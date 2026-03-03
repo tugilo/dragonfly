@@ -21,8 +21,8 @@
 | カラム | Laravel 型 | null | 備考 |
 |--------|------------|------|------|
 | id | bigIncrements() | NO | PK |
-| owner_member_id | foreignId()->constrained('members') | NO | 記録者。ON DELETE は RESTRICT または CASCADE を運用で決定 |
-| target_member_id | foreignId()->constrained('members') | NO | 相手 |
+| owner_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 記録者。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
+| target_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 相手。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
 | interested | boolean()->default(false) | NO | 気になる |
 | want_1on1 | boolean()->default(false) | NO | 1on1 したい |
 | extra_status | json()->nullable() | YES | 追加フラグ。キー snake_case、値 boolean/string/number のみ |
@@ -52,8 +52,8 @@ CREATE TABLE dragonfly_contact_flags (
   INDEX (owner_member_id),
   INDEX (interested),
   INDEX (want_1on1),
-  FOREIGN KEY (owner_member_id) REFERENCES members(id),
-  FOREIGN KEY (target_member_id) REFERENCES members(id)
+  FOREIGN KEY (owner_member_id) REFERENCES members(id) ON DELETE RESTRICT,
+  FOREIGN KEY (target_member_id) REFERENCES members(id) ON DELETE RESTRICT
 );
 ```
 
@@ -66,15 +66,15 @@ CREATE TABLE dragonfly_contact_flags (
 | カラム | Laravel 型 | null | 備考 |
 |--------|------------|------|------|
 | id | bigIncrements() | NO | PK |
-| owner_member_id | foreignId()->constrained('members') | NO | 記録者 |
-| target_member_id | foreignId()->constrained('members') | NO | 相手 |
-| meeting_id | foreignId()->nullable()->constrained('meetings')->nullOnDelete() | YES | 会議外なら null |
+| owner_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 記録者。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
+| target_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 相手。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
+| meeting_id | foreignId()->nullable()->constrained('meetings')->nullOnDelete() | YES | 会議外なら null。meeting 削除時は SET NULL。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
 | event_type | string(32) | NO | interested_on / interested_off / want_1on1_on / want_1on1_off / note |
 | reason | string(280)->nullable() | YES | 理由の短文 |
 | meta | json()->nullable() | YES | 将来拡張用 |
-| created_at | timestamp() | YES | updated_at は持たない（イミュータブルログ） |
+| created_at | timestamp() | YES | **updated_at は持たない**（イミュータブルログ。[D-05](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)） |
 
-**注意:** contact_events は「追加のみ」のログとするため、`updated_at` は持たない。Laravel の `timestamps()` を使う場合は `updated_at` を nullable で追加し運用で更新しないか、または `created_at` のみのカラムとする。
+**注意:** contact_events は「追加のみ」のログのため、`created_at` のみ。Laravel では `timestamps()` を使わず、`$table->timestamp('created_at')` のみで定義する。
 
 **制約:**
 
@@ -97,6 +97,8 @@ CREATE TABLE dragonfly_contact_events (
   INDEX (meeting_id),
   FOREIGN KEY (owner_member_id) REFERENCES members(id),
   FOREIGN KEY (target_member_id) REFERENCES members(id),
+  FOREIGN KEY (owner_member_id) REFERENCES members(id) ON DELETE RESTRICT,
+  FOREIGN KEY (target_member_id) REFERENCES members(id) ON DELETE RESTRICT,
   FOREIGN KEY (meeting_id) REFERENCES meetings(id) ON DELETE SET NULL
 );
 ```
@@ -110,14 +112,14 @@ CREATE TABLE dragonfly_contact_events (
 | カラム | Laravel 型 | null | 備考 |
 |--------|------------|------|------|
 | id | bigIncrements() | NO | PK |
-| owner_member_id | foreignId()->constrained('members') | NO | 記録者 |
-| target_member_id | foreignId()->constrained('members') | NO | 相手 |
+| owner_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 記録者。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
+| target_member_id | foreignId()->constrained('members')->restrictOnDelete() | NO | 相手。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
 | held_at | dateTime()->nullable() | YES | 実施日時。未定なら null |
 | status | string(16) | NO | planned / done / canceled |
 | agenda | text()->nullable() | YES | 話したいこと |
 | memo | text()->nullable() | YES | 結果メモ |
 | next_action | text()->nullable() | YES | 次やること |
-| source_meeting_id | foreignId()->nullable()->constrained('meetings')->nullOnDelete() | YES | きっかけの meeting |
+| source_meeting_id | foreignId()->nullable()->constrained('meetings')->nullOnDelete() | YES | きっかけの meeting。meeting 削除時は SET NULL。[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
 | created_at | timestamps() | YES | |
 | updated_at | timestamps() | YES | |
 
@@ -145,8 +147,8 @@ CREATE TABLE dragonfly_one_on_one_sessions (
   INDEX (owner_member_id, target_member_id, held_at),
   INDEX (status),
   INDEX (source_meeting_id),
-  FOREIGN KEY (owner_member_id) REFERENCES members(id),
-  FOREIGN KEY (target_member_id) REFERENCES members(id),
+  FOREIGN KEY (owner_member_id) REFERENCES members(id) ON DELETE RESTRICT,
+  FOREIGN KEY (target_member_id) REFERENCES members(id) ON DELETE RESTRICT,
   FOREIGN KEY (source_meeting_id) REFERENCES meetings(id) ON DELETE SET NULL
 );
 ```
@@ -158,18 +160,12 @@ CREATE TABLE dragonfly_one_on_one_sessions (
 - **flags 更新は必ず events を伴う**  
   API で contact_flags の interested または want_1on1 を変更した場合、同一リクエスト内で contact_events に 1 件（以上）追加する。event_type は変更内容に応じて自動設定（interested_on / interested_off / want_1on1_on / want_1on1_off）。アプリケーション層（Service または Controller）で保証する。
 
-- **1on1 作成時 want_1on1 を自動 ON にするか**  
-  未決事項とする。する場合は contact_flags の upsert と contact_events への want_1on1_on 追加を整合ルールに従って行う。
+- **1on1 作成時は contact_flags / contact_events を更新しない**  
+  V1 決定（[D-04](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)）: 1on1 セッション作成時に want_1on1 を自動で true にしない。UI で明示的にフラグを ON にする。
 
 ---
 
-## 5. 未決事項
+## 5. 未決事項・Resolved
 
-- **1on1 セッション作成時に contact_flags.want_1on1 を自動で true にするか**  
-  する場合、contact_events に want_1on1_on を 1 件追加する整合ルールに従う。
-
-- **contact_events に updated_at を設けるか**  
-  本設計では「追加のみ」のログとして created_at のみでよいとする。Laravel の timestamps() で updated_at を付ける場合は、更新しない運用とする。
-
-- **外部キー ON DELETE**  
-  owner_member_id / target_member_id は RESTRICT か CASCADE を運用で決定。members 削除が稀であれば RESTRICT でよい。
+- **contact_events の updated_at** … Resolved（[D-05](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)）: created_at のみ。updated_at は持たない。
+- **外部キー ON DELETE** … Resolved（[D-06](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)）: members 参照は RESTRICT、meetings 参照（nullable）は SET NULL。

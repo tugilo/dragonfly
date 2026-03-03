@@ -18,7 +18,10 @@
   1on1 の予定・実施履歴は `dragonfly_one_on_one_sessions` のみで扱う。contact_events に one_on_one_* は持たない。
 
 - **owner は owner_member_id を正とする**  
-  暫定は「participant から member_id を解決して owner_member_id として渡す」。将来はログインで確定。
+  V1 暫定: 画面で「自分」に該当する参加者（participant）を選択し、その member_id を owner_member_id として全 API にクエリで渡す（[D-01](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)）。将来はログインで確定。
+
+- **URL 方針**  
+  プレフィックスは `/api/dragonfly/` で統一。既存の meeting 依存 API は `meetings/{number}/...`、新規の owner 依存 API（flags / contacts / one-on-one）は直下で、owner_member_id はクエリで渡す（[D-07](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)）。
 
 ---
 
@@ -68,7 +71,7 @@
 |------------|-----|------|------|
 | interested | boolean | 否 | 気になる。省略時は変更しない。 |
 | want_1on1 | boolean | 否 | 1on1 したい。省略時は変更しない。 |
-| extra_status | object | 否 | 追加フラグ（JSON）。省略時は変更しない。上書きかマージかは実装で決定。 |
+| extra_status | object | 否 | 追加フラグ（JSON）。省略時は変更しない。**指定キーのみマージ**（送信したキーを更新し、未送信キーは既存値を保持）。[D-03](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) |
 | reason | string(280) | 否 | フラグ変更に付ける理由。contact_events の reason に保存。空でも可。 |
 | meeting_id | integer | 否 | どの meeting で付けたか。null の場合は会議外。 |
 
@@ -83,7 +86,7 @@
    - 例: interested が true→false → event_type = `interested_off`
    - 例: want_1on1 が false→true → event_type = `want_1on1_on`
    - 例: want_1on1 が true→false → event_type = `want_1on1_off`  
-   reason / meeting_id はリクエストの値を contact_events に保存。extra_status のみの変更の場合は、events に追加するかは未決（未決事項参照）。
+   reason / meeting_id はリクエストの値を contact_events に保存。**extra_status のみの変更の場合は contact_events には追加しない**（主要フラグ interested / want_1on1 の変更時のみ履歴を残す）。[D-02](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)
 
 **出力:** 更新後の contact_flags の 1 行（target_member_id, interested, want_1on1, extra_status, updated_at 等）。
 
@@ -208,7 +211,7 @@
 
 ### GET /api/dragonfly/contacts/{target_member_id}/summary
 
-**目的:** 人物カードに必要な情報を 1 リクエストで取得。同室回数・メモ・フラグ・理由・1on1 サマリを集約する。
+**目的:** 人物カードに必要な情報を 1 リクエストで取得。V1 では**人物カード用の最小責務**（flags ＋ 履歴要約 ＋ 1on1 要約）に限定する。同室回数・メモ・フラグ・理由・1on1 サマリを集約する。[D-08](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md)
 
 **入力（クエリ）:**
 
@@ -236,16 +239,6 @@
 
 ---
 
-## 5. 未決事項
+## 5. 未決事項・Resolved
 
-- **owner_member_id の渡し方**  
-  暫定: クエリで毎回渡す。将来: ログインセッションや JWT から解決し、クエリでは省略可能にするか。
-
-- **extra_status のみ更新した場合の contact_events**  
-  interested / want_1on1 が変わらない場合、events に追加するか（例: event_type = `extra_status_updated`）、追加しないか。データモデル SSOT では「フラグ ON/OFF 時に必ず 1 件」としているため、extra_status のみの変更は「追加しない」でよいとする案でよいか。
-
-- **1on1 作成時に want_1on1 を自動 ON にするか**  
-  1on1 予定を立てたタイミングで contact_flags の want_1on1 を true にするかは未決。する場合は contact_events に want_1on1_on を 1 件追加する整合ルールに従う。
-
-- **既存 API との URL プレフィックス**  
-  既存が `/api/dragonfly/meetings/{number}/...` の場合、本設計の `/api/dragonfly/flags` 等はプレフィックスを揃えるか（例: `/api/dragonfly/meetings/199/...` に owner を紐づけるか）は実装時に決定。本設計では `/api/dragonfly/` 直下で記載。
+V1 で決定した項目（D-01〜D-08）は [DRAGONFLY_DECISIONS_V1.md](../../decisions/dragonfly/DRAGONFLY_DECISIONS_V1.md) に記載。owner の渡し方（D-01）、extra_status のみの変更時は events に追加しない（D-02）、extra_status はマージ（D-03）、1on1 作成時は want_1on1 を自動 ON にしない（D-04）、URL は /api/dragonfly/ で統一（D-07）、Summary は人物カード用最小（D-08）は本文に反映済み。
