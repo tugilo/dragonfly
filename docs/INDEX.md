@@ -1,0 +1,53 @@
+# ドキュメント INDEX
+
+このファイルは **docs/ 以下のドキュメント一覧と管理ルール** を定義する INDEX です。  
+**ドキュメントを追加・変更・削除したら、必ずこの INDEX を更新すること。**
+
+---
+
+## 更新ルール（必須）
+
+- 新しいドキュメントを追加したら、この INDEX の「一覧」に追記する。
+- **進捗ファイル（<プロジェクト名>_progress.md）を更新したら、この INDEX の一覧に含まれていることを確認する。**
+- ドキュメントを移動・リネーム・削除したら、この INDEX を整合する。
+
+---
+
+## 一覧
+
+### 進捗（docs/ 直下）
+
+進捗は **必ず** `docs/<プロジェクト名>_progress.md` に記録する。このプロジェクトの進捗ファイルは以下。
+
+| ファイル | 説明 |
+|----------|------|
+| [dragonfly_progress.md](dragonfly_progress.md) | 本プロジェクトの進捗。Phase ・作業内容をここに追記する。 |
+
+### その他（docs/）
+
+| ファイル | 説明 |
+|----------|------|
+| [INDEX.md](INDEX.md) | 本ファイル。ドキュメントの索引と更新ルール。 |
+
+### 詳細資料（docs/process/）
+
+Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ を使用し、この一覧に追記する。
+
+| ファイル | 説明 |
+|----------|------|
+| （必要に応じて PHASE_<内容>_PLAN.md 等を追加） | |
+
+### BNI DragonFly（docs/networking/bni/dragonfly/）
+
+| ファイル | 説明 |
+|----------|------|
+| [REQUIREMENTS_MEMBER_PARTICIPANTS.md](networking/bni/dragonfly/REQUIREMENTS_MEMBER_PARTICIPANTS.md) | メンバーマスター・参加者・ブレイクアウトメモの要件定義。 |
+| [STATUS_MVP_199.md](networking/bni/dragonfly/STATUS_MVP_199.md) | 第199回 MVP の完了範囲・未実装・技術的注意点。 |
+| [api/DRAGONFLY_MVP_API_GUIDE.md](networking/bni/dragonfly/api/DRAGONFLY_MVP_API_GUIDE.md) | DragonFly MVP API のエンドポイント・curl 例・レスポンス・エラー仕様。 |
+| [breakout/DRAGONFLY_BREAKOUT_SEEDING_POLICY_20260303.md](networking/bni/dragonfly/breakout/DRAGONFLY_BREAKOUT_SEEDING_POLICY_20260303.md) | 第199回ブレイクアウトの暫定割当ルールと冪等性・正式割当反映手順。 |
+
+### 実装設計（docs/design/bni/dragonfly/）
+
+| ファイル | 説明 |
+|----------|------|
+| [BNI_MEMBER_PARTICIPANTS_IMPLEMENTATION_DESIGN.md](design/bni/dragonfly/BNI_MEMBER_PARTICIPANTS_IMPLEMENTATION_DESIGN.md) | メンバー・参加者管理のDB設計・リレーション・実装順序。 |
