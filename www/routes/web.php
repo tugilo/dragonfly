@@ -8,3 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dragonfly/{number}', [DragonFlyMvpController::class, 'show'])->whereNumber('number');
+
+Route::get('/admin', function () {
+    return view('admin');
+});
