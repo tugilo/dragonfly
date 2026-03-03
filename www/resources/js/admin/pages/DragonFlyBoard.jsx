@@ -1,7 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Box, Grid, TextField, Autocomplete, Card, CardContent, Typography, FormControlLabel, Switch } from '@mui/material';
 
 const API = '';
+const TOGGLE_DEBOUNCE_MS = 300;
 
 async function fetchJson(url) {
     const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
@@ -27,8 +28,9 @@ export default function DragonFlyBoard() {
     const [members, setMembers] = useState([]);
     const [targetMember, setTargetMember] = useState(null);
     const [summary, setSummary] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [loadingSummary, setLoadingSummary] = useState(false);
+    const [pendingFlags, setPendingFlags] = useState(null);
+    const debounceRef = useRef(null);
 
     useEffect(() => {
         fetchJson('/api/dragonfly/members')
@@ -42,10 +44,14 @@ export default function DragonFlyBoard() {
         fetchJson(
             `/api/dragonfly/contacts/${targetMember.id}/summary?owner_member_id=${ownerMemberId}`
         )
-            .then(setSummary)
+            .then((s) => {
+                setSummary(s);
+                setPendingFlags(null);
+            })
             .catch((e) => {
                 console.error('summary load failed', e);
                 setSummary(null);
+                setPendingFlags(null);
             })
             .finally(() => setLoadingSummary(false));
     }, [targetMember?.id, ownerMemberId]);
@@ -54,18 +60,30 @@ export default function DragonFlyBoard() {
         loadSummary();
     }, [loadSummary]);
 
-    const handleToggle = async (field, value) => {
-        if (!targetMember?.id) return;
-        setLoading(true);
-        try {
-            await putFlags(ownerMemberId, targetMember.id, { [field]: value });
-            loadSummary();
-        } catch (e) {
-            console.error('PUT flags failed', e);
-        } finally {
-            setLoading(false);
-        }
+    const handleToggle = (field, value) => {
+        if (!targetMember?.id || !summary?.flags) return;
+        const next = { ...summary.flags, [field]: value };
+        setPendingFlags(next);
+
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(async () => {
+            debounceRef.current = null;
+            try {
+                await putFlags(ownerMemberId, targetMember.id, {
+                    interested: next.interested,
+                    want_1on1: next.want_1on1,
+                });
+                loadSummary();
+            } catch (e) {
+                console.error('PUT flags failed', e);
+                setPendingFlags(null);
+            }
+        }, TOGGLE_DEBOUNCE_MS);
     };
+
+    const displayFlags = pendingFlags ?? summary?.flags ?? { interested: false, want_1on1: false };
+    const latestMemos = summary?.latest_memos ?? [];
+    const interestedReason = summary?.latest_interested_reason;
 
     return (
         <Box sx={{ p: 2 }}>
@@ -107,8 +125,7 @@ export default function DragonFlyBoard() {
                                     <FormControlLabel
                                         control={
                                             <Switch
-                                                checked={!!summary?.flags?.interested}
-                                                disabled={loading}
+                                                checked={!!displayFlags.interested}
                                                 onChange={(_, v) =>
                                                     handleToggle('interested', v)
                                                 }
@@ -119,8 +136,7 @@ export default function DragonFlyBoard() {
                                     <FormControlLabel
                                         control={
                                             <Switch
-                                                checked={!!summary?.flags?.want_1on1}
-                                                disabled={loading}
+                                                checked={!!displayFlags.want_1on1}
                                                 onChange={(_, v) =>
                                                     handleToggle('want_1on1', v)
                                                 }
@@ -132,6 +148,27 @@ export default function DragonFlyBoard() {
                                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                                     同室回数: {summary?.same_room_count ?? 0}
                                 </Typography>
+                                {interestedReason?.reason && (
+                                    <Typography variant="body2" sx={{ mt: 1 }} color="text.secondary">
+                                        気になる理由: {interestedReason.reason}
+                                    </Typography>
+                                )}
+                                {latestMemos.length > 0 && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <Typography variant="caption" color="text.secondary">
+                                            メモ（直近{latestMemos.length}件）
+                                        </Typography>
+                                        {latestMemos.map((m) => (
+                                            <Typography
+                                                key={m.id}
+                                                variant="body2"
+                                                sx={{ display: 'block', mt: 0.5 }}
+                                            >
+                                                #{m.meeting_number}: {m.body || '(なし)'}
+                                            </Typography>
+                                        ))}
+                                    </Box>
+                                )}
                             </CardContent>
                         </Card>
                     )}
