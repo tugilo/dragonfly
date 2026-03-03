@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { Admin, Resource } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';
+import DragonFlyBoard from './pages/DragonFlyBoard';
 
 function DummyList() {
     console.log('[Admin] DummyList mounted — check Network/Console for getList flags API');
@@ -14,7 +15,7 @@ function DummyList() {
 const root = document.getElementById('admin-root');
 if (root) {
     createRoot(root).render(
-        <Admin dataProvider={dragonflyDataProvider}>
+        <Admin dataProvider={dragonflyDataProvider} dashboard={DragonFlyBoard}>
             <Resource name="dragonflyFlags" list={DummyList} />
         </Admin>
     );
