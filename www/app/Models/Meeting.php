@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Meeting extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'number',
+        'held_on',
+        'name',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'held_on' => 'date',
+        ];
+    }
+
+    public function participants(): HasMany
+    {
+        return $this->hasMany(Participant::class);
+    }
+
+    public function breakoutRooms(): HasMany
+    {
+        return $this->hasMany(BreakoutRoom::class);
+    }
+
+    public function breakoutMemos(): HasMany
+    {
+        return $this->hasMany(BreakoutMemo::class);
+    }
+}
