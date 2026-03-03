@@ -103,6 +103,7 @@ class DragonFlyBreakoutMemoController extends Controller
     /**
      * 指定 participant の同室者一覧（自分以外）.
      * GET /api/dragonfly/meetings/{number}/breakout-roommates/{participant_id}
+     * ?session=1 または ?session=2 を付けると、そのセッションのルーム（room_label が S{session}- で始まる）のみ対象.
      */
     public function roommates(Request $request, int $number, int $participantId): JsonResponse
     {
@@ -110,15 +111,35 @@ class DragonFlyBreakoutMemoController extends Controller
         if (! $meeting) {
             return response()->json(['message' => 'Meeting not found.'], 404);
         }
+        $session = $request->query('session');
+        if ($session !== null && $session !== '') {
+            $session = (int) $session;
+            if (! in_array($session, [1, 2], true)) {
+                return response()->json(['message' => 'session must be 1 or 2.'], 422);
+            }
+        } else {
+            $session = null;
+        }
+
         $participant = Participant::where('meeting_id', $meeting->id)
             ->where('id', $participantId)
-            ->with('breakoutRooms.participants.member')
+            ->with(['breakoutRooms' => function ($q) use ($session) {
+                if ($session !== null) {
+                    $q->where('room_label', 'like', 'S' . $session . '-%');
+                }
+            }, 'breakoutRooms.participants.member'])
             ->first();
         if (! $participant) {
             return response()->json(['message' => 'Participant not found.'], 404);
         }
+
         $roommateParticipantIds = collect();
+        $breakoutRoomLabels = [];
         foreach ($participant->breakoutRooms as $room) {
+            if ($session !== null && strpos($room->room_label, 'S' . $session . '-') !== 0) {
+                continue;
+            }
+            $breakoutRoomLabels[] = $room->room_label;
             foreach ($room->participants as $p) {
                 if ((int) $p->id !== (int) $participantId) {
                     $roommateParticipantIds->push($p);
@@ -136,6 +157,11 @@ class DragonFlyBreakoutMemoController extends Controller
                 'category' => $p->member->category,
             ] : null,
         ])->values()->all();
-        return response()->json(['data' => $data]);
+
+        $payload = ['data' => $data];
+        if ($session !== null) {
+            $payload['breakout_room_labels'] = array_values(array_unique($breakoutRoomLabels));
+        }
+        return response()->json($payload);
     }
 }

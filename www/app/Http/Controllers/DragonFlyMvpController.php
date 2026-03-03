@@ -11,6 +11,9 @@ class DragonFlyMvpController extends Controller
      */
     public function show(int $number): View
     {
-        return view('dragonfly.mvp', ['number' => $number]);
+        return view('dragonfly.mvp', [
+            'number' => $number,
+            'participant_id_from_query' => request()->query('participant_id'),
+        ]);
     }
 }

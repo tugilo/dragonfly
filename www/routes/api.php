@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DragonFlyBreakoutAssignmentController;
 use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
 use App\Http\Controllers\Api\DragonFlyMeetingController;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,6 @@ Route::put('/dragonfly/meetings/{number}/breakout-memos', [DragonFlyBreakoutMemo
 Route::get('/dragonfly/meetings/{number}/breakout-roommates/{participant_id}', [DragonFlyBreakoutMemoController::class, 'roommates'])
     ->whereNumber('number')
     ->whereNumber('participant_id');
+
+Route::put('/dragonfly/meetings/{number}/breakout-assignments', [DragonFlyBreakoutAssignmentController::class, 'store'])
+    ->whereNumber('number');
