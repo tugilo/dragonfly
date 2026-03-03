@@ -17,6 +17,15 @@
 | PUT | `/api/dragonfly/meetings/{number}/breakout-memos` | 同室者へのメモを upsert | 200: data（id, meeting_id, participant_id, target_participant_id, breakout_room_id, body, created_at, updated_at） |
 | GET | `/api/dragonfly/meetings/{number}/breakout-memos?participant_id={id}` | 指定参加者が書いたメモ一覧 | 200: data 配列 |
 
+### Flags API（DragonFly V1）
+
+| Method | Endpoint | 説明 |
+|--------|----------|------|
+| GET | `/api/dragonfly/flags?owner_member_id={id}` | 指定 owner のフラグ一覧 |
+| PUT | `/api/dragonfly/flags/{target_member_id}?owner_member_id={id}` | フラグ upsert（body: interested, want_1on1, extra_status, reason, meeting_id **または** meeting_number） |
+
+- **meeting の指定:** `meeting_id`（meetings.id）と `meeting_number`（meetings.number、例: 199）のどちらでも指定可能。両方渡した場合は `meeting_id` を優先。`meeting_number` が存在しない場合は 422。
+
 - `{number}` は meeting の回数（例: 199）。数値のみ。
 - `{participant_id}` は participants.id（数値）。
 

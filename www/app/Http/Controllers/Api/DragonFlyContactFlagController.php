@@ -57,13 +57,14 @@ class DragonFlyContactFlagController extends Controller
         }
 
         $flag = $this->contactFlagService->upsertFlag(
-            $ownerMemberId,
-            $targetMemberId,
-            $request->input('interested'),
-            $request->input('want_1on1'),
-            $request->input('extra_status'),
-            $request->input('reason'),
-            $request->input('meeting_id') !== null ? (int) $request->input('meeting_id') : null
+            ownerMemberId: $ownerMemberId,
+            targetMemberId: $targetMemberId,
+            interested: $request->input('interested'),
+            want1on1: $request->input('want_1on1'),
+            extraStatus: $request->input('extra_status'),
+            reason: $request->input('reason'),
+            meetingId: $request->input('meeting_id') !== null ? (int) $request->input('meeting_id') : null,
+            meetingNumber: $request->input('meeting_number') !== null ? (int) $request->input('meeting_number') : null
         );
 
         return response()->json([

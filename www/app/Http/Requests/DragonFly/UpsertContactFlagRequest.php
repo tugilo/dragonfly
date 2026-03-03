@@ -31,6 +31,7 @@ class UpsertContactFlagRequest extends FormRequest
             'extra_status' => ['nullable', 'array'],
             'reason' => ['nullable', 'string', 'max:280'],
             'meeting_id' => ['nullable', 'integer', 'exists:meetings,id'],
+            'meeting_number' => ['nullable', 'integer'],
         ];
     }
 }
