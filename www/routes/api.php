@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\DragonFlyBreakoutAssignmentController;
 use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
 use App\Http\Controllers\Api\DragonFlyContactFlagController;
+use App\Http\Controllers\Api\DragonFlyContactSummaryController;
 use App\Http\Controllers\Api\DragonFlyMeetingController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,7 @@ Route::delete('/dragonfly/meetings/{number}/breakout-assignments', [DragonFlyBre
 
 Route::get('/dragonfly/flags', [DragonFlyContactFlagController::class, 'index']);
 Route::put('/dragonfly/flags/{target_member_id}', [DragonFlyContactFlagController::class, 'update'])
+    ->whereNumber('target_member_id');
+
+Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
     ->whereNumber('target_member_id');
