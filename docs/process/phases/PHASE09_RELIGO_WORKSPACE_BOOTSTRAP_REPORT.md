@@ -61,7 +61,7 @@ git push origin develop
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 8ab219e354531a45e88158896dc0057cd0c4f0c9 |
 | **merge 元ブランチ名** | feature/phase09-workspace-seed-and-test-v1 |
 | **変更ファイル一覧** | 上記参照 |
-| **テスト結果** | 14 passed |
+| **テスト結果** | 14 passed (65 assertions) |
