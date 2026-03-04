@@ -15,4 +15,11 @@
 
 ---
 
-（Phase や日付ごとに追記する）
+## main 反映（リリース証跡）
+
+| 日付 | main HEAD (merge commit) | 取り込んだ Phase | テスト結果 |
+|------|-------------------------|------------------|------------|
+| 2026-03-04 | `cc22f08f79a367e937b9d15f2f8c0095ca0fec6f` | Phase04〜08（一覧 summary、メモ/1to1 API、Board メモ追加、Board 1to1 登録、workspace_id 自動取得） | 13 passed (58 assertions) |
+
+- **develop HEAD（反映時点）:** `2b404aeb4346dd9132b4b9b28fefda5e790a6aa3`
+- **手順:** develop を main に no-ff merge → テスト実行 → push main → 本証跡を develop に追記して push。
