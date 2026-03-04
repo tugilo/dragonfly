@@ -31,7 +31,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | `181bb5f67fa1c95cf282b95a11708c51e8fac580` |
 | **merge 元ブランチ名** | feature/phase12w-board-shortcut-v1 |
-| **変更ファイル一覧** | （merge 後に記入） |
+| **変更ファイル一覧** | docs/INDEX.md, docs/dragonfly_progress.md, docs/process/phases/PHASE12W_RELIGO_BOARD_SHORTCUT_PLAN.md, docs/process/phases/PHASE12W_RELIGO_BOARD_SHORTCUT_REPORT.md, docs/process/phases/PHASE12W_RELIGO_BOARD_SHORTCUT_WORKLOG.md, www/resources/js/admin/pages/DragonFlyBoard.jsx |
 | **テスト結果** | 27 passed (125 assertions) |
