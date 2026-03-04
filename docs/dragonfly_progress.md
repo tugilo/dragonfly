@@ -17,6 +17,7 @@
 | 2026-03-04 | **Phase10R Religo**: Breakout Round 可変。Meeting ごとに Round を複数管理可能に拡張。breakout_rounds テーブル新規・breakout_rooms.breakout_round_id 追加・バックフィル。GET/PUT /api/meetings/{id}/breakout-rounds、DragonFlyBoard「BO (Round)」セクション追加。Phase10 の BO1/BO2 固定 API/UI は互換のため維持。 |
 | 2026-03-04 | **Phase11A Religo**: 管理画面メニュー整理（IA）。ReactAdmin カスタム Menu で Board → Members → 区切り → Meetings → 区切り → 1 to 1 の順に整理。1 to 1 は Meeting と独立であることを UI で明示。members/meetings/one-to-ones はプレースホルダー導線を追加。 |
 | 2026-03-04 | **Phase11B Religo**: 1 to 1 独立一覧。GET /api/one-to-ones（フィルタ・並び順）、ReactAdmin Resource one-to-ones の List/Create。meeting_id は任意。OneToOneIndexTest 追加。 |
+| 2026-03-04 | **Phase12 Religo**: Board UX Refresh。固定 BO セクション撤去、Round UI のみに統一。Meeting Autocomplete + 状態 Chip、Round タブ + Chip 割当 + メモ Dialog（文脈表示）、保存 1 ボタン。 |
 
 ---
 
