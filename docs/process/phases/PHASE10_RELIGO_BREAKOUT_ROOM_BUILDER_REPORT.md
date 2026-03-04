@@ -33,7 +33,7 @@ www/tests/Feature/Religo/MeetingBreakoutsTest.php
 
 ## テスト結果
 
-（merge 後に記載: 18 passed）
+18 passed (82 assertions)
 
 ## DoD チェック
 
@@ -43,14 +43,14 @@ www/tests/Feature/Religo/MeetingBreakoutsTest.php
 - [x] BO 内の各メンバーに meeting メモが書ける導線がある
 - [x] Feature テストが green
 - [x] PLAN/WORKLOG/REPORT ＋ INDEX/progress 更新
-- [ ] 1 commit push → develop へ --no-ff merge
-- [ ] REPORT に merge commit id とテスト結果を記録
+- [x] 1 commit push → develop へ --no-ff merge
+- [x] REPORT に merge commit id とテスト結果を記録
 
 ## 取り込み証跡（develop への merge 後）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | bd0fb315929391180d2fd83f1c578436291926f4 |
 | **merge 元ブランチ名** | feature/phase10-breakout-room-builder-v1 |
 | **変更ファイル一覧** | 上記参照 |
-| **テスト結果** | （passed 数） |
+| **テスト結果** | 18 passed (82 assertions) |
