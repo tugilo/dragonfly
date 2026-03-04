@@ -40,6 +40,18 @@ export const dragonflyDataProvider = {
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
         }
+        if (resource === 'members') {
+            const owner = getOwnerMemberId(params);
+            const url = `/api/dragonfly/members?owner_member_id=${owner}&with_summary=1`;
+            const data = await request(url);
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'meetings') {
+            const data = await request('/api/meetings');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
         return { data: [], total: 0 };
     },
 
