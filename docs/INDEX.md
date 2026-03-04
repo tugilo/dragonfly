@@ -28,6 +28,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [INDEX.md](INDEX.md) | 本ファイル。ドキュメントの索引と更新ルール。 |
+| [GIT_WORKFLOW.md](GIT_WORKFLOW.md) | Git ブランチ運用ルール（main / develop / feature / hotfix、1push 原則）。SSOT。 |
 
 ### プロダクト要件（docs/product/）
 
