@@ -42,14 +42,14 @@
 ## テスト結果
 
 - docs のみの変更のため、php artisan test は任意。実施した場合はここに記載する。
-- 例: （実施した場合）`docker compose ... exec app php artisan test` — XX passed
+- `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` — **27 passed (125 assertions)**
 
 ## 取り込み証跡（develop への merge 後に追記）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に `git log -1 --format=%H develop` で取得して記入） |
+| **merge commit id** | `5bb0b8731c53b69fefd61029b507f46c580e3261` |
 | **merge 元ブランチ名** | feature/phase12r-roadmap-ssot-v1 |
-| **変更ファイル一覧** | （merge 後に `git diff --name-only develop^1...develop` の結果を記入） |
-| **テスト結果** | docs のみのため任意。実施したら記載。 |
+| **変更ファイル一覧** | docs/INDEX.md, docs/SSOT/ROADMAP.md, docs/dragonfly_progress.md, docs/process/phases/PHASE12R_RELIGO_ROADMAP_SSOT_PLAN.md, docs/process/phases/PHASE12R_RELIGO_ROADMAP_SSOT_REPORT.md, docs/process/phases/PHASE12R_RELIGO_ROADMAP_SSOT_WORKLOG.md |
+| **テスト結果** | 27 passed (125 assertions) |
 | **手動確認** | INDEX のリンク・ROADMAP 表の依存関係を目視確認。 |
