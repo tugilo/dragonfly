@@ -21,6 +21,7 @@
 | 2026-03-04 | **Phase12S Religo**: Board MUI Polish。Container/Grid/Card/Stack/Divider で骨格を整え、CardHeader・CardActions・Chip・LoadingButton で階層と状態を表現。機能は変更せず見た目・余白・導線のみ改善。 |
 | 2026-03-04 | **Phase12T Religo**: Admin Theme SSOT + 適用。Theme を religoTheme.js に集約し全ページに適用。Typography/shape/spacing/components override と CssBaseline で統一感を担保。Board は微調整のみ。 |
 | 2026-03-05 | **Phase12R Religo**: 全体ロードマップ SSOT 確定。docs/SSOT/ROADMAP.md で Phase 順序・DoD・依存・スコープロック・テスト規約・Execution Playbook・Next 3 を固定。4 レーン（UI/IA, データ整合, 機能拡張, 運用品質）の Phase 表を確定。 |
+| 2026-03-05 | **Phase12U Religo**: Board 3ペイン IA。左：メンバー選択、中：Meeting 選択＋Round 編集、右：関係ログ（クイックアクション・要点・紹介 Coming soon）。getMeetings 追加。既存 Round 保存・メモ・1to1 導線維持。 |
 
 ---
 
