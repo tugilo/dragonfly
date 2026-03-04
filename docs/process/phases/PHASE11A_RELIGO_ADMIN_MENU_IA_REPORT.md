@@ -27,19 +27,20 @@
 
 ## テスト結果
 
-（merge 後に記載）
+- `php artisan test` で 23 passed (108 assertions)。既存 Feature テストはすべて green。
 
 ## DoD
 
 - [x] メニューが上記の意図通り並ぶ
 - [x] 既存画面への導線が壊れていない
 - [x] docs 更新
-- [ ] 1 コミット push → develop へ --no-ff merge → push
-- [ ] REPORT に merge commit id を記録
+- [x] 1 コミット push → develop へ --no-ff merge → push
+- [x] REPORT に merge commit id を記録
 
 ## 取り込み証跡
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **テスト結果** | （passed 数） |
+| **merge commit id** | `492bbde31109611d1f0e51e6d6f9b64ddd28ea7a` |
+| **merge 元ブランチ** | feature/phase11a-admin-menu-ia-v1 |
+| **テスト結果** | 23 passed (108 assertions) |
