@@ -1,0 +1,69 @@
+# ============================================
+# dragonfly プロジェクト開発ルール（Cursor用）
+# ============================================
+
+このリポジトリは **dragonfly** プロジェクト（tugilo-template から生成された Laravel アプリ）です。
+
+あなた（Cursor）は、このプロジェクトの Laravel アプリ開発に集中し、安全・再現性を最優先に実装してください。
+
+-------------------------------------------------
+■ 🎯 このプロジェクトの構成
+-------------------------------------------------
+
+- プロジェクト名: dragonfly
+- **Laravel は www/ 直下**（app/, routes/, config/ 等）。**infra/ と www/ は同階層。**
+- Docker 定義はこのプロジェクトの infra/ にあり、このディレクトリで docker compose する
+- Composer / php artisan は app コンテナ内で実行する（ホストに Composer は不要）
+
+-------------------------------------------------
+■ 📦 触ってよい範囲（このプロジェクト内）
+-------------------------------------------------
+
+- Laravel アプリコード → **www/** 以下（app/, routes/, config/, resources/, database/ 等）
+- インフラ変更 → infra/ のみ（ポート・DB 等は infra/compose/docker-compose.yml, versions.env）
+- セットアップスクリプト → bin/, Makefile（必要時のみ）
+
+-------------------------------------------------
+■ 📄 ドキュメント・進捗管理（必須）
+-------------------------------------------------
+
+- **進捗ファイルは docs 直下に `dragonfly_progress.md` として必ず作成・使用する。** 例: fluo なら docs/fluo_progress.md。進捗はこの 1 ファイルに記録する。
+- **docs/INDEX.md を別ファイルで必ず管理する。** ドキュメントを追加・変更・削除したら必ず INDEX を更新する。進捗ファイルを更新したら INDEX に載っていることを確認する。
+- 詳細は docs/process/README.md および docs/INDEX.md を参照。
+
+-------------------------------------------------
+■ 🐳 よく使うコマンド（このディレクトリで実行）
+-------------------------------------------------
+
+# コンテナ起動
+docker compose -f infra/compose/docker-compose.yml --env-file project.env up -d
+
+# Artisan（マイグレーション等）
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan migrate
+
+# Composer
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app composer require ...
+
+-------------------------------------------------
+■ 🧪 動作確認
+-------------------------------------------------
+
+- http://localhost … Laravel
+- http://localhost:8081 … phpMyAdmin（root/root または dragonfly/dragonfly）
+- コンテナ: dragonfly-app, dragonfly-node, dragonfly-nginx, dragonfly-db, dragonfly-phpmyadmin
+
+-------------------------------------------------
+■ 🚫 禁止事項
+-------------------------------------------------
+
+- ホスト側での composer 実行
+- sed の使用（Mac/Linux 差異防止のため）
+- .env の手動編集（必要な場合は PHP スクリプトで行う）
+- バージョン番号の直書き（versions.env に定義する）
+
+-------------------------------------------------
+■ 📐 コードスタイル
+-------------------------------------------------
+
+- PHP: PSR-12、Laravel の慣習に従う
+- 安定性を最優先する。指示外の変更をしない。

@@ -12,6 +12,16 @@ class UpsertBreakoutAssignmentRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if ($this->input('session') === null && $this->getContent()) {
+            $decoded = json_decode($this->getContent(), true);
+            if (is_array($decoded)) {
+                $this->merge($decoded);
+            }
+        }
+    }
+
     /**
      * @return array<string, mixed>
      */

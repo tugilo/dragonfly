@@ -75,4 +75,22 @@ class BreakoutAssignmentService
             'members' => $members,
         ];
     }
+
+    /**
+     * 指定セッションの自分の割当を解除する（participant_breakout から削除）.
+     */
+    public function removeAssignment(Meeting $meeting, int $session, int $participantId): void
+    {
+        $sessionPrefix = 'S' . $session . '-';
+        $roomIds = BreakoutRoom::where('meeting_id', $meeting->id)
+            ->where('room_label', 'like', $sessionPrefix . '%')
+            ->pluck('id')
+            ->all();
+        if (! empty($roomIds)) {
+            DB::table('participant_breakout')
+                ->where('participant_id', $participantId)
+                ->whereIn('breakout_room_id', $roomIds)
+                ->delete();
+        }
+    }
 }

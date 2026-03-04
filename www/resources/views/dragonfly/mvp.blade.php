@@ -3,109 +3,133 @@
 @section('title', 'DragonFly MVP (Meeting ' . $number . ')')
 
 @section('content')
-<h1>DragonFly MVP（Meeting {{ $number }}）</h1>
+<div id="mvp-config" data-participant-id="{{ $participant_id_from_query ?? '' }}" class="hidden" aria-hidden="true"></div>
 
-<section>
-    <h2>1. 参加者一覧</h2>
-    <button type="button" id="btn-load-attendees">参加者を読み込む</button>
-    <div id="attendees-error" class="error" style="display:none;"></div>
-    <div id="attendees-tables" style="display:none;">
-        <h3>メンバー</h3>
-        <table id="table-member"><thead><tr><th>No</th><th>氏名</th><th>カテゴリー</th><th>役職・備考</th><th>ルーム</th></tr></thead><tbody></tbody></table>
-        <h3>ビジター</h3>
-        <table id="table-visitor"><thead><tr><th>No</th><th>氏名</th><th>カテゴリー</th><th>ルーム</th></tr></thead><tbody></tbody></table>
-        <h3>ゲスト</h3>
-        <table id="table-guest"><thead><tr><th>No</th><th>氏名</th><th>カテゴリー</th><th>ルーム</th></tr></thead><tbody></tbody></table>
-    </div>
-</section>
+<header class="mb-8">
+    <h1 class="text-2xl font-semibold text-slate-900">DragonFly MVP（Meeting {{ $number }}）</h1>
+</header>
 
-<section>
-    <h2>2. 自分を選択</h2>
-    <select id="select-participant">
-        <option value="">-- 参加者を読み込んでから選択 --</option>
-    </select>
-    <p id="participant-required-msg" class="hint" style="display:none;">ブレイクアウト記録・振り返りを使うには「自分」を選択してください。</p>
-    <button type="button" id="btn-show-roommates">同室者を表示（従来）</button>
-</section>
-
-<section id="section-breakout-record">
-    <h2>3. ブレイクアウト記録</h2>
-    <div id="breakout-record-disabled" style="display:none;">
-        <p class="hint">自分を選択すると Session1 / Session2 の記録ができます。</p>
-    </div>
-    <div id="breakout-record-body" style="display:none;">
-        <div class="session-block" data-session="1">
-            <h3>Session 1</h3>
-            <p>
-                <label>ルーム名 <input type="text" id="room-label-s1" placeholder="A" maxlength="20"></label>
-            </p>
-            <p>
-                <label>同室者を検索 <input type="text" id="search-s1" placeholder="名前 or No で絞り込み"></label>
-            </p>
-            <div id="roommate-checkboxes-s1" class="roommate-checkboxes"></div>
-            <button type="button" class="btn-save-assignment" data-session="1">保存</button>
-            <span class="save-result" id="save-result-s1"></span>
-            <div class="roommates-by-session" id="roommates-s1">
-                <h4>このセッションの同室者一覧</h4>
-                <div id="roommates-list-s1"></div>
+<section class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">1. 参加者一覧</h2>
+    <button type="button" id="btn-load-attendees" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">参加者を読み込む</button>
+    <div id="attendees-error" class="mt-2 text-sm text-red-600 hidden"></div>
+    <div id="attendees-tables" class="mt-4 hidden space-y-4">
+        <div>
+            <h3 class="mb-2 text-sm font-medium text-slate-500">メンバー</h3>
+            <div class="overflow-x-auto rounded-lg border border-slate-200">
+                <table id="table-member" class="min-w-full divide-y divide-slate-200 text-sm"><thead class="bg-slate-50"><tr><th class="px-4 py-2 text-left font-medium text-slate-600">No</th><th class="px-4 py-2 text-left font-medium text-slate-600">氏名</th><th class="px-4 py-2 text-left font-medium text-slate-600">カテゴリー</th><th class="px-4 py-2 text-left font-medium text-slate-600">役職・備考</th><th class="px-4 py-2 text-left font-medium text-slate-600">ルーム</th></tr></thead><tbody class="divide-y divide-slate-200 bg-white"></tbody></table>
             </div>
         </div>
-        <div class="session-block" data-session="2">
-            <h3>Session 2</h3>
-            <p>
-                <label>ルーム名 <input type="text" id="room-label-s2" placeholder="B" maxlength="20"></label>
-            </p>
-            <p>
-                <label>同室者を検索 <input type="text" id="search-s2" placeholder="名前 or No で絞り込み"></label>
-            </p>
-            <div id="roommate-checkboxes-s2" class="roommate-checkboxes"></div>
-            <button type="button" class="btn-save-assignment" data-session="2">保存</button>
-            <span class="save-result" id="save-result-s2"></span>
-            <div class="roommates-by-session" id="roommates-s2">
-                <h4>このセッションの同室者一覧</h4>
-                <div id="roommates-list-s2"></div>
+        <div>
+            <h3 class="mb-2 text-sm font-medium text-slate-500">ビジター</h3>
+            <div class="overflow-x-auto rounded-lg border border-slate-200">
+                <table id="table-visitor" class="min-w-full divide-y divide-slate-200 text-sm"><thead class="bg-slate-50"><tr><th class="px-4 py-2 text-left font-medium text-slate-600">No</th><th class="px-4 py-2 text-left font-medium text-slate-600">氏名</th><th class="px-4 py-2 text-left font-medium text-slate-600">カテゴリー</th><th class="px-4 py-2 text-left font-medium text-slate-600">ルーム</th></tr></thead><tbody class="divide-y divide-slate-200 bg-white"></tbody></table>
+            </div>
+        </div>
+        <div>
+            <h3 class="mb-2 text-sm font-medium text-slate-500">ゲスト</h3>
+            <div class="overflow-x-auto rounded-lg border border-slate-200">
+                <table id="table-guest" class="min-w-full divide-y divide-slate-200 text-sm"><thead class="bg-slate-50"><tr><th class="px-4 py-2 text-left font-medium text-slate-600">No</th><th class="px-4 py-2 text-left font-medium text-slate-600">氏名</th><th class="px-4 py-2 text-left font-medium text-slate-600">カテゴリー</th><th class="px-4 py-2 text-left font-medium text-slate-600">ルーム</th></tr></thead><tbody class="divide-y divide-slate-200 bg-white"></tbody></table>
             </div>
         </div>
     </div>
 </section>
 
-<section>
-    <h2>4. 同室者一覧・メモ（従来）</h2>
-    <div id="roommates-area" style="display:none;">
-        <p id="roommates-empty">同室者がいません。</p>
-        <div id="roommates-list"></div>
+<section class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">2. 自分を選択</h2>
+    <div class="flex flex-wrap items-center gap-3">
+        <select id="select-participant" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 min-w-[220px]">
+            <option value="">-- 参加者を読み込んでから選択 --</option>
+        </select>
+        <button type="button" id="btn-show-roommates" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">同室者を表示（従来）</button>
+    </div>
+    <p id="participant-required-msg" class="mt-2 text-sm text-slate-500 hidden">ブレイクアウト記録・振り返りを使うには「自分」を選択してください。</p>
+</section>
+
+<section id="section-breakout-record" class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">3. ブレイクアウト記録</h2>
+    <div id="breakout-record-disabled" class="hidden">
+        <p class="text-sm text-slate-500">自分を選択すると Session1 / Session2 の記録ができます。</p>
+    </div>
+    <div id="breakout-record-body" class="hidden space-y-6">
+        <div class="session-block rounded-lg border border-slate-200 bg-slate-50/50 p-4" data-session="1">
+            <h3 class="mb-3 font-medium text-slate-700">Session 1</h3>
+            <div class="space-y-3">
+                <label class="block text-sm text-slate-600">ルーム名 <input type="text" id="room-label-s1" placeholder="A" maxlength="20" class="mt-1 rounded border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-24"></label>
+                <label class="block text-sm text-slate-600">同室者を検索 <input type="text" id="search-s1" placeholder="名前 or No で絞り込み" class="mt-1 rounded border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-full max-w-xs"></label>
+            </div>
+            <div id="roommate-checkboxes-s1" class="roommate-checkboxes my-3 max-h-48 overflow-y-auto rounded border border-slate-200 bg-white p-2 text-sm"></div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" class="btn-save-assignment rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" data-session="1">保存</button>
+                <button type="button" class="btn-delete-assignment rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50" data-session="1">このセッションの記録を削除</button>
+                <span class="save-result text-sm" id="save-result-s1"></span>
+            </div>
+            <div class="roommates-by-session mt-4">
+                <h4 class="mb-2 text-sm font-medium text-slate-600">このセッションの同室者一覧</h4>
+                <div id="roommates-list-s1" class="space-y-3"></div>
+            </div>
+        </div>
+        <div class="session-block rounded-lg border border-slate-200 bg-slate-50/50 p-4" data-session="2">
+            <h3 class="mb-3 font-medium text-slate-700">Session 2</h3>
+            <div class="space-y-3">
+                <label class="block text-sm text-slate-600">ルーム名 <input type="text" id="room-label-s2" placeholder="B" maxlength="20" class="mt-1 rounded border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-24"></label>
+                <label class="block text-sm text-slate-600">同室者を検索 <input type="text" id="search-s2" placeholder="名前 or No で絞り込み" class="mt-1 rounded border border-slate-300 px-3 py-1.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 w-full max-w-xs"></label>
+            </div>
+            <div id="roommate-checkboxes-s2" class="roommate-checkboxes my-3 max-h-48 overflow-y-auto rounded border border-slate-200 bg-white p-2 text-sm"></div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" class="btn-save-assignment rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500" data-session="2">保存</button>
+                <button type="button" class="btn-delete-assignment rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50" data-session="2">このセッションの記録を削除</button>
+                <span class="save-result text-sm" id="save-result-s2"></span>
+            </div>
+            <div class="roommates-by-session mt-4">
+                <h4 class="mb-2 text-sm font-medium text-slate-600">このセッションの同室者一覧</h4>
+                <div id="roommates-list-s2" class="space-y-3"></div>
+            </div>
+        </div>
     </div>
 </section>
 
-<section>
-    <h2>5. 振り返り</h2>
-    <div id="review-disabled" style="display:none;">
-        <p class="hint">自分を選択すると振り返りを表示します。</p>
+<section class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">4. 同室者一覧・メモ（従来）</h2>
+    <div id="roommates-area" class="hidden">
+        <p id="roommates-empty" class="text-sm text-slate-500">同室者がいません。</p>
+        <div id="roommates-list" class="mt-3 space-y-3"></div>
     </div>
-    <div id="review-body" style="display:none;">
+</section>
+
+<section class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">5. 振り返り</h2>
+    <div id="review-disabled" class="hidden">
+        <p class="text-sm text-slate-500">自分を選択すると振り返りを表示します。</p>
+    </div>
+    <div id="review-body" class="hidden space-y-4">
         <div id="review-s1">
-            <h3>Session 1 の同室者</h3>
+            <h3 class="mb-2 text-sm font-medium text-slate-600">Session 1 の同室者</h3>
             <div id="review-roommates-s1"></div>
         </div>
         <div id="review-s2">
-            <h3>Session 2 の同室者</h3>
+            <h3 class="mb-2 text-sm font-medium text-slate-600">Session 2 の同室者</h3>
             <div id="review-roommates-s2"></div>
         </div>
-        <p><button type="button" id="btn-refresh-review">振り返りを再取得</button></p>
+        <button type="button" id="btn-refresh-review" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50">振り返りを再取得</button>
     </div>
 </section>
 
-<section>
-    <h2>6. 自分が書いたメモ一覧</h2>
-    <button type="button" id="btn-load-memos">メモ一覧を更新</button>
-    <ul id="memos-list" class="memos"></ul>
+<section class="mb-8 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200/60">
+    <h2 class="mb-4 text-lg font-medium text-slate-700">6. 自分が書いたメモ一覧</h2>
+    <button type="button" id="btn-load-memos" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500">メモ一覧を更新</button>
+    <ul id="memos-list" class="mt-4 list-none divide-y divide-slate-200 p-0"></ul>
 </section>
 
 @push('scripts')
 <script>
 (function() {
     const number = {{ $number }};
-    const initialParticipantId = {{ json_encode($participant_id_from_query ?? null) }};
+    const initialParticipantId = (function() {
+        const el = document.getElementById('mvp-config');
+        const raw = el ? (el.getAttribute('data-participant-id') || '') : '';
+        return raw && /^\d+$/.test(raw) ? raw : null;
+    })();
     const baseUrl = '/api/dragonfly/meetings/' + number;
     let attendees = { meeting: null, attendees: { member: [], visitor: [], guest: [] } };
     let roommates = [];
@@ -135,11 +159,11 @@
     }
 
     function setBreakoutAndReviewVisibility(hasParticipant) {
-        document.getElementById('breakout-record-disabled').style.display = hasParticipant ? 'none' : 'block';
-        document.getElementById('breakout-record-body').style.display = hasParticipant ? 'block' : 'none';
-        document.getElementById('review-disabled').style.display = hasParticipant ? 'none' : 'block';
-        document.getElementById('review-body').style.display = hasParticipant ? 'block' : 'none';
-        document.getElementById('participant-required-msg').style.display = hasParticipant ? 'none' : 'block';
+        document.getElementById('breakout-record-disabled').classList.toggle('hidden', !!hasParticipant);
+        document.getElementById('breakout-record-body').classList.toggle('hidden', !hasParticipant);
+        document.getElementById('review-disabled').classList.toggle('hidden', !!hasParticipant);
+        document.getElementById('review-body').classList.toggle('hidden', !hasParticipant);
+        document.getElementById('participant-required-msg').classList.toggle('hidden', !!hasParticipant);
         if (hasParticipant) {
             allParticipantsForBreakout = buildParticipantOptions();
             renderRoommateCheckboxes(1);
@@ -166,7 +190,7 @@
         const list = document.querySelectorAll('#roommate-checkboxes-s' + session + ' .roommate-row');
         list.forEach(function(row) {
             const text = (row.dataset.displayNo || '') + ' ' + (row.dataset.name || '');
-            row.style.display = !q || text.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+            row.style.display = !q || text.toLowerCase().indexOf(q) !== -1 ? 'flex' : 'none';
         });
     }
 
@@ -175,23 +199,49 @@
         container.innerHTML = '';
         allParticipantsForBreakout.forEach(function(a) {
             const row = document.createElement('label');
-            row.className = 'roommate-row';
+            row.className = 'roommate-row flex cursor-pointer items-center gap-2 py-1.5 text-sm text-slate-700 hover:bg-slate-100 rounded px-2';
             row.dataset.displayNo = (a.member && a.member.display_no) ? String(a.member.display_no) : '';
             row.dataset.name = (a.member && a.member.name) ? String(a.member.name) : '';
             const id = 'cb-s' + session + '-' + a.participant_id;
-            row.innerHTML = '<input type="checkbox" class="roommate-cb" data-session="' + session + '" value="' + a.participant_id + '" id="' + id + '"> ' +
-                (a.member ? (a.member.display_no + ' ' + a.member.name) : '') + ' (' + (a.type || '') + ')';
-            row.style.display = '';
+            row.innerHTML = '<input type="checkbox" class="roommate-cb h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" data-session="' + session + '" value="' + a.participant_id + '" id="' + id + '"> ' +
+                '<span>' + (a.member ? (a.member.display_no + ' ' + a.member.name) : '') + ' <span class="text-slate-400">(' + (a.type || '') + ')</span></span>';
+            row.style.display = 'flex';
             container.appendChild(row);
         });
     }
 
+    function formatValidationErrors(data) {
+        if (data.errors && typeof data.errors === 'object') {
+            const parts = [];
+            for (const key in data.errors) {
+                if (Array.isArray(data.errors[key]) && data.errors[key].length) {
+                    parts.push(key + ': ' + data.errors[key][0]);
+                }
+            }
+            if (parts.length) return parts.join(' / ');
+        }
+        return null;
+    }
+
     async function saveBreakoutAssignment(session, roomLabel, roommateIds) {
         const participantId = getSelectedParticipantId();
-        if (!participantId || !roomLabel.trim()) return;
         const resultEl = document.getElementById('save-result-s' + session);
-        resultEl.textContent = '保存中...';
         resultEl.className = 'save-result';
+        if (!participantId) {
+            resultEl.textContent = '自分を選択してください';
+            resultEl.className = 'save-result text-sm text-red-600';
+            resultEl.classList.remove('hidden');
+            return;
+        }
+        if (!roomLabel.trim()) {
+            resultEl.textContent = 'ルーム名を入力してください';
+            resultEl.className = 'save-result text-sm text-red-600';
+            resultEl.classList.remove('hidden');
+            return;
+        }
+        resultEl.textContent = '保存中...';
+        resultEl.className = 'save-result text-sm text-slate-600';
+        resultEl.classList.remove('hidden');
         try {
             const res = await fetch(baseUrl + '/breakout-assignments', {
                 method: 'PUT',
@@ -203,15 +253,52 @@
                     roommate_participant_ids: roommateIds.map(function(id) { return parseInt(id, 10); })
                 })
             });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || (data.errors ? JSON.stringify(data.errors) : 'Failed'));
+            const data = await res.json().catch(function() { return {}; });
+            if (!res.ok) {
+                const msg = formatValidationErrors(data) || data.message || (data.errors ? JSON.stringify(data.errors) : '保存に失敗しました');
+                throw new Error(msg);
+            }
             resultEl.textContent = '保存しました';
-            resultEl.className = 'save-result ok';
+            resultEl.className = 'save-result text-sm text-green-600';
             fetchRoommatesBySession(session);
             refreshReview();
         } catch (e) {
             resultEl.textContent = 'エラー: ' + (e.message || '');
-            resultEl.className = 'save-result error';
+            resultEl.className = 'save-result text-sm text-red-600';
+        }
+    }
+
+    async function deleteBreakoutAssignment(session) {
+        const participantId = getSelectedParticipantId();
+        const resultEl = document.getElementById('save-result-s' + session);
+        resultEl.className = 'save-result';
+        if (!participantId) {
+            resultEl.textContent = '自分を選択してください';
+            resultEl.className = 'save-result text-sm text-red-600';
+            resultEl.classList.remove('hidden');
+            return;
+        }
+        resultEl.textContent = '削除中...';
+        resultEl.className = 'save-result text-sm text-slate-600';
+        resultEl.classList.remove('hidden');
+        try {
+            const res = await fetch(baseUrl + '/breakout-assignments', {
+                method: 'DELETE',
+                headers: getCsrfHeaders(),
+                body: JSON.stringify({ session: session, participant_id: parseInt(participantId, 10) })
+            });
+            const data = await res.json().catch(function() { return {}; });
+            if (!res.ok) {
+                const msg = formatValidationErrors(data) || data.message || '削除に失敗しました';
+                throw new Error(msg);
+            }
+            resultEl.textContent = '削除しました';
+            resultEl.className = 'save-result text-sm text-green-600';
+            fetchRoommatesBySession(session);
+            refreshReview();
+        } catch (e) {
+            resultEl.textContent = 'エラー: ' + (e.message || '');
+            resultEl.className = 'save-result text-sm text-red-600';
         }
     }
 
@@ -226,21 +313,20 @@
             if (!res.ok) throw new Error(data.message || 'Failed');
             const roommatesList = data.data || [];
             if (roommatesList.length === 0) {
-                listEl.innerHTML = '<p class="hint">このセッションの同室者はいません。ルーム名と同室者を選んで保存してください。</p>';
+                listEl.innerHTML = '<p class="text-sm text-slate-500">このセッションの同室者はいません。ルーム名と同室者を選んで保存してください。</p>';
             } else {
                 roommatesList.forEach(function(r) {
                     const card = document.createElement('div');
-                    card.className = 'card';
+                    card.className = 'rounded-lg border border-slate-200 bg-white p-4 shadow-sm';
                     card.dataset.targetParticipantId = r.participant_id;
-                    card.innerHTML = '<div><strong>' + (r.member ? r.member.display_no + ' ' + r.member.name : '') + '</strong></div>' +
-                        '<textarea data-target-id="' + r.participant_id + '" placeholder="メモを入力"></textarea>' +
-                        '<button type="button" class="btn-save-memo btn-save-memo-session" data-session="' + session + '" data-target-id="' + r.participant_id + '">保存</button>' +
-                        '<span class="saved" style="display:none;"></span>';
+                    card.innerHTML = '<div class="font-medium text-slate-800">' + (r.member ? r.member.display_no + ' ' + r.member.name : '') + '</div>' +
+                        '<textarea data-target-id="' + r.participant_id + '" placeholder="メモを入力" class="mt-2 w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 min-h-[80px]"></textarea>' +
+                        '<div class="mt-2 flex items-center gap-2"><button type="button" class="btn-save-memo btn-save-memo-session rounded-lg bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-500" data-session="' + session + '" data-target-id="' + r.participant_id + '">保存</button><span class="saved text-sm hidden"></span></div>';
                     listEl.appendChild(card);
                 });
             }
         } catch (e) {
-            listEl.innerHTML = '<p class="error">取得失敗: ' + (e.message || '') + '</p>';
+            listEl.innerHTML = '<p class="text-sm text-red-600">取得失敗: ' + (e.message || '') + '</p>';
         }
     }
 
@@ -249,15 +335,15 @@
         if (!participantId) return;
         [1, 2].forEach(function(session) {
             const container = document.getElementById('review-roommates-s' + session);
-            container.innerHTML = '<p class="hint">読み込み中...</p>';
+            container.innerHTML = '<p class="text-sm text-slate-500">読み込み中...</p>';
             fetch(baseUrl + '/breakout-roommates/' + participantId + '?session=' + session)
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     const list = data.data || [];
                     if (list.length === 0) {
-                        container.innerHTML = '<p class="hint">同室者なし</p>';
+                        container.innerHTML = '<p class="text-sm text-slate-500">同室者なし</p>';
                     } else {
-                        container.innerHTML = '<ul class="review-list"></ul>';
+                        container.innerHTML = '<ul class="list-disc space-y-1 pl-5 text-sm text-slate-700"></ul>';
                         const ul = container.querySelector('ul');
                         list.forEach(function(r) {
                             const li = document.createElement('li');
@@ -267,14 +353,14 @@
                     }
                 })
                 .catch(function(e) {
-                    container.innerHTML = '<p class="error">取得失敗: ' + (e.message || '') + '</p>';
+                    container.innerHTML = '<p class="text-sm text-red-600">取得失敗: ' + (e.message || '') + '</p>';
                 });
         });
     }
 
     async function fetchAttendees() {
         const errEl = document.getElementById('attendees-error');
-        errEl.style.display = 'none';
+        errEl.classList.add('hidden');
         try {
             const res = await fetch(baseUrl + '/attendees');
             const data = await res.json();
@@ -282,7 +368,7 @@
             attendees = data;
             renderAttendees(data);
             fillParticipantSelect(data);
-            document.getElementById('attendees-tables').style.display = 'block';
+            document.getElementById('attendees-tables').classList.remove('hidden');
             if (initialParticipantId && document.querySelector('#select-participant option[value="' + initialParticipantId + '"]')) {
                 document.getElementById('select-participant').value = initialParticipantId;
                 updateParticipantInUrl(initialParticipantId);
@@ -290,16 +376,17 @@
             }
         } catch (e) {
             errEl.textContent = e.message || '参加者の読み込みに失敗しました';
-            errEl.style.display = 'block';
+            errEl.classList.remove('hidden');
         }
     }
 
     function renderAttendees(data) {
+        var cell = ' class="px-4 py-2 text-slate-700"';
         function rowMember(a) {
-            return '<tr><td>' + (a.member.display_no || '') + '</td><td>' + (a.member.name || '') + '</td><td>' + (a.member.category || '') + '</td><td>' + (a.member.role_notes || '') + '</td><td>' + (a.breakout_room_labels && a.breakout_room_labels.length ? a.breakout_room_labels.join(',') : '') + '</td></tr>';
+            return '<tr class="hover:bg-slate-50"><td' + cell + '>' + (a.member.display_no || '') + '</td><td' + cell + '>' + (a.member.name || '') + '</td><td' + cell + '>' + (a.member.category || '') + '</td><td' + cell + '>' + (a.member.role_notes || '') + '</td><td' + cell + '>' + (a.breakout_room_labels && a.breakout_room_labels.length ? a.breakout_room_labels.join(',') : '') + '</td></tr>';
         }
         function rowShort(a) {
-            return '<tr><td>' + (a.member.display_no || '') + '</td><td>' + (a.member.name || '') + '</td><td>' + (a.member.category || '') + '</td><td>' + (a.breakout_room_labels && a.breakout_room_labels.length ? a.breakout_room_labels.join(',') : '') + '</td></tr>';
+            return '<tr class="hover:bg-slate-50"><td' + cell + '>' + (a.member.display_no || '') + '</td><td' + cell + '>' + (a.member.name || '') + '</td><td' + cell + '>' + (a.member.category || '') + '</td><td' + cell + '>' + (a.breakout_room_labels && a.breakout_room_labels.length ? a.breakout_room_labels.join(',') : '') + '</td></tr>';
         }
         document.querySelector('#table-member tbody').innerHTML = (data.attendees.member || []).map(rowMember).join('');
         document.querySelector('#table-visitor tbody').innerHTML = (data.attendees.visitor || []).map(rowShort).join('');
@@ -324,22 +411,21 @@
         const list = document.getElementById('roommates-list');
         const empty = document.getElementById('roommates-empty');
         list.innerHTML = '';
-        area.style.display = 'block';
-        empty.style.display = 'block';
+        area.classList.remove('hidden');
+        empty.classList.remove('hidden');
         try {
             const res = await fetch(baseUrl + '/breakout-roommates/' + participantId);
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Failed');
             roommates = data.data || [];
-            empty.style.display = roommates.length ? 'none' : 'block';
+            empty.classList.toggle('hidden', roommates.length > 0);
             roommates.forEach(function(r) {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = 'rounded-lg border border-slate-200 bg-white p-4 shadow-sm';
                 card.dataset.targetParticipantId = r.participant_id;
-                card.innerHTML = '<div><strong>' + (r.member ? r.member.display_no + ' ' + r.member.name : '') + '</strong> ' + (r.member ? r.member.category || '' : '') + '</div>' +
-                    '<textarea data-target-id="' + r.participant_id + '" placeholder="メモを入力"></textarea>' +
-                    '<button type="button" class="btn-save-memo" data-target-id="' + r.participant_id + '">保存</button>' +
-                    '<span class="saved" style="display:none;"></span>';
+                card.innerHTML = '<div class="font-medium text-slate-800">' + (r.member ? r.member.display_no + ' ' + r.member.name : '') + ' ' + (r.member ? r.member.category || '' : '') + '</div>' +
+                    '<textarea data-target-id="' + r.participant_id + '" placeholder="メモを入力" class="mt-2 w-full rounded border border-slate-300 px-3 py-2 text-sm min-h-[80px] focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"></textarea>' +
+                    '<div class="mt-2 flex items-center gap-2"><button type="button" class="btn-save-memo rounded-lg bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-500" data-target-id="' + r.participant_id + '">保存</button><span class="saved text-sm hidden"></span></div>';
                 list.appendChild(card);
             });
         } catch (e) {
@@ -376,12 +462,13 @@
             const items = data.data || [];
             items.forEach(function(m) {
                 const li = document.createElement('li');
-                li.innerHTML = '<strong>' + (m.target_member ? m.target_member.display_no + ' ' + m.target_member.name : '') + '</strong>: ' + (m.body || '(メモなし)') + ' <span style="color:#666;font-size:0.85rem">' + (m.updated_at || '') + '</span>';
+                li.className = 'py-3 text-sm';
+                li.innerHTML = '<span class="font-medium text-slate-800">' + (m.target_member ? m.target_member.display_no + ' ' + m.target_member.name : '') + '</span>: ' + (m.body || '(メモなし)') + ' <span class="text-slate-500 text-xs">' + (m.updated_at || '') + '</span>';
                 list.appendChild(li);
             });
         } catch (e) {
             const li = document.createElement('li');
-            li.className = 'error';
+            li.className = 'py-3 text-sm text-red-600';
             li.textContent = 'メモ一覧の取得に失敗: ' + (e.message || '');
             list.appendChild(li);
         }
@@ -408,6 +495,13 @@
         });
     });
 
+    document.querySelectorAll('.btn-delete-assignment').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const session = parseInt(this.dataset.session, 10);
+            deleteBreakoutAssignment(session);
+        });
+    });
+
     document.getElementById('btn-refresh-review').addEventListener('click', refreshReview);
 
     document.getElementById('search-s1').addEventListener('input', function() { filterBySearch(1); });
@@ -418,21 +512,17 @@
         const participantId = document.getElementById('select-participant').value;
         if (!participantId) return;
         const targetId = ev.target.dataset.targetId;
-        const card = ev.target.closest('.card');
-        const textarea = card.querySelector('textarea');
-        const savedSpan = card.querySelector('.saved');
+        const card = ev.target.closest('[data-target-participant-id]');
+        const textarea = card ? card.querySelector('textarea') : null;
+        const savedSpan = card ? card.querySelector('.saved') : null;
         const body = textarea ? textarea.value.trim() : '';
         ev.target.disabled = true;
-        savedSpan.style.display = 'none';
+        if (savedSpan) savedSpan.classList.add('hidden');
         upsertMemo(participantId, targetId, body || null).then(function() {
-            savedSpan.className = 'saved';
-            savedSpan.textContent = '保存しました';
-            savedSpan.style.display = 'inline';
+            if (savedSpan) { savedSpan.className = 'saved text-sm text-green-600'; savedSpan.textContent = '保存しました'; savedSpan.classList.remove('hidden'); }
             ev.target.disabled = false;
         }).catch(function(e) {
-            savedSpan.textContent = 'エラー: ' + (e.message || '');
-            savedSpan.className = 'saved error';
-            savedSpan.style.display = 'inline';
+            if (savedSpan) { savedSpan.className = 'saved text-sm text-red-600'; savedSpan.textContent = 'エラー: ' + (e.message || ''); savedSpan.classList.remove('hidden'); }
             ev.target.disabled = false;
         });
     });
@@ -442,26 +532,18 @@
         const participantId = getSelectedParticipantId();
         if (!participantId) return;
         const targetId = ev.target.dataset.targetId;
-        const card = ev.target.closest('.card');
+        const card = ev.target.closest('[data-target-participant-id]');
         const textarea = card ? card.querySelector('textarea') : null;
         const savedSpan = card ? card.querySelector('.saved') : null;
         const body = textarea ? textarea.value.trim() : '';
         ev.target.disabled = true;
-        if (savedSpan) savedSpan.style.display = 'none';
+        if (savedSpan) savedSpan.classList.add('hidden');
         upsertMemo(participantId, targetId, body || null).then(function() {
-            if (savedSpan) {
-                savedSpan.className = 'saved';
-                savedSpan.textContent = '保存しました';
-                savedSpan.style.display = 'inline';
-            }
+            if (savedSpan) { savedSpan.className = 'saved text-sm text-green-600'; savedSpan.textContent = '保存しました'; savedSpan.classList.remove('hidden'); }
             ev.target.disabled = false;
             fetchMemos();
         }).catch(function(e) {
-            if (savedSpan) {
-                savedSpan.textContent = 'エラー: ' + (e.message || '');
-                savedSpan.className = 'saved error';
-                savedSpan.style.display = 'inline';
-            }
+            if (savedSpan) { savedSpan.className = 'saved text-sm text-red-600'; savedSpan.textContent = 'エラー: ' + (e.message || ''); savedSpan.classList.remove('hidden'); }
             ev.target.disabled = false;
         });
     });

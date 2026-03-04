@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DragonFly\UpsertBreakoutAssignmentRequest;
+use App\Http\Requests\DragonFly\DeleteBreakoutAssignmentRequest;
 use App\Services\DragonFly\BreakoutAssignmentService;
 use App\Models\Meeting;
 use App\Models\Participant;
@@ -50,5 +51,27 @@ class DragonFlyBreakoutAssignmentController extends Controller
         );
 
         return response()->json($result);
+    }
+
+    /**
+     * 指定セッションの自分の同室記録を削除する.
+     * DELETE /api/dragonfly/meetings/{number}/breakout-assignments
+     */
+    public function destroy(DeleteBreakoutAssignmentRequest $request, int $number): JsonResponse
+    {
+        $meeting = Meeting::where('number', $number)->first();
+        if (! $meeting) {
+            return response()->json(['message' => 'Meeting not found.'], 404);
+        }
+
+        $participantId = (int) $request->input('participant_id');
+        if (! Participant::where('meeting_id', $meeting->id)->where('id', $participantId)->exists()) {
+            return response()->json(['message' => 'Participant not found in this meeting.'], 422);
+        }
+
+        $session = (int) $request->input('session');
+        $this->assignmentService->removeAssignment($meeting, $session, $participantId);
+
+        return response()->json(['message' => 'Deleted.']);
     }
 }

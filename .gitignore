@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+
+# Laravel（www/ 以下）
+www/vendor
+www/node_modules
+www/public/build
+www/storage/*.key
+www/.env
+
+# プロジェクトルート
+project.env
+
+# docker volume
+db_data

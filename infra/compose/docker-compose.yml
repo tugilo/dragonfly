@@ -1,0 +1,110 @@
+# Docker Compose: Laravel + MariaDB + Nginx + Node + phpMyAdmin
+# この compose は「プロジェクトルート/infra/compose」にあり、context はプロジェクトルート（../..）
+# 実行: プロジェクトルートで docker compose -f infra/compose/docker-compose.yml --env-file project.env up -d --build
+# ポート・PMA は project.env の APP_PORT, DB_PORT, PMA_PORT, PMA_UPLOAD_LIMIT で変更可能
+# Laravel はプロジェクトルートの www/ にあり、infra/ と www/ は同階層。コンテナ内では /var/www = www/ をマウント。
+
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: infra/docker/php/Dockerfile
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    container_name: ${PROJECT}-app
+    volumes:
+      - ${PROJECT_DIR}/www:/var/www
+    working_dir: /var/www
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      # php 公式イメージに pgrep が無い場合があるため /proc/1/comm で PID1=php-fpm を判定
+      test: ["CMD-SHELL", "cat /proc/1/comm 2>/dev/null | grep -q php-fpm || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  node:
+    build:
+      context: ../..
+      dockerfile: infra/docker/node/Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    container_name: ${PROJECT}-node
+    volumes:
+      - ${PROJECT_DIR}/www:/var/www
+    working_dir: /var/www
+    command: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:stable
+    container_name: ${PROJECT}-nginx
+    ports:
+      - "${APP_PORT:-80}:80"
+    volumes:
+      - ${PROJECT_DIR}/www:/var/www
+      - ../docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  db:
+    image: mariadb:${MARIADB_VERSION}
+    container_name: ${PROJECT}-db
+    command: >
+      mariadbd
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: ${PROJECT}
+      MARIADB_USER: ${PROJECT}
+      MARIADB_PASSWORD: ${PROJECT}
+    ports:
+      - "${DB_PORT:-3307}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    platform: linux/arm64
+    container_name: ${PROJECT}-phpmyadmin
+    ports:
+      - "${PMA_PORT:-8081}:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: ${PMA_UPLOAD_LIMIT:-64M}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  db_data:

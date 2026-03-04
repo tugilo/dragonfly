@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Admin, Resource } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';

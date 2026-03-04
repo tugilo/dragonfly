@@ -29,6 +29,12 @@
 |----------|------|
 | [INDEX.md](INDEX.md) | 本ファイル。ドキュメントの索引と更新ルール。 |
 
+### プロダクト要件（docs/product/）
+
+| ファイル | 説明 |
+|----------|------|
+| [DRAGONFLY_REQUIREMENTS.md](product/DRAGONFLY_REQUIREMENTS.md) | DragonFly 要件定義（目的・Phase・UX・技術構成・Cursor 向けルール）。 |
+
 ### 詳細資料（docs/process/）
 
 Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ を使用し、この一覧に追記する。
