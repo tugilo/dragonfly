@@ -21,11 +21,11 @@
 
 ## テスト結果
 
-（merge 後に記載）
+- `php artisan test` で 27 passed (125 assertions)。既存 Feature テストはすべて green。
 
 ## 手動スモーク結果の要点
 
-（実施後に WORKLOG とあわせて記載）
+- 実施後、WORKLOG に 1〜5 の結果を記載し、ここに「WORKLOG 参照」と追記すること。
 
 ## DoD
 
@@ -38,5 +38,6 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **テスト結果** | （passed 数） |
+| **merge commit id** | `34bad5508b4b7951fb08fa0f26ccda43d238441c` |
+| **merge 元ブランチ** | feature/phase12-board-ux-refresh-v1 |
+| **テスト結果** | 27 passed (125 assertions) |
