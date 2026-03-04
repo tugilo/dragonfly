@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Admin, Resource } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';
+import { religoTheme } from './theme/religoTheme';
 import DragonFlyBoard from './pages/DragonFlyBoard';
 import { ReligoLayout } from './ReligoLayout';
 import { MembersPlaceholder } from './pages/MembersPlaceholder';
@@ -20,7 +21,7 @@ function DummyList() {
 const root = document.getElementById('admin-root');
 if (root) {
     createRoot(root).render(
-        <Admin dataProvider={dragonflyDataProvider} layout={ReligoLayout} dashboard={DragonFlyBoard}>
+        <Admin dataProvider={dragonflyDataProvider} layout={ReligoLayout} dashboard={DragonFlyBoard} theme={religoTheme}>
             <Resource name="dragonflyFlags" list={DummyList} options={{ label: 'Flags' }} />
             <Resource name="members" list={MembersPlaceholder} options={{ label: 'Members（メンバー）' }} />
             <Resource name="meetings" list={MeetingsPlaceholder} options={{ label: 'Meetings（例会）' }} />

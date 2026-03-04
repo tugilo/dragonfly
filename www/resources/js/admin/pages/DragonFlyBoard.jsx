@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
     Box,
+    Container,
     Grid,
+    Stack,
     TextField,
     Autocomplete,
     Card,
+    CardHeader,
     CardContent,
+    CardActions,
     Typography,
     FormControlLabel,
     Switch,
@@ -23,8 +27,12 @@ import {
     Chip,
     IconButton,
     Snackbar,
+    Divider,
+    Alert,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import AddIcon from '@mui/icons-material/Add';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -85,6 +93,10 @@ async function postOneToOne(payload) {
     return res.json();
 }
 
+async function getMeetings() {
+    return fetchJson('/api/meetings');
+}
+
 async function getMeetingBreakoutRounds(meetingId) {
     return fetchJson(`/api/meetings/${meetingId}/breakout-rounds`);
 }
@@ -117,29 +129,33 @@ function RoomCard({
 }) {
     const candidates = members.filter((m) => !assignedInRound.has(m.id));
     const [addValue, setAddValue] = useState(null);
+    const count = memberIds.length;
     return (
         <Card variant="outlined" sx={{ height: '100%' }}>
-            <CardContent>
-                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    {roomLabel}
-                </Typography>
+            <CardHeader
+                title={roomLabel}
+                subheader={null}
+                action={<Chip size="small" label={`${count}名`} variant="outlined" />}
+            />
+            <CardContent sx={{ pt: 0 }}>
                 <TextField
                     label="ルームメモ"
                     multiline
-                    minRows={2}
+                    minRows={3}
                     fullWidth
                     size="small"
                     value={notes}
                     onChange={(e) => onNotesChange(e.target.value)}
                     sx={{ mb: 2 }}
                 />
+                <Divider sx={{ my: 2 }} />
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
                     メンバー割当
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center', mb: 1 }}>
+                <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
                     <Autocomplete
                         size="small"
-                        sx={{ minWidth: 180, flex: '1 1 auto' }}
+                        sx={{ flex: 1, minWidth: 0 }}
                         options={candidates}
                         getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
                         value={addValue}
@@ -149,18 +165,44 @@ function RoomCard({
                                 setAddValue(null);
                             }
                         }}
-                        renderInput={(params) => <TextField {...params} placeholder="追加するメンバー" />}
+                        filterOptions={(options, { inputValue }) => {
+                            const q = (inputValue || '').trim().toLowerCase();
+                            if (!q) return options;
+                            return options.filter((m) => {
+                                const label = `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`;
+                                return label.toLowerCase().includes(q) || String(m.id).includes(q);
+                            });
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                placeholder="名前・番号で検索して追加"
+                                variant="outlined"
+                                inputProps={{ ...params.inputProps, autoComplete: 'off' }}
+                            />
+                        )}
                     />
-                    <Button size="small" variant="outlined" onClick={() => addValue && (onAddMember(addValue.id), setAddValue(null))}>
-                        追加
-                    </Button>
-                </Box>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center' }}>
+                    <IconButton
+                        size="small"
+                        color="primary"
+                        onClick={() => {
+                            if (addValue) {
+                                onAddMember(addValue.id);
+                                setAddValue(null);
+                            }
+                        }}
+                        disabled={!addValue}
+                        aria-label="追加"
+                    >
+                        <AddIcon />
+                    </IconButton>
+                </Stack>
+                <Stack direction="row" flexWrap="wrap" gap={1} alignItems="center">
                     {memberIds.map((id) => {
                         const m = members.find((x) => x.id === id);
                         const label = m ? `${m.display_no || ''} ${m.name}`.trim() || `#${id}` : `#${id}`;
                         return (
-                            <Box key={id} sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.25, mr: 0.5, mb: 0.5 }}>
+                            <Box key={id} sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.25 }}>
                                 <Chip
                                     size="small"
                                     label={label}
@@ -177,7 +219,7 @@ function RoomCard({
                             </Box>
                         );
                     })}
-                </Box>
+                </Stack>
             </CardContent>
         </Card>
     );
@@ -570,6 +612,7 @@ export default function DragonFlyBoard() {
             refetchMembers();
             setDirty(false);
             setSaveStatus('saved');
+            setSnackbarMessage('Round 割当を保存しました');
             if (savedTimeoutRef.current) clearTimeout(savedTimeoutRef.current);
             savedTimeoutRef.current = setTimeout(() => {
                 setSaveStatus('idle');
@@ -598,128 +641,163 @@ export default function DragonFlyBoard() {
     }, [dirty]);
 
     return (
-        <Box sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2, mb: 2 }}>
-                <Typography variant="h6">Board（会の地図）</Typography>
-                <Autocomplete
-                    size="small"
-                    sx={{ minWidth: 220 }}
-                    options={meetings}
-                    getOptionLabel={(m) => `#${m.number} ${m.held_on}`}
-                    value={selectedMeeting ? { id: selectedMeeting.id, number: selectedMeeting.number, held_on: selectedMeeting.held_on } : null}
-                    onChange={(_, v) => {
-                        setSelectedMeetingId(v ? String(v.id) : '');
-                        setSelectedRoundIndex(0);
-                    }}
-                    isOptionEqualToValue={(a, b) => a?.id === b?.id}
-                    renderInput={(params) => <TextField {...params} label="Meeting" />}
-                />
-                {statusChipLabel && (
-                    <Chip
-                        label={statusChipLabel}
-                        size="small"
-                        color={statusChipLabel === 'Saved' ? 'success' : statusChipLabel === 'Unsaved' ? 'warning' : 'default'}
-                        variant="outlined"
-                    />
-                )}
-            </Box>
-            {roundsError && (
-                <Typography color="error" variant="body2" sx={{ mb: 1 }}>
-                    {roundsError}
-                </Typography>
-            )}
-            {selectedMeetingId && (
-                <Grid container spacing={2} sx={{ mb: 2 }}>
-                    <Grid item xs={12} md={3}>
-                        <Tabs
-                            orientation="vertical"
-                            value={Math.min(selectedRoundIndex, Math.max(0, roundsEdit.length - 1))}
-                            onChange={(_, v) => setSelectedRoundIndex(v)}
-                            sx={{ borderRight: 1, borderColor: 'divider' }}
-                        >
-                            {roundsEdit.map((round, idx) => (
-                                <Tab key={`round-${round.round_no}`} label={round.label ?? `Round ${round.round_no}`} id={`round-tab-${idx}`} />
-                            ))}
-                        </Tabs>
-                        <Button variant="outlined" size="small" onClick={addRound} sx={{ mt: 1 }}>
-                            ＋ Round
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12} md={9}>
-                        {roundsLoading ? (
-                            <Typography color="text.secondary">Loading...</Typography>
-                        ) : roundsEdit.length > 0 ? (
-                            (() => {
-                                const round = roundsEdit[selectedRoundIndex] ?? roundsEdit[0];
-                                const roundIdx = roundsEdit.indexOf(round);
-                                const bo1 = round.rooms?.find((r) => r.room_label === 'BO1') ?? { room_label: 'BO1', notes: '', member_ids: [] };
-                                const bo2 = round.rooms?.find((r) => r.room_label === 'BO2') ?? { room_label: 'BO2', notes: '', member_ids: [] };
-                                const assignedInRound = new Set((round.rooms ?? []).flatMap((room) => room.member_ids ?? []));
-                                const roundLabel = round.label ?? `Round ${round.round_no}`;
-                                return (
-                                    <Card variant="outlined">
-                                        <CardContent>
-                                            <TextField
-                                                size="small"
-                                                label="Round 名"
-                                                value={round.label ?? ''}
-                                                onChange={(e) => {
-                                                    setDirty(true);
-                                                    setRoundsEdit((prev) => prev.map((r, i) => (i === roundIdx ? { ...r, label: e.target.value } : r)));
-                                                }}
-                                                sx={{ mb: 2, minWidth: 200 }}
-                                            />
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={12} md={6}>
-                                                    <RoomCard
-                                                        roomLabel="BO1"
-                                                        notes={bo1.notes}
-                                                        memberIds={bo1.member_ids ?? []}
-                                                        members={members}
-                                                        assignedInRound={assignedInRound}
-                                                        roundLabel={roundLabel}
-                                                        meetingNumber={selectedMeeting?.number}
-                                                        onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO1', notes)}
-                                                        onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
-                                                        onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
-                                                        onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO1')}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12} md={6}>
-                                                    <RoomCard
-                                                        roomLabel="BO2"
-                                                        notes={bo2.notes}
-                                                        memberIds={bo2.member_ids ?? []}
-                                                        members={members}
-                                                        assignedInRound={assignedInRound}
-                                                        roundLabel={roundLabel}
-                                                        meetingNumber={selectedMeeting?.number}
-                                                        onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO2', notes)}
-                                                        onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
-                                                        onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
-                                                        onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO2')}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <Button
-                                                variant="contained"
-                                                onClick={saveRounds}
-                                                disabled={roundsSaving || roundsLoading}
-                                                sx={{ mt: 2 }}
-                                            >
-                                                Round 割当を保存
-                                            </Button>
-                                        </CardContent>
-                                    </Card>
+        <Container maxWidth="lg" sx={{ py: 2, px: 2 }}>
+            <Stack spacing={2}>
+                <Card variant="outlined" sx={{ p: 2 }}>
+                    <Stack direction="row" alignItems="center" flexWrap="wrap" spacing={2}>
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>Board（会の地図）</Typography>
+                        <Autocomplete
+                            size="small"
+                            sx={{ minWidth: 280 }}
+                            options={meetings}
+                            getOptionLabel={(m) => `#${m.number} ${m.held_on}`}
+                            value={selectedMeeting ? { id: selectedMeeting.id, number: selectedMeeting.number, held_on: selectedMeeting.held_on } : null}
+                            onChange={(_, v) => {
+                                setSelectedMeetingId(v ? String(v.id) : '');
+                                setSelectedRoundIndex(0);
+                            }}
+                            isOptionEqualToValue={(a, b) => a?.id === b?.id}
+                            filterOptions={(options, { inputValue }) => {
+                                const q = (inputValue || '').trim().toLowerCase();
+                                if (!q) return options;
+                                return options.filter((m) =>
+                                    String(m.number).toLowerCase().includes(q) ||
+                                    (m.held_on || '').toLowerCase().includes(q)
                                 );
-                            })()
-                        ) : (
-                            <Typography color="text.secondary">＋ Round で追加してください</Typography>
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Meeting"
+                                    placeholder="例会を検索（#番号・日付）"
+                                    variant="outlined"
+                                />
+                            )}
+                        />
+                        {statusChipLabel && (
+                            <Chip
+                                label={statusChipLabel}
+                                size="small"
+                                color={statusChipLabel === 'Saved' ? 'success' : statusChipLabel === 'Unsaved' ? 'warning' : 'info'}
+                                variant={statusChipLabel === 'Saved' ? 'filled' : 'outlined'}
+                            />
                         )}
+                    </Stack>
+                    {!selectedMeetingId && (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            例会を選択すると Round 割当を編集できます。
+                        </Typography>
+                    )}
+                </Card>
+                {roundsError && (
+                    <Alert severity="error" onClose={() => setRoundsError('')}>
+                        {roundsError}
+                    </Alert>
+                )}
+                {selectedMeetingId && (
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={3}>
+                            <Card variant="outlined" sx={{ p: 2 }}>
+                                <Tabs
+                                    orientation="vertical"
+                                    value={Math.min(selectedRoundIndex, Math.max(0, roundsEdit.length - 1))}
+                                    onChange={(_, v) => setSelectedRoundIndex(v)}
+                                    sx={{ borderRight: 1, borderColor: 'divider' }}
+                                >
+                                    {roundsEdit.map((round, idx) => (
+                                        <Tab key={`round-${round.round_no}`} label={round.label ?? `Round ${round.round_no}`} id={`round-tab-${idx}`} />
+                                    ))}
+                                </Tabs>
+                                <Button variant="outlined" size="small" startIcon={<AddIcon />} onClick={addRound} sx={{ mt: 2 }}>
+                                    ＋ Round
+                                </Button>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                            {roundsLoading ? (
+                                <Typography color="text.secondary">Loading...</Typography>
+                            ) : roundsEdit.length > 0 ? (
+                                (() => {
+                                    const round = roundsEdit[selectedRoundIndex] ?? roundsEdit[0];
+                                    const roundIdx = roundsEdit.indexOf(round);
+                                    const bo1 = round.rooms?.find((r) => r.room_label === 'BO1') ?? { room_label: 'BO1', notes: '', member_ids: [] };
+                                    const bo2 = round.rooms?.find((r) => r.room_label === 'BO2') ?? { room_label: 'BO2', notes: '', member_ids: [] };
+                                    const assignedInRound = new Set((round.rooms ?? []).flatMap((room) => room.member_ids ?? []));
+                                    const roundLabel = round.label ?? `Round ${round.round_no}`;
+                                    return (
+                                        <Card variant="outlined">
+                                            <CardContent sx={{ pt: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
+                                                    Round 割当
+                                                </Typography>
+                                                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                                                    Round 名を編集し、BO1/BO2 にメンバーを割り当てます。
+                                                </Typography>
+                                                <TextField
+                                                    size="small"
+                                                    label="Round 名"
+                                                    value={round.label ?? ''}
+                                                    onChange={(e) => {
+                                                        setDirty(true);
+                                                        setRoundsEdit((prev) => prev.map((r, i) => (i === roundIdx ? { ...r, label: e.target.value } : r)));
+                                                    }}
+                                                    sx={{ mb: 2, minWidth: 200 }}
+                                                />
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12} md={6}>
+                                                        <RoomCard
+                                                            roomLabel="BO1"
+                                                            notes={bo1.notes}
+                                                            memberIds={bo1.member_ids ?? []}
+                                                            members={members}
+                                                            assignedInRound={assignedInRound}
+                                                            roundLabel={roundLabel}
+                                                            meetingNumber={selectedMeeting?.number}
+                                                            onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO1', notes)}
+                                                            onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
+                                                            onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
+                                                            onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO1')}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <RoomCard
+                                                            roomLabel="BO2"
+                                                            notes={bo2.notes}
+                                                            memberIds={bo2.member_ids ?? []}
+                                                            members={members}
+                                                            assignedInRound={assignedInRound}
+                                                            roundLabel={roundLabel}
+                                                            meetingNumber={selectedMeeting?.number}
+                                                            onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO2', notes)}
+                                                            onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
+                                                            onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
+                                                            onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO2')}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </CardContent>
+                                            <CardActions sx={{ justifyContent: 'flex-end', px: 2, pb: 2 }}>
+                                                <LoadingButton
+                                                    variant={dirty ? 'contained' : 'outlined'}
+                                                    color="primary"
+                                                    onClick={saveRounds}
+                                                    loading={roundsSaving}
+                                                    disabled={roundsLoading}
+                                                >
+                                                    Round 割当を保存
+                                                </LoadingButton>
+                                            </CardActions>
+                                        </Card>
+                                    );
+                                })()
+                            ) : (
+                                <Typography color="text.secondary">＋ Round で追加してください</Typography>
+                            )}
+                        </Grid>
                     </Grid>
-                </Grid>
-            )}
-            <Grid container spacing={2}>
+                )}
+            </Stack>
+            <Grid container spacing={2} sx={{ mt: 2 }}>
                 <Grid item xs={12} md={4}>
                     <TextField
                         label="Owner member ID"
@@ -1019,6 +1097,6 @@ export default function DragonFlyBoard() {
                 message={snackbarMessage}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             />
-        </Box>
+        </Container>
     );
 }
