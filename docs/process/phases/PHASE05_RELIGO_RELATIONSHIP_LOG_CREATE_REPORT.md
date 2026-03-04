@@ -70,7 +70,7 @@ git push -u origin feature/relationship-log-create-v1
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 7e19ff414e567a5e95f377e1e427feeb51f67aa4 |
 | **merge 元ブランチ名** | feature/relationship-log-create-v1 |
 | **変更ファイル一覧** | 上記参照 |
 | **テスト結果** | 8 passed |
