@@ -31,6 +31,12 @@
 | [GIT_WORKFLOW.md](GIT_WORKFLOW.md) | Git ブランチ運用ルール（main / develop / feature / hotfix、1push 原則）。SSOT。 |
 | [PROJECT_NAMING.md](PROJECT_NAMING.md) | プロジェクト命名（Religo＝プロダクト名、DragonFly＝チャプター名、dragonfly＝リポジトリ名）。 |
 
+### SSOT（docs/SSOT/）
+
+| ファイル | 説明 |
+|----------|------|
+| [DATA_MODEL.md](SSOT/DATA_MODEL.md) | Religo 会の地図（Relationship Map）データモデル。エンティティ・テーブル定義・派生指標・Phase 対応の SSOT。 |
+
 ### プロダクト要件（docs/product/）
 
 | ファイル | 説明 |
