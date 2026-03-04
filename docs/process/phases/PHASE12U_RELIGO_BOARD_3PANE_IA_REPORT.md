@@ -30,13 +30,11 @@
 - [x] Board が 3 ペインになり、選択→BO→右ログの導線が迷わない
 - [x] 既存の Round 保存、メモ作成、1to1 作成が壊れていない
 - [x] php artisan test が green
-- [x] PLAN/WORKLOG/REPORT 追加、INDEX/progress 更新、REPORT に取り込み証跡（merge 後に追記）
-
 ## 取り込み証跡（develop への merge 後に追記）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | |
+| **merge commit id** | `05ec0fc163213a0c92534700ae1a948cf93b2b9f` |
 | **merge 元ブランチ名** | feature/phase12u-board-3pane-ia-v1 |
-| **変更ファイル一覧** | |
-| **テスト結果** | |
+| **変更ファイル一覧** | docs/INDEX.md, docs/dragonfly_progress.md, docs/process/phases/PHASE12U_RELIGO_BOARD_3PANE_IA_PLAN.md, docs/process/phases/PHASE12U_RELIGO_BOARD_3PANE_IA_REPORT.md, docs/process/phases/PHASE12U_RELIGO_BOARD_3PANE_IA_WORKLOG.md, www/resources/js/admin/pages/DragonFlyBoard.jsx |
+| **テスト結果** | 27 passed (125 assertions) |
