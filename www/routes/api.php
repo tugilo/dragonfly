@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DragonFlyContactFlagController;
 use App\Http\Controllers\Api\DragonFlyContactSummaryController;
 use App\Http\Controllers\Api\DragonFlyMeetingController;
 use App\Http\Controllers\Api\DragonFlyMemberController;
+use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\OneToOneController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,8 @@ Route::put('/dragonfly/flags/{target_member_id}', [DragonFlyContactFlagControlle
     ->whereNumber('target_member_id');
 
 Route::get('/dragonfly/members', [DragonFlyMemberController::class, 'index']);
+
+Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
 Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
     ->whereNumber('target_member_id');
