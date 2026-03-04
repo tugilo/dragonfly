@@ -175,10 +175,10 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 |------|------|
 | **目的** | 興味関心。owner→target の「今の状態」を 1 行で保持。interested / want_1on1 / extra_status。 |
 | **主キー** | id (bigIncrements) |
-| **外部キー** | owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete) |
-| **ユニーク制約** | (owner_member_id, target_member_id) UNIQUE |
-| **主要カラム** | id, owner_member_id, target_member_id, interested (boolean, default false), want_1on1 (boolean, default false), extra_status (json, nullable), timestamps |
-| **インデックス** | owner_member_id, interested, want_1on1 |
+| **外部キー** | owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), **workspace_id → workspaces.id (nullable, nullOnDelete)**（追加 migration で付与） |
+| **ユニーク制約** | (owner_member_id, target_member_id) UNIQUE（維持）。将来は (workspace_id, owner_member_id, target_member_id) のユニークを検討。 |
+| **主要カラム** | id, **workspace_id (nullable)**, owner_member_id, target_member_id, interested (boolean, default false), want_1on1 (boolean, default false), extra_status (json, nullable), timestamps |
+| **インデックス** | owner_member_id, interested, want_1on1, **workspace_id** |
 
 ---
 
@@ -190,10 +190,10 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 |------|------|
 | **目的** | 接触履歴。owner→target のメモ。種別は memo_type で区別。one_to_one に紐づく場合は 1 to 1 の会話内容を履歴保存。 |
 | **主キー** | id (bigIncrements) |
-| **外部キー** | owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete), one_to_one_id → one_to_ones.id (nullable, nullOnDelete) |
+| **外部キー** | owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete), one_to_one_id → one_to_ones.id (nullable, nullOnDelete), **workspace_id → workspaces.id (nullable, nullOnDelete)**（追加 migration で付与） |
 | **ユニーク制約** | なし（1 owner–target で複数メモ可） |
-| **主要カラム** | id, owner_member_id, target_member_id, meeting_id (nullable), **one_to_one_id (nullable)**, **memo_type (string, 下記)**, body (text, nullable), timestamps |
-| **インデックス** | (owner_member_id, target_member_id, created_at), meeting_id, one_to_one_id |
+| **主要カラム** | id, **workspace_id (nullable)**, owner_member_id, target_member_id, meeting_id (nullable), **one_to_one_id (nullable)**, **memo_type (string, 下記)**, body (text, nullable), timestamps |
+| **インデックス** | (owner_member_id, target_member_id, created_at), meeting_id, one_to_one_id, **workspace_id** |
 
 **memo_type**（必須または default あり）:
 
@@ -217,7 +217,7 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | **目的** | 1 to 1。BNI の「1 to 1」の予定と実施履歴。 |
 | **主キー** | id (bigIncrements) |
 | **外部キー** | workspace_id → workspaces.id (nullable。現行は未導入のため nullable 可), owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete) |
-| **ユニーク制約** | なし（同一ペアで複数回の 1 to 1 があり得る） |
+| **ユニーク制約** | なし（同一ペアで複数回の 1 to 1 があり得る）。重複予定を避けるため (owner_member_id, target_member_id, scheduled_at) のユニークは将来検討とし、今回はインデックスのみ。 |
 | **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), notes (text, nullable), timestamps |
 | **インデックス** | (owner_member_id, target_member_id), scheduled_at |
 
@@ -237,10 +237,10 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 |------|------|
 | **目的** | 紹介。紹介の記録（誰が誰を誰に紹介したか）。 |
 | **主キー** | id (bigIncrements) |
-| **外部キー** | owner_member_id → members.id (restrictOnDelete), from_member_id → members.id (restrictOnDelete), to_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete) |
+| **外部キー** | owner_member_id → members.id (restrictOnDelete), from_member_id → members.id (restrictOnDelete), to_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete), **workspace_id → workspaces.id (nullable, nullOnDelete)**（追加 migration で付与） |
 | **ユニーク制約** | なし（同一ペアで複数回紹介があり得る） |
-| **主要カラム** | id, owner_member_id, from_member_id, to_member_id, meeting_id (nullable), notes (text, nullable), created_at, updated_at |
-| **インデックス** | (owner_member_id, from_member_id, to_member_id), meeting_id |
+| **主要カラム** | id, **workspace_id (nullable)**, owner_member_id, from_member_id, to_member_id, meeting_id (nullable), notes (text, nullable), created_at, updated_at |
+| **インデックス** | (owner_member_id, from_member_id, to_member_id), meeting_id, **workspace_id** |
 
 ---
 
@@ -256,7 +256,27 @@ Religo では以下を**関係指標**として算出する。
 | **one_to_one_count** | one_to_ones の (owner_member_id, target_member_id) で status = completed の件数。 |
 | **last_one_to_one** | one_to_ones の (owner_member_id, target_member_id) で、scheduled_at または started_at の降順の先頭 1 件（直近の 1 to 1 予定または実施）。 |
 | **introduction_count** | introductions の (owner_member_id, from_member_id, to_member_id) の組み合わせ、または owner が関与する紹介の件数。要件に応じて集計範囲を定義。 |
+| **last_introduction** | introductions の (owner_member_id, from_member_id, to_member_id) など owner が関与する紹介のうち、created_at 降順の先頭 1 件。last_contact_at の候補の一つ。 |
+| **last_contact_at** | **必須指標。** owner→target の「最後の接触」を 1 つの時刻で表す。MAX( 以下の「存在する値」) とし、全て NULL の場合は NULL。対象は: (1) last_same_room_meeting の meeting.held_on、(2) last_memo の contact_memos.created_at、(3) last_one_to_one の one_to_ones.scheduled_at または started_at、(4) last_introduction の introductions.created_at。NULL は無視する。 |
 | **relationship_score** | 将来の計算式として定義のみ。same_room_count, last_same_room_meeting（新旧）, last_memo（有無）, one_to_one_count, introduction_count などを入力にしたスコア。算出ロジックは別途定義（例: 重み付き合計・正規化）。 |
+
+---
+
+## 5.1 Workspace Scope Rules（スコープ一貫性）
+
+Religo は将来の multi-workspace を想定する。**原則: すべての関係データ（flags / memos / 1to1 / introductions）は「同一 workspace 内」で完結することとする。** スコープ方法は「各テーブルが workspace_id を保持する」案を採用する（クエリが単純で一貫性を保ちやすい）。
+
+| テーブル | workspace_id | 備考 |
+|----------|--------------|------|
+| workspaces | — | 親エンティティ |
+| one_to_ones | あり（nullable） | 既存で保持 |
+| contact_memos | あり（nullable） | 追加 migration で付与 |
+| introductions | あり（nullable） | 追加 migration で付与 |
+| dragonfly_contact_flags | あり（nullable） | 追加 migration で付与 |
+| members | なし（将来付与可） | Future extensions で workspace_id 付与を検討 |
+| meetings | なし（将来付与可） | Future extensions で workspace_id 付与を検討 |
+
+既存データ互換のため workspace_id は nullable とする。既存行の workspace_id 埋め（backfill）は別タスクとし、方針は「7. Future Extensions」に記載する。
 
 ---
 
@@ -272,7 +292,8 @@ Religo では以下を**関係指標**として算出する。
 
 ## 7. Future Extensions
 
-- **workspace の紐付け:** members / meetings / one_to_ones に workspace_id を追加し、マルチワークスペース対応。
+- **workspace の紐付け:** members / meetings に workspace_id を追加し、マルチワークスペース対応。contact_memos / introductions / dragonfly_contact_flags には今回 migration で workspace_id（nullable）を追加済み。
+- **workspace_id の backfill（将来の移行手順）:** 既存行の workspace_id が NULL のままのデータがある場合、backfill は「単一 workspace を前提とする環境では、デフォルト workspace を 1 件作成し、該当テーブルを workspace_id で UPDATE する」方針で実施する。複数 workspace 混在時は meeting_id や owner の所属から workspace を推定するロジックを別途定義する。
 - **紹介先の拡張（introductions）:** client（紹介先クライアント）, company（会社）, deal（案件）などのカラムまたは関連テーブルで、紹介先を構造化。
 - **紹介推論:** introductions と contact_flags / same_room_count / one_to_one_count を組み合わせた「紹介の糸口」推論。
 - **relationship_score の具体化:** 重み・閾値・正規化ルールを SSOT または別ドキュメントで定義。
@@ -284,6 +305,6 @@ Religo では以下を**関係指標**として算出する。
 
 ## 8. 既存実装との対応（スコープロック）
 
-- **既存テーブルは変更しない:** members, meetings, participants, breakout_rooms, participant_breakout, dragonfly_contact_flags のスキーマは変更しない。
-- **本ドキュメントは SSOT:** 上記の「完成形」を Cursor の実装基準とする。contact_memos の拡張（memo_type, one_to_one_id）および one_to_ones テーブルは、マイグレーションで追加する際は本定義に従う。
-- **新規テーブル:** one_to_ones。contact_memos へのカラム追加は別マイグレーションで実施する。
+- **既存テーブルは変更しない:** members, meetings, participants, breakout_rooms, participant_breakout のスキーマは変更しない。dragonfly_contact_flags は「既存カラムの削除・変更」は行わず、workspace_id の追加のみ行う。
+- **本ドキュメントは SSOT:** 上記の「完成形」を Cursor の実装基準とする。contact_memos の拡張（memo_type, one_to_one_id, workspace_id）および one_to_ones テーブル、introductions / dragonfly_contact_flags への workspace_id 追加は、マイグレーションで本定義に従う。
+- **新規テーブル:** one_to_ones。contact_memos / introductions / dragonfly_contact_flags への workspace_id 追加は別マイグレーションで実施する。
