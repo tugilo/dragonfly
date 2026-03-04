@@ -99,7 +99,8 @@ export default function DragonFlyBoard() {
 
     // 1 to 1 登録モーダル
     const [o2oOpen, setO2oOpen] = useState(false);
-    const [o2oWorkspaceId, setO2oWorkspaceId] = useState('1');
+    const [firstWorkspace, setFirstWorkspace] = useState(null);
+    const [workspaceLoadError, setWorkspaceLoadError] = useState('');
     const [o2oStatus, setO2oStatus] = useState('planned');
     const [o2oScheduledAt, setO2oScheduledAt] = useState('');
     const [o2oStartedAt, setO2oStartedAt] = useState('');
@@ -118,6 +119,23 @@ export default function DragonFlyBoard() {
     useEffect(() => {
         refetchMembers();
     }, [refetchMembers]);
+
+    useEffect(() => {
+        fetchJson('/api/workspaces')
+            .then((data) => {
+                if (Array.isArray(data) && data.length > 0) {
+                    setFirstWorkspace({ id: data[0].id, name: data[0].name || `ID: ${data[0].id}` });
+                    setWorkspaceLoadError('');
+                } else {
+                    setFirstWorkspace(null);
+                    setWorkspaceLoadError('workspace が未作成です。seed で 1 件作成してください。');
+                }
+            })
+            .catch(() => {
+                setFirstWorkspace(null);
+                setWorkspaceLoadError('workspace の取得に失敗しました。');
+            });
+    }, []);
 
     const loadSummary = useCallback(() => {
         if (!targetMember?.id || !ownerMemberId) return;
@@ -213,10 +231,9 @@ export default function DragonFlyBoard() {
         }
     };
 
-    const canSubmitO2o = o2oWorkspaceId.trim() !== '' && !Number.isNaN(parseInt(o2oWorkspaceId, 10));
+    const canSubmitO2o = firstWorkspace != null;
 
     const openO2oDialog = () => {
-        setO2oWorkspaceId('1');
         setO2oStatus('planned');
         setO2oScheduledAt('');
         setO2oStartedAt('');
@@ -243,7 +260,7 @@ export default function DragonFlyBoard() {
         setO2oSubmitting(true);
         setO2oError('');
         const payload = {
-            workspace_id: parseInt(o2oWorkspaceId, 10),
+            workspace_id: firstWorkspace.id,
             owner_member_id: ownerMemberId,
             target_member_id: targetMember.id,
             status: o2oStatus,
@@ -470,16 +487,15 @@ export default function DragonFlyBoard() {
             <Dialog open={o2oOpen} onClose={closeO2oDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>1 to 1 登録</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        label="workspace_id（必須）"
-                        type="number"
-                        size="small"
-                        fullWidth
-                        required
-                        value={o2oWorkspaceId}
-                        onChange={(e) => setO2oWorkspaceId(e.target.value)}
-                        sx={{ mt: 1 }}
-                    />
+                    {firstWorkspace ? (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            ワークスペース: {firstWorkspace.name} (ID: {firstWorkspace.id})
+                        </Typography>
+                    ) : (
+                        <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                            {workspaceLoadError}
+                        </Typography>
+                    )}
                     <FormControl fullWidth size="small" sx={{ mt: 2 }}>
                         <InputLabel>状態</InputLabel>
                         <Select
