@@ -59,7 +59,7 @@ git push -u origin feature/members-list-summary-v1
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | e44e29933e43afb45aab85f522998290048bdcaf |
 | **merge 元ブランチ名** | feature/members-list-summary-v1 |
 | **変更ファイル一覧** | 上記参照 |
 | **テスト結果** | 3 passed |
