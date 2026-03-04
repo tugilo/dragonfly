@@ -18,6 +18,7 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    Checkbox,
 } from '@mui/material';
 
 const API = '';
@@ -79,6 +80,27 @@ async function postOneToOne(payload) {
     return res.json();
 }
 
+async function getMeetings() {
+    return fetchJson('/api/meetings');
+}
+
+async function getMeetingBreakouts(meetingId) {
+    return fetchJson(`/api/meetings/${meetingId}/breakouts`);
+}
+
+async function putMeetingBreakouts(meetingId, payload) {
+    const res = await fetch(`${API}/api/meetings/${meetingId}/breakouts`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message || `PUT breakouts ${res.status}`);
+    }
+    return res.json();
+}
+
 export default function DragonFlyBoard() {
     const [ownerMemberId, setOwnerMemberId] = useState(1);
     const [members, setMembers] = useState([]);
@@ -110,6 +132,21 @@ export default function DragonFlyBoard() {
     const [o2oError, setO2oError] = useState('');
     const [o2oSubmitting, setO2oSubmitting] = useState(false);
 
+    // Meeting Breakout (BO1/BO2) ビルダー
+    const [meetings, setMeetings] = useState([]);
+    const [selectedMeetingId, setSelectedMeetingId] = useState('');
+    const [breakoutsLoading, setBreakoutsLoading] = useState(false);
+    const [breakoutsSaving, setBreakoutsSaving] = useState(false);
+    const [bo1Notes, setBo1Notes] = useState('');
+    const [bo2Notes, setBo2Notes] = useState('');
+    const [bo1MemberIds, setBo1MemberIds] = useState([]);
+    const [bo2MemberIds, setBo2MemberIds] = useState([]);
+    const [breakoutError, setBreakoutError] = useState('');
+
+    // メモモーダルを BO メンバー用に開くときの固定 target/meeting
+    const [memoContextTargetMemberId, setMemoContextTargetMemberId] = useState(null);
+    const [memoContextMeetingId, setMemoContextMeetingId] = useState(null);
+
     const refetchMembers = useCallback(() => {
         fetchJson(`/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`)
             .then(setMembers)
@@ -136,6 +173,39 @@ export default function DragonFlyBoard() {
                 setWorkspaceLoadError('workspace の取得に失敗しました。');
             });
     }, []);
+
+    useEffect(() => {
+        getMeetings().then(setMeetings).catch(() => setMeetings([]));
+    }, []);
+
+    useEffect(() => {
+        if (!selectedMeetingId) {
+            setBo1Notes('');
+            setBo2Notes('');
+            setBo1MemberIds([]);
+            setBo2MemberIds([]);
+            return;
+        }
+        setBreakoutsLoading(true);
+        setBreakoutError('');
+        getMeetingBreakouts(selectedMeetingId)
+            .then((data) => {
+                const r1 = data.rooms?.find((r) => r.room_label === 'BO1');
+                const r2 = data.rooms?.find((r) => r.room_label === 'BO2');
+                setBo1Notes(r1?.notes ?? '');
+                setBo2Notes(r2?.notes ?? '');
+                setBo1MemberIds(r1?.member_ids ?? []);
+                setBo2MemberIds(r2?.member_ids ?? []);
+            })
+            .catch((e) => {
+                setBreakoutError(e.message || '取得に失敗しました');
+                setBo1Notes('');
+                setBo2Notes('');
+                setBo1MemberIds([]);
+                setBo2MemberIds([]);
+            })
+            .finally(() => setBreakoutsLoading(false));
+    }, [selectedMeetingId]);
 
     const loadSummary = useCallback(() => {
         if (!targetMember?.id || !ownerMemberId) return;
@@ -186,7 +256,7 @@ export default function DragonFlyBoard() {
 
     const canSubmitMemo =
         memoBody.trim() !== '' &&
-        (memoType !== 'meeting' || memoMeetingId.trim() !== '') &&
+        (memoType !== 'meeting' || memoContextMeetingId != null || memoMeetingId.trim() !== '') &&
         (memoType !== 'one_to_one' || memoOneToOneId.trim() !== '');
 
     const openMemoDialog = () => {
@@ -195,26 +265,43 @@ export default function DragonFlyBoard() {
         setMemoMeetingId('');
         setMemoOneToOneId('');
         setMemoError('');
+        setMemoContextTargetMemberId(null);
+        setMemoContextMeetingId(null);
+        setMemoOpen(true);
+    };
+
+    const openMemoDialogForMeetingMember = (meetingId, memberId) => {
+        setMemoBody('');
+        setMemoType('meeting');
+        setMemoMeetingId(String(meetingId));
+        setMemoOneToOneId('');
+        setMemoError('');
+        setMemoContextTargetMemberId(memberId);
+        setMemoContextMeetingId(meetingId);
         setMemoOpen(true);
     };
 
     const closeMemoDialog = () => {
         setMemoOpen(false);
         setMemoError('');
+        setMemoContextTargetMemberId(null);
+        setMemoContextMeetingId(null);
     };
 
     const submitMemo = async () => {
-        if (!targetMember?.id || !ownerMemberId || !canSubmitMemo) return;
+        const targetId = memoContextTargetMemberId ?? targetMember?.id;
+        if (!targetId || !ownerMemberId || !canSubmitMemo) return;
+        if (memoType === 'meeting' && !(memoContextMeetingId ?? memoMeetingId.trim())) return;
         setMemoSubmitting(true);
         setMemoError('');
         const payload = {
             owner_member_id: ownerMemberId,
-            target_member_id: targetMember.id,
+            target_member_id: targetId,
             memo_type: memoType,
             body: memoBody.trim(),
         };
-        if (memoType === 'meeting' && memoMeetingId.trim() !== '') {
-            payload.meeting_id = parseInt(memoMeetingId, 10);
+        if (memoType === 'meeting') {
+            payload.meeting_id = memoContextMeetingId ?? parseInt(memoMeetingId, 10);
         }
         if (memoType === 'one_to_one' && memoOneToOneId.trim() !== '') {
             payload.one_to_one_id = parseInt(memoOneToOneId, 10);
@@ -224,6 +311,8 @@ export default function DragonFlyBoard() {
             refetchMembers();
             loadSummary();
             closeMemoDialog();
+            setMemoContextTargetMemberId(null);
+            setMemoContextMeetingId(null);
         } catch (e) {
             setMemoError(e.message || '保存に失敗しました');
         } finally {
@@ -282,11 +371,178 @@ export default function DragonFlyBoard() {
         }
     };
 
+    const toggleBoMember = (room, memberId) => {
+        if (room === 'BO1') {
+            setBo1MemberIds((prev) =>
+                prev.includes(memberId) ? prev.filter((id) => id !== memberId) : [...prev, memberId]
+            );
+        } else {
+            setBo2MemberIds((prev) =>
+                prev.includes(memberId) ? prev.filter((id) => id !== memberId) : [...prev, memberId]
+            );
+        }
+    };
+
+    const saveBreakouts = async () => {
+        if (!selectedMeetingId) return;
+        const allIds = [...bo1MemberIds, ...bo2MemberIds];
+        if (allIds.length !== new Set(allIds).size) {
+            setBreakoutError('同一メンバーを BO1/BO2 の両方に割り当てることはできません。');
+            return;
+        }
+        setBreakoutsSaving(true);
+        setBreakoutError('');
+        try {
+            await putMeetingBreakouts(selectedMeetingId, {
+                rooms: [
+                    { room_label: 'BO1', notes: bo1Notes || null, member_ids: bo1MemberIds },
+                    { room_label: 'BO2', notes: bo2Notes || null, member_ids: bo2MemberIds },
+                ],
+            });
+            getMeetingBreakouts(selectedMeetingId).then((data) => {
+                const r1 = data.rooms?.find((r) => r.room_label === 'BO1');
+                const r2 = data.rooms?.find((r) => r.room_label === 'BO2');
+                setBo1Notes(r1?.notes ?? '');
+                setBo2Notes(r2?.notes ?? '');
+                setBo1MemberIds(r1?.member_ids ?? []);
+                setBo2MemberIds(r2?.member_ids ?? []);
+            });
+            refetchMembers();
+        } catch (e) {
+            setBreakoutError(e.message || '保存に失敗しました');
+        } finally {
+            setBreakoutsSaving(false);
+        }
+    };
+
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
                 DragonFly Board
             </Typography>
+            <Box sx={{ mb: 2 }}>
+                <FormControl size="small" sx={{ minWidth: 200 }}>
+                    <InputLabel>Meeting</InputLabel>
+                    <Select
+                        value={selectedMeetingId}
+                        label="Meeting"
+                        onChange={(e) => setSelectedMeetingId(e.target.value)}
+                    >
+                        <MenuItem value="">— 選択 —</MenuItem>
+                        {meetings.map((m) => (
+                            <MenuItem key={m.id} value={m.id}>
+                                #{m.number} {m.held_on}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                {breakoutError && (
+                    <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                        {breakoutError}
+                    </Typography>
+                )}
+            </Box>
+            {selectedMeetingId && (
+                <Grid container spacing={2} sx={{ mb: 2 }}>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined">
+                            <CardContent>
+                                <Typography variant="subtitle2">BO1</Typography>
+                                <TextField
+                                    label="ルームメモ"
+                                    multiline
+                                    minRows={2}
+                                    fullWidth
+                                    size="small"
+                                    value={bo1Notes}
+                                    onChange={(e) => setBo1Notes(e.target.value)}
+                                    sx={{ mt: 1 }}
+                                />
+                                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                                    メンバー割当
+                                </Typography>
+                                {breakoutsLoading ? (
+                                    <Typography variant="body2" color="text.secondary">Loading...</Typography>
+                                ) : (
+                                    <Box sx={{ maxHeight: 200, overflow: 'auto' }}>
+                                        {members.map((m) => (
+                                            <Box key={m.id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                <Checkbox
+                                                    size="small"
+                                                    checked={bo1MemberIds.includes(m.id)}
+                                                    onChange={() => toggleBoMember('BO1', m.id)}
+                                                />
+                                                <Typography variant="body2" sx={{ flex: 1 }}>
+                                                    {m.display_no} {m.name}
+                                                </Typography>
+                                                <Button
+                                                    size="small"
+                                                    onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, m.id)}
+                                                >
+                                                    メモ
+                                                </Button>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Card variant="outlined">
+                            <CardContent>
+                                <Typography variant="subtitle2">BO2</Typography>
+                                <TextField
+                                    label="ルームメモ"
+                                    multiline
+                                    minRows={2}
+                                    fullWidth
+                                    size="small"
+                                    value={bo2Notes}
+                                    onChange={(e) => setBo2Notes(e.target.value)}
+                                    sx={{ mt: 1 }}
+                                />
+                                <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                                    メンバー割当
+                                </Typography>
+                                {breakoutsLoading ? (
+                                    <Typography variant="body2" color="text.secondary">Loading...</Typography>
+                                ) : (
+                                    <Box sx={{ maxHeight: 200, overflow: 'auto' }}>
+                                        {members.map((m) => (
+                                            <Box key={m.id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                <Checkbox
+                                                    size="small"
+                                                    checked={bo2MemberIds.includes(m.id)}
+                                                    onChange={() => toggleBoMember('BO2', m.id)}
+                                                />
+                                                <Typography variant="body2" sx={{ flex: 1 }}>
+                                                    {m.display_no} {m.name}
+                                                </Typography>
+                                                <Button
+                                                    size="small"
+                                                    onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, m.id)}
+                                                >
+                                                    メモ
+                                                </Button>
+                                            </Box>
+                                        ))}
+                                    </Box>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button
+                            variant="contained"
+                            onClick={saveBreakouts}
+                            disabled={breakoutsSaving || breakoutsLoading}
+                        >
+                            {breakoutsSaving ? '保存中...' : 'BO 割当を保存'}
+                        </Button>
+                    </Grid>
+                </Grid>
+            )}
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
                     <TextField
@@ -421,7 +677,12 @@ export default function DragonFlyBoard() {
             <Dialog open={memoOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>メモ追加</DialogTitle>
                 <DialogContent>
-                    <FormControl fullWidth size="small" sx={{ mt: 1 }}>
+                    {memoContextTargetMemberId != null && (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            対象: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
+                        </Typography>
+                    )}
+                    <FormControl fullWidth size="small" sx={{ mt: 1 }} disabled={memoContextTargetMemberId != null}>
                         <InputLabel>種別</InputLabel>
                         <Select
                             value={memoType}
@@ -445,7 +706,7 @@ export default function DragonFlyBoard() {
                         onChange={(e) => setMemoBody(e.target.value)}
                         sx={{ mt: 2 }}
                     />
-                    {memoType === 'meeting' && (
+                    {memoType === 'meeting' && memoContextMeetingId == null && (
                         <TextField
                             label="meeting_id（数値）"
                             type="number"
