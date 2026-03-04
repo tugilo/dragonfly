@@ -58,8 +58,8 @@ git push origin develop
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 1379affb69555454702ed03e8a01c79fc35e887c |
 | **merge 元ブランチ名** | feature/phase06-board-add-memo-v1 |
 | **変更ファイル一覧** | 上記参照 |
-| **テスト結果** | php artisan test — 既存テスト green |
+| **テスト結果** | php artisan test — 13 passed (58 assertions) |
 | **手動確認** | memo_type=other で追加→一覧 last_memo 更新 OK。meeting/one_to_one で ID 未入力時は保存ボタン無効。 |
