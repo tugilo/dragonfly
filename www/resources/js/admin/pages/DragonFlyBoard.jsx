@@ -19,7 +19,11 @@ import {
     Select,
     MenuItem,
     Checkbox,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -101,6 +105,23 @@ async function putMeetingBreakouts(meetingId, payload) {
     return res.json();
 }
 
+async function getMeetingBreakoutRounds(meetingId) {
+    return fetchJson(`/api/meetings/${meetingId}/breakout-rounds`);
+}
+
+async function putMeetingBreakoutRounds(meetingId, payload) {
+    const res = await fetch(`${API}/api/meetings/${meetingId}/breakout-rounds`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message || `PUT breakout-rounds ${res.status}`);
+    }
+    return res.json();
+}
+
 export default function DragonFlyBoard() {
     const [ownerMemberId, setOwnerMemberId] = useState(1);
     const [members, setMembers] = useState([]);
@@ -142,6 +163,12 @@ export default function DragonFlyBoard() {
     const [bo1MemberIds, setBo1MemberIds] = useState([]);
     const [bo2MemberIds, setBo2MemberIds] = useState([]);
     const [breakoutError, setBreakoutError] = useState('');
+
+    // Phase10R: BO (Round) 可変
+    const [roundsEdit, setRoundsEdit] = useState([]);
+    const [roundsLoading, setRoundsLoading] = useState(false);
+    const [roundsSaving, setRoundsSaving] = useState(false);
+    const [roundsError, setRoundsError] = useState('');
 
     // メモモーダルを BO メンバー用に開くときの固定 target/meeting
     const [memoContextTargetMemberId, setMemoContextTargetMemberId] = useState(null);
@@ -205,6 +232,33 @@ export default function DragonFlyBoard() {
                 setBo2MemberIds([]);
             })
             .finally(() => setBreakoutsLoading(false));
+    }, [selectedMeetingId]);
+
+    useEffect(() => {
+        if (!selectedMeetingId) {
+            setRoundsEdit([]);
+            return;
+        }
+        setRoundsLoading(true);
+        setRoundsError('');
+        getMeetingBreakoutRounds(selectedMeetingId)
+            .then((data) => {
+                const rounds = Array.isArray(data.rounds) ? data.rounds : [];
+                setRoundsEdit(rounds.map((r) => ({
+                    round_no: r.round_no,
+                    label: r.label ?? `Round ${r.round_no}`,
+                    rooms: (r.rooms ?? []).map((room) => ({
+                        room_label: room.room_label,
+                        notes: room.notes ?? '',
+                        member_ids: Array.isArray(room.member_ids) ? [...room.member_ids] : [],
+                    })),
+                })));
+            })
+            .catch((e) => {
+                setRoundsError(e.message || 'Round 取得に失敗しました');
+                setRoundsEdit([]);
+            })
+            .finally(() => setRoundsLoading(false));
     }, [selectedMeetingId]);
 
     const loadSummary = useCallback(() => {
@@ -415,6 +469,97 @@ export default function DragonFlyBoard() {
         }
     };
 
+    const addRound = () => {
+        const maxNo = roundsEdit.length === 0 ? 0 : Math.max(...roundsEdit.map((r) => r.round_no));
+        setRoundsEdit((prev) => [
+            ...prev,
+            {
+                round_no: maxNo + 1,
+                label: `Round ${maxNo + 1}`,
+                rooms: [
+                    { room_label: 'BO1', notes: '', member_ids: [] },
+                    { room_label: 'BO2', notes: '', member_ids: [] },
+                ],
+            },
+        ]);
+    };
+
+    const toggleRoundMember = (roundIndex, roomLabel, memberId) => {
+        setRoundsEdit((prev) => {
+            const next = prev.map((r, i) => {
+                if (i !== roundIndex) return r;
+                const rooms = r.rooms.map((room) => {
+                    if (room.room_label !== roomLabel) return room;
+                    const ids = room.member_ids.includes(memberId)
+                        ? room.member_ids.filter((id) => id !== memberId)
+                        : [...room.member_ids, memberId];
+                    return { ...room, member_ids: ids };
+                });
+                return { ...r, rooms };
+            });
+            return next;
+        });
+    };
+
+    const setRoundRoomNotes = (roundIndex, roomLabel, notes) => {
+        setRoundsEdit((prev) =>
+            prev.map((r, i) => {
+                if (i !== roundIndex) return r;
+                const rooms = r.rooms.map((room) =>
+                    room.room_label === roomLabel ? { ...room, notes } : room
+                );
+                return { ...r, rooms };
+            })
+        );
+    };
+
+    const saveRounds = async () => {
+        if (!selectedMeetingId) return;
+        const allIdsByRound = roundsEdit.map((r) => {
+            const ids = (r.rooms ?? []).flatMap((room) => room.member_ids ?? []);
+            return ids;
+        });
+        for (let i = 0; i < allIdsByRound.length; i++) {
+            const ids = allIdsByRound[i];
+            if (ids.length !== new Set(ids).size) {
+                setRoundsError(`Round ${roundsEdit[i].round_no} 内で同一メンバーを複数ルームに割り当てることはできません。`);
+                return;
+            }
+        }
+        setRoundsSaving(true);
+        setRoundsError('');
+        try {
+            const payload = {
+                rounds: roundsEdit.map((r) => ({
+                    round_no: r.round_no,
+                    label: r.label,
+                    rooms: r.rooms.map((room) => ({
+                        room_label: room.room_label,
+                        notes: room.notes || null,
+                        member_ids: room.member_ids ?? [],
+                    })),
+                })),
+            };
+            await putMeetingBreakoutRounds(selectedMeetingId, payload);
+            const data = await getMeetingBreakoutRounds(selectedMeetingId);
+            const rounds = Array.isArray(data.rounds) ? data.rounds : [];
+            setRoundsEdit(rounds.map((r) => ({
+                round_no: r.round_no,
+                label: r.label ?? `Round ${r.round_no}`,
+                rooms: (r.rooms ?? []).map((room) => ({
+                    room_label: room.room_label,
+                    notes: room.notes ?? '',
+                    member_ids: Array.isArray(room.member_ids) ? [...room.member_ids] : [],
+                })),
+            })));
+            refetchMembers();
+        } catch (e) {
+            setRoundsError(e.message || '保存に失敗しました');
+        } finally {
+            setRoundsSaving(false);
+        }
+    };
+
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
@@ -542,6 +687,123 @@ export default function DragonFlyBoard() {
                         </Button>
                     </Grid>
                 </Grid>
+            )}
+            {selectedMeetingId && (
+                <Box sx={{ mb: 2 }}>
+                    <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                        BO (Round) — 複数回対応
+                    </Typography>
+                    {roundsError && (
+                        <Typography color="error" variant="body2" sx={{ mb: 1 }}>
+                            {roundsError}
+                        </Typography>
+                    )}
+                    {roundsLoading ? (
+                        <Typography color="text.secondary">Loading...</Typography>
+                    ) : (
+                        <>
+                            {roundsEdit.map((round, roundIndex) => {
+                                const bo1 = round.rooms?.find((r) => r.room_label === 'BO1') ?? { room_label: 'BO1', notes: '', member_ids: [] };
+                                const bo2 = round.rooms?.find((r) => r.room_label === 'BO2') ?? { room_label: 'BO2', notes: '', member_ids: [] };
+                                return (
+                                    <Accordion key={`round-${round.round_no}`} defaultExpanded={roundIndex === 0}>
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                            <Typography>{round.label ?? `Round ${round.round_no}`}</Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle2">BO1</Typography>
+                                                    <TextField
+                                                        label="ルームメモ"
+                                                        multiline
+                                                        minRows={2}
+                                                        fullWidth
+                                                        size="small"
+                                                        value={bo1.notes ?? ''}
+                                                        onChange={(e) => setRoundRoomNotes(roundIndex, 'BO1', e.target.value)}
+                                                        sx={{ mt: 1 }}
+                                                    />
+                                                    <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                                                        メンバー割当
+                                                    </Typography>
+                                                    <Box sx={{ maxHeight: 180, overflow: 'auto' }}>
+                                                        {members.map((m) => (
+                                                            <Box key={m.id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                                <Checkbox
+                                                                    size="small"
+                                                                    checked={(bo1.member_ids ?? []).includes(m.id)}
+                                                                    onChange={() => toggleRoundMember(roundIndex, 'BO1', m.id)}
+                                                                />
+                                                                <Typography variant="body2" sx={{ flex: 1 }}>
+                                                                    {m.display_no} {m.name}
+                                                                </Typography>
+                                                                <Button
+                                                                    size="small"
+                                                                    onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, m.id)}
+                                                                >
+                                                                    メモ
+                                                                </Button>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="subtitle2">BO2</Typography>
+                                                    <TextField
+                                                        label="ルームメモ"
+                                                        multiline
+                                                        minRows={2}
+                                                        fullWidth
+                                                        size="small"
+                                                        value={bo2.notes ?? ''}
+                                                        onChange={(e) => setRoundRoomNotes(roundIndex, 'BO2', e.target.value)}
+                                                        sx={{ mt: 1 }}
+                                                    />
+                                                    <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                                                        メンバー割当
+                                                    </Typography>
+                                                    <Box sx={{ maxHeight: 180, overflow: 'auto' }}>
+                                                        {members.map((m) => (
+                                                            <Box key={m.id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                                                <Checkbox
+                                                                    size="small"
+                                                                    checked={(bo2.member_ids ?? []).includes(m.id)}
+                                                                    onChange={() => toggleRoundMember(roundIndex, 'BO2', m.id)}
+                                                                />
+                                                                <Typography variant="body2" sx={{ flex: 1 }}>
+                                                                    {m.display_no} {m.name}
+                                                                </Typography>
+                                                                <Button
+                                                                    size="small"
+                                                                    onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, m.id)}
+                                                                >
+                                                                    メモ
+                                                                </Button>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
+                                                </Grid>
+                                            </Grid>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                );
+                            })}
+                            <Box sx={{ mt: 1 }}>
+                                <Button variant="outlined" size="small" onClick={addRound} sx={{ mr: 1 }}>
+                                    ＋ Round 追加
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={saveRounds}
+                                    disabled={roundsSaving || roundsLoading}
+                                >
+                                    {roundsSaving ? '保存中...' : 'Round 割当を保存'}
+                                </Button>
+                            </Box>
+                        </>
+                    )}
+                </Box>
             )}
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\DragonFlyMemberController;
 use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
+use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
 use App\Http\Controllers\Religo\OneToOneController;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,8 @@ Route::get('/meetings', [MeetingController::class, 'index']);
 Route::get('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'show'])
     ->whereNumber('meetingId');
 Route::put('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'update'])
+    ->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'show'])
+    ->whereNumber('meetingId');
+Route::put('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'update'])
     ->whereNumber('meetingId');
