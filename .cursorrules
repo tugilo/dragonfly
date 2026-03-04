@@ -67,3 +67,83 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 
 - PHP: PSR-12、Laravel の慣習に従う
 - 安定性を最優先する。指示外の変更をしない。
+
+---
+
+## Product Naming Rule (SSOT)
+
+Religo プロジェクトでは以下の命名を厳密に区別する。
+
+### Product
+**Religo**
+
+意味: Re + Ligo（再び結ぶ）
+
+定義: BNIなどのコミュニティにおいて「会の地図（Relationship Map）」を作り、人間関係の理解と紹介発想を支援するツール。
+
+### Chapter
+**DragonFly**
+
+定義: BNIのチャプター名。Religo が現在利用されているコミュニティ。
+
+注意: DragonFly はプロダクト名ではない。
+
+### Repository / Internal Name
+**dragonfly**
+
+理由: 既存環境との整合性のため変更しない。
+
+対象:
+- GitHub repository
+- Docker container
+- ローカルディレクトリ
+- Cursor workspace
+
+### AI作業ルール
+
+AIがコード・ドキュメントを生成する場合：
+
+**使用する名称**
+- Religo → プロダクト名
+- DragonFly → チャプター名
+- dragonfly → 内部識別子
+
+**禁止**
+- DragonFly をプロダクト名として扱うこと
+- Religo をリポジトリ名として扱うこと
+
+### SSOT
+
+命名の単一情報源は以下：
+- docs/PROJECT_NAMING.md
+
+-------------------------------------------------
+■ 🔀 Git 取り込み（PRレス運用・絶対遵守）
+-------------------------------------------------
+
+**PR は使わない。** feature → develop の取り込みは必ず「ローカルで merge → テスト → push」で行う。PR 作成を提案しない。
+
+- **develop への直接コミット禁止:** 機能・修正は必ず feature ブランチで行い、merge で取り込む。例外: docs の軽微な追記（進捗ファイル・INDEX の 1 行追加など）のみ、事前に「例外」と判断した場合に限り develop 直コミットを許容する。
+- **main への反映:** リリース時のみ。develop → main の merge を原則とし、main への直コミットは禁止。
+- **1push の意味:** Phase 単位でまとめて push。Phase の PLAN / WORKLOG / REPORT を締めたうえで 1 コミットで push。取り込みは「develop 側での merge」が最後の push となる。
+- **REPORT に merge commit id を必ず記録:** feature を develop に取り込んだあと、該当 Phase の REPORT に「取り込み証跡」セクションを追加し、merge commit id・merge 元ブランチ・変更ファイル一覧・テスト結果を記録する（PR の代替）。詳細は docs/process/templates/PHASE_REPORT_TEMPLATE.md および docs/git/PRLESS_MERGE_FLOW.md を参照。
+
+**取り込み用の固定手順（コピペ用）:**
+
+```bash
+# 1. develop を最新化
+git checkout develop
+git pull origin develop
+
+# 2. feature を merge（PR の代わりに merge commit を残す）
+git merge --no-ff feature/<ブランチ名> -m "Merge feature/<ブランチ名> into develop"
+
+# 3. テスト実行（必須）
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test
+
+# 4. 問題なければ push
+git push origin develop
+```
+
+取り込み後、該当 Phase の REPORT に「取り込み証跡」を追記すること（merge commit id は `git log -1 --format=%H develop` で取得）。
+
