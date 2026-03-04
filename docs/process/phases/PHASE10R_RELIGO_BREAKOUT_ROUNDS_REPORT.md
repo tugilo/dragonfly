@@ -45,12 +45,14 @@
 - [x] BO 内から meeting メモが書ける
 - [x] Feature テスト green
 - [x] docs 更新
-- [ ] 1 commit push → develop へ --no-ff merge
-- [ ] REPORT に merge commit id とテスト結果
+- [x] 1 commit push → develop へ --no-ff merge
+- [x] REPORT に merge commit id とテスト結果
 
 ## 取り込み証跡
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **テスト結果** | （passed 数） |
+| **merge commit id** | `d2b016bde56bda4b228fc8d627156412c51b6e15` |
+| **merge 元ブランチ** | feature/phase10r-breakout-rounds-v1 |
+| **テスト結果** | 23 passed (108 assertions) |
+| **変更ファイル数** | 17 files changed, 990 insertions(+), 13 deletions(-) |
