@@ -59,8 +59,8 @@ git push origin develop
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 6a189b76058ab6f6b6673a86eb2f1316e07fe56e |
 | **merge 元ブランチ名** | feature/phase08-auto-workspace-id-v1 |
 | **変更ファイル一覧** | 上記参照 |
-| **テスト結果** | php artisan test — 13 passed 想定 |
+| **テスト結果** | php artisan test — 13 passed (58 assertions) |
 | **手動確認** | workspace 取得成功で自動 workspace_id・登録可。0 件/失敗で保存不可・ガイド表示。 |
