@@ -29,6 +29,7 @@
 |----------|------|
 | [INDEX.md](INDEX.md) | 本ファイル。ドキュメントの索引と更新ルール。 |
 | [GIT_WORKFLOW.md](GIT_WORKFLOW.md) | Git ブランチ運用ルール（main / develop / feature / hotfix、1push 原則）。SSOT。 |
+| [PROJECT_NAMING.md](PROJECT_NAMING.md) | プロジェクト命名（Religo＝プロダクト名、DragonFly＝チャプター名、dragonfly＝リポジトリ名）。 |
 
 ### プロダクト要件（docs/product/）
 
