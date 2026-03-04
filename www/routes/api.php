@@ -48,6 +48,7 @@ Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSu
     ->whereNumber('target_member_id');
 
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
+Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
 
 Route::get('/meetings', [MeetingController::class, 'index']);
