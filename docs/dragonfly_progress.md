@@ -15,6 +15,7 @@
 | 2026-03-04 | **Phase09 Religo**: Workspace 初期化（WorkspaceSeeder 冪等）と GET /api/workspaces の Feature テスト 1 本を追加。運用で workspace が最低 1 件ある状態を保証。feature/phase09-workspace-seed-and-test-v1 を develop に merge。 |
 | 2026-03-04 | **Phase10 Religo**: Meeting Breakout Room Builder。BO1/BO2 のメンバー割当・ルームメモ（breakout_rooms.notes）・メンバーへの meeting メモ導線を追加。GET/PUT /api/meetings, /api/meetings/{id}/breakouts。feature/phase10-breakout-room-builder-v1 を develop に merge。 |
 | 2026-03-04 | **Phase10R Religo**: Breakout Round 可変。Meeting ごとに Round を複数管理可能に拡張。breakout_rounds テーブル新規・breakout_rooms.breakout_round_id 追加・バックフィル。GET/PUT /api/meetings/{id}/breakout-rounds、DragonFlyBoard「BO (Round)」セクション追加。Phase10 の BO1/BO2 固定 API/UI は互換のため維持。 |
+| 2026-03-04 | **Phase11A Religo**: 管理画面メニュー整理（IA）。ReactAdmin カスタム Menu で Board → Members → 区切り → Meetings → 区切り → 1 to 1 の順に整理。1 to 1 は Meeting と独立であることを UI で明示。members/meetings/one-to-ones はプレースホルダー導線を追加。 |
 
 ---
 
