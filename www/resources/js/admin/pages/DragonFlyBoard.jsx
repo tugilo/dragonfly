@@ -33,10 +33,11 @@ export default function DragonFlyBoard() {
     const debounceRef = useRef(null);
 
     useEffect(() => {
-        fetchJson('/api/dragonfly/members')
+        const url = `/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`;
+        fetchJson(url)
             .then(setMembers)
             .catch((e) => console.error('members load failed', e));
-    }, []);
+    }, [ownerMemberId]);
 
     const loadSummary = useCallback(() => {
         if (!targetMember?.id || !ownerMemberId) return;
@@ -105,6 +106,37 @@ export default function DragonFlyBoard() {
                         getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
                         value={targetMember}
                         onChange={(_, v) => setTargetMember(v)}
+                        renderOption={(props, m) => {
+                            const lite = m.summary_lite;
+                            const contact = lite?.last_contact_at
+                                ? new Date(lite.last_contact_at).toLocaleDateString('ja-JP')
+                                : '未接触';
+                            const sameRoom = lite?.same_room_count ?? 0;
+                            const o2o = lite?.one_to_one_count ?? 0;
+                            const memoShort = lite?.last_memo?.body_short ?? '';
+                            return (
+                                <li {...props} key={m.id}>
+                                    <Box sx={{ width: '100%' }}>
+                                        <Typography variant="body2">
+                                            {`${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
+                                            {lite && (lite.interested || lite.want_1on1) && (
+                                                <Typography component="span" variant="caption" color="primary" sx={{ ml: 1 }}>
+                                                    {lite.interested && '気になる'}
+                                                    {lite.interested && lite.want_1on1 && ' / '}
+                                                    {lite.want_1on1 && '1on1'}
+                                                </Typography>
+                                            )}
+                                        </Typography>
+                                        {lite && (
+                                            <Typography variant="caption" color="text.secondary" display="block">
+                                                同室{sameRoom}回 / 1on1 {o2o}回 / 最終接触: {contact}
+                                                {memoShort && ` / ${memoShort}`}
+                                            </Typography>
+                                        )}
+                                    </Box>
+                                </li>
+                            );
+                        }}
                         renderInput={(params) => (
                             <TextField {...params} label="メンバーを選択" size="small" />
                         )}
