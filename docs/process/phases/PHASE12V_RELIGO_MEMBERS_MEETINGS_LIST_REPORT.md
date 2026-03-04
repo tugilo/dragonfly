@@ -34,7 +34,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | `c98e7c51d5083f0eff1bb9d4444b5761f0ffd215` |
 | **merge 元ブランチ名** | feature/phase12v-members-meetings-list-v1 |
-| **変更ファイル一覧** | （merge 後に記入） |
+| **変更ファイル一覧** | docs/INDEX.md, docs/dragonfly_progress.md, docs/process/phases/PHASE12V_RELIGO_MEMBERS_MEETINGS_LIST_PLAN.md, docs/process/phases/PHASE12V_RELIGO_MEMBERS_MEETINGS_LIST_REPORT.md, docs/process/phases/PHASE12V_RELIGO_MEMBERS_MEETINGS_LIST_WORKLOG.md, www/resources/js/admin/app.jsx, www/resources/js/admin/dataProvider.js, www/resources/js/admin/pages/MeetingsList.jsx, www/resources/js/admin/pages/MembersList.jsx |
 | **テスト結果** | 27 passed (125 assertions) |
