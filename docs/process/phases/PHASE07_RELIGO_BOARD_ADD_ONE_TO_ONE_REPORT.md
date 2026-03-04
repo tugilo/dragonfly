@@ -58,8 +58,8 @@ git push origin develop
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 7e7af1238b2535014701d246af20fb7fd9b19243 |
 | **merge 元ブランチ名** | feature/phase07-board-add-1to1-v1 |
 | **変更ファイル一覧** | 上記参照 |
-| **テスト結果** | php artisan test — 既存テスト green |
+| **テスト結果** | php artisan test — 13 passed (58 assertions) |
 | **手動確認** | planned 登録で one_to_one_count 更新。canceled 登録で last_* 変化なし。 |
