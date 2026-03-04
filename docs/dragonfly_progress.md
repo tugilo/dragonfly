@@ -18,6 +18,9 @@
 | 2026-03-04 | **Phase11A Religo**: 管理画面メニュー整理（IA）。ReactAdmin カスタム Menu で Board → Members → 区切り → Meetings → 区切り → 1 to 1 の順に整理。1 to 1 は Meeting と独立であることを UI で明示。members/meetings/one-to-ones はプレースホルダー導線を追加。 |
 | 2026-03-04 | **Phase11B Religo**: 1 to 1 独立一覧。GET /api/one-to-ones（フィルタ・並び順）、ReactAdmin Resource one-to-ones の List/Create。meeting_id は任意。OneToOneIndexTest 追加。 |
 | 2026-03-04 | **Phase12 Religo**: Board UX Refresh。固定 BO セクション撤去、Round UI のみに統一。Meeting Autocomplete + 状態 Chip、Round タブ + Chip 割当 + メモ Dialog（文脈表示）、保存 1 ボタン。 |
+| 2026-03-04 | **Phase12S Religo**: Board MUI Polish。Container/Grid/Card/Stack/Divider で骨格を整え、CardHeader・CardActions・Chip・LoadingButton で階層と状態を表現。機能は変更せず見た目・余白・導線のみ改善。 |
+| 2026-03-04 | **Phase12T Religo**: Admin Theme SSOT + 適用。Theme を religoTheme.js に集約し全ページに適用。Typography/shape/spacing/components override と CssBaseline で統一感を担保。Board は微調整のみ。 |
+| 2026-03-05 | **Phase12R Religo**: 全体ロードマップ SSOT 確定。docs/SSOT/ROADMAP.md で Phase 順序・DoD・依存・スコープロック・テスト規約・Execution Playbook・Next 3 を固定。4 レーン（UI/IA, データ整合, 機能拡張, 運用品質）の Phase 表を確定。 |
 
 ---
 
