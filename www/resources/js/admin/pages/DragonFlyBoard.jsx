@@ -1,8 +1,33 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Box, Grid, TextField, Autocomplete, Card, CardContent, Typography, FormControlLabel, Switch } from '@mui/material';
+import {
+    Box,
+    Grid,
+    TextField,
+    Autocomplete,
+    Card,
+    CardContent,
+    Typography,
+    FormControlLabel,
+    Switch,
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+} from '@mui/material';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
+const MEMO_TYPES = [
+    { value: 'other', label: 'その他' },
+    { value: 'meeting', label: '例会' },
+    { value: 'one_to_one', label: '1 to 1' },
+    { value: 'introduction', label: '紹介' },
+];
 
 async function fetchJson(url) {
     const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
@@ -23,6 +48,19 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
     return res.json();
 }
 
+async function postContactMemo(payload) {
+    const res = await fetch(`${API}/api/contact-memos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message || `POST contact-memos ${res.status}`);
+    }
+    return res.json();
+}
+
 export default function DragonFlyBoard() {
     const [ownerMemberId, setOwnerMemberId] = useState(1);
     const [members, setMembers] = useState([]);
@@ -32,12 +70,24 @@ export default function DragonFlyBoard() {
     const [pendingFlags, setPendingFlags] = useState(null);
     const debounceRef = useRef(null);
 
-    useEffect(() => {
-        const url = `/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`;
-        fetchJson(url)
+    // メモ追加モーダル
+    const [memoOpen, setMemoOpen] = useState(false);
+    const [memoBody, setMemoBody] = useState('');
+    const [memoType, setMemoType] = useState('other');
+    const [memoMeetingId, setMemoMeetingId] = useState('');
+    const [memoOneToOneId, setMemoOneToOneId] = useState('');
+    const [memoError, setMemoError] = useState('');
+    const [memoSubmitting, setMemoSubmitting] = useState(false);
+
+    const refetchMembers = useCallback(() => {
+        fetchJson(`/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`)
             .then(setMembers)
             .catch((e) => console.error('members load failed', e));
     }, [ownerMemberId]);
+
+    useEffect(() => {
+        refetchMembers();
+    }, [refetchMembers]);
 
     const loadSummary = useCallback(() => {
         if (!targetMember?.id || !ownerMemberId) return;
@@ -85,6 +135,53 @@ export default function DragonFlyBoard() {
     const displayFlags = pendingFlags ?? summary?.flags ?? { interested: false, want_1on1: false };
     const latestMemos = summary?.latest_memos ?? [];
     const interestedReason = summary?.latest_interested_reason;
+
+    const canSubmitMemo =
+        memoBody.trim() !== '' &&
+        (memoType !== 'meeting' || memoMeetingId.trim() !== '') &&
+        (memoType !== 'one_to_one' || memoOneToOneId.trim() !== '');
+
+    const openMemoDialog = () => {
+        setMemoBody('');
+        setMemoType('other');
+        setMemoMeetingId('');
+        setMemoOneToOneId('');
+        setMemoError('');
+        setMemoOpen(true);
+    };
+
+    const closeMemoDialog = () => {
+        setMemoOpen(false);
+        setMemoError('');
+    };
+
+    const submitMemo = async () => {
+        if (!targetMember?.id || !ownerMemberId || !canSubmitMemo) return;
+        setMemoSubmitting(true);
+        setMemoError('');
+        const payload = {
+            owner_member_id: ownerMemberId,
+            target_member_id: targetMember.id,
+            memo_type: memoType,
+            body: memoBody.trim(),
+        };
+        if (memoType === 'meeting' && memoMeetingId.trim() !== '') {
+            payload.meeting_id = parseInt(memoMeetingId, 10);
+        }
+        if (memoType === 'one_to_one' && memoOneToOneId.trim() !== '') {
+            payload.one_to_one_id = parseInt(memoOneToOneId, 10);
+        }
+        try {
+            await postContactMemo(payload);
+            refetchMembers();
+            loadSummary();
+            closeMemoDialog();
+        } catch (e) {
+            setMemoError(e.message || '保存に失敗しました');
+        } finally {
+            setMemoSubmitting(false);
+        }
+    };
 
     return (
         <Box sx={{ p: 2 }}>
@@ -176,6 +273,14 @@ export default function DragonFlyBoard() {
                                         }
                                         label="1on1 したい"
                                     />
+                                    <Button
+                                        size="small"
+                                        variant="outlined"
+                                        onClick={openMemoDialog}
+                                        sx={{ ml: 1 }}
+                                    >
+                                        メモ追加
+                                    </Button>
                                 </Box>
                                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                                     同室回数: {summary?.same_room_count ?? 0}
@@ -206,6 +311,72 @@ export default function DragonFlyBoard() {
                     )}
                 </Grid>
             </Grid>
+            <Dialog open={memoOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
+                <DialogTitle>メモ追加</DialogTitle>
+                <DialogContent>
+                    <FormControl fullWidth size="small" sx={{ mt: 1 }}>
+                        <InputLabel>種別</InputLabel>
+                        <Select
+                            value={memoType}
+                            label="種別"
+                            onChange={(e) => setMemoType(e.target.value)}
+                        >
+                            {MEMO_TYPES.map((t) => (
+                                <MenuItem key={t.value} value={t.value}>
+                                    {t.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        label="本文"
+                        multiline
+                        minRows={3}
+                        fullWidth
+                        required
+                        value={memoBody}
+                        onChange={(e) => setMemoBody(e.target.value)}
+                        sx={{ mt: 2 }}
+                    />
+                    {memoType === 'meeting' && (
+                        <TextField
+                            label="meeting_id（数値）"
+                            type="number"
+                            size="small"
+                            fullWidth
+                            value={memoMeetingId}
+                            onChange={(e) => setMemoMeetingId(e.target.value)}
+                            sx={{ mt: 2 }}
+                        />
+                    )}
+                    {memoType === 'one_to_one' && (
+                        <TextField
+                            label="one_to_one_id（数値）"
+                            type="number"
+                            size="small"
+                            fullWidth
+                            value={memoOneToOneId}
+                            onChange={(e) => setMemoOneToOneId(e.target.value)}
+                            sx={{ mt: 2 }}
+                        />
+                    )}
+                    {memoError && (
+                        <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+                            {memoError}
+                        </Typography>
+                    )}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeMemoDialog}>キャンセル</Button>
+                    <Button
+                        variant="contained"
+                        onClick={submitMemo}
+                        disabled={!canSubmitMemo || memoSubmitting}
+                    >
+                        {memoSubmitting ? '送信中...' : '保存'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
