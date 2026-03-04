@@ -67,3 +67,52 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 
 - PHP: PSR-12、Laravel の慣習に従う
 - 安定性を最優先する。指示外の変更をしない。
+
+---
+
+## Product Naming Rule (SSOT)
+
+Religo プロジェクトでは以下の命名を厳密に区別する。
+
+### Product
+**Religo**
+
+意味: Re + Ligo（再び結ぶ）
+
+定義: BNIなどのコミュニティにおいて「会の地図（Relationship Map）」を作り、人間関係の理解と紹介発想を支援するツール。
+
+### Chapter
+**DragonFly**
+
+定義: BNIのチャプター名。Religo が現在利用されているコミュニティ。
+
+注意: DragonFly はプロダクト名ではない。
+
+### Repository / Internal Name
+**dragonfly**
+
+理由: 既存環境との整合性のため変更しない。
+
+対象:
+- GitHub repository
+- Docker container
+- ローカルディレクトリ
+- Cursor workspace
+
+### AI作業ルール
+
+AIがコード・ドキュメントを生成する場合：
+
+**使用する名称**
+- Religo → プロダクト名
+- DragonFly → チャプター名
+- dragonfly → 内部識別子
+
+**禁止**
+- DragonFly をプロダクト名として扱うこと
+- Religo をリポジトリ名として扱うこと
+
+### SSOT
+
+命名の単一情報源は以下：
+- docs/PROJECT_NAMING.md
