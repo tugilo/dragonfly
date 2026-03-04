@@ -18,6 +18,7 @@ class BreakoutRoom extends Model
         'meeting_id',
         'room_label',
         'sort_order',
+        'notes',
     ];
 
     public function meeting(): BelongsTo
