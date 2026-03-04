@@ -26,6 +26,7 @@ import {
     Chip,
     IconButton,
     Snackbar,
+    Tooltip,
 } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
@@ -369,6 +370,9 @@ export default function DragonFlyBoard() {
         setMemoError('');
         setMemoContextTargetMemberId(null);
         setMemoContextMeetingId(null);
+        if (!selectedMeetingId) {
+            setSnackbarMessage('例会メモは中央で Meeting を選択してください');
+        }
         setMemoOpen(true);
     };
 
@@ -825,9 +829,13 @@ export default function DragonFlyBoard() {
                                             <Button size="small" variant="outlined" onClick={openO2oDialog}>
                                                 1 to 1 を登録
                                             </Button>
-                                            <Button size="small" variant="outlined" disabled title="紹介（Coming soon）">
-                                                紹介（Coming soon）
-                                            </Button>
+                                            <Tooltip title="紹介の登録は Phase14A で追加予定">
+                                                <span>
+                                                    <Button size="small" variant="outlined" disabled>
+                                                        紹介（Coming soon）
+                                                    </Button>
+                                                </span>
+                                            </Tooltip>
                                         </Stack>
                                         {!selectedMeetingId && (
                                             <Typography variant="caption" color="warning.main" sx={{ display: 'block', mt: 0.5 }}>
