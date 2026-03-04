@@ -29,7 +29,7 @@
 
 ## テスト結果
 
-（merge 後に記載）
+- `php artisan test` で 27 passed (125 assertions)。OneToOneIndexTest 4 件含む。
 
 ## DoD
 
@@ -37,11 +37,12 @@
 - [x] Resource から一覧・作成ができる
 - [x] meeting_id は任意
 - [x] docs 更新・Feature test green・1 コミット merge
-- [ ] REPORT に merge commit id
+- [x] REPORT に merge commit id を記録
 
 ## 取り込み証跡
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **テスト結果** | （passed 数） |
+| **merge commit id** | `9d2d467e23c00407f3d68459f63331797d4dc736` |
+| **merge 元ブランチ** | feature/phase11b-one-to-one-list-v1 |
+| **テスト結果** | 27 passed (125 assertions) |
