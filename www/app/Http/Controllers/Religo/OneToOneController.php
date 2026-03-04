@@ -3,15 +3,28 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Religo\IndexOneToOnesRequest;
 use App\Http\Requests\Religo\StoreOneToOneRequest;
+use App\Services\Religo\OneToOneIndexService;
 use App\Services\Religo\OneToOneService;
 use Illuminate\Http\JsonResponse;
 
 class OneToOneController extends Controller
 {
     public function __construct(
-        private OneToOneService $oneToOneService
+        private OneToOneService $oneToOneService,
+        private OneToOneIndexService $indexService
     ) {}
+
+    /**
+     * GET /api/one-to-ones — 一覧. SSOT: PHASE11B PLAN.
+     */
+    public function index(IndexOneToOnesRequest $request): JsonResponse
+    {
+        $filters = $request->validated();
+        $data = $this->indexService->getIndex($filters);
+        return response()->json($data);
+    }
 
     /**
      * POST /api/one-to-ones — 1 to 1 登録. SSOT: DATA_MODEL §4.9.

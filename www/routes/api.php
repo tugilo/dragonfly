@@ -8,6 +8,9 @@ use App\Http\Controllers\Api\DragonFlyMeetingController;
 use App\Http\Controllers\Api\DragonFlyMemberController;
 use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Religo\ContactMemoController;
+use App\Http\Controllers\Religo\MeetingBreakoutController;
+use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
+use App\Http\Controllers\Religo\MeetingController;
 use App\Http\Controllers\Religo\OneToOneController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,4 +48,15 @@ Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSu
     ->whereNumber('target_member_id');
 
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
+Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
+
+Route::get('/meetings', [MeetingController::class, 'index']);
+Route::get('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'show'])
+    ->whereNumber('meetingId');
+Route::put('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'update'])
+    ->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'show'])
+    ->whereNumber('meetingId');
+Route::put('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'update'])
+    ->whereNumber('meetingId');

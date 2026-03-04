@@ -16,9 +16,16 @@ class BreakoutRoom extends Model
 
     protected $fillable = [
         'meeting_id',
+        'breakout_round_id',
         'room_label',
         'sort_order',
+        'notes',
     ];
+
+    public function breakoutRound(): BelongsTo
+    {
+        return $this->belongsTo(BreakoutRound::class);
+    }
 
     public function meeting(): BelongsTo
     {

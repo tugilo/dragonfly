@@ -33,6 +33,11 @@ class Meeting extends Model
         return $this->hasMany(BreakoutRoom::class);
     }
 
+    public function breakoutRounds(): HasMany
+    {
+        return $this->hasMany(BreakoutRound::class);
+    }
+
     public function breakoutMemos(): HasMany
     {
         return $this->hasMany(BreakoutMemo::class);

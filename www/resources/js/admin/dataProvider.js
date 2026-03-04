@@ -27,6 +27,31 @@ export const dragonflyDataProvider = {
             console.log('[DataProvider] getList result', { count: total, data });
             return { data: Array.isArray(data) ? data : [], total };
         }
+        if (resource === 'one-to-ones') {
+            const q = new URLSearchParams();
+            const f = params?.filter ?? {};
+            if (f.owner_member_id != null) q.set('owner_member_id', String(f.owner_member_id));
+            if (f.status) q.set('status', f.status);
+            if (f.from) q.set('from', f.from);
+            if (f.to) q.set('to', f.to);
+            if (f.workspace_id != null) q.set('workspace_id', String(f.workspace_id));
+            const url = `/api/one-to-ones${q.toString() ? `?${q.toString()}` : ''}`;
+            const data = await request(url);
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'members') {
+            const owner = getOwnerMemberId(params);
+            const url = `/api/dragonfly/members?owner_member_id=${owner}&with_summary=1`;
+            const data = await request(url);
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'meetings') {
+            const data = await request('/api/meetings');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
         return { data: [], total: 0 };
     },
 
@@ -66,7 +91,22 @@ export const dragonflyDataProvider = {
 
     getMany: () => Promise.resolve({ data: [] }),
     getManyReference: () => Promise.resolve({ data: [], total: 0 }),
-    create: () => Promise.reject(new Error('create not implemented')),
+    create: async (resource, params) => {
+        if (resource === 'one-to-ones') {
+            const res = await fetch(`${API_BASE}/api/one-to-ones`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(params.data),
+            });
+            if (!res.ok) {
+                const j = await res.json().catch(() => ({}));
+                throw new Error(j.message || `POST one-to-ones ${res.status}`);
+            }
+            const data = await res.json();
+            return { data: { ...params.data, id: data.id } };
+        }
+        throw new Error(`create not implemented for ${resource}`);
+    },
     delete: () => Promise.reject(new Error('delete not implemented')),
     deleteMany: () => Promise.resolve({ data: [] }),
     updateMany: () => Promise.resolve({ data: [] }),
