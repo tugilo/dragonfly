@@ -67,8 +67,8 @@ www/tests/Feature/Api/RoleApiTest.php
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | 69b12a153ea97c30437831c1c1e0312992dd16e2 |
 | **merge 元ブランチ名** | feature/phase16c-settings-crud-and-member-actions-v1 |
-| **変更ファイル一覧** | （merge 後に記入） |
+| **変更ファイル一覧** | docs/INDEX.md, docs/dragonfly_progress.md, PHASE16C_* (PLAN/WORKLOG/REPORT), CategoryController.php, RoleController.php, api.php, ReligoMenu.jsx, app.jsx, dataProvider.js, Dashboard.jsx, MembersList.jsx, MemberShow.jsx, CategoriesList/Create/Edit.jsx, RolesList/Create/Edit.jsx, RoleHistoryList.jsx, CategoryApiTest.php, RoleApiTest.php（CategoriesPage.jsx, RolesPage.jsx 削除） |
 | **テスト結果** | 44 passed (196 assertions) |
 | **手動確認** | 未実施 |
