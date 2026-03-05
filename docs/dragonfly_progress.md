@@ -26,6 +26,7 @@
 | 2026-03-05 | **Phase12W Religo**: Board ショートカット導線。右ペイン「メモを書く」で Meeting 未選択時に Snackbar で誘導。紹介ボタンに Tooltip（Phase14A で追加予定）。1to1 の「Meeting と独立」キャプション維持。 |
 | 2026-03-05 | **Phase16A Religo**: Members 要件 SSOT 確定。docs/SSOT/MEMBERS_REQUIREMENTS.md で List/Show/Edit・表示項目・操作・メモ・1to1・役職履歴・権限・非目標・DoD を固定。実装は次 Phase。 |
 | 2026-03-05 | **Phase16B Religo**: 管理画面 UI モック同期。religo-admin-mock.html を SSOT にメニュー・全ページ・モーダルを統一。Dashboard / Connections / Members / Meetings / 1 to 1 / Role History / Settings(Categories,Roles)。Members にメモ・1to1・1to1メモの 3 モーダル追加。 |
+| 2026-03-05 | **Phase16C Religo**: Admin UI Mock→Working。Settings（Categories/Roles）を実 API で CRUD。Role History を GET /api/member-roles に接続。Members 一覧にカテゴリ・役職・最終接触・詳細（Member Show）・1to1メモ紐付け。CategoryApiTest/RoleApiTest 追加。 |
 
 ---
 

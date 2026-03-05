@@ -48,7 +48,16 @@ Route::get('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'show']
 Route::put('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'update'])->whereNumber('id');
 
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->whereNumber('id');
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::put('/categories/{id}', [CategoryController::class, 'update'])->whereNumber('id');
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->whereNumber('id');
+
 Route::get('/roles', [RoleController::class, 'index']);
+Route::get('/roles/{id}', [RoleController::class, 'show'])->whereNumber('id');
+Route::post('/roles', [RoleController::class, 'store']);
+Route::put('/roles/{id}', [RoleController::class, 'update'])->whereNumber('id');
+Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->whereNumber('id');
 
 Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
