@@ -86,16 +86,16 @@ export const ReligoMenu = () => {
             </ListSubheader>
             <MenuItem
                 component={Link}
-                to="/settings/categories"
-                selected={isActive('/settings/categories')}
+                to="/categories"
+                selected={isActive('/categories')}
                 sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
             >
                 Categories
             </MenuItem>
             <MenuItem
                 component={Link}
-                to="/settings/roles"
-                selected={isActive('/settings/roles')}
+                to="/roles"
+                selected={isActive('/roles')}
                 sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
             >
                 Roles

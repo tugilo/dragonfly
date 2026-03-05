@@ -25,6 +25,9 @@ export default function Dashboard() {
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                         今日の活動・未アクション・KPI
                     </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                        表示は静的です（実データ連携は今後の Phase で対応）
+                    </Typography>
                 </Box>
                 <Stack direction="row" spacing={1} flexWrap="wrap">
                     <Button component={Link} to="/connections" variant="contained" size="small">🗺 Connectionsへ</Button>

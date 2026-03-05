@@ -78,6 +78,22 @@ function SameRoomCountField({ record }) {
     return <span>{n}</span>;
 }
 
+function CategoryField({ record }) {
+    const c = record?.category;
+    if (!c) return <span>—</span>;
+    return <span>{c.group_name} / {c.name}</span>;
+}
+
+function LastContactField({ record }) {
+    const d = record?.summary_lite?.last_contact_at;
+    if (!d) return <span>—</span>;
+    try {
+        return <span>{new Date(d).toLocaleDateString('ja-JP')}</span>;
+    } catch {
+        return <span>{String(d)}</span>;
+    }
+}
+
 function LastMemoField({ record }) {
     const body = record?.summary_lite?.last_memo?.body_short;
     if (!body) return <span>—</span>;
@@ -88,10 +104,11 @@ function MemberRowActions({ record }) {
     const ctx = useContext(MembersModalContext);
     if (!ctx || !record) return null;
     return (
-        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', alignItems: 'center' }}>
             <Button size="small" variant="contained" onClick={() => ctx.openMemo(record)}>✏️ メモ</Button>
             <Button size="small" variant="outlined" onClick={() => ctx.openO2o(record)}>📅 1to1</Button>
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
+            <Button size="small" variant="outlined" color="inherit" component={Link} to={`/members/${record.id}`}>詳細</Button>
         </Box>
     );
 }
@@ -283,25 +300,40 @@ function O2oModal({ open, member, onClose, onSaved }) {
 
 function O2oMemoModal({ open, member, onClose, onSaved }) {
     const [body, setBody] = useState('');
+    const [oneToOneId, setOneToOneId] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [otoList, setOtoList] = useState([]);
     const notify = useNotify();
 
     useEffect(() => {
-        if (open) { setBody(''); setError(''); }
+        if (open) { setBody(''); setOneToOneId(''); setError(''); setOtoList([]); }
+    }, [open, member?.id]);
+
+    useEffect(() => {
+        if (!open || !member?.id) return;
+        fetch(`${API}/api/one-to-ones?owner_member_id=${OWNER_MEMBER_ID}`)
+            .then((res) => res.ok ? res.json() : [])
+            .then((arr) => {
+                const forTarget = Array.isArray(arr) ? arr.filter((o) => Number(o.target_member_id) === Number(member.id)) : [];
+                setOtoList(forTarget);
+            })
+            .catch(() => setOtoList([]));
     }, [open, member?.id]);
 
     const handleSave = async () => {
         if (!member?.id || !body.trim()) return;
         setLoading(true);
         setError('');
+        const payload = {
+            owner_member_id: OWNER_MEMBER_ID,
+            target_member_id: member.id,
+            memo_type: 'one_to_one',
+            body: body.trim(),
+        };
+        if (oneToOneId) payload.one_to_one_id = parseInt(oneToOneId, 10);
         try {
-            await postContactMemo({
-                owner_member_id: OWNER_MEMBER_ID,
-                target_member_id: member.id,
-                memo_type: 'one_to_one',
-                body: body.trim(),
-            });
+            await postContactMemo(payload);
             notify('1to1メモを保存しました');
             onSaved?.();
             onClose();
@@ -317,9 +349,23 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
         <Dialog open onClose={onClose} maxWidth="sm" fullWidth>
             <DialogTitle>📝 1to1メモ <Typography component="span" variant="body2" color="text.secondary" fontWeight={400}>— {member?.name}</Typography></DialogTitle>
             <DialogContent>
-                <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ display: 'block', mb: 1 }}>過去の1to1履歴</Typography>
+                <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ display: 'block', mb: 1 }}>過去の1to1（紐付け任意）</Typography>
                 <Box sx={{ bgcolor: 'grey.100', borderRadius: 1, p: 1.5, maxHeight: 140, overflow: 'auto' }}>
-                    <Typography variant="body2" color="text.secondary">（一覧は API 連携後に表示）</Typography>
+                    {otoList.length === 0 ? (
+                        <Typography variant="body2" color="text.secondary">1to1履歴はまだありません</Typography>
+                    ) : (
+                        <FormControl fullWidth size="small" sx={{ mt: 0 }}>
+                            <InputLabel>今回のメモを紐づける1to1（任意）</InputLabel>
+                            <Select value={oneToOneId} label="今回のメモを紐づける1to1（任意）" onChange={(e) => setOneToOneId(e.target.value)}>
+                                <MenuItem value="">— 紐づけない</MenuItem>
+                                {otoList.map((o) => (
+                                    <MenuItem key={o.id} value={String(o.id)}>
+                                        {o.scheduled_at || o.started_at ? new Date(o.scheduled_at || o.started_at).toLocaleDateString('ja-JP') : '—'} — {o.status || ''}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
                 </Box>
                 <MuiTextField label="今回のメモ" multiline rows={4} fullWidth placeholder="今回の1to1で話した内容…" value={body} onChange={(e) => setBody(e.target.value)} sx={{ mt: 2 }} />
                 {error && <Typography color="error" variant="body2" sx={{ mt: 2 }}>{error}</Typography>}
@@ -367,7 +413,10 @@ export function MembersList() {
                     <Datagrid rowClick={false}>
                         <TextField source="display_no" label="番号" emptyText="—" />
                         <TextField source="name" label="名前" />
+                        <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
+                        <TextField source="current_role" label="役職" emptyText="—" />
                         <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
+                        <FunctionField label="最終接触" render={(r) => <LastContactField record={r} />} />
                         <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
                         <FunctionField label="Actions" render={(r) => <MemberRowActions record={r} />} />
                     </Datagrid>

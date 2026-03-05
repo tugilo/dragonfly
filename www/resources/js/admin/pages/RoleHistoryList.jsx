@@ -1,11 +1,21 @@
-import React from 'react';
-import { List, Datagrid, TextField, FunctionField, TopToolbar, Button } from 'react-admin';
+import React, { useEffect, useState } from 'react';
+import {
+    List,
+    Datagrid,
+    TextField,
+    FunctionField,
+    TopToolbar,
+    Button,
+    Filter,
+    SelectInput,
+    TextInput,
+    useDataProvider,
+} from 'react-admin';
 import { Link } from 'react-router-dom';
 import { Chip } from '@mui/material';
 
 /**
- * Role History 一覧。SSOT: religo-admin-mock.html (pg-role-history).
- * API 未整備のため dataProvider がスタブを返す。UI のみモック準拠。
+ * Role History 一覧。GET /api/member-roles を利用。フィルタ: role_id, member_id, from, to.
  */
 const ROLE_CHIP_COLOR = {
     プレジ: 'warning',
@@ -21,8 +31,30 @@ function RoleHistoryActions() {
     return (
         <TopToolbar>
             <Button component={Link} to="/connections" variant="outlined" size="small">🗺 Connectionsへ</Button>
-            <Button variant="contained" size="small" disabled>＋ 役職追加（Coming soon）</Button>
+            <Button component={Link} to="/roles/create" variant="contained" size="small">＋ 役職追加</Button>
         </TopToolbar>
+    );
+}
+
+function RoleHistoryFilters(props) {
+    const [roleChoices, setRoleChoices] = useState([]);
+    const [memberChoices, setMemberChoices] = useState([]);
+    const dataProvider = useDataProvider();
+
+    useEffect(() => {
+        dataProvider.getList('roles', { pagination: { page: 1, perPage: 100 }, sort: { field: 'name', order: 'ASC' }, filter: {} })
+            .then((r) => setRoleChoices((r.data || []).map((x) => ({ id: x.id, name: x.name }))));
+        dataProvider.getList('members', { pagination: { page: 1, perPage: 500 }, sort: { field: 'id', order: 'ASC' }, filter: {} })
+            .then((r) => setMemberChoices((r.data || []).map((x) => ({ id: x.id, name: x.name || `#${x.id}` }))));
+    }, [dataProvider]);
+
+    return (
+        <Filter {...props}>
+            <SelectInput source="role_id" label="役職" choices={roleChoices} alwaysOn />
+            <SelectInput source="member_id" label="メンバー" choices={memberChoices} alwaysOn />
+            <TextInput source="from" label="from (日付)" type="date" />
+            <TextInput source="to" label="to (日付)" type="date" />
+        </Filter>
     );
 }
 
@@ -33,6 +65,7 @@ export function RoleHistoryList() {
             actions={<RoleHistoryActions />}
             perPage={25}
             sort={{ field: 'start', order: 'DESC' }}
+            filters={[<RoleHistoryFilters key="filters" />]}
         >
             <Datagrid rowClick={false}>
                 <TextField source="member" label="メンバー" />
@@ -60,12 +93,6 @@ export function RoleHistoryList() {
                         ) : (
                             <Chip label="終了" size="small" variant="outlined" />
                         )
-                    )}
-                />
-                <FunctionField
-                    label="Actions"
-                    render={() => (
-                        <Button size="small" variant="outlined" disabled>✏️ 編集</Button>
                     )}
                 />
             </Datagrid>

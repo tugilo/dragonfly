@@ -52,18 +52,35 @@ export const dragonflyDataProvider = {
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
         }
+        if (resource === 'categories') {
+            const data = await request('/api/categories');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'roles') {
+            const data = await request('/api/roles');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
         if (resource === 'role-history') {
-            // UI only: stub for Role History until API is ready
-            const stub = [
-                { id: 1, member: '田中 誠一', role: 'プレジ', start: '2025-01-01', end: null, current: true },
-                { id: 2, member: '鈴木 花子', role: 'バイス', start: '2025-01-01', end: null, current: true },
-                { id: 3, member: '山田 大輔', role: '書記', start: '2025-01-01', end: null, current: true },
-                { id: 4, member: '小林 陽子', role: '会計', start: '2025-01-01', end: null, current: true },
-                { id: 5, member: '佐藤 美咲', role: 'メンター', start: '2025-01-01', end: null, current: true },
-                { id: 6, member: '水野 花菜', role: 'エドコ', start: '2025-01-01', end: null, current: true },
-                { id: 7, member: '渡辺 彩香', role: 'バイス', start: '2024-01-01', end: '2024-12-31', current: false },
-            ];
-            return { data: stub, total: stub.length };
+            const q = new URLSearchParams();
+            const f = params?.filter ?? {};
+            if (f.role_id != null) q.set('role_id', String(f.role_id));
+            if (f.member_id != null) q.set('member_id', String(f.member_id));
+            if (f.from) q.set('from', f.from);
+            if (f.to) q.set('to', f.to);
+            const url = `/api/member-roles${q.toString() ? `?${q.toString()}` : ''}`;
+            const data = await request(url);
+            const arr = Array.isArray(data) ? data : [];
+            const withCurrent = arr.map((row) => ({
+                ...row,
+                member: row.member_name,
+                role: row.role_name,
+                start: row.term_start,
+                end: row.term_end,
+                current: row.term_end == null,
+            }));
+            return { data: withCurrent, total: withCurrent.length };
         }
         return { data: [], total: 0 };
     },
@@ -75,6 +92,18 @@ export const dragonflyDataProvider = {
             console.log('[DataProvider] getOne dragonflySummary', url);
             const data = await request(url);
             console.log('[DataProvider] getOne result', data);
+            return { data };
+        }
+        if (resource === 'members') {
+            const data = await request(`/api/dragonfly/members/${params.id}`);
+            return { data };
+        }
+        if (resource === 'categories') {
+            const data = await request(`/api/categories/${params.id}`);
+            return { data };
+        }
+        if (resource === 'roles') {
+            const data = await request(`/api/roles/${params.id}`);
             return { data };
         }
         throw new Error(`getOne not implemented for ${resource}`);
@@ -99,6 +128,20 @@ export const dragonflyDataProvider = {
             console.log('[DataProvider] update result', data);
             return { data };
         }
+        if (resource === 'categories') {
+            const data = await request(`/api/categories/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(params.data),
+            });
+            return { data };
+        }
+        if (resource === 'roles') {
+            const data = await request(`/api/roles/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(params.data),
+            });
+            return { data };
+        }
         throw new Error(`update not implemented for ${resource}`);
     },
 
@@ -118,9 +161,47 @@ export const dragonflyDataProvider = {
             const data = await res.json();
             return { data: { ...params.data, id: data.id } };
         }
+        if (resource === 'categories') {
+            const data = await request('/api/categories', {
+                method: 'POST',
+                body: JSON.stringify(params.data),
+            });
+            return { data: { ...params.data, id: data.id } };
+        }
+        if (resource === 'roles') {
+            const data = await request('/api/roles', {
+                method: 'POST',
+                body: JSON.stringify(params.data),
+            });
+            return { data: { ...params.data, id: data.id } };
+        }
         throw new Error(`create not implemented for ${resource}`);
     },
-    delete: () => Promise.reject(new Error('delete not implemented')),
+    delete: async (resource, params) => {
+        if (resource === 'categories') {
+            const res = await fetch(`${API_BASE}/api/categories/${params.id}`, {
+                method: 'DELETE',
+                headers: { Accept: 'application/json' },
+            });
+            if (!res.ok) {
+                const j = await res.json().catch(() => ({}));
+                throw new Error(j.message || `DELETE category ${res.status}`);
+            }
+            return { data: params.previousData };
+        }
+        if (resource === 'roles') {
+            const res = await fetch(`${API_BASE}/api/roles/${params.id}`, {
+                method: 'DELETE',
+                headers: { Accept: 'application/json' },
+            });
+            if (!res.ok) {
+                const j = await res.json().catch(() => ({}));
+                throw new Error(j.message || `DELETE role ${res.status}`);
+            }
+            return { data: params.previousData };
+        }
+        return Promise.reject(new Error('delete not implemented'));
+    },
     deleteMany: () => Promise.resolve({ data: [] }),
     updateMany: () => Promise.resolve({ data: [] }),
 };
