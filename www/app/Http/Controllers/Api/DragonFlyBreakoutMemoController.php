@@ -127,7 +127,7 @@ class DragonFlyBreakoutMemoController extends Controller
                 if ($session !== null) {
                     $q->where('room_label', 'like', 'S' . $session . '-%');
                 }
-            }, 'breakoutRooms.participants.member'])
+            }, 'breakoutRooms.participants.member.category'])
             ->first();
         if (! $participant) {
             return response()->json(['message' => 'Participant not found.'], 404);
@@ -154,7 +154,7 @@ class DragonFlyBreakoutMemoController extends Controller
                 'display_no' => $p->member->display_no,
                 'name' => $p->member->name,
                 'name_kana' => $p->member->name_kana,
-                'category' => $p->member->category,
+                'category' => $p->member->category ? ($p->member->category->group_name . ($p->member->category->name !== $p->member->category->group_name ? ' / ' . $p->member->category->name : '')) : null,
             ] : null,
         ])->values()->all();
 

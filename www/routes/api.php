@@ -1,16 +1,19 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DragonFlyBreakoutAssignmentController;
 use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
 use App\Http\Controllers\Api\DragonFlyContactFlagController;
 use App\Http\Controllers\Api\DragonFlyContactSummaryController;
 use App\Http\Controllers\Api\DragonFlyMeetingController;
 use App\Http\Controllers\Api\DragonFlyMemberController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
 use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
+use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +44,11 @@ Route::put('/dragonfly/flags/{target_member_id}', [DragonFlyContactFlagControlle
     ->whereNumber('target_member_id');
 
 Route::get('/dragonfly/members', [DragonFlyMemberController::class, 'index']);
+Route::get('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'show'])->whereNumber('id');
+Route::put('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'update'])->whereNumber('id');
+
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/roles', [RoleController::class, 'index']);
 
 Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
@@ -50,6 +58,8 @@ Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSu
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
+
+Route::get('/member-roles', [MemberRoleController::class, 'index']);
 
 Route::get('/meetings', [MeetingController::class, 'index']);
 Route::get('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'show'])

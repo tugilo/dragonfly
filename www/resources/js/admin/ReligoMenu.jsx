@@ -10,6 +10,7 @@ export const ReligoMenu = () => (
     <Menu>
         <Menu.DashboardItem primaryText="Board（会の地図）" />
         <Menu.ResourceItem name="members" />
+        <Menu.ResourceItem name="member-roles" />
         <Divider sx={{ my: 1 }} />
         <Menu.ResourceItem name="meetings" />
         <Divider sx={{ my: 1 }} />

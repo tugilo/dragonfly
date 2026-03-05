@@ -24,6 +24,9 @@
 | 2026-03-05 | **Phase12U Religo**: Board 3ペイン IA。左：メンバー選択、中：Meeting 選択＋Round 編集、右：関係ログ（クイックアクション・要点・紹介 Coming soon）。getMeetings 追加。既存 Round 保存・メモ・1to1 導線維持。 |
 | 2026-03-05 | **Phase12V Religo**: Members / Meetings の List 実装（placeholder 卒業）。dataProvider に members.getList / meetings.getList 追加。MembersList.jsx / MeetingsList.jsx で実データ Datagrid 表示、TopToolbar に「Board へ戻る」追加。 |
 | 2026-03-05 | **Phase12W Religo**: Board ショートカット導線。右ペイン「メモを書く」で Meeting 未選択時に Snackbar で誘導。紹介ボタンに Tooltip（Phase14A で追加予定）。1to1 の「Meeting と独立」キャプション維持。 |
+| 2026-03-05 | **Phase14 Religo**: Member モデルリファクタ。category 正規化（categories テーブル・category_id）、role 履歴（roles / member_roles）。Member API で category オブジェクト・current_role。Admin で Member 一覧・編集（カテゴリー/役職 select）。 |
+| 2026-03-05 | **Phase15A Religo**: SSOT（DATA_MODEL）を Phase14 正規化に同期。members / categories / roles / member_roles を明記。current_role 定義・API 互換を記載。 |
+| 2026-03-05 | **Phase15B Religo**: 役職履歴照会。GET /api/member-roles（role_id / member_id / from / to フィルタ）、MemberRolesList（閲覧特化）、メニューに「役職履歴」追加。 |
 
 ---
 

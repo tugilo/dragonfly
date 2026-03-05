@@ -21,7 +21,9 @@ class DragonFlyMemberController extends Controller
     public function index(Request $request): JsonResponse
     {
         $members = Member::query()
-            ->select('id', 'display_no', 'name', 'name_kana', 'category')
+            ->with('category')
+            ->with('memberRoles.role')
+            ->select('id', 'display_no', 'name', 'name_kana', 'category_id')
             ->orderBy('id')
             ->get();
 
@@ -36,6 +38,12 @@ class DragonFlyMemberController extends Controller
             $members = $members->map(function ($m) use ($batch) {
                 $lite = $batch[$m->id] ?? null;
                 $arr = $m->toArray();
+                $arr['category'] = $m->category ? [
+                    'id' => $m->category->id,
+                    'group_name' => $m->category->group_name,
+                    'name' => $m->category->name,
+                ] : null;
+                $arr['current_role'] = $m->currentRole()?->name;
                 if ($lite !== null) {
                     $arr['summary_lite'] = [
                         'same_room_count' => $lite['same_room_count'],
@@ -49,9 +57,83 @@ class DragonFlyMemberController extends Controller
                 return $arr;
             });
         } else {
-            $members = $members->map(fn ($m) => $m->toArray());
+            $members = $members->map(function ($m) {
+                $arr = $m->toArray();
+                $arr['category'] = $m->category ? [
+                    'id' => $m->category->id,
+                    'group_name' => $m->category->group_name,
+                    'name' => $m->category->name,
+                ] : null;
+                $arr['current_role'] = $m->currentRole()?->name;
+                return $arr;
+            });
         }
 
         return response()->json($members->values()->all());
+    }
+
+    /**
+     * GET /api/dragonfly/members/{id} — 1件取得（編集用）.
+     */
+    public function show(int $id): JsonResponse
+    {
+        $member = Member::with('category', 'memberRoles.role')->find($id);
+        if (! $member) {
+            return response()->json(['message' => 'Member not found.'], 404);
+        }
+        $arr = $member->toArray();
+        $arr['category'] = $member->category ? [
+            'id' => $member->category->id,
+            'group_name' => $member->category->group_name,
+            'name' => $member->category->name,
+        ] : null;
+        $arr['current_role'] = $member->currentRole()?->name;
+        $arr['current_role_id'] = $member->currentRole()?->id;
+        $arr['role_id'] = $member->currentRole()?->id;
+
+        return response()->json($arr);
+    }
+
+    /**
+     * PUT /api/dragonfly/members/{id} — 更新（category_id, 現在役職を member_roles で更新）.
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $member = Member::find($id);
+        if (! $member) {
+            return response()->json(['message' => 'Member not found.'], 404);
+        }
+        $categoryId = $request->input('category_id');
+        if (array_key_exists('category_id', $request->all())) {
+            $member->category_id = $categoryId ? (int) $categoryId : null;
+        }
+        $member->fill($request->only(['name', 'name_kana', 'type', 'display_no', 'introducer_member_id', 'attendant_member_id']));
+        $member->save();
+
+        if (array_key_exists('role_id', $request->all())) {
+            $today = now()->toDateString();
+            $member->memberRoles()->whereNull('term_end')->update(['term_end' => $today]);
+            $roleId = $request->input('role_id');
+            if ($roleId) {
+                $member->memberRoles()->create([
+                    'role_id' => (int) $roleId,
+                    'term_start' => $today,
+                    'term_end' => null,
+                ]);
+            }
+        }
+
+        $member->load('category', 'memberRoles.role');
+        $arr = $member->toArray();
+        $arr['category'] = $member->category ? [
+            'id' => $member->category->id,
+            'group_name' => $member->category->group_name,
+            'name' => $member->category->name,
+        ] : null;
+        $arr['current_role'] = $member->currentRole()?->name;
+        $arr['current_role_id'] = $member->currentRole()?->id;
+        $arr['role_id'] = $member->currentRole()?->id;
+
+        return response()->json($arr);
     }
 }
