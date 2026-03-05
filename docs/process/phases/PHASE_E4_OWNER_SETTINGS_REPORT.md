@@ -109,10 +109,10 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記録） |
+| **merge commit id** | `38707b3e14f00c73172fa392df427c9879437366` |
 | **merge 元ブランチ名** | feature/e4-owner-settings-close |
 | **変更ファイル一覧** | docs/SSOT/DASHBOARD_DATA_SSOT.md, docs/process/phases/PHASE_E4_OWNER_SETTINGS_REPORT.md |
-| **テスト結果** | php artisan test / npm run build 実施済み |
+| **テスト結果** | php artisan test — 69 passed。npm run build — 成功。 |
 | **手動確認** | 特になし |
 
 ---
