@@ -8,23 +8,21 @@
 
 ## 1. 実施内容（Phase 完了時に記入）
 
-- （D-2 完了時）Dashboard.jsx をモック #pg-dashboard に合わせて修正。ヘッダー・stats・2 カラム・Tasks 4 件・クイックショートカット・最近の活動 6 件を静的表示で一致。
-- （D-3 完了時）チェックリスト全項目確認、モック比較実施、REPORT 確定。
+- **Phase D-2 完了:** Dashboard.jsx をモック #pg-dashboard に合わせて修正。ページヘッダー（タイトル・サブ・2 ボタン、注記削除）、統計カード 4 枚（値 3/5/8/4、grid 4 列・gap 12px）、2 カラム（1fr 340px・gap 14px・1100px で 1 列）、今日やること 4 件、クイックショートカット 4 ボタン、最近の活動 6 件を静的表示で一致。WORKLOG Step1〜7 を根拠付きで記録。
 
 ---
 
 ## 2. 変更ファイル一覧（Phase 完了時に記入）
 
-- （D-2 完了時）`git diff --name-only develop...feature/dashboard-mock-align-impl` の結果を貼る。
-- （D-1 のみの場合は）docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_PLAN.md, PHASE_DASHBOARD_MOCK_ALIGN_WORKLOG.md, PHASE_DASHBOARD_MOCK_ALIGN_REPORT.md, docs/INDEX.md
+- **Phase D-2:** docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_WORKLOG.md, www/resources/js/admin/pages/Dashboard.jsx
 
 ---
 
 ## 3. テスト結果（Phase 完了時に記入）
 
-- **php artisan test:** （実行コマンドと pass 数）
-- **フロントビルド:** （例: `npm run build` — 成功/失敗）
-- 特記事項: （あれば）
+- **php artisan test:** 53 passed (226 assertions)
+- **npm run build:** 成功（Vite build）
+- 特記事項: なし
 
 ---
 
@@ -50,12 +48,24 @@
 
 PR を介さない運用のため、feature を develop に取り込んだあと、このセクションを REPORT に追加する。
 
+**Phase D-1（feature/dashboard-mock-align-docs）**
+
 | 項目 | 内容 |
 |------|------|
 | **merge commit id** | `5f5c17b2df36363327119e8676211a254e0406c1` |
 | **merge 元ブランチ名** | feature/dashboard-mock-align-docs |
 | **変更ファイル一覧** | docs/INDEX.md, docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_PLAN.md, PHASE_DASHBOARD_MOCK_ALIGN_REPORT.md, PHASE_DASHBOARD_MOCK_ALIGN_WORKLOG.md |
 | **テスト結果** | docker compose ... exec app php artisan test — Tests: 53 passed (226 assertions)。npm run build — 成功。 |
+| **手動確認** | 特になし |
+
+**Phase D-2（feature/dashboard-mock-align-impl）**
+
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | `2bf869df5efbb872e59a0c6a76a40a26dc618722` |
+| **merge 元ブランチ名** | feature/dashboard-mock-align-impl |
+| **変更ファイル一覧** | docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_WORKLOG.md, www/resources/js/admin/pages/Dashboard.jsx |
+| **テスト結果** | php artisan test — 53 passed (226 assertions)。npm run build — 成功。 |
 | **手動確認** | 特になし |
 
 ---
