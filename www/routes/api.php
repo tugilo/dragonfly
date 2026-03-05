@@ -17,6 +17,7 @@ use App\Http\Controllers\Religo\MeetingMemoController;
 use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
 use App\Http\Controllers\Religo\DashboardController;
+use App\Http\Controllers\Religo\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,6 +67,9 @@ Route::get('/workspaces', [WorkspaceController::class, 'index']);
 Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
 Route::get('/dashboard/tasks', [DashboardController::class, 'tasks']);
 Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+
+Route::get('/users/me', [UserController::class, 'showMe']);
+Route::patch('/users/me', [UserController::class, 'updateMe']);
 
 Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
     ->whereNumber('target_member_id');

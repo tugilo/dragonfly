@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,
     Card,
@@ -7,19 +7,28 @@ import {
     Typography,
     Button,
     Chip,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const API_BASE = '';
-/** 暫定。他ページ（MembersList/MeetingDetailDrawer）と統一。current owner を返す API が無いため E-4 で検討。 */
-const OWNER_MEMBER_ID = 1;
 
 async function dashboardRequest(path, params = {}) {
-    const q = new URLSearchParams({ owner_member_id: String(params.owner_member_id ?? OWNER_MEMBER_ID) });
+    const q = new URLSearchParams();
+    if (params.owner_member_id != null) q.set('owner_member_id', String(params.owner_member_id));
     if (params.limit != null) q.set('limit', String(params.limit));
     const url = `${API_BASE}/api/dashboard/${path}${q.toString() ? `?${q.toString()}` : ''}`;
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`Dashboard API ${res.status}`);
+    return res.json();
+}
+
+async function fetchJson(url, options = {}) {
+    const res = await fetch(`${API_BASE}${url}`, { headers: { Accept: 'application/json', ...options.headers }, ...options });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }
 
@@ -50,35 +59,100 @@ const ACTIVITY_FALLBACK = [
 ];
 
 /**
- * Religo Dashboard. SSOT: DASHBOARD_REQUIREMENTS.md. API: GET /api/dashboard/stats, tasks, activity.
+ * Religo Dashboard. SSOT: DASHBOARD_REQUIREMENTS.md. E-4: owner を user 設定で保存し、未設定時は設定UI・設定済みは Owner セレクタを表示。
  */
 export default function Dashboard() {
+    const [ownerMemberId, setOwnerMemberId] = useState(null);
+    const [needOwnerSetup, setNeedOwnerSetup] = useState(false);
+    const [members, setMembers] = useState([]);
     const [stats, setStats] = useState(STATS_DEFAULT);
     const [tasks, setTasks] = useState(TASKS_FALLBACK);
     const [activity, setActivity] = useState(ACTIVITY_FALLBACK);
     const [loading, setLoading] = useState(true);
+    const [savingOwner, setSavingOwner] = useState(false);
+    const [ownerError, setOwnerError] = useState('');
+
+    const loadMe = useCallback(async () => {
+        try {
+            const data = await fetchJson('/api/users/me');
+            const id = data.owner_member_id ?? null;
+            setOwnerMemberId(id);
+            setNeedOwnerSetup(id == null);
+            return id;
+        } catch {
+            setNeedOwnerSetup(true);
+            setOwnerMemberId(null);
+            return null;
+        }
+    }, []);
+
+    const loadMembers = useCallback(async () => {
+        try {
+            const data = await fetchJson('/api/dragonfly/members');
+            setMembers(Array.isArray(data) ? data : []);
+        } catch {
+            setMembers([]);
+        }
+    }, []);
+
+    const loadDashboard = useCallback(async () => {
+        try {
+            const [s, t, a] = await Promise.all([
+                dashboardRequest('stats').catch(() => null),
+                dashboardRequest('tasks').catch(() => null),
+                dashboardRequest('activity', { limit: 6 }).catch(() => null),
+            ]);
+            if (s && typeof s.stale_contacts_count === 'number') setStats(s);
+            if (Array.isArray(t) && t.length > 0) setTasks(t);
+            if (Array.isArray(a) && a.length > 0) setActivity(a);
+        } catch (_) {}
+    }, []);
 
     useEffect(() => {
         let cancelled = false;
         setLoading(true);
+        setOwnerError('');
         (async () => {
-            try {
-                const [s, t, a] = await Promise.all([
-                    dashboardRequest('stats', { owner_member_id: OWNER_MEMBER_ID }).catch(() => null),
-                    dashboardRequest('tasks', { owner_member_id: OWNER_MEMBER_ID }).catch(() => null),
-                    dashboardRequest('activity', { owner_member_id: OWNER_MEMBER_ID, limit: 6 }).catch(() => null),
-                ]);
-                if (cancelled) return;
-                if (s && typeof s.stale_contacts_count === 'number') setStats(s);
-                if (Array.isArray(t) && t.length > 0) setTasks(t);
-                if (Array.isArray(a) && a.length > 0) setActivity(a);
-            } catch (_) {}
-            finally {
-                if (!cancelled) setLoading(false);
+            const id = await loadMe();
+            if (cancelled) return;
+            if (id != null) {
+                await Promise.all([loadDashboard(), loadMembers()]);
+            } else {
+                await loadMembers();
             }
+            if (!cancelled) setLoading(false);
         })();
         return () => { cancelled = true; };
-    }, []);
+    }, [loadMe, loadMembers, loadDashboard]);
+
+    const saveOwner = useCallback(async (memberId) => {
+        setSavingOwner(true);
+        setOwnerError('');
+        try {
+            const res = await fetch(`${API_BASE}/api/users/me`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({ owner_member_id: memberId }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                setOwnerError(data.message || '保存に失敗しました');
+                return;
+            }
+            setOwnerMemberId(data.owner_member_id);
+            setNeedOwnerSetup(false);
+            await loadDashboard();
+        } catch {
+            setOwnerError('保存に失敗しました');
+        } finally {
+            setSavingOwner(false);
+        }
+    }, [loadDashboard]);
+
+    const handleOwnerSelect = (e) => {
+        const id = Number(e.target.value);
+        if (Number.isInteger(id)) saveOwner(id);
+    };
 
     const subtexts = stats.subtexts || STATS_DEFAULT.subtexts;
     const tasksToShow = tasks.length > 0 ? tasks : TASKS_FALLBACK;
@@ -86,17 +160,7 @@ export default function Dashboard() {
 
     return (
         <Container maxWidth="lg" sx={{ py: 0 }}>
-            {/* Step1: ページヘッダー — 要件 §3.1 */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    justifyContent: 'space-between',
-                    flexWrap: 'wrap',
-                    gap: 2,
-                    mb: 2.25,
-                }}
-            >
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2, mb: 2.25 }}>
                 <Box>
                     <Typography component="h1" sx={{ fontSize: 21, fontWeight: 700, letterSpacing: -0.3 }}>
                         Dashboard
@@ -106,20 +170,57 @@ export default function Dashboard() {
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
-                    <Button component={Link} to="/connections" variant="contained" size="small">
-                        🗺 Connectionsへ
-                    </Button>
-                    <Button component={Link} to="/one-to-ones/create" variant="outlined" size="small">
-                        ＋ 1to1追加
-                    </Button>
+                    {ownerMemberId != null && members.length > 0 && (
+                        <FormControl size="small" sx={{ minWidth: 140 }}>
+                            <InputLabel id="dashboard-owner-label">Owner</InputLabel>
+                            <Select
+                                labelId="dashboard-owner-label"
+                                label="Owner"
+                                value={String(ownerMemberId)}
+                                onChange={handleOwnerSelect}
+                                disabled={savingOwner}
+                            >
+                                {members.map((m) => (
+                                    <MenuItem key={m.id} value={String(m.id)}>{m.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
+                    <Button component={Link} to="/connections" variant="contained" size="small">🗺 Connectionsへ</Button>
+                    <Button component={Link} to="/one-to-ones/create" variant="outlined" size="small">＋ 1to1追加</Button>
                 </Box>
             </Box>
+
+            {needOwnerSetup && (
+                <Card variant="outlined" sx={{ mb: 2, bgcolor: 'grey.50', borderColor: 'warning.main' }}>
+                    <CardContent>
+                        <Typography sx={{ fontWeight: 600, mb: 1 }}>オーナーを設定してください</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                            ダッシュボードの表示対象となる「自分」に該当するメンバーを選択してください。
+                        </Typography>
+                        <FormControl size="small" sx={{ minWidth: 200 }}>
+                            <InputLabel id="owner-setup-label">メンバーを選択</InputLabel>
+                            <Select
+                                labelId="owner-setup-label"
+                                label="メンバーを選択"
+                                value=""
+                                onChange={(e) => saveOwner(Number(e.target.value))}
+                                disabled={savingOwner || members.length === 0}
+                            >
+                                {members.map((m) => (
+                                    <MenuItem key={m.id} value={String(m.id)}>{m.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        {ownerError && <Typography color="error" variant="body2" sx={{ mt: 1 }}>{ownerError}</Typography>}
+                    </CardContent>
+                </Card>
+            )}
 
             {loading && (
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>読込中…</Typography>
             )}
 
-            {/* Step2: 統計カード — 要件 §3.2、PLAN §7 ダミー値 3/5/8/4 */}
             <Box
                 sx={{
                     display: 'grid',
@@ -132,13 +233,9 @@ export default function Dashboard() {
             >
                 <Card variant="outlined" sx={{ boxShadow: 1 }}>
                     <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: '#ffebee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
-                            ⚠️
-                        </Box>
+                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: '#ffebee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>⚠️</Box>
                         <Box>
-                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
-                                未接触（30日以上）
-                            </Typography>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>未接触（30日以上）</Typography>
                             <Typography sx={{ fontSize: 20, fontWeight: 700, color: 'warning.main' }}>{stats.stale_contacts_count}</Typography>
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.stale}</Typography>
                         </Box>
@@ -146,13 +243,9 @@ export default function Dashboard() {
                 </Card>
                 <Card variant="outlined" sx={{ boxShadow: 1 }}>
                     <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'primary.light', color: 'primary.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
-                            🤝
-                        </Box>
+                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'primary.light', color: 'primary.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🤝</Box>
                         <Box>
-                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
-                                今月の1to1回数
-                            </Typography>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>今月の1to1回数</Typography>
                             <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_one_to_one_count}</Typography>
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.one_to_one}</Typography>
                         </Box>
@@ -160,13 +253,9 @@ export default function Dashboard() {
                 </Card>
                 <Card variant="outlined" sx={{ boxShadow: 1 }}>
                     <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'success.light', color: 'success.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
-                            📝
-                        </Box>
+                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'success.light', color: 'success.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>📝</Box>
                         <Box>
-                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
-                                紹介メモ数（今月）
-                            </Typography>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>紹介メモ数（今月）</Typography>
                             <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_intro_memo_count}</Typography>
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.intro}</Typography>
                         </Box>
@@ -174,13 +263,9 @@ export default function Dashboard() {
                 </Card>
                 <Card variant="outlined" sx={{ boxShadow: 1 }}>
                     <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'secondary.light', color: 'secondary.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
-                            📋
-                        </Box>
+                        <Box sx={{ width: 40, height: 40, borderRadius: 1, bgcolor: 'secondary.light', color: 'secondary.contrastText', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>📋</Box>
                         <Box>
-                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
-                                例会メモ数（今月）
-                            </Typography>
+                            <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>例会メモ数（今月）</Typography>
                             <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_meeting_memo_count}</Typography>
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.meeting}</Typography>
                         </Box>
@@ -188,17 +273,8 @@ export default function Dashboard() {
                 </Card>
             </Box>
 
-            {/* Step3: 2カラム 1fr / 340px, gap 14px, 1100px以下で1列 — 要件 §4 */}
-            <Box
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 340px',
-                    gap: 1.75,
-                    '@media (max-width: 1100px)': { gridTemplateColumns: '1fr' },
-                }}
-            >
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 1.75, '@media (max-width: 1100px)': { gridTemplateColumns: '1fr' } }}>
                 <Box>
-                    {/* Step4: 今日やること 4件 — 要件 §3.3 */}
                     <Card variant="outlined" sx={{ mb: 1.75, boxShadow: 1 }}>
                         <CardContent>
                             <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1.25 }}>⚡ 今日やること（Tasks）</Typography>
@@ -231,8 +307,6 @@ export default function Dashboard() {
                             </Box>
                         </CardContent>
                     </Card>
-
-                    {/* Step5: クイックショートカット — 要件 §3.4 */}
                     <Card variant="outlined" sx={{ boxShadow: 1 }}>
                         <CardContent>
                             <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1.25 }}>🔗 クイックショートカット</Typography>
@@ -245,22 +319,12 @@ export default function Dashboard() {
                         </CardContent>
                     </Card>
                 </Box>
-
-                {/* Step6: 最近の活動 6件 — 要件 §3.5 */}
                 <Card variant="outlined" sx={{ boxShadow: 1 }}>
                     <CardContent>
                         <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1.25 }}>🕐 最近の活動</Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                             {activityToShow.map((item, i) => (
-                                <Box
-                                    key={item.id || i}
-                                    sx={{
-                                        display: 'flex',
-                                        gap: 1.5,
-                                        py: 1.25,
-                                        borderBottom: i < activityToShow.length - 1 ? '1px solid #f5f5f5' : 'none',
-                                    }}
-                                >
+                                <Box key={item.id || i} sx={{ display: 'flex', gap: 1.5, py: 1.25, borderBottom: i < activityToShow.length - 1 ? '1px solid #f5f5f5' : 'none' }}>
                                     <Box sx={{ width: 28, height: 28, borderRadius: '50%', bgcolor: 'grey.200', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0 }}>
                                         {ACTIVITY_ICONS[item.kind] || '✏️'}
                                     </Box>
