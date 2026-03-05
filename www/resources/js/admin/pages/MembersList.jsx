@@ -15,7 +15,7 @@ function MembersListActions() {
 function CategoryField({ record, ...props }) {
     const c = record?.category;
     if (!c) return <span>—</span>;
-    const text = c.group_name + (c.name && c.name !== c.group_name ? ' / ' + c.name : '');
+    const text = c.name ? `${c.group_name} / ${c.name}` : c.group_name;
     return <span>{text}</span>;
 }
 

@@ -27,6 +27,7 @@
 | 2026-03-05 | **Phase14 Religo**: Member モデルリファクタ。category 正規化（categories テーブル・category_id）、role 履歴（roles / member_roles）。Member API で category オブジェクト・current_role。Admin で Member 一覧・編集（カテゴリー/役職 select）。 |
 | 2026-03-05 | **Phase15A Religo**: SSOT（DATA_MODEL）を Phase14 正規化に同期。members / categories / roles / member_roles を明記。current_role 定義・API 互換を記載。 |
 | 2026-03-05 | **Phase15B Religo**: 役職履歴照会。GET /api/member-roles（role_id / member_id / from / to フィルタ）、MemberRolesList（閲覧特化）、メニューに「役職履歴」追加。 |
+| 2026-03-05 | **Phase15C Religo**: Members カテゴリ表示最適化。一覧・編集で「大カテゴリ / 実カテゴリ」を統一表示（group_name / name）。 |
 
 ---
 
