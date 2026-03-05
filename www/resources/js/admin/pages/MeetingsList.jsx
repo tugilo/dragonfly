@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 function MeetingsListActions() {
     return (
         <TopToolbar>
-            <Button component={Link} to="/" variant="outlined" size="small">
-                Board へ戻る
-            </Button>
+            <Button component={Link} to="/connections" variant="contained" size="small">🗺 Connectionsで編集</Button>
         </TopToolbar>
     );
 }
@@ -25,7 +23,7 @@ function HeldOnField({ record, ...props }) {
 export function MeetingsList() {
     return (
         <List
-            title="Meetings（例会）"
+            title="Meetings"
             actions={<MeetingsListActions />}
             perPage={25}
         >

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Box,
     Container,
@@ -606,7 +607,25 @@ export default function DragonFlyBoard() {
 
     return (
         <Container maxWidth="lg" sx={{ py: 2 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Board（会の地図）</Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2} sx={{ mb: 2 }}>
+                <Box>
+                    <Typography variant="h5" fontWeight={700}>Connections</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                        Meeting → BO割当 → 関係ログの中心
+                    </Typography>
+                </Box>
+                <Stack direction="row" spacing={1}>
+                    <Button
+                        variant={dirty ? 'contained' : 'outlined'}
+                        size="small"
+                        onClick={saveRounds}
+                        disabled={roundsSaving || roundsLoading}
+                    >
+                        {roundsSaving ? '保存中...' : '💾 BO割当を保存'}
+                    </Button>
+                    <Button component={Link} to="/meetings" variant="outlined" size="small" color="inherit">📋 Meetingsへ</Button>
+                </Stack>
+            </Stack>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={3}>
                     <Card variant="outlined" sx={{ height: '100%' }}>
