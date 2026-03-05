@@ -2,13 +2,9 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom';
 import {
     Box,
-    Grid,
     Stack,
     TextField,
     Autocomplete,
-    Card,
-    CardContent,
-    CardActions,
     Typography,
     FormControlLabel,
     Switch,
@@ -21,14 +17,9 @@ import {
     InputLabel,
     Select,
     MenuItem,
-    Tabs,
-    Tab,
     Chip,
-    IconButton,
     Snackbar,
-    Tooltip,
 } from '@mui/material';
-import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -110,85 +101,6 @@ async function putMeetingBreakoutRounds(meetingId, payload) {
     return res.json();
 }
 
-function RoomCard({
-    roomLabel,
-    notes,
-    memberIds,
-    members,
-    assignedInRound,
-    roundLabel,
-    meetingNumber,
-    onNotesChange,
-    onAddMember,
-    onRemoveMember,
-    onMemoClick,
-}) {
-    const candidates = members.filter((m) => !assignedInRound.has(m.id));
-    const [addValue, setAddValue] = useState(null);
-    return (
-        <Card variant="outlined" sx={{ height: '100%' }}>
-            <CardContent>
-                <Typography variant="subtitle1" sx={{ mb: 1 }}>
-                    {roomLabel}
-                </Typography>
-                <TextField
-                    label="ルームメモ"
-                    multiline
-                    minRows={2}
-                    fullWidth
-                    size="small"
-                    value={notes}
-                    onChange={(e) => onNotesChange(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-                    メンバー割当
-                </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center', mb: 1 }}>
-                    <Autocomplete
-                        size="small"
-                        sx={{ minWidth: 180, flex: '1 1 auto' }}
-                        options={candidates}
-                        getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
-                        value={addValue}
-                        onChange={(_, v) => {
-                            if (v) {
-                                onAddMember(v.id);
-                                setAddValue(null);
-                            }
-                        }}
-                        renderInput={(params) => <TextField {...params} placeholder="追加するメンバー" />}
-                    />
-                    <Button size="small" variant="outlined" onClick={() => addValue && (onAddMember(addValue.id), setAddValue(null))}>
-                        追加
-                    </Button>
-                </Box>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center' }}>
-                    {memberIds.map((id) => {
-                        const m = members.find((x) => x.id === id);
-                        const label = m ? `${m.display_no || ''} ${m.name}`.trim() || `#${id}` : `#${id}`;
-                        return (
-                            <Box key={id} sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.25, mr: 0.5, mb: 0.5 }}>
-                                <Chip
-                                    size="small"
-                                    label={label}
-                                    onDelete={() => onRemoveMember(id)}
-                                />
-                                <IconButton
-                                    size="small"
-                                    onClick={() => onMemoClick(id)}
-                                    aria-label="メモ"
-                                    sx={{ p: 0.25 }}
-                                >
-                                    <EditNoteIcon fontSize="small" />
-                                </IconButton>
-                            </Box>
-                        );
-                    })}
-                </Box>
-            </CardContent>
-        </Card>
-    );
 }
 
 export default function DragonFlyBoard() {
@@ -344,6 +256,21 @@ export default function DragonFlyBoard() {
         loadSummary();
     }, [loadSummary]);
 
+    // C-4: 1to1 history for selected member (Relationship Log)
+    const [oneToOnes, setOneToOnes] = useState([]);
+    const refetchOneToOnes = useCallback(() => {
+        if (!targetMember?.id || !ownerMemberId) {
+            setOneToOnes([]);
+            return;
+        }
+        fetchJson(`/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${targetMember.id}`)
+            .then((data) => setOneToOnes(Array.isArray(data) ? data : []))
+            .catch(() => setOneToOnes([]));
+    }, [targetMember?.id, ownerMemberId]);
+    useEffect(() => {
+        refetchOneToOnes();
+    }, [refetchOneToOnes]);
+
     const handleToggle = (field, value) => {
         if (!targetMember?.id || !summary?.flags) return;
         const next = { ...summary.flags, [field]: value };
@@ -491,6 +418,7 @@ export default function DragonFlyBoard() {
             await postOneToOne(payload);
             refetchMembers();
             loadSummary();
+            refetchOneToOnes();
             closeO2oDialog();
         } catch (e) {
             setO2oError(e.message || '登録に失敗しました');
@@ -966,8 +894,119 @@ export default function DragonFlyBoard() {
                         <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
                             🔗 Relationship Log
                         </Typography>
+                        <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>
+                            {targetMember ? `${targetMember.display_no || ''} ${targetMember.name}`.trim() || targetMember.name : '← メンバーを選択'}
+                        </Typography>
                     </Box>
-                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
+                        {!targetMember && (
+                            <Box sx={{ textAlign: 'center', py: 3 }}>
+                                <Typography sx={{ fontSize: 24, mb: 1 }}>👈</Typography>
+                                <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>
+                                    左リストからメンバーを選ぶと関係ログが表示されます
+                                </Typography>
+                            </Box>
+                        )}
+                        {targetMember && (
+                            <>
+                                {loadingSummary && <Typography color="text.secondary" variant="body2">Loading...</Typography>}
+                                {targetMember && summary && !loadingSummary && (
+                                    <>
+                                        <Stack direction="row" flexWrap="wrap" gap={0.5} sx={{ mb: 1.5 }}>
+                                            <Button size="small" variant="contained" onClick={openMemoDialog}>✏️ メモ</Button>
+                                            <Button size="small" variant="outlined" onClick={openO2oDialog}>📅 1to1</Button>
+                                            <Button size="small" component={Link} to="/members" variant="outlined" color="inherit">👥 詳細</Button>
+                                        </Stack>
+                                        <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5, mb: 1.25 }}>
+                                            関係ログ
+                                        </Typography>
+                                        {(latestMemos || []).length === 0 && (
+                                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: 12, pb: 1, borderBottom: '1px solid #f5f5f5' }}>
+                                                メモはまだありません
+                                            </Typography>
+                                        )}
+                                        {(latestMemos || []).map((m) => (
+                                            <Box
+                                                key={m.id}
+                                                sx={{
+                                                    display: 'flex',
+                                                    gap: 0.875,
+                                                    alignItems: 'flex-start',
+                                                    py: 0.875,
+                                                    borderBottom: '1px solid #f5f5f5',
+                                                    fontSize: 12,
+                                                }}
+                                            >
+                                                <Chip label="例会" size="small" sx={{ fontSize: 9, height: 18 }} variant="outlined" />
+                                                <Typography component="span" sx={{ fontSize: 10, color: 'text.secondary', flexShrink: 0 }}>
+                                                    {m.updated_at ? new Date(m.updated_at).toLocaleDateString('ja-JP') : ''}
+                                                </Typography>
+                                                <Typography component="span" sx={{ fontSize: 12 }}>{m.body || '(なし)'}</Typography>
+                                            </Box>
+                                        ))}
+                                        <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5, mt: 1.5, mb: 1.25 }}>
+                                            1to1履歴
+                                        </Typography>
+                                        {oneToOnes.length === 0 && (
+                                            <Typography variant="body2" color="text.secondary" sx={{ fontSize: 11 }}>
+                                                1to1はまだありません
+                                            </Typography>
+                                        )}
+                                        {oneToOnes.map((o) => (
+                                            <Box
+                                                key={o.id}
+                                                sx={{
+                                                    border: '1px solid',
+                                                    borderColor: 'divider',
+                                                    borderRadius: 1.75,
+                                                    p: '8px 10px',
+                                                    mb: 0.75,
+                                                }}
+                                            >
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.375 }}>
+                                                    <Chip
+                                                        label={o.status === 'completed' ? '実施済み' : o.status === 'planned' ? '予定' : o.status === 'canceled' ? 'キャンセル' : o.status}
+                                                        size="small"
+                                                        sx={{ fontSize: 9, height: 16 }}
+                                                        color={o.status === 'completed' ? 'success' : o.status === 'planned' ? 'primary' : 'default'}
+                                                        variant="outlined"
+                                                    />
+                                                    <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>
+                                                        {o.scheduled_at || o.started_at || o.ended_at
+                                                            ? new Date(o.scheduled_at || o.started_at || o.ended_at).toLocaleDateString('ja-JP')
+                                                            : ''}
+                                                    </Typography>
+                                                </Box>
+                                                <Typography sx={{ fontSize: 11 }}>{o.notes || '(メモなし)'}</Typography>
+                                            </Box>
+                                        ))}
+                                        <Box sx={{ mt: 1 }}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        size="small"
+                                                        checked={!!displayFlags.interested}
+                                                        onChange={(_, v) => handleToggle('interested', v)}
+                                                    />
+                                                }
+                                                label={<Typography variant="caption">気になる</Typography>}
+                                            />
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        size="small"
+                                                        checked={!!displayFlags.want_1on1}
+                                                        onChange={(_, v) => handleToggle('want_1on1', v)}
+                                                    />
+                                                }
+                                                label={<Typography variant="caption">1on1 したい</Typography>}
+                                            />
+                                        </Box>
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </Box>
                 </Box>
             </Box>
             <Dialog open={memoOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
