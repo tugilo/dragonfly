@@ -62,10 +62,10 @@ E-4a を develop に merge した後、以下の表を埋める。
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （`git log -1 --format=%H develop` で取得） |
+| **merge commit id** | `94fffb5f726f98e241154028529578736ffc4203` |
 | **merge 元ブランチ名** | feature/e4-owner-settings-docs |
-| **変更ファイル一覧** | `git diff --name-only develop^1...develop` の結果 |
-| **テスト結果** | php artisan test / npm run build の結果 |
+| **変更ファイル一覧** | docs/INDEX.md, docs/process/phases/PHASE_E4_OWNER_SETTINGS_PLAN.md, docs/process/phases/PHASE_E4_OWNER_SETTINGS_REPORT.md, docs/process/phases/PHASE_E4_OWNER_SETTINGS_WORKLOG.md |
+| **テスト結果** | php artisan test — 61 passed (247 assertions)。npm run build — 成功。 |
 | **手動確認** | 特になし（docs のみ） |
 
 ---
