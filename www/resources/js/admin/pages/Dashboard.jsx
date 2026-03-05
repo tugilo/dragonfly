@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Card,
@@ -10,11 +10,74 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+const API_BASE = '';
+const DEFAULT_OWNER_ID = 1;
+
+async function dashboardRequest(path, params = {}) {
+    const q = new URLSearchParams({ owner_member_id: String(params.owner_member_id ?? DEFAULT_OWNER_ID) });
+    if (params.limit != null) q.set('limit', String(params.limit));
+    const url = `${API_BASE}/api/dashboard/${path}${q.toString() ? `?${q.toString()}` : ''}`;
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`Dashboard API ${res.status}`);
+    return res.json();
+}
+
+const STATS_DEFAULT = {
+    stale_contacts_count: 3,
+    monthly_one_to_one_count: 5,
+    monthly_intro_memo_count: 8,
+    monthly_meeting_memo_count: 4,
+    subtexts: { stale: '要フォロー', one_to_one: '先月比 +2', intro: 'BO含む', meeting: '例会#247 含む' },
+};
+
+const TASKS_FALLBACK = [
+    { id: 's1', kind: 'stale_follow', title: '伊藤 勇樹', meta: '55日間未接触 — 1to1を検討', action: { label: '1to1予定', href: '/one-to-ones/create', disabled: false } },
+    { id: 's2', kind: 'stale_follow', title: '水野 花菜', meta: '66日間未接触 — フォローアップ要', action: { label: 'メモ追加', href: null, disabled: true } },
+    { id: 'o1', kind: 'one_to_one_planned', title: '田中 誠一 との1to1', meta: '本日 12:00 — CRM導入フォロー', badge: '予定', action: { label: '予定', href: null, disabled: true } },
+    { id: 'm1', kind: 'meeting_memo_pending', title: '例会 #248 メモ未整理', meta: '次回例会まであと5日', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
+];
+
+const ACTIVITY_ICONS = { memo_added: '✏️', one_to_one_created: '📅', one_to_one_completed: '🤝', flag_changed: '⭐', bo_assigned: '📋' };
+
+const ACTIVITY_FALLBACK = [
+    { id: 'a1', kind: 'memo_added', title: '佐藤 美咲 にメモ追加', meta: 'セミナー案件・1to1メモ — 2分前' },
+    { id: 'a2', kind: 'one_to_one_created', title: '田中 誠一 1to1を登録', meta: 'planned — 本日 12:00 — 3時間前' },
+    { id: 'a3', kind: 'bo_assigned', title: '例会 #247 BO割当を保存', meta: 'BO4件 — 2025-07-08 — 昨日' },
+    { id: 'a4', kind: 'one_to_one_completed', title: '渡辺 彩香 1to1完了', meta: 'DX案件ヒアリング — 2025-07-09' },
+    { id: 'a5', kind: 'flag_changed', title: '森 友美 に interested フラグ', meta: 'スポーツ施術コラボ検討 — 2025-07-06' },
+    { id: 'a6', kind: 'memo_added', title: '小林 陽子 にメモ追加', meta: '投資物件の情報提供依頼 — 2025-07-05' },
+];
+
 /**
- * Religo Dashboard. SSOT: docs/SSOT/DASHBOARD_REQUIREMENTS.md, モック #pg-dashboard（行327〜384）
- * 静的表示でモック一致。値は PLAN 固定（3/5/8/4）。Tasks 4件、Activity 6件。
+ * Religo Dashboard. SSOT: DASHBOARD_REQUIREMENTS.md. API: GET /api/dashboard/stats, tasks, activity.
  */
 export default function Dashboard() {
+    const [stats, setStats] = useState(STATS_DEFAULT);
+    const [tasks, setTasks] = useState(TASKS_FALLBACK);
+    const [activity, setActivity] = useState(ACTIVITY_FALLBACK);
+
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+            try {
+                const [s, t, a] = await Promise.all([
+                    dashboardRequest('stats').catch(() => null),
+                    dashboardRequest('tasks').catch(() => null),
+                    dashboardRequest('activity', { limit: 6 }).catch(() => null),
+                ]);
+                if (cancelled) return;
+                if (s && typeof s.stale_contacts_count === 'number') setStats(s);
+                if (Array.isArray(t) && t.length > 0) setTasks(t);
+                if (Array.isArray(a) && a.length > 0) setActivity(a);
+            } catch (_) {}
+        })();
+        return () => { cancelled = true; };
+    }, []);
+
+    const subtexts = stats.subtexts || STATS_DEFAULT.subtexts;
+    const tasksToShow = tasks.length > 0 ? tasks : TASKS_FALLBACK;
+    const activityToShow = activity.length > 0 ? activity : ACTIVITY_FALLBACK;
+
     return (
         <Container maxWidth="lg" sx={{ py: 0 }}>
             {/* Step1: ページヘッダー — 要件 §3.1 */}
@@ -66,8 +129,8 @@ export default function Dashboard() {
                             <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
                                 未接触（30日以上）
                             </Typography>
-                            <Typography sx={{ fontSize: 20, fontWeight: 700, color: 'warning.main' }}>3</Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>要フォロー</Typography>
+                            <Typography sx={{ fontSize: 20, fontWeight: 700, color: 'warning.main' }}>{stats.stale_contacts_count}</Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.stale}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
@@ -80,8 +143,8 @@ export default function Dashboard() {
                             <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
                                 今月の1to1回数
                             </Typography>
-                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>5</Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>先月比 +2</Typography>
+                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_one_to_one_count}</Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.one_to_one}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
@@ -94,8 +157,8 @@ export default function Dashboard() {
                             <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
                                 紹介メモ数（今月）
                             </Typography>
-                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>8</Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>BO含む</Typography>
+                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_intro_memo_count}</Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.intro}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
@@ -108,8 +171,8 @@ export default function Dashboard() {
                             <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10 }}>
                                 例会メモ数（今月）
                             </Typography>
-                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>4</Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>例会#247 含む</Typography>
+                            <Typography sx={{ fontSize: 20, fontWeight: 700 }}>{stats.monthly_meeting_memo_count}</Typography>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>{subtexts.meeting}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
@@ -130,38 +193,31 @@ export default function Dashboard() {
                         <CardContent>
                             <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1.25 }}>⚡ 今日やること（Tasks）</Typography>
                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, py: 1.125, px: 1.5, bgcolor: '#fff3e0', borderRadius: 1, borderLeft: 3, borderColor: 'warning.main' }}>
-                                    <span style={{ fontSize: 16 }}>⏰</span>
-                                    <Box sx={{ flex: 1 }}>
-                                        <Typography sx={{ fontSize: 13, fontWeight: 600, color: '#bf360c' }}>伊藤 勇樹</Typography>
-                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>55日間未接触 — 1to1を検討</Typography>
-                                    </Box>
-                                    <Button size="small" variant="outlined" color="warning" component={Link} to="/one-to-ones/create">1to1予定</Button>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, py: 1.125, px: 1.5, bgcolor: '#fff3e0', borderRadius: 1, borderLeft: 3, borderColor: 'warning.main' }}>
-                                    <span style={{ fontSize: 16 }}>⏰</span>
-                                    <Box sx={{ flex: 1 }}>
-                                        <Typography sx={{ fontSize: 13, fontWeight: 600, color: '#bf360c' }}>水野 花菜</Typography>
-                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>66日間未接触 — フォローアップ要</Typography>
-                                    </Box>
-                                    <Button size="small" variant="outlined" color="warning" disabled>メモ追加</Button>
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, py: 1.125, px: 1.5, bgcolor: 'primary.light', borderRadius: 1, borderLeft: 3, borderColor: 'primary.main' }}>
-                                    <span style={{ fontSize: 16 }}>📅</span>
-                                    <Box sx={{ flex: 1 }}>
-                                        <Typography sx={{ fontSize: 13, fontWeight: 600 }}>田中 誠一 との1to1</Typography>
-                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>本日 12:00 — CRM導入フォロー</Typography>
-                                    </Box>
-                                    <Chip label="予定" size="small" sx={{ bgcolor: '#fff3e0', color: '#e65100', border: '1px solid #ffcc80' }} />
-                                </Box>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, py: 1.125, px: 1.5, bgcolor: '#f8f9fa', borderRadius: 1, borderLeft: 3, borderColor: '#ccc' }}>
-                                    <span style={{ fontSize: 16 }}>📝</span>
-                                    <Box sx={{ flex: 1 }}>
-                                        <Typography sx={{ fontSize: 13, fontWeight: 600 }}>例会 #248 メモ未整理</Typography>
-                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>次回例会まであと5日</Typography>
-                                    </Box>
-                                    <Button size="small" variant="outlined" color="inherit" component={Link} to="/meetings">Meetingsへ</Button>
-                                </Box>
+                                {tasksToShow.map((task) => {
+                                    const isStale = task.kind === 'stale_follow';
+                                    const isO2o = task.kind === 'one_to_one_planned';
+                                    const isMeeting = task.kind === 'meeting_memo_pending';
+                                    const bg = isStale ? '#fff3e0' : isO2o ? 'primary.light' : '#f8f9fa';
+                                    const borderColor = isStale ? 'warning.main' : isO2o ? 'primary.main' : '#ccc';
+                                    const icon = isStale ? '⏰' : isO2o ? '📅' : '📝';
+                                    const action = task.action || {};
+                                    return (
+                                        <Box key={task.id} sx={{ display: 'flex', alignItems: 'center', gap: 1.25, py: 1.125, px: 1.5, bgcolor: bg, borderRadius: 1, borderLeft: 3, borderColor }}>
+                                            <span style={{ fontSize: 16 }}>{icon}</span>
+                                            <Box sx={{ flex: 1 }}>
+                                                <Typography sx={{ fontSize: 13, fontWeight: 600, color: isStale ? '#bf360c' : undefined }}>{task.title}</Typography>
+                                                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>{task.meta || ''}</Typography>
+                                            </Box>
+                                            {action.href ? (
+                                                <Button size="small" variant="outlined" color={isStale ? 'warning' : 'inherit'} component={Link} to={action.href} disabled={action.disabled}>{action.label}</Button>
+                                            ) : task.badge ? (
+                                                <Chip label={task.badge} size="small" sx={{ bgcolor: '#fff3e0', color: '#e65100', border: '1px solid #ffcc80' }} />
+                                            ) : (
+                                                <Button size="small" variant="outlined" color="warning" disabled>{action.label}</Button>
+                                            )}
+                                        </Box>
+                                    );
+                                })}
                             </Box>
                         </CardContent>
                     </Card>
@@ -185,29 +241,22 @@ export default function Dashboard() {
                     <CardContent>
                         <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1.25 }}>🕐 最近の活動</Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                            {[
-                                { icon: '✏️', title: '佐藤 美咲 にメモ追加', meta: 'セミナー案件・1to1メモ — 2分前' },
-                                { icon: '📅', title: '田中 誠一 1to1を登録', meta: 'planned — 本日 12:00 — 3時間前' },
-                                { icon: '📋', title: '例会 #247 BO割当を保存', meta: 'BO4件 — 2025-07-08 — 昨日' },
-                                { icon: '🤝', title: '渡辺 彩香 1to1完了', meta: 'DX案件ヒアリング — 2025-07-09' },
-                                { icon: '⭐', title: '森 友美 に interested フラグ', meta: 'スポーツ施術コラボ検討 — 2025-07-06' },
-                                { icon: '✏️', title: '小林 陽子 にメモ追加', meta: '投資物件の情報提供依頼 — 2025-07-05' },
-                            ].map((item, i) => (
+                            {activityToShow.map((item, i) => (
                                 <Box
-                                    key={i}
+                                    key={item.id || i}
                                     sx={{
                                         display: 'flex',
                                         gap: 1.5,
                                         py: 1.25,
-                                        borderBottom: i < 5 ? '1px solid #f5f5f5' : 'none',
+                                        borderBottom: i < activityToShow.length - 1 ? '1px solid #f5f5f5' : 'none',
                                     }}
                                 >
                                     <Box sx={{ width: 28, height: 28, borderRadius: '50%', bgcolor: 'grey.200', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0 }}>
-                                        {item.icon}
+                                        {ACTIVITY_ICONS[item.kind] || '✏️'}
                                     </Box>
                                     <Box sx={{ minWidth: 0 }}>
                                         <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{item.title}</Typography>
-                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>{item.meta}</Typography>
+                                        <Typography variant="caption" color="text.secondary" sx={{ fontSize: 11 }}>{item.meta || ''}</Typography>
                                     </Box>
                                 </Box>
                             ))}
