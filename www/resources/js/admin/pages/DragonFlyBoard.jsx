@@ -101,8 +101,6 @@ async function putMeetingBreakoutRounds(meetingId, payload) {
     return res.json();
 }
 
-}
-
 export default function DragonFlyBoard() {
     const [ownerMemberId, setOwnerMemberId] = useState(1);
     const [members, setMembers] = useState([]);
