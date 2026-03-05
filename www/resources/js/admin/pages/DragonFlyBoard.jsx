@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
     Box,
@@ -234,6 +234,18 @@ export default function DragonFlyBoard() {
     const [saveStatus, setSaveStatus] = useState('idle'); // 'idle' | 'loading' | 'saved' | 'unsaved'
     const [dirty, setDirty] = useState(false);
     const savedTimeoutRef = useRef(null);
+
+    // C-2: Members pane search
+    const [memberSearch, setMemberSearch] = useState('');
+    const filteredMembers = useMemo(() => {
+        if (!memberSearch.trim()) return members;
+        const q = memberSearch.trim().toLowerCase();
+        return members.filter((m) => {
+            const name = `${m.display_no || ''} ${m.name}`.trim().toLowerCase();
+            const cat = (m.category?.group_name || '') + (m.category?.name || '') + (m.current_role || '');
+            return name.includes(q) || cat.toLowerCase().includes(q);
+        });
+    }, [members, memberSearch]);
 
     // メモモーダル（BO から開くときの文脈）
     const [memoContextTargetMemberId, setMemoContextTargetMemberId] = useState(null);
@@ -673,8 +685,87 @@ export default function DragonFlyBoard() {
                         <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
                             👥 Members
                         </Typography>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.875,
+                                bgcolor: '#f5f5f5',
+                                border: '1px solid',
+                                borderColor: 'divider',
+                                borderRadius: 1,
+                                px: 1.25,
+                                py: 0.75,
+                                minWidth: 180,
+                            }}
+                        >
+                            <span style={{ color: '#999', fontSize: 12 }}>🔍</span>
+                            <TextField
+                                size="small"
+                                placeholder="メンバー検索"
+                                value={memberSearch}
+                                onChange={(e) => setMemberSearch(e.target.value)}
+                                variant="standard"
+                                InputProps={{ disableUnderline: true, sx: { fontSize: 12 } }}
+                                sx={{ flex: 1, minWidth: 0 }}
+                            />
+                        </Box>
                     </Box>
-                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
+                        {filteredMembers.map((m) => {
+                            const name = `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`;
+                            const sub = [m.category?.group_name, m.category?.name].filter(Boolean).join(' / ') || m.current_role || '';
+                            const isSel = targetMember?.id === m.id;
+                            return (
+                                <Box
+                                    key={m.id}
+                                    component="button"
+                                    type="button"
+                                    onClick={() => setTargetMember(m)}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 1,
+                                        p: '7px 10px',
+                                        borderRadius: 1.75,
+                                        cursor: 'pointer',
+                                        border: 'none',
+                                        background: isSel ? 'primary.light' : 'transparent',
+                                        borderLeft: isSel ? '3px solid' : '3px solid transparent',
+                                        borderColor: 'primary.main',
+                                        width: '100%',
+                                        textAlign: 'left',
+                                        mb: 0.25,
+                                        '&:hover': { bgcolor: isSel ? 'primary.light' : '#f5f6fa' },
+                                    }}
+                                >
+                                    <Box
+                                        sx={{
+                                            width: 30,
+                                            height: 30,
+                                            borderRadius: '50%',
+                                            bgcolor: 'primary.main',
+                                            color: 'primary.contrastText',
+                                            fontSize: 11,
+                                            fontWeight: 700,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flexShrink: 0,
+                                        }}
+                                    >
+                                        {(m.name || '?').charAt(0)}
+                                    </Box>
+                                    <Box sx={{ minWidth: 0, flex: 1 }}>
+                                        <Typography sx={{ fontSize: 12, fontWeight: 600 }}>{name}</Typography>
+                                        {sub && (
+                                            <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sub}</Typography>
+                                        )}
+                                    </Box>
+                                </Box>
+                            );
+                        })}
+                    </Box>
                 </Box>
 
                 {/* Pane 2: Meeting + BO */}
