@@ -24,6 +24,7 @@ class IndexOneToOnesRequest extends FormRequest
             'status' => ['nullable', 'string', Rule::in(['planned', 'completed', 'canceled'])],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'limit' => ['nullable', 'integer', 'min:1', 'max:100'],
         ];
     }
 }
