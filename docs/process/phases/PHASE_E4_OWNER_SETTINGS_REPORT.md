@@ -25,7 +25,8 @@
 
 ### E-4c（Close）— 実施後に追記
 
-- （E-4c 完了後に SSOT 更新・証跡確定を追記）
+- docs/SSOT/DASHBOARD_DATA_SSOT.md を更新: owner_member_id の決定順（query > ユーザー設定 > 422）を明記。「暫定で固定値 1」を削除し、E-4 で解消した旨を記載。実装との紐づけに UserController とフロントの現状を追記。
+- PHASE_E4_OWNER_SETTINGS_REPORT.md に E-4c の変更ファイル・取り込み証跡・DoD 確定を記録。
 
 ---
 
@@ -48,6 +49,11 @@
 - www/resources/js/admin/pages/Dashboard.jsx
 - www/tests/Feature/Religo/DashboardApiTest.php
 - www/tests/Feature/Religo/UserMeApiTest.php（新規）
+
+### E-4c
+
+- docs/SSOT/DASHBOARD_DATA_SSOT.md
+- docs/process/phases/PHASE_E4_OWNER_SETTINGS_REPORT.md
 
 ---
 
@@ -73,7 +79,7 @@
 - [x] Dashboard UI で owner を変更でき、保存後に再取得される
 - [x] 既存の正（fetch / 直 json / テスト流儀）に準拠し、新規基盤を作っていない
 - [x] php artisan test / npm run build がすべて通る
-- [ ] SSOT（DASHBOARD_DATA_SSOT）が暫定1を脱し、正の決定順が固定されている（E-4c で実施）
+- [x] SSOT（DASHBOARD_DATA_SSOT）が暫定1を脱し、正の決定順が固定されている（E-4c で実施）
 
 ---
 
@@ -97,6 +103,16 @@
 | **merge 元ブランチ名** | feature/e4-owner-settings-impl |
 | **変更ファイル一覧** | www/app/Http/Controllers/Religo/DashboardController.php, www/app/Http/Controllers/Religo/UserController.php, www/app/Models/User.php, www/database/migrations/2026_03_05_120000_add_owner_member_id_to_users_table.php, www/resources/js/admin/pages/Dashboard.jsx, www/routes/api.php, www/tests/Feature/Religo/DashboardApiTest.php, www/tests/Feature/Religo/UserMeApiTest.php |
 | **テスト結果** | php artisan test — 69 passed (260 assertions)。npm run build — 成功。 |
+| **手動確認** | 特になし |
+
+### E-4c
+
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | （merge 後に記録） |
+| **merge 元ブランチ名** | feature/e4-owner-settings-close |
+| **変更ファイル一覧** | docs/SSOT/DASHBOARD_DATA_SSOT.md, docs/process/phases/PHASE_E4_OWNER_SETTINGS_REPORT.md |
+| **テスト結果** | php artisan test / npm run build 実施済み |
 | **手動確認** | 特になし |
 
 ---

@@ -10,7 +10,11 @@
 ### owner_member_id
 - **意味:** 「自分」を表すメンバー ID。Dashboard の stats / tasks / activity はすべて「このメンバーを owner として」集計する。
 - **スコープ:** 現行は workspace 未適用（単一 workspace 前提）。将来 workspace スコープをかける場合は API と本 SSOT を同時に更新する。
-- **暫定:** フロントでは「current user に紐づく owner_member_id」を返す API が無いため、**暫定で固定値 1** を使用（MembersList / MeetingDetailDrawer と同一）。E-4 候補で「ログインユーザー → owner_member_id」の正を検討する。
+- **決定順（E-4 で固定）:**  
+  1. **クエリ** — リクエストに `owner_member_id` があればそれを使用（互換維持）。  
+  2. **ユーザー設定** — 無ければ現在ユーザーの `owner_member_id`（users.owner_member_id）を使用。GET /api/users/me で取得、PATCH /api/users/me で更新。認証なしの場合は user id 1 を「現在ユーザー」とする。  
+  3. **未設定時** — 上記のいずれも無い（null）場合は **422 Unprocessable Entity** を返し、`message` で初回設定を促す。暫定の固定値 1 は使用しない。
+- **解消済み:** 旧「暫定で固定値 1」は Phase E-4 で廃止し、上記の決定順に統一した。
 
 ---
 
@@ -58,8 +62,8 @@
 
 | 種別 | 場所 |
 |------|------|
-| **エンドポイント** | GET /api/dashboard/stats、GET /api/dashboard/tasks、GET /api/dashboard/activity |
-| **Controller** | App\Http\Controllers\Religo\DashboardController |
+| **エンドポイント** | GET /api/dashboard/stats、GET /api/dashboard/tasks、GET /api/dashboard/activity。Owner 設定: GET /api/users/me、PATCH /api/users/me |
+| **Controller** | App\Http\Controllers\Religo\DashboardController、App\Http\Controllers\Religo\UserController（showMe / updateMe） |
 | **Service** | App\Services\Religo\DashboardService（getStats / getTasks / getActivity） |
-| **フロント** | www/resources/js/admin/pages/Dashboard.jsx（OWNER_MEMBER_ID 暫定 1、fetch で上記 3 エンドポイントを呼び出し） |
-| **参照** | docs/SSOT/DASHBOARD_REQUIREMENTS.md（UI・モック合わせ）、docs/process/phases/PHASE_E3_DASHBOARD_UI_WORKLOG.md（owner/loading の暫定理由） |
+| **フロント** | www/resources/js/admin/pages/Dashboard.jsx（GET /api/users/me で owner 取得。未設定時は「オーナーを設定してください」ブロック＋members Select。設定済み時は右上 Owner セレクタで変更時自動保存。fetch で dashboard 3 エンドポイントを呼び出し） |
+| **参照** | docs/SSOT/DASHBOARD_REQUIREMENTS.md（UI・モック合わせ）、docs/process/phases/PHASE_E4_OWNER_SETTINGS_PLAN.md（E-4 スコープ） |
