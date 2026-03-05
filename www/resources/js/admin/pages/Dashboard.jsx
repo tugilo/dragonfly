@@ -11,10 +11,11 @@ import {
 import { Link } from 'react-router-dom';
 
 const API_BASE = '';
-const DEFAULT_OWNER_ID = 1;
+/** 暫定。他ページ（MembersList/MeetingDetailDrawer）と統一。current owner を返す API が無いため E-4 で検討。 */
+const OWNER_MEMBER_ID = 1;
 
 async function dashboardRequest(path, params = {}) {
-    const q = new URLSearchParams({ owner_member_id: String(params.owner_member_id ?? DEFAULT_OWNER_ID) });
+    const q = new URLSearchParams({ owner_member_id: String(params.owner_member_id ?? OWNER_MEMBER_ID) });
     if (params.limit != null) q.set('limit', String(params.limit));
     const url = `${API_BASE}/api/dashboard/${path}${q.toString() ? `?${q.toString()}` : ''}`;
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
@@ -55,21 +56,26 @@ export default function Dashboard() {
     const [stats, setStats] = useState(STATS_DEFAULT);
     const [tasks, setTasks] = useState(TASKS_FALLBACK);
     const [activity, setActivity] = useState(ACTIVITY_FALLBACK);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let cancelled = false;
+        setLoading(true);
         (async () => {
             try {
                 const [s, t, a] = await Promise.all([
-                    dashboardRequest('stats').catch(() => null),
-                    dashboardRequest('tasks').catch(() => null),
-                    dashboardRequest('activity', { limit: 6 }).catch(() => null),
+                    dashboardRequest('stats', { owner_member_id: OWNER_MEMBER_ID }).catch(() => null),
+                    dashboardRequest('tasks', { owner_member_id: OWNER_MEMBER_ID }).catch(() => null),
+                    dashboardRequest('activity', { owner_member_id: OWNER_MEMBER_ID, limit: 6 }).catch(() => null),
                 ]);
                 if (cancelled) return;
                 if (s && typeof s.stale_contacts_count === 'number') setStats(s);
                 if (Array.isArray(t) && t.length > 0) setTasks(t);
                 if (Array.isArray(a) && a.length > 0) setActivity(a);
             } catch (_) {}
+            finally {
+                if (!cancelled) setLoading(false);
+            }
         })();
         return () => { cancelled = true; };
     }, []);
@@ -108,6 +114,10 @@ export default function Dashboard() {
                     </Button>
                 </Box>
             </Box>
+
+            {loading && (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>読込中…</Typography>
+            )}
 
             {/* Step2: 統計カード — 要件 §3.2、PLAN §7 ダミー値 3/5/8/4 */}
             <Box
