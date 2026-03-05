@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Religo – Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --accent: #0288d1;
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --sidebar-bg: #1e2a3a;
+  --sidebar-w: 240px;
+  --appbar-h: 56px;
+  --border: #e0e0e0;
+  --text-primary: #1a1a2e;
+  --text-secondary: #637381;
+  --text-disabled: #bdbdbd;
+  --success: #2e7d32;
+  --warning: #e65100;
+  --error: #c62828;
+  --chip-h: 22px;
+  --shadow1: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+  --shadow2: 0 2px 8px rgba(0,0,0,.12), 0 1px 4px rgba(0,0,0,.08);
+  --shadow3: 0 4px 16px rgba(0,0,0,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Roboto','Noto Sans JP',sans-serif;font-size:14px;background:var(--bg);color:var(--text-primary)}
+button{font-family:inherit;cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+/* ─── LAYOUT ─── */
+#shell{display:flex;height:100vh;overflow:hidden}
+
+/* ─── SIDEBAR ─── */
+#sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--sidebar-bg);
+  display:flex;flex-direction:column;
+  overflow-y:auto;overflow-x:hidden;
+  z-index:10;
+}
+.sidebar-logo{
+  padding:18px 20px 14px;
+  display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.sidebar-logo-mark{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,#1976d2,#42a5f5);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;color:#fff;letter-spacing:-.5px;
+}
+.sidebar-logo-text{color:#fff;font-size:16px;font-weight:700;letter-spacing:.3px}
+.sidebar-logo-sub{color:rgba(255,255,255,.4);font-size:10px;margin-top:1px}
+
+.nav-section{padding:8px 0}
+.nav-section-label{
+  padding:8px 16px 4px;
+  font-size:10px;font-weight:600;letter-spacing:1px;
+  color:rgba(255,255,255,.3);text-transform:uppercase;
+}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:9px 20px;
+  color:rgba(255,255,255,.65);
+  font-size:13px;font-weight:400;
+  cursor:pointer;position:relative;
+  transition:all .15s;border:none;background:transparent;width:100%;text-align:left;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{
+  background:rgba(25,118,210,.25);color:#fff;font-weight:500;
+}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--primary);border-radius:0 2px 2px 0;
+}
+.nav-item .nav-icon{font-size:16px;opacity:.75;width:20px;text-align:center}
+.nav-item.active .nav-icon{opacity:1}
+.nav-sub{
+  display:flex;align-items:center;gap:12px;
+  padding:7px 20px 7px 44px;
+  color:rgba(255,255,255,.5);font-size:12px;
+  cursor:pointer;transition:all .15s;border:none;background:transparent;width:100%;text-align:left;
+}
+.nav-sub:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.05)}
+.nav-divider{height:1px;background:rgba(255,255,255,.1);margin:6px 16px}
+
+/* ─── MAIN ─── */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ─── APPBAR ─── */
+#appbar{
+  height:var(--appbar-h);flex-shrink:0;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;
+  gap:12px;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+  z-index:9;
+}
+.appbar-breadcrumb{display:flex;align-items:center;gap:6px;flex:1}
+.breadcrumb-item{color:var(--text-secondary);font-size:13px}
+.breadcrumb-sep{color:var(--text-disabled)}
+.breadcrumb-current{color:var(--text-primary);font-weight:500;font-size:13px}
+.appbar-search{
+  display:flex;align-items:center;gap:8px;
+  background:#f5f5f5;border:1px solid var(--border);
+  border-radius:20px;padding:5px 14px;width:220px;
+}
+.appbar-search input{border:none;background:transparent;outline:none;font-size:13px;width:100%;color:var(--text-primary)}
+.appbar-search input::placeholder{color:var(--text-disabled)}
+.appbar-actions{display:flex;align-items:center;gap:8px}
+.appbar-icon-btn{
+  width:34px;height:34px;border-radius:50%;border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-secondary);font-size:18px;cursor:pointer;transition:background .15s;
+}
+.appbar-icon-btn:hover{background:rgba(0,0,0,.06)}
+.avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,#1976d2,#42a5f5);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;font-weight:700;cursor:pointer;
+}
+
+/* ─── CONTENT ─── */
+#content{flex:1;overflow-y:auto;padding:24px}
+
+/* ─── PAGE HEADER ─── */
+.page-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:20px;
+}
+.page-header-left h1{font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-.3px}
+.page-header-left p{font-size:12px;color:var(--text-secondary);margin-top:3px}
+.page-header-actions{display:flex;gap:10px;align-items:center}
+
+/* ─── BUTTONS ─── */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;
+  border:none;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit;
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-outlined{background:transparent;color:var(--primary);border:1px solid var(--primary)}
+.btn-outlined:hover{background:var(--primary-light)}
+.btn-outlined-gray{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+.btn-outlined-gray:hover{background:#f5f5f5}
+.btn-text{background:transparent;color:var(--primary);border:none}
+.btn-text:hover{background:var(--primary-light)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ─── STATS CARDS ─── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat-card{
+  background:var(--surface);border-radius:10px;padding:16px 18px;
+  box-shadow:var(--shadow1);border:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+}
+.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.stat-icon.blue{background:#e3f2fd}
+.stat-icon.orange{background:#fff3e0}
+.stat-icon.green{background:#e8f5e9}
+.stat-icon.purple{background:#f3e5f5}
+.stat-label{font-size:11px;color:var(--text-secondary);font-weight:500;margin-bottom:2px}
+.stat-value{font-size:22px;font-weight:700;color:var(--text-primary);line-height:1}
+.stat-sub{font-size:10px;color:var(--text-secondary);margin-top:2px}
+
+/* ─── TOOLBAR/FILTERS ─── */
+.filter-bar{
+  background:var(--surface);border-radius:10px;
+  padding:12px 16px;margin-bottom:16px;
+  box-shadow:var(--shadow1);border:1px solid var(--border);
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+}
+.filter-search{
+  display:flex;align-items:center;gap:8px;
+  background:#f5f5f5;border:1px solid var(--border);
+  border-radius:6px;padding:6px 12px;min-width:200px;
+}
+.filter-search input{border:none;background:transparent;outline:none;font-size:13px;width:100%}
+.filter-select{
+  padding:7px 28px 7px 10px;border:1px solid var(--border);
+  border-radius:6px;font-size:12px;background:#fff;
+  color:var(--text-primary);outline:none;cursor:pointer;font-family:inherit;
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;
+}
+.filter-sep{width:1px;height:24px;background:var(--border);flex-shrink:0}
+.toggle-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;
+  border:1px solid var(--border);background:#fff;cursor:pointer;
+  color:var(--text-secondary);transition:all .15s;
+}
+.toggle-chip.on{background:var(--primary-light);color:var(--primary);border-color:var(--primary)}
+.sort-select{padding:6px 28px 6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;outline:none;cursor:pointer;font-family:inherit;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;}
+.filter-count{margin-left:auto;font-size:12px;color:var(--text-secondary)}
+
+/* ─── CARDS GRID ─── */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1200px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ─── MEMBER CARD ─── */
+.member-card{
+  background:var(--surface);border-radius:12px;
+  box-shadow:var(--shadow1);border:1px solid var(--border);
+  overflow:hidden;transition:box-shadow .2s,transform .15s;
+  display:flex;flex-direction:column;
+}
+.member-card:hover{box-shadow:var(--shadow2);transform:translateY(-1px)}
+
+.card-header{
+  padding:14px 16px 10px;
+  border-bottom:1px solid #f0f0f0;
+  background:linear-gradient(135deg,#fafbff,#ffffff);
+}
+.card-header-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.card-no-chip{
+  height:20px;padding:0 8px;border-radius:10px;
+  background:#eceff1;color:#546e7a;font-size:10px;font-weight:700;
+  display:inline-flex;align-items:center;
+}
+.card-role-chip{
+  height:20px;padding:0 8px;border-radius:4px;
+  font-size:10px;font-weight:600;
+  display:inline-flex;align-items:center;
+}
+.role-presi{background:#fff3e0;color:#e65100}
+.role-vice{background:#fce4ec;color:#c2185b}
+.role-sec{background:#e8f5e9;color:#2e7d32}
+.role-acc{background:#e3f2fd;color:#1565c0}
+.role-mentor{background:#f3e5f5;color:#6a1b9a}
+.role-member{background:#eceff1;color:#546e7a}
+
+.card-name{font-size:16px;font-weight:700;color:var(--text-primary);margin-bottom:1px}
+.card-kana{font-size:10px;color:var(--text-secondary)}
+
+.card-body{padding:12px 16px;flex:1;display:flex;flex-direction:column;gap:10px}
+
+.cat-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cat-group{
+  font-size:10px;font-weight:600;color:#546e7a;
+  background:#eceff1;padding:2px 8px;border-radius:3px;
+}
+.cat-sep{color:var(--text-disabled);font-size:11px}
+.cat-name{
+  font-size:10px;font-weight:600;color:#1565c0;
+  background:#e3f2fd;padding:2px 8px;border-radius:3px;
+}
+
+.relation-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rel-item{background:#f8f9fa;border-radius:6px;padding:7px 10px}
+.rel-label{font-size:9px;color:var(--text-secondary);font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:2px}
+.rel-value{font-size:13px;font-weight:700;color:var(--text-primary)}
+.rel-value.highlight{color:var(--primary)}
+
+.memo-snippet{
+  background:#fffde7;border-left:3px solid #ffd600;
+  padding:6px 10px;border-radius:0 6px 6px 0;
+  font-size:11px;color:#5d4037;line-height:1.5;
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+
+.flag-row{display:flex;gap:8px;flex-wrap:wrap}
+.flag-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;
+  border:1px solid var(--border);cursor:pointer;transition:all .15s;
+}
+.flag-off{background:#fff;color:var(--text-disabled)}
+.flag-on-interested{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
+.flag-on-want1on1{background:#e3f2fd;color:#1565c0;border-color:#90caf9}
+
+.card-actions{
+  padding:10px 16px 12px;
+  border-top:1px solid #f0f0f0;
+  display:flex;gap:6px;flex-wrap:wrap;
+  background:#fafafa;
+}
+
+.log-section{
+  padding:8px 16px 12px;
+  border-top:1px solid #f0f0f0;
+}
+.log-title{font-size:9px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:6px}
+.log-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px;font-size:11px;color:var(--text-secondary);line-height:1.4}
+.log-item:last-child{margin-bottom:0}
+.log-type-chip{
+  height:16px;padding:0 5px;border-radius:3px;font-size:9px;font-weight:700;
+  display:inline-flex;align-items:center;flex-shrink:0;margin-top:1px;
+}
+.log-meeting{background:#e3f2fd;color:#1565c0}
+.log-1on1{background:#fce4ec;color:#c2185b}
+.log-other{background:#f3e5f5;color:#6a1b9a}
+
+/* ─── CHIP ─── */
+.chip{
+  display:inline-flex;align-items:center;height:22px;padding:0 10px;
+  border-radius:11px;font-size:11px;font-weight:500;
+}
+
+/* ─── MODAL OVERLAY ─── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.45);
+  z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:#fff;border-radius:12px;width:100%;max-width:480px;
+  box-shadow:0 20px 60px rgba(0,0,0,.2);
+  transform:translateY(12px) scale(.98);transition:transform .2s;
+  overflow:hidden;
+}
+.modal-overlay.open .modal{transform:none}
+.modal-header{
+  padding:18px 22px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-title{font-size:15px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px}
+.modal-close{
+  width:28px;height:28px;border-radius:50%;border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  color:var(--text-secondary);font-size:18px;transition:background .15s;
+}
+.modal-close:hover{background:#f5f5f5}
+.modal-body{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.modal-footer{
+  padding:12px 22px 16px;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:10px;background:#fafafa;
+}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:11px;font-weight:600;color:var(--text-secondary);letter-spacing:.3px}
+.form-select,.form-input,.form-textarea{
+  padding:9px 12px;border:1px solid var(--border);border-radius:6px;
+  font-size:13px;font-family:inherit;color:var(--text-primary);outline:none;
+  transition:border-color .15s;background:#fff;
+}
+.form-select:focus,.form-input:focus,.form-textarea:focus{border-color:var(--primary)}
+.form-textarea{resize:vertical;min-height:80px;line-height:1.5}
+.form-checkbox-row{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer}
+.form-checkbox-row input{width:16px;height:16px;cursor:pointer;accent-color:var(--primary)}
+
+.history-mini{
+  background:#f8f9fa;border-radius:6px;padding:10px 12px;
+  display:flex;flex-direction:column;gap:7px;max-height:160px;overflow-y:auto;
+}
+.history-row-mini{display:flex;justify-content:space-between;font-size:11px;border-bottom:1px dashed #e0e0e0;padding-bottom:6px}
+.history-row-mini:last-child{border-bottom:none;padding-bottom:0}
+.history-date{color:var(--text-secondary)}
+.history-note{color:var(--text-primary);flex:1;margin:0 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.switch-row{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
+.switch-label{font-size:13px;color:var(--text-primary)}
+.switch{position:relative;width:40px;height:22px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.switch-slider{
+  position:absolute;inset:0;background:#ccc;border-radius:11px;cursor:pointer;
+  transition:background .2s;
+}
+.switch-slider::before{
+  content:'';position:absolute;height:16px;width:16px;
+  left:3px;bottom:3px;background:#fff;border-radius:50%;
+  transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+input:checked + .switch-slider{background:var(--primary)}
+input:checked + .switch-slider::before{transform:translateX(18px)}
+
+.snackbar{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:#323232;color:#fff;padding:10px 22px;border-radius:24px;
+  font-size:13px;font-weight:500;z-index:500;
+  transition:transform .25s,opacity .25s;opacity:0;white-space:nowrap;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.snackbar.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+<div id="shell">
+
+<!-- ─── SIDEBAR ─── -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">R</div>
+    <div>
+      <div class="sidebar-logo-text">Religo</div>
+      <div class="sidebar-logo-sub">DragonFly Chapter</div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <button class="nav-item" onclick="setNav(this)">
+      <span class="nav-icon">🗺</span>Connections
+      <span style="margin-left:auto;font-size:9px;opacity:.5;font-weight:400">Network Map</span>
+    </button>
+    <button class="nav-item active" onclick="setNav(this)">
+      <span class="nav-icon">👥</span>Members
+    </button>
+    <button class="nav-item" onclick="setNav(this)">
+      <span class="nav-icon">📋</span>Meetings
+    </button>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <button class="nav-item" onclick="setNav(this)">
+      <span class="nav-icon">🤝</span>1 to 1
+    </button>
+    <button class="nav-item" onclick="setNav(this)">
+      <span class="nav-icon">🏅</span>Role History
+    </button>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <button class="nav-item" onclick="setNav(this)">
+      <span class="nav-icon">⚙️</span>Settings
+    </button>
+    <button class="nav-sub" onclick="setNav(this)">Categories</button>
+    <button class="nav-sub" onclick="setNav(this)">Roles</button>
+  </div>
+
+  <div style="flex:1"></div>
+  <div style="padding:14px 20px;border-top:1px solid rgba(255,255,255,.08)">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="avatar" style="width:30px;height:30px;font-size:11px">ME</div>
+      <div>
+        <div style="color:#fff;font-size:12px;font-weight:500">メンバー管理者</div>
+        <div style="color:rgba(255,255,255,.4);font-size:10px">admin@dragonfly</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<div id="main">
+
+  <!-- AppBar -->
+  <div id="appbar">
+    <div class="appbar-breadcrumb">
+      <span class="breadcrumb-item">Religo</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Members</span>
+    </div>
+    <div class="appbar-search">
+      <span style="color:#999;font-size:15px">🔍</span>
+      <input type="text" placeholder="メンバー検索…"/>
+    </div>
+    <div class="appbar-actions">
+      <button class="appbar-icon-btn" title="通知">🔔</button>
+      <button class="appbar-icon-btn" title="ヘルプ">❓</button>
+      <div class="avatar">ME</div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-header-left">
+        <h1>Members</h1>
+        <p>仕事 / 役職 / 関係性を把握し、1to1とメモで接点を増やす</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-primary btn-sm">🗺 Connectionsへ戻る</button>
+        <button class="btn btn-outlined btn-sm" disabled>＋ メンバー追加（将来）</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon blue">👥</div>
+        <div>
+          <div class="stat-label">総メンバー数</div>
+          <div class="stat-value">24</div>
+          <div class="stat-sub">アクティブ 22</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange">⏰</div>
+        <div>
+          <div class="stat-label">1to1未実施（30日）</div>
+          <div class="stat-value" style="color:#e65100">8</div>
+          <div class="stat-sub">要フォロー</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">⭐</div>
+        <div>
+          <div class="stat-label">interested ON</div>
+          <div class="stat-value" style="color:#2e7d32">11</div>
+          <div class="stat-sub">関係強化対象</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">🔁</div>
+        <div>
+          <div class="stat-label">want_1on1 ON</div>
+          <div class="stat-value" style="color:#6a1b9a">7</div>
+          <div class="stat-sub">予定を入れよう</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-search">
+        <span style="color:#999">🔍</span>
+        <input type="text" placeholder="名前 / カテゴリ / ロール"/>
+      </div>
+      <select class="filter-select">
+        <option>大カテゴリ: すべて</option>
+        <option>建設</option><option>士業</option><option>医療</option>
+        <option>IT</option><option>デザイン</option><option>不動産</option>
+        <option>金融</option>
+      </select>
+      <select class="filter-select">
+        <option>カテゴリ: すべて</option>
+        <option>塗装</option><option>税理士</option><option>歯科</option>
+        <option>システム開発</option><option>グラフィック</option><option>仲介</option>
+        <option>社労士</option><option>保険</option><option>コンサル</option>
+      </select>
+      <select class="filter-select">
+        <option>ロール: すべて</option>
+        <option>プレジ</option><option>バイス</option><option>書記</option>
+        <option>会計</option><option>メンター</option><option>メンバー</option>
+      </select>
+      <div class="filter-sep"></div>
+      <button class="toggle-chip" onclick="this.classList.toggle('on')">⭐ interested</button>
+      <button class="toggle-chip" onclick="this.classList.toggle('on')">🔁 want_1on1</button>
+      <div class="filter-sep"></div>
+      <select class="sort-select">
+        <option>最近接触順</option>
+        <option>同室回数順</option>
+        <option>50音順</option>
+        <option>1to1回数順</option>
+      </select>
+      <div class="filter-count">12件表示</div>
+    </div>
+
+    <!-- Member Cards -->
+    <div class="cards-grid" id="cards-grid"></div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- ─── MODALS ─── -->
+
+<!-- Memo Modal -->
+<div class="modal-overlay" id="modal-memo">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">✏️ メモ追加 <span id="memo-target" style="font-weight:400;font-size:13px;color:#637381"></span></div>
+      <button class="modal-close" onclick="closeModal('modal-memo')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">メモ種別</label>
+        <select class="form-select">
+          <option>other（その他）</option>
+          <option>meeting（例会メモ）</option>
+          <option>one_to_one（1to1メモ）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">本文</label>
+        <textarea class="form-textarea" placeholder="メモ内容を入力してください…" rows="4"></textarea>
+      </div>
+      <label class="form-checkbox-row">
+        <input type="checkbox"/> 重要フラグを立てる
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outlined-gray btn-sm" onclick="closeModal('modal-memo')">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="fakeLoad(this,'保存中…','保存しました ✓','modal-memo')">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- 1to1 Yotei Modal -->
+<div class="modal-overlay" id="modal-1on1">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">📅 1to1予定作成 <span id="oto-target" style="font-weight:400;font-size:13px;color:#637381"></span></div>
+      <button class="modal-close" onclick="closeModal('modal-1on1')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group">
+          <label class="form-label">日付</label>
+          <input type="date" class="form-input" value="2025-08-20"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">時刻</label>
+          <input type="time" class="form-input" value="12:00"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ステータス</label>
+        <select class="form-select">
+          <option>planned（予定）</option>
+          <option>completed（完了）</option>
+          <option>canceled（キャンセル）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">メモ / アジェンダ</label>
+        <textarea class="form-textarea" placeholder="打ち合わせ内容、目的など…" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outlined-gray btn-sm" onclick="closeModal('modal-1on1')">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="fakeLoad(this,'保存中…','保存しました ✓','modal-1on1')">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- 1to1 Memo Modal -->
+<div class="modal-overlay" id="modal-1on1memo">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">📝 1to1メモ <span id="otomemo-target" style="font-weight:400;font-size:13px;color:#637381"></span></div>
+      <button class="modal-close" onclick="closeModal('modal-1on1memo')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-label" style="margin-bottom:6px">過去の1to1履歴</div>
+        <div class="history-mini">
+          <div class="history-row-mini">
+            <span class="history-date">2025-06-12</span>
+            <span class="history-note">新商品の紹介。来月また会う約束。</span>
+            <span style="color:var(--primary);font-size:10px">完了</span>
+          </div>
+          <div class="history-row-mini">
+            <span class="history-date">2025-04-08</span>
+            <span class="history-note">業務提携の可能性を探った。継続検討。</span>
+            <span style="color:#2e7d32;font-size:10px">完了</span>
+          </div>
+          <div class="history-row-mini">
+            <span class="history-date">2025-02-20</span>
+            <span class="history-note">初回顔合わせ。共通の顧客が判明。</span>
+            <span style="color:#2e7d32;font-size:10px">完了</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">今回のメモ</label>
+        <textarea class="form-textarea" placeholder="今回の1to1で話した内容…" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outlined-gray btn-sm" onclick="closeModal('modal-1on1memo')">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="fakeLoad(this,'保存中…','保存しました ✓','modal-1on1memo')">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- Flag Modal -->
+<div class="modal-overlay" id="modal-flag">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">🚩 フラグ編集 <span id="flag-target" style="font-weight:400;font-size:13px;color:#637381"></span></div>
+      <button class="modal-close" onclick="closeModal('modal-flag')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#f8f9fa;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+        <div class="switch-row">
+          <div>
+            <div class="switch-label">⭐ interested</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">関係を深めたい・紹介候補</div>
+          </div>
+          <label class="switch"><input type="checkbox" checked/><span class="switch-slider"></span></label>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div class="switch-row">
+          <div>
+            <div class="switch-label">🔁 want_1on1</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">1to1の予定を入れたい</div>
+          </div>
+          <label class="switch"><input type="checkbox"/><span class="switch-slider"></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outlined-gray btn-sm" onclick="closeModal('modal-flag')">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="fakeLoad(this,'保存中…','更新しました ✓','modal-flag')">保存する</button>
+    </div>
+  </div>
+</div>
+
+<div class="snackbar" id="snackbar"></div>
+
+<script>
+// ─── DATA ───
+const MEMBERS = [
+  {no:1, name:"田中 誠一", kana:"たなか せいいち", group:"IT", cat:"システム開発", role:"プレジ", rooms:28, contact:"2025-07-18", memo:"新しいCRMの導入について相談あり。来月デモを実施予定。", interested:true, want1on1:true, logs:[{type:"1on1",date:"7/15",text:"CRM導入の進捗確認"},{type:"meeting",date:"7/8",text:"例会でBOを受領"},{type:"other",date:"6/28",text:"ランチMTGで情報交換"}]},
+  {no:2, name:"鈴木 花子", kana:"すずき はなこ", group:"士業", cat:"税理士", role:"バイス", rooms:22, contact:"2025-07-20", memo:"節税対策の勉強会を企画中。BNIメンバーへの案内を依頼された。", interested:true, want1on1:false, logs:[{type:"1on1",date:"7/12",text:"決算対策について深掘り"},{type:"meeting",date:"6/30",text:"例会でプレゼン好評"},{type:"other",date:"6/15",text:"紹介案件の経過確認"}]},
+  {no:3, name:"山田 大輔", kana:"やまだ だいすけ", group:"建設", cat:"塗装", role:"書記", rooms:18, contact:"2025-07-05", memo:"外壁塗装の新工法を開発中。来月サンプルを持参してくれる予定。", interested:false, want1on1:true, logs:[{type:"meeting",date:"7/1",text:"例会での名刺交換"},{type:"1on1",date:"6/20",text:"現場の課題ヒアリング"},{type:"other",date:"5/30",text:"見積もり相談あり"}]},
+  {no:4, name:"佐藤 美咲", kana:"さとう みさき", group:"医療", cat:"歯科", role:"メンター", rooms:31, contact:"2025-07-22", memo:"患者向けの予防歯科セミナー開催予定。会場探しを手伝っている。", interested:true, want1on1:true, logs:[{type:"1on1",date:"7/20",text:"セミナー企画の詳細確認"},{type:"meeting",date:"7/8",text:"例会でBOを3件受領"},{type:"1on1",date:"6/10",text:"コラボ企画について"}]},
+  {no:5, name:"中村 健太", kana:"なかむら けんた", group:"デザイン", cat:"グラフィック", role:"メンバー", rooms:12, contact:"2025-06-28", memo:"企業ロゴのリブランディング案件を複数抱えており多忙な様子。", interested:false, want1on1:false, logs:[{type:"other",date:"6/25",text:"SNS投稿の相談"},{type:"meeting",date:"6/8",text:"例会でピッチ"},{ type:"other",date:"5/20",text:"ポートフォリオ共有"}]},
+  {no:6, name:"小林 陽子", kana:"こばやし ようこ", group:"不動産", cat:"仲介", role:"会計", rooms:25, contact:"2025-07-17", memo:"投資用物件の情報提供をお願いしている。良い物件があれば連絡くれる。", interested:true, want1on1:false, logs:[{type:"1on1",date:"7/14",text:"投資エリアの絞り込み"},{type:"meeting",date:"7/1",text:"例会参加"},{type:"other",date:"6/18",text:"物件資料の送付依頼"}]},
+  {no:7, name:"伊藤 勇樹", kana:"いとう ゆうき", group:"金融", cat:"保険", role:"メンバー", rooms:9, contact:"2025-06-10", memo:"経営者向けの生命保険プランを提案中。先月から少し疎遠になっている。", interested:false, want1on1:true, logs:[{type:"1on1",date:"6/8",text:"保険見直しの提案"},{type:"meeting",date:"5/27",text:"例会欠席"},{type:"other",date:"5/10",text:"資料送付のみ"}]},
+  {no:8, name:"渡辺 彩香", kana:"わたなべ あやか", group:"IT", cat:"コンサル", role:"メンバー", rooms:16, contact:"2025-07-10", memo:"DX推進コンサルとして製造業クライアントへの支援を強化中。紹介案件あり。", interested:true, want1on1:true, logs:[{type:"1on1",date:"7/9",text:"DX案件の詳細ヒアリング"},{type:"meeting",date:"6/30",text:"例会でBO交換"},{type:"other",date:"6/15",text:"セミナー共催の提案"}]},
+  {no:9, name:"加藤 浩二", kana:"かとう こうじ", group:"士業", cat:"社労士", role:"メンバー", rooms:20, contact:"2025-07-14", memo:"就業規則の見直しプロジェクトで複数の会社を支援中。人手不足が悩み。", interested:false, want1on1:false, logs:[{type:"meeting",date:"7/8",text:"例会参加・名刺交換"},{type:"1on1",date:"6/22",text:"人事制度の課題整理"},{type:"other",date:"5/30",text:"メール返信あり"}]},
+  {no:10, name:"吉田 理沙", kana:"よしだ りさ", group:"デザイン", cat:"Webデザイン", role:"メンバー", rooms:14, contact:"2025-07-08", memo:"UI/UXデザインの案件を積極的に探している。ポートフォリオを最近更新した。", interested:true, want1on1:false, logs:[{type:"1on1",date:"7/5",text:"ポートフォリオレビュー"},{type:"meeting",date:"6/16",text:"例会でピッチ高評価"},{type:"other",date:"5/28",text:"案件紹介の打診"}]},
+  {no:11, name:"松本 剛", kana:"まつもと つよし", group:"建設", cat:"設備工事", role:"メンバー", rooms:19, contact:"2025-06-20", memo:"マンションの設備更新工事の受注が増えており忙しい。新スタッフを採用したと言っていた。", interested:false, want1on1:true, logs:[{type:"meeting",date:"6/16",text:"例会参加"},{type:"other",date:"5/25",text:"現場見学のお誘い"},{type:"1on1",date:"4/10",text:"事業拡大の相談"}]},
+  {no:12, name:"森 友美", kana:"もり ともみ", group:"医療", cat:"整体・鍼灸", role:"メンバー", rooms:11, contact:"2025-07-01", memo:"スポーツ選手専門の施術で差別化中。アスリート向けのサービスへの展開を検討。", interested:true, want1on1:true, logs:[{type:"1on1",date:"6/29",text:"スポーツ施術の方向性"},{type:"meeting",date:"6/16",text:"例会でサービス紹介"},{type:"other",date:"5/20",text:"コラボ案の検討"}]},
+];
+
+const ROLE_CLASS = {プレジ:"role-presi",バイス:"role-vice",書記:"role-sec",会計:"role-acc",メンター:"role-mentor",メンバー:"role-member"};
+const LOG_CLASS = {"1on1":"log-1on1","meeting":"log-meeting","other":"log-other"};
+const LOG_LABEL = {"1on1":"1to1","meeting":"例会","other":"その他"};
+
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = MEMBERS.map(m => `
+    <div class="member-card">
+      <div class="card-header">
+        <div class="card-header-row">
+          <span class="card-no-chip"># ${String(m.no).padStart(2,'0')}</span>
+          <span class="card-role-chip ${ROLE_CLASS[m.role]||'role-member'}">${m.role}</span>
+        </div>
+        <div class="card-name">${m.name}</div>
+        <div class="card-kana">${m.kana}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="cat-row">
+          <span class="cat-group">${m.group}</span>
+          <span class="cat-sep">/</span>
+          <span class="cat-name">${m.cat}</span>
+        </div>
+
+        <div class="relation-row">
+          <div class="rel-item">
+            <div class="rel-label">同室回数</div>
+            <div class="rel-value highlight">${m.rooms}回</div>
+          </div>
+          <div class="rel-item">
+            <div class="rel-label">最終接触</div>
+            <div class="rel-value" style="font-size:11px">${m.contact}</div>
+          </div>
+        </div>
+
+        <div class="memo-snippet">${m.memo}</div>
+
+        <div class="flag-row">
+          <span class="flag-chip ${m.interested?'flag-on-interested':'flag-off'}" onclick="openFlagModal(${m.no})">
+            ⭐ interested
+          </span>
+          <span class="flag-chip ${m.want1on1?'flag-on-want1on1':'flag-off'}" onclick="openFlagModal(${m.no})">
+            🔁 want 1on1
+          </span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn btn-primary btn-sm" onclick="openMemoModal('${m.name}')">✏️ メモ追加</button>
+        <button class="btn btn-outlined btn-sm" onclick="openOtoModal('${m.name}')">📅 1to1予定</button>
+        <button class="btn btn-text btn-sm" onclick="openOtoMemoModal('${m.name}')">📝 1to1メモ</button>
+        <button class="btn btn-outlined-gray btn-sm" disabled style="margin-left:auto">詳細 →</button>
+      </div>
+
+      <div class="log-section">
+        <div class="log-title">関係ログ（最近）</div>
+        ${m.logs.map(l => `
+          <div class="log-item">
+            <span class="log-type-chip ${LOG_CLASS[l.type]||'log-other'}">${LOG_LABEL[l.type]}</span>
+            <span style="color:#9e9e9e;font-size:10px;flex-shrink:0">${l.date}</span>
+            <span>${l.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── NAV ───
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ─── MODALS ───
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openMemoModal(name) {
+  document.getElementById('memo-target').textContent = '— ' + name;
+  openModal('modal-memo');
+}
+function openOtoModal(name) {
+  document.getElementById('oto-target').textContent = '— ' + name;
+  openModal('modal-1on1');
+}
+function openOtoMemoModal(name) {
+  document.getElementById('otomemo-target').textContent = '— ' + name;
+  openModal('modal-1on1memo');
+}
+function openFlagModal(no) {
+  const m = MEMBERS.find(x => x.no === no);
+  document.getElementById('flag-target').textContent = m ? '— ' + m.name : '';
+  openModal('modal-flag');
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', () => el.classList.remove('open'));
+});
+
+// ─── FAKE SAVE ───
+let snackTimer;
+function fakeLoad(btn, loadingText, doneText, modalId) {
+  const orig = btn.textContent;
+  btn.disabled = true; btn.textContent = loadingText;
+  setTimeout(() => {
+    btn.disabled = false; btn.textContent = orig;
+    closeModal(modalId);
+    showSnack(doneText);
+  }, 900);
+}
+function showSnack(msg) {
+  const el = document.getElementById('snackbar');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(snackTimer);
+  snackTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+// ─── INIT ───
+renderCards();
+</script>
+</body>
+</html>
