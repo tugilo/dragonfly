@@ -3,28 +3,24 @@
 namespace App\Services\Religo;
 
 use App\Models\BreakoutRoom;
-use App\Models\BreakoutRound;
 use App\Models\Meeting;
 use App\Models\Participant;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換・round_no=1 のみ）. SSOT: DATA_MODEL §4.5, §4.6.
+ * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換）.
+ * breakout_rounds テーブルが無い環境でも動作するよう meeting_id + room_label で breakout_rooms を扱う. SSOT: DATA_MODEL §4.5, §4.6.
  */
 class MeetingBreakoutService
 {
     private const ROOM_LABELS = ['BO1', 'BO2'];
 
     /**
-     * GET 用: meeting と rooms（round_no=1 の round に属する BO1/BO2）.
+     * GET 用: meeting と rooms（BO1/BO2）.
      */
     public function getBreakouts(Meeting $meeting): array
     {
-        $round = BreakoutRound::firstOrCreate(
-            ['meeting_id' => $meeting->id, 'round_no' => 1],
-            ['label' => 'Round 1']
-        );
-        $rooms = BreakoutRoom::where('breakout_round_id', $round->id)
+        $rooms = BreakoutRoom::where('meeting_id', $meeting->id)
             ->whereIn('room_label', self::ROOM_LABELS)
             ->orderBy('room_label')
             ->get();
@@ -65,15 +61,10 @@ class MeetingBreakoutService
     }
 
     /**
-     * PUT 用: round_no=1 の round の rooms のみ保存.
+     * PUT 用: BO1/BO2 の rooms を保存.
      */
     public function updateBreakouts(Meeting $meeting, array $rooms): void
     {
-        $round = BreakoutRound::firstOrCreate(
-            ['meeting_id' => $meeting->id, 'round_no' => 1],
-            ['label' => 'Round 1']
-        );
-
         $allMemberIds = [];
         foreach ($rooms as $r) {
             foreach ($r['member_ids'] ?? [] as $mid) {
@@ -86,15 +77,15 @@ class MeetingBreakoutService
             ]);
         }
 
-        DB::transaction(function () use ($meeting, $round, $rooms) {
+        DB::transaction(function () use ($meeting, $rooms) {
             $roomLabels = array_column($rooms, 'room_label');
             $roomMap = [];
             foreach (self::ROOM_LABELS as $label) {
                 $idx = array_search($label, $roomLabels, true);
                 $payload = $idx !== false ? $rooms[$idx] : ['room_label' => $label, 'notes' => null, 'member_ids' => []];
                 $room = BreakoutRoom::firstOrCreate(
-                    ['breakout_round_id' => $round->id, 'room_label' => $label],
-                    ['meeting_id' => $meeting->id, 'sort_order' => 1]
+                    ['meeting_id' => $meeting->id, 'room_label' => $label],
+                    ['sort_order' => 1]
                 );
                 $room->update(['notes' => $payload['notes'] ?? null]);
                 $roomMap[$label] = ['room' => $room, 'member_ids' => array_map('intval', $payload['member_ids'] ?? [])];

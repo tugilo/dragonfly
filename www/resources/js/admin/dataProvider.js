@@ -52,6 +52,28 @@ export const dragonflyDataProvider = {
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
         }
+        if (resource === 'categories') {
+            const data = await request('/api/categories');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'roles') {
+            const data = await request('/api/roles');
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
+        if (resource === 'member-roles') {
+            const q = new URLSearchParams();
+            const f = params?.filter ?? {};
+            if (f.role_id != null) q.set('role_id', String(f.role_id));
+            if (f.member_id != null) q.set('member_id', String(f.member_id));
+            if (f.from) q.set('from', f.from);
+            if (f.to) q.set('to', f.to);
+            const url = `/api/member-roles${q.toString() ? `?${q.toString()}` : ''}`;
+            const data = await request(url);
+            const arr = Array.isArray(data) ? data : [];
+            return { data: arr, total: arr.length };
+        }
         return { data: [], total: 0 };
     },
 
@@ -62,6 +84,10 @@ export const dragonflyDataProvider = {
             console.log('[DataProvider] getOne dragonflySummary', url);
             const data = await request(url);
             console.log('[DataProvider] getOne result', data);
+            return { data };
+        }
+        if (resource === 'members') {
+            const data = await request(`/api/dragonfly/members/${params.id}`);
             return { data };
         }
         throw new Error(`getOne not implemented for ${resource}`);
@@ -84,6 +110,20 @@ export const dragonflyDataProvider = {
                 }),
             });
             console.log('[DataProvider] update result', data);
+            return { data };
+        }
+        if (resource === 'members') {
+            const data = await request(`/api/dragonfly/members/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    name: params.data?.name,
+                    name_kana: params.data?.name_kana,
+                    category_id: params.data?.category_id,
+                    type: params.data?.type,
+                    display_no: params.data?.display_no,
+                    role_id: params.data?.role_id,
+                }),
+            });
             return { data };
         }
         throw new Error(`update not implemented for ${resource}`);

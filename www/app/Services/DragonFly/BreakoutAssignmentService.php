@@ -53,7 +53,7 @@ class BreakoutAssignmentService
             }
         }
 
-        $room->load('participants.member');
+        $room->load('participants.member.category');
         $members = $room->participants->map(fn (Participant $p) => [
             'participant_id' => $p->id,
             'member' => $p->member ? [
@@ -61,7 +61,7 @@ class BreakoutAssignmentService
                 'display_no' => $p->member->display_no,
                 'name' => $p->member->name,
                 'name_kana' => $p->member->name_kana,
-                'category' => $p->member->category,
+                'category' => $p->member->category ? ($p->member->category->group_name . ($p->member->category->name !== $p->member->category->group_name ? ' / ' . $p->member->category->name : '')) : null,
             ] : null,
         ])->values()->all();
 

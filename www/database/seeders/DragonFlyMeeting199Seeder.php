@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Meeting;
 use App\Models\Member;
+use App\Models\MemberRole;
 use App\Models\Participant;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 /**
@@ -121,19 +124,20 @@ class DragonFlyMeeting199Seeder extends Seeder
 
         foreach ($this->membersData() as $row) {
             [$displayNo, $name, $nameKana, $category, $roleNotes] = $row;
+            $categoryId = $this->resolveCategoryId($category);
             $member = Member::updateOrCreate(
                 $this->memberUniqueKey($displayNo, 'member', $name),
                 [
                     'name' => $name,
                     'name_kana' => $nameKana,
-                    'category' => $this->nullDash($category),
-                    'role_notes' => $this->nullDash($roleNotes),
+                    'category_id' => $categoryId,
                     'type' => 'member',
                     'display_no' => $displayNo,
                     'introducer_member_id' => null,
                     'attendant_member_id' => null,
                 ]
             );
+            $this->syncCurrentRole($member, $roleNotes);
             $memberIdByKey['member:' . $displayNo] = $member->id;
             $memberIdByKey['name:' . $name] = $member->id;
         }
@@ -142,12 +146,13 @@ class DragonFlyMeeting199Seeder extends Seeder
             [$displayNo, $name, $nameKana, $category, $introducerName, $attendantName] = $row;
             $introducerId = $memberIdByKey['name:' . $introducerName] ?? null;
             $attendantId = $memberIdByKey['name:' . $attendantName] ?? null;
+            $categoryId = $this->resolveCategoryId($category);
             $member = Member::updateOrCreate(
                 $this->memberUniqueKey($displayNo, 'visitor', $name),
                 [
                     'name' => $name,
                     'name_kana' => $nameKana,
-                    'category' => $this->nullDash($category),
+                    'category_id' => $categoryId,
                     'role_notes' => null,
                     'type' => 'visitor',
                     'display_no' => $displayNo,
@@ -162,12 +167,13 @@ class DragonFlyMeeting199Seeder extends Seeder
             [$displayNo, $name, $nameKana, $category, $introducerName, $attendantName] = $row;
             $introducerId = $memberIdByKey['name:' . $introducerName] ?? null;
             $attendantId = $memberIdByKey['name:' . $attendantName] ?? null;
+            $categoryId = $this->resolveCategoryId($category);
             $member = Member::updateOrCreate(
                 $this->memberUniqueKey($displayNo, 'guest', $name),
                 [
                     'name' => $name,
                     'name_kana' => $nameKana,
-                    'category' => $this->nullDash($category),
+                    'category_id' => $categoryId,
                     'role_notes' => null,
                     'type' => 'guest',
                     'display_no' => $displayNo,
@@ -222,5 +228,41 @@ class DragonFlyMeeting199Seeder extends Seeder
             return null;
         }
         return trim($value);
+    }
+
+    private function resolveCategoryId(?string $category): ?int
+    {
+        $v = $this->nullDash($category);
+        if ($v === null) {
+            return null;
+        }
+        $cat = Category::firstOrCreate(
+            ['group_name' => $v, 'name' => $v],
+            ['group_name' => $v, 'name' => $v]
+        );
+
+        return $cat->id;
+    }
+
+    private function syncCurrentRole(Member $member, ?string $roleNotes): void
+    {
+        $v = $this->nullDash($roleNotes);
+        $today = now()->toDateString();
+        MemberRole::where('member_id', $member->id)->whereNull('term_end')->update(['term_end' => $today]);
+        if ($v === null) {
+            return;
+        }
+        $role = Role::firstOrCreate(
+            ['name' => $v],
+            ['name' => $v, 'description' => null]
+        );
+        MemberRole::updateOrCreate(
+            [
+                'member_id' => $member->id,
+                'role_id' => $role->id,
+                'term_end' => null,
+            ],
+            ['term_start' => $today]
+        );
     }
 }

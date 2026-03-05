@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Meeting;
 use App\Models\Member;
+use App\Models\MemberRole;
 use App\Models\Participant;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 
 /**
@@ -121,13 +124,13 @@ class BniDragonFly199ParticipantsSeeder extends Seeder
             $member = Member::create([
                 'name' => $name,
                 'name_kana' => $nameKana,
-                'category' => $this->nullIfDash($category),
-                'role_notes' => $this->nullIfDash($roleNotes),
+                'category_id' => $this->resolveCategoryId($category),
                 'type' => $type,
                 'display_no' => $displayNo,
                 'introducer_member_id' => null,
                 'attendant_member_id' => null,
             ]);
+            $this->syncCurrentRole($member, $roleNotes);
 
             $nameToMemberId[$name] = $member->id;
 
@@ -185,5 +188,38 @@ class BniDragonFly199ParticipantsSeeder extends Seeder
             return null;
         }
         return trim($value);
+    }
+
+    private function resolveCategoryId(?string $category): ?int
+    {
+        $v = $this->nullIfDash($category);
+        if ($v === null) {
+            return null;
+        }
+        $cat = Category::firstOrCreate(
+            ['group_name' => $v, 'name' => $v],
+            ['group_name' => $v, 'name' => $v]
+        );
+
+        return $cat->id;
+    }
+
+    private function syncCurrentRole(Member $member, ?string $roleNotes): void
+    {
+        $v = $this->nullIfDash($roleNotes);
+        $today = now()->toDateString();
+        if ($v === null) {
+            return;
+        }
+        $role = Role::firstOrCreate(
+            ['name' => $v],
+            ['name' => $v, 'description' => null]
+        );
+        MemberRole::create([
+            'member_id' => $member->id,
+            'role_id' => $role->id,
+            'term_start' => $today,
+            'term_end' => null,
+        ]);
     }
 }

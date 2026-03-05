@@ -5,6 +5,8 @@ import { dragonflyDataProvider } from './dataProvider';
 import DragonFlyBoard from './pages/DragonFlyBoard';
 import { ReligoLayout } from './ReligoLayout';
 import { MembersList } from './pages/MembersList';
+import { MemberEdit } from './pages/MemberEdit';
+import { MemberRolesList } from './pages/MemberRolesList';
 import { MeetingsList } from './pages/MeetingsList';
 import { OneToOnesList, OneToOnesCreate } from './pages/OneToOnesList';
 
@@ -22,7 +24,8 @@ if (root) {
     createRoot(root).render(
         <Admin dataProvider={dragonflyDataProvider} layout={ReligoLayout} dashboard={DragonFlyBoard}>
             <Resource name="dragonflyFlags" list={DummyList} options={{ label: 'Flags' }} />
-            <Resource name="members" list={MembersList} options={{ label: 'Members（メンバー）' }} />
+            <Resource name="members" list={MembersList} edit={MemberEdit} options={{ label: 'Members（メンバー）' }} />
+            <Resource name="member-roles" list={MemberRolesList} options={{ label: '役職履歴' }} />
             <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings（例会）' }} />
             <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} options={{ label: '1 to 1（予定・履歴）' }} />
         </Admin>
