@@ -70,8 +70,8 @@ git push -u origin feature/phase16b-admin-ui-mock-sync-v1
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に `git log -1 --format=%H develop` で取得して記入） |
+| **merge commit id** | `4b5b6135825943618ce0f0fb3be19cb09b66247a` |
 | **merge 元ブランチ名** | feature/phase16b-admin-ui-mock-sync-v1 |
-| **変更ファイル一覧** | （merge 後に `git diff --name-only develop^1...develop` の結果を貼る） |
-| **テスト結果** | （例: php artisan test — 27 passed） |
-| **手動確認** | 未実施 または 実施結果を簡潔に |
+| **変更ファイル一覧** | docs/INDEX.md, docs/MERGE_RELIGO_PR_STEPS.md, docs/dragonfly_progress.md, docs/process/phases/PHASE16B_RELIGO_ADMIN_UI_MOCK_SYNC_PLAN.md, docs/process/phases/PHASE16B_RELIGO_ADMIN_UI_MOCK_SYNC_REPORT.md, docs/process/phases/PHASE16B_RELIGO_ADMIN_UI_MOCK_SYNC_WORKLOG.md, www/public/mock/religo-admin-mock.html, www/resources/js/admin/ReligoMenu.jsx, www/resources/js/admin/app.jsx, www/resources/js/admin/dataProvider.js, www/resources/js/admin/pages/CategoriesPage.jsx, www/resources/js/admin/pages/Dashboard.jsx, www/resources/js/admin/pages/DragonFlyBoard.jsx, www/resources/js/admin/pages/MeetingsList.jsx, www/resources/js/admin/pages/MembersList.jsx, www/resources/js/admin/pages/OneToOnesList.jsx, www/resources/js/admin/pages/RoleHistoryList.jsx, www/resources/js/admin/pages/RolesPage.jsx |
+| **テスト結果** | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` — 32 passed (151 assertions) |
+| **手動確認** | 未実施 |
