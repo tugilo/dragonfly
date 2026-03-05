@@ -8,10 +8,11 @@ use App\Models\Member;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 /**
- * GET /api/dashboard/stats, tasks, activity. Phase E-1. SSOT: DASHBOARD_REQUIREMENTS.md §5.
+ * GET /api/dashboard/stats, tasks, activity. Phase E-1, E-4. SSOT: DASHBOARD_REQUIREMENTS.md §5.
  */
 class DashboardApiTest extends TestCase
 {
@@ -27,6 +28,20 @@ class DashboardApiTest extends TestCase
             'type' => 'active',
             'created_at' => now(),
             'updated_at' => now(),
+        ]);
+    }
+
+    private function createMeUser(?int $ownerMemberId): void
+    {
+        DB::table('users')->insert([
+            'id' => 1,
+            'name' => 'Me',
+            'email' => 'me@example.com',
+            'password' => Hash::make('password'),
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+            'owner_member_id' => $ownerMemberId,
         ]);
     }
 
@@ -53,12 +68,24 @@ class DashboardApiTest extends TestCase
         $this->assertArrayHasKey('message', $data);
     }
 
-    public function test_stats_defaults_owner_to_1_when_omitted(): void
+    /** E-4: user.owner_member_id が設定済みなら query なしで 200 */
+    public function test_stats_returns_200_without_query_when_user_owner_set(): void
     {
+        $this->createMeUser($this->ownerId);
         $res = $this->getJson('/api/dashboard/stats');
         $res->assertOk();
         $data = $res->json();
         $this->assertArrayHasKey('stale_contacts_count', $data);
+    }
+
+    /** E-4: user.owner_member_id が未設定なら 422 */
+    public function test_stats_returns_422_when_owner_not_set(): void
+    {
+        $this->createMeUser(null);
+        $res = $this->getJson('/api/dashboard/stats');
+        $res->assertStatus(422);
+        $data = $res->json();
+        $this->assertArrayHasKey('message', $data);
     }
 
     public function test_tasks_returns_200_array(): void
