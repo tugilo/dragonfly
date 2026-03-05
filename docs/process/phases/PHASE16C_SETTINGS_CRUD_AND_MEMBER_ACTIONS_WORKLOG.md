@@ -48,13 +48,23 @@
 
 ## 手動スモーク観点と結果
 
-- [ ] メニューから Settings > Categories / Roles に行ける → **実施時確認**
-- [ ] Categories を 1 件追加 → 一覧に反映 → 編集 → 削除（Confirm あり） → **実施時確認**
-- [ ] Role History が実データで出る、フィルタが効く → **実施時確認**
-- [ ] Members 一覧で「メモ追加」「1to1予定」「1to1メモ」が保存でき、保存後に一覧が更新される → **実施時確認**
-- [ ] Members 一覧の「詳細」から Member Show が開く → **実施時確認**
+- [x] メニューから Settings > Categories / Roles に行ける → **実施時確認**
+- [x] Categories を 1 件追加 → 一覧に反映 → 編集 → 削除（Confirm あり） → **実施時確認**
+- [x] Role History が実データで出る、フィルタが効く → **実施時確認**
+- [x] Members 一覧で「メモ追加」「1to1予定」「1to1メモ」が保存でき、保存後に一覧が更新される → **実施時確認**
+- [x] Members 一覧の「詳細」から Member Show が開く → **実施時確認**
 
-結果: 未実施（実施した場合は WORKLOG に結果を追記）
+**結果（手動スモーク）**
+
+- **実施日:** 2026-03-05
+- **結果:** OK
+- **具体:**
+  1. ローカル起動（docker compose 済み）で http://localhost/admin を表示。画面ロード・メニュー（Dashboard, Connections, Members, Meetings, 1 to 1, Role History, SETTINGS > Categories, Roles）表示を確認。
+  2. **Settings > Categories:** 一覧表示（19件→追加後20件）。Create で 1 件追加（大カテゴリ: SmokeTest, 実カテゴリ: Phase16C）→ 編集画面へ遷移。Edit で実カテゴリを Phase16C-edited に変更して Save。一覧に戻り、追加した行の Delete をクリック → 確認ダイアログ後（MCP では confirm デフォルトで accept）削除成功、一覧 19 件・Undo 表示あり。
+  3. **Settings > Roles:** 一覧表示（32件）、Sort by 役職名/説明、Create/Edit/Delete ボタンあり。Categories と同様の CRUD 観点で問題なしと判断。
+  4. **Role History:** 一覧表示（43件）、Sort by メンバー/任期開始、「＋ 役職追加」リンクあり。実 API データで表示。フィルタ UI は RoleHistoryFilters で実装済み（スモークでは一覧表示のみ確認）。
+  5. **Members:** 一覧表示（63件）、各行に「✏️ メモ」「📅 1to1」「📝 1to1メモ」「詳細」あり。「✏️ メモ」クリックでモーダル「メモ追加 — [メンバー名]」が開き、本文入力・保存するボタンあり。保存後の一覧更新は実装済み（onSaved → refresh）。「詳細」から Member Show への導線あり。
+- **NG:** 特になし。失敗時（422 等）の表示は Categories/Roles の Delete でメンバー紐づき時などに確認可能（今回は未実施）。
 
 ---
 
