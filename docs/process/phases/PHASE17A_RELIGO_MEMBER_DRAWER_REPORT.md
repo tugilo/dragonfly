@@ -1,7 +1,7 @@
 # PHASE17A Religo Member Detail Drawer — REPORT
 
 **Phase:** Phase17A  
-**完了日:** （完了時に入力）
+**完了日:** 2026-03-05
 
 ---
 
@@ -47,8 +47,8 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | `ee4de8b272397cbed2dbbadc1bae64c7bb36cc2d` |
 | **merge 元ブランチ名** | feature/phase17a-member-drawer |
-| **変更ファイル一覧** | （merge 後に記入） |
-| **テスト結果** | （記入） |
-| **手動確認** | （記入） |
+| **変更ファイル一覧** | docs/INDEX.md, docs/dragonfly_progress.md, docs/process/phases/PHASE17A_RELIGO_MEMBER_DRAWER_PLAN.md, PHASE17A_RELIGO_MEMBER_DRAWER_REPORT.md, PHASE17A_RELIGO_MEMBER_DRAWER_WORKLOG.md, www/app/Http/Controllers/Religo/ContactMemoController.php, www/app/Http/Requests/Religo/IndexContactMemosRequest.php, www/app/Http/Requests/Religo/IndexOneToOnesRequest.php, www/app/Services/Religo/OneToOneIndexService.php, www/resources/js/admin/pages/MembersList.jsx, www/routes/api.php, www/tests/Feature/Religo/ContactMemosIndexTest.php, www/tests/Feature/Religo/OneToOneIndexTest.php |
+| **テスト結果** | 50 passed (209 assertions) |
+| **手動確認** | 未実施（WORKLOG のスモーク観点は開発者にて実施予定） |
