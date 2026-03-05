@@ -13,8 +13,10 @@ use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
 use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
+use App\Http\Controllers\Religo\MeetingMemoController;
 use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
+use App\Http\Controllers\Religo\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,11 +63,16 @@ Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->whereNumber('i
 
 Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
+Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
+Route::get('/dashboard/tasks', [DashboardController::class, 'tasks']);
+Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+
 Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
     ->whereNumber('target_member_id');
 
 Route::get('/contact-memos', [ContactMemoController::class, 'index']);
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
+Route::get('/meeting-memos', [MeetingMemoController::class, 'index']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
 
