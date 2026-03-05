@@ -35,6 +35,6 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | `b208d81d94f30cb07f2077f2b6a067b20b9a1aa2` |
 | **merge 元ブランチ名** | `feature/phase15c-category-display` |
 | **テスト結果** | 32 passed (151 assertions) |

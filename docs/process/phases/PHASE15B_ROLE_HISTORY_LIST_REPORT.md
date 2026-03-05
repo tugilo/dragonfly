@@ -42,6 +42,6 @@ Tests: 32 passed (151 assertions)（既存 27 + 新規 5）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
+| **merge commit id** | `c48562ebdc87fdbbac83ffe6da7f81b681cea02b` |
 | **merge 元ブランチ名** | `feature/phase15b-role-history-list` |
 | **テスト結果** | 32 passed (151 assertions) |
