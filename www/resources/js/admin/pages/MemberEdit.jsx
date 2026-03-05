@@ -19,7 +19,7 @@ export function MemberEdit() {
 
     const categoryChoices = categories.map((c) => ({
         id: c.id,
-        name: c.name && c.name !== c.group_name ? `${c.group_name} / ${c.name}` : c.group_name,
+        name: c.name ? `${c.group_name} / ${c.name}` : c.group_name,
     }));
     const roleChoices = roles.map((r) => ({ id: r.id, name: r.name }));
 
