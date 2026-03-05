@@ -589,6 +589,7 @@ export default function DragonFlyBoard() {
             refetchMembers();
             setDirty(false);
             setSaveStatus('saved');
+            setSnackbarMessage('BO割当を保存しました ✓');
             if (savedTimeoutRef.current) clearTimeout(savedTimeoutRef.current);
             savedTimeoutRef.current = setTimeout(() => {
                 setSaveStatus('idle');
@@ -793,8 +794,151 @@ export default function DragonFlyBoard() {
                         <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
                             📋 Meeting + BO割当
                         </Typography>
+                        <FormControl size="small" fullWidth sx={{ mt: 0 }}>
+                            <Select
+                                displayEmpty
+                                value={selectedMeetingId || ''}
+                                onChange={(e) => {
+                                    setSelectedMeetingId(e.target.value ? String(e.target.value) : '');
+                                    setSelectedRoundIndex(0);
+                                }}
+                                sx={{ fontSize: 12 }}
+                            >
+                                <MenuItem value="">例会を選択</MenuItem>
+                                {meetings.map((m) => (
+                                    <MenuItem key={m.id} value={String(m.id)}>
+                                        #{m.number} — {m.held_on}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <Typography sx={{ fontSize: 11, color: 'text.secondary', mt: 1 }}>
+                            BO回数はデフォルト2。将来的に増加可能な設計。
+                        </Typography>
                     </Box>
-                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
+                        {roundsError && (
+                            <Typography color="error" variant="body2" sx={{ mb: 1 }}>
+                                {roundsError}
+                            </Typography>
+                        )}
+                        {roundsLoading && <Typography color="text.secondary">Loading...</Typography>}
+                        {!roundsLoading && selectedMeetingId && roundsEdit.length > 0 && (() => {
+                            const round = roundsEdit[selectedRoundIndex] ?? roundsEdit[0];
+                            const roundIdx = selectedRoundIndex >= 0 && selectedRoundIndex < roundsEdit.length ? selectedRoundIndex : 0;
+                            const assignedInRound = new Set((round.rooms ?? []).flatMap((room) => room.member_ids ?? []));
+                            return (
+                                <>
+                                    {roundsEdit.length > 1 && (
+                                        <Box sx={{ mb: 1 }}>
+                                            <Typography variant="caption" color="text.secondary">Round: </Typography>
+                                            <Select
+                                                size="small"
+                                                value={roundIdx}
+                                                onChange={(e) => setSelectedRoundIndex(Number(e.target.value))}
+                                                sx={{ fontSize: 11, minWidth: 100 }}
+                                            >
+                                                {roundsEdit.map((r, i) => (
+                                                    <MenuItem key={r.round_no} value={i}>{r.label ?? `Round ${r.round_no}`}</MenuItem>
+                                                ))}
+                                            </Select>
+                                        </Box>
+                                    )}
+                                    {['BO1', 'BO2'].map((roomLabel) => {
+                                        const room = (round.rooms ?? []).find((r) => r.room_label === roomLabel) ?? { room_label: roomLabel, notes: '', member_ids: [] };
+                                        return (
+                                            <Box
+                                                key={roomLabel}
+                                                sx={{
+                                                    border: '1px solid',
+                                                    borderColor: 'divider',
+                                                    borderRadius: 1.5,
+                                                    mb: 1.25,
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        py: 1.25,
+                                                        px: 1.5,
+                                                        background: 'linear-gradient(135deg, #f0f4ff, #fff)',
+                                                        borderBottom: '1px solid',
+                                                        borderColor: 'divider',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'space-between',
+                                                    }}
+                                                >
+                                                    <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'primary.main' }}>
+                                                        {roomLabel}
+                                                    </Typography>
+                                                    <Chip label="同室枠" size="small" sx={{ fontSize: 10, height: 20 }} variant="outlined" />
+                                                </Box>
+                                                <Box sx={{ p: 1.5 }}>
+                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center', mb: 1 }}>
+                                                        <Autocomplete
+                                                            size="small"
+                                                            sx={{ minWidth: 140, flex: '1 1 auto' }}
+                                                            options={members.filter((x) => !assignedInRound.has(x.id))}
+                                                            getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
+                                                            onChange={(_, v) => v && toggleRoundMember(roundIdx, roomLabel, v.id)}
+                                                            renderInput={(params) => <TextField {...params} size="small" placeholder="追加" />}
+                                                        />
+                                                        {(room.member_ids ?? []).map((id) => {
+                                                            const mem = members.find((x) => x.id === id);
+                                                            const label = mem ? `${mem.display_no || ''} ${mem.name}`.trim() || `#${id}` : `#${id}`;
+                                                            return (
+                                                                <Chip
+                                                                    key={id}
+                                                                    size="small"
+                                                                    label={label}
+                                                                    onDelete={() => toggleRoundMember(roundIdx, roomLabel, id)}
+                                                                    sx={{ fontSize: 11 }}
+                                                                />
+                                                            );
+                                                        })}
+                                                    </Box>
+                                                    <TextField
+                                                        size="small"
+                                                        placeholder="ルームメモ"
+                                                        multiline
+                                                        minRows={1}
+                                                        fullWidth
+                                                        value={room.notes ?? ''}
+                                                        onChange={(e) => setRoundRoomNotes(roundIdx, roomLabel, e.target.value)}
+                                                        sx={{
+                                                            '& .MuiInput-input': { fontSize: 11, fontStyle: 'italic' },
+                                                            bgcolor: '#fffde7',
+                                                        }}
+                                                    />
+                                                </Box>
+                                            </Box>
+                                        );
+                                    })}
+                                    <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap' }}>
+                                        <Button variant="outlined" size="small" onClick={addRound}>
+                                            ＋ Round
+                                        </Button>
+                                        <Button
+                                            variant={dirty ? 'contained' : 'outlined'}
+                                            size="small"
+                                            fullWidth
+                                            onClick={saveRounds}
+                                            disabled={roundsSaving || roundsLoading}
+                                        >
+                                            {roundsSaving ? '保存中...' : '💾 BO割当を保存'}
+                                        </Button>
+                                    </Box>
+                                </>
+                            );
+                        })()}
+                        {!roundsLoading && selectedMeetingId && roundsEdit.length === 0 && (
+                            <>
+                                <Typography color="text.secondary" variant="body2" sx={{ mb: 1 }}>＋ Round で追加してください</Typography>
+                                <Button variant="outlined" size="small" onClick={addRound}>＋ Round</Button>
+                            </>
+                        )}
+                    </Box>
                 </Box>
 
                 {/* Pane 3: Relationship Log */}
