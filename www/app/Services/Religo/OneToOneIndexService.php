@@ -41,6 +41,11 @@ class OneToOneIndexService
 
         $query->orderByRaw('COALESCE(started_at, scheduled_at) DESC, id DESC');
 
+        $limit = isset($filters['limit']) ? (int) $filters['limit'] : null;
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
         $items = $query->get();
 
         return $items->map(function (OneToOne $o) {

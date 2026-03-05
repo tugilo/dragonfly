@@ -64,6 +64,7 @@ Route::get('/workspaces', [WorkspaceController::class, 'index']);
 Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
     ->whereNumber('target_member_id');
 
+Route::get('/contact-memos', [ContactMemoController::class, 'index']);
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);

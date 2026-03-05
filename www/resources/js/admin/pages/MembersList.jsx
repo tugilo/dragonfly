@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import React, { useState, useEffect, useCallback, createContext, useContext, useRef, forwardRef, useImperativeHandle } from 'react';
 import {
     List,
     Datagrid,
@@ -24,6 +24,13 @@ import {
     Checkbox,
     Box,
     Typography,
+    Drawer,
+    Tabs,
+    Tab,
+    Chip,
+    Stack,
+    Card,
+    CardContent,
 } from '@mui/material';
 
 const API = '';
@@ -108,7 +115,7 @@ function MemberRowActions({ record }) {
             <Button size="small" variant="contained" onClick={() => ctx.openMemo(record)}>✏️ メモ</Button>
             <Button size="small" variant="outlined" onClick={() => ctx.openO2o(record)}>📅 1to1</Button>
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
-            <Button size="small" variant="outlined" color="inherit" component={Link} to={`/members/${record.id}`}>詳細</Button>
+            <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openDrawer(record)}>詳細</Button>
         </Box>
     );
 }
@@ -378,6 +385,128 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
     );
 }
 
+const MEMO_LIMIT = 20;
+
+const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o }, ref) {
+    const [tab, setTab] = useState(0);
+    const [memos, setMemos] = useState([]);
+    const [o2oList, setO2oList] = useState([]);
+    const [loadingMemos, setLoadingMemos] = useState(false);
+    const [loadingO2o, setLoadingO2o] = useState(false);
+
+    const refetchMemos = useCallback(() => {
+        if (!member?.id || !open) return;
+        setLoadingMemos(true);
+        fetch(`${API}/api/contact-memos?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+            .then((res) => (res.ok ? res.json() : []))
+            .then(setMemos)
+            .catch(() => setMemos([]))
+            .finally(() => setLoadingMemos(false));
+    }, [member?.id, open]);
+
+    const refetchO2o = useCallback(() => {
+        if (!member?.id || !open) return;
+        setLoadingO2o(true);
+        fetch(`${API}/api/one-to-ones?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+            .then((res) => (res.ok ? res.json() : []))
+            .then(setO2oList)
+            .catch(() => setO2oList([]))
+            .finally(() => setLoadingO2o(false));
+    }, [member?.id, open]);
+
+    useImperativeHandle(ref, () => ({ refetchMemos, refetchO2o }), [refetchMemos, refetchO2o]);
+
+    useEffect(() => {
+        if (open && member?.id) {
+            setTab(0);
+            refetchMemos();
+            refetchO2o();
+        }
+    }, [open, member?.id]);
+
+    if (!member) return null;
+
+    const categoryLabel = member?.category
+        ? `${member.category.group_name} / ${member.category.name}`
+        : '—';
+    const summary = member?.summary_lite || {};
+    const lastContact = summary.last_contact_at
+        ? (() => { try { return new Date(summary.last_contact_at).toLocaleDateString('ja-JP'); } catch { return summary.last_contact_at; } })()
+        : '—';
+
+    return (
+        <Drawer anchor="right" open={open} onClose={onClose} sx={{ '& .MuiDrawer-paper': { width: { xs: '100%', sm: 440 } } }}>
+            <Box sx={{ p: 2, pt: 3 }}>
+                <Typography variant="h6" gutterBottom>{member.name}</Typography>
+                <Typography variant="body2" color="text.secondary" gutterBottom>#{member.display_no ?? member.id} · {categoryLabel}</Typography>
+                <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mt: 1, borderBottom: 1, borderColor: 'divider' }}>
+                    <Tab label="Overview" id="drawer-tab-0" />
+                    <Tab label="Memos" id="drawer-tab-1" />
+                    <Tab label="1to1" id="drawer-tab-2" />
+                </Tabs>
+                <Box role="tabpanel" hidden={tab !== 0} id="drawer-tabpanel-0">
+                    {tab === 0 && (
+                        <Stack spacing={1.5} sx={{ mt: 2 }}>
+                            <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                                <Typography variant="caption" color="text.secondary">役職</Typography>
+                                <Typography variant="body2">{member.current_role || '—'}</Typography>
+                            </CardContent></Card>
+                            <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                                <Typography variant="caption" color="text.secondary">要点</Typography>
+                                <Stack direction="row" flexWrap="wrap" gap={0.5} sx={{ mt: 0.5 }}>
+                                    {summary.same_room_count != null && <Chip size="small" label={`同室 ${summary.same_room_count}`} />}
+                                    {summary.one_to_one_count != null && <Chip size="small" label={`1to1 ${summary.one_to_one_count}`} />}
+                                    <Chip size="small" label={`最終接触 ${lastContact}`} />
+                                    {summary.interested && <Chip size="small" color="primary" label="興味" />}
+                                    {summary.want_1on1 && <Chip size="small" color="secondary" label="1to1希望" />}
+                                </Stack>
+                            </CardContent></Card>
+                            <Stack direction="row" gap={1}>
+                                <Button size="small" variant="contained" onClick={() => openMemo(member)}>✏️ メモ追加</Button>
+                                <Button size="small" variant="outlined" onClick={() => openO2o(member)}>📅 1to1予定</Button>
+                            </Stack>
+                        </Stack>
+                    )}
+                </Box>
+                <Box role="tabpanel" hidden={tab !== 1} id="drawer-tabpanel-1">
+                    {tab === 1 && (
+                        <Stack spacing={1} sx={{ mt: 2 }}>
+                            <Button size="small" variant="contained" onClick={() => openMemo(member)}>✏️ メモ追加</Button>
+                            {loadingMemos ? <Typography variant="body2" color="text.secondary">読込中…</Typography> : (
+                                memos.length === 0
+                                    ? <Typography variant="body2" color="text.secondary">メモはまだありません</Typography>
+                                    : <Stack spacing={1}>{memos.map((m) => (
+                                        <Card key={m.id} variant="outlined"><CardContent sx={{ py: 1, '&:last-child': { pb: 1 } }}>
+                                            <Typography variant="caption" color="text.secondary">{m.memo_type} · {m.created_at ? new Date(m.created_at).toLocaleString('ja-JP') : ''}</Typography>
+                                            <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{(m.body || '').slice(0, 200)}{(m.body && m.body.length > 200) ? '…' : ''}</Typography>
+                                        </CardContent></Card>
+                                    ))}</Stack>
+                            )}
+                        </Stack>
+                    )}
+                </Box>
+                <Box role="tabpanel" hidden={tab !== 2} id="drawer-tabpanel-2">
+                    {tab === 2 && (
+                        <Stack spacing={1} sx={{ mt: 2 }}>
+                            <Button size="small" variant="contained" onClick={() => openO2o(member)}>📅 1to1予定追加</Button>
+                            {loadingO2o ? <Typography variant="body2" color="text.secondary">読込中…</Typography> : (
+                                o2oList.length === 0
+                                    ? <Typography variant="body2" color="text.secondary">1to1はまだありません</Typography>
+                                    : <Stack spacing={1}>{o2oList.map((o) => (
+                                        <Card key={o.id} variant="outlined"><CardContent sx={{ py: 1, '&:last-child': { pb: 1 } }}>
+                                            <Typography variant="caption" color="text.secondary">{o.status} · {(o.scheduled_at || o.started_at) ? new Date(o.scheduled_at || o.started_at).toLocaleString('ja-JP') : '—'}</Typography>
+                                            {o.notes && <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{(o.notes || '').slice(0, 120)}{(o.notes && o.notes.length > 120) ? '…' : ''}</Typography>}
+                                        </CardContent></Card>
+                                    ))}</Stack>
+                            )}
+                        </Stack>
+                    )}
+                </Box>
+            </Box>
+        </Drawer>
+    );
+});
+
 export function MembersList() {
     const [memoOpen, setMemoOpen] = useState(false);
     const [memoMember, setMemoMember] = useState(null);
@@ -385,6 +514,8 @@ export function MembersList() {
     const [o2oMember, setO2oMember] = useState(null);
     const [o2oMemoOpen, setO2oMemoOpen] = useState(false);
     const [o2oMemoMember, setO2oMemoMember] = useState(null);
+    const [drawerMember, setDrawerMember] = useState(null);
+    const drawerRef = useRef(null);
     const refresh = useRefresh();
 
     const openMemo = useCallback((member) => {
@@ -399,12 +530,23 @@ export function MembersList() {
         setO2oMemoMember(member);
         setO2oMemoOpen(true);
     }, []);
+    const openDrawer = useCallback((member) => {
+        setDrawerMember(member);
+    }, []);
 
-    const onSaved = useCallback(() => { refresh(); }, [refresh]);
+    const onSaved = useCallback(() => {
+        refresh();
+        drawerRef.current?.refetchMemos?.();
+        drawerRef.current?.refetchO2o?.();
+    }, [refresh]);
+    const onO2oSaved = useCallback(() => {
+        refresh();
+        drawerRef.current?.refetchO2o?.();
+    }, [refresh]);
 
     return (
         <>
-            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo }}>
+            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openDrawer }}>
                 <List
                     title="Members"
                     actions={<MembersListActions />}
@@ -422,8 +564,16 @@ export function MembersList() {
                     </Datagrid>
                 </List>
             </MembersModalContext.Provider>
+            <MemberDetailDrawer
+                ref={drawerRef}
+                open={!!drawerMember}
+                member={drawerMember}
+                onClose={() => setDrawerMember(null)}
+                openMemo={openMemo}
+                openO2o={openO2o}
+            />
             <MemoModal open={memoOpen} member={memoMember} onClose={() => setMemoOpen(false)} onSaved={onSaved} />
-            <O2oModal open={o2oOpen} member={o2oMember} onClose={() => setO2oOpen(false)} onSaved={onSaved} />
+            <O2oModal open={o2oOpen} member={o2oMember} onClose={() => setO2oOpen(false)} onSaved={onO2oSaved} />
             <O2oMemoModal open={o2oMemoOpen} member={o2oMemoMember} onClose={() => setO2oMemoOpen(false)} onSaved={onSaved} />
         </>
     );

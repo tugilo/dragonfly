@@ -27,6 +27,7 @@
 | 2026-03-05 | **Phase16A Religo**: Members 要件 SSOT 確定。docs/SSOT/MEMBERS_REQUIREMENTS.md で List/Show/Edit・表示項目・操作・メモ・1to1・役職履歴・権限・非目標・DoD を固定。実装は次 Phase。 |
 | 2026-03-05 | **Phase16B Religo**: 管理画面 UI モック同期。religo-admin-mock.html を SSOT にメニュー・全ページ・モーダルを統一。Dashboard / Connections / Members / Meetings / 1 to 1 / Role History / Settings(Categories,Roles)。Members にメモ・1to1・1to1メモの 3 モーダル追加。 |
 | 2026-03-05 | **Phase16C Religo**: Admin UI Mock→Working。Settings（Categories/Roles）を実 API で CRUD。Role History を GET /api/member-roles に接続。Members 一覧にカテゴリ・役職・最終接触・詳細（Member Show）・1to1メモ紐付け。CategoryApiTest/RoleApiTest 追加。 |
+| 2026-03-05 | **Phase17A Religo**: Members 詳細 Drawer。GET /api/contact-memos 追加（owner/target 必須、limit 任意）。one-to-ones index に limit 対応。MembersList で「詳細」クリックで右側 Drawer（Overview / Memos / 1to1 タブ）、メモ・1to1 追加で refetch。 |
 
 ---
 

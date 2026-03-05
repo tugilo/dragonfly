@@ -153,4 +153,22 @@ class OneToOneIndexTest extends TestCase
         $this->assertCount(1, $data);
         $this->assertSame('Mine', $data[0]['notes']);
     }
+
+    public function test_limit_applied(): void
+    {
+        for ($i = 0; $i < 5; $i++) {
+            OneToOne::create([
+                'workspace_id' => $this->workspaceId,
+                'owner_member_id' => $this->ownerId,
+                'target_member_id' => $this->target1Id,
+                'status' => 'planned',
+                'scheduled_at' => now()->addDays($i),
+                'notes' => "Note {$i}",
+            ]);
+        }
+        $res = $this->getJson('/api/one-to-ones?owner_member_id=' . $this->ownerId . '&target_member_id=' . $this->target1Id . '&limit=2');
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertCount(2, $data);
+    }
 }
