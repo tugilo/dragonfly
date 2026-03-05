@@ -52,11 +52,11 @@ PR を介さない運用のため、feature を develop に取り込んだあと
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （`git log -1 --format=%H develop` で取得） |
-| **merge 元ブランチ名** | （例: feature/dashboard-mock-align-docs） |
-| **変更ファイル一覧** | `git diff --name-only develop^1...develop` の結果 |
-| **テスト結果** | （例: php artisan test — X passed） |
-| **手動確認** | （必要なら記述） |
+| **merge commit id** | `5f5c17b2df36363327119e8676211a254e0406c1` |
+| **merge 元ブランチ名** | feature/dashboard-mock-align-docs |
+| **変更ファイル一覧** | docs/INDEX.md, docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_PLAN.md, PHASE_DASHBOARD_MOCK_ALIGN_REPORT.md, PHASE_DASHBOARD_MOCK_ALIGN_WORKLOG.md |
+| **テスト結果** | docker compose ... exec app php artisan test — Tests: 53 passed (226 assertions)。npm run build — 成功。 |
+| **手動確認** | 特になし |
 
 ---
 
