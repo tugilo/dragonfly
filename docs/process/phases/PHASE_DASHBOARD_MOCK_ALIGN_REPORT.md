@@ -74,6 +74,16 @@ PR を介さない運用のため、feature を develop に取り込んだあと
 | **テスト結果** | php artisan test — 53 passed (226 assertions)。npm run build — 成功。 |
 | **手動確認** | 特になし |
 
+**Phase D-3（feature/dashboard-mock-align-close）**
+
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | `b53b3f3b7058b53522f15157fdf6eef874560d8d` |
+| **merge 元ブランチ名** | feature/dashboard-mock-align-close |
+| **変更ファイル一覧** | docs/process/phases/PHASE_DASHBOARD_MOCK_ALIGN_REPORT.md |
+| **テスト結果** | php artisan test — 53 passed (226 assertions)。npm run build — 成功。 |
+| **手動確認** | 特になし |
+
 ---
 
 ## 7. 実行した git コマンド（コピペ用）
