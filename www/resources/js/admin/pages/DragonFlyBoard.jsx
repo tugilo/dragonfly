@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
     Box,
-    Container,
     Grid,
     Stack,
     TextField,
@@ -606,15 +605,25 @@ export default function DragonFlyBoard() {
     }, [dirty]);
 
     return (
-        <Container maxWidth="lg" sx={{ py: 2 }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2} sx={{ mb: 2 }}>
+        <Box sx={{ px: 2, py: 2 }}>
+            {/* C-1: Page header — SSOT CONNECTIONS_REQUIREMENTS §3.1 */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    marginBottom: '18px',
+                }}
+            >
                 <Box>
-                    <Typography variant="h5" fontWeight={700}>Connections</Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    <Typography component="h1" sx={{ fontSize: 21, fontWeight: 700, letterSpacing: -0.3 }}>
+                        Connections
+                    </Typography>
+                    <Typography sx={{ fontSize: 12, color: 'text.secondary', mt: 0.25 }}>
                         Meeting → BO割当 → 関係ログの中心
                     </Typography>
                 </Box>
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={1} flexWrap="wrap">
                     <Button
                         variant={dirty ? 'contained' : 'outlined'}
                         size="small"
@@ -623,290 +632,109 @@ export default function DragonFlyBoard() {
                     >
                         {roundsSaving ? '保存中...' : '💾 BO割当を保存'}
                     </Button>
-                    <Button component={Link} to="/meetings" variant="outlined" size="small" color="inherit">📋 Meetingsへ</Button>
+                    <Button component={Link} to="/meetings" variant="outlined" size="small" color="inherit">
+                        📋 Meetingsへ
+                    </Button>
                 </Stack>
-            </Stack>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={3}>
-                    <Card variant="outlined" sx={{ height: '100%' }}>
-                        <CardContent>
-                            <Typography variant="subtitle1" sx={{ mb: 1 }}>メンバー選択</Typography>
-                            <TextField
-                                label="Owner ID"
-                                type="number"
-                                size="small"
-                                fullWidth
-                                value={ownerMemberId}
-                                onChange={(e) => setOwnerMemberId(Number(e.target.value) || 1)}
-                                sx={{ mb: 1 }}
-                            />
-                            <Autocomplete
-                                size="small"
-                                options={members}
-                                getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
-                                value={targetMember}
-                                onChange={(_, v) => setTargetMember(v)}
-                                renderOption={(props, m) => {
-                                    const lite = m.summary_lite;
-                                    const contact = lite?.last_contact_at
-                                        ? new Date(lite.last_contact_at).toLocaleDateString('ja-JP')
-                                        : '未接触';
-                                    const sameRoom = lite?.same_room_count ?? 0;
-                                    const o2o = lite?.one_to_one_count ?? 0;
-                                    const memoShort = lite?.last_memo?.body_short ?? '';
-                                    return (
-                                        <li {...props} key={m.id}>
-                                            <Box sx={{ width: '100%' }}>
-                                                <Typography variant="body2">
-                                                    {`${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
-                                                    {lite && (lite.interested || lite.want_1on1) && (
-                                                        <Typography component="span" variant="caption" color="primary" sx={{ ml: 1 }}>
-                                                            {lite.interested && '気になる'}
-                                                            {lite.interested && lite.want_1on1 && ' / '}
-                                                            {lite.want_1on1 && '1on1'}
-                                                        </Typography>
-                                                    )}
-                                                </Typography>
-                                                {lite && (
-                                                    <Typography variant="caption" color="text.secondary" display="block">
-                                                        同室{sameRoom}回 / 1on1 {o2o}回 / 最終: {contact}
-                                                        {memoShort && ` / ${memoShort}`}
-                                                    </Typography>
-                                                )}
-                                            </Box>
-                                        </li>
-                                    );
-                                }}
-                                renderInput={(params) => (
-                                    <TextField {...params} label="メンバーを検索" placeholder="名前・番号で検索" />
-                                )}
-                            />
-                            {targetMember && (
-                                <Chip size="small" label="Selected" color="primary" sx={{ mt: 1 }} />
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Stack spacing={2}>
-                        <Card variant="outlined">
-                            <CardContent>
-                                <Typography variant="subtitle1" sx={{ mb: 1 }}>Meeting 選択</Typography>
-                                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
-                                    <Autocomplete
-                                        size="small"
-                                        sx={{ minWidth: 220, flex: 1 }}
-                                        options={meetings}
-                                        getOptionLabel={(m) => `#${m.number} ${m.held_on}`}
-                                        value={selectedMeeting ? { id: selectedMeeting.id, number: selectedMeeting.number, held_on: selectedMeeting.held_on } : null}
-                                        onChange={(_, v) => {
-                                            setSelectedMeetingId(v ? String(v.id) : '');
-                                            setSelectedRoundIndex(0);
-                                        }}
-                                        isOptionEqualToValue={(a, b) => a?.id === b?.id}
-                                        renderInput={(params) => <TextField {...params} label="例会" />}
-                                    />
-                                    {statusChipLabel && (
-                                        <Chip
-                                            label={statusChipLabel}
-                                            size="small"
-                                            color={statusChipLabel === 'Saved' ? 'success' : statusChipLabel === 'Unsaved' ? 'warning' : 'default'}
-                                            variant="outlined"
-                                        />
-                                    )}
-                                </Box>
-                            </CardContent>
-                        </Card>
-                        {roundsError && (
-                            <Typography color="error" variant="body2">
-                                {roundsError}
-                            </Typography>
-                        )}
-                        {selectedMeetingId && (
-                            <Card variant="outlined">
-                                <CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 2 }}>
-                                        <Tabs
-                                            orientation="vertical"
-                                            value={Math.min(selectedRoundIndex, Math.max(0, roundsEdit.length - 1))}
-                                            onChange={(_, v) => setSelectedRoundIndex(v)}
-                                            sx={{ borderRight: 1, borderColor: 'divider', minHeight: 120 }}
-                                        >
-                                            {roundsEdit.map((round, idx) => (
-                                                <Tab key={`round-${round.round_no}`} label={round.label ?? `Round ${round.round_no}`} id={`round-tab-${idx}`} />
-                                            ))}
-                                        </Tabs>
-                                        <Button variant="outlined" size="small" onClick={addRound} sx={{ mt: 0.5 }}>
-                                            ＋ Round
-                                        </Button>
-                                    </Box>
-                                    {roundsLoading ? (
-                                        <Typography color="text.secondary">Loading...</Typography>
-                                    ) : roundsEdit.length > 0 ? (
-                                        (() => {
-                                            const round = roundsEdit[selectedRoundIndex] ?? roundsEdit[0];
-                                            const roundIdx = roundsEdit.indexOf(round);
-                                            const bo1 = round.rooms?.find((r) => r.room_label === 'BO1') ?? { room_label: 'BO1', notes: '', member_ids: [] };
-                                            const bo2 = round.rooms?.find((r) => r.room_label === 'BO2') ?? { room_label: 'BO2', notes: '', member_ids: [] };
-                                            const assignedInRound = new Set((round.rooms ?? []).flatMap((room) => room.member_ids ?? []));
-                                            const roundLabel = round.label ?? `Round ${round.round_no}`;
-                                            return (
-                                                <Box>
-                                                    <TextField
-                                                        size="small"
-                                                        label="Round 名"
-                                                        value={round.label ?? ''}
-                                                        onChange={(e) => {
-                                                            setDirty(true);
-                                                            setRoundsEdit((prev) => prev.map((r, i) => (i === roundIdx ? { ...r, label: e.target.value } : r)));
-                                                        }}
-                                                        sx={{ mb: 2, minWidth: 200 }}
-                                                    />
-                                                    <Grid container spacing={2}>
-                                                        <Grid item xs={12} md={6}>
-                                                            <RoomCard
-                                                                roomLabel="BO1"
-                                                                notes={bo1.notes}
-                                                                memberIds={bo1.member_ids ?? []}
-                                                                members={members}
-                                                                assignedInRound={assignedInRound}
-                                                                roundLabel={roundLabel}
-                                                                meetingNumber={selectedMeeting?.number}
-                                                                onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO1', notes)}
-                                                                onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
-                                                                onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO1', memberId)}
-                                                                onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO1')}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item xs={12} md={6}>
-                                                            <RoomCard
-                                                                roomLabel="BO2"
-                                                                notes={bo2.notes}
-                                                                memberIds={bo2.member_ids ?? []}
-                                                                members={members}
-                                                                assignedInRound={assignedInRound}
-                                                                roundLabel={roundLabel}
-                                                                meetingNumber={selectedMeeting?.number}
-                                                                onNotesChange={(notes) => setRoundRoomNotes(roundIdx, 'BO2', notes)}
-                                                                onAddMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
-                                                                onRemoveMember={(memberId) => toggleRoundMember(roundIdx, 'BO2', memberId)}
-                                                                onMemoClick={(memberId) => openMemoDialogForMeetingMember(selectedMeetingId, memberId, roundLabel, 'BO2')}
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                </Box>
-                                            );
-                                        })()
-                                    ) : (
-                                        <Typography color="text.secondary">＋ Round で追加してください</Typography>
-                                    )}
-                                </CardContent>
-                                <CardActions sx={{ justifyContent: 'flex-end', px: 2, pb: 2 }}>
-                                    <Button
-                                        variant={dirty ? 'contained' : 'outlined'}
-                                        onClick={saveRounds}
-                                        disabled={roundsSaving || roundsLoading}
-                                    >
-                                        {roundsSaving ? '保存中...' : 'Round 割当を保存'}
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                        )}
-                    </Stack>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <Card variant="outlined" sx={{ height: '100%' }}>
-                        <CardContent>
-                            <Typography variant="subtitle1" sx={{ mb: 1 }}>関係ログ</Typography>
-                            {loadingSummary && (
-                                <Typography color="text.secondary" variant="body2">Loading...</Typography>
-                            )}
-                            {!targetMember && !loadingSummary && (
-                                <Typography color="text.secondary" variant="body2">
-                                    左でメンバーを選択してください
-                                </Typography>
-                            )}
-                            {targetMember && summary && !loadingSummary && (
-                                <Stack spacing={1.5}>
-                                    <Box>
-                                        <Typography variant="body2" fontWeight={600}>
-                                            {targetMember.display_no} {targetMember.name}
-                                        </Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            同室 {summary?.same_room_count ?? 0} 回 / 1to1 {summary?.one_to_one_count ?? 0} 回
-                                            {summary?.last_contact_at && ` / 最終: ${new Date(summary.last_contact_at).toLocaleDateString('ja-JP')}`}
-                                        </Typography>
-                                    </Box>
-                                    <Box>
-                                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
-                                            クイックアクション
-                                        </Typography>
-                                        <Stack direction="row" flexWrap="wrap" gap={0.5}>
-                                            <Button size="small" variant="outlined" onClick={openMemoDialog}>
-                                                メモを書く
-                                            </Button>
-                                            <Button size="small" variant="outlined" onClick={openO2oDialog}>
-                                                1 to 1 を登録
-                                            </Button>
-                                            <Tooltip title="紹介の登録は Phase14A で追加予定">
-                                                <span>
-                                                    <Button size="small" variant="outlined" disabled>
-                                                        紹介（Coming soon）
-                                                    </Button>
-                                                </span>
-                                            </Tooltip>
-                                        </Stack>
-                                        {!selectedMeetingId && (
-                                            <Typography variant="caption" color="warning.main" sx={{ display: 'block', mt: 0.5 }}>
-                                                例会メモは Meeting を選択してください
-                                            </Typography>
-                                        )}
-                                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-                                            1 to 1 は Meeting と独立して登録できます
-                                        </Typography>
-                                    </Box>
-                                    <FormControlLabel
-                                        control={
-                                            <Switch
-                                                size="small"
-                                                checked={!!displayFlags.interested}
-                                                onChange={(_, v) => handleToggle('interested', v)}
-                                            />
-                                        }
-                                        label={<Typography variant="caption">気になる</Typography>}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Switch
-                                                size="small"
-                                                checked={!!displayFlags.want_1on1}
-                                                onChange={(_, v) => handleToggle('want_1on1', v)}
-                                            />
-                                        }
-                                        label={<Typography variant="caption">1on1 したい</Typography>}
-                                    />
-                                    {summary?.last_memo?.body_short && (
-                                        <Box>
-                                            <Typography variant="caption" color="text.secondary">直近メモ</Typography>
-                                            <Typography variant="body2" sx={{ mt: 0.25 }}>{summary.last_memo.body_short}</Typography>
-                                        </Box>
-                                    )}
-                                    {latestMemos.length > 0 && (
-                                        <Box>
-                                            <Typography variant="caption" color="text.secondary">メモ（直近{latestMemos.length}件）</Typography>
-                                            {latestMemos.slice(0, 3).map((m) => (
-                                                <Typography key={m.id} variant="body2" sx={{ display: 'block', mt: 0.25 }}>
-                                                    #{m.meeting_number}: {m.body || '(なし)'}
-                                                </Typography>
-                                            ))}
-                                        </Box>
-                                    )}
-                                </Stack>
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
+            </Box>
+
+            {/* C-1: 3-column grid — 220px | 1fr | 300px, gap 12px */}
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '220px 1fr 300px',
+                    gap: '12px',
+                    height: 'calc(100vh - 120px)',
+                    minHeight: 500,
+                }}
+            >
+                {/* Pane 1: Members */}
+                <Box
+                    sx={{
+                        bgcolor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: '12px 14px',
+                            borderBottom: '1px solid',
+                            borderColor: 'divider',
+                            bgcolor: '#fafbff',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
+                            👥 Members
+                        </Typography>
+                    </Box>
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                </Box>
+
+                {/* Pane 2: Meeting + BO */}
+                <Box
+                    sx={{
+                        bgcolor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: '12px 14px',
+                            borderBottom: '1px solid',
+                            borderColor: 'divider',
+                            bgcolor: '#fafbff',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
+                            📋 Meeting + BO割当
+                        </Typography>
+                    </Box>
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                </Box>
+
+                {/* Pane 3: Relationship Log */}
+                <Box
+                    sx={{
+                        bgcolor: 'background.paper',
+                        borderRadius: 2,
+                        boxShadow: 1,
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: '12px 14px',
+                            borderBottom: '1px solid',
+                            borderColor: 'divider',
+                            bgcolor: '#fafbff',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
+                            🔗 Relationship Log
+                        </Typography>
+                    </Box>
+                    <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }} />
+                </Box>
+            </Box>
             <Dialog open={memoOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>メモ追加</DialogTitle>
                 <DialogContent>
@@ -1076,6 +904,6 @@ export default function DragonFlyBoard() {
                 message={snackbarMessage}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             />
-        </Container>
+        </Box>
     );
 }
