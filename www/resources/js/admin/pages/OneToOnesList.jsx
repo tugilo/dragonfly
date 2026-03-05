@@ -15,7 +15,10 @@ import {
     required,
     useNotify,
     useRedirect,
+    TopToolbar,
+    Button,
 } from 'react-admin';
+import { Link } from 'react-router-dom';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -44,9 +47,18 @@ export function OneToOnesListFilters() {
     );
 }
 
+function OneToOnesListActions() {
+    return (
+        <TopToolbar>
+            <Button component={Link} to="/one-to-ones/create" variant="contained" size="small">＋ 1to1を追加</Button>
+            <Button component={Link} to="/connections" variant="outlined" size="small">🗺 Connectionsへ</Button>
+        </TopToolbar>
+    );
+}
+
 export function OneToOnesList() {
     return (
-        <List filters={[<OneToOnesListFilters key="filters" />]} title="1 to 1（予定・履歴）">
+        <List filters={[<OneToOnesListFilters key="filters" />]} title="1 to 1" actions={<OneToOnesListActions />}>
             <Datagrid rowClick={false}>
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
                 <TextField source="target_name" label="相手" />

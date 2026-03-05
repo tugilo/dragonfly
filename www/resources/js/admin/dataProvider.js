@@ -52,6 +52,19 @@ export const dragonflyDataProvider = {
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
         }
+        if (resource === 'role-history') {
+            // UI only: stub for Role History until API is ready
+            const stub = [
+                { id: 1, member: '田中 誠一', role: 'プレジ', start: '2025-01-01', end: null, current: true },
+                { id: 2, member: '鈴木 花子', role: 'バイス', start: '2025-01-01', end: null, current: true },
+                { id: 3, member: '山田 大輔', role: '書記', start: '2025-01-01', end: null, current: true },
+                { id: 4, member: '小林 陽子', role: '会計', start: '2025-01-01', end: null, current: true },
+                { id: 5, member: '佐藤 美咲', role: 'メンター', start: '2025-01-01', end: null, current: true },
+                { id: 6, member: '水野 花菜', role: 'エドコ', start: '2025-01-01', end: null, current: true },
+                { id: 7, member: '渡辺 彩香', role: 'バイス', start: '2024-01-01', end: '2024-12-31', current: false },
+            ];
+            return { data: stub, total: stub.length };
+        }
         return { data: [], total: 0 };
     },
 

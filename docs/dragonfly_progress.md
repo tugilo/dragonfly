@@ -24,6 +24,8 @@
 | 2026-03-05 | **Phase12U Religo**: Board 3ペイン IA。左：メンバー選択、中：Meeting 選択＋Round 編集、右：関係ログ（クイックアクション・要点・紹介 Coming soon）。getMeetings 追加。既存 Round 保存・メモ・1to1 導線維持。 |
 | 2026-03-05 | **Phase12V Religo**: Members / Meetings の List 実装（placeholder 卒業）。dataProvider に members.getList / meetings.getList 追加。MembersList.jsx / MeetingsList.jsx で実データ Datagrid 表示、TopToolbar に「Board へ戻る」追加。 |
 | 2026-03-05 | **Phase12W Religo**: Board ショートカット導線。右ペイン「メモを書く」で Meeting 未選択時に Snackbar で誘導。紹介ボタンに Tooltip（Phase14A で追加予定）。1to1 の「Meeting と独立」キャプション維持。 |
+| 2026-03-05 | **Phase16A Religo**: Members 要件 SSOT 確定。docs/SSOT/MEMBERS_REQUIREMENTS.md で List/Show/Edit・表示項目・操作・メモ・1to1・役職履歴・権限・非目標・DoD を固定。実装は次 Phase。 |
+| 2026-03-05 | **Phase16B Religo**: 管理画面 UI モック同期。religo-admin-mock.html を SSOT にメニュー・全ページ・モーダルを統一。Dashboard / Connections / Members / Meetings / 1 to 1 / Role History / Settings(Categories,Roles)。Members にメモ・1to1・1to1メモの 3 モーダル追加。 |
 
 ---
 
