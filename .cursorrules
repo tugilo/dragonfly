@@ -53,6 +53,15 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 - コンテナ: dragonfly-app, dragonfly-node, dragonfly-nginx, dragonfly-db, dragonfly-phpmyadmin
 
 -------------------------------------------------
+■ 🖼 管理画面 UI とモックの比較（必須）
+-------------------------------------------------
+
+- **モック（SSOT）:** http://localhost/mock/religo-admin-mock.html（実体: www/public/mock/religo-admin-mock.html）
+- **UI を触る Phase** は、PLAN に **「モック比較: docs/SSOT/MOCK_UI_VERIFICATION.md に従う」** を必ず書く。
+- **実装後**は、対象画面をモックと同一操作で比較し、差分は **docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md** に記録する。
+- **Members 以外**のモックコンテンツが単一ファイルに無い現状は、**FIT_AND_GAP の“モック”列を正**として扱う。
+
+-------------------------------------------------
 ■ 🚫 禁止事項
 -------------------------------------------------
 
