@@ -35,4 +35,9 @@
 
 ## 5. 取り込み証跡（develop への merge 後に追記）
 
-（merge 後に merge commit id・変更ファイル・テスト結果を追記）
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | `3c2f755ed83c11cf26961a970ab11431ea41ecc3` |
+| **merge 元ブランチ名** | feature/dashboard-api-e1 |
+| **変更ファイル一覧** | docs/INDEX.md, PHASE_E1_DASHBOARD_API_REPORT.md, PHASE_E1_DASHBOARD_API_WORKLOG.md, www/app/Http/Controllers/Religo/DashboardController.php, www/app/Services/Religo/DashboardService.php, www/resources/js/admin/pages/Dashboard.jsx, www/routes/api.php, www/tests/Feature/Religo/DashboardApiTest.php |
+| **テスト結果** | php artisan test — 61 passed (247 assertions)。npm run build — 成功。 |
