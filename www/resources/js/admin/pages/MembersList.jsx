@@ -8,6 +8,7 @@ import {
     Button,
     useRefresh,
     useNotify,
+    useListContext,
     SearchInput,
     ReferenceInput,
     SelectInput,
@@ -94,6 +95,84 @@ const membersFilters = [
     <BooleanInput key="interested" source="interested" label="Interested" />,
     <BooleanInput key="want_1on1" source="want_1on1" label="Want 1on1" />,
 ];
+
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+function MembersStatsCards() {
+    const { data = [], total, isLoading } = useListContext();
+    const totalMembers = total ?? 0;
+    const arr = Array.isArray(data) ? data : [];
+    const no1on1Within30 = arr.filter((m) => {
+        const d = m?.summary_lite?.last_contact_at;
+        if (!d) return true;
+        try {
+            return (Date.now() - new Date(d).getTime()) > THIRTY_DAYS_MS;
+        } catch {
+            return true;
+        }
+    }).length;
+    const interestedOn = arr.filter((m) => m?.summary_lite?.interested).length;
+    const want1on1On = arr.filter((m) => m?.summary_lite?.want_1on1).length;
+
+    if (isLoading) {
+        return (
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+                {[1, 2, 3, 4].map((i) => (
+                    <Card key={i} variant="outlined" sx={{ minWidth: 140, flex: '1 1 140px' }}>
+                        <CardContent sx={{ py: 1.5 }}><Typography variant="body2" color="text.secondary">—</Typography></CardContent>
+                    </Card>
+                ))}
+            </Box>
+        );
+    }
+    const stats = [
+        { label: '総メンバー数', value: totalMembers },
+        { label: '1to1未実施(30日)', value: no1on1Within30 },
+        { label: 'interested ON', value: interestedOn },
+        { label: 'want_1on1 ON', value: want1on1On },
+    ];
+    return (
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+            {stats.map(({ label, value }) => (
+                <Card key={label} variant="outlined" sx={{ minWidth: 140, flex: '1 1 140px' }}>
+                    <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                        <Typography variant="caption" color="text.secondary" display="block">{label}</Typography>
+                        <Typography variant="h6" component="span">{value}</Typography>
+                    </CardContent>
+                </Card>
+            ))}
+        </Box>
+    );
+}
+
+function MembersFilterBar() {
+    const { sort, setSort, total } = useListContext();
+    const field = sort?.field ?? 'display_no';
+    const order = sort?.order ?? 'ASC';
+    const handleSortChange = (e) => {
+        const v = e.target.value;
+        if (v === 'display_no_asc') setSort({ field: 'display_no', order: 'ASC' });
+        else if (v === 'display_no_desc') setSort({ field: 'display_no', order: 'DESC' });
+        else if (v === 'name_asc') setSort({ field: 'name', order: 'ASC' });
+        else if (v === 'name_desc') setSort({ field: 'name', order: 'DESC' });
+    };
+    const sortValue = `${field}_${order.toLowerCase()}`;
+    return (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center', mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
+            {membersFilters}
+            <FormControl size="small" sx={{ minWidth: 160 }}>
+                <InputLabel>並び順</InputLabel>
+                <Select value={sortValue} label="並び順" onChange={handleSortChange}>
+                    <MenuItem value="display_no_asc">番号 昇順</MenuItem>
+                    <MenuItem value="display_no_desc">番号 降順</MenuItem>
+                    <MenuItem value="name_asc">名前 昇順</MenuItem>
+                    <MenuItem value="name_desc">名前 降順</MenuItem>
+                </Select>
+            </FormControl>
+            {total != null && <Typography variant="body2" color="text.secondary">件数: {total}</Typography>}
+        </Box>
+    );
+}
 
 function SameRoomCountField({ record }) {
     const n = record?.summary_lite?.same_room_count;
@@ -597,7 +676,10 @@ export function MembersList() {
                     sort={{ field: 'display_no', order: 'ASC' }}
                     perPage={25}
                 >
-                    <Datagrid rowClick={false}>
+                    <>
+                        <MembersStatsCards />
+                        <MembersFilterBar />
+                        <Datagrid rowClick={false}>
                         <TextField source="display_no" label="番号" emptyText="—" sortable />
                         <TextField source="name" label="名前" sortable />
                         <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
@@ -608,7 +690,8 @@ export function MembersList() {
                         <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
                         <FunctionField label="フラグ" render={(r) => <FlagsField record={r} />} />
                         <FunctionField label="Actions" render={(r) => <MemberRowActions record={r} />} />
-                    </Datagrid>
+                        </Datagrid>
+                    </>
                 </List>
             </MembersModalContext.Provider>
             <MemberDetailDrawer
