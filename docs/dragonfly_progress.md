@@ -34,6 +34,7 @@
 | 2026-03-06 | **Phase C-7 Relationship Score**: 右ペインに Relationship Score（関係温度 ★☆☆☆☆〜★★★★★）を追加。ContactSummary から UI 計算のみ。RELATIONSHIP_SCORE_SSOT 追加。 |
 | 2026-03-06 | **Phase C-8 Introduction Hint**: 右ペインに 💡 Introduction Hint（紹介候補、業種（名前）→ 業種（名前）最大3件）を追加。members の summary_lite と C-7 スコアを利用・新 API なし。INTRODUCTION_HINT_SSOT 追加。 |
 | 2026-03-06 | **Phase M-4 Members パッと見レイアウト**: モック準拠のブロック順（ヘッダー→統計カード→常時表示フィルタバー→一覧）を実装。統計4種（総メンバー数・1to1未実施30日・interested ON・want_1on1 ON）をクライアント集計で表示。フィルタバーを横並びで常時表示（検索・カテゴリ・役職・フラグ・並び順・件数）。一覧は Datagrid 維持。PHASE_M4_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
+| 2026-03-06 | **Phase M-5 Members フラグ編集**: Members 一覧から interested / want_1on1 を編集可能に。行アクション「🚩 フラグ」で Dialog（Switch×2＋保存）。既存 PUT /api/dragonfly/flags/{id} を流用（Connections と同じ）。更新後は useRefresh で一覧再取得。PHASE_M5_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
 
 ---
 
