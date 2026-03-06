@@ -32,6 +32,7 @@
 | 2026-03-05 | **Connections UX 改善**: BO 表示を BO1/BO2/BO3… に統一（DB の A/B/C は表示のみ変換）。割当メンバーを縦一列リスト化・行クリックでメンバー詳細モーダル（氏名・カテゴリ・関係ログに表示・例会メモ）。各 BO カードに「BO○ を保存」ボタン、「割当をクリア」追加。1to1 登録を日付 1 つ＋開始時刻＋終了時刻の 3 フィールドに簡素化。BO データ一括クリアは `php artisan religo:clear-breakout-data`。.cursorrules に React 修正後のビルド必須を追記。 |
 | 2026-03-06 | **Phase C-6 Connections Intelligence**: 右ペインに 🧠 Relationship Summary（同室回数・直近同室・1to1・直近メモ）と 💡 次の一手（ルールベース提案・最大3件）を追加。既存 summary / one-to-ones のみ使用・新 API なし。CONNECTIONS_INTELLIGENCE_SSOT 追加。 |
 | 2026-03-06 | **Phase C-7 Relationship Score**: 右ペインに Relationship Score（関係温度 ★☆☆☆☆〜★★★★★）を追加。ContactSummary から UI 計算のみ。RELATIONSHIP_SCORE_SSOT 追加。 |
+| 2026-03-06 | **Phase C-8 Introduction Hint**: 右ペインに 💡 Introduction Hint（紹介候補、業種（名前）→ 業種（名前）最大3件）を追加。members の summary_lite と C-7 スコアを利用・新 API なし。INTRODUCTION_HINT_SSOT 追加。 |
 
 ---
 
