@@ -42,7 +42,21 @@ export const dragonflyDataProvider = {
         }
         if (resource === 'members') {
             const owner = getOwnerMemberId(params);
-            const url = `/api/dragonfly/members?owner_member_id=${owner}&with_summary=1`;
+            const q = new URLSearchParams();
+            q.set('owner_member_id', String(owner));
+            q.set('with_summary', '1');
+            const f = params?.filter ?? {};
+            if (f.q != null && String(f.q).trim() !== '') q.set('q', String(f.q).trim());
+            if (f.category_id != null) q.set('category_id', String(f.category_id));
+            if (f.group_name != null && String(f.group_name).trim() !== '') q.set('group_name', String(f.group_name).trim());
+            if (f.role_id != null) q.set('role_id', String(f.role_id));
+            if (f.interested === true || f.interested === 'true' || f.interested === 1) q.set('interested', '1');
+            if (f.want_1on1 === true || f.want_1on1 === 'true' || f.want_1on1 === 1) q.set('want_1on1', '1');
+            const sortField = params?.sort?.field ?? 'id';
+            const sortOrder = params?.sort?.order === 'DESC' ? 'desc' : 'asc';
+            q.set('sort', sortField);
+            q.set('order', sortOrder);
+            const url = `/api/dragonfly/members?${q.toString()}`;
             const data = await request(url);
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
