@@ -87,6 +87,22 @@ async function getMeetingBreakouts(meetingId) {
     return fetchJson(`/api/meetings/${meetingId}/breakouts`);
 }
 
+/** C-7: Relationship Score 0..5 from ContactSummary (UI only) */
+function calculateRelationshipScore(summary) {
+    if (!summary) return 0;
+    let s = 0;
+    const same = summary.same_room_count ?? 0;
+    if (same >= 10) s += 2;
+    else if (same >= 5) s += 1;
+    const memos = summary.latest_memos ?? [];
+    if (memos.length > 0) s += 1;
+    if (summary.flags?.interested) s += 1;
+    if (summary.flags?.want_1on1) s += 1;
+    return Math.min(5, Math.max(0, s));
+}
+
+const STARS = ['☆☆☆☆☆', '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★'];
+
 async function getMeetings() {
     return fetchJson('/api/meetings');
 }
@@ -1164,6 +1180,24 @@ export default function DragonFlyBoard() {
                                             ) : (
                                                 <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>—</Typography>
                                             )}
+                                        </Box>
+                                        {/* C-7: Relationship Score (below Summary) */}
+                                        <Box
+                                            sx={{
+                                                border: '1px solid',
+                                                borderColor: 'divider',
+                                                borderRadius: 1.5,
+                                                p: 1.25,
+                                                mb: 1.5,
+                                                bgcolor: 'background.default',
+                                            }}
+                                        >
+                                            <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.5 }}>
+                                                Relationship Score
+                                            </Typography>
+                                            <Typography sx={{ fontSize: 16, letterSpacing: 2 }}>
+                                                {summary != null ? STARS[calculateRelationshipScore(summary)] : '—'}
+                                            </Typography>
                                         </Box>
                                         {!loadingSummary && (
                                     <>
