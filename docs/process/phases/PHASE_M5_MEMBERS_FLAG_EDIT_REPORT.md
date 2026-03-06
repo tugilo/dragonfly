@@ -32,10 +32,19 @@
 
 ---
 
+## まだ残る GAP（Members）
+
+- カードグリッド未対応（一覧は表のまま）
+- 大カテゴリ単独フィルタ未実装
+- かな・関係ログ（最近）の一覧表示
+- Member Show ページ（/members/:id）のメモ・1to1履歴（Coming soon）
+
+---
+
 ## テスト結果・ビルド結果
 
-- **php artisan test:** （M-5b 後に記入）
-- **npm run build:** （M-5b 後に記入）
+- **php artisan test:** 69 passed (262 assertions)
+- **npm run build:** 成功（exit 0）
 
 ---
 
@@ -44,8 +53,8 @@
 | Phase | DoD | 結果 |
 |-------|-----|------|
 | M-5a | PLAN / WORKLOG / REPORT が揃う、INDEX から辿れる | ○ |
-| M-5b | 一覧からフラグ編集 Dialog を開ける、保存できる、既存 API 流用、一覧へ反映、test/build 成功 | （実施後記入） |
-| M-5c | FIT_AND_GAP 更新、progress 更新、REPORT に取り込み証跡 | （実施後記入） |
+| M-5b | 一覧からフラグ編集 Dialog を開ける、保存できる、既存 API 流用、一覧へ反映、test/build 成功 | ○ |
+| M-5c | FIT_AND_GAP 更新、progress 更新、REPORT に取り込み証跡 | ○ |
 
 ---
 
