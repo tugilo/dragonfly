@@ -62,6 +62,6 @@
 
 | Phase | merge commit id | merge 元ブランチ | 変更ファイル |
 |-------|-----------------|------------------|---------------|
-| M-6a | （merge 後に記入） | feature/m6a-member-show-docs | （merge 後に記入） |
-| M-6b | （merge 後に記入） | feature/m6b-member-show-impl | （merge 後に記入） |
-| M-6c | （merge 後に記入） | feature/m6c-member-show-close | （merge 後に記入） |
+| M-6a | `1ec02c877d4fc39ef7bef34bb6b175f474443dac` | feature/m6a-member-show-docs | docs/INDEX.md, docs/process/phases/PHASE_M6_MEMBER_SHOW_PLAN.md, docs/process/phases/PHASE_M6_MEMBER_SHOW_REPORT.md, docs/process/phases/PHASE_M6_MEMBER_SHOW_WORKLOG.md |
+| M-6b | `c777ca2784ce86067e3867ecf259c8649fbb2f88` | feature/m6b-member-show-impl | www/resources/js/admin/pages/MembersList.jsx, www/resources/js/admin/pages/MemberShow.jsx |
+| M-6c | `c7e4c3afa2ce4f6445ea03e00f4c7ae43e6bd220` | feature/m6c-member-show-close | docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md, docs/process/phases/PHASE_M6_MEMBER_SHOW_REPORT.md |
