@@ -1,7 +1,8 @@
 # フィット＆ギャップ：モック vs 実装UI
 
-**SSOT（モック）:** `www/public/mock/religo-admin-mock.html`  
-**対象:** Phase16B/16C 時点の管理画面実装（React Admin + MUI）
+**SSOT（モック）:** `www/public/mock/religo-admin-mock-v2.html`（同一内容で religo-admin-mock2.html の可能性あり）  
+**対象:** Phase16B/16C 時点の管理画面実装（React Admin + MUI）  
+**比較:** モック http://localhost/mock/religo-admin-mock-v2.html#/members ／ 実装 http://localhost/admin#/members
 
 ---
 
@@ -50,16 +51,18 @@
 
 | 観点 | モック | 実装 | Fit / Gap |
 |------|--------|------|-----------|
-| タイトル・説明 | 「Members」「仕事 / 役職 / 関係性を把握し…」 | タイトル「Members」のみ。サブ説明はなし | **Gap:** サブコピー未実装 |
+| タイトル・説明 | 「Members」「仕事 / 役職 / 関係性を把握し…」 | タイトル「Members」＋サブ説明（M-2） | **Fit** |
 | ヘッダーアクション | 「Connectionsへ」「＋ メンバー追加（将来）」disabled | 同一 | **Fit** |
-| 統計カード | 総メンバー数 / 1to1未実施(30日) / interested ON / want_1on1 ON | 実装には統計カードなし | **Gap:** モックの stats 4 種が未実装 |
-| フィルタバー | 検索、大カテゴリ、カテゴリ、ロール、interested/want_1on1 トグル、並び順、件数 | React Admin の Filter（検索等）のみ。大カテゴリ/ロール/トグル/並びは Datagrid 標準の範囲 | **Gap:** モック相当の多条件フィルタ・トグルは未 |
-| 一覧形式 | **カードグリッド**（mcard）。番号・名前・カナ・大/実カテゴリ・役職・同室回数・最終接触・メモ抜粋・interested/want_1on1 フラグ・✏️メモ/📅1to1/📝1to1メモ/詳細＋関係ログ（最近） | **Datagrid（表）**。番号・名前・カテゴリ・役職・同室回数・最終接触・直近メモ・Actions（✏️メモ、📅1to1、📝1to1メモ、詳細）。**1to1回数列なし** | **Gap:** モックはカード、実装は表。カナ・1to1回数・interested/want_1on1 表示・関係ログ（最近）は未。直近メモは表示あり |
+| **ブロック順** | ヘッダー → 統計カード → フィルタバー → 一覧 | 同一（M-4b でヘッダー→統計→フィルタバー→一覧に統一） | **Fit** |
+| 統計カード | 総メンバー数 / 1to1未実施(30日) / interested ON / want_1on1 ON | **4 種を常時表示**（M-4b。クライアント集計・表示件数ベースの制約あり） | **Fit** |
+| フィルタバー | 検索、大カテゴリ、カテゴリ、ロール、interested/want_1on1 トグル、並び順、件数 | **常時表示**（検索・カテゴリ・役職・Interested/Want 1on1・並び順・件数）。大カテゴリは未 | **Fit:** 常時表示は実装。**Gap:** 大カテゴリ単独フィルタは未 |
+| 一覧形式 | **カードグリッド**（mcard） | **Datagrid（表）**（M-4 ではブロック順優先のため表のまま維持。カード化は後続 Phase） | **Gap:** カードグリッド未対応 |
+| 一覧列 | 番号・名前・カナ・大/実カテゴリ・役職・同室・1to1回数・最終接触・メモ抜粋・フラグ・関係ログ（最近） | 番号・名前・カテゴリ・役職・同室回数・1to1回数・最終接触・直近メモ・フラグ・Actions（M-2/M-3 で列追加済み） | **Fit:** 1to1回数・フラグは表示。**Gap:** かな・関係ログ（最近）は未 |
 | 行アクション | 同一 4 種（メモ、1to1、1to1メモ、詳細） | 同一 4 種 | **Fit** |
-| メモ/1to1/1to1メモモーダル | タイトルに「— メンバー名」、種別・本文・重要フラグ等 | 実装も同様の Dialog。メモ種別・例会/1to1紐付け・本文・重要フラグ | **Fit** |
-| 詳細（一覧から） | **右側 Drawer**（Overview / Memos / 1to1 タブ） | **Drawer**（Overview / Memos / 1to1 タブ）で実装済み。API からメモ・1to1 取得表示 | **Fit:** 一覧の「詳細」は Drawer＋タブで揃っている |
+| メモ/1to1/1to1メモモーダル | タイトルに「— メンバー名」、種別・本文・重要フラグ等 | 実装も同様の Dialog | **Fit** |
+| 詳細（一覧から） | **右側 Drawer**（Overview / Memos / 1to1 タブ） | **Drawer** で実装済み | **Fit** |
 | Member Show（/members/:id） | — | Show ページあり。メモ履歴・1to1履歴は「Coming soon」注記 | **Gap:** URL 遷移先の Show では履歴タブ未実装 |
-| フラグ編集モーダル | モックに「🚩 フラグ編集」モーダル（interested / want_1on1 スイッチ） | Members 一覧からはフラグ専用モーダルなし。Connections 右ペインでは Switch で更新 | **Gap:** Members 画面からフラグ編集モーダルは未実装 |
+| フラグ編集モーダル | モックに「🚩 フラグ編集」モーダル | Members 一覧からはフラグ専用モーダルなし。Connections では Switch で更新 | **Gap:** Members 画面からフラグ編集モーダルは未実装 |
 
 ---
 
