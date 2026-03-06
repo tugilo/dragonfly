@@ -9,10 +9,7 @@ import {
     useRefresh,
     useNotify,
     useListContext,
-    SearchInput,
-    ReferenceInput,
-    SelectInput,
-    BooleanInput,
+    useGetList,
 } from 'react-admin';
 import { Link } from 'react-router-dom';
 import {
@@ -27,6 +24,7 @@ import {
     MenuItem,
     FormControlLabel,
     Checkbox,
+    Switch,
     Box,
     Typography,
     Drawer,
@@ -73,6 +71,22 @@ async function postOneToOne(payload) {
     return res.json();
 }
 
+async function putFlags(ownerMemberId, targetMemberId, data) {
+    const res = await fetch(
+        `${API}/api/dragonfly/flags/${targetMemberId}?owner_member_id=${ownerMemberId}`,
+        {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data),
+        }
+    );
+    if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message || `PUT flags ${res.status}`);
+    }
+    return res.json();
+}
+
 const MembersModalContext = createContext(null);
 
 const MembersListActions = () => {
@@ -84,17 +98,8 @@ const MembersListActions = () => {
     );
 };
 
-const membersFilters = [
-    <SearchInput key="q" source="q" placeholder="名前・番号・かな" alwaysOn />,
-    <ReferenceInput key="category_id" source="category_id" reference="categories" label="カテゴリ">
-        <SelectInput optionText={(r) => (r?.group_name && r?.name ? `${r.group_name} / ${r.name}` : r?.name ?? String(r?.id ?? ''))} />
-    </ReferenceInput>,
-    <ReferenceInput key="role_id" source="role_id" reference="roles" label="役職">
-        <SelectInput optionText="name" />
-    </ReferenceInput>,
-    <BooleanInput key="interested" source="interested" label="Interested" />,
-    <BooleanInput key="want_1on1" source="want_1on1" label="Want 1on1" />,
-];
+// フィルタは MembersFilterBar で MUI のみ使用（SearchInput/BooleanInput は List 外で _names エラーになるため使用しない）
+const membersFilters = [];
 
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -146,7 +151,9 @@ function MembersStatsCards() {
 }
 
 function MembersFilterBar() {
-    const { sort, setSort, total } = useListContext();
+    const { sort, setSort, total, filterValues, setFilters } = useListContext();
+    const { data: categories = [] } = useGetList('categories', { pagination: { page: 1, perPage: 500 }, sort: { field: 'id', order: 'ASC' } });
+    const { data: roles = [] } = useGetList('roles', { pagination: { page: 1, perPage: 100 }, sort: { field: 'id', order: 'ASC' } });
     const field = sort?.field ?? 'display_no';
     const order = sort?.order ?? 'ASC';
     const handleSortChange = (e) => {
@@ -157,9 +164,49 @@ function MembersFilterBar() {
         else if (v === 'name_desc') setSort({ field: 'name', order: 'DESC' });
     };
     const sortValue = `${field}_${order.toLowerCase()}`;
+    const categoryChoices = Array.isArray(categories) ? categories.map((c) => ({ id: c.id, name: c?.group_name && c?.name ? `${c.group_name} / ${c.name}` : c?.name ?? String(c?.id ?? '') })) : [];
+    const roleChoices = Array.isArray(roles) ? roles.map((r) => ({ id: r.id, name: r?.name ?? String(r?.id ?? '') })) : [];
+    const fv = filterValues || {};
+    const handleFilter = (key, value) => {
+        const next = { ...fv, [key]: value };
+        if (value === undefined || value === '' || value === false) delete next[key];
+        setFilters(next);
+    };
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center', mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
-            {membersFilters}
+            <MuiTextField
+                size="small"
+                placeholder="名前・番号・かな"
+                value={fv.q ?? ''}
+                onChange={(e) => handleFilter('q', e.target.value || undefined)}
+                sx={{ minWidth: 180 }}
+            />
+            <FormControl size="small" sx={{ minWidth: 180 }}>
+                <InputLabel>カテゴリ</InputLabel>
+                <Select value={fv.category_id ?? ''} label="カテゴリ" onChange={(e) => handleFilter('category_id', e.target.value === '' ? undefined : Number(e.target.value))}>
+                    <MenuItem value="">—</MenuItem>
+                    {categoryChoices.map((c) => (
+                        <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 140 }}>
+                <InputLabel>役職</InputLabel>
+                <Select value={fv.role_id ?? ''} label="役職" onChange={(e) => handleFilter('role_id', e.target.value === '' ? undefined : Number(e.target.value))}>
+                    <MenuItem value="">—</MenuItem>
+                    {roleChoices.map((r) => (
+                        <MenuItem key={r.id} value={String(r.id)}>{r.name}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            <FormControlLabel
+                control={<Checkbox size="small" checked={!!fv.interested} onChange={(e) => handleFilter('interested', e.target.checked ? true : undefined)} />}
+                label="Interested"
+            />
+            <FormControlLabel
+                control={<Checkbox size="small" checked={!!fv.want_1on1} onChange={(e) => handleFilter('want_1on1', e.target.checked ? true : undefined)} />}
+                label="Want 1on1"
+            />
             <FormControl size="small" sx={{ minWidth: 160 }}>
                 <InputLabel>並び順</InputLabel>
                 <Select value={sortValue} label="並び順" onChange={handleSortChange}>
@@ -230,8 +277,66 @@ function MemberRowActions({ record }) {
             <Button size="small" variant="contained" onClick={() => ctx.openMemo(record)}>✏️ メモ</Button>
             <Button size="small" variant="outlined" onClick={() => ctx.openO2o(record)}>📅 1to1</Button>
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
+            <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openFlagEdit(record)}>🚩 フラグ</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openDrawer(record)}>詳細</Button>
         </Box>
+    );
+}
+
+function FlagEditDialog({ open, member, onClose, onSaved }) {
+    const [interested, setInterested] = useState(false);
+    const [want_1on1, setWant_1on1] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const notify = useNotify();
+
+    useEffect(() => {
+        if (open && member) {
+            const s = member?.summary_lite;
+            setInterested(!!s?.interested);
+            setWant_1on1(!!s?.want_1on1);
+            setError('');
+        }
+    }, [open, member?.id]);
+
+    const handleSave = async () => {
+        if (!member?.id) return;
+        setLoading(true);
+        setError('');
+        try {
+            await putFlags(OWNER_MEMBER_ID, member.id, { interested, want_1on1 });
+            notify('フラグを更新しました');
+            onSaved?.();
+            onClose();
+        } catch (e) {
+            setError(e.message || '保存に失敗しました');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (!open) return null;
+    return (
+        <Dialog open onClose={onClose} maxWidth="xs" fullWidth>
+            <DialogTitle>🚩 フラグ編集 — {member?.name}</DialogTitle>
+            <DialogContent>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 1 }}>
+                    <FormControlLabel
+                        control={<Switch size="small" checked={interested} onChange={(_, v) => setInterested(v)} />}
+                        label="気になる（Interested）"
+                    />
+                    <FormControlLabel
+                        control={<Switch size="small" checked={want_1on1} onChange={(_, v) => setWant_1on1(v)} />}
+                        label="1on1 したい（Want 1on1）"
+                    />
+                </Box>
+                {error && <Typography color="error" variant="body2" sx={{ mt: 2 }}>{error}</Typography>}
+            </DialogContent>
+            <DialogActions sx={{ bgcolor: 'grey.50' }}>
+                <Button onClick={onClose}>キャンセル</Button>
+                <Button variant="contained" onClick={handleSave} disabled={loading}>{loading ? '保存中…' : '保存'}</Button>
+            </DialogActions>
+        </Dialog>
     );
 }
 
@@ -630,6 +735,7 @@ export function MembersList() {
     const [o2oMemoOpen, setO2oMemoOpen] = useState(false);
     const [o2oMemoMember, setO2oMemoMember] = useState(null);
     const [drawerMember, setDrawerMember] = useState(null);
+    const [flagEditMember, setFlagEditMember] = useState(null);
     const drawerRef = useRef(null);
     const refresh = useRefresh();
 
@@ -644,6 +750,9 @@ export function MembersList() {
     const openO2oMemo = useCallback((member) => {
         setO2oMemoMember(member);
         setO2oMemoOpen(true);
+    }, []);
+    const openFlagEdit = useCallback((member) => {
+        setFlagEditMember(member);
     }, []);
     const openDrawer = useCallback((member) => {
         setDrawerMember(member);
@@ -661,7 +770,7 @@ export function MembersList() {
 
     return (
         <>
-            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openDrawer }}>
+            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openFlagEdit, openDrawer }}>
                 <List
                     title={
                         <Box>
@@ -705,6 +814,7 @@ export function MembersList() {
             <MemoModal open={memoOpen} member={memoMember} onClose={() => setMemoOpen(false)} onSaved={onSaved} />
             <O2oModal open={o2oOpen} member={o2oMember} onClose={() => setO2oOpen(false)} onSaved={onO2oSaved} />
             <O2oMemoModal open={o2oMemoOpen} member={o2oMemoMember} onClose={() => setO2oMemoOpen(false)} onSaved={onSaved} />
+            <FlagEditDialog open={!!flagEditMember} member={flagEditMember} onClose={() => setFlagEditMember(null)} onSaved={onSaved} />
         </>
     );
 }
