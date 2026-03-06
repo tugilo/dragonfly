@@ -653,6 +653,7 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const lastContact = summary.last_contact_at
         ? (() => { try { return new Date(summary.last_contact_at).toLocaleDateString('ja-JP'); } catch { return summary.last_contact_at; } })()
         : '—';
+    const lastMemoBody = summary.last_memo?.body_short || (memos.length > 0 ? (memos[0].body || '').slice(0, 80) + ((memos[0].body && memos[0].body.length > 80) ? '…' : '') : null);
 
     return (
         <Drawer anchor="right" open={open} onClose={onClose} sx={{ '& .MuiDrawer-paper': { width: { xs: '100%', sm: 440 } } }}>
@@ -681,6 +682,12 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
                                     {summary.want_1on1 && <Chip size="small" color="secondary" label="1to1希望" />}
                                 </Stack>
                             </CardContent></Card>
+                            {lastMemoBody && (
+                                <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                                    <Typography variant="caption" color="text.secondary">直近メモ</Typography>
+                                    <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>{lastMemoBody}</Typography>
+                                </CardContent></Card>
+                            )}
                             <Stack direction="row" gap={1}>
                                 <Button size="small" variant="contained" onClick={() => openMemo(member)}>✏️ メモ追加</Button>
                                 <Button size="small" variant="outlined" onClick={() => openO2o(member)}>📅 1to1予定</Button>
