@@ -46,8 +46,8 @@ docs/INDEX.md
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に `git log -1 --format=%H develop` で取得） |
+| **merge commit id** | `3e7e13e4d896ce877e7cebbee4f76123aa6ce2ae` |
 | **merge 元ブランチ名** | feature/m1-members-gap-docs |
-| **変更ファイル一覧** | （上記の 4 ファイル） |
-| **テスト結果** | （例: php artisan test — N passed） |
+| **変更ファイル一覧** | docs/INDEX.md, docs/process/phases/PHASE_M1_MEMBERS_GAP_PLAN.md, docs/process/phases/PHASE_M1_MEMBERS_GAP_REPORT.md, docs/process/phases/PHASE_M1_MEMBERS_GAP_WORKLOG.md |
+| **テスト結果** | php artisan test — 66 passed |
 | **手動確認** | 特になし |
