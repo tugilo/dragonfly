@@ -8,6 +8,10 @@ import {
     Button,
     useRefresh,
     useNotify,
+    SearchInput,
+    ReferenceInput,
+    SelectInput,
+    BooleanInput,
 } from 'react-admin';
 import { Link } from 'react-router-dom';
 import {
@@ -70,14 +74,26 @@ async function postOneToOne(payload) {
 
 const MembersModalContext = createContext(null);
 
-function MembersListActions() {
+const MembersListActions = () => {
     return (
         <TopToolbar>
             <Button component={Link} to="/connections" variant="contained" size="small">🗺 Connectionsへ</Button>
             <Button variant="outlined" size="small" disabled>＋ メンバー追加（将来）</Button>
         </TopToolbar>
     );
-}
+};
+
+const membersFilters = [
+    <SearchInput key="q" source="q" placeholder="名前・番号・かな" alwaysOn />,
+    <ReferenceInput key="category_id" source="category_id" reference="categories" label="カテゴリ">
+        <SelectInput optionText={(r) => (r?.group_name && r?.name ? `${r.group_name} / ${r.name}` : r?.name ?? String(r?.id ?? ''))} />
+    </ReferenceInput>,
+    <ReferenceInput key="role_id" source="role_id" reference="roles" label="役職">
+        <SelectInput optionText="name" />
+    </ReferenceInput>,
+    <BooleanInput key="interested" source="interested" label="Interested" />,
+    <BooleanInput key="want_1on1" source="want_1on1" label="Want 1on1" />,
+];
 
 function SameRoomCountField({ record }) {
     const n = record?.summary_lite?.same_room_count;
@@ -577,11 +593,13 @@ export function MembersList() {
                         </Box>
                     }
                     actions={<MembersListActions />}
+                    filters={membersFilters}
+                    sort={{ field: 'display_no', order: 'ASC' }}
                     perPage={25}
                 >
                     <Datagrid rowClick={false}>
-                        <TextField source="display_no" label="番号" emptyText="—" />
-                        <TextField source="name" label="名前" />
+                        <TextField source="display_no" label="番号" emptyText="—" sortable />
+                        <TextField source="name" label="名前" sortable />
                         <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
                         <TextField source="current_role" label="役職" emptyText="—" />
                         <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
