@@ -56,8 +56,8 @@ Exit code: 0（成功）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に `git log -1 --format=%H develop` で取得） |
+| **merge commit id** | `5064600119dddf9015a701af490452588ac14c4a` |
 | **merge 元ブランチ名** | feature/m2-members-required-columns |
-| **変更ファイル一覧** | www/resources/js/admin/pages/MembersList.jsx |
+| **変更ファイル一覧** | docs/INDEX.md, docs/process/phases/PHASE_M2_MEMBERS_REQUIRED_COLUMNS_REPORT.md, www/resources/js/admin/pages/MembersList.jsx |
 | **テスト結果** | php artisan test — 66 passed |
 | **ビルド結果** | npm run build — 成功 |
