@@ -1,0 +1,164 @@
+# フィット＆ギャップ：モック vs 実装UI
+
+**SSOT（モック）:** `www/public/mock/religo-admin-mock.html`  
+**対象:** Phase16B/16C 時点の管理画面実装（React Admin + MUI）
+
+---
+
+## 1. シェル（サイドバー・AppBar）
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| サイドバー | 固定幅 240px、Religo ロゴ＋DragonFly Chapter、ナビ項目＋SETTINGS 配下 Categories/Roles、フッターにユーザー（メンバー管理者） | React Admin Layout + ReligoMenu。アイコン＋ラベル（Dashboard, Connections, Members, Meetings, 1 to 1, Role History, SETTINGS > Categories, Roles） | **Fit:** 項目順・SETTINGS 階層は同一。**Gap:** ロゴ/製品名・フッターのユーザー表示なし（React Admin デフォルトは AppBar のみ） |
+| AppBar | パンくず、検索ボックス、通知アイコン、アバター | React Admin デフォルト（Skip to content, メニュー開閉, テーマ切替, 更新等）。パンくずは React Admin の Breadcrumb で別表現の可能性 | **Gap:** モックの「検索」「🔔」「ME」アバターは未実装または別コンポーネント |
+| ルート | `#/dashboard`, `#/settings/categories` 等 | React Admin は `#/categories`, `#/roles`（Settings はメニューラベルのみでパスに含まない） | **Gap:** モックの `/settings/categories` は実装で `/categories`。導線は同じ |
+
+---
+
+## 2. Dashboard
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Dashboard」「今日の活動・未アクション・KPI」 | 同一 | **Fit** |
+| ヘッダーアクション | 「Connectionsへ」「＋ 1to1追加」 | 同一（Connectionsへ、＋ 1to1追加） | **Fit** |
+| 統計カード 4 種 | 未接触(30日以上) / 今月の1to1回数 / 紹介メモ数 / 例会メモ数（数値・色・アイコン） | 同一構成・同一ラベル。アイコン色は MUI の error/primary/success/secondary | **Fit** |
+| 今日やること（Tasks） | 4 件（伊藤 勇樹 1to1予定、水野 花菜 メモ追加、田中 誠一 1to1、例会メモ未整理） | 2 件のみ（伊藤 勇樹、田中 誠一）。静的な表示 | **Gap:** 件数・内容は静的。モックは「水野」「例会メモ未整理」あり |
+| クイックショートカット | Connections、Members一覧、＋1to1を追加、例会一覧 | 同一 4 ボタン | **Fit** |
+| 最近の活動 | タイムライン 6 件（佐藤 メモ追加、田中 1to1登録、例会#247 BO割当…） | 3 件のみ静的表示 | **Gap:** 件数・実データ連携は未。実装に「表示は静的です」注記あり |
+| レイアウト | 左 1fr / 右 340px の two-col | Grid で md={8} / md={4} | **Fit** |
+
+---
+
+## 3. Connections
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Connections」「Meeting → BO割当 → 関係ログの中心」 | 同一 | **Fit** |
+| ヘッダーアクション | 「BO割当を保存」「Meetingsへ」 | 「💾 BO割当を保存」「📋 Meetingsへ」 | **Fit** |
+| 3 ペイン構成 | 左 Members リスト / 中央 Meeting+BO / 右 Relationship Log | 左 メンバー選択（Owner ID + Autocomplete）/ 中央 Meeting 選択 + Round タブ + BO1/BO2 / 右 関係ログ | **Fit:** 3 カラムの役割は同じ |
+| 左ペイン | メンバー検索＋クリックで選択、アバター＋名前＋group/cat | メンバー検索＋**縦リスト**（アバター＋名前＋カテゴリ）。クリックで右ペインに表示。例会選択時はタップで「BO1 に追加」等のメニュー表示 | **Fit:** リスト＋検索に変更済み。BO 割当時はメニューで BO を選択 |
+| 中央ペイン | Meeting セレクト＋BO カード（BO1, BO2…）＋「BO割当を保存」 | Meeting セレクト＋**BO1/BO2 表示**（同室枠）＋割当メンバー**縦リスト**（行クリックでメンバー詳細モーダル、メモ・削除）＋各「BO○ を保存」＋割当をクリア＋同室枠追加 | **Fit:** BO 表示は BO1/BO2 に統一。割当メンバーは縦リストで視認性向上。各 BO に保存ボタン |
+| 右ペイン | 選択メンバー名＋関係ログ＋1to1履歴＋メモ/1to1/詳細ボタン | 選択メンバー名＋同室/1to1回数＋クイックアクション（メモを書く、**1to1を登録**）＋気になる/1on1したい Switch＋直近メモ。1to1登録は**日付＋開始・終了時刻**の簡易入力 | **Fit:** 役割は同じ。**Fit:** 1to1 登録 UI を日付・開始・終了の 3 フィールドに簡素化 |
+| 右ペイン（C-6） | — | **🧠 Relationship Summary**（同室回数・直近同室・1to1・直近メモ）＋**💡 次の一手**（ルールベース提案、最大3件）。モック追加ではなく UX 知性追加 | **Fit** |
+| モーダル | メモ追加・1to1作成・フラグ編集はモックにあり | メモ追加・1to1登録（日付＋開始/終了時刻）・**メンバー詳細**（BO 割当メンバー行タップで開く）。フラグは Switch でインライン。紹介は「Coming soon」 | **Fit**（メンバー詳細モーダル追加済み） |
+
+---
+
+## 4. Members
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Members」「仕事 / 役職 / 関係性を把握し…」 | タイトル「Members」のみ。サブ説明はなし | **Gap:** サブコピー未実装 |
+| ヘッダーアクション | 「Connectionsへ」「＋ メンバー追加（将来）」disabled | 同一 | **Fit** |
+| 統計カード | 総メンバー数 / 1to1未実施(30日) / interested ON / want_1on1 ON | 実装には統計カードなし | **Gap:** モックの stats 4 種が未実装 |
+| フィルタバー | 検索、大カテゴリ、カテゴリ、ロール、interested/want_1on1 トグル、並び順、件数 | React Admin の Filter（検索等）のみ。大カテゴリ/ロール/トグル/並びは Datagrid 標準の範囲 | **Gap:** モック相当の多条件フィルタ・トグルは未 |
+| 一覧形式 | **カードグリッド**（mcard）。番号・名前・カナ・大/実カテゴリ・役職・同室回数・最終接触・メモ抜粋・interested/want_1on1 フラグ・✏️メモ/📅1to1/📝1to1メモ/詳細＋関係ログ（最近） | **Datagrid（表）**。番号・名前・カテゴリ・役職・同室回数・最終接触・直近メモ・Actions（✏️メモ、📅1to1、📝1to1メモ、詳細）。**1to1回数列なし** | **Gap:** モックはカード、実装は表。カナ・1to1回数・interested/want_1on1 表示・関係ログ（最近）は未。直近メモは表示あり |
+| 行アクション | 同一 4 種（メモ、1to1、1to1メモ、詳細） | 同一 4 種 | **Fit** |
+| メモ/1to1/1to1メモモーダル | タイトルに「— メンバー名」、種別・本文・重要フラグ等 | 実装も同様の Dialog。メモ種別・例会/1to1紐付け・本文・重要フラグ | **Fit** |
+| 詳細（一覧から） | **右側 Drawer**（Overview / Memos / 1to1 タブ） | **Drawer**（Overview / Memos / 1to1 タブ）で実装済み。API からメモ・1to1 取得表示 | **Fit:** 一覧の「詳細」は Drawer＋タブで揃っている |
+| Member Show（/members/:id） | — | Show ページあり。メモ履歴・1to1履歴は「Coming soon」注記 | **Gap:** URL 遷移先の Show では履歴タブ未実装 |
+| フラグ編集モーダル | モックに「🚩 フラグ編集」モーダル（interested / want_1on1 スイッチ） | Members 一覧からはフラグ専用モーダルなし。Connections 右ペインでは Switch で更新 | **Gap:** Members 画面からフラグ編集モーダルは未実装 |
+
+---
+
+## 5. Meetings
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Meetings」「例会管理 / BO割当 / メモ」 | タイトル「Meetings」のみ | **Gap:** サブ説明なし |
+| ヘッダーアクション | 「Connectionsで編集」 | 同一 | **Fit** |
+| 統計カード | 総例会数 / 総BO数（今年）/ メモ有り例会 / 次回例会 | 実装には統計カードなし | **Gap:** 4 種の stats 未実装 |
+| レイアウト | two-col：左が例会一覧テーブル、右が例会詳細パネル | List（Datagrid）＋**行「詳細」で右側 Drawer**（Phase17B） | **Fit:** 詳細は Drawer で表示。モックの「右パネル」に相当 |
+| 一覧テーブル | 番号・日付・BO数・メモ・Actions（📝メモ、🗺BO編集） | 回・開催日・名前・**Actions（詳細）**。「Connectionsで編集」はヘッダーにあり | **Gap:** BO数・メモ列は一覧には未。行アクションは「詳細」で Drawer に集約 |
+| 例会詳細パネル | 番号・日付・BO数・メモ有無・メモ本文・BO割当・メモ編集/Connectionsへ | **Drawer:** Overview（番号・日付・BO数・参加者数・ルームメモ・Connectionsで編集）、Breakouts（BO1/BO2 割当表示）、Memos（例会メモ一覧＋対象選択で追加） | **Fit:** Phase17B で Drawer＋タブを実装。編集は Connections へ誘導 |
+| 例会メモモーダル | 「📝 例会メモ編集 — #247」＋Connections リンク | Drawer の Memos タブで「例会メモを書く」（対象メンバー＋本文）＋保存。専用モーダルではなく Drawer 内フォーム | **Fit:** Meetings 起点で例会メモ追加可能 |
+
+---
+
+## 6. 1 to 1
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「1 to 1」「予定・実施・キャンセル履歴の管理」 | タイトル「1 to 1」のみ | **Gap:** サブ説明なし |
+| ヘッダーアクション | 「＋ 1to1を追加」「Connectionsへ」 | 同一 | **Fit** |
+| 統計カード | 予定中 / 完了(今月) / キャンセル / want_1on1 ON | 実装には統計カードなし | **Gap:** 4 種の stats 未実装 |
+| フィルタバー | 検索・相手・ステータス・日付 from-to・件数 | Filter: owner_member_id, status, from, to（React Admin） | **Fit:** 概念は同じ。**Gap:** モックの「相手」プルダウン・日付範囲は実装で from/to 等で代替 |
+| テーブル列 | 日付・相手・ステータス・Meeting・メモ・Actions（📝メモ、✏️編集） | 予定/実施日・相手・状態・メモ・Meeting ID。行アクションは Datagrid デフォルト（編集等） | **Gap:** モックの「📝メモ」「✏️編集」は実装で別導線の可能性。列は「役職」表示なし等の差は軽微 |
+| 1to1追加モーダル | 日付・時刻・相手・ステータス・関連例会・メモ | Create ページで Owner/相手/状態/予定日時/開始・終了/meeting_id/メモ | **Fit:** 項目はほぼ同一 |
+
+---
+
+## 7. Role History
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Role History」「役職履歴 / 任期管理 / 歴代役職一覧」 | タイトル「Role History」のみ | **Gap:** サブ説明なし |
+| ヘッダーアクション | 「＋ 役職追加」「Connectionsへ」 | 「＋ 役職追加」→/roles/create、「Connectionsへ」 | **Fit**（役職追加はマスタ追加であり、モックの「役職履歴を追加」とは別。モックでは mol-role-add が履歴追加） |
+| 統計カード | 現役職保有者 / 総履歴件数 / 歴代プレジ数 / 次期改選 | 実装には統計カードなし | **Gap:** 4 種の stats 未実装 |
+| フィルタバー | 検索・メンバー・役職・年・件数＋info-box「役職フィルタ+年で…」 | Filter: role_id, member_id, from, to（SelectInput/TextInput） | **Fit:** 役職・メンバー・期間あり。**Gap:** モックの「年」単一入力は from/to で代替。info-box の説明文は未 |
+| テーブル列 | メンバー・役職・任期開始・任期終了・状態・Actions（✏️編集） | メンバー・役職（Chip）・任期開始・任期終了・状態（現任/終了）。Actions 列は実装で削除済み | **Fit:** 列は同一。**Gap:** モックの「✏️ 編集」は役職履歴編集（mol-role-add）。実装は編集なしで「＋ 役職追加」のみ |
+| 役職履歴追加モーダル | メンバー・役職・任期開始・終了 | 実装には「役職履歴を追加」専用モーダル/ページなし（Roles の Create はマスタ追加） | **Gap:** 履歴 1 件追加の UI が未実装 |
+
+---
+
+## 8. Settings — Categories
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Settings — Categories」「大カテゴリ（group）と実カテゴリの管理」 | 「Settings — Categories」同一。サブ説明なし | **Gap:** サブ説明なし |
+| ヘッダーアクション | 「＋ カテゴリ追加」→ モーダル | 「Create」→ /categories/create ページ | **Gap:** モックはモーダル、実装は別ページ Create。導線は異なる |
+| 注意書き | warn-box「カテゴリの削除は…」 | 同一文面の Box | **Fit** |
+| テーブル列 | 大カテゴリ(group)・実カテゴリ(name)・メンバー数・Actions（✏️編集、🗑削除） | 大カテゴリ(group)・実カテゴリ(name)・EditButton・DeleteButton。メンバー数列なし | **Gap:** メンバー数列なし。Edit/Delete は実装あり |
+| カテゴリ追加/編集モーダル | 大カテゴリ・実カテゴリの入力 | Create/Edit ページで同一項目 | **Fit**（UI はページ vs モーダルの差のみ） |
+
+---
+
+## 9. Settings — Roles
+
+| 観点 | モック | 実装 | Fit / Gap |
+|------|--------|------|-----------|
+| タイトル・説明 | 「Settings — Roles」「役職マスタの管理」 | 「Settings — Roles」同一。サブ説明なし | **Gap:** サブ説明なし |
+| ヘッダーアクション | 「＋ 役職追加」→ モーダル | CreateButton → /roles/create | **Gap:** モーダル vs 別ページ（Categories と同様） |
+| テーブル列 | 役職名・説明・現在の担当者数・Actions（✏️編集） | 役職名・説明・EditButton・DeleteButton。担当者数なし | **Gap:** 現在の担当者数列なし |
+| 役職編集モーダル | 役職名・説明 | Create/Edit ページで同一 | **Fit** |
+
+---
+
+## 10. モーダル・Drawer 一覧
+
+| モック | 実装 | Fit / Gap |
+|--------|------|-----------|
+| ✏️ メモ追加 | MembersList の MemoModal。Connections でもメモ Dialog | **Fit** |
+| 📅 1to1予定作成 | MembersList の O2oModal。Connections でも 1to1 登録 Dialog | **Fit** |
+| 📝 1to1メモ | MembersList の O2oMemoModal（過去 1to1 紐付け選択あり） | **Fit** |
+| 🚩 フラグ編集 | Connections 右ペインで Switch。Members からはなし | **Gap:** Members のフラグ編集モーダルなし |
+| 📝 例会メモ編集 | Connections の BO から例会メモコンテキストあり。Meetings は **Drawer Memos タブ**で対象選択＋本文で追加（Phase17B） | **Fit:** Meetings 起点で例会メモ追加可能 |
+| 📂 カテゴリ編集/追加 | CategoriesCreate / CategoriesEdit ページ | **Fit**（モーダルではない） |
+| 🏅 役職編集/追加 | RolesCreate / RolesEdit ページ | **Fit** |
+| 🏅 役職履歴を追加 | 未実装 | **Gap** |
+| Member Detail Drawer（Overview / Memos / 1to1） | MembersList 内の MemberDetailDrawer で実装済み。一覧の「詳細」で開く | **Fit:** Drawer＋タブでモックと同等。MemberShow ページ（/members/:id）は履歴が Coming soon |
+
+---
+
+## 11. まとめ
+
+- **Fit（揃っているところ）**
+  - シェルのメニュー項目・階層（SETTINGS > Categories, Roles）。
+  - Dashboard の見出し・統計カード・クイックショートカット・Tasks/最近の活動の**構成**。
+  - Connections の 3 ペイン・BO 割当・関係ログ・メモ/1to1 の導線。
+  - Members の一覧アクション（メモ・1to1・1to1メモ・詳細）と 3 モーダル。
+  - Settings Categories/Roles の注意書き・CRUD と Create/Edit フォーム項目。
+  - Role History のフィルタ・列・役職 Chip・現任/終了表示。
+  - 1 to 1 の List＋Create とフィルタの概念。
+
+- **主なギャップ**
+  - **一覧の表現:** Members がモックはカードグリッド、実装は Datagrid（表）。
+  - **統計カード不足:** Members / Meetings / 1 to 1 / Role History の各ページでモックの 4 種 stats が未実装。
+  - **サブタイトル不足:** 多くのページで「pg-hdr-l p」相当の説明文がない。
+  - **Meetings:** 右側の例会詳細は **Phase17B で Drawer（Overview/Breakouts/Memos）として実装済み**。一覧の BO数/メモ列・統計カードは未実装。
+  - **Member 詳細:** 一覧の「詳細」は **Drawer（Overview / Memos / 1to1）で実装済み**。URL 直アクセス /members/:id の Show ページはメモ・1to1履歴が Coming soon。
+  - **Settings:** カテゴリ/役職の追加がモックはモーダル、実装は別ページ。テーブルの「メンバー数」「担当者数」列なし。
+  - **Role History:** 「役職履歴を 1 件追加」するモーダル/ページが未実装。
+  - **シェル:** ロゴ/製品名・AppBar 検索・通知・ユーザー表示が未実装またはデフォルトのまま。
+
+以上を踏まえ、今後の Phase で「モック完全一致」を目指す場合は、上記ギャップを優先度付けして対応するとよい。
