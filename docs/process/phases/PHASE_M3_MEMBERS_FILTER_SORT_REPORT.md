@@ -60,6 +60,9 @@
 
 | Phase | merge commit id | merge 元ブランチ | 変更ファイル |
 |-------|-----------------|------------------|--------------|
-| M-3a | （追記） | feature/m3a-members-filter-sort-docs | 上記 4 ファイル |
-| M-3c | （追記） | feature/m3c-members-filter-sort-api | （Backend ファイル一覧） |
-| M-3b | （追記） | feature/m3b-members-filter-sort-ui | （Front ファイル一覧） |
+| M-3a | `1e594f9924583964729b670f7a0b45b064156602` | feature/m3a-members-filter-sort-docs | docs/INDEX.md, docs/process/phases/PHASE_M3_MEMBERS_FILTER_SORT_PLAN.md, docs/process/phases/PHASE_M3_MEMBERS_FILTER_SORT_REPORT.md, docs/process/phases/PHASE_M3_MEMBERS_FILTER_SORT_WORKLOG.md |
+| M-3c | `c1754e8b8c0dae329fae24feb2e3d85e8ba71d2d` | feature/m3c-members-filter-sort-api | www/app/Http/Controllers/Api/DragonFlyMemberController.php, www/app/Http/Requests/Api/IndexDragonFlyMembersRequest.php, www/tests/Feature/Api/DragonFlyMembersIndexFilterSortTest.php |
+| M-3b | `555635dd89b649126da9cef2f38594504bf4e935` | feature/m3b-members-filter-sort-ui | www/resources/js/admin/dataProvider.js, www/resources/js/admin/pages/MembersList.jsx |
+
+**テスト結果:** `php artisan test` — 69 passed (262 assertions)  
+**ビルド結果:** `cd www && npm run build` — 成功
