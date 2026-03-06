@@ -17,9 +17,12 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    Menu,
     Chip,
+    IconButton,
     Snackbar,
 } from '@mui/material';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -80,23 +83,23 @@ async function postOneToOne(payload) {
     return res.json();
 }
 
-async function getMeetingBreakoutRounds(meetingId) {
-    return fetchJson(`/api/meetings/${meetingId}/breakout-rounds`);
+async function getMeetingBreakouts(meetingId) {
+    return fetchJson(`/api/meetings/${meetingId}/breakouts`);
 }
 
 async function getMeetings() {
     return fetchJson('/api/meetings');
 }
 
-async function putMeetingBreakoutRounds(meetingId, payload) {
-    const res = await fetch(`${API}/api/meetings/${meetingId}/breakout-rounds`, {
+async function putMeetingBreakouts(meetingId, payload) {
+    const res = await fetch(`${API}/api/meetings/${meetingId}/breakouts`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
     });
     if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.message || `PUT breakout-rounds ${res.status}`);
+        throw new Error(j.message || `PUT breakouts ${res.status}`);
     }
     return res.json();
 }
@@ -124,9 +127,9 @@ export default function DragonFlyBoard() {
     const [firstWorkspace, setFirstWorkspace] = useState(null);
     const [workspaceLoadError, setWorkspaceLoadError] = useState('');
     const [o2oStatus, setO2oStatus] = useState('planned');
-    const [o2oScheduledAt, setO2oScheduledAt] = useState('');
-    const [o2oStartedAt, setO2oStartedAt] = useState('');
-    const [o2oEndedAt, setO2oEndedAt] = useState('');
+    const [o2oDate, setO2oDate] = useState('');
+    const [o2oStartTime, setO2oStartTime] = useState('');
+    const [o2oEndTime, setO2oEndTime] = useState('');
     const [o2oNotes, setO2oNotes] = useState('');
     const [o2oMeetingId, setO2oMeetingId] = useState('');
     const [o2oError, setO2oError] = useState('');
@@ -163,6 +166,13 @@ export default function DragonFlyBoard() {
     const [memoContextRoundLabel, setMemoContextRoundLabel] = useState('');
     const [memoContextRoomLabel, setMemoContextRoomLabel] = useState('');
     const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    // 左ペイン：メンバー tap で BO 割当メニュー
+    const [assignToBoAnchor, setAssignToBoAnchor] = useState(null);
+    const [assignToBoMember, setAssignToBoMember] = useState(null);
+
+    // BO メンバーチップタップで表示するメンバー詳細モーダル
+    const [memberDetailModalMember, setMemberDetailModalMember] = useState(null);
 
     const refetchMembers = useCallback(() => {
         fetchJson(`/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`)
@@ -203,26 +213,27 @@ export default function DragonFlyBoard() {
             setDirty(false);
             return;
         }
+        setTargetMember(null);
         const meeting = meetings.find((m) => String(m.id) === String(selectedMeetingId));
         setSelectedMeeting(meeting || null);
         setRoundsLoading(true);
         setRoundsError('');
         setSaveStatus('loading');
-        getMeetingBreakoutRounds(selectedMeetingId)
+        getMeetingBreakouts(selectedMeetingId)
             .then((data) => {
-                const rounds = Array.isArray(data.rounds) ? data.rounds : [];
-                setRoundsEdit(rounds.map((r) => ({
-                    round_no: r.round_no,
-                    label: r.label ?? `Round ${r.round_no}`,
-                    rooms: (r.rooms ?? []).map((room) => ({
+                const rooms = Array.isArray(data.rooms) ? data.rooms : [];
+                setRoundsEdit([{
+                    round_no: 1,
+                    label: 'Round 1',
+                    rooms: rooms.map((room) => ({
                         room_label: room.room_label,
                         notes: room.notes ?? '',
                         member_ids: Array.isArray(room.member_ids) ? [...room.member_ids] : [],
                     })),
-                })));
+                }]);
             })
             .catch((e) => {
-                setRoundsError(e.message || 'Round 取得に失敗しました');
+                setRoundsError(e.message || 'BO 取得に失敗しました');
                 setRoundsEdit([]);
             })
             .finally(() => {
@@ -293,6 +304,31 @@ export default function DragonFlyBoard() {
     const displayFlags = pendingFlags ?? summary?.flags ?? { interested: false, want_1on1: false };
     const latestMemos = summary?.latest_memos ?? [];
     const interestedReason = summary?.latest_interested_reason;
+
+    // C-6: Next Action rules (client-side, max 3)
+    const nextActions = useMemo(() => {
+        if (!summary) return [];
+        const actions = [];
+        const sameRoom = summary.same_room_count ?? 0;
+        const o2oCount = summary.one_on_one_count ?? oneToOnes.length ?? 0;
+        const memos = summary.latest_memos ?? [];
+        const hasPlanned = (oneToOnes || []).some((o) => o.status === 'planned');
+        const meetingMemosCount = (memos || []).filter((m) => m.meeting_id).length;
+
+        if (sameRoom >= 3 && o2oCount === 0) {
+            actions.push({ id: 'a', label: '1to1を提案', action: '1to1' });
+        }
+        if ((memos || []).length === 0) {
+            actions.push({ id: 'b', label: 'メモを書く', action: 'memo' });
+        }
+        if (hasPlanned) {
+            actions.push({ id: 'c', label: '実施後メモを残す', action: 'memo' });
+        }
+        if (meetingMemosCount >= 2) {
+            actions.push({ id: 'd', label: '紹介メモ整理', action: 'memo' });
+        }
+        return actions.slice(0, 3);
+    }, [summary, oneToOnes]);
 
     const canSubmitMemo =
         memoBody.trim() !== '' &&
@@ -377,9 +413,10 @@ export default function DragonFlyBoard() {
 
     const openO2oDialog = () => {
         setO2oStatus('planned');
-        setO2oScheduledAt('');
-        setO2oStartedAt('');
-        setO2oEndedAt('');
+        const today = new Date().toISOString().slice(0, 10);
+        setO2oDate(today);
+        setO2oStartTime('');
+        setO2oEndTime('');
         setO2oNotes('');
         setO2oMeetingId('');
         setO2oError('');
@@ -407,9 +444,13 @@ export default function DragonFlyBoard() {
             target_member_id: targetMember.id,
             status: o2oStatus,
         };
-        if (o2oScheduledAt.trim()) payload.scheduled_at = toDateTimeLocal(o2oScheduledAt);
-        if (o2oStartedAt.trim()) payload.started_at = toDateTimeLocal(o2oStartedAt);
-        if (o2oEndedAt.trim()) payload.ended_at = toDateTimeLocal(o2oEndedAt);
+        if (o2oDate.trim() && o2oStartTime.trim()) {
+            payload.scheduled_at = `${o2oDate.trim()} ${o2oStartTime.trim()}:00`;
+            payload.started_at = payload.scheduled_at;
+        }
+        if (o2oDate.trim() && o2oEndTime.trim()) {
+            payload.ended_at = `${o2oDate.trim()} ${o2oEndTime.trim()}:00`;
+        }
         if (o2oNotes.trim()) payload.notes = o2oNotes.trim();
         if (o2oMeetingId.trim()) payload.meeting_id = parseInt(o2oMeetingId, 10);
         try {
@@ -425,20 +466,21 @@ export default function DragonFlyBoard() {
         }
     };
 
-    const addRound = () => {
+    const addBO = () => {
         setDirty(true);
-        const maxNo = roundsEdit.length === 0 ? 0 : Math.max(...roundsEdit.map((r) => r.round_no));
-        setRoundsEdit((prev) => [
-            ...prev,
-            {
-                round_no: maxNo + 1,
-                label: `Round ${maxNo + 1}`,
-                rooms: [
-                    { room_label: 'BO1', notes: '', member_ids: [] },
-                    { room_label: 'BO2', notes: '', member_ids: [] },
-                ],
-            },
-        ]);
+        setRoundsEdit((prev) => {
+            const first = prev[0];
+            const rooms = first?.rooms ?? [];
+            const nextNo = rooms.length + 1;
+            const newRoom = { room_label: `BO${nextNo}`, notes: '', member_ids: [] };
+            if (prev.length === 0) {
+                return [{ round_no: 1, label: 'Round 1', rooms: [newRoom] }];
+            }
+            return [{
+                ...first,
+                rooms: [...rooms, newRoom],
+            }];
+        });
     };
 
     const toggleRoundMember = (roundIndex, roomLabel, memberId) => {
@@ -472,46 +514,88 @@ export default function DragonFlyBoard() {
         );
     };
 
+    /** メンバーを指定 BO に割り当て（他 BO からは外す） */
+    const assignMemberToRoom = (memberId, toRoomLabel) => {
+        setDirty(true);
+        setRoundsEdit((prev) => {
+            if (prev.length === 0) return prev;
+            const next = prev.map((r, i) => {
+                if (i !== 0) return r;
+                const rooms = (r.rooms ?? []).map((room) => {
+                    const ids = room.member_ids ?? [];
+                    const hasMember = ids.includes(memberId);
+                    const isTarget = room.room_label === toRoomLabel;
+                    if (isTarget && !hasMember) return { ...room, member_ids: [...ids, memberId] };
+                    if (hasMember && !isTarget) return { ...room, member_ids: ids.filter((id) => id !== memberId) };
+                    return room;
+                });
+                return { ...r, rooms };
+            });
+            return next;
+        });
+    };
+
+    /** メンバーを指定 BO から外す */
+    const removeMemberFromRoom = (memberId, roomLabel) => {
+        setDirty(true);
+        setRoundsEdit((prev) =>
+            prev.map((r, i) => {
+                if (i !== 0) return r;
+                const rooms = (r.rooms ?? []).map((room) =>
+                    room.room_label === roomLabel
+                        ? { ...room, member_ids: (room.member_ids ?? []).filter((id) => id !== memberId) }
+                        : room
+                );
+                return { ...r, rooms };
+            })
+        );
+    };
+
+    /** この例会の全 BO 割当をクリア（未保存の編集状態のみ） */
+    const clearAllAssignments = () => {
+        setDirty(true);
+        setRoundsEdit((prev) =>
+            prev.map((r, i) => {
+                if (i !== 0) return r;
+                return {
+                    ...r,
+                    rooms: (r.rooms ?? []).map((room) => ({ ...room, member_ids: [] })),
+                };
+            })
+        );
+    };
+
     const saveRounds = async () => {
         if (!selectedMeetingId) return;
-        const allIdsByRound = roundsEdit.map((r) => {
-            const ids = (r.rooms ?? []).flatMap((room) => room.member_ids ?? []);
-            return ids;
-        });
-        for (let i = 0; i < allIdsByRound.length; i++) {
-            const ids = allIdsByRound[i];
-            if (ids.length !== new Set(ids).size) {
-                setRoundsError(`Round ${roundsEdit[i].round_no} 内で同一メンバーを複数ルームに割り当てることはできません。`);
-                return;
-            }
+        const rooms = roundsEdit[0]?.rooms ?? [];
+        const allIds = rooms.flatMap((room) => room.member_ids ?? []);
+        if (allIds.length !== new Set(allIds).size) {
+            setRoundsError('同一のメンバーを複数の BO に割り当てることはできません。');
+            return;
         }
         setRoundsSaving(true);
         setRoundsError('');
         setSaveStatus('loading');
         try {
             const payload = {
-                rounds: roundsEdit.map((r) => ({
-                    round_no: r.round_no,
-                    label: r.label,
-                    rooms: r.rooms.map((room) => ({
-                        room_label: room.room_label,
-                        notes: room.notes || null,
-                        member_ids: room.member_ids ?? [],
-                    })),
+                rooms: rooms.map((room) => ({
+                    room_label: room.room_label,
+                    notes: room.notes || null,
+                    member_ids: room.member_ids ?? [],
                 })),
             };
-            await putMeetingBreakoutRounds(selectedMeetingId, payload);
-            const data = await getMeetingBreakoutRounds(selectedMeetingId);
-            const rounds = Array.isArray(data.rounds) ? data.rounds : [];
-            setRoundsEdit(rounds.map((r) => ({
-                round_no: r.round_no,
-                label: r.label ?? `Round ${r.round_no}`,
-                rooms: (r.rooms ?? []).map((room) => ({
+            await putMeetingBreakouts(selectedMeetingId, payload);
+            const data = await getMeetingBreakouts(selectedMeetingId);
+            const nextRooms = Array.isArray(data.rooms) ? data.rooms : [];
+            setRoundsEdit([{
+                round_no: 1,
+                label: 'Round 1',
+                rooms: nextRooms.map((room) => ({
                     room_label: room.room_label,
                     notes: room.notes ?? '',
                     member_ids: Array.isArray(room.member_ids) ? [...room.member_ids] : [],
                 })),
-            })));
+            }]);
             refetchMembers();
             setDirty(false);
             setSaveStatus('saved');
@@ -643,12 +727,18 @@ export default function DragonFlyBoard() {
                             const name = `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`;
                             const sub = [m.category?.group_name, m.category?.name].filter(Boolean).join(' / ') || m.current_role || '';
                             const isSel = targetMember?.id === m.id;
+                            const hasBoRooms = selectedMeetingId && roundsEdit[0]?.rooms?.length > 0;
+                            const openAssignMenu = (e) => {
+                                e.stopPropagation();
+                                setAssignToBoMember(m);
+                                setAssignToBoAnchor(e.currentTarget);
+                            };
                             return (
                                 <Box
                                     key={m.id}
                                     component="button"
                                     type="button"
-                                    onClick={() => setTargetMember(m)}
+                                    onClick={hasBoRooms ? openAssignMenu : () => setTargetMember(m)}
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
@@ -689,10 +779,53 @@ export default function DragonFlyBoard() {
                                             <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sub}</Typography>
                                         )}
                                     </Box>
+                                    {hasBoRooms && (
+                                        <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>＋</Typography>
+                                    )}
                                 </Box>
                             );
                         })}
                     </Box>
+                    <Menu
+                        anchorEl={assignToBoAnchor}
+                        open={Boolean(assignToBoAnchor)}
+                        onClose={() => { setAssignToBoAnchor(null); setAssignToBoMember(null); }}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                        slotProps={{ paper: { sx: { minWidth: 200 } } }}
+                    >
+                        <MenuItem
+                            onClick={() => {
+                                if (assignToBoMember) setTargetMember(assignToBoMember);
+                                setAssignToBoAnchor(null);
+                                setAssignToBoMember(null);
+                            }}
+                        >
+                            関係ログに表示
+                        </MenuItem>
+                        {assignToBoMember && roundsEdit[0]?.rooms?.map((room, roomIdx) => {
+                            const roomLabel = room.room_label;
+                            const boDisplayLabel = `BO${roomIdx + 1}`;
+                            const isIn = (room.member_ids ?? []).includes(assignToBoMember.id);
+                            return (
+                                <MenuItem
+                                    key={roomLabel}
+                                    onClick={() => {
+                                        const mid = assignToBoMember.id;
+                                        if (isIn) {
+                                            removeMemberFromRoom(mid, roomLabel);
+                                        } else {
+                                            assignMemberToRoom(mid, roomLabel);
+                                        }
+                                        setAssignToBoAnchor(null);
+                                        setAssignToBoMember(null);
+                                    }}
+                                >
+                                    {isIn ? `${boDisplayLabel} から外す` : `${boDisplayLabel} に追加`}
+                                </MenuItem>
+                            );
+                        })}
+                    </Menu>
                 </Box>
 
                 {/* Pane 2: Meeting + BO */}
@@ -739,7 +872,7 @@ export default function DragonFlyBoard() {
                             </Select>
                         </FormControl>
                         <Typography sx={{ fontSize: 11, color: 'text.secondary', mt: 1 }}>
-                            BO回数はデフォルト2。将来的に増加可能な設計。
+                            各同室枠（BO）にメンバーを割り当て、「BO割当を保存」で反映します。左のメンバーをタップ → 表示されるメニューで BO を選ぶと割り当てできます。
                         </Typography>
                     </Box>
                     <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
@@ -750,31 +883,17 @@ export default function DragonFlyBoard() {
                         )}
                         {roundsLoading && <Typography color="text.secondary">Loading...</Typography>}
                         {!roundsLoading && selectedMeetingId && roundsEdit.length > 0 && (() => {
-                            const round = roundsEdit[selectedRoundIndex] ?? roundsEdit[0];
-                            const roundIdx = selectedRoundIndex >= 0 && selectedRoundIndex < roundsEdit.length ? selectedRoundIndex : 0;
-                            const assignedInRound = new Set((round.rooms ?? []).flatMap((room) => room.member_ids ?? []));
+                            const round = roundsEdit[0];
+                            const rooms = round.rooms ?? [];
+                            const assignedInRound = new Set(rooms.flatMap((room) => room.member_ids ?? []));
                             return (
                                 <>
-                                    {roundsEdit.length > 1 && (
-                                        <Box sx={{ mb: 1 }}>
-                                            <Typography variant="caption" color="text.secondary">Round: </Typography>
-                                            <Select
-                                                size="small"
-                                                value={roundIdx}
-                                                onChange={(e) => setSelectedRoundIndex(Number(e.target.value))}
-                                                sx={{ fontSize: 11, minWidth: 100 }}
-                                            >
-                                                {roundsEdit.map((r, i) => (
-                                                    <MenuItem key={r.round_no} value={i}>{r.label ?? `Round ${r.round_no}`}</MenuItem>
-                                                ))}
-                                            </Select>
-                                        </Box>
-                                    )}
-                                    {['BO1', 'BO2'].map((roomLabel) => {
-                                        const room = (round.rooms ?? []).find((r) => r.room_label === roomLabel) ?? { room_label: roomLabel, notes: '', member_ids: [] };
+                                    {rooms.map((room, roomIndex) => {
+                                        const roomLabel = room.room_label;
+                                        const boDisplayLabel = `BO${roomIndex + 1}`;
                                         return (
                                             <Box
-                                                key={roomLabel}
+                                                key={`${selectedMeetingId}-${roomLabel}`}
                                                 sx={{
                                                     border: '1px solid',
                                                     borderColor: 'divider',
@@ -796,54 +915,130 @@ export default function DragonFlyBoard() {
                                                     }}
                                                 >
                                                     <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'primary.main' }}>
-                                                        {roomLabel}
+                                                        {boDisplayLabel}
                                                     </Typography>
                                                     <Chip label="同室枠" size="small" sx={{ fontSize: 10, height: 20 }} variant="outlined" />
                                                 </Box>
                                                 <Box sx={{ p: 1.5 }}>
-                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center', mb: 1 }}>
-                                                        <Autocomplete
-                                                            size="small"
-                                                            sx={{ minWidth: 140, flex: '1 1 auto' }}
-                                                            options={members.filter((x) => !assignedInRound.has(x.id))}
-                                                            getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
-                                                            onChange={(_, v) => v && toggleRoundMember(roundIdx, roomLabel, v.id)}
-                                                            renderInput={(params) => <TextField {...params} size="small" placeholder="追加" />}
-                                                        />
+                                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                                                        割り当てメンバー（左のメンバーをタップ→{boDisplayLabel}を選択）
+                                                    </Typography>
+                                                    <Autocomplete
+                                                        key={`${selectedMeetingId}-${roomLabel}-add`}
+                                                        size="small"
+                                                        value={null}
+                                                        sx={{ width: '100%', mb: 1 }}
+                                                        options={members.filter((x) => !assignedInRound.has(x.id))}
+                                                        getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
+                                                        onChange={(_, v) => v && toggleRoundMember(0, roomLabel, v.id)}
+                                                        renderInput={(params) => (
+                                                            <TextField
+                                                                {...params}
+                                                                size="small"
+                                                                placeholder={`${boDisplayLabel} に追加するメンバーを検索`}
+                                                            />
+                                                        )}
+                                                    />
+                                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mb: 1 }}>
                                                         {(room.member_ids ?? []).map((id) => {
                                                             const mem = members.find((x) => x.id === id);
                                                             const label = mem ? `${mem.display_no || ''} ${mem.name}`.trim() || `#${id}` : `#${id}`;
                                                             return (
-                                                                <Chip
+                                                                <Box
                                                                     key={id}
-                                                                    size="small"
-                                                                    label={label}
-                                                                    onDelete={() => toggleRoundMember(roundIdx, roomLabel, id)}
-                                                                    sx={{ fontSize: 11 }}
-                                                                />
+                                                                    sx={{
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'space-between',
+                                                                        gap: 0.5,
+                                                                        py: 0.75,
+                                                                        px: 1,
+                                                                        borderRadius: 1,
+                                                                        bgcolor: 'grey.50',
+                                                                        border: '1px solid',
+                                                                        borderColor: 'divider',
+                                                                        '&:hover': { bgcolor: 'grey.100' },
+                                                                    }}
+                                                                >
+                                                                    <Box
+                                                                        component="button"
+                                                                        type="button"
+                                                                        onClick={() => mem && setMemberDetailModalMember(mem)}
+                                                                        sx={{
+                                                                            flex: 1,
+                                                                            minWidth: 0,
+                                                                            textAlign: 'left',
+                                                                            border: 'none',
+                                                                            background: 'none',
+                                                                            cursor: mem ? 'pointer' : 'default',
+                                                                            py: 0.25,
+                                                                            px: 0,
+                                                                            fontSize: 13,
+                                                                            fontWeight: 600,
+                                                                            color: 'text.primary',
+                                                                            '&:hover': mem ? { color: 'primary.main' } : {},
+                                                                        }}
+                                                                    >
+                                                                        {label}
+                                                                    </Box>
+                                                                    <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                                                                        <IconButton
+                                                                            size="small"
+                                                                            onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, id, round.label, roomLabel)}
+                                                                            aria-label={`${label}にメモ`}
+                                                                            sx={{ p: 0.35 }}
+                                                                        >
+                                                                            <EditNoteIcon fontSize="small" />
+                                                                        </IconButton>
+                                                                        <IconButton
+                                                                            size="small"
+                                                                            onClick={() => toggleRoundMember(0, roomLabel, id)}
+                                                                            aria-label={`${label}を削除`}
+                                                                            sx={{ p: 0.35 }}
+                                                                        >
+                                                                            <Typography component="span" sx={{ fontSize: 16, lineHeight: 1, color: 'text.secondary' }}>×</Typography>
+                                                                        </IconButton>
+                                                                    </Box>
+                                                                </Box>
                                                             );
                                                         })}
                                                     </Box>
+                                                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                                                        ルームメモ
+                                                    </Typography>
                                                     <TextField
                                                         size="small"
-                                                        placeholder="ルームメモ"
+                                                        placeholder="例: 今月のテーマ・共有事項"
                                                         multiline
                                                         minRows={1}
                                                         fullWidth
                                                         value={room.notes ?? ''}
-                                                        onChange={(e) => setRoundRoomNotes(roundIdx, roomLabel, e.target.value)}
+                                                        onChange={(e) => setRoundRoomNotes(0, roomLabel, e.target.value)}
                                                         sx={{
                                                             '& .MuiInput-input': { fontSize: 11, fontStyle: 'italic' },
                                                             bgcolor: '#fffde7',
                                                         }}
                                                     />
+                                                    <Button
+                                                        variant={dirty ? 'contained' : 'outlined'}
+                                                        size="small"
+                                                        fullWidth
+                                                        onClick={saveRounds}
+                                                        disabled={roundsSaving || roundsLoading}
+                                                        sx={{ mt: 1 }}
+                                                    >
+                                                        {roundsSaving ? '保存中...' : `${boDisplayLabel} を保存`}
+                                                    </Button>
                                                 </Box>
                                             </Box>
                                         );
                                     })}
                                     <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap' }}>
-                                        <Button variant="outlined" size="small" onClick={addRound}>
-                                            ＋ Round
+                                        <Button variant="outlined" size="small" color="error" onClick={clearAllAssignments}>
+                                            割当をクリア
+                                        </Button>
+                                        <Button variant="outlined" size="small" onClick={addBO}>
+                                            ＋ 同室枠を追加
                                         </Button>
                                         <Button
                                             variant={dirty ? 'contained' : 'outlined'}
@@ -860,8 +1055,10 @@ export default function DragonFlyBoard() {
                         })()}
                         {!roundsLoading && selectedMeetingId && roundsEdit.length === 0 && (
                             <>
-                                <Typography color="text.secondary" variant="body2" sx={{ mb: 1 }}>＋ Round で追加してください</Typography>
-                                <Button variant="outlined" size="small" onClick={addRound}>＋ Round</Button>
+                                <Typography color="text.secondary" variant="body2" sx={{ mb: 1 }}>
+                                    同室枠がありません。「＋ 同室枠を追加」で BO1 から作成できます。
+                                </Typography>
+                                <Button variant="outlined" size="small" onClick={addBO}>＋ 同室枠を追加</Button>
                             </>
                         )}
                     </Box>
@@ -908,7 +1105,67 @@ export default function DragonFlyBoard() {
                         {targetMember && (
                             <>
                                 {loadingSummary && <Typography color="text.secondary" variant="body2">Loading...</Typography>}
-                                {targetMember && summary && !loadingSummary && (
+                                {targetMember && (summary || !loadingSummary) && (
+                                    <>
+                                        {/* C-6: Relationship Summary (above Relationship Log) */}
+                                        <Box
+                                            sx={{
+                                                border: '1px solid',
+                                                borderColor: 'divider',
+                                                borderRadius: 1.5,
+                                                p: 1.25,
+                                                mb: 1.5,
+                                                bgcolor: 'background.default',
+                                            }}
+                                        >
+                                            <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
+                                                🧠 Relationship Summary
+                                            </Typography>
+                                            {summary ? (
+                                                <>
+                                                    <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
+                                                        同室回数: {typeof summary.same_room_count === 'number' ? summary.same_room_count : '—'}
+                                                    </Typography>
+                                                    <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
+                                                        直近同室: {summary.last_same_room_meeting
+                                                            ? `#${summary.last_same_room_meeting.number ?? ''} (${summary.last_same_room_meeting.held_on ?? ''})`
+                                                            : '—'}
+                                                    </Typography>
+                                                    <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
+                                                        1to1: 合計 {typeof summary.one_on_one_count === 'number' ? summary.one_on_one_count : oneToOnes?.length ?? 0}
+                                                        {summary.last_one_on_one_at ? ` / 直近 ${new Date(summary.last_one_on_one_at).toLocaleDateString('ja-JP')}` : ''}
+                                                    </Typography>
+                                                    <Box sx={{ fontSize: 11, color: 'text.secondary', mb: 1 }}>
+                                                        直近メモ: {(summary.latest_memos || []).length === 0
+                                                            ? '—'
+                                                            : (summary.latest_memos || []).slice(0, 3).map((m) => (
+                                                                  <Box key={m.id} sx={{ fontSize: 10, display: 'block' }}>
+                                                                      {m.updated_at ? new Date(m.updated_at).toLocaleDateString('ja-JP') : ''} {(m.body || '').slice(0, 40)}{(m.body && m.body.length > 40) ? '…' : ''}
+                                                                  </Box>
+                                                              ))}
+                                                    </Box>
+                                                    {nextActions.length > 0 && (
+                                                        <>
+                                                            <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'text.secondary', mb: 0.75 }}>
+                                                                💡 次の一手
+                                                            </Typography>
+                                                            <Stack spacing={0.5}>
+                                                                {nextActions.map((a) => (
+                                                                    <Stack key={a.id} direction="row" alignItems="center" flexWrap="wrap" gap={0.5}>
+                                                                        <Typography sx={{ fontSize: 11 }}>{a.label}</Typography>
+                                                                        {a.action === '1to1' && <Button size="small" variant="outlined" sx={{ fontSize: 10, minWidth: 0, py: 0.25 }} onClick={openO2oDialog}>📅 1to1登録</Button>}
+                                                                        {a.action === 'memo' && <Button size="small" variant="outlined" sx={{ fontSize: 10, minWidth: 0, py: 0.25 }} onClick={openMemoDialog}>✏️ メモを書く</Button>}
+                                                                    </Stack>
+                                                                ))}
+                                                            </Stack>
+                                                        </>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>—</Typography>
+                                            )}
+                                        </Box>
+                                        {!loadingSummary && (
                                     <>
                                         <Stack direction="row" flexWrap="wrap" gap={0.5} sx={{ mb: 1.5 }}>
                                             <Button size="small" variant="contained" onClick={openMemoDialog}>✏️ メモ</Button>
@@ -1003,10 +1260,78 @@ export default function DragonFlyBoard() {
                                     </>
                                 )}
                             </>
-                        )}
+                                        )}
+                                    </>
+                                )}
                     </Box>
                 </Box>
             </Box>
+            {/* BO メンバーチップタップで開くメンバー詳細モーダル */}
+            <Dialog open={Boolean(memberDetailModalMember)} onClose={() => setMemberDetailModalMember(null)} maxWidth="xs" fullWidth>
+                <DialogTitle>メンバー情報</DialogTitle>
+                <DialogContent>
+                    {memberDetailModalMember && (
+                        <Box sx={{ pt: 0.5 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                                <Box
+                                    sx={{
+                                        width: 48,
+                                        height: 48,
+                                        borderRadius: '50%',
+                                        bgcolor: 'primary.main',
+                                        color: 'primary.contrastText',
+                                        fontSize: 18,
+                                        fontWeight: 700,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    {(memberDetailModalMember.name || '?').charAt(0)}
+                                </Box>
+                                <Box sx={{ minWidth: 0 }}>
+                                    <Typography variant="h6" sx={{ fontSize: 16 }}>
+                                        {`${memberDetailModalMember.display_no || ''} ${memberDetailModalMember.name}`.trim() || memberDetailModalMember.name || `#${memberDetailModalMember.id}`}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {[memberDetailModalMember.category?.group_name, memberDetailModalMember.category?.name].filter(Boolean).join(' / ') || memberDetailModalMember.current_role || '—'}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
+                                <Button
+                                    size="small"
+                                    variant="outlined"
+                                    onClick={() => {
+                                        setTargetMember(memberDetailModalMember);
+                                        setMemberDetailModalMember(null);
+                                    }}
+                                >
+                                    関係ログに表示
+                                </Button>
+                                <Button
+                                    size="small"
+                                    variant="outlined"
+                                    startIcon={<EditNoteIcon />}
+                                    onClick={() => {
+                                        if (selectedMeetingId) {
+                                            openMemoDialogForMeetingMember(selectedMeetingId, memberDetailModalMember.id, roundsEdit[0]?.label ?? '', '');
+                                        }
+                                        setMemberDetailModalMember(null);
+                                    }}
+                                    disabled={!selectedMeetingId}
+                                >
+                                    例会メモ
+                                </Button>
+                            </Stack>
+                        </Box>
+                    )}
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setMemberDetailModalMember(null)}>閉じる</Button>
+                </DialogActions>
+            </Dialog>
             <Dialog open={memoOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>メモ追加</DialogTitle>
                 <DialogContent>
@@ -1104,36 +1429,40 @@ export default function DragonFlyBoard() {
                             ))}
                         </Select>
                     </FormControl>
-                    <TextField
-                        label="予定日時"
-                        type="datetime-local"
-                        size="small"
-                        fullWidth
-                        value={o2oScheduledAt}
-                        onChange={(e) => setO2oScheduledAt(e.target.value)}
-                        InputLabelProps={{ shrink: true }}
-                        sx={{ mt: 2 }}
-                    />
-                    <TextField
-                        label="開始日時"
-                        type="datetime-local"
-                        size="small"
-                        fullWidth
-                        value={o2oStartedAt}
-                        onChange={(e) => setO2oStartedAt(e.target.value)}
-                        InputLabelProps={{ shrink: true }}
-                        sx={{ mt: 1 }}
-                    />
-                    <TextField
-                        label="終了日時"
-                        type="datetime-local"
-                        size="small"
-                        fullWidth
-                        value={o2oEndedAt}
-                        onChange={(e) => setO2oEndedAt(e.target.value)}
-                        InputLabelProps={{ shrink: true }}
-                        sx={{ mt: 1 }}
-                    />
+                    <Typography variant="subtitle2" color="text.secondary" sx={{ mt: 2, mb: 1 }}>
+                        日時
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-start' }}>
+                        <TextField
+                            label="日付"
+                            type="date"
+                            size="small"
+                            value={o2oDate}
+                            onChange={(e) => setO2oDate(e.target.value)}
+                            InputLabelProps={{ shrink: true }}
+                            sx={{ minWidth: 160 }}
+                        />
+                        <TextField
+                            label="開始時刻"
+                            type="time"
+                            size="small"
+                            value={o2oStartTime}
+                            onChange={(e) => setO2oStartTime(e.target.value)}
+                            InputLabelProps={{ shrink: true }}
+                            inputProps={{ step: 300 }}
+                            sx={{ minWidth: 120 }}
+                        />
+                        <TextField
+                            label="終了時刻"
+                            type="time"
+                            size="small"
+                            value={o2oEndTime}
+                            onChange={(e) => setO2oEndTime(e.target.value)}
+                            InputLabelProps={{ shrink: true }}
+                            inputProps={{ step: 300 }}
+                            sx={{ minWidth: 120 }}
+                        />
+                    </Box>
                     <TextField
                         label="meeting_id（任意）"
                         type="number"
