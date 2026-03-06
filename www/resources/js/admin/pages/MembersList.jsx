@@ -85,6 +85,26 @@ function SameRoomCountField({ record }) {
     return <span>{n}</span>;
 }
 
+function OneToOneCountField({ record }) {
+    const n = record?.summary_lite?.one_to_one_count;
+    if (n == null) return <span>—</span>;
+    return <span>{n}</span>;
+}
+
+function FlagsField({ record }) {
+    const s = record?.summary_lite;
+    if (!s) return null;
+    const interested = s.interested;
+    const want1on1 = s.want_1on1;
+    if (!interested && !want1on1) return null;
+    return (
+        <Box component="span" sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+            {interested && <Chip size="small" label="Interested" sx={{ height: 20 }} />}
+            {want1on1 && <Chip size="small" label="1on1" variant="outlined" sx={{ height: 20 }} />}
+        </Box>
+    );
+}
+
 function CategoryField({ record }) {
     const c = record?.category;
     if (!c) return <span>—</span>;
@@ -548,7 +568,14 @@ export function MembersList() {
         <>
             <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openDrawer }}>
                 <List
-                    title="Members"
+                    title={
+                        <Box>
+                            <Typography variant="h5" component="span">Members</Typography>
+                            <Typography variant="body2" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+                                仕事 / 役職 / 関係性を把握し、1to1とメモで接点を増やす
+                            </Typography>
+                        </Box>
+                    }
                     actions={<MembersListActions />}
                     perPage={25}
                 >
@@ -558,8 +585,10 @@ export function MembersList() {
                         <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
                         <TextField source="current_role" label="役職" emptyText="—" />
                         <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
+                        <FunctionField label="1to1回数" render={(r) => <OneToOneCountField record={r} />} />
                         <FunctionField label="最終接触" render={(r) => <LastContactField record={r} />} />
                         <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
+                        <FunctionField label="フラグ" render={(r) => <FlagsField record={r} />} />
                         <FunctionField label="Actions" render={(r) => <MemberRowActions record={r} />} />
                     </Datagrid>
                 </List>
