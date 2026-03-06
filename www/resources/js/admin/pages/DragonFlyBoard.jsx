@@ -103,6 +103,53 @@ function calculateRelationshipScore(summary) {
 
 const STARS = ['☆☆☆☆☆', '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★'];
 
+/** Build pseudo-summary from summary_lite for score calculation */
+function summaryLiteToPseudoSummary(lite) {
+    if (!lite) return null;
+    const memos = lite.last_memo ? [{ updated_at: lite.last_memo.created_at, body: lite.last_memo.body }] : [];
+    return {
+        same_room_count: lite.same_room_count ?? 0,
+        latest_memos: memos,
+        flags: { interested: lite.interested ?? false, want_1on1: lite.want_1on1 ?? false },
+    };
+}
+
+/** C-8: Introduction hints from members (summary_lite). Max 3 pairs. */
+function calculateIntroductionHints(members, calculateRelationshipScoreFn) {
+    if (!Array.isArray(members) || !calculateRelationshipScoreFn) return [];
+    const withContact = members.filter((m) => {
+        const lite = m.summary_lite;
+        if (!lite) return false;
+        if ((lite.same_room_count ?? 0) < 3) return false;
+        if (lite.want_1on1 === true) return false;
+        const pseudo = summaryLiteToPseudoSummary(lite);
+        const score = calculateRelationshipScoreFn(pseudo);
+        return score >= 2;
+    });
+    const categoryKey = (m) => (m.category?.name || m.category?.group_name || '').trim();
+    const nameStr = (m) => `${m.display_no || ''} ${m.name}`.trim() || m.name || `#${m.id}`;
+    const pairs = [];
+    for (let i = 0; i < withContact.length; i++) {
+        for (let j = i + 1; j < withContact.length; j++) {
+            const a = withContact[i];
+            const b = withContact[j];
+            if (categoryKey(a) === categoryKey(b)) continue;
+            const scoreA = calculateRelationshipScoreFn(summaryLiteToPseudoSummary(a.summary_lite));
+            const scoreB = calculateRelationshipScoreFn(summaryLiteToPseudoSummary(b.summary_lite));
+            pairs.push({
+                from: { member: a, category: categoryKey(a) || '—', name: nameStr(a), score: scoreA },
+                to: { member: b, category: categoryKey(b) || '—', name: nameStr(b), score: scoreB },
+                priority: (a.summary_lite?.same_room_count ?? 0) + (b.summary_lite?.same_room_count ?? 0) + scoreA + scoreB,
+            });
+        }
+    }
+    pairs.sort((x, y) => y.priority - x.priority);
+    return pairs.slice(0, 3).map((p) => ({
+        from: p.from,
+        to: p.to,
+    }));
+}
+
 async function getMeetings() {
     return fetchJson('/api/meetings');
 }
@@ -345,6 +392,12 @@ export default function DragonFlyBoard() {
         }
         return actions.slice(0, 3);
     }, [summary, oneToOnes]);
+
+    // C-8: Introduction hints from members (summary_lite)
+    const introductionHints = useMemo(
+        () => calculateIntroductionHints(members, calculateRelationshipScore),
+        [members]
+    );
 
     const canSubmitMemo =
         memoBody.trim() !== '' &&
@@ -1198,6 +1251,32 @@ export default function DragonFlyBoard() {
                                             <Typography sx={{ fontSize: 16, letterSpacing: 2 }}>
                                                 {summary != null ? STARS[calculateRelationshipScore(summary)] : '—'}
                                             </Typography>
+                                        </Box>
+                                        {/* C-8: Introduction Hint (below Score, above Relationship Log) */}
+                                        <Box
+                                            sx={{
+                                                border: '1px solid',
+                                                borderColor: 'divider',
+                                                borderRadius: 1.5,
+                                                p: 1.25,
+                                                mb: 1.5,
+                                                bgcolor: 'background.default',
+                                            }}
+                                        >
+                                            <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.75 }}>
+                                                💡 Introduction Hint
+                                            </Typography>
+                                            {introductionHints.length === 0 ? (
+                                                <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>紹介候補なし</Typography>
+                                            ) : (
+                                                <Stack spacing={0.75}>
+                                                    {introductionHints.map((hint, idx) => (
+                                                        <Typography key={idx} sx={{ fontSize: 11 }}>
+                                                            {idx + 1}. {hint.from.category}（{hint.from.name}） → {hint.to.category}（{hint.to.name}）
+                                                        </Typography>
+                                                    ))}
+                                                </Stack>
+                                            )}
                                         </Box>
                                         {!loadingSummary && (
                                     <>
