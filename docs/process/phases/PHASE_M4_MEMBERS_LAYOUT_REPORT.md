@@ -72,4 +72,4 @@
 |-------|-----------------|------------------|---------------|
 | M-4a | `1db0084fa34152dd08e8d44a8ebf465cc45f68d1` | feature/m4a-members-layout-docs | docs/INDEX.md, docs/process/phases/PHASE_M4_MEMBERS_LAYOUT_REPORT.md, docs/process/phases/PHASE_M4_MEMBERS_LAYOUT_WORKLOG.md |
 | M-4b | `702f1afc3c95d12cbe33ee858bee7b14a96b1a13` | feature/m4b-members-layout-impl | www/resources/js/admin/pages/MembersList.jsx |
-| M-4c | （merge 後に記入） | feature/m4c-members-layout-close | docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md, docs/process/phases/PHASE_M4_MEMBERS_LAYOUT_REPORT.md |
+| M-4c | `3e6188bc048fca991df159b8042e82fd94e5c86a` | feature/m4c-members-layout-close | docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md, docs/process/phases/PHASE_M4_MEMBERS_LAYOUT_REPORT.md |
