@@ -35,8 +35,16 @@
 
 ## テスト結果・ビルド結果
 
-- **php artisan test:** （M-6b 後に記入）
-- **npm run build:** （M-6b 後に記入）
+- **php artisan test:** 69 passed (262 assertions)
+- **npm run build:** 成功（exit 0）
+
+---
+
+## まだ残る GAP（Members）
+
+- カードグリッド未対応（一覧は表のまま）
+- 大カテゴリ単独フィルタ未実装
+- かな・関係ログ（最近）の一覧表示
 
 ---
 
@@ -45,8 +53,8 @@
 | Phase | DoD | 結果 |
 |-------|-----|------|
 | M-6a | PLAN / WORKLOG / REPORT が揃う、INDEX から辿れる | ○ |
-| M-6b | Drawer/Show でメモ・1to1履歴が見える、Overview 整理、「Coming soon」除去、既存 API、test/build 成功 | （実施後記入） |
-| M-6c | FIT_AND_GAP 更新、progress 更新、REPORT に取り込み証跡 | （実施後記入） |
+| M-6b | Drawer/Show でメモ・1to1履歴が見える、Overview 整理、「Coming soon」除去、既存 API、test/build 成功 | ○ |
+| M-6c | FIT_AND_GAP 更新、progress 更新、REPORT に取り込み証跡 | ○ |
 
 ---
 
