@@ -61,7 +61,7 @@
 | 行アクション | メモ、1to1、1to1メモ、詳細 | **5 種**（メモ、1to1、1to1メモ、**🚩 フラグ**、詳細）（M-5b） | **Fit** |
 | メモ/1to1/1to1メモモーダル | タイトルに「— メンバー名」、種別・本文・重要フラグ等 | 実装も同様の Dialog | **Fit** |
 | 詳細（一覧から） | **右側 Drawer**（Overview / Memos / 1to1 タブ） | **Drawer** で実装済み | **Fit** |
-| Member Show（/members/:id） | — | Show ページあり。メモ履歴・1to1履歴は「Coming soon」注記 | **Gap:** URL 遷移先の Show では履歴タブ未実装 |
+| Member Show（/members/:id） | — | **Overview / Memos / 1to1 タブで履歴表示**（M-6b）。contacts summary・contact-memos・one-to-ones を既存 API で取得。「Coming soon」除去。一覧への導線あり | **Fit** |
 | フラグ編集モーダル | モックに「🚩 フラグ編集」モーダル（interested / want_1on1） | **行アクション「🚩 フラグ」で Dialog**（M-5b）。Interested / Want 1on1 の Switch、保存で既存 PUT /api/dragonfly/flags を流用。Connections と同じ API | **Fit** |
 
 ---
