@@ -62,6 +62,6 @@
 
 | Phase | merge commit id | merge 元ブランチ | 変更ファイル |
 |-------|-----------------|------------------|---------------|
-| M-5a | （merge 後に記入） | feature/m5a-members-flag-edit-docs | （merge 後に記入） |
-| M-5b | （merge 後に記入） | feature/m5b-members-flag-edit-impl | （merge 後に記入） |
-| M-5c | （merge 後に記入） | feature/m5c-members-flag-edit-close | （merge 後に記入） |
+| M-5a | `947450862db4b95631f40f0bf82551e710b32720` | feature/m5a-members-flag-edit-docs | docs/INDEX.md, docs/process/phases/PHASE_M5_MEMBERS_FLAG_EDIT_PLAN.md, docs/process/phases/PHASE_M5_MEMBERS_FLAG_EDIT_REPORT.md, docs/process/phases/PHASE_M5_MEMBERS_FLAG_EDIT_WORKLOG.md |
+| M-5b | `c4123960af2a0483a5a772e598e0ffe6333d7078` | feature/m5b-members-flag-edit-impl | www/resources/js/admin/pages/MembersList.jsx |
+| M-5c | `a13171d37d145d66c6cc6b8739f2ad90701eeef2` | feature/m5c-members-flag-edit-close | docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md, docs/process/phases/PHASE_M5_MEMBERS_FLAG_EDIT_REPORT.md |
