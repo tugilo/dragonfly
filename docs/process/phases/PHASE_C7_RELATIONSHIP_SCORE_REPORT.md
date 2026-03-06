@@ -35,6 +35,7 @@
 
 - [x] Relationship Score 表示
 - [x] ContactSummary のみ使用
+- [x] Backend 変更なし
 - [x] 既存 UI 壊れていない
 - [x] test / build 成功
 
@@ -44,7 +45,41 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **merge 元ブランチ名** | feature/relationship-score-close-c7c |
-| **変更ファイル一覧** | （merge 後に記入） |
-| **テスト結果** | （記入） |
+| **merge commit id** | （下記のとおり a/b/c ごとに記録） |
+| **merge 元ブランチ名** | feature/c7a-*, feature/c7b-*, feature/c7c-* |
+| **変更ファイル一覧** | （下記のとおり） |
+| **テスト結果** | 66 passed (243 assertions) |
+| **ビルド結果** | 成功 |
+
+### C-7a（docs）
+
+- **feature branch:** feature/c7a-relationship-score-docs
+- **merge commit:** `b1f02c9`
+- **取り込み日時:** 2026-03-06 10:07:56 +0900
+- **変更ファイル:** docs/INDEX.md, docs/SSOT/RELATIONSHIP_SCORE_SSOT.md, docs/process/phases/PHASE_C7_RELATIONSHIP_SCORE_PLAN.md, PHASE_C7_RELATIONSHIP_SCORE_REPORT.md, PHASE_C7_RELATIONSHIP_SCORE_WORKLOG.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-7b（impl）
+
+- **feature branch:** feature/c7b-relationship-score-impl
+- **merge commit:** `430e426`
+- **取り込み日時:** 2026-03-06 10:09:03 +0900
+- **変更ファイル:** www/resources/js/admin/pages/DragonFlyBoard.jsx
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-7c（close docs）
+
+- **feature branch:** feature/c7c-relationship-score-close
+- **merge commit:** `bdb800a`
+- **取り込み日時:** 2026-03-06 10:10:04 +0900
+- **変更ファイル:** docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+---
+
+## 実装結果の要約
+
+Relationship Score を ★ 表示で追加。ContactSummary をクライアント側で計算し、UI 知性として実装。

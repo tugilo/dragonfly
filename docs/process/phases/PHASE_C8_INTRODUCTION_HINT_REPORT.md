@@ -35,6 +35,7 @@
 
 - [x] Introduction Hint 表示
 - [x] 新 API なし
+- [x] Backend 変更なし
 - [x] 既存 UI 壊れていない
 - [x] test / build 成功
 
@@ -44,7 +45,41 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **merge 元ブランチ名** | feature/introduction-hint-close-c8c |
-| **変更ファイル一覧** | （merge 後に記入） |
-| **テスト結果** | （記入） |
+| **merge commit id** | （下記のとおり a/b/c ごとに記録） |
+| **merge 元ブランチ名** | feature/c8a-*, feature/c8b-*, feature/c8c-* |
+| **変更ファイル一覧** | （下記のとおり） |
+| **テスト結果** | 66 passed (243 assertions) |
+| **ビルド結果** | 成功 |
+
+### C-8a（docs）
+
+- **feature branch:** feature/c8a-introduction-hint-docs
+- **merge commit:** `3bd95ae`
+- **取り込み日時:** 2026-03-06 10:10:41 +0900
+- **変更ファイル:** docs/INDEX.md, docs/SSOT/INTRODUCTION_HINT_SSOT.md, docs/process/phases/PHASE_C8_INTRODUCTION_HINT_PLAN.md, PHASE_C8_INTRODUCTION_HINT_REPORT.md, PHASE_C8_INTRODUCTION_HINT_WORKLOG.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-8b（impl）
+
+- **feature branch:** feature/c8b-introduction-hint-impl
+- **merge commit:** `a4c65be`
+- **取り込み日時:** 2026-03-06 10:11:34 +0900
+- **変更ファイル:** www/resources/js/admin/pages/DragonFlyBoard.jsx
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-8c（close docs）
+
+- **feature branch:** feature/c8c-introduction-hint-close
+- **merge commit:** `c6aa40b`
+- **取り込み日時:** 2026-03-06 10:12:04 +0900
+- **変更ファイル:** docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+---
+
+## 実装結果の要約
+
+Introduction Hint を追加。members の summary_lite と既存スコアを利用して、最大 3 件の紹介候補を表示。

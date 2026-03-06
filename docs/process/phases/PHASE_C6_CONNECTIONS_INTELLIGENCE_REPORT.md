@@ -37,8 +37,9 @@
 
 - [x] Relationship Summary 表示
 - [x] Next Action 最大 3 件
-- [x] 既存 UI 壊れていない
-- [x] test 成功 / build 成功
+- [x] 既存 fetch 再利用
+- [x] 二重 fetch なし
+- [x] test / build 成功
 - [x] docs 更新完了
 
 ---
@@ -47,9 +48,43 @@
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （merge 後に記入） |
-| **merge 元ブランチ名** | feature/connections-intelligence-close-c6c（C-6c で取り込み時） |
-| **変更ファイル一覧** | （merge 後に記入） |
-| **テスト結果** | （記入） |
+| **merge commit id** | （下記のとおり a/b/c ごとに記録） |
+| **merge 元ブランチ名** | feature/c6a-*, feature/c6b-*, feature/c6c-* |
+| **変更ファイル一覧** | （下記のとおり） |
+| **テスト結果** | 66 passed (243 assertions) |
+| **ビルド結果** | 成功 |
+
+### C-6a（docs）
+
+- **feature branch:** feature/c6a-connections-intelligence-docs
+- **merge commit:** `8ff2a89`
+- **取り込み日時:** 2026-03-06 10:04:49 +0900
+- **変更ファイル:** docs/INDEX.md, docs/SSOT/CONNECTIONS_INTELLIGENCE_SSOT.md, docs/process/phases/PHASE_C6_CONNECTIONS_INTELLIGENCE_PLAN.md, PHASE_C6_CONNECTIONS_INTELLIGENCE_REPORT.md, PHASE_C6_CONNECTIONS_INTELLIGENCE_WORKLOG.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-6b（impl）
+
+- **feature branch:** feature/c6b-connections-intelligence-impl
+- **merge commit:** `f99ec60`
+- **取り込み日時:** 2026-03-06 10:06:08 +0900
+- **変更ファイル:** www/resources/js/admin/pages/DragonFlyBoard.jsx
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+### C-6c（close docs）
+
+- **feature branch:** feature/c6c-connections-intelligence-close
+- **merge commit:** `b62b0a6`
+- **取り込み日時:** 2026-03-06 10:07:18 +0900
+- **変更ファイル:** docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/dragonfly_progress.md
+- **php artisan test:** 66 passed
+- **npm run build:** 成功
+
+---
+
+## 実装結果の要約
+
+Connections 右ペインに Relationship Summary と Next Action を追加。既存 summary / oneToOnes を再利用し、二重 fetch なしで実装。
 
 ※ C-6 はモック追加ではなく **UX 知性追加**。FIT_AND_GAP には「Relationship Summary / Next Action 追加」を Fit として記録済み。
