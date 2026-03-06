@@ -28,6 +28,9 @@
 | 2026-03-05 | **Phase16B Religo**: 管理画面 UI モック同期。religo-admin-mock.html を SSOT にメニュー・全ページ・モーダルを統一。Dashboard / Connections / Members / Meetings / 1 to 1 / Role History / Settings(Categories,Roles)。Members にメモ・1to1・1to1メモの 3 モーダル追加。 |
 | 2026-03-05 | **Phase16C Religo**: Admin UI Mock→Working。Settings（Categories/Roles）を実 API で CRUD。Role History を GET /api/member-roles に接続。Members 一覧にカテゴリ・役職・最終接触・詳細（Member Show）・1to1メモ紐付け。CategoryApiTest/RoleApiTest 追加。 |
 | 2026-03-05 | **Phase17A Religo**: Members 詳細 Drawer。GET /api/contact-memos 追加（owner/target 必須、limit 任意）。one-to-ones index に limit 対応。MembersList で「詳細」クリックで右側 Drawer（Overview / Memos / 1to1 タブ）、メモ・1to1 追加で refetch。 |
+| 2026-03-05 | **Phase17B Religo**: Meetings 詳細 Drawer。GET /api/meeting-memos 追加（owner_member_id, meeting_id 必須、limit 任意）。MeetingsList で「詳細」クリックで右側 Drawer（Overview / Breakouts / Memos タブ）、例会メモ追加で refetch。Connections で編集導線維持。 |
+| 2026-03-05 | **Connections UX 改善**: BO 表示を BO1/BO2/BO3… に統一（DB の A/B/C は表示のみ変換）。割当メンバーを縦一列リスト化・行クリックでメンバー詳細モーダル（氏名・カテゴリ・関係ログに表示・例会メモ）。各 BO カードに「BO○ を保存」ボタン、「割当をクリア」追加。1to1 登録を日付 1 つ＋開始時刻＋終了時刻の 3 フィールドに簡素化。BO データ一括クリアは `php artisan religo:clear-breakout-data`。.cursorrules に React 修正後のビルド必須を追記。 |
+| 2026-03-06 | **Phase C-6 Connections Intelligence**: 右ペインに 🧠 Relationship Summary（同室回数・直近同室・1to1・直近メモ）と 💡 次の一手（ルールベース提案・最大3件）を追加。既存 summary / one-to-ones のみ使用・新 API なし。CONNECTIONS_INTELLIGENCE_SSOT 追加。 |
 
 ---
 
