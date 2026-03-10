@@ -11,6 +11,7 @@
 | G6 | .cursor tooling policy alignment | docs | completed | develop | 2026-03-11 |
 | G10 | phase13 remove round rework | implement | completed | develop | 2026-03-11 |
 | G11 | DragonFly breakout duplicate member support | implement | completed | develop | 2026-03-11 |
+| G13 | Repository Branch Cleanup Final | docs | completed | develop | 2026-03-10 |
 | M4D | Members List/Card 表示切替 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4E | Members Card 関係ログ表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4F | Members 一覧かな表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
