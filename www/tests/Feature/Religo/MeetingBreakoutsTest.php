@@ -67,7 +67,8 @@ class MeetingBreakoutsTest extends TestCase
         $this->assertSame([$this->member3], $bo2['member_ids']);
     }
 
-    public function test_same_member_in_both_rooms_returns_422(): void
+    /** G11: 同一 member を BO1 と BO2 の両方に入れてよい。 */
+    public function test_same_member_in_both_rooms_allowed(): void
     {
         $payload = [
             'rooms' => [
@@ -76,7 +77,13 @@ class MeetingBreakoutsTest extends TestCase
             ],
         ];
         $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
-        $res->assertStatus(422);
+        $res->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $get->assertOk();
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        $this->assertContains($this->member1, $bo1['member_ids']);
+        $this->assertContains($this->member1, $bo2['member_ids']);
     }
 
     public function test_other_meeting_breakouts_unchanged(): void

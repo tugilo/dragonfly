@@ -9,6 +9,8 @@
 | G4 | CSV import implementation bundle | implement | completed | develop | 2026-03-11 |
 | G5 | mock asset / reference file alignment | docs | completed | develop | 2026-03-11 |
 | G6 | .cursor tooling policy alignment | docs | completed | develop | 2026-03-11 |
+| G10 | phase13 remove round rework | implement | in_progress | feature/phase13-remove-round-v2 | 2026-03-11 |
+| G11 | DragonFly breakout duplicate member support | implement | in_progress | feature/phase13-remove-round-v2 | 2026-03-11 |
 | M4D | Members List/Card 表示切替 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4E | Members Card 関係ログ表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4F | Members 一覧かな表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |

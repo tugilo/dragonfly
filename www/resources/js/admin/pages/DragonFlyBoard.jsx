@@ -198,7 +198,7 @@ export default function DragonFlyBoard() {
     const [o2oError, setO2oError] = useState('');
     const [o2oSubmitting, setO2oSubmitting] = useState(false);
 
-    // Meeting + Round（Phase10R のみ。固定 BO は UI から撤去）
+    // Meeting + BO（Round なし。BO はデフォルト 2）
     const [meetings, setMeetings] = useState([]);
     const [selectedMeetingId, setSelectedMeetingId] = useState('');
     const [selectedMeeting, setSelectedMeeting] = useState(null);
@@ -287,7 +287,7 @@ export default function DragonFlyBoard() {
                 const rooms = Array.isArray(data.rooms) ? data.rooms : [];
                 setRoundsEdit([{
                     round_no: 1,
-                    label: 'Round 1',
+                    label: 'BO',
                     rooms: rooms.map((room) => ({
                         room_label: room.room_label,
                         notes: room.notes ?? '',
@@ -543,7 +543,7 @@ export default function DragonFlyBoard() {
             const nextNo = rooms.length + 1;
             const newRoom = { room_label: `BO${nextNo}`, notes: '', member_ids: [] };
             if (prev.length === 0) {
-                return [{ round_no: 1, label: 'Round 1', rooms: [newRoom] }];
+                return [{ round_no: 1, label: 'BO', rooms: [newRoom] }];
             }
             return [{
                 ...first,
@@ -637,28 +637,25 @@ export default function DragonFlyBoard() {
     const saveRounds = async () => {
         if (!selectedMeetingId) return;
         const rooms = roundsEdit[0]?.rooms ?? [];
-        const allIds = rooms.flatMap((room) => room.member_ids ?? []);
-        if (allIds.length !== new Set(allIds).size) {
-            setRoundsError('同一のメンバーを複数の BO に割り当てることはできません。');
-            return;
-        }
+        // G11: 同一 BO 内の重複のみ防ぐ。cross-BO は同一 member 可。
+        const payloadRooms = rooms.map((room) => ({
+            room_label: room.room_label,
+            notes: room.notes || null,
+            member_ids: [...new Set(room.member_ids ?? [])],
+        }));
         setRoundsSaving(true);
         setRoundsError('');
         setSaveStatus('loading');
         try {
             const payload = {
-                rooms: rooms.map((room) => ({
-                    room_label: room.room_label,
-                    notes: room.notes || null,
-                    member_ids: room.member_ids ?? [],
-                })),
+                rooms: payloadRooms,
             };
             await putMeetingBreakouts(selectedMeetingId, payload);
             const data = await getMeetingBreakouts(selectedMeetingId);
             const nextRooms = Array.isArray(data.rooms) ? data.rooms : [];
             setRoundsEdit([{
                 round_no: 1,
-                label: 'Round 1',
+                label: 'BO',
                 rooms: nextRooms.map((room) => ({
                     room_label: room.room_label,
                     notes: room.notes ?? '',
@@ -954,12 +951,13 @@ export default function DragonFlyBoard() {
                         {!roundsLoading && selectedMeetingId && roundsEdit.length > 0 && (() => {
                             const round = roundsEdit[0];
                             const rooms = round.rooms ?? [];
-                            const assignedInRound = new Set(rooms.flatMap((room) => room.member_ids ?? []));
                             return (
                                 <>
                                     {rooms.map((room, roomIndex) => {
                                         const roomLabel = room.room_label;
                                         const boDisplayLabel = `BO${roomIndex + 1}`;
+                                        // G11: この BO に未割当のメンバーのみ候補。他 BO には同じ member を入れてよい。
+                                        const assignedInThisRoom = new Set(room.member_ids ?? []);
                                         return (
                                             <Box
                                                 key={`${selectedMeetingId}-${roomLabel}`}
@@ -986,7 +984,34 @@ export default function DragonFlyBoard() {
                                                     <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'primary.main' }}>
                                                         {boDisplayLabel}
                                                     </Typography>
-                                                    <Chip label="同室枠" size="small" sx={{ fontSize: 10, height: 20 }} variant="outlined" />
+                                                    <Stack direction="row" spacing={0.5} alignItems="center">
+                                                        {roomLabel === 'BO2' && (() => {
+                                                            const bo1 = rooms.find((r) => r.room_label === 'BO1');
+                                                            return bo1 ? (
+                                                                <Button
+                                                                    size="small"
+                                                                    variant="outlined"
+                                                                    sx={{ fontSize: 11 }}
+                                                                    onClick={() => {
+                                                                        setDirty(true);
+                                                                        setRoundsEdit((prev) => {
+                                                                            const r0 = prev[0];
+                                                                            const rs = r0?.rooms ?? [];
+                                                                            const bo1Room = rs.find((r) => r.room_label === 'BO1');
+                                                                            const bo2Copy = bo1Room
+                                                                                ? { room_label: 'BO2', notes: bo1Room.notes ?? '', member_ids: [...(bo1Room.member_ids ?? [])] }
+                                                                                : { room_label: 'BO2', notes: '', member_ids: [] };
+                                                                            const nextRooms = rs.filter((r) => r.room_label !== 'BO2').concat(bo2Copy);
+                                                                            return [{ ...r0, rooms: nextRooms }];
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    BO1→BO2 コピー
+                                                                </Button>
+                                                            ) : null;
+                                                        })()}
+                                                        <Chip label="同室枠" size="small" sx={{ fontSize: 10, height: 20 }} variant="outlined" />
+                                                    </Stack>
                                                 </Box>
                                                 <Box sx={{ p: 1.5 }}>
                                                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
@@ -997,7 +1022,7 @@ export default function DragonFlyBoard() {
                                                         size="small"
                                                         value={null}
                                                         sx={{ width: '100%', mb: 1 }}
-                                                        options={members.filter((x) => !assignedInRound.has(x.id))}
+                                                        options={members.filter((x) => !assignedInThisRoom.has(x.id))}
                                                         getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
                                                         onChange={(_, v) => v && toggleRoundMember(0, roomLabel, v.id)}
                                                         renderInput={(params) => (
@@ -1450,7 +1475,7 @@ export default function DragonFlyBoard() {
                 <DialogContent>
                     {memoContextTargetMemberId != null && (
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'Round'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
+                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
                         </Typography>
                     )}
                     <FormControl fullWidth size="small" sx={{ mt: 1 }} disabled={memoContextTargetMemberId != null}>
