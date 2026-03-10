@@ -46,9 +46,9 @@
 
 - **Phase type:** docs（develop 直接 commit、feature ブランチなし）
 - **target branch:** develop
-- **commit:** Phase G13 repository branch cleanup final
+- **commit id:** 26895b2
 - **test:** スキップ（docs のみ変更）
-- **push:** origin develop
+- **push:** origin develop (b30404a..26895b2)
 
 ---
 
