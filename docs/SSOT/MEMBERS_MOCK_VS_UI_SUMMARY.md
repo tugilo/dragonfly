@@ -2,7 +2,8 @@
 
 **目的:** Members 画面について、モック（SSOT）と実装 UI の差分を整理し、要件を一覧化する。  
 **参照:** [MEMBERS_REQUIREMENTS.md](MEMBERS_REQUIREMENTS.md)（要件 SSOT）、[FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §4、  
-モック: `www/public/mock/religo-admin-mock2.html`（#/members）、`www/public/mock/members-mock.html`  
+**モック:** `www/public/mock/religo-admin-mock-v2.html`（#/members）  
+**比較:** モック http://localhost/mock/religo-admin-mock-v2.html#/members ／ 実装 http://localhost/admin#/members  
 **作成日:** 2026-03-06
 
 ---
@@ -13,12 +14,12 @@
 
 | モック | 用途 | 一覧形式 |
 |--------|------|----------|
-| **religo-admin-mock2.html** (#/members) | 管理画面全体の SSOT。Members はカードグリッド＋統計＋フィルタバー | カード（mcard） |
-| **members-mock.html** | Members 単体モック（テーブル版） | テーブル |
+| **religo-admin-mock-v2.html** (#/members) | 管理画面全体の SSOT。Members は**統計カード＋横並びフィルタバー＋カードグリッド** | カード（mcard） |
+| members-mock.html | Members 単体モック（テーブル版） | テーブル |
 
-本ドキュメントでは **religo-admin-mock2.html** を「モック」の正とする（.cursorrules に従う）。
+本ドキュメントでは **religo-admin-mock-v2.html** を「モック」の正とする。
 
-### 1.2 モックの Members 画面構成（religo-admin-mock2）
+### 1.2 モックの Members 画面構成（religo-admin-mock-v2）
 
 | ブロック | 内容 |
 |----------|------|
@@ -29,6 +30,33 @@
 | **一覧** | カードグリッド（mcard）。各カード: 番号・役職 chip・名前・かな・大/実カテゴリ・同室回数・最終接触・直近メモ・interested/want_1on1 フラグ・操作（✏️メモ、📅1to1、📝1to1メモ、詳細→）・関係ログ（最近） |
 | **詳細** | 右側 Drawer。タブ: Overview / Memos / 1to1。Overview: 同室・1to1回数・最終接触・役職・直近メモ・メモ追加・1to1予定・Connectionsで開く。Memos/1to1: 履歴一覧 |
 | **モーダル** | メモ追加、1to1予定作成、1to1メモ、**フラグ編集**（interested / want_1on1） |
+
+---
+
+## 1.3 基本レイアウトの差と「パッと見で分かる」UI
+
+**問題:** モック（religo-admin-mock-v2.html#/members）と実装（/admin#/members）を並べると **UI が全然違って見える**。パッと見で同じ画面だと分かるようにするには、**基本レイアウト**と**ブロックの並び・見た目**をモックに合わせる必要がある。
+
+### 基本レイアウトの差
+
+| 観点 | モック | 実装 | 影響 |
+|------|--------|------|------|
+| **シェル** | 左サイドバー（幅 240px・暗色）、上部 AppBar（パンくず・検索・通知・アバター）、メインは #content | React Admin の Layout（サイドバー・AppBar はデフォルトの見た目）。パンくず・検索・アバターの有無・配置が異なる | 画面全体の「雰囲気」が違う |
+| **Members ページの構成** | **上から順に**：① ページヘッダ（h1＋サブコピー＋ボタン）→ ② **統計カード 4 枚（横並び）** → ③ **フィルタバー（横並び・常時表示）** → ④ **カードグリッド（mcard）** | **上から順に**：① List タイトル＋ツールバー（ボタン）→ ② フィルタは「フィルタ」ボタンで開くドロワー/ポップover → ③ **表（Datagrid）**。統計カードなし | モックは「数→条件→カード」の流れで一目で分かる。実装は「表だけ」が目立ち、数も条件もパッと見で分かりにくい |
+| **一覧の形** | **カード**（1 メンバー＝1 カード）。番号・名前・かな・カテゴリ・同室/最終接触・メモ抜粋・フラグ・操作・関係ログが 1 ブロックにまとまる | **表**（行×列）。横スクロールしやすく情報は揃うが、モックのような「1 人 1 カード」の視認性はない | パッと見で「誰がいて、どういう状態か」がカードの方が認識しやすい |
+
+### 目指す UI（パッと見で分かる）
+
+- **ブロック順をモックと揃える:** ヘッダー → **統計カード行** → **横並びフィルタバー（常時表示）** → 一覧（カード or 表）。
+- **統計カード:** 総メンバー数・1to1未実施(30日)・interested ON・want_1on1 ON を、モックと同様にページ上部に常時表示する。
+- **フィルタバー:** 検索・大カテゴリ・カテゴリ・ロール・interested/want_1on1 トグル・並び順・件数を、**1 行に並べて常時表示**する（隠す場合は「フィルタ」ボタンではなく、モックに近い配置）。
+- **一覧:** モックに合わせて**カードグリッド**にするか、表のまま**ブロック構成だけ**（統計＋フィルタバー）を揃えるかは Phase で選択。いずれにしても「パッと見で同じ画面」と分かることを目標とする。
+- **リスト／カード切替（推奨）:** 一覧を**リスト形式（表）**と**カード形式**でスイッチできるようにすると、モックの「1 人分の情報が 1 枚のカードで見える」体験と、表での比較・ソートの両方を満たせる。詳細は docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md §4.2・4.3 を参照。
+
+### 実装時の参照
+
+- モックの HTML/CSS: `www/public/mock/religo-admin-mock-v2.html` の `#pg-members`、`.stats`、`.fbar`、`.cgrid`、`.mcard`。
+- 比較用 URL: モック http://localhost/mock/religo-admin-mock-v2.html#/members ／ 実装 http://localhost/admin#/members 。
 
 ---
 
@@ -162,4 +190,4 @@
 - [MEMBERS_REQUIREMENTS.md](MEMBERS_REQUIREMENTS.md) — 要件 SSOT
 - [MEMBERS_REQUIREMENTS_REVIEW.md](MEMBERS_REQUIREMENTS_REVIEW.md) — 要件整理・推奨設計
 - [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §4 — 管理画面全体の Members 差分
-- モック: http://localhost/mock/religo-admin-mock2.html → #/members
+- モック: http://localhost/mock/religo-admin-mock-v2.html → #/members
