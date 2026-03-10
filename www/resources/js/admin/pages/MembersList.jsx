@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext, useContext, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, useCallback, createContext, useContext, useRef, forwardRef, useImperativeHandle, useMemo } from 'react';
 import {
     List,
     Datagrid,
@@ -38,6 +38,7 @@ import {
 
 const API = '';
 const OWNER_MEMBER_ID = 1;
+const CARD_LOGS_LIMIT = 3;
 
 async function fetchJson(url) {
     const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
@@ -88,6 +89,7 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
 }
 
 const MembersModalContext = createContext(null);
+const ViewModeContext = createContext({ viewMode: 'list', setViewMode: () => {}, displaySortKey: 'display_no_asc', setDisplaySortKey: () => {} });
 
 const MembersListActions = () => {
     return (
@@ -152,71 +154,133 @@ function MembersStatsCards() {
 
 function MembersFilterBar() {
     const { sort, setSort, total, filterValues, setFilters } = useListContext();
+    const { viewMode, setViewMode, displaySortKey, setDisplaySortKey } = useContext(ViewModeContext);
     const { data: categories = [] } = useGetList('categories', { pagination: { page: 1, perPage: 500 }, sort: { field: 'id', order: 'ASC' } });
     const { data: roles = [] } = useGetList('roles', { pagination: { page: 1, perPage: 100 }, sort: { field: 'id', order: 'ASC' } });
     const field = sort?.field ?? 'display_no';
     const order = sort?.order ?? 'ASC';
     const handleSortChange = (e) => {
         const v = e.target.value;
+        setDisplaySortKey(v);
         if (v === 'display_no_asc') setSort({ field: 'display_no', order: 'ASC' });
         else if (v === 'display_no_desc') setSort({ field: 'display_no', order: 'DESC' });
         else if (v === 'name_asc') setSort({ field: 'name', order: 'ASC' });
         else if (v === 'name_desc') setSort({ field: 'name', order: 'DESC' });
+        else setSort({ field: 'display_no', order: 'ASC' });
     };
-    const sortValue = `${field}_${order.toLowerCase()}`;
-    const categoryChoices = Array.isArray(categories) ? categories.map((c) => ({ id: c.id, name: c?.group_name && c?.name ? `${c.group_name} / ${c.name}` : c?.name ?? String(c?.id ?? '') })) : [];
+    const sortSelectValue = displaySortKey ?? `${field}_${order.toLowerCase()}`;
+    const categoriesArray = Array.isArray(categories) ? categories : [];
+    const categoryChoices = categoriesArray.map((c) => ({ id: c.id, name: c?.group_name && c?.name ? `${c.group_name} / ${c.name}` : c?.name ?? String(c?.id ?? ''), group_name: c?.group_name }));
+    const groupNames = [...new Set(categoriesArray.map((c) => c?.group_name).filter(Boolean))].sort();
     const roleChoices = Array.isArray(roles) ? roles.map((r) => ({ id: r.id, name: r?.name ?? String(r?.id ?? '') })) : [];
     const fv = filterValues || {};
+    const selectedGroup = fv.group_name ?? '';
+    const categoryOptionsForSelect = selectedGroup
+        ? categoryChoices.filter((c) => c.group_name === selectedGroup)
+        : categoryChoices;
     const handleFilter = (key, value) => {
         const next = { ...fv, [key]: value };
         if (value === undefined || value === '' || value === false) delete next[key];
+        if (key === 'group_name' && next.category_id) {
+            const cat = categoriesArray.find((c) => c.id === next.category_id);
+            if (cat && cat.group_name !== (value || '')) delete next.category_id;
+        }
         setFilters(next);
     };
+    const handleClearFilters = () => setFilters({});
+    const activeFilters = [];
+    if (fv.q != null && String(fv.q).trim() !== '') activeFilters.push({ key: 'q', label: `検索: ${String(fv.q).trim()}` });
+    if (fv.group_name != null && String(fv.group_name).trim() !== '') activeFilters.push({ key: 'group_name', label: `大カテゴリ: ${fv.group_name}` });
+    if (fv.category_id != null) {
+        const name = categoryChoices.find((c) => c.id === fv.category_id)?.name ?? String(fv.category_id);
+        activeFilters.push({ key: 'category_id', label: `カテゴリ: ${name}` });
+    }
+    if (fv.role_id != null) {
+        const name = roleChoices.find((r) => r.id === fv.role_id)?.name ?? String(fv.role_id);
+        activeFilters.push({ key: 'role_id', label: `役職: ${name}` });
+    }
+    if (fv.interested) activeFilters.push({ key: 'interested', label: 'Interested' });
+    if (fv.want_1on1) activeFilters.push({ key: 'want_1on1', label: 'Want 1on1' });
     return (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center', mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
-            <MuiTextField
-                size="small"
-                placeholder="名前・番号・かな"
-                value={fv.q ?? ''}
-                onChange={(e) => handleFilter('q', e.target.value || undefined)}
-                sx={{ minWidth: 180 }}
-            />
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-                <InputLabel>カテゴリ</InputLabel>
-                <Select value={fv.category_id ?? ''} label="カテゴリ" onChange={(e) => handleFilter('category_id', e.target.value === '' ? undefined : Number(e.target.value))}>
-                    <MenuItem value="">—</MenuItem>
-                    {categoryChoices.map((c) => (
-                        <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
+                <MuiTextField
+                    size="small"
+                    placeholder="名前・番号・かな"
+                    value={fv.q ?? ''}
+                    onChange={(e) => handleFilter('q', e.target.value || undefined)}
+                    sx={{ minWidth: 180 }}
+                />
+                <FormControl size="small" sx={{ minWidth: 140 }}>
+                    <InputLabel>大カテゴリ</InputLabel>
+                    <Select value={fv.group_name ?? ''} label="大カテゴリ" onChange={(e) => handleFilter('group_name', e.target.value === '' ? undefined : e.target.value)}>
+                        <MenuItem value="">—</MenuItem>
+                        {groupNames.map((g) => (
+                            <MenuItem key={g} value={g}>{g}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl size="small" sx={{ minWidth: 180 }}>
+                    <InputLabel>カテゴリ</InputLabel>
+                    <Select value={fv.category_id ?? ''} label="カテゴリ" onChange={(e) => handleFilter('category_id', e.target.value === '' ? undefined : Number(e.target.value))}>
+                        <MenuItem value="">—</MenuItem>
+                        {categoryOptionsForSelect.map((c) => (
+                            <MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl size="small" sx={{ minWidth: 140 }}>
+                    <InputLabel>役職</InputLabel>
+                    <Select value={fv.role_id ?? ''} label="役職" onChange={(e) => handleFilter('role_id', e.target.value === '' ? undefined : Number(e.target.value))}>
+                        <MenuItem value="">—</MenuItem>
+                        {roleChoices.map((r) => (
+                            <MenuItem key={r.id} value={String(r.id)}>{r.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControlLabel
+                    control={<Checkbox size="small" checked={!!fv.interested} onChange={(e) => handleFilter('interested', e.target.checked ? true : undefined)} />}
+                    label="Interested"
+                />
+                <FormControlLabel
+                    control={<Checkbox size="small" checked={!!fv.want_1on1} onChange={(e) => handleFilter('want_1on1', e.target.checked ? true : undefined)} />}
+                    label="Want 1on1"
+                />
+                <FormControl size="small" sx={{ minWidth: 200 }}>
+                    <InputLabel>並び順</InputLabel>
+                    <Select value={sortSelectValue} label="並び順" onChange={handleSortChange}>
+                        <MenuItem value="display_no_asc">番号 昇順</MenuItem>
+                        <MenuItem value="display_no_desc">番号 降順</MenuItem>
+                        <MenuItem value="name_asc">名前 昇順</MenuItem>
+                        <MenuItem value="name_desc">名前 降順</MenuItem>
+                        <MenuItem value="last_contact_oldest_first">最終接触が古い順（要フォロー）</MenuItem>
+                        <MenuItem value="relationship_score_desc">関係温度が高い順</MenuItem>
+                        <MenuItem value="interested_first">Interested 優先</MenuItem>
+                        <MenuItem value="want_1on1_first">Want 1on1 優先</MenuItem>
+                    </Select>
+                </FormControl>
+                {total != null && <Typography variant="body2" color="text.secondary">件数: {total}</Typography>}
+                {activeFilters.length > 0 && (
+                    <Button size="small" variant="outlined" color="secondary" onClick={handleClearFilters} sx={{ flexShrink: 0 }}>条件クリア</Button>
+                )}
+                <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
+                    <Button size="small" variant={viewMode === 'list' ? 'contained' : 'outlined'} onClick={() => setViewMode('list')}>List</Button>
+                    <Button size="small" variant={viewMode === 'card' ? 'contained' : 'outlined'} onClick={() => setViewMode('card')}>Card</Button>
+                </Box>
+            </Box>
+            {activeFilters.length > 0 && (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 0.75 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>適用中:</Typography>
+                    {activeFilters.map((f) => (
+                        <Chip
+                            key={f.key}
+                            size="small"
+                            label={f.label}
+                            onDelete={() => handleFilter(f.key, undefined)}
+                        />
                     ))}
-                </Select>
-            </FormControl>
-            <FormControl size="small" sx={{ minWidth: 140 }}>
-                <InputLabel>役職</InputLabel>
-                <Select value={fv.role_id ?? ''} label="役職" onChange={(e) => handleFilter('role_id', e.target.value === '' ? undefined : Number(e.target.value))}>
-                    <MenuItem value="">—</MenuItem>
-                    {roleChoices.map((r) => (
-                        <MenuItem key={r.id} value={String(r.id)}>{r.name}</MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <FormControlLabel
-                control={<Checkbox size="small" checked={!!fv.interested} onChange={(e) => handleFilter('interested', e.target.checked ? true : undefined)} />}
-                label="Interested"
-            />
-            <FormControlLabel
-                control={<Checkbox size="small" checked={!!fv.want_1on1} onChange={(e) => handleFilter('want_1on1', e.target.checked ? true : undefined)} />}
-                label="Want 1on1"
-            />
-            <FormControl size="small" sx={{ minWidth: 160 }}>
-                <InputLabel>並び順</InputLabel>
-                <Select value={sortValue} label="並び順" onChange={handleSortChange}>
-                    <MenuItem value="display_no_asc">番号 昇順</MenuItem>
-                    <MenuItem value="display_no_desc">番号 降順</MenuItem>
-                    <MenuItem value="name_asc">名前 昇順</MenuItem>
-                    <MenuItem value="name_desc">名前 降順</MenuItem>
-                </Select>
-            </FormControl>
-            {total != null && <Typography variant="body2" color="text.secondary">件数: {total}</Typography>}
+                </Box>
+            )}
         </Box>
     );
 }
@@ -277,8 +341,209 @@ function MemberRowActions({ record }) {
             <Button size="small" variant="contained" onClick={() => ctx.openMemo(record)}>✏️ メモ</Button>
             <Button size="small" variant="outlined" onClick={() => ctx.openO2o(record)}>📅 1to1</Button>
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
+            <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary">🗺 Connections</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openFlagEdit(record)}>🚩 フラグ</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openDrawer(record)}>詳細</Button>
+        </Box>
+    );
+}
+
+/** Relationship Score 0..5 from summary_lite (C-7 rule, UI only). last_memo counts as "recent memo". */
+function relationshipScoreFromSummaryLite(lite) {
+    if (!lite) return 0;
+    let s = 0;
+    const same = lite.same_room_count ?? 0;
+    if (same >= 10) s += 2;
+    else if (same >= 5) s += 1;
+    if (lite.last_memo != null && (lite.last_memo.body_short != null || lite.last_memo.body != null)) s += 1;
+    if (lite.interested === true) s += 1;
+    if (lite.want_1on1 === true) s += 1;
+    return Math.min(5, Math.max(0, s));
+}
+
+const RELATIONSHIP_SCORE_STARS = ['☆☆☆☆☆', '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★'];
+
+// Card view: mcard structure per SSOT FIT_AND_GAP §4.1
+function MemberCard({ record }) {
+    const ctx = useContext(MembersModalContext);
+    const [recentLogs, setRecentLogs] = useState([]);
+    const [loadingLogs, setLoadingLogs] = useState(false);
+
+    useEffect(() => {
+        if (!record?.id) return;
+        setLoadingLogs(true);
+        fetch(`${API}/api/contact-memos?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${record.id}&limit=${CARD_LOGS_LIMIT}`)
+            .then((res) => (res.ok ? res.json() : []))
+            .then((data) => {
+                setRecentLogs(Array.isArray(data) ? data : []);
+            })
+            .catch(() => setRecentLogs([]))
+            .finally(() => setLoadingLogs(false));
+    }, [record?.id]);
+
+    if (!record) return null;
+    const no = record.display_no != null ? String(record.display_no).padStart(2, '0') : record.id;
+    const role = record.current_role || '—';
+    const c = record?.category;
+    const s = record?.summary_lite || {};
+    const sameRoom = s.same_room_count != null ? s.same_room_count : '—';
+    const lastContact = s.last_contact_at
+        ? (() => { try { return new Date(s.last_contact_at).toLocaleDateString('ja-JP'); } catch { return s.last_contact_at; } })()
+        : '—';
+    const lastMemo = s.last_memo?.body_short;
+    const interested = !!s.interested;
+    const want1on1 = !!s.want_1on1;
+    const contactWarn = s.last_contact_at && (Date.now() - new Date(s.last_contact_at).getTime()) > THIRTY_DAYS_MS;
+
+    return (
+        <Box
+            className="mcard"
+            sx={{
+                bgcolor: 'background.paper',
+                borderRadius: 2,
+                boxShadow: 1,
+                border: '1px solid',
+                borderColor: 'divider',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                '&:hover': { boxShadow: 2, transform: 'translateY(-1px)' },
+                transition: 'box-shadow .2s, transform .15s',
+            }}
+        >
+            <Box className="mc-hdr" sx={{ p: 1.5, pb: 1, borderBottom: '1px solid', borderColor: 'grey.200', background: 'linear-gradient(135deg, #fafbff, #fff)' }}>
+                <Box className="mc-hdr-r" sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography component="span" className="mc-no" variant="caption" sx={{ height: 19, px: 0.875, borderRadius: '9px', bgcolor: 'grey.200', color: 'grey.700', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>#{no}</Typography>
+                    <Chip size="small" label={role} sx={{ height: 22 }} />
+                </Box>
+                <Typography className="mc-name" variant="subtitle1" fontWeight={700}>{record.name}</Typography>
+                <Typography className="mc-kana" variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.25 }}>{(record.name_kana != null && String(record.name_kana).trim() !== '') ? String(record.name_kana).trim() : '—'}</Typography>
+            </Box>
+            <Box className="mc-body" sx={{ p: 1.5, flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box className="mc-cat" sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+                    <Chip size="small" label={c?.group_name ?? '—'} sx={{ fontSize: '10px', height: 20 }} />
+                    <Typography component="span" variant="caption" color="text.secondary">/</Typography>
+                    <Chip size="small" label={c?.name ?? '—'} color="primary" variant="outlined" sx={{ fontSize: '10px', height: 20 }} />
+                </Box>
+                <Box className="mc-rel" sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0.5 }}>
+                    <Box sx={{ bgcolor: 'grey.50', borderRadius: 1, p: 0.75 }}>
+                        <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase' }}>同室回数</Typography>
+                        <Typography variant="body2" fontWeight={700} color="primary.main">{sameRoom}回</Typography>
+                    </Box>
+                    <Box sx={{ bgcolor: 'grey.50', borderRadius: 1, p: 0.75 }}>
+                        <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase' }}>最終接触</Typography>
+                        {contactWarn ? (
+                            <Typography variant="caption" color="warning.main" fontWeight={700}>⚠ {Math.floor((Date.now() - new Date(s.last_contact_at).getTime()) / 86400000)}日未接触</Typography>
+                        ) : (
+                            <Typography variant="body2" fontWeight={700}>{lastContact}</Typography>
+                        )}
+                    </Box>
+                </Box>
+                <Box className="mc-score" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase' }}>関係温度</Typography>
+                    <Typography component="span" variant="body2" fontWeight={700} sx={{ letterSpacing: 0.5 }} aria-label={`Relationship Score ${relationshipScoreFromSummaryLite(s)}`}>
+                        {RELATIONSHIP_SCORE_STARS[relationshipScoreFromSummaryLite(s)]}
+                    </Typography>
+                </Box>
+                <Box className="mc-memo" sx={{ bgcolor: 'warning.50', borderLeft: '3px solid', borderColor: 'warning.main', py: 0.5, px: 1, borderRadius: '0 5px 5px 0', fontSize: '11px', color: 'grey.800', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                    {lastMemo ? (lastMemo.length > 80 ? `${lastMemo.slice(0, 80)}…` : lastMemo) : '—'}
+                </Box>
+                <Box className="mc-flags" sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap' }}>
+                    <Chip size="small" label="⭐ interested" variant={interested ? 'filled' : 'outlined'} color={interested ? 'success' : 'default'} sx={{ height: 22 }} onClick={() => ctx?.openFlagEdit(record)} />
+                    <Chip size="small" label="🔁 want 1on1" variant={want1on1 ? 'filled' : 'outlined'} color={want1on1 ? 'primary' : 'default'} sx={{ height: 22 }} onClick={() => ctx?.openFlagEdit(record)} />
+                </Box>
+            </Box>
+            <Box className="mc-act" sx={{ p: 1, borderTop: '1px solid', borderColor: 'grey.200', display: 'flex', gap: 0.5, flexWrap: 'wrap', bgcolor: 'grey.50' }}>
+                <Button size="small" variant="contained" onClick={() => ctx?.openMemo(record)}>✏️ メモ</Button>
+                <Button size="small" variant="outlined" onClick={() => ctx?.openO2o(record)}>📅 1to1</Button>
+                <Button size="small" variant="text" onClick={() => ctx?.openO2oMemo(record)}>📝 1to1メモ</Button>
+                <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary" sx={{ flexShrink: 0 }}>🗺 Connections で見る</Button>
+                <Button size="small" variant="outlined" color="inherit" sx={{ ml: 'auto' }} onClick={() => ctx?.openDrawer(record)}>詳細 →</Button>
+            </Box>
+            <Box className="mc-logs" sx={{ p: 1, borderTop: '1px solid', borderColor: 'grey.200' }}>
+                <Typography variant="caption" color="text.secondary" sx={{ fontSize: '9px', fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', display: 'block', mb: 0.5 }}>関係ログ（最近）</Typography>
+                {loadingLogs ? (
+                    <Typography variant="body2" color="text.secondary">読込中…</Typography>
+                ) : recentLogs.length === 0 ? (
+                    <Typography variant="body2" color="text.secondary">—</Typography>
+                ) : (
+                    recentLogs.map((log) => {
+                        const typeLabel = log.memo_type === 'one_to_one' ? '1to1' : log.memo_type === 'meeting' ? '例会' : 'その他';
+                        const dateStr = log.created_at ? (() => { try { return new Date(log.created_at).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }); } catch { return ''; } })() : '';
+                        const bodyShort = (log.body_short || log.body || '').slice(0, 40);
+                        const bodyDisplay = bodyShort.length >= 40 ? `${bodyShort}…` : bodyShort;
+                        return (
+                            <Box key={log.id} className="log-i" sx={{ display: 'flex', alignItems: 'flex-start', gap: 0.75, mb: 0.5, fontSize: '11px', color: 'text.secondary', lineHeight: 1.4 }}>
+                                <Chip size="small" label={typeLabel} sx={{ height: 15, fontSize: '9px', fontWeight: 700, flexShrink: 0 }} />
+                                <Typography component="span" variant="caption" sx={{ flexShrink: 0, fontSize: '10px' }}>{dateStr}</Typography>
+                                <Typography component="span" variant="body2" sx={{ fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bodyDisplay || '—'}</Typography>
+                            </Box>
+                        );
+                    })
+                )}
+            </Box>
+        </Box>
+    );
+}
+
+function MembersCardGrid() {
+    const { data = [], isLoading } = useListContext();
+    const { displaySortKey } = useContext(ViewModeContext);
+    const rawMembers = Array.isArray(data) ? data : [];
+    const members = useMemo(() => {
+        const key = displaySortKey ?? 'display_no_asc';
+        if (key === 'display_no_asc' || key === 'display_no_desc' || key === 'name_asc' || key === 'name_desc') return rawMembers;
+        const arr = [...rawMembers];
+        if (key === 'last_contact_oldest_first') {
+            arr.sort((a, b) => {
+                const da = a?.summary_lite?.last_contact_at ? new Date(a.summary_lite.last_contact_at).getTime() : Infinity;
+                const db = b?.summary_lite?.last_contact_at ? new Date(b.summary_lite.last_contact_at).getTime() : Infinity;
+                if (da !== db) return da - db;
+                return (a?.display_no ?? a?.id ?? 0) - (b?.display_no ?? b?.id ?? 0);
+            });
+        } else if (key === 'relationship_score_desc') {
+            arr.sort((a, b) => {
+                const sa = relationshipScoreFromSummaryLite(a?.summary_lite);
+                const sb = relationshipScoreFromSummaryLite(b?.summary_lite);
+                if (sb !== sa) return sb - sa;
+                return (a?.display_no ?? a?.id ?? 0) - (b?.display_no ?? b?.id ?? 0);
+            });
+        } else if (key === 'interested_first') {
+            arr.sort((a, b) => {
+                const ia = a?.summary_lite?.interested ? 1 : 0;
+                const ib = b?.summary_lite?.interested ? 1 : 0;
+                if (ib !== ia) return ib - ia;
+                return (a?.display_no ?? a?.id ?? 0) - (b?.display_no ?? b?.id ?? 0);
+            });
+        } else if (key === 'want_1on1_first') {
+            arr.sort((a, b) => {
+                const wa = a?.summary_lite?.want_1on1 ? 1 : 0;
+                const wb = b?.summary_lite?.want_1on1 ? 1 : 0;
+                if (wb !== wa) return wb - wa;
+                return (a?.display_no ?? a?.id ?? 0) - (b?.display_no ?? b?.id ?? 0);
+            });
+        }
+        return arr;
+    }, [rawMembers, displaySortKey]);
+    if (isLoading) {
+        return (
+            <Box sx={{ py: 3, textAlign: 'center' }}>
+                <Typography color="text.secondary">読込中…</Typography>
+            </Box>
+        );
+    }
+    return (
+        <Box
+            className="cgrid"
+            sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr 1fr', md: 'repeat(3, 1fr)' },
+                gap: 2,
+            }}
+        >
+            {members.map((member) => (
+                <MemberCard key={member.id} record={member} />
+            ))}
         </Box>
     );
 }
@@ -734,6 +999,40 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     );
 });
 
+function MembersListInner() {
+    const [viewMode, setViewMode] = useState('card');
+    const [displaySortKey, setDisplaySortKey] = useState('display_no_asc');
+    return (
+        <ViewModeContext.Provider value={{ viewMode, setViewMode, displaySortKey, setDisplaySortKey }}>
+            <MembersStatsCards />
+            <MembersFilterBar />
+            {viewMode === 'list' ? (
+                    <Datagrid rowClick={false}>
+                    <TextField source="display_no" label="番号" emptyText="—" sortable />
+                    <FunctionField label="名前" sortable sortBy="name" source="name" render={(r) => (
+                        <Box>
+                            <Typography variant="body2" component="span">{r?.name ?? '—'}</Typography>
+                            {(r?.name_kana != null && String(r.name_kana).trim() !== '') && (
+                                <Typography variant="caption" display="block" color="text.secondary">{String(r.name_kana).trim()}</Typography>
+                            )}
+                        </Box>
+                    )} />
+                    <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
+                    <TextField source="current_role" label="役職" emptyText="—" />
+                    <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
+                    <FunctionField label="1to1回数" render={(r) => <OneToOneCountField record={r} />} />
+                    <FunctionField label="最終接触" render={(r) => <LastContactField record={r} />} />
+                    <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
+                    <FunctionField label="フラグ" render={(r) => <FlagsField record={r} />} />
+                    <FunctionField label="Actions" render={(r) => <MemberRowActions record={r} />} />
+                </Datagrid>
+            ) : (
+                <MembersCardGrid />
+            )}
+        </ViewModeContext.Provider>
+    );
+}
+
 export function MembersList() {
     const [memoOpen, setMemoOpen] = useState(false);
     const [memoMember, setMemoMember] = useState(null);
@@ -792,22 +1091,7 @@ export function MembersList() {
                     sort={{ field: 'display_no', order: 'ASC' }}
                     perPage={25}
                 >
-                    <>
-                        <MembersStatsCards />
-                        <MembersFilterBar />
-                        <Datagrid rowClick={false}>
-                        <TextField source="display_no" label="番号" emptyText="—" sortable />
-                        <TextField source="name" label="名前" sortable />
-                        <FunctionField label="カテゴリ" render={(r) => <CategoryField record={r} />} />
-                        <TextField source="current_role" label="役職" emptyText="—" />
-                        <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
-                        <FunctionField label="1to1回数" render={(r) => <OneToOneCountField record={r} />} />
-                        <FunctionField label="最終接触" render={(r) => <LastContactField record={r} />} />
-                        <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
-                        <FunctionField label="フラグ" render={(r) => <FlagsField record={r} />} />
-                        <FunctionField label="Actions" render={(r) => <MemberRowActions record={r} />} />
-                        </Datagrid>
-                    </>
+                    <MembersListInner />
                 </List>
             </MembersModalContext.Provider>
             <MemberDetailDrawer
