@@ -5,6 +5,7 @@
 | 001 | DevOS Setup | docs | completed | feature/phase001-devos-setup | 2026-03-10 |
 | G1 | phase12t と M4 UI suite の Git 整合 | implement | completed | (develop に直接 merge) | 2026-03-10 |
 | G2 | SSOT / docs alignment after G1 | docs | completed | develop | 2026-03-11 |
+| G4 | CSV import implementation bundle | implement | completed | develop | 2026-03-11 |
 | M4D | Members List/Card 表示切替 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4E | Members Card 関係ログ表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
 | M4F | Members 一覧かな表示 | implement | completed | feature/m4-members-ui-suite | 2026-03-10 |
