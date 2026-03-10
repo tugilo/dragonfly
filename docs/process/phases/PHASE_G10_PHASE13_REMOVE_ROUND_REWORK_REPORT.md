@@ -2,7 +2,7 @@
 
 | Phase ID | G10 |
 |----------|-----|
-| Status | completed (feature push 済み。develop 未 merge) |
+| Status | completed |
 | 完了日 | 2026-03-11 |
 
 ---
@@ -18,6 +18,16 @@
 
 ---
 
+## Merge Evidence
+
+- **merge commit id:** 0160e8c77a88b93927e250a59ccd2d515ea5f8ab
+- **source branch:** feature/phase13-remove-round-v2
+- **target branch:** develop
+- **test result:** 79 passed (php artisan test)
+- **build result:** OK (npm run build)
+
+---
+
 ## DoD チェック
 
 - [x] Board に round 依存の表示を "BO" に統一（Round 1 → BO、Round → BO）
@@ -25,11 +35,20 @@
 - [x] php artisan test が通る（79 passed）
 - [x] npm run build が通る
 - [x] feature/phase13-remove-round-v2 として push 済み
+- [x] develop へ merge 済み（G12）
+
+---
+
+## Merge Evidence
+
+- **merge commit id:** 0160e8c77a88b93927e250a59ccd2d515ea5f8ab
+- **source branch:** feature/phase13-remove-round-v2
+- **target branch:** develop
+- **test result:** 79 passed (php artisan test)
+- **build result:** OK (npm run build)
 
 ---
 
 ## Merge readiness
 
-- **commit id:** a919f99
-- **branch:** feature/phase13-remove-round-v2
-- develop への merge は未実施。必要に応じローカルで merge → test → push する。
+- develop への merge 完了（G12）。

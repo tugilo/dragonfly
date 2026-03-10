@@ -2,7 +2,7 @@
 
 | Phase ID | G11 |
 |----------|-----|
-| Status | completed (feature push 済み。develop 未 merge) |
+| Status | completed |
 | 完了日 | 2026-03-11 |
 
 ---
@@ -20,6 +20,16 @@
 
 ---
 
+## Merge Evidence
+
+- **merge commit id:** 0160e8c77a88b93927e250a59ccd2d515ea5f8ab
+- **source branch:** feature/phase13-remove-round-v2
+- **target branch:** develop
+- **test result:** 79 passed (php artisan test)
+- **build result:** OK (npm run build)
+
+---
+
 ## DoD チェック
 
 - [x] 同じ member を BO1 と BO2 の両方に入れられる
@@ -33,4 +43,4 @@
 
 ## Merge readiness
 
-- feature/phase13-remove-round-v2 上で push まで。develop への merge は未実施。
+- develop への merge 完了（G12）。merge commit: 0160e8c
