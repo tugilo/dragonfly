@@ -1,0 +1,97 @@
+---
+description: tugilo AI DevOS v4.3 - AI駆動開発の標準プロセス。推測実装禁止・Phase管理・SSOT優先。
+alwaysApply: true
+---
+
+# tugilo AI DevOS v4.3
+
+あなたは tugilo AI DevOS v4.3 に従って開発を行う。
+プロジェクト固有の技術スタックは .cursorrules を参照すること。
+
+## 絶対ルール
+
+1. 仕様参照は docs/02_specifications/SSOT_REGISTRY.md を起点とする。
+2. Phase開始前に docs/process/PHASE_REGISTRY.md を確認し次番号を取得する。
+3. フェーズ種別（docs / implement / refactor）を PLANで宣言する。
+4. PLANに Related SSOT（Spec ID）を必ず記載する。
+5. PLAN → WORKLOG → REPORT の順で作業する。PLAN完成前は実装を開始しない。
+6. PRは禁止。mergeはローカルで実施する。ブランチ名は feature/phaseXXX-name 形式。
+7. REPORTにMerge Evidenceを必ず記録する。
+8. Phase完了時に PHASE_REGISTRY.md を更新する。
+9. pushは1Phase完了時に1回のみ。
+10. Scope違反・SSOT不明・DoD未定義を検出したら即座に作業停止する。
+
+## Phase開始時の確認手順（必須・省略禁止）
+
+1. docs/02_specifications/SSOT_REGISTRY.md を開き、関連仕様を特定する
+2. docs/process/PHASE_REGISTRY.md を開き、次のPhase番号を確認する
+3. フェーズ種別（docs / implement / refactor）を決定する
+4. Scope（変更可能なファイル・ディレクトリ）を確認する
+5. DoD（何をもって完了とするか）を定義する
+
+確認後、以下を生成する。
+docs/process/phases/PHASE_XXX_name_PLAN.md
+docs/process/phases/PHASE_XXX_name_WORKLOG.md
+docs/process/phases/PHASE_XXX_name_REPORT.md
+
+## フェーズ種別とScope
+
+docs     : docs/** .cursor/** .cursorrules のみ変更可能
+implement: app/** resources/** routes/** database/** docs/** 変更可能
+refactor : PLANで明示したファイルのみ変更可能
+package.json / composer.json は人間の承認後のみ変更可能
+
+## 安全装置（以下を検出したら即座に作業停止）
+
+- Scope違反      → REPORTに記録 → 人間に確認
+- SSOT不明       → 人間に確認
+- DoD未定義      → PLAN未完了として作業開始禁止
+- SSOT矛盾       → SSOT修正後に再開
+- Phase ID未確認 → PHASE_REGISTRY.md確認後に再開
+
+## WORKLOGの記録方針
+
+「いつ何をしたか」ではなく「何を判断してどう実装したか」を記録する。
+
+## AIセルフチェック（Task完了前）
+
+□ SSOT_REGISTRYから仕様を参照したか
+□ SSOTと矛盾していないか
+□ Scope違反はないか
+□ WORKLOGに判断理由を記録したか
+
+## AIセルフチェック（Phase完了前）
+
+□ 全TaskのWORKLOGが記録されているか
+□ REPORT必須項目がすべて埋まっているか
+□ Merge Evidenceが書かれているか
+□ SSOT更新が必要な変更はないか
+□ PHASE_REGISTRY.mdを更新したか
+□ SSOT_REGISTRY.mdの更新が必要な変更はないか
+
+## Merge Evidence（REPORTに必ず記載）
+
+merge commit id:
+source branch: feature/phaseXXX-name
+target branch: develop
+phase id: XXX
+phase type: docs / implement / refactor
+related ssot: SPEC-XXX
+
+test command: php artisan test
+test result: XX passed / スキップ（docsフェーズ）
+
+changed files: [git diff --name-only の出力]
+
+scope check: OK / VIOLATION
+ssot check: OK / UPDATE REQUIRED
+dod check: OK / INCOMPLETE
+
+## mergeフロー
+
+git checkout develop
+git pull origin develop
+git merge --no-ff feature/phaseXXX-name -m "Merge feature/phaseXXX-name into develop"
+# implement フェーズのみ
+php artisan test
+git push origin develop
