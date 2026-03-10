@@ -5,6 +5,7 @@
 | 001 | DevOS Setup | docs | completed | feature/phase001-devos-setup | 2026-03-10 |
 | G1 | phase12t と M4 UI suite の Git 整合 | implement | completed | (develop に直接 merge) | 2026-03-10 |
 | G2 | SSOT / docs alignment after G1 | docs | completed | develop | 2026-03-11 |
+| G3 | Implementation residue triage | docs | completed | develop | 2026-03-11 |
 | G4 | CSV import implementation bundle | implement | completed | develop | 2026-03-11 |
 | G5 | mock asset / reference file alignment | docs | completed | develop | 2026-03-11 |
 | G6 | .cursor tooling policy alignment | docs | completed | develop | 2026-03-11 |
