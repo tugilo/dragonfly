@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Religo – Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --p:#1976d2;--pd:#1565c0;--pl:#e3f2fd;
+  --bg:#f4f6f9;--sur:#fff;
+  --sb:#1e2a3a;--sbw:240px;--abh:56px;
+  --bdr:#e0e0e0;--txt:#1a1f36;--sub:#637381;--dis:#bdbdbd;
+  --ok:#2e7d32;--warn:#e65100;--err:#c62828;--info:#0288d1;
+  --sh1:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);
+  --sh2:0 2px 8px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08);
+  --sh3:0 8px 24px rgba(0,0,0,.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'Roboto','Noto Sans JP',sans-serif;font-size:14px;background:var(--bg);color:var(--txt)}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+
+/* ── SHELL ── */
+#shell{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+#sidebar{width:var(--sbw);flex-shrink:0;background:var(--sb);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;z-index:10}
+.sb-logo{padding:16px 18px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#1976d2,#42a5f5);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
+.sb-name{color:#fff;font-size:15px;font-weight:700}
+.sb-sub{color:rgba(255,255,255,.38);font-size:10px;margin-top:1px}
+.sb-sec{padding:6px 0}
+.sb-lbl{padding:8px 16px 3px;font-size:9px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.28);text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:10px;padding:8px 18px;color:rgba(255,255,255,.62);font-size:13px;cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left;position:relative}
+.nav:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav.active{background:rgba(25,118,210,.22);color:#fff;font-weight:500}
+.nav.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--p);border-radius:0 2px 2px 0}
+.nav .ico{font-size:15px;width:20px;text-align:center;opacity:.7}
+.nav.active .ico{opacity:1}
+.nav-sub{display:flex;align-items:center;gap:10px;padding:6px 18px 6px 44px;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:all .15s}
+.nav-sub:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.05)}
+.nav-sub.active{color:#90caf9;font-weight:500}
+.sb-div{height:1px;background:rgba(255,255,255,.1);margin:6px 16px}
+.sb-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);margin-top:auto}
+.sb-user{display:flex;align-items:center;gap:9px}
+.sb-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#1976d2,#42a5f5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+
+/* ── MAIN ── */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── APPBAR ── */
+#appbar{height:var(--abh);flex-shrink:0;background:var(--sur);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.07);z-index:9}
+.ab-bc{display:flex;align-items:center;gap:6px;flex:1}
+.ab-bc span{color:var(--sub);font-size:13px;cursor:pointer}
+.ab-bc span:hover{color:var(--p)}
+.ab-bc .sep{color:var(--dis);cursor:default}
+.ab-bc .cur{color:var(--txt);font-weight:500;cursor:default}
+.ab-search{display:flex;align-items:center;gap:7px;background:#f5f5f5;border:1px solid var(--bdr);border-radius:20px;padding:5px 14px;width:210px}
+.ab-search input{border:none;background:transparent;outline:none;font-size:12px;width:100%;color:var(--txt)}
+.ab-search input::placeholder{color:var(--dis)}
+.ab-ico{width:34px;height:34px;border-radius:50%;border:none;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:17px;cursor:pointer;transition:background .15s}
+.ab-ico:hover{background:rgba(0,0,0,.06)}
+.av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1976d2,#42a5f5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;cursor:pointer}
+
+/* ── CONTENT ── */
+#content{flex:1;overflow-y:auto;padding:22px}
+.page{display:none}
+.page.active{display:block}
+
+/* ── TYPOGRAPHY ── */
+.pg-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+.pg-hdr-l h1{font-size:21px;font-weight:700;color:var(--txt);letter-spacing:-.3px}
+.pg-hdr-l p{font-size:12px;color:var(--sub);margin-top:3px}
+.pg-hdr-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sec-title{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sub);margin-bottom:10px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit;line-height:1.2}
+.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:var(--pd)}
+.btn-o{background:transparent;color:var(--p);border:1px solid var(--p)}.btn-o:hover{background:var(--pl)}
+.btn-g{background:transparent;color:var(--sub);border:1px solid var(--bdr)}.btn-g:hover{background:#f5f5f5}
+.btn-t{background:transparent;color:var(--p);border:none}.btn-t:hover{background:var(--pl)}
+.btn-warn{background:#fff3e0;color:var(--warn);border:1px solid #ffcc80}.btn-warn:hover{background:#ffe0b2}
+.btn-err{background:#ffebee;color:var(--err);border:1px solid #ef9a9a}.btn-err:hover{background:#ffcdd2}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-xs{padding:3px 8px;font-size:11px;border-radius:4px}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+
+/* ── CHIPS ── */
+.chip{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:11px;font-size:11px;font-weight:500;white-space:nowrap}
+.chip-p{background:var(--pl);color:var(--pd)}
+.chip-ok{background:#e8f5e9;color:#1b5e20}
+.chip-warn{background:#fff3e0;color:#bf360c}
+.chip-err{background:#ffebee;color:#b71c1c}
+.chip-info{background:#e1f5fe;color:#01579b}
+.chip-gray{background:#eceff1;color:#546e7a}
+.chip-purple{background:#f3e5f5;color:#4a148c}
+.chip-presi{background:#fff3e0;color:#e65100}
+.chip-vice{background:#fce4ec;color:#c2185b}
+.chip-sec{background:#e8f5e9;color:#2e7d32}
+.chip-acc{background:#e3f2fd;color:#1565c0}
+.chip-mentor{background:#f3e5f5;color:#6a1b9a}
+.chip-edco{background:#e0f7fa;color:#00695c}
+.chip-member{background:#eceff1;color:#546e7a}
+.chip-planned{background:#fff9c4;color:#f57f17}
+.chip-done{background:#e8f5e9;color:#2e7d32}
+.chip-canceled{background:#ffebee;color:#b71c1c}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;font-size:10px;font-weight:700}
+
+/* ── STATS ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--sur);border-radius:10px;padding:15px 16px;box-shadow:var(--sh1);border:1px solid var(--bdr);display:flex;align-items:center;gap:12px}
+.stat-ico{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ico-b{background:#e3f2fd}.ico-o{background:#fff3e0}.ico-g{background:#e8f5e9}.ico-pu{background:#f3e5f5}.ico-r{background:#ffebee}.ico-c{background:#e0f7fa}
+.stat-lbl{font-size:10px;color:var(--sub);font-weight:600;margin-bottom:2px;letter-spacing:.2px}
+.stat-val{font-size:20px;font-weight:700;line-height:1}
+.stat-s{font-size:10px;color:var(--sub);margin-top:2px}
+
+/* ── FILTER BAR ── */
+.fbar{background:var(--sur);border-radius:10px;padding:11px 14px;margin-bottom:14px;box-shadow:var(--sh1);border:1px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fsearch{display:flex;align-items:center;gap:7px;background:#f5f5f5;border:1px solid var(--bdr);border-radius:6px;padding:6px 10px;min-width:180px}
+.fsearch input{border:none;background:transparent;outline:none;font-size:12px;width:100%}
+.fsel{padding:6px 24px 6px 9px;border:1px solid var(--bdr);border-radius:6px;font-size:12px;background:#fff;color:var(--txt);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center}
+.ftoggle{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid var(--bdr);background:#fff;cursor:pointer;color:var(--sub);transition:all .15s}
+.ftoggle.on{background:var(--pl);color:var(--p);border-color:var(--p)}
+.fdiv{width:1px;height:22px;background:var(--bdr);flex-shrink:0}
+.fcount{margin-left:auto;font-size:11px;color:var(--sub)}
+
+/* ── CARD GRID ── */
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:1300px){.cgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ── MEMBER CARD ── */
+.mcard{background:var(--sur);border-radius:12px;box-shadow:var(--sh1);border:1px solid var(--bdr);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .15s}
+.mcard:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.mc-hdr{padding:13px 15px 9px;border-bottom:1px solid #f0f0f0;background:linear-gradient(135deg,#fafbff,#fff)}
+.mc-hdr-r{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.mc-no{height:19px;padding:0 7px;border-radius:9px;background:#eceff1;color:#546e7a;font-size:10px;font-weight:700;display:inline-flex;align-items:center}
+.mc-name{font-size:15px;font-weight:700;color:var(--txt)}
+.mc-kana{font-size:10px;color:var(--sub)}
+.mc-body{padding:11px 15px;flex:1;display:flex;flex-direction:column;gap:8px}
+.mc-cat{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.cg{font-size:10px;font-weight:600;color:#546e7a;background:#eceff1;padding:2px 7px;border-radius:3px}
+.cn{font-size:10px;font-weight:600;color:#1565c0;background:#e3f2fd;padding:2px 7px;border-radius:3px}
+.mc-rel{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.rel-i{background:#f8f9fa;border-radius:6px;padding:6px 9px}
+.rel-l{font-size:9px;color:var(--sub);font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:1px}
+.rel-v{font-size:12px;font-weight:700;color:var(--txt)}
+.rel-v.hi{color:var(--p)}
+.mc-memo{background:#fffde7;border-left:3px solid #ffd600;padding:5px 9px;border-radius:0 5px 5px 0;font-size:11px;color:#5d4037;line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.mc-flags{display:flex;gap:6px;flex-wrap:wrap}
+.flag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:11px;font-size:10px;font-weight:600;border:1px solid var(--bdr);cursor:pointer;transition:all .15s}
+.flag-off{background:#fff;color:var(--dis)}
+.flag-int{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
+.flag-w1o{background:#e3f2fd;color:#1565c0;border-color:#90caf9}
+.mc-act{padding:9px 15px 11px;border-top:1px solid #f0f0f0;display:flex;gap:5px;flex-wrap:wrap;background:#fafafa}
+.mc-logs{padding:7px 15px 11px;border-top:1px solid #f0f0f0}
+.log-ttl{font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sub);margin-bottom:5px}
+.log-i{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;font-size:11px;color:var(--sub);line-height:1.4}
+.log-i:last-child{margin-bottom:0}
+.lt{height:15px;padding:0 4px;border-radius:3px;font-size:9px;font-weight:700;display:inline-flex;align-items:center;flex-shrink:0;margin-top:1px}
+.lt-m{background:#e3f2fd;color:#1565c0}
+.lt-1{background:#fce4ec;color:#c2185b}
+.lt-o{background:#f3e5f5;color:#6a1b9a}
+.contact-warn{color:var(--warn);font-size:10px;font-weight:700}
+
+/* ── TABLE ── */
+.tbl-wrap{background:var(--sur);border-radius:10px;box-shadow:var(--sh1);border:1px solid var(--bdr);overflow:hidden}
+.tbl-toolbar{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse}
+thead th{background:#f5f6fa;font-size:11px;font-weight:700;color:var(--sub);letter-spacing:.4px;padding:9px 12px;border-bottom:2px solid var(--bdr);text-align:left;white-space:nowrap}
+thead th.c{text-align:center}
+tbody tr{cursor:pointer;transition:background .1s}
+tbody tr:hover{background:rgba(25,118,210,.03)}
+tbody tr.selected{background:rgba(25,118,210,.06)}
+tbody td{padding:9px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.td-c{text-align:center}
+
+/* ── CARDS (generic) ── */
+.card{background:var(--sur);border-radius:10px;box-shadow:var(--sh1);border:1px solid var(--bdr);padding:16px}
+.card-title{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;position:relative}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:#f0f0f0}
+.tl-body{flex:1;min-width:0}
+.tl-title{font-size:13px;font-weight:500;color:var(--txt)}
+.tl-meta{font-size:11px;color:var(--sub);margin-top:2px}
+
+/* ── CONNECTION LAYOUT ── */
+.conn-grid{display:grid;grid-template-columns:220px 1fr 300px;gap:12px;height:calc(100vh - var(--abh) - 100px);min-height:500px}
+.conn-pane{background:var(--sur);border-radius:10px;box-shadow:var(--sh1);border:1px solid var(--bdr);display:flex;flex-direction:column;overflow:hidden}
+.pane-hdr{padding:12px 14px;border-bottom:1px solid var(--bdr);background:#fafbff;flex-shrink:0}
+.pane-hdr h3{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.pane-body{flex:1;overflow-y:auto;padding:10px}
+.pane-body::-webkit-scrollbar{width:4px}
+.pane-body::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+
+.mb-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;transition:background .12s;border:none;background:transparent;width:100%;text-align:left;margin-bottom:2px}
+.mb-item:hover{background:#f5f6fa}
+.mb-item.sel{background:var(--pl);border-left:3px solid var(--p)}
+.mb-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#42a5f5,#1976d2);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mb-info{flex:1;min-width:0}
+.mb-name{font-size:12px;font-weight:600;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mb-sub{font-size:10px;color:var(--sub)}
+
+.bo-card{border:1px solid var(--bdr);border-radius:8px;margin-bottom:10px;overflow:hidden}
+.bo-hdr{padding:10px 12px;background:linear-gradient(135deg,#f0f4ff,#fff);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.bo-title{font-size:12px;font-weight:700;color:var(--p)}
+.bo-body{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.bo-member{display:flex;align-items:center;gap:6px;font-size:12px;padding:5px 8px;background:#f8f9fa;border-radius:6px}
+.bo-note{font-size:11px;color:var(--sub);font-style:italic;padding:4px 8px;background:#fffde7;border-radius:4px;margin-top:2px}
+
+/* ── DRAWER ── */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:200;opacity:0;pointer-events:none;transition:opacity .2s}
+.drawer-overlay.open{opacity:1;pointer-events:all}
+.drawer{position:fixed;top:0;right:0;width:440px;max-width:100vw;height:100vh;background:#fff;z-index:201;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:var(--sh3)}
+.drawer.open{transform:translateX(0)}
+.drw-hdr{background:var(--sb);padding:15px 18px;flex-shrink:0}
+.drw-hdr-r{display:flex;align-items:flex-start;justify-content:space-between}
+.drw-body{flex:1;overflow-y:auto;padding:16px}
+.drw-tabs{display:flex;border-bottom:1px solid var(--bdr);flex-shrink:0;background:#fff}
+.dtab{flex:1;padding:10px;text-align:center;font-size:12px;font-weight:600;color:var(--sub);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s}
+.dtab.a{color:var(--p);border-bottom-color:var(--p)}
+
+/* ── MODAL ── */
+.mol{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .18s}
+.mol.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.22);transform:translateY(10px) scale(.98);transition:transform .18s;overflow:hidden}
+.modal.wide{max-width:600px}
+.mol.open .modal{transform:none}
+.mhdr{padding:16px 20px 12px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
+.mtitle{font-size:14px;font-weight:700;color:var(--txt);display:flex;align-items:center;gap:7px}
+.mclose{width:26px;height:26px;border-radius:50%;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:17px}
+.mclose:hover{background:#f5f5f5}
+.mbody{padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.mfooter{padding:11px 20px 14px;border-top:1px solid var(--bdr);display:flex;justify-content:flex-end;gap:8px;background:#fafafa}
+.fgrp{display:flex;flex-direction:column;gap:4px}
+.flbl{font-size:11px;font-weight:600;color:var(--sub);letter-spacing:.2px}
+.finput,.fsel2,.fta{padding:8px 11px;border:1px solid var(--bdr);border-radius:6px;font-size:13px;font-family:inherit;color:var(--txt);outline:none;transition:border-color .15s;background:#fff;width:100%}
+.finput:focus,.fsel2:focus,.fta:focus{border-color:var(--p)}
+.fta{resize:vertical;min-height:72px;line-height:1.5}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fcheck{display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer}
+.fcheck input{width:15px;height:15px;cursor:pointer;accent-color:var(--p)}
+.fsel2{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px}
+.sw-row{display:flex;align-items:center;justify-content:space-between;padding:3px 0}
+.sw-lbl{font-size:13px;color:var(--txt)}
+.sw-sub{font-size:11px;color:var(--sub)}
+.sw{position:relative;width:38px;height:20px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0}
+.sw-sl{position:absolute;inset:0;background:#ccc;border-radius:10px;cursor:pointer;transition:background .2s}
+.sw-sl::before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+input:checked+.sw-sl{background:var(--p)}
+input:checked+.sw-sl::before{transform:translateX(18px)}
+.his-mini{background:#f8f9fa;border-radius:6px;padding:9px 11px;display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto}
+.hi-row{display:flex;justify-content:space-between;font-size:11px;border-bottom:1px dashed #e0e0e0;padding-bottom:5px}
+.hi-row:last-child{border-bottom:none;padding-bottom:0}
+.hi-date{color:var(--sub);flex-shrink:0;margin-right:8px}
+.hi-note{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txt)}
+
+/* ── SNACKBAR ── */
+.snk{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(60px);background:#323232;color:#fff;padding:9px 20px;border-radius:22px;font-size:13px;font-weight:500;z-index:500;transition:transform .25s,opacity .25s;opacity:0;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.28)}
+.snk.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--bdr);margin:14px 0}
+.empty{text-align:center;padding:40px;color:var(--sub)}
+.empty .ei{font-size:36px;margin-bottom:10px}
+.empty p{font-size:13px}
+.tag-grid{display:flex;gap:6px;flex-wrap:wrap}
+.back-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--p);cursor:pointer;margin-bottom:14px;text-decoration:none}
+.back-link:hover{text-decoration:underline}
+.info-box{background:var(--pl);border:1px solid #90caf9;border-radius:8px;padding:10px 14px;font-size:12px;color:#0d47a1;line-height:1.5}
+.warn-box{background:#fff3e0;border:1px solid #ffcc80;border-radius:8px;padding:10px 14px;font-size:12px;color:#bf360c;line-height:1.5}
+.two-col{display:grid;grid-template-columns:1fr 340px;gap:14px}
+@media(max-width:1100px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="shell">
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-mark">R</div>
+    <div><div class="sb-name">Religo</div><div class="sb-sub">DragonFly Chapter</div></div>
+  </div>
+  <div class="sb-sec">
+    <button class="nav" data-href="#/dashboard"><span class="ico">📊</span>Dashboard</button>
+    <button class="nav" data-href="#/connections"><span class="ico">🗺</span>Connections</button>
+    <button class="nav" data-href="#/members"><span class="ico">👥</span>Members</button>
+    <button class="nav" data-href="#/meetings"><span class="ico">📋</span>Meetings</button>
+    <button class="nav" data-href="#/one-to-ones"><span class="ico">🤝</span>1 to 1</button>
+    <button class="nav" data-href="#/role-history"><span class="ico">🏅</span>Role History</button>
+  </div>
+  <div class="sb-div"></div>
+  <div class="sb-sec">
+    <div class="sb-lbl">Settings</div>
+    <button class="nav-sub" data-href="#/settings/categories">Categories</button>
+    <button class="nav-sub" data-href="#/settings/roles">Roles</button>
+  </div>
+  <div class="sb-foot">
+    <div class="sb-user">
+      <div class="sb-av">ME</div>
+      <div><div style="color:#fff;font-size:12px;font-weight:500">メンバー管理者</div><div style="color:rgba(255,255,255,.38);font-size:10px">admin@dragonfly</div></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div id="main">
+  <div id="appbar">
+    <div class="ab-bc" id="abbc"></div>
+    <div class="ab-search"><span style="color:#bbb;font-size:14px">🔍</span><input type="text" placeholder="検索…"/></div>
+    <button class="ab-ico">🔔</button>
+    <div class="av">ME</div>
+  </div>
+  <div id="content">
+
+<!-- ════════════════════════════════════════
+     PAGE: DASHBOARD
+════════════════════════════════════════ -->
+<div class="page" id="pg-dashboard">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Dashboard</h1><p>今日の活動・未アクション・KPI</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="nav('#/connections')">🗺 Connectionsへ</button>
+      <button class="btn btn-o btn-sm" onclick="nav('#/one-to-ones')">＋ 1to1追加</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-ico ico-r">⚠️</div><div><div class="stat-lbl">未接触（30日以上）</div><div class="stat-val" style="color:var(--warn)">4</div><div class="stat-s">要フォロー</div></div></div>
+    <div class="stat"><div class="stat-ico ico-b">🤝</div><div><div class="stat-lbl">今月の1to1回数</div><div class="stat-val">7</div><div class="stat-s">先月比 +2</div></div></div>
+    <div class="stat"><div class="stat-ico ico-g">📝</div><div><div class="stat-lbl">紹介メモ数（今月）</div><div class="stat-val">12</div><div class="stat-s">BO含む</div></div></div>
+    <div class="stat"><div class="stat-ico ico-pu">📋</div><div><div class="stat-lbl">例会メモ数（今月）</div><div class="stat-val">31</div><div class="stat-s">例会#247 含む</div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:14px">
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-title">⚡ 今日やること（Tasks）</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#fff3e0;border-radius:8px;border-left:3px solid var(--warn)">
+            <span style="font-size:16px">⏰</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#bf360c">伊藤 勇樹</div><div style="font-size:11px;color:var(--sub)">55日間未接触 — 1to1を検討</div></div>
+            <button class="btn btn-warn btn-xs" onclick="openModal('mol-1on1create')">1to1予定</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#fff3e0;border-radius:8px;border-left:3px solid var(--warn)">
+            <span style="font-size:16px">⏰</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#bf360c">水野 花菜</div><div style="font-size:11px;color:var(--sub)">66日間未接触 — フォローアップ要</div></div>
+            <button class="btn btn-warn btn-xs" onclick="openMemoModal('水野 花菜')">メモ追加</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--pl);border-radius:8px;border-left:3px solid var(--p)">
+            <span style="font-size:16px">📅</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">田中 誠一 との1to1</div><div style="font-size:11px;color:var(--sub)">本日 12:00 — CRM導入フォロー</div></div>
+            <span class="chip chip-planned">予定</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#f8f9fa;border-radius:8px;border-left:3px solid #ccc">
+            <span style="font-size:16px">📝</span>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">例会 #248 メモ未整理</div><div style="font-size:11px;color:var(--sub)">次回例会まであと5日</div></div>
+            <button class="btn btn-g btn-xs" onclick="nav('#/meetings')">Meetingsへ</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 クイックショートカット</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-p btn-sm" onclick="nav('#/connections')">🗺 Connections（会の地図）</button>
+          <button class="btn btn-o btn-sm" onclick="nav('#/members')">👥 Members一覧</button>
+          <button class="btn btn-o btn-sm" onclick="openModal('mol-1on1create')">＋ 1to1を追加</button>
+          <button class="btn btn-g btn-sm" onclick="nav('#/meetings')">📋 例会一覧</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🕐 最近の活動</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot">✏️</div><div class="tl-body"><div class="tl-title">佐藤 美咲 にメモ追加</div><div class="tl-meta">セミナー案件・1to1メモ — 2分前</div></div></div>
+        <div class="tl-item"><div class="tl-dot">📅</div><div class="tl-body"><div class="tl-title">田中 誠一 1to1を登録</div><div class="tl-meta">planned — 本日 12:00 — 3時間前</div></div></div>
+        <div class="tl-item"><div class="tl-dot">📋</div><div class="tl-body"><div class="tl-title">例会 #247 BO割当を保存</div><div class="tl-meta">BO4件 — 2025-07-08 — 昨日</div></div></div>
+        <div class="tl-item"><div class="tl-dot">🤝</div><div class="tl-body"><div class="tl-title">渡辺 彩香 1to1完了</div><div class="tl-meta">DX案件ヒアリング — 2025-07-09</div></div></div>
+        <div class="tl-item"><div class="tl-dot">⭐</div><div class="tl-body"><div class="tl-title">森 友美 に interested フラグ</div><div class="tl-meta">スポーツ施術コラボ検討 — 2025-07-06</div></div></div>
+        <div class="tl-item"><div class="tl-dot">✏️</div><div class="tl-body"><div class="tl-title">小林 陽子 にメモ追加</div><div class="tl-meta">投資物件の情報提供依頼 — 2025-07-05</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: CONNECTIONS
+════════════════════════════════════════ -->
+<div class="page" id="pg-connections">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Connections</h1><p>Meeting → BO割当 → 関係ログの中心</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="saveBo()">💾 BO割当を保存</button>
+      <button class="btn btn-g btn-sm" onclick="nav('#/meetings')">📋 Meetingsへ</button>
+    </div>
+  </div>
+  <div class="conn-grid">
+    <!-- Pane 1: Members -->
+    <div class="conn-pane">
+      <div class="pane-hdr">
+        <h3>👥 Members</h3>
+        <div class="fsearch" style="margin-top:0"><span style="color:#bbb">🔍</span><input type="text" placeholder="メンバー検索"/></div>
+      </div>
+      <div class="pane-body" id="conn-members-list"></div>
+    </div>
+    <!-- Pane 2: Meeting + BO -->
+    <div class="conn-pane">
+      <div class="pane-hdr">
+        <h3>📋 Meeting + BO割当</h3>
+        <select class="fsel" style="width:100%;margin-top:0" id="conn-meeting-sel" onchange="renderBO()">
+          <option value="247">#247 — 2025-07-08</option>
+          <option value="246">#246 — 2025-06-24</option>
+          <option value="245">#245 — 2025-06-10</option>
+          <option value="244">#244 — 2025-05-27</option>
+        </select>
+        <div style="margin-top:8px;font-size:11px;color:var(--sub)">BO回数はデフォルト2。将来的に増加可能な設計。</div>
+      </div>
+      <div class="pane-body" id="conn-bo-area"></div>
+    </div>
+    <!-- Pane 3: Relationship log -->
+    <div class="conn-pane" id="conn-rel-pane">
+      <div class="pane-hdr">
+        <h3>🔗 Relationship Log</h3>
+        <div id="conn-sel-name" style="font-size:11px;color:var(--sub)">← メンバーを選択</div>
+      </div>
+      <div class="pane-body" id="conn-rel-body">
+        <div class="empty"><div class="ei">👈</div><p>左リストからメンバーを選ぶと関係ログが表示されます</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: MEMBERS
+════════════════════════════════════════ -->
+<div class="page" id="pg-members">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Members</h1><p>仕事 / 役職 / 関係性を把握し、1to1とメモで接点を増やす</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="nav('#/connections')">🗺 Connectionsへ</button>
+      <button class="btn btn-o btn-sm" disabled>＋ メンバー追加（将来）</button>
+    </div>
+  </div>
+  <div class="stats" id="members-stats"></div>
+  <div class="fbar">
+    <div class="fsearch"><span style="color:#bbb">🔍</span><input type="text" placeholder="名前 / カテゴリ / ロール" oninput="filterMembers(this.value)"/></div>
+    <select class="fsel" onchange="filterMemberGroup(this.value)"><option value="">大カテゴリ: すべて</option><option>IT</option><option>士業</option><option>医療</option><option>建設</option><option>デザイン</option><option>不動産</option><option>金融</option></select>
+    <select class="fsel"><option>カテゴリ: すべて</option><option>システム開発</option><option>税理士</option><option>歯科</option><option>塗装</option><option>グラフィック</option><option>仲介</option><option>社労士</option><option>保険</option><option>コンサル</option></select>
+    <select class="fsel"><option>ロール: すべて</option><option>プレジ</option><option>バイス</option><option>書記</option><option>会計</option><option>メンター</option><option>メンバー</option></select>
+    <div class="fdiv"></div>
+    <button class="ftoggle" onclick="this.classList.toggle('on')">⭐ interested</button>
+    <button class="ftoggle" onclick="this.classList.toggle('on')">🔁 want_1on1</button>
+    <div class="fdiv"></div>
+    <select class="fsel"><option>最近接触順</option><option>同室回数順</option><option>50音順</option></select>
+    <div class="fcount" id="members-count"></div>
+  </div>
+  <div class="cgrid" id="members-grid"></div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: MEETINGS
+════════════════════════════════════════ -->
+<div class="page" id="pg-meetings">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Meetings</h1><p>例会管理 / BO割当 / メモ</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="nav('#/connections')">🗺 Connectionsで編集</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-ico ico-b">📋</div><div><div class="stat-lbl">総例会数</div><div class="stat-val">247</div><div class="stat-s">今年度 20回</div></div></div>
+    <div class="stat"><div class="stat-ico ico-g">🤝</div><div><div class="stat-lbl">総BO数（今年）</div><div class="stat-val">76</div><div class="stat-s">平均 3.8/例会</div></div></div>
+    <div class="stat"><div class="stat-ico ico-o">📝</div><div><div class="stat-lbl">メモ有り例会</div><div class="stat-val">18</div><div class="stat-s">91%</div></div></div>
+    <div class="stat"><div class="stat-ico ico-pu">📅</div><div><div class="stat-lbl">次回例会</div><div class="stat-val" style="font-size:14px">7/22</div><div class="stat-s">#248 予定</div></div></div>
+  </div>
+  <div class="two-col">
+    <div class="tbl-wrap">
+      <div class="tbl-toolbar">
+        <span class="sec-title" style="margin:0">例会一覧</span>
+        <div class="fdiv"></div>
+        <div class="fsearch" style="min-width:150px"><span style="color:#bbb">🔍</span><input type="text" placeholder="番号 / 日付"/></div>
+        <select class="fsel"><option>すべて</option><option>メモあり</option><option>メモなし</option></select>
+        <div class="fcount">6件</div>
+      </div>
+      <table id="meetings-table">
+        <thead><tr><th>番号</th><th>日付</th><th class="c">BO数</th><th>メモ</th><th>Actions</th></tr></thead>
+        <tbody id="meetings-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card" id="meeting-detail-panel">
+      <div class="card-title">📋 例会詳細</div>
+      <div id="meeting-detail-body"><div class="empty" style="padding:20px"><div class="ei" style="font-size:24px">←</div><p style="font-size:12px">例会を選択してください</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: 1 to 1
+════════════════════════════════════════ -->
+<div class="page" id="pg-one-to-ones">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>1 to 1</h1><p>予定・実施・キャンセル履歴の管理</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="openModal('mol-1on1create')">＋ 1to1を追加</button>
+      <button class="btn btn-g btn-sm" onclick="nav('#/connections')">🗺 Connectionsへ</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-ico ico-b">📅</div><div><div class="stat-lbl">予定中</div><div class="stat-val" style="color:#f57f17">3</div><div class="stat-s">今後の予定</div></div></div>
+    <div class="stat"><div class="stat-ico ico-g">✅</div><div><div class="stat-lbl">完了（今月）</div><div class="stat-val" style="color:var(--ok)">7</div><div class="stat-s">先月比 +2</div></div></div>
+    <div class="stat"><div class="stat-ico ico-r">❌</div><div><div class="stat-lbl">キャンセル</div><div class="stat-val" style="color:var(--err)">2</div><div class="stat-s">今月</div></div></div>
+    <div class="stat"><div class="stat-ico ico-pu">🔁</div><div><div class="stat-lbl">want_1on1 ON</div><div class="stat-val" style="color:#6a1b9a">5</div><div class="stat-s">未予定あり</div></div></div>
+  </div>
+  <div class="fbar">
+    <div class="fsearch"><span style="color:#bbb">🔍</span><input type="text" placeholder="相手の名前 / メモ"/></div>
+    <select class="fsel"><option>相手: すべて</option><option>田中 誠一</option><option>鈴木 花子</option><option>佐藤 美咲</option><option>渡辺 彩香</option><option>小林 陽子</option></select>
+    <select class="fsel"><option>ステータス: すべて</option><option>planned</option><option>completed</option><option>canceled</option></select>
+    <div class="fdiv"></div>
+    <input type="date" class="fsel" value="2025-06-01" style="min-width:120px"/>
+    <span style="color:var(--sub);font-size:12px">〜</span>
+    <input type="date" class="fsel" value="2025-07-31" style="min-width:120px"/>
+    <div class="fcount">12件</div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>日付</th><th>相手</th><th>ステータス</th><th>Meeting</th><th>メモ</th><th>Actions</th></tr></thead>
+      <tbody id="oto-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: ROLE HISTORY
+════════════════════════════════════════ -->
+<div class="page" id="pg-role-history">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Role History</h1><p>役職履歴 / 任期管理 / 歴代役職一覧</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="openModal('mol-role-add')">＋ 役職追加</button>
+      <button class="btn btn-g btn-sm" onclick="nav('#/connections')">🗺 Connectionsへ</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-ico ico-pu">🏅</div><div><div class="stat-lbl">現役職保有者</div><div class="stat-val">7</div><div class="stat-s">全役職埋まり</div></div></div>
+    <div class="stat"><div class="stat-ico ico-b">📜</div><div><div class="stat-lbl">総履歴件数</div><div class="stat-val">28</div><div class="stat-s">過去3年分</div></div></div>
+    <div class="stat"><div class="stat-ico ico-g">👑</div><div><div class="stat-lbl">歴代プレジ数</div><div class="stat-val">4</div><div class="stat-s">2022〜2025</div></div></div>
+    <div class="stat"><div class="stat-ico ico-o">🔄</div><div><div class="stat-lbl">次期改選</div><div class="stat-val" style="font-size:14px">2026-01</div><div class="stat-s">あと5ヶ月</div></div></div>
+  </div>
+  <div class="fbar">
+    <div class="fsearch"><span style="color:#bbb">🔍</span><input type="text" placeholder="メンバー名 / 役職名"/></div>
+    <select class="fsel"><option>メンバー: すべて</option><option>田中 誠一</option><option>鈴木 花子</option><option>山田 大輔</option><option>佐藤 美咲</option></select>
+    <select class="fsel"><option>役職: すべて</option><option>プレジ</option><option>バイス</option><option>書記</option><option>会計</option><option>メンター</option><option>エドコ</option></select>
+    <div class="fdiv"></div>
+    <input type="number" class="fsel" placeholder="年 例: 2024" style="width:120px"/>
+    <div class="fcount">12件</div>
+    <div class="info-box" style="margin-left:auto;padding:5px 12px">💡 役職フィルタ + 年で「去年のプレジ」を検索できます</div>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>メンバー</th><th>役職</th><th>任期開始</th><th>任期終了</th><th>状態</th><th>Actions</th></tr></thead>
+      <tbody id="rh-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: SETTINGS CATEGORIES
+════════════════════════════════════════ -->
+<div class="page" id="pg-settings-categories">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Settings — Categories</h1><p>大カテゴリ（group）と実カテゴリの管理</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="openModal('mol-cat-edit')">＋ カテゴリ追加</button>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-bottom:14px">⚠️ カテゴリの削除は、所属メンバーがいる場合は不可です。メンバーを別カテゴリへ移動してから削除してください。</div>
+  <div class="tbl-wrap">
+    <div class="tbl-toolbar"><span class="sec-title" style="margin:0">カテゴリ一覧</span><div class="fcount" style="margin-left:auto">15件</div></div>
+    <table>
+      <thead><tr><th>大カテゴリ (group)</th><th>実カテゴリ (name)</th><th class="c">メンバー数</th><th>Actions</th></tr></thead>
+      <tbody id="cat-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: SETTINGS ROLES
+════════════════════════════════════════ -->
+<div class="page" id="pg-settings-roles">
+  <div class="pg-hdr">
+    <div class="pg-hdr-l"><h1>Settings — Roles</h1><p>役職マスタの管理</p></div>
+    <div class="pg-hdr-r">
+      <button class="btn btn-p btn-sm" onclick="openModal('mol-role-edit')">＋ 役職追加</button>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+    <div class="tbl-toolbar"><span class="sec-title" style="margin:0">役職一覧</span><div class="fcount" style="margin-left:auto">7件</div></div>
+    <table>
+      <thead><tr><th>役職名</th><th>説明</th><th class="c">現在の担当者数</th><th>Actions</th></tr></thead>
+      <tbody id="roles-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- ════════ MODALS ════════ -->
+
+<!-- Memo Modal -->
+<div class="mol" id="mol-memo">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">✏️ メモ追加 <span id="memo-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-memo')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><label class="flbl">メモ種別</label><select class="fsel2" id="memo-type" onchange="toggleMemoFields()"><option value="other">other（その他）</option><option value="meeting">meeting（例会メモ）</option><option value="one_to_one">one_to_one（1to1メモ）</option></select></div>
+      <div class="fgrp" id="memo-meeting-field" style="display:none"><label class="flbl">例会番号（任意）</label><select class="fsel2"><option>—</option><option>#247 — 2025-07-08</option><option>#246 — 2025-06-24</option><option>#245 — 2025-06-10</option></select></div>
+      <div class="fgrp" id="memo-oto-field" style="display:none"><label class="flbl">1to1 ID（任意）</label><select class="fsel2"><option>—</option><option>1to1-001 — 2025-07-15</option><option>1to1-002 — 2025-06-12</option></select></div>
+      <div class="fgrp"><label class="flbl">本文</label><textarea class="fta" placeholder="メモ内容を入力…" rows="4"></textarea></div>
+      <label class="fcheck"><input type="checkbox"/> 重要フラグを立てる</label>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-memo')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','メモを保存しました ✓','mol-memo')">保存する</button></div>
+  </div>
+</div>
+
+<!-- 1to1 Create Modal -->
+<div class="mol" id="mol-1on1create">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">📅 1to1予定作成 <span id="oto-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-1on1create')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrid2">
+        <div class="fgrp"><label class="flbl">日付</label><input type="date" class="finput" value="2025-08-20"/></div>
+        <div class="fgrp"><label class="flbl">時刻</label><input type="time" class="finput" value="12:00"/></div>
+      </div>
+      <div class="fgrp"><label class="flbl">相手メンバー</label><select class="fsel2"><option>田中 誠一</option><option>鈴木 花子</option><option>佐藤 美咲</option><option>渡辺 彩香</option><option>小林 陽子</option><option>森 友美</option><option>加藤 浩二</option></select></div>
+      <div class="fgrp"><label class="flbl">ステータス</label><select class="fsel2"><option>planned（予定）</option><option>completed（完了）</option><option>canceled（キャンセル）</option></select></div>
+      <div class="fgrp"><label class="flbl">関連例会（任意）</label><select class="fsel2"><option>—</option><option>#247 — 2025-07-08</option><option>#246 — 2025-06-24</option></select></div>
+      <div class="fgrp"><label class="flbl">メモ / アジェンダ</label><textarea class="fta" placeholder="打ち合わせ内容、目的など…" rows="3"></textarea></div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-1on1create')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','1to1予定を保存しました ✓','mol-1on1create')">保存する</button></div>
+  </div>
+</div>
+
+<!-- 1to1 Memo Modal -->
+<div class="mol" id="mol-1on1memo">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">📝 1to1メモ <span id="otomemo-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-1on1memo')">✕</button></div>
+    <div class="mbody">
+      <div><div class="flbl" style="margin-bottom:6px">過去の1to1履歴</div>
+        <div class="his-mini">
+          <div class="hi-row"><span class="hi-date">2025-06-12</span><span class="hi-note">新商品の紹介。来月また会う約束。</span><span class="chip chip-done" style="height:16px;font-size:9px">完了</span></div>
+          <div class="hi-row"><span class="hi-date">2025-04-08</span><span class="hi-note">業務提携の可能性を探った。継続検討。</span><span class="chip chip-done" style="height:16px;font-size:9px">完了</span></div>
+          <div class="hi-row"><span class="hi-date">2025-02-20</span><span class="hi-note">初回顔合わせ。共通の顧客が判明。</span><span class="chip chip-done" style="height:16px;font-size:9px">完了</span></div>
+        </div>
+      </div>
+      <div class="fgrp"><label class="flbl">今回のメモ</label><textarea class="fta" placeholder="今回の1to1で話した内容…" rows="4"></textarea></div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-1on1memo')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','1to1メモを保存しました ✓','mol-1on1memo')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Flag Modal -->
+<div class="mol" id="mol-flag">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">🚩 フラグ編集 <span id="flag-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-flag')">✕</button></div>
+    <div class="mbody">
+      <div style="background:#f8f9fa;border-radius:8px;padding:13px 15px;display:flex;flex-direction:column;gap:12px">
+        <div class="sw-row"><div><div class="sw-lbl">⭐ interested</div><div class="sw-sub">関係を深めたい・紹介候補</div></div><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div style="height:1px;background:var(--bdr)"></div>
+        <div class="sw-row"><div><div class="sw-lbl">🔁 want_1on1</div><div class="sw-sub">1to1の予定を入れたい</div></div><label class="sw"><input type="checkbox"/><span class="sw-sl"></span></label></div>
+      </div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-flag')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','フラグを更新しました ✓','mol-flag')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Meeting Memo Modal -->
+<div class="mol" id="mol-meeting-memo">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">📝 例会メモ編集 <span id="meeting-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-meeting-memo')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><label class="flbl">例会メモ</label><textarea class="fta" id="meeting-memo-body" placeholder="例会の概要、特記事項、BOの状況など…" rows="5"></textarea></div>
+      <div class="info-box">💡 BO割当の詳細は <a style="color:var(--p);cursor:pointer" onclick="closeModal('mol-meeting-memo');nav('#/connections')">Connectionsで編集</a> できます</div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-meeting-memo')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','メモを保存しました ✓','mol-meeting-memo')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Category Edit Modal -->
+<div class="mol" id="mol-cat-edit">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">📂 カテゴリ編集</div><button class="mclose" onclick="closeModal('mol-cat-edit')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><label class="flbl">大カテゴリ (group_name)</label><input type="text" class="finput" placeholder="例: IT, 士業, 医療…" value=""/></div>
+      <div class="fgrp"><label class="flbl">実カテゴリ (name)</label><input type="text" class="finput" placeholder="例: システム開発, 税理士…" value=""/></div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-cat-edit')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','カテゴリを保存しました ✓','mol-cat-edit')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Role Edit Modal -->
+<div class="mol" id="mol-role-edit">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">🏅 役職編集</div><button class="mclose" onclick="closeModal('mol-role-edit')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><label class="flbl">役職名</label><input type="text" class="finput" placeholder="例: プレジ, バイス…" value=""/></div>
+      <div class="fgrp"><label class="flbl">説明</label><textarea class="fta" placeholder="役職の役割・職務内容…" rows="3"></textarea></div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-role-edit')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','役職を保存しました ✓','mol-role-edit')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Role Add Modal (from RoleHistory) -->
+<div class="mol" id="mol-role-add">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">🏅 役職履歴を追加</div><button class="mclose" onclick="closeModal('mol-role-add')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><label class="flbl">メンバー</label><select class="fsel2"><option>田中 誠一</option><option>鈴木 花子</option><option>山田 大輔</option><option>佐藤 美咲</option><option>小林 陽子</option></select></div>
+      <div class="fgrp"><label class="flbl">役職</label><select class="fsel2"><option>プレジ</option><option>バイス</option><option>書記</option><option>会計</option><option>メンター</option><option>エドコ</option></select></div>
+      <div class="fgrid2">
+        <div class="fgrp"><label class="flbl">任期開始</label><input type="date" class="finput"/></div>
+        <div class="fgrp"><label class="flbl">任期終了（任意）</label><input type="date" class="finput"/></div>
+      </div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-role-add')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','役職履歴を保存しました ✓','mol-role-add')">保存する</button></div>
+  </div>
+</div>
+
+<!-- Member Detail Drawer -->
+<div class="drawer-overlay" id="drw-member-overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drw-member">
+  <div class="drw-hdr">
+    <div class="drw-hdr-r">
+      <div>
+        <div style="color:rgba(255,255,255,.5);font-size:10px;font-weight:600" id="drw-member-no"></div>
+        <div style="color:#fff;font-size:17px;font-weight:700" id="drw-member-name"></div>
+        <div style="display:flex;gap:4px;margin-top:5px;flex-wrap:wrap" id="drw-member-chips"></div>
+      </div>
+      <button class="mclose" style="color:rgba(255,255,255,.6)" onclick="closeDrawer()">✕</button>
+    </div>
+  </div>
+  <div class="drw-tabs">
+    <button class="dtab a" onclick="setDrwTab(0,this)">Overview</button>
+    <button class="dtab" onclick="setDrwTab(1,this)">Memos</button>
+    <button class="dtab" onclick="setDrwTab(2,this)">1to1</button>
+  </div>
+  <div class="drw-body" id="drw-body"></div>
+</div>
+
+<div class="snk" id="snk"></div>
+
+<script>
+// ══════════════════════════════════
+// DATA
+// ══════════════════════════════════
+const MEMBERS=[
+  {id:1,no:1,name:"田中 誠一",kana:"たなか せいいち",group:"IT",cat:"システム開発",role:"プレジ",rooms:28,contact:"2025-07-18",memo:"新しいCRMの導入について相談あり。来月デモを実施予定。",interested:true,want1on1:true,logs:[{t:"1on1",d:"7/15",txt:"CRM導入の進捗確認"},{t:"meeting",d:"7/8",txt:"例会でBOを受領"},{t:"other",d:"6/28",txt:"ランチMTGで情報交換"}]},
+  {id:2,no:2,name:"鈴木 花子",kana:"すずき はなこ",group:"士業",cat:"税理士",role:"バイス",rooms:22,contact:"2025-07-20",memo:"節税対策の勉強会を企画中。BNIメンバーへの案内を依頼された。",interested:true,want1on1:false,logs:[{t:"1on1",d:"7/12",txt:"決算対策について深掘り"},{t:"meeting",d:"6/30",txt:"例会でプレゼン好評"},{t:"other",d:"6/15",txt:"紹介案件の経過確認"}]},
+  {id:3,no:3,name:"山田 大輔",kana:"やまだ だいすけ",group:"建設",cat:"塗装",role:"書記",rooms:18,contact:"2025-07-05",memo:"外壁塗装の新工法を開発中。来月サンプルを持参してくれる予定。",interested:false,want1on1:true,logs:[{t:"meeting",d:"7/1",txt:"例会での名刺交換"},{t:"1on1",d:"6/20",txt:"現場の課題ヒアリング"},{t:"other",d:"5/30",txt:"見積もり相談あり"}]},
+  {id:4,no:4,name:"佐藤 美咲",kana:"さとう みさき",group:"医療",cat:"歯科",role:"メンター",rooms:31,contact:"2025-07-22",memo:"患者向けの予防歯科セミナー開催予定。会場探しを手伝っている。",interested:true,want1on1:true,logs:[{t:"1on1",d:"7/20",txt:"セミナー企画の詳細確認"},{t:"meeting",d:"7/8",txt:"例会でBO3件受領"},{t:"1on1",d:"6/10",txt:"コラボ企画について"}]},
+  {id:5,no:5,name:"中村 健太",kana:"なかむら けんた",group:"デザイン",cat:"グラフィック",role:"メンバー",rooms:12,contact:"2025-06-28",memo:"企業ロゴのリブランディング案件を複数抱えており多忙な様子。",interested:false,want1on1:false,logs:[{t:"other",d:"6/25",txt:"SNS投稿の相談"},{t:"meeting",d:"6/8",txt:"例会でピッチ"},{t:"other",d:"5/20",txt:"ポートフォリオ共有"}]},
+  {id:6,no:6,name:"小林 陽子",kana:"こばやし ようこ",group:"不動産",cat:"仲介",role:"会計",rooms:25,contact:"2025-07-17",memo:"投資用物件の情報提供をお願いしている。良い物件があれば連絡くれる。",interested:true,want1on1:false,logs:[{t:"1on1",d:"7/14",txt:"投資エリアの絞り込み"},{t:"meeting",d:"7/1",txt:"例会参加"},{t:"other",d:"6/18",txt:"物件資料の送付依頼"}]},
+  {id:7,no:7,name:"伊藤 勇樹",kana:"いとう ゆうき",group:"金融",cat:"保険",role:"メンバー",rooms:9,contact:"2025-06-10",memo:"経営者向けの生命保険プランを提案中。先月から少し疎遠になっている。",interested:false,want1on1:true,logs:[{t:"1on1",d:"6/8",txt:"保険見直しの提案"},{t:"meeting",d:"5/27",txt:"例会欠席"},{t:"other",d:"5/10",txt:"資料送付のみ"}]},
+  {id:8,no:8,name:"渡辺 彩香",kana:"わたなべ あやか",group:"IT",cat:"コンサル",role:"メンバー",rooms:16,contact:"2025-07-10",memo:"DX推進コンサルとして製造業クライアントへの支援を強化中。紹介案件あり。",interested:true,want1on1:true,logs:[{t:"1on1",d:"7/9",txt:"DX案件の詳細ヒアリング"},{t:"meeting",d:"6/30",txt:"例会でBO交換"},{t:"other",d:"6/15",txt:"セミナー共催の提案"}]},
+  {id:9,no:9,name:"加藤 浩二",kana:"かとう こうじ",group:"士業",cat:"社労士",role:"メンバー",rooms:20,contact:"2025-07-14",memo:"就業規則の見直しプロジェクトで複数の会社を支援中。人手不足が悩み。",interested:false,want1on1:false,logs:[{t:"meeting",d:"7/8",txt:"例会参加・名刺交換"},{t:"1on1",d:"6/22",txt:"人事制度の課題整理"},{t:"other",d:"5/30",txt:"メール返信あり"}]},
+  {id:10,no:10,name:"吉田 理沙",kana:"よしだ りさ",group:"デザイン",cat:"Webデザイン",role:"メンバー",rooms:14,contact:"2025-07-08",memo:"UI/UXデザインの案件を積極的に探している。ポートフォリオを最近更新した。",interested:true,want1on1:false,logs:[{t:"1on1",d:"7/5",txt:"ポートフォリオレビュー"},{t:"meeting",d:"6/16",txt:"例会でピッチ高評価"},{t:"other",d:"5/28",txt:"案件紹介の打診"}]},
+  {id:11,no:11,name:"松本 剛",kana:"まつもと つよし",group:"建設",cat:"設備工事",role:"メンバー",rooms:19,contact:"2025-06-20",memo:"マンションの設備更新工事の受注が増えており忙しい。新スタッフを採用した。",interested:false,want1on1:true,logs:[{t:"meeting",d:"6/16",txt:"例会参加"},{t:"other",d:"5/25",txt:"現場見学のお誘い"},{t:"1on1",d:"4/10",txt:"事業拡大の相談"}]},
+  {id:12,no:12,name:"森 友美",kana:"もり ともみ",group:"医療",cat:"整体・鍼灸",role:"メンバー",rooms:11,contact:"2025-07-01",memo:"スポーツ選手専門の施術で差別化中。アスリート向けサービスへの展開を検討。",interested:true,want1on1:true,logs:[{t:"1on1",d:"6/29",txt:"スポーツ施術の方向性"},{t:"meeting",d:"6/16",txt:"例会でサービス紹介"},{t:"other",d:"5/20",txt:"コラボ案の検討"}]},
+  {id:13,no:13,name:"高橋 誠",kana:"たかはし まこと",group:"IT",cat:"Web制作",role:"メンバー",rooms:17,contact:"2025-07-15",memo:"中小企業向けのホームページ制作が専門。最近SEOにも注力し始めた。",interested:true,want1on1:false,logs:[{t:"meeting",d:"7/8",txt:"例会で名刺交換"},{t:"1on1",d:"6/30",txt:"Web制作案件の詳細"},{t:"other",d:"6/10",txt:"ポートフォリオ共有"}]},
+  {id:14,no:14,name:"水野 花菜",kana:"みずの はな",group:"士業",cat:"司法書士",role:"エドコ",rooms:8,contact:"2025-05-30",memo:"相続・不動産登記専門。BNIでは教育委員として例会資料を担当。",interested:false,want1on1:false,logs:[{t:"meeting",d:"5/27",txt:"例会資料を配布"},{t:"other",d:"4/25",txt:"相続案件の相談"},{t:"1on1",d:"4/10",txt:"エドコとしての役割確認"}]},
+  {id:15,no:15,name:"池田 隆",kana:"いけだ たかし",group:"不動産",cat:"管理",role:"メンバー",rooms:13,contact:"2025-07-03",memo:"賃貸管理専門。空室対策のノウハウを持っており、定期的に情報共有してもらっている。",interested:false,want1on1:true,logs:[{t:"1on1",d:"7/2",txt:"空室対策のヒアリング"},{t:"meeting",d:"6/16",txt:"例会参加"},{t:"other",d:"5/30",txt:"市場動向の情報共有"}]},
+];
+
+const MEETINGS=[
+  {id:247,num:"#247",date:"2025-07-08",bo:4,notes:"今回は新メンバー佐藤さんのプレゼンが好評。BO4件、うちIT系が2件。次回はデザイン系の紹介を増やしたい。"},
+  {id:246,num:"#246",date:"2025-06-24",bo:3,notes:"例会後のランチで田中さんと鈴木さんが新プロジェクトの話を進めた。BOは3件。"},
+  {id:245,num:"#245",date:"2025-06-10",bo:5,notes:"特大BOウィーク。医療×ITのコラボ案件が出た。次回1to1の設定を急ぐ。"},
+  {id:244,num:"#244",date:"2025-05-27",bo:2,notes:null},
+  {id:243,num:"#243",date:"2025-05-13",bo:6,notes:"渡辺さんのDX案件紹介で盛り上がった。BO6件は今年最多。"},
+  {id:242,num:"#242",date:"2025-04-22",bo:3,notes:"4月の例会。新年度スタート。役職引き継ぎも兼ねて。"},
+];
+
+const OTO=[
+  {id:1,date:"2025-08-05",partner:"田中 誠一",status:"planned",meeting:"#247",notes:"CRM導入の進め方について深掘り"},
+  {id:2,date:"2025-07-22",partner:"佐藤 美咲",status:"planned",meeting:null,notes:"セミナー企画の詳細詰め"},
+  {id:3,date:"2025-07-28",partner:"渡辺 彩香",status:"planned",meeting:null,notes:"DXコンサル案件の紹介"},
+  {id:4,date:"2025-07-09",partner:"渡辺 彩香",status:"completed",meeting:"#246",notes:"DX案件ヒアリング完了。次回は11月を予定。"},
+  {id:5,date:"2025-07-05",partner:"吉田 理沙",status:"completed",meeting:null,notes:"ポートフォリオレビュー。Web案件を紹介できそう。"},
+  {id:6,date:"2025-07-02",partner:"池田 隆",status:"completed",meeting:"#246",notes:"空室対策のヒアリング。有益な情報交換。"},
+  {id:7,date:"2025-06-29",partner:"森 友美",status:"completed",meeting:null,notes:"スポーツ施術の方向性について議論。"},
+  {id:8,date:"2025-06-22",partner:"加藤 浩二",status:"completed",meeting:"#245",notes:"人事制度の課題整理。2件紹介案件が生まれた。"},
+  {id:9,date:"2025-06-15",partner:"山田 大輔",status:"canceled",meeting:null,notes:"現場の都合でキャンセル。来月再調整。"},
+  {id:10,date:"2025-06-12",partner:"田中 誠一",status:"completed",meeting:"#245",notes:"新商品紹介。継続接触中。"},
+  {id:11,date:"2025-06-08",partner:"伊藤 勇樹",status:"completed",meeting:null,notes:"保険見直しの提案。要継続フォロー。"},
+  {id:12,date:"2025-04-10",partner:"松本 剛",status:"completed",meeting:null,notes:"事業拡大の相談。採用支援を紹介できた。"},
+];
+
+const ROLE_HISTORY=[
+  {member:"田中 誠一",role:"プレジ",start:"2025-01-01",end:null,current:true},
+  {member:"鈴木 花子",role:"バイス",start:"2025-01-01",end:null,current:true},
+  {member:"山田 大輔",role:"書記",start:"2025-01-01",end:null,current:true},
+  {member:"小林 陽子",role:"会計",start:"2025-01-01",end:null,current:true},
+  {member:"佐藤 美咲",role:"メンター",start:"2025-01-01",end:null,current:true},
+  {member:"水野 花菜",role:"エドコ",start:"2025-01-01",end:null,current:true},
+  {member:"渡辺 彩香",role:"バイス",start:"2024-01-01",end:"2024-12-31",current:false},
+  {member:"加藤 浩二",role:"書記",start:"2024-01-01",end:"2024-12-31",current:false},
+  {member:"中村 健太",role:"会計",start:"2024-01-01",end:"2024-12-31",current:false},
+  {member:"高橋 誠",role:"エドコ",start:"2024-01-01",end:"2024-12-31",current:false},
+  {member:"松本 剛",role:"プレジ",start:"2023-01-01",end:"2023-12-31",current:false},
+  {member:"池田 隆",role:"バイス",start:"2023-01-01",end:"2023-12-31",current:false},
+];
+
+const CATS=[
+  {group:"IT",name:"システム開発",count:1},{group:"IT",name:"Web制作",count:1},{group:"IT",name:"コンサル",count:1},{group:"IT",name:"Webデザイン",count:1},
+  {group:"士業",name:"税理士",count:1},{group:"士業",name:"社労士",count:1},{group:"士業",name:"司法書士",count:1},
+  {group:"医療",name:"歯科",count:1},{group:"医療",name:"整体・鍼灸",count:1},
+  {group:"建設",name:"塗装",count:1},{group:"建設",name:"設備工事",count:1},
+  {group:"デザイン",name:"グラフィック",count:1},
+  {group:"不動産",name:"仲介",count:1},{group:"不動産",name:"管理",count:1},
+  {group:"金融",name:"保険",count:1},
+];
+
+const ROLES_MASTER=[
+  {name:"プレジ",desc:"チャプター代表。例会進行・外部対応全般",count:1},
+  {name:"バイス",desc:"副代表。プレジのサポート・メンター管理",count:1},
+  {name:"書記",desc:"会議録・連絡調整・書類管理",count:1},
+  {name:"会計",desc:"会費管理・経費精算・財務報告",count:1},
+  {name:"メンター",desc:"新メンバーのオンボーディング支援",count:1},
+  {name:"エドコ",desc:"例会の教育コンテンツ作成・配布",count:1},
+  {name:"メンバー",desc:"一般メンバー",count:9},
+];
+
+const BO_DATA={
+  247:[
+    {bo:1,note:"今週の紹介枠①",members:["田中 誠一","鈴木 花子"]},
+    {bo:2,note:"今週の紹介枠②",members:["佐藤 美咲","渡辺 彩香"]},
+  ],
+  246:[
+    {bo:1,note:"紹介枠①",members:["小林 陽子","山田 大輔"]},
+    {bo:2,note:"紹介枠②",members:["加藤 浩二","森 友美"]},
+  ],
+  245:[
+    {bo:1,note:"紹介枠①",members:["田中 誠一","高橋 誠"]},
+    {bo:2,note:"紹介枠②",members:["吉田 理沙","松本 剛"]},
+  ],
+  244:[
+    {bo:1,note:"紹介枠①",members:["中村 健太"]},
+    {bo:2,note:"紹介枠②",members:["池田 隆"]},
+  ],
+};
+
+const ROLE_CHIP={プレジ:"chip-presi",バイス:"chip-vice",書記:"chip-sec",会計:"chip-acc",メンター:"chip-mentor",エドコ:"chip-edco",メンバー:"chip-member"};
+const LOG_CLS={"1on1":"lt-1","meeting":"lt-m","other":"lt-o"};
+const LOG_LBL={"1on1":"1to1","meeting":"例会","other":"その他"};
+const STATUS_CHIP={planned:"chip-planned",completed:"chip-done",canceled:"chip-canceled"};
+const STATUS_LBL={planned:"予定",completed:"完了",canceled:"キャンセル"};
+
+// ══════════════════════════════════
+// ROUTING
+// ══════════════════════════════════
+const PAGE_MAP={
+  "/dashboard":"pg-dashboard",
+  "/connections":"pg-connections",
+  "/members":"pg-members",
+  "/meetings":"pg-meetings",
+  "/one-to-ones":"pg-one-to-ones",
+  "/role-history":"pg-role-history",
+  "/settings/categories":"pg-settings-categories",
+  "/settings/roles":"pg-settings-roles",
+};
+const BC_MAP={
+  "/dashboard":["Dashboard"],
+  "/connections":["Connections","Network Map"],
+  "/members":["Members"],
+  "/meetings":["Meetings"],
+  "/one-to-ones":["1 to 1"],
+  "/role-history":["Role History"],
+  "/settings/categories":["Settings","Categories"],
+  "/settings/roles":["Settings","Roles"],
+};
+
+function nav(href){location.hash=href}
+
+function route(){
+  const hash=location.hash||"#/dashboard";
+  const path=hash.replace("#","");
+  const pageId=PAGE_MAP[path]||"pg-dashboard";
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const pg=document.getElementById(pageId);
+  if(pg)pg.classList.add("active");
+  // sidebar active
+  document.querySelectorAll(".nav,.nav-sub").forEach(n=>n.classList.remove("active"));
+  const href="#"+path;
+  document.querySelectorAll("[data-href]").forEach(n=>{if(n.dataset.href===href)n.classList.add("active")});
+  // breadcrumb
+  const bcs=BC_MAP[path]||["—"];
+  const abc=document.getElementById("abbc");
+  abc.innerHTML=`<span onclick="nav('#/dashboard')">Religo</span><span class="sep">›</span>`+
+    bcs.map((b,i)=>i===bcs.length-1?`<span class="cur">${b}</span>`:`<span>${b}</span><span class="sep">›</span>`).join("");
+  // lazy render
+  if(path==="/connections")renderConnections();
+  if(path==="/members")renderMembers();
+  if(path==="/meetings")renderMeetings();
+  if(path==="/one-to-ones")renderOto();
+  if(path==="/role-history")renderRH();
+  if(path==="/settings/categories")renderCats();
+  if(path==="/settings/roles")renderRoles();
+}
+
+window.addEventListener("hashchange",route);
+document.querySelectorAll("[data-href]").forEach(el=>el.addEventListener("click",()=>nav(el.dataset.href)));
+
+// ══════════════════════════════════
+// MEMBERS PAGE
+// ══════════════════════════════════
+function daysSince(d){return Math.floor((Date.now()-new Date(d).getTime())/86400000)}
+function contactBadge(d){
+  const days=daysSince(d);
+  if(days>=30)return`<span class="contact-warn">⚠ ${days}日未接触</span>`;
+  return`<span style="font-size:11px;color:var(--sub)">${d}</span>`;
+}
+
+function renderMembersStats(){
+  const total=MEMBERS.length;
+  const noContact=MEMBERS.filter(m=>daysSince(m.contact)>=30).length;
+  const interested=MEMBERS.filter(m=>m.interested).length;
+  const want1on1=MEMBERS.filter(m=>m.want1on1).length;
+  document.getElementById("members-stats").innerHTML=`
+    <div class="stat"><div class="stat-ico ico-b">👥</div><div><div class="stat-lbl">総メンバー数</div><div class="stat-val">${total}</div><div class="stat-s">アクティブ ${total-1}</div></div></div>
+    <div class="stat"><div class="stat-ico ico-o">⏰</div><div><div class="stat-lbl">1to1未実施（30日）</div><div class="stat-val" style="color:var(--warn)">${noContact}</div><div class="stat-s">要フォロー</div></div></div>
+    <div class="stat"><div class="stat-ico ico-g">⭐</div><div><div class="stat-lbl">interested ON</div><div class="stat-val" style="color:var(--ok)">${interested}</div><div class="stat-s">関係強化対象</div></div></div>
+    <div class="stat"><div class="stat-ico ico-pu">🔁</div><div><div class="stat-lbl">want_1on1 ON</div><div class="stat-val" style="color:#6a1b9a">${want1on1}</div><div class="stat-s">予定を入れよう</div></div></div>
+  `;
+}
+
+let filteredMembers=[...MEMBERS];
+function renderMembers(list){
+  renderMembersStats();
+  const m=list||filteredMembers;
+  document.getElementById("members-count").textContent=m.length+"件";
+  document.getElementById("members-grid").innerHTML=m.map(mb=>`
+    <div class="mcard">
+      <div class="mc-hdr">
+        <div class="mc-hdr-r"><span class="mc-no">#${String(mb.no).padStart(2,"0")}</span><span class="chip ${ROLE_CHIP[mb.role]||"chip-member"}">${mb.role}</span></div>
+        <div class="mc-name">${mb.name}</div><div class="mc-kana">${mb.kana}</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-cat"><span class="cg">${mb.group}</span><span class="cat-sep" style="color:var(--dis)">/</span><span class="cn">${mb.cat}</span></div>
+        <div class="mc-rel">
+          <div class="rel-i"><div class="rel-l">同室回数</div><div class="rel-v hi">${mb.rooms}回</div></div>
+          <div class="rel-i"><div class="rel-l">最終接触</div><div class="rel-v">${contactBadge(mb.contact)}</div></div>
+        </div>
+        <div class="mc-memo">${mb.memo}</div>
+        <div class="mc-flags">
+          <span class="flag ${mb.interested?"flag-int":"flag-off"}" onclick="openFlagModal(${mb.id})">⭐ interested</span>
+          <span class="flag ${mb.want1on1?"flag-w1o":"flag-off"}" onclick="openFlagModal(${mb.id})">🔁 want 1on1</span>
+        </div>
+      </div>
+      <div class="mc-act">
+        <button class="btn btn-p btn-xs" onclick="openMemoModal('${mb.name}')">✏️ メモ</button>
+        <button class="btn btn-o btn-xs" onclick="openOtoModal('${mb.name}')">📅 1to1</button>
+        <button class="btn btn-t btn-xs" onclick="openOtoMemoModal('${mb.name}')">📝 1to1メモ</button>
+        <button class="btn btn-g btn-xs" onclick="openMemberDrawer(${mb.id})" style="margin-left:auto">詳細 →</button>
+      </div>
+      <div class="mc-logs">
+        <div class="log-ttl">関係ログ（最近）</div>
+        ${mb.logs.map(l=>`<div class="log-i"><span class="lt ${LOG_CLS[l.t]||"lt-o"}">${LOG_LBL[l.t]}</span><span style="color:#bbb;font-size:10px;flex-shrink:0;margin:1px 3px 0">${l.d}</span><span>${l.txt}</span></div>`).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function filterMembers(q){
+  const lq=q.toLowerCase();
+  filteredMembers=MEMBERS.filter(m=>m.name.toLowerCase().includes(lq)||m.cat.toLowerCase().includes(lq)||m.role.toLowerCase().includes(lq));
+  renderMembers();
+}
+function filterMemberGroup(g){
+  filteredMembers=g?MEMBERS.filter(m=>m.group===g):[...MEMBERS];
+  renderMembers();
+}
+
+// ══════════════════════════════════
+// MEMBER DRAWER
+// ══════════════════════════════════
+let drwMember=null,drwTab=0;
+function openMemberDrawer(id){
+  drwMember=MEMBERS.find(m=>m.id===id);
+  drwTab=0;
+  document.getElementById("drw-member-no").textContent="#"+String(drwMember.no).padStart(2,"0");
+  document.getElementById("drw-member-name").textContent=drwMember.name;
+  document.getElementById("drw-member-chips").innerHTML=`
+    <span class="chip" style="background:rgba(144,202,249,.15);color:#90caf9">${drwMember.group}</span>
+    <span class="chip" style="background:rgba(128,222,234,.15);color:#80deea">${drwMember.cat}</span>
+    <span class="chip ${ROLE_CHIP[drwMember.role]||""}" style="opacity:.85">${drwMember.role}</span>
+  `;
+  document.querySelectorAll(".dtab").forEach((t,i)=>{t.classList.toggle("a",i===0)});
+  renderDrwBody();
+  document.getElementById("drw-member-overlay").classList.add("open");
+  document.getElementById("drw-member").classList.add("open");
+}
+function closeDrawer(){
+  document.getElementById("drw-member-overlay").classList.remove("open");
+  document.getElementById("drw-member").classList.remove("open");
+}
+function setDrwTab(i,el){
+  drwTab=i;
+  document.querySelectorAll(".dtab").forEach(t=>t.classList.remove("a"));
+  el.classList.add("a");
+  renderDrwBody();
+}
+function renderDrwBody(){
+  const m=drwMember;if(!m)return;
+  const body=document.getElementById("drw-body");
+  if(drwTab===0){
+    body.innerHTML=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+        ${[["👥","同室回数",m.rooms+"回","var(--ok)"],["🤝","1to1回数",OTO.filter(o=>o.partner===m.name).length+"回","var(--p)"],["🕐","最終接触",m.contact,"var(--sub)"],["🏅","役職",m.role,"#d97706"]].map(([ic,lb,vl,co])=>`
+          <div style="border:1px solid var(--bdr);border-radius:8px;padding:9px 11px">
+            <div style="font-size:9px;color:var(--sub);font-weight:700;margin-bottom:3px">${ic} ${lb}</div>
+            <div style="font-size:13px;font-weight:700;color:${co}">${vl}</div>
+          </div>`).join("")}
+      </div>
+      <div style="background:#fffde7;border-left:3px solid #ffd600;padding:8px 11px;border-radius:0 7px 7px 0;font-size:12px;color:#5d4037;margin-bottom:12px">${m.memo}</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="btn btn-o btn-sm" style="flex:1" onclick="openMemoModal('${m.name}')">✏️ メモ追加</button>
+        <button class="btn btn-o btn-sm" style="flex:1;border-color:#d97706;color:#d97706" onclick="openOtoModal('${m.name}')">📅 1to1予定</button>
+      </div>
+      <div style="font-size:11px;color:var(--p);cursor:pointer;text-align:center" onclick="nav('#/connections')">🗺 Connectionsで開く →</div>
+    `;
+  } else if(drwTab===1){
+    body.innerHTML=m.logs.map(l=>`
+      <div style="border:1px solid var(--bdr);border-radius:8px;padding:9px 12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <span class="lt ${LOG_CLS[l.t]||"lt-o"}" style="height:18px;font-size:10px">${LOG_LBL[l.t]}</span>
+          <span style="font-size:10px;color:var(--sub)">${l.d}</span>
+        </div>
+        <div style="font-size:12px;color:var(--txt)">${l.txt}</div>
+      </div>`).join("");
+  } else {
+    const otos=OTO.filter(o=>o.partner===m.name);
+    if(!otos.length){body.innerHTML=`<div class="empty"><div class="ei" style="font-size:22px">📭</div><p>1to1履歴はまだありません</p></div>`;return;}
+    body.innerHTML=otos.map(o=>`
+      <div style="border:1px solid var(--bdr);border-radius:8px;padding:9px 12px;margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span class="chip ${STATUS_CHIP[o.status]||""}" style="height:18px;font-size:10px">${STATUS_LBL[o.status]}</span>
+          <span style="font-size:10px;color:var(--sub)">${o.date}</span>
+        </div>
+        <div style="font-size:12px;color:var(--txt)">${o.notes}</div>
+      </div>`).join("");
+  }
+}
+
+// ══════════════════════════════════
+// CONNECTIONS PAGE
+// ══════════════════════════════════
+let connSelMember=null;
+function renderConnections(){
+  const list=document.getElementById("conn-members-list");
+  list.innerHTML=MEMBERS.map(m=>`
+    <button class="mb-item ${connSelMember===m.id?"sel":""}" onclick="selectConnMember(${m.id})">
+      <div class="mb-av">${m.name.charAt(0)}</div>
+      <div class="mb-info"><div class="mb-name">${m.name}</div><div class="mb-sub">${m.group} / ${m.cat}</div></div>
+    </button>`).join("");
+  renderBO();
+}
+function selectConnMember(id){
+  connSelMember=id;
+  document.querySelectorAll(".mb-item").forEach((el,i)=>el.classList.toggle("sel",MEMBERS[i].id===id));
+  const m=MEMBERS.find(mb=>mb.id===id);
+  document.getElementById("conn-sel-name").textContent=m?m.name:"";
+  const body=document.getElementById("conn-rel-body");
+  if(!m){body.innerHTML="";return;}
+  const otos=OTO.filter(o=>o.partner===m.name);
+  body.innerHTML=`
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="btn btn-p btn-xs" onclick="openMemoModal('${m.name}')">✏️ メモ</button>
+      <button class="btn btn-o btn-xs" onclick="openOtoModal('${m.name}')">📅 1to1</button>
+      <button class="btn btn-t btn-xs" onclick="nav('#/members')">👥 詳細</button>
+    </div>
+    <div class="sec-title">関係ログ</div>
+    ${m.logs.map(l=>`
+      <div style="display:flex;gap:7px;align-items:flex-start;padding:7px 0;border-bottom:1px solid #f5f5f5;font-size:12px">
+        <span class="lt ${LOG_CLS[l.t]||"lt-o"}">${LOG_LBL[l.t]}</span>
+        <span style="color:var(--sub);font-size:10px;margin-top:1px;flex-shrink:0">${l.d}</span>
+        <span>${l.txt}</span>
+      </div>`).join("")}
+    ${otos.length?`<div class="sec-title" style="margin-top:12px">1to1履歴</div>`+otos.map(o=>`
+      <div style="border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span class="chip ${STATUS_CHIP[o.status]||""}" style="height:16px;font-size:9px">${STATUS_LBL[o.status]}</span>
+          <span style="font-size:10px;color:var(--sub)">${o.date}</span>
+        </div>
+        <div style="font-size:11px;color:var(--txt)">${o.notes}</div>
+      </div>`).join(""):""}
+  `;
+}
+function renderBO(){
+  const sel=document.getElementById("conn-meeting-sel");
+  const mid=parseInt(sel.value);
+  const bos=BO_DATA[mid]||[];
+  document.getElementById("conn-bo-area").innerHTML=bos.map(b=>`
+    <div class="bo-card">
+      <div class="bo-hdr"><span class="bo-title">BO ${b.bo}</span><span class="chip chip-gray" style="font-size:10px">同室枠</span></div>
+      <div class="bo-body">
+        ${b.members.map(n=>`<div class="bo-member"><div class="mb-av" style="width:24px;height:24px;font-size:10px">${n.charAt(0)}</div>${n}</div>`).join("")}
+        <div class="bo-note">${b.note}</div>
+      </div>
+    </div>`).join("")+`
+    <button class="btn btn-p btn-sm" style="width:100%;justify-content:center;margin-top:6px" onclick="saveBo()">💾 BO割当を保存</button>`;
+}
+function saveBo(){showSnack("BO割当を保存しました ✓")}
+
+// ══════════════════════════════════
+// MEETINGS PAGE
+// ══════════════════════════════════
+let selMeeting=null;
+function renderMeetings(){
+  document.getElementById("meetings-tbody").innerHTML=MEETINGS.map(m=>`
+    <tr onclick="selectMeeting(${m.id})" class="${selMeeting===m.id?"selected":""}">
+      <td><span style="font-weight:700">${m.num}</span></td>
+      <td>${m.date}</td>
+      <td class="td-c"><span class="chip chip-p" style="height:20px;font-size:11px">${m.bo}</span></td>
+      <td>${m.notes?`<span class="chip chip-ok" style="height:18px;font-size:10px">あり</span>`:`<span class="chip chip-gray" style="height:18px;font-size:10px">なし</span>`}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-g btn-xs" onclick="event.stopPropagation();openMeetingMemo(${m.id})">📝 メモ</button>
+        <button class="btn btn-t btn-xs" onclick="event.stopPropagation();nav('#/connections')">🗺 BO編集</button>
+      </td>
+    </tr>`).join("");
+}
+function selectMeeting(id){
+  selMeeting=id;
+  const m=MEETINGS.find(x=>x.id===id);
+  document.querySelectorAll("#meetings-tbody tr").forEach((tr,i)=>tr.classList.toggle("selected",MEETINGS[i].id===id));
+  const bos=BO_DATA[id]||[];
+  document.getElementById("meeting-detail-body").innerHTML=`
+    <div style="margin-bottom:12px">
+      <div style="font-size:18px;font-weight:700;color:var(--txt)">${m.num}</div>
+      <div style="font-size:12px;color:var(--sub)">${m.date}</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="flex:1;background:#f0f4ff;border-radius:7px;padding:9px 11px;text-align:center"><div style="font-size:10px;color:var(--sub)">BO数</div><div style="font-size:20px;font-weight:700;color:var(--p)">${m.bo}</div></div>
+      <div style="flex:1;background:#f0fff4;border-radius:7px;padding:9px 11px;text-align:center"><div style="font-size:10px;color:var(--sub)">メモ</div><div style="font-size:13px;font-weight:700;color:${m.notes?"var(--ok)":"var(--dis)"}">${m.notes?"あり":"なし"}</div></div>
+    </div>
+    ${m.notes?`<div style="background:#fffde7;border-left:3px solid #ffd600;padding:8px 10px;border-radius:0 7px 7px 0;font-size:12px;color:#5d4037;margin-bottom:12px;line-height:1.5">${m.notes}</div>`:""}
+    ${bos.length?`<div class="sec-title">BO割当</div>`+bos.map(b=>`<div style="border:1px solid var(--bdr);border-radius:7px;padding:8px 10px;margin-bottom:6px"><div style="font-size:11px;font-weight:700;color:var(--p);margin-bottom:4px">BO ${b.bo}</div><div style="display:flex;gap:4px;flex-wrap:wrap">${b.members.map(n=>`<span class="chip chip-gray" style="height:18px;font-size:10px">${n}</span>`).join("")}</div></div>`).join(""):""}
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn btn-o btn-sm" style="flex:1" onclick="openMeetingMemo(${id})">📝 メモ編集</button>
+      <button class="btn btn-g btn-sm" style="flex:1" onclick="nav('#/connections')">🗺 Connectionsへ</button>
+    </div>
+  `;
+}
+function openMeetingMemo(id){
+  const m=MEETINGS.find(x=>x.id===id);
+  document.getElementById("meeting-target-name").textContent="— "+m.num;
+  document.getElementById("meeting-memo-body").value=m.notes||"";
+  openModal("mol-meeting-memo");
+}
+
+// ══════════════════════════════════
+// 1 to 1 PAGE
+// ══════════════════════════════════
+function renderOto(){
+  document.getElementById("oto-tbody").innerHTML=OTO.map(o=>`
+    <tr>
+      <td>${o.date}</td>
+      <td><span style="font-weight:600">${o.partner}</span></td>
+      <td><span class="chip ${STATUS_CHIP[o.status]||""}">${STATUS_LBL[o.status]}</span></td>
+      <td>${o.meeting?`<span class="chip chip-gray" style="height:18px;font-size:10px">${o.meeting}</span>`:`<span style="color:var(--dis)">—</span>`}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--sub)">${o.notes}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-g btn-xs" onclick="openOtoMemoModal('${o.partner}')">📝 メモ</button>
+        <button class="btn btn-t btn-xs" onclick="openModal('mol-1on1create')">✏️ 編集</button>
+      </td>
+    </tr>`).join("");
+}
+
+// ══════════════════════════════════
+// ROLE HISTORY PAGE
+// ══════════════════════════════════
+function renderRH(){
+  document.getElementById("rh-tbody").innerHTML=ROLE_HISTORY.map(r=>`
+    <tr>
+      <td><span style="font-weight:600">${r.member}</span></td>
+      <td><span class="chip ${ROLE_CHIP[r.role]||"chip-member"}">${r.role}</span></td>
+      <td>${r.start}</td>
+      <td>${r.end||`<span style="color:var(--dis)">—</span>`}</td>
+      <td>${r.current?`<span class="chip chip-ok" style="height:18px;font-size:10px">現任</span>`:`<span class="chip chip-gray" style="height:18px;font-size:10px">終了</span>`}</td>
+      <td><button class="btn btn-g btn-xs" onclick="openModal('mol-role-add')">✏️ 編集</button></td>
+    </tr>`).join("");
+}
+
+// ══════════════════════════════════
+// SETTINGS PAGES
+// ══════════════════════════════════
+function renderCats(){
+  document.getElementById("cat-tbody").innerHTML=CATS.map(c=>`
+    <tr>
+      <td><span class="cg">${c.group}</span></td>
+      <td><span class="cn">${c.name}</span></td>
+      <td class="td-c"><span class="badge" style="background:var(--pl);color:var(--p)">${c.count}</span></td>
+      <td>
+        <button class="btn btn-g btn-xs" onclick="openModal('mol-cat-edit')">✏️ 編集</button>
+        <button class="btn btn-err btn-xs" disabled title="メンバーがいる場合は削除不可">🗑 削除</button>
+      </td>
+    </tr>`).join("");
+}
+function renderRoles(){
+  document.getElementById("roles-tbody").innerHTML=ROLES_MASTER.map(r=>`
+    <tr>
+      <td><span class="chip ${ROLE_CHIP[r.name]||"chip-member"}">${r.name}</span></td>
+      <td style="font-size:12px;color:var(--sub)">${r.desc}</td>
+      <td class="td-c"><span class="badge" style="background:var(--pl);color:var(--p)">${r.count}</span></td>
+      <td><button class="btn btn-g btn-xs" onclick="openModal('mol-role-edit')">✏️ 編集</button></td>
+    </tr>`).join("");
+}
+
+// ══════════════════════════════════
+// MODAL / DRAWER HELPERS
+// ══════════════════════════════════
+function openModal(id){document.getElementById(id).classList.add("open")}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+document.querySelectorAll(".mol").forEach(el=>el.addEventListener("click",function(){this.classList.remove("open")}));
+
+function openMemoModal(name){document.getElementById("memo-target-name").textContent="— "+name;openModal("mol-memo")}
+function openOtoModal(name){document.getElementById("oto-target-name").textContent="— "+name;openModal("mol-1on1create")}
+function openOtoMemoModal(name){document.getElementById("otomemo-target-name").textContent="— "+name;openModal("mol-1on1memo")}
+function openFlagModal(id){const m=MEMBERS.find(x=>x.id===id);document.getElementById("flag-target-name").textContent=m?"— "+m.name:"";openModal("mol-flag")}
+
+function toggleMemoFields(){
+  const t=document.getElementById("memo-type").value;
+  document.getElementById("memo-meeting-field").style.display=t==="meeting"?"block":"none";
+  document.getElementById("memo-oto-field").style.display=t==="one_to_one"?"block":"none";
+}
+
+// ══════════════════════════════════
+// SNACKBAR + FAKE LOAD
+// ══════════════════════════════════
+let snkTimer;
+function showSnack(msg){
+  const el=document.getElementById("snk");
+  el.textContent=msg;el.classList.add("show");
+  clearTimeout(snkTimer);snkTimer=setTimeout(()=>el.classList.remove("show"),2800);
+}
+function fakeLoad(btn,loadTxt,doneTxt,molId){
+  const orig=btn.textContent;btn.disabled=true;btn.textContent=loadTxt;
+  setTimeout(()=>{btn.disabled=false;btn.textContent=orig;closeModal(molId);showSnack(doneTxt);},850);
+}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+route();
+</script>
+</body>
+</html>
