@@ -65,30 +65,20 @@ class MeetingBreakoutService
      */
     public function updateBreakouts(Meeting $meeting, array $rooms): void
     {
-        $allMemberIds = [];
-        foreach ($rooms as $r) {
-            foreach ($r['member_ids'] ?? [] as $mid) {
-                $allMemberIds[] = (int) $mid;
-            }
-        }
-        if (count($allMemberIds) !== count(array_unique($allMemberIds))) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
-                'rooms' => ['同一のメンバーを BO1/BO2 の両方に割り当てることはできません。'],
-            ]);
-        }
-
+        // G11: 同一 member を BO1/BO2 の両方に入れてよい。同一 BO 内のみ重複を防ぐ。
         DB::transaction(function () use ($meeting, $rooms) {
             $roomLabels = array_column($rooms, 'room_label');
             $roomMap = [];
             foreach (self::ROOM_LABELS as $label) {
                 $idx = array_search($label, $roomLabels, true);
                 $payload = $idx !== false ? $rooms[$idx] : ['room_label' => $label, 'notes' => null, 'member_ids' => []];
+                $memberIds = array_values(array_unique(array_map('intval', $payload['member_ids'] ?? [])));
                 $room = BreakoutRoom::firstOrCreate(
                     ['meeting_id' => $meeting->id, 'room_label' => $label],
                     ['sort_order' => 1]
                 );
                 $room->update(['notes' => $payload['notes'] ?? null]);
-                $roomMap[$label] = ['room' => $room, 'member_ids' => array_map('intval', $payload['member_ids'] ?? [])];
+                $roomMap[$label] = ['room' => $room, 'member_ids' => $memberIds];
             }
 
             $participantIdsByRoom = [];
