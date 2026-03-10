@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Admin, Resource } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';
+import { religoTheme } from './theme/religoTheme';
 import DragonFlyBoard from './pages/DragonFlyBoard';
 import Dashboard from './pages/Dashboard';
 import { ReligoLayout } from './ReligoLayout';
@@ -24,6 +25,7 @@ if (root) {
             dataProvider={dragonflyDataProvider}
             layout={ReligoLayout}
             dashboard={Dashboard}
+            theme={religoTheme}
         >
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} options={{ label: 'Members' }} />
