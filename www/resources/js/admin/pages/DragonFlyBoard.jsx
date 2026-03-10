@@ -198,7 +198,7 @@ export default function DragonFlyBoard() {
     const [o2oError, setO2oError] = useState('');
     const [o2oSubmitting, setO2oSubmitting] = useState(false);
 
-    // Meeting + Round（Phase10R のみ。固定 BO は UI から撤去）
+    // Meeting + BO（Round なし。BO はデフォルト 2）
     const [meetings, setMeetings] = useState([]);
     const [selectedMeetingId, setSelectedMeetingId] = useState('');
     const [selectedMeeting, setSelectedMeeting] = useState(null);
@@ -287,7 +287,7 @@ export default function DragonFlyBoard() {
                 const rooms = Array.isArray(data.rooms) ? data.rooms : [];
                 setRoundsEdit([{
                     round_no: 1,
-                    label: 'Round 1',
+                    label: 'BO',
                     rooms: rooms.map((room) => ({
                         room_label: room.room_label,
                         notes: room.notes ?? '',
@@ -543,7 +543,7 @@ export default function DragonFlyBoard() {
             const nextNo = rooms.length + 1;
             const newRoom = { room_label: `BO${nextNo}`, notes: '', member_ids: [] };
             if (prev.length === 0) {
-                return [{ round_no: 1, label: 'Round 1', rooms: [newRoom] }];
+                return [{ round_no: 1, label: 'BO', rooms: [newRoom] }];
             }
             return [{
                 ...first,
@@ -658,7 +658,7 @@ export default function DragonFlyBoard() {
             const nextRooms = Array.isArray(data.rooms) ? data.rooms : [];
             setRoundsEdit([{
                 round_no: 1,
-                label: 'Round 1',
+                label: 'BO',
                 rooms: nextRooms.map((room) => ({
                     room_label: room.room_label,
                     notes: room.notes ?? '',
@@ -1450,7 +1450,7 @@ export default function DragonFlyBoard() {
                 <DialogContent>
                     {memoContextTargetMemberId != null && (
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'Round'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
+                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
                         </Typography>
                     )}
                     <FormControl fullWidth size="small" sx={{ mt: 1 }} disabled={memoContextTargetMemberId != null}>
