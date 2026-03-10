@@ -2,8 +2,8 @@
 
 | Phase ID | G5 |
 |----------|-----|
-| Status | in_progress |
-| 完了日 | — |
+| Status | completed |
+| 完了日 | 2026-03-11 |
 
 ---
 
@@ -16,17 +16,15 @@
 - docs/process/PHASE_REGISTRY.md
 - docs/INDEX.md
 
-（必要に応じ上記以外に 1 ファイルのみ最小限追加の可能性あり）
-
 ---
 
 ## Merge Evidence
 
-- commit id: —
-- push 状態: —
-- test 結果: —
-- build 結果: —
-- target branch: develop
-- phase type: docs
-- scope check: mock asset および G5 関連 docs のみ
+- **commit id:** a986214
+- **push 状態:** pushed (origin/develop)
+- **test 結果:** 79 passed (php artisan test)
+- **build 結果:** OK (npm run build)
+- **target branch:** develop
+- **phase type:** docs
+- **scope check:** OK（mock asset および G5 関連 docs のみ）
 - **Excluded files:** .cursor/, 実装コード, CSV 関連, PHASE_G3_*
