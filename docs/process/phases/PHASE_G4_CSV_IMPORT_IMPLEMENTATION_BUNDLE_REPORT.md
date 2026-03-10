@@ -2,8 +2,8 @@
 
 | Phase ID | G4 |
 |----------|-----|
-| Status | in_progress |
-| 完了日 | — |
+| Status | completed |
+| 完了日 | 2026-03-11 |
 
 ---
 
@@ -23,11 +23,11 @@
 
 ## Merge Evidence
 
-- commit id: —
-- push 状態: —
-- test 結果: —
-- build 結果: —
-- target branch: develop
-- phase type: implement
-- scope check: 対象 4 ファイル＋G4 docs＋REGISTRY＋INDEX のみ
+- **commit id:** ac0bc7e
+- **push 状態:** pushed (origin/develop)
+- **test 結果:** 79 passed (php artisan test)
+- **build 結果:** OK (npm run build)
+- **target branch:** develop
+- **phase type:** implement
+- **scope check:** OK（対象 4 ファイル＋G4 docs＋REGISTRY＋INDEX のみ）
 - **Excluded files:** .cursor/, www/public/mock/religo-admin-mock-v2.html, database/csv/.DS_Store, PHASE_G3_*
