@@ -44,6 +44,17 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 # Composer
 docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app composer require ...
 
+# フロントビルド（Vite / React）
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build
+
+-------------------------------------------------
+■ ⚛️ React / フロント実装後の必須作業
+-------------------------------------------------
+
+- **React や www/resources/js の実装・変更をしたあとは、必ずビルドを実行する。**
+- コマンド: `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build`
+- ビルド失敗時はエラーを解消してから完了とする。
+
 -------------------------------------------------
 ■ 🧪 動作確認
 -------------------------------------------------

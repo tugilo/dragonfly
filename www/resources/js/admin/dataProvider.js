@@ -62,7 +62,15 @@ export const dragonflyDataProvider = {
             return { data: arr, total: arr.length };
         }
         if (resource === 'meetings') {
-            const data = await request('/api/meetings');
+            const f = params?.filter ?? {};
+            const q = new URLSearchParams();
+            if (f.q != null && String(f.q).trim() !== '') q.set('q', String(f.q).trim());
+            if (f.has_memo === true || f.has_memo === '1') q.set('has_memo', '1');
+            else if (f.has_memo === false || f.has_memo === '0') q.set('has_memo', '0');
+            if (f.has_participant_pdf === true || f.has_participant_pdf === '1') q.set('has_participant_pdf', '1');
+            else if (f.has_participant_pdf === false || f.has_participant_pdf === '0') q.set('has_participant_pdf', '0');
+            const url = `/api/meetings${q.toString() ? `?${q.toString()}` : ''}`;
+            const data = await request(url);
             const arr = Array.isArray(data) ? data : [];
             return { data: arr, total: arr.length };
         }

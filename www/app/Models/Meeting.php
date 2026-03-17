@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Meeting extends Model
 {
@@ -21,6 +22,11 @@ class Meeting extends Model
         return [
             'held_on' => 'date',
         ];
+    }
+
+    public function participantImport(): HasOne
+    {
+        return $this->hasOne(MeetingParticipantImport::class);
     }
 
     public function participants(): HasMany

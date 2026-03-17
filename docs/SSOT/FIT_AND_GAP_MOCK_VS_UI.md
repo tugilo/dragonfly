@@ -8,6 +8,8 @@
 
 ## 1. シェル（サイドバー・AppBar）
 
+**メニュー・ヘッダーに特化した詳細調査:** [FIT_AND_GAP_MENU_HEADER.md](FIT_AND_GAP_MENU_HEADER.md) を参照（モック v2 の構造・クラス・Fit/Gap 一覧）。
+
 | 観点 | モック | 実装 | Fit / Gap |
 |------|--------|------|-----------|
 | サイドバー | 固定幅 240px、Religo ロゴ＋DragonFly Chapter、ナビ項目＋SETTINGS 配下 Categories/Roles、フッターにユーザー（メンバー管理者） | React Admin Layout + ReligoMenu。アイコン＋ラベル（Dashboard, Connections, Members, Meetings, 1 to 1, Role History, SETTINGS > Categories, Roles） | **Fit:** 項目順・SETTINGS 階層は同一。**Gap:** ロゴ/製品名・フッターのユーザー表示なし（React Admin デフォルトは AppBar のみ） |
@@ -136,15 +138,17 @@
 
 ## 5. Meetings
 
+**詳細調査（モック v2 #/meetings 基準）:** [FIT_AND_GAP_MEETINGS.md](FIT_AND_GAP_MEETINGS.md) を参照。M1〜M6 で一覧・統計・ツールバー・Drawer・例会メモモーダルを実装済み。
+
 | 観点 | モック | 実装 | Fit / Gap |
 |------|--------|------|-----------|
-| タイトル・説明 | 「Meetings」「例会管理 / BO割当 / メモ」 | タイトル「Meetings」のみ | **Gap:** サブ説明なし |
+| タイトル・説明 | 「Meetings」「例会管理 / BO割当 / メモ」 | 同一（M1） | **Fit** |
 | ヘッダーアクション | 「Connectionsで編集」 | 同一 | **Fit** |
-| 統計カード | 総例会数 / 総BO数（今年）/ メモ有り例会 / 次回例会 | 実装には統計カードなし | **Gap:** 4 種の stats 未実装 |
-| レイアウト | two-col：左が例会一覧テーブル、右が例会詳細パネル | List（Datagrid）＋**行「詳細」で右側 Drawer**（Phase17B） | **Fit:** 詳細は Drawer で表示。モックの「右パネル」に相当 |
-| 一覧テーブル | 番号・日付・BO数・メモ・Actions（📝メモ、🗺BO編集） | 回・開催日・名前・**Actions（詳細）**。「Connectionsで編集」はヘッダーにあり | **Gap:** BO数・メモ列は一覧には未。行アクションは「詳細」で Drawer に集約 |
-| 例会詳細パネル | 番号・日付・BO数・メモ有無・メモ本文・BO割当・メモ編集/Connectionsへ | **Drawer:** Overview（番号・日付・BO数・参加者数・ルームメモ・Connectionsで編集）、Breakouts（BO1/BO2 割当表示）、Memos（例会メモ一覧＋対象選択で追加） | **Fit:** Phase17B で Drawer＋タブを実装。編集は Connections へ誘導 |
-| 例会メモモーダル | 「📝 例会メモ編集 — #247」＋Connections リンク | Drawer の Memos タブで「例会メモを書く」（対象メンバー＋本文）＋保存。専用モーダルではなく Drawer 内フォーム | **Fit:** Meetings 起点で例会メモ追加可能 |
+| 統計カード | 総例会数 / 総BO数（今年）/ メモ有り例会 / 次回例会 | 4 種表示（M6）。副表示（今年度・平均・割合）は未実装 | **Fit** |
+| レイアウト | two-col：左が例会一覧、右が例会詳細パネル | 一覧＋行クリックで Drawer。右パネル常時表示ではない | **Partial Fit**（詳細は Drawer で表示。機能は充足） |
+| 一覧テーブル | 番号・日付・BO数・メモ・Actions（📝メモ、🗺BO編集） | 番号・開催日・BO数・メモ・Actions（M1/M2） | **Fit** |
+| 例会詳細 | 右パネル：番号・日付・BO数・メモ有無・メモ本文・BO割当・メモ編集/Connectionsへ | Drawer で同内容（M3） | **Fit（Drawer 採用）** |
+| 例会メモモーダル | 「📝 例会メモ編集 — #247」＋Connections リンク | 同一（M4） | **Fit** |
 
 ---
 
@@ -226,9 +230,9 @@
 
 - **主なギャップ**
   - **一覧の表現:** Members がモックはカードグリッド、実装は Datagrid（表）。§4.1〜4.3 にモックのカード要素（.mcard 内の mc-hdr / mc-body / mc-act / mc-logs）と実装の要素別比較を記載。**推奨:** リスト形式とカード形式をスイッチで切替可能にすると、モックに近い「1 人分の情報が 1 枚で見える」体験と表の利便性の両立が可能。
-  - **統計カード不足:** Members / Meetings / 1 to 1 / Role History の各ページでモックの 4 種 stats が未実装。
+  - **統計カード不足:** Members / 1 to 1 / Role History ではモックの 4 種 stats が未実装。Meetings は M6 で実装済み。
   - **サブタイトル不足:** 多くのページで「pg-hdr-l p」相当の説明文がない。
-  - **Meetings:** 右側の例会詳細は **Phase17B で Drawer（Overview/Breakouts/Memos）として実装済み**。一覧の BO数/メモ列・統計カードは未実装。
+  - **Meetings:** M1〜M6 で一覧・統計カード・ツールバー（検索・メモフィルタ・件数）・Drawer（例会詳細）・例会メモモーダルを実装済み。レイアウトは two-col ではなく Drawer 採用。詳細は [FIT_AND_GAP_MEETINGS.md](FIT_AND_GAP_MEETINGS.md) 参照。
   - **Member 詳細:** 一覧の「詳細」は **Drawer（Overview / Memos / 1to1）で実装済み**。URL 直アクセス /members/:id の Show ページはメモ・1to1履歴が Coming soon。
   - **Members の細かい Gap:** 一覧にかな（name_kana）・関係ログ（最近）なし、大カテゴリ単独フィルタなし（§4.2 参照）。
   - **Settings:** カテゴリ/役職の追加がモックはモーダル、実装は別ページ。テーブルの「メンバー数」「担当者数」列なし。

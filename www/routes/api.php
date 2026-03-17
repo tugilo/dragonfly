@@ -14,6 +14,8 @@ use App\Http\Controllers\Religo\MeetingBreakoutController;
 use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
 use App\Http\Controllers\Religo\MeetingMemoController;
+use App\Http\Controllers\Religo\MemberSearchController;
+use App\Http\Controllers\Religo\MeetingParticipantImportController;
 use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
 use App\Http\Controllers\Religo\DashboardController;
@@ -82,7 +84,18 @@ Route::post('/one-to-ones', [OneToOneController::class, 'store']);
 
 Route::get('/member-roles', [MemberRoleController::class, 'index']);
 
+Route::get('/members/search', [MemberSearchController::class, 'search']);
 Route::get('/meetings', [MeetingController::class, 'index']);
+Route::get('/meetings/stats', [MeetingController::class, 'stats']);
+Route::get('/meetings/{meetingId}', [MeetingController::class, 'show'])->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'show'])->whereNumber('meetingId');
+Route::put('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'update'])->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/participants/import', [MeetingParticipantImportController::class, 'show'])->whereNumber('meetingId');
+Route::post('/meetings/{meetingId}/participants/import', [MeetingParticipantImportController::class, 'store'])->whereNumber('meetingId');
+Route::post('/meetings/{meetingId}/participants/import/parse', [MeetingParticipantImportController::class, 'parse'])->whereNumber('meetingId');
+Route::put('/meetings/{meetingId}/participants/import/candidates', [MeetingParticipantImportController::class, 'updateCandidates'])->whereNumber('meetingId');
+Route::post('/meetings/{meetingId}/participants/import/apply', [MeetingParticipantImportController::class, 'apply'])->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/participants/import/download', [MeetingParticipantImportController::class, 'download'])->whereNumber('meetingId');
 Route::get('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'show'])
     ->whereNumber('meetingId');
 Route::put('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'update'])
