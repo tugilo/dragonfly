@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **ONETOONES P1〜P4 総括メモ:** `docs/process/ONETOONES_P1_P4_SUMMARY.md` を追加（到達状態・設計決定・Fit/Gap・優先順位）。INDEX 更新。コード変更なし。 |
 | 2026-03-20 | **ONETOONES-P4:** 1 to 1 統計を一覧と同一 filter（`applyIndexFilters` 共通化・`OneToOneStatsRequest` 拡充）で `GET /api/one-to-ones/stats` に連動。`GET/POST /api/one-to-ones/{id}/memos` で `contact_memos`（`one_to_one_id` 既存）履歴、`OneToOnesEdit` にパネル。`GET/PATCH /api/users/me` に `id`・`member_id` を追加（後方互換で `owner_member_id` 維持）。PLAN/WORKLOG/REPORT（`PHASE_ONETOONES_P4_STATS_FILTER_MEMO_*`）・REGISTRY・INDEX・SSOT 更新。`php artisan test` 286・`npm run build` 通過。 |
 | 2026-03-20 | **ONETOONES-P3:** 1 to 1 一覧の Owner 既定を `GET /api/users/me` ＋ `ownerMemberIdFallback` で設定（List は準備後マウント）。ツールバー「＋ 1to1を追加」はクイック作成 Dialog（POST `/api/one-to-ones`）、「フォームで追加」は従来 Create。`OneToOnesCreate` の owner 初期値をフォールバック統一。メモ Dialog・`DATA_MODEL` §4.12・`FIT_AND_GAP` §6 を notes / contact_memos の住み分けに合わせて更新。PLAN/WORKLOG/REPORT（`PHASE_ONETOONES_CREATE_EDIT_UX_*`）・REGISTRY・INDEX・本ファイル。`php artisan test` 280 passed、`npm run build` 通過。 |
 | 2026-03-20 | **ONETOONES-P2:** 1 to 1 一覧に統計 API（`GET /api/one-to-ones/stats`・owner 必須・完了/キャンセルは当月基準・want_1on1 は flags 件数）と 4 カード UI、サブタイトル、ステータス Chip 日本語化、`meeting_label`（`OneToOneIndexService`・store 応答統一）。PLAN/WORKLOG/REPORT（`PHASE_ONETOONES_STATS_DISPLAY_*`）・`PHASE_REGISTRY`・INDEX・`FIT_AND_GAP` §6・本ファイル更新。`php artisan test` 280・`npm run build` 通過。 |
