@@ -76,6 +76,7 @@
 | ONETOONES-P2 | 1 to 1 統計4カード（GET /api/one-to-ones/stats）＋サブタイトル＋ステータス chip 日本語＋例会 meeting_label | implement | completed | feature/phase-onetoones-p2-stats-display（想定） | 2026-03-20 |
 | ONETOONES-P3 | 1 to 1 Create/Edit UX（Owner 既定・クイック作成 Dialog・notes 位置づけ・SSOT 追記） | implement | completed | feature/phase-onetoones-p3-create-edit-ux（想定） | 2026-03-20 |
 | ONETOONES-P4 | 1 to 1 統計フィルタ連動＋contact_memos 履歴 API・Edit UI・/api/users/me 拡張 | implement | completed | feature/phase-onetoones-p4-stats-memo（想定） | 2026-03-20 |
+| ONETOONES-P5 | 1 to 1 導線（Members/Dashboard 連携・next 1to1・want 優先・最小 status API） | implement | planned | feature/phase-onetoones-p5-leads | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

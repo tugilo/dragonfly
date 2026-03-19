@@ -143,7 +143,7 @@
 
 **高**
 
-1. **導線強化（G3）** — 使われるかに直結
+1. **導線強化（G3）** — 使われるかに直結 → **着手予定:** [ONETOONES-P5 PLAN](phases/PHASE_ONETOONES_P5_LEADS_PLAN.md)（Members / Dashboard）
 2. **stats UI（G2）** — 見える化 → 行動につながる
 
 **中**
