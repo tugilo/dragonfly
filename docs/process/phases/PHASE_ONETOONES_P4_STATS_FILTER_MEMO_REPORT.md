@@ -34,10 +34,16 @@
 
 - 一覧から履歴メモ直接編集、Members 連携、`/api/users/me` の認証本番化。
 
-## 5. Merge Evidence（develop 取り込み後）
+## 5. Merge Evidence（develop 取り込み済み）
 
 | 項目 | 値 |
 |------|-----|
-| merge commit id | _追記_ |
-| source branch | `feature/phase-onetoones-p4-stats-memo` |
+| merge commit id | `d966e31dd110da5e2e31bd6022329ea6ab1f4948` |
+| source branch | `develop`（作業ツリーが develop 上だったため **feature ブランチなし**で直接コミット） |
 | target branch | `develop` |
+| phase id | ONETOONES-P4 |
+| test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` / `exec node npm run build` |
+| test result | **286 passed**（1171 assertions）/ **build OK** |
+| pushed at | 2026-03-19T22:34Z（UTC） |
+
+**補足:** 運用ルールどおり `merge --no-ff feature/...` を使う場合は、次回から P5 以降で feature ブランチを切り、取り込みマージコミットのハッシュをここに記録する。
