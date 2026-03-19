@@ -80,8 +80,22 @@ export const ReligoMenu = () => {
                     Role History
                 </MenuItem>
             )}
-            <Divider sx={{ my: 1 }} />
-            <ListSubheader sx={{ lineHeight: 2, fontSize: '0.75rem', color: 'text.secondary' }}>
+            <Divider
+                sx={{
+                    my: 1,
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    backgroundColor: 'transparent',
+                }}
+            />
+            <ListSubheader
+                disableSticky
+                sx={{
+                    lineHeight: 2,
+                    fontSize: '0.75rem',
+                    backgroundColor: 'transparent',
+                    color: 'rgba(255,255,255,0.45)',
+                }}
+            >
                 SETTINGS
             </ListSubheader>
             <MenuItem

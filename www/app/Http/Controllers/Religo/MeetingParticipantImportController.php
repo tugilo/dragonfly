@@ -157,7 +157,7 @@ class MeetingParticipantImportController extends Controller
         $now = now();
 
         try {
-            $text = $this->parseService->extractText($fullPath);
+            $result = $this->parseService->parseFile($fullPath);
         } catch (\Throwable $e) {
             Log::warning('Participant PDF parse: text extraction failed.', [
                 'meeting_id' => $meetingId,
@@ -177,12 +177,15 @@ class MeetingParticipantImportController extends Controller
             ], 422);
         }
 
-        $result = $this->parseService->buildCandidates($text);
         $candidateCount = count($result['candidates']);
+        $extractedResult = [
+            'candidates' => $result['candidates'],
+            'meta' => $result['meta'],
+        ];
 
         $import->update([
-            'extracted_text' => $text,
-            'extracted_result' => $result,
+            'extracted_text' => $result['extracted_text'],
+            'extracted_result' => $extractedResult,
             'parse_status' => MeetingParticipantImport::PARSE_STATUS_SUCCESS,
             'parsed_at' => $now,
         ]);

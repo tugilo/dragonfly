@@ -44,6 +44,34 @@
 | M7-P4 | member 照合と反映前確認の強化 | implement | completed | — | 2026-03-17 |
 | M7-P5 | 手動マッチングUI | implement | completed | — | 2026-03-17 |
 | M7-P6 | 反映履歴の記録 | implement | completed | — | 2026-03-17 |
+| M7-P7 | 内容ベースのページ判定（ignore / members / participants） | implement | completed | — | 2026-03-17 |
+| M7-P8 | participants / members 専用パーサ強化 | implement | completed | — | 2026-03-17 |
+| M7-P9-INVESTIGATION | 解析結果クリア機能の調査 | docs | completed | — | 2026-03-17 |
+| M7-P10 | 再解析導線の追加（UI中心） | implement | completed | — | 2026-03-17 |
+| M7-P11-REQUIREMENTS | ChatGPT作成CSVのアップロード連携 要件整理 | docs | completed | — | 2026-03-17 |
+| M7-C1 | 参加者CSVアップロード保存 | implement | completed | — | 2026-03-17 |
+| M7-C2 | 参加者CSVプレビュー | implement | completed | — | 2026-03-17 |
+| M7-C3 | 参加者CSVを participants / members に反映 | implement | completed | — | 2026-03-19 |
+| M7-C4-REQUIREMENTS | participants 差分更新 要件整理 | docs | completed | — | 2026-03-19 |
+| M7-C4.5-REQUIREMENTS | participants 差分更新 + members 更新 + Role History 連携 要件整理 | docs | completed | — | 2026-03-19 |
+| M7-M1 | participants 差分更新（BO保護あり） | implement | completed | — | 2026-03-19 |
+| M7-M2 | members 基本情報更新候補プレビュー（CSV差分表示のみ） | implement | completed | — | 2026-03-17 |
+| M7-M3 | members 基本情報の確定反映（member-apply） | implement | completed | — | 2026-03-17 |
+| M7-M4 | Role History 差分検知（CSV 役職 vs 現在役職・表示のみ） | implement | completed | — | 2026-03-17 |
+| M7-M5 | Role History の確定反映（role-apply・member_roles のみ） | implement | completed | — | 2026-03-17 |
+| M7-M6 | CSV反映監査ログ + Role 基準日指定（effective_date / held_on） | implement | completed | — | 2026-03-17 |
+| M7-D2 | participants 差分プレビューUI（名前解決ベース） | implement | completed | — | 2026-03-19 |
+| M7-D3 | 削除候補 + BO保護付き削除オプション | implement | completed | — | 2026-03-17 |
+| M7-M7 | CSV 未解決（member/category/role）ガイド付き解決・resolutions テーブル | implement | completed | — | 2026-03-17 |
+| M7-FINAL-CHECK | CSV 同期フロー最終確認（実装横断レビュー・ドキュメントのみ） | docs | completed | — | 2026-03-17 |
+| M8 | 参加者CSV unresolved あいまい一致 + 候補提示（suggestions API・UI・自動確定なし） | implement | completed | — | 2026-03-17 |
+| M8.5 | 参加者CSV member 解決順の統一（resolution → 名前・preview=apply・MeetingCsvMemberResolver） | implement | completed | — | 2026-03-17 |
+| M9 | 参加者CSV resolution 管理UI強化 + 同名member警告（一覧/解除/再マップ・duplicate メタ・MeetingsList） | implement | completed | — | 2026-03-19 |
+| MEETINGS_CREATE_FIT_AND_GAP_CHECK | Meetings 新規作成機能の Fit & Gap 調査（要件・実装・案A/B/C・推奨方針） | docs | completed | — | 2026-03-19 |
+| MEETINGS_CREATE_IMPLEMENT | Meetings 新規作成（POST /api/meetings・一覧「＋ 新規例会」Dialog・テスト） | implement | completed | — | 2026-03-19 |
+| MEETINGS_UPDATE_IMPLEMENT | Meetings 更新（PATCH /api/meetings/{id}・一覧「編集」Dialog・index/POST 行形式に name 統一・テスト） | implement | completed | — | 2026-03-19 |
+| MEETINGS_DELETE_FIT_AND_GAP_CHECK | Meetings 削除の Fit & Gap・子データ/FK・案A〜E・推奨方針（docs のみ・実装なし） | docs | completed | — | 2026-03-19 |
+| MEETINGS_ARCHIVE_FIT_AND_GAP_CHECK | Meetings Archive（非表示/論理無効化/履歴保持）の要否・子データ/一覧/stats/Drawer 影響・案A〜F・推奨（docs のみ・実装なし） | docs | completed | — | 2026-03-19 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

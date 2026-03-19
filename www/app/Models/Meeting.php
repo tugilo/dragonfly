@@ -29,6 +29,16 @@ class Meeting extends Model
         return $this->hasOne(MeetingParticipantImport::class);
     }
 
+    public function csvImports(): HasMany
+    {
+        return $this->hasMany(MeetingCsvImport::class);
+    }
+
+    public function csvApplyLogs(): HasMany
+    {
+        return $this->hasMany(MeetingCsvApplyLog::class);
+    }
+
     public function participants(): HasMany
     {
         return $this->hasMany(Participant::class);

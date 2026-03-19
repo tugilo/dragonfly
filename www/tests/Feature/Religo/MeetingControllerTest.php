@@ -15,6 +15,8 @@ use Tests\TestCase;
  * GET /api/meetings — 一覧. Phase M1: breakout_count, has_memo. Phase M5: q, has_memo フィルタ.
  * GET /api/meetings/stats — 統計. Phase M6: total_meetings, total_breakouts, meetings_with_memo, next_meeting.
  * GET /api/meetings/{meetingId} — 詳細. Phase M3: meeting, memo_body, rooms を検証.
+ * POST /api/meetings — 新規作成. MEETINGS_CREATE_IMPLEMENT: 既定名・重複 422・未来日.
+ * PATCH /api/meetings/{id} — 更新. MEETINGS_UPDATE_IMPLEMENT: ignore unique・404・一覧行形式（name 含む）.
  */
 class MeetingControllerTest extends TestCase
 {
@@ -40,6 +42,7 @@ class MeetingControllerTest extends TestCase
         $this->assertArrayHasKey('breakout_count', $meeting);
         $this->assertArrayHasKey('has_memo', $meeting);
         $this->assertArrayHasKey('has_participant_pdf', $meeting);
+        $this->assertArrayHasKey('name', $meeting);
         $this->assertSame(200, $meeting['number']);
         $this->assertSame('2026-03-01', $meeting['held_on']);
         $this->assertSame(0, $meeting['breakout_count']);
@@ -138,6 +141,9 @@ class MeetingControllerTest extends TestCase
         $this->assertArrayHasKey('meeting', $data);
         $this->assertArrayHasKey('memo_body', $data);
         $this->assertArrayHasKey('participant_import', $data);
+        $this->assertArrayHasKey('csv_import', $data);
+        $this->assertArrayHasKey('csv_apply_logs_recent', $data);
+        $this->assertIsArray($data['csv_apply_logs_recent']);
         $this->assertArrayHasKey('rooms', $data);
         $this->assertSame(203, $data['meeting']['number']);
         $this->assertSame('Detail memo body', $data['memo_body']);
@@ -154,6 +160,7 @@ class MeetingControllerTest extends TestCase
             'imported_at' => null,
             'applied_count' => null,
         ], $data['participant_import']);
+        $this->assertSame(['has_csv' => false, 'file_name' => null, 'uploaded_at' => null, 'imported_at' => null, 'applied_count' => null], $data['csv_import']);
         $this->assertIsArray($data['rooms']);
     }
 
@@ -513,5 +520,186 @@ class MeetingControllerTest extends TestCase
         $res->assertOk();
         $data = $res->json();
         $this->assertNull($data['next_meeting']);
+    }
+
+    public function test_store_creates_meeting_with_default_name(): void
+    {
+        $res = $this->postJson('/api/meetings', [
+            'number' => 910,
+            'held_on' => '2026-12-15',
+        ]);
+        $res->assertCreated();
+        $res->assertJsonPath('number', 910);
+        $res->assertJsonPath('held_on', '2026-12-15');
+        $res->assertJsonPath('breakout_count', 0);
+        $res->assertJsonPath('has_memo', false);
+        $res->assertJsonPath('has_participant_pdf', false);
+        $res->assertJsonPath('name', '第910回定例会');
+        $this->assertTrue(
+            Meeting::query()->where('number', 910)->whereDate('held_on', '2026-12-15')->where('name', '第910回定例会')->exists()
+        );
+    }
+
+    public function test_store_accepts_explicit_name(): void
+    {
+        $res = $this->postJson('/api/meetings', [
+            'number' => 911,
+            'held_on' => '2026-11-01',
+            'name' => '特別例会',
+        ]);
+        $res->assertCreated();
+        $this->assertDatabaseHas('meetings', [
+            'number' => 911,
+            'name' => '特別例会',
+        ]);
+    }
+
+    public function test_store_empty_string_name_uses_default(): void
+    {
+        $res = $this->postJson('/api/meetings', [
+            'number' => 912,
+            'held_on' => '2026-10-01',
+            'name' => '   ',
+        ]);
+        $res->assertCreated();
+        $this->assertDatabaseHas('meetings', [
+            'number' => 912,
+            'name' => '第912回定例会',
+        ]);
+    }
+
+    public function test_store_allows_future_held_on(): void
+    {
+        $future = Carbon::today()->addYear()->format('Y-m-d');
+        $res = $this->postJson('/api/meetings', [
+            'number' => 913,
+            'held_on' => $future,
+        ]);
+        $res->assertCreated();
+        $this->assertTrue(
+            Meeting::query()->where('number', 913)->whereDate('held_on', $future)->exists()
+        );
+    }
+
+    public function test_store_duplicate_number_returns_422(): void
+    {
+        Meeting::create(['number' => 920, 'held_on' => '2026-01-01', 'name' => '第920回定例会']);
+
+        $res = $this->postJson('/api/meetings', [
+            'number' => 920,
+            'held_on' => '2026-06-01',
+        ]);
+        $res->assertUnprocessable();
+        $res->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_store_requires_number_and_held_on(): void
+    {
+        $this->postJson('/api/meetings', [])->assertUnprocessable()->assertJsonValidationErrors(['number', 'held_on']);
+        $this->postJson('/api/meetings', ['number' => 930])->assertUnprocessable()->assertJsonValidationErrors(['held_on']);
+        $this->postJson('/api/meetings', ['held_on' => '2026-01-01'])->assertUnprocessable()->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_update_changes_number_held_on_name(): void
+    {
+        $m = Meeting::create([
+            'number' => 1001,
+            'held_on' => '2026-04-01',
+            'name' => '旧名称',
+        ]);
+
+        $res = $this->patchJson("/api/meetings/{$m->id}", [
+            'number' => 1002,
+            'held_on' => '2026-05-10',
+            'name' => '新名称',
+        ]);
+        $res->assertOk();
+        $res->assertJsonPath('id', $m->id);
+        $res->assertJsonPath('number', 1002);
+        $res->assertJsonPath('held_on', '2026-05-10');
+        $res->assertJsonPath('name', '新名称');
+        $this->assertTrue(
+            Meeting::query()->whereKey($m->id)->where('number', 1002)->whereDate('held_on', '2026-05-10')->where('name', '新名称')->exists()
+        );
+    }
+
+    public function test_update_empty_string_name_uses_default(): void
+    {
+        $m = Meeting::create([
+            'number' => 1003,
+            'held_on' => '2026-04-02',
+            'name' => '仮',
+        ]);
+
+        $res = $this->patchJson("/api/meetings/{$m->id}", [
+            'number' => 1003,
+            'held_on' => '2026-04-03',
+            'name' => '  ',
+        ]);
+        $res->assertOk();
+        $res->assertJsonPath('name', '第1003回定例会');
+        $this->assertTrue(
+            Meeting::query()->whereKey($m->id)->where('name', '第1003回定例会')->whereDate('held_on', '2026-04-03')->exists()
+        );
+    }
+
+    public function test_update_duplicate_number_returns_422(): void
+    {
+        Meeting::create(['number' => 1010, 'held_on' => '2026-01-01', 'name' => '第1010回定例会']);
+        $other = Meeting::create(['number' => 1011, 'held_on' => '2026-01-02', 'name' => '第1011回定例会']);
+
+        $res = $this->patchJson("/api/meetings/{$other->id}", [
+            'number' => 1010,
+            'held_on' => '2026-01-03',
+            'name' => '衝突',
+        ]);
+        $res->assertUnprocessable();
+        $res->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_update_allows_future_held_on(): void
+    {
+        $m = Meeting::create(['number' => 1020, 'held_on' => '2026-01-01', 'name' => '第1020回定例会']);
+        $future = Carbon::today()->addMonths(6)->format('Y-m-d');
+
+        $res = $this->patchJson("/api/meetings/{$m->id}", [
+            'number' => 1020,
+            'held_on' => $future,
+        ]);
+        $res->assertOk();
+        $this->assertTrue(Meeting::query()->whereKey($m->id)->whereDate('held_on', $future)->exists());
+    }
+
+    public function test_update_requires_number_and_held_on(): void
+    {
+        $m = Meeting::create(['number' => 1030, 'held_on' => '2026-01-01', 'name' => 'x']);
+
+        $this->patchJson("/api/meetings/{$m->id}", [])->assertUnprocessable()->assertJsonValidationErrors(['number', 'held_on']);
+        $this->patchJson("/api/meetings/{$m->id}", ['number' => 1030])->assertUnprocessable()->assertJsonValidationErrors(['held_on']);
+        $this->patchJson("/api/meetings/{$m->id}", ['held_on' => '2026-02-02'])->assertUnprocessable()->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_update_can_keep_same_number_for_same_record(): void
+    {
+        $m = Meeting::create(['number' => 1040, 'held_on' => '2026-01-01', 'name' => '第1040回定例会']);
+
+        $res = $this->patchJson("/api/meetings/{$m->id}", [
+            'number' => 1040,
+            'held_on' => '2026-08-20',
+            'name' => '据え置き番号テスト',
+        ]);
+        $res->assertOk();
+        $res->assertJsonPath('number', 1040);
+        $this->assertTrue(
+            Meeting::query()->whereKey($m->id)->where('number', 1040)->whereDate('held_on', '2026-08-20')->where('name', '据え置き番号テスト')->exists()
+        );
+    }
+
+    public function test_update_returns_404_for_unknown(): void
+    {
+        $this->patchJson('/api/meetings/999999', [
+            'number' => 1,
+            'held_on' => '2026-01-01',
+        ])->assertNotFound();
     }
 }

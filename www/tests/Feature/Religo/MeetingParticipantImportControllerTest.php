@@ -181,13 +181,17 @@ class MeetingParticipantImportControllerTest extends TestCase
         ]);
 
         $mockService = Mockery::mock(PdfParticipantParseService::class);
-        $mockService->shouldReceive('extractText')->once()->andReturn("山田 太郎\n佐藤 花子");
-        $mockService->shouldReceive('buildCandidates')->once()->with("山田 太郎\n佐藤 花子")->andReturn([
+        $mockService->shouldReceive('parseFile')->once()->andReturn([
             'candidates' => [
-                ['name' => '山田 太郎', 'raw_line' => '山田 太郎', 'type_hint' => 'regular'],
-                ['name' => '佐藤 花子', 'raw_line' => '佐藤 花子', 'type_hint' => 'regular'],
+                ['name' => '山田 太郎', 'raw_line' => '山田 太郎', 'type_hint' => 'visitor', 'page_type' => 'participants', 'source_section' => 'visitor'],
+                ['name' => '佐藤 花子', 'raw_line' => '佐藤 花子', 'type_hint' => 'regular', 'page_type' => 'members', 'source_section' => null],
             ],
-            'meta' => ['line_count' => 2, 'parser_version' => 1],
+            'meta' => [
+                'pages' => [['page' => 1, 'type' => 'participants'], ['page' => 2, 'type' => 'members']],
+                'line_count' => 2,
+                'parser_version' => 2,
+            ],
+            'extracted_text' => "山田 太郎\n佐藤 花子",
         ]);
         $this->app->instance(PdfParticipantParseService::class, $mockService);
 
@@ -206,7 +210,65 @@ class MeetingParticipantImportControllerTest extends TestCase
         $this->assertSame("山田 太郎\n佐藤 花子", $import->extracted_text);
         $this->assertIsArray($import->extracted_result);
         $this->assertSame('山田 太郎', $import->extracted_result['candidates'][0]['name']);
+        $this->assertSame('visitor', $import->extracted_result['candidates'][0]['type_hint']);
+        $this->assertSame('participants', $import->extracted_result['candidates'][0]['page_type']);
+        $this->assertSame('visitor', $import->extracted_result['candidates'][0]['source_section']);
+        $this->assertSame('members', $import->extracted_result['candidates'][1]['page_type']);
         $this->assertSame(2, count($import->extracted_result['candidates']));
+        $this->assertArrayHasKey('pages', $import->extracted_result['meta']);
+        $this->assertSame(2, count($import->extracted_result['meta']['pages']));
+        $this->assertSame(2, $import->extracted_result['meta']['parser_version']);
+    }
+
+    /**
+     * M7-P10: 解析成功後でも parse API を再実行でき、結果が上書きされること。
+     */
+    public function test_parse_can_be_re_run_after_success_overwrites_result(): void
+    {
+        $meetingId = $this->createMeeting(109, '2026-03-28');
+        $path = 'meeting_participant_imports/109/reparse.pdf';
+        Storage::disk('local')->put($path, '%PDF-1.4 dummy');
+
+        MeetingParticipantImport::create([
+            'meeting_id' => $meetingId,
+            'file_path' => $path,
+            'original_filename' => 'reparse.pdf',
+            'status' => 'uploaded',
+            'parse_status' => MeetingParticipantImport::PARSE_STATUS_SUCCESS,
+            'parsed_at' => now()->subHour(),
+            'extracted_text' => 'Old text',
+            'extracted_result' => [
+                'candidates' => [
+                    ['name' => 'Old Name', 'raw_line' => 'Old', 'type_hint' => 'regular'],
+                ],
+                'meta' => ['pages' => [], 'line_count' => 1, 'parser_version' => 1],
+            ],
+        ]);
+
+        $mockService = Mockery::mock(PdfParticipantParseService::class);
+        $mockService->shouldReceive('parseFile')->once()->andReturn([
+            'candidates' => [
+                ['name' => 'New Name', 'raw_line' => 'New', 'type_hint' => 'visitor', 'page_type' => 'participants', 'source_section' => 'visitor'],
+            ],
+            'meta' => [
+                'pages' => [['page' => 1, 'type' => 'participants']],
+                'line_count' => 1,
+                'parser_version' => 2,
+            ],
+            'extracted_text' => 'New text',
+        ]);
+        $this->app->instance(PdfParticipantParseService::class, $mockService);
+
+        $res = $this->postJson("/api/meetings/{$meetingId}/participants/import/parse");
+        $res->assertOk();
+        $res->assertJson(['parse_status' => 'success', 'candidate_count' => 1]);
+
+        $import = MeetingParticipantImport::where('meeting_id', $meetingId)->first();
+        $this->assertSame('success', $import->parse_status);
+        $this->assertSame('New text', $import->extracted_text);
+        $this->assertCount(1, $import->extracted_result['candidates']);
+        $this->assertSame('New Name', $import->extracted_result['candidates'][0]['name']);
+        $this->assertSame(2, $import->extracted_result['meta']['parser_version']);
     }
 
     public function test_show_returns_parse_status_and_candidate_count_in_meeting_detail(): void

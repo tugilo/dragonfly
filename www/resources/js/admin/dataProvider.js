@@ -164,6 +164,25 @@ export const dragonflyDataProvider = {
             });
             return { data };
         }
+        if (resource === 'meetings') {
+            const res = await fetch(`${API_BASE}/api/meetings/${params.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    number: params.data?.number,
+                    held_on: params.data?.held_on,
+                    name: params.data?.name,
+                }),
+            });
+            const j = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const fromErrors = j.errors && typeof j.errors === 'object'
+                    ? Object.values(j.errors).flat().filter(Boolean).join(' ')
+                    : '';
+                throw new Error(fromErrors || j.message || `PATCH meetings ${res.status}`);
+            }
+            return { data: j };
+        }
         throw new Error(`update not implemented for ${resource}`);
     },
 
@@ -182,6 +201,25 @@ export const dragonflyDataProvider = {
             }
             const data = await res.json();
             return { data: { ...params.data, id: data.id } };
+        }
+        if (resource === 'meetings') {
+            const res = await fetch(`${API_BASE}/api/meetings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    number: params.data?.number,
+                    held_on: params.data?.held_on,
+                    name: params.data?.name,
+                }),
+            });
+            const j = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                const fromErrors = j.errors && typeof j.errors === 'object'
+                    ? Object.values(j.errors).flat().filter(Boolean).join(' ')
+                    : '';
+                throw new Error(fromErrors || j.message || `POST meetings ${res.status}`);
+            }
+            return { data: j };
         }
         if (resource === 'categories') {
             const data = await request('/api/categories', {

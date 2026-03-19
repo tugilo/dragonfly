@@ -71,7 +71,12 @@ export const CustomSidebar = ({ children, appBarAlwaysOn }) => {
                     '& .MuiMenuItem-root': { color: 'rgba(255,255,255,.62)' },
                     '& .MuiMenuItem-root:hover': { backgroundColor: 'rgba(255,255,255,.07)', color: '#fff' },
                     '& .Mui-selected': { backgroundColor: 'rgba(25,118,210,.22)', color: '#fff', fontWeight: 500 },
-                    '& .MuiListSubheader-root': { color: 'rgba(255,255,255,.28)', fontSize: '0.75rem' },
+                    '& .MuiListSubheader-root': {
+                        backgroundColor: 'transparent',
+                        color: 'rgba(255,255,255,.45)',
+                        fontSize: '0.75rem',
+                    },
+                    '& .MuiDivider-root': { borderColor: 'rgba(255,255,255,.12)' },
                 }}
             >
                 {children}
