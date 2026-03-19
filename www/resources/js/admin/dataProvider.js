@@ -30,11 +30,18 @@ export const dragonflyDataProvider = {
         if (resource === 'one-to-ones') {
             const q = new URLSearchParams();
             const f = params?.filter ?? {};
-            if (f.owner_member_id != null) q.set('owner_member_id', String(f.owner_member_id));
+            if (f.owner_member_id != null && String(f.owner_member_id).trim() !== '') {
+                q.set('owner_member_id', String(f.owner_member_id).trim());
+            }
             if (f.status) q.set('status', f.status);
             if (f.from) q.set('from', f.from);
             if (f.to) q.set('to', f.to);
             if (f.workspace_id != null) q.set('workspace_id', String(f.workspace_id));
+            if (f.target_member_id != null && String(f.target_member_id).trim() !== '') {
+                q.set('target_member_id', String(f.target_member_id).trim());
+            }
+            const qText = f.q != null ? String(f.q).trim() : '';
+            if (qText !== '') q.set('q', qText);
             const url = `/api/one-to-ones${q.toString() ? `?${q.toString()}` : ''}`;
             const data = await request(url);
             const arr = Array.isArray(data) ? data : [];
@@ -128,6 +135,10 @@ export const dragonflyDataProvider = {
             const data = await request(`/api/roles/${params.id}`);
             return { data };
         }
+        if (resource === 'one-to-ones') {
+            const data = await request(`/api/one-to-ones/${params.id}`);
+            return { data };
+        }
         throw new Error(`getOne not implemented for ${resource}`);
     },
 
@@ -182,6 +193,23 @@ export const dragonflyDataProvider = {
                 throw new Error(fromErrors || j.message || `PATCH meetings ${res.status}`);
             }
             return { data: j };
+        }
+        if (resource === 'one-to-ones') {
+            const body = {
+                owner_member_id: params.data?.owner_member_id,
+                target_member_id: params.data?.target_member_id,
+                meeting_id: params.data?.meeting_id ?? null,
+                status: params.data?.status,
+                scheduled_at: params.data?.scheduled_at,
+                started_at: params.data?.started_at,
+                ended_at: params.data?.ended_at,
+                notes: params.data?.notes ?? null,
+            };
+            const data = await request(`/api/one-to-ones/${params.id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(body),
+            });
+            return { data };
         }
         throw new Error(`update not implemented for ${resource}`);
     },

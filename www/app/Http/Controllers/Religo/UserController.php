@@ -16,7 +16,7 @@ class UserController extends Controller
     private const ME_USER_ID = 1;
 
     /**
-     * GET /api/users/me — owner_member_id のみ返す（Dashboard 用）.
+     * GET /api/users/me — 現在ユーザー id・owner_member_id（member_id は同値のエイリアス、ONETOONES-P4）。
      */
     public function showMe(): JsonResponse
     {
@@ -24,7 +24,12 @@ class UserController extends Controller
         if (! $user) {
             return response()->json(['message' => 'User not found.'], 404);
         }
-        return response()->json(['owner_member_id' => $user->owner_member_id]);
+
+        return response()->json([
+            'id' => $user->id,
+            'owner_member_id' => $user->owner_member_id,
+            'member_id' => $user->owner_member_id,
+        ]);
     }
 
     /**
@@ -40,6 +45,12 @@ class UserController extends Controller
             'owner_member_id' => ['required', 'integer', 'exists:members,id'],
         ]);
         $user->update(['owner_member_id' => (int) $validated['owner_member_id']]);
-        return response()->json(['owner_member_id' => $user->owner_member_id]);
+        $user->refresh();
+
+        return response()->json([
+            'id' => $user->id,
+            'owner_member_id' => $user->owner_member_id,
+            'member_id' => $user->owner_member_id,
+        ]);
     }
 }

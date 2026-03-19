@@ -84,8 +84,13 @@ Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSu
 Route::get('/contact-memos', [ContactMemoController::class, 'index']);
 Route::post('/contact-memos', [ContactMemoController::class, 'store']);
 Route::get('/meeting-memos', [MeetingMemoController::class, 'index']);
+Route::get('/one-to-ones/stats', [OneToOneController::class, 'stats']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
+Route::get('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosIndex']);
+Route::post('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosStore']);
+Route::get('/one-to-ones/{oneToOne}', [OneToOneController::class, 'show']);
+Route::patch('/one-to-ones/{oneToOne}', [OneToOneController::class, 'update']);
 
 Route::get('/member-roles', [MemberRoleController::class, 'index']);
 

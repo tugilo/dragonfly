@@ -297,6 +297,13 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), notes (text, nullable), timestamps |
 | **インデックス** | (owner_member_id, target_member_id), scheduled_at |
 
+**notes の位置づけ（実装・UX・ONETOONES-P3）:** `one_to_ones.notes` は **当該 1 to 1 レコード 1 件に紐づく要約メモ**（目的・アジェンダ・実施後の一行サマリ等）として扱う。**会話・接触の時系列履歴**は **`contact_memos`**（`memo_type = one_to_one`、`one_to_one_id` で 1 to 1 に N 件紐付け）を **本流** とする（ONETOONES-P4）。
+
+**API（ONETOONES-P4・管理画面用）:**
+
+- `GET /api/one-to-ones/{id}/memos` — 当該 1 to 1 の `contact_memos` を新しい順。
+- `POST /api/one-to-ones/{id}/memos` — `body` のみ必須。サーバ側で `owner_member_id` / `target_member_id` / `workspace_id` を 1 to 1 から複製し `memo_type = one_to_one` で作成。
+
 **scheduled_at の変更:** 予定日時の変更は**上書き**で行う。変更履歴（監査ログ）が必要な場合は Future extensions で別テーブル等を検討する。
 
 **status:**

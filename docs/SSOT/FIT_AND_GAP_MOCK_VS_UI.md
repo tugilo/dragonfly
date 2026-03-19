@@ -154,14 +154,73 @@
 
 ## 6. 1 to 1
 
-| 観点 | モック | 実装 | Fit / Gap |
-|------|--------|------|-----------|
-| タイトル・説明 | 「1 to 1」「予定・実施・キャンセル履歴の管理」 | タイトル「1 to 1」のみ | **Gap:** サブ説明なし |
-| ヘッダーアクション | 「＋ 1to1を追加」「Connectionsへ」 | 同一 | **Fit** |
-| 統計カード | 予定中 / 完了(今月) / キャンセル / want_1on1 ON | 実装には統計カードなし | **Gap:** 4 種の stats 未実装 |
-| フィルタバー | 検索・相手・ステータス・日付 from-to・件数 | Filter: owner_member_id, status, from, to（React Admin） | **Fit:** 概念は同じ。**Gap:** モックの「相手」プルダウン・日付範囲は実装で from/to 等で代替 |
-| テーブル列 | 日付・相手・ステータス・Meeting・メモ・Actions（📝メモ、✏️編集） | 予定/実施日・相手・状態・メモ・Meeting ID。行アクションは Datagrid デフォルト（編集等） | **Gap:** モックの「📝メモ」「✏️編集」は実装で別導線の可能性。列は「役職」表示なし等の差は軽微 |
-| 1to1追加モーダル | 日付・時刻・相手・ステータス・関連例会・メモ | Create ページで Owner/相手/状態/予定日時/開始・終了/meeting_id/メモ | **Fit:** 項目はほぼ同一 |
+**モック:** `www/public/mock/religo-admin-mock-v2.html` の `#pg-one-to-ones`（ルート `#/one-to-ones`）  
+**実装:** `www/resources/js/admin/pages/OneToOnesList.jsx`・`/admin#/one-to-ones`・API `GET/POST /api/one-to-ones`・**`GET/PATCH /api/one-to-ones/{id}`**（ONETOONES-P1）
+
+### 6.1 モックのページ要素（v2 #/one-to-ones）
+
+| ブロック | モック（HTML / JS） | 内容 |
+|----------|---------------------|------|
+| **ページヘッダ** | `.pg-hdr` | h1「1 to 1」、p「予定・実施・キャンセル履歴の管理」 |
+| **ヘッダー右** | `.pg-hdr-r` | 「＋ 1to1を追加」（`mol-1on1create`）、「🗺 Connectionsへ」 |
+| **統計** | `.stats`（4 × `.stat`） | 予定中 / 完了（今月）/ キャンセル / want_1on1 ON（各サブラベル付き） |
+| **フィルタバー** | `.fbar` | 検索（placeholder「相手の名前 / メモ」）、相手 select、ステータス select、日付 from〜to、`N件` |
+| **テーブル** | `#oto-tbody`（`renderOto()`） | 列: 日付・相手（太字）・ステータス（chip・日本語ラベル）・Meeting（chip または —）・メモ（ellipsis）・Actions（📝 メモ → `openOtoMemoModal`、✏️ 編集 → `mol-1on1create`） |
+| **1to1追加** | モーダル `mol-1on1create` | 日付・時刻・相手 select・ステータス・関連例会（任意）・メモ/アジェンダ |
+
+### 6.2 実装との要素別比較
+
+| # | 観点 | モック | 実装 | Fit / Gap |
+|---|------|--------|------|-----------|
+| O1 | タイトル・説明 | 「1 to 1」＋サブ説明 | List `title`＋本文領域にサブ「予定・実施・キャンセル履歴の管理」（AppBar パンくずは従来どおり） | **Partial Fit（ONETOONES-P2）:** モックと同一 DOM 構造ではないが趣旨どおり |
+| O2 | ヘッダーアクション | ＋ 1to1を追加、Connectionsへ | **＋ 1to1を追加** は **クイック作成 Dialog**（主）、**フォームで追加** で `/one-to-ones/create`。Connections は outlined | **Partial Fit（ONETOONES-P3）:** モックは単一モーダル。実装は Dialog＋フルページの二段 |
+| O3 | 統計カード 4 種 | 予定中 / 完了(今月) / キャンセル / want_1on1 | `GET /api/one-to-ones/stats` ＋ 4 カード。**一覧と同一 filter**（owner・target・status・from/to・q・workspace）で Index と共通 WHERE（ONETOONES-P4）。want_1on1 は **filter 後の一覧に現れる target** のフラグ件数 | **Partial Fit:** モックの「先月比」等は未 |
+| O4 | フリーテキスト検索 | 「相手の名前 / メモ」 | Filter の `q` → API（`notes`・相手 `name` の LIKE）。placeholder はモックと同趣旨のラベル | **Fit（ONETOONES-P1）** |
+| O5 | 相手フィルタ | 相手プルダウン | Owner 連動の `SelectInput`（`target_member_id`）＋ dataProvider 接続 | **Fit（ONETOONES-P1）** |
+| O6 | ステータス・日付 | select ＋ from/to date | 同上。**Owner** は **一覧マウント前に `GET /api/users/me` で既定**（未設定時フォールバック 1）。`owner_member_id` **alwaysOn** | **Partial Fit（ONETOONES-P3）:** 既定 UX は改善。**Gap:** Owner をモックのように完全非表示には未対応 |
+| O7 | 件数表示 | `.fcount`「12件」 | 一覧上部に「N 件」＋下部は RA 標準 Pagination | **Partial Fit（ONETOONES-P1）:** モックと同一レイアウトではないが件数は明示 |
+| O8 | 日付列 | 日付文字列（デモデータ） | `COALESCE(started_at, scheduled_at)` を `EffectiveDateField` で日時ロケール表示 | **Fit**（実データは日時） |
+| O9 | 相手列 | 太字名 | `target_name` | **Fit** |
+| O10 | ステータス列 | chip ＋ 日本語（予定/完了/キャンセル系） | MUI **Chip**＋日本語（未知キーはフォールバック） | **Fit（ONETOONES-P2）** |
+| O11 | Meeting 列 | `#247 — 日付` 形式の chip | **`meeting_label`（Chip）**＋ API で `meeting_number` / `meeting_held_on` 付与 | **Fit（ONETOONES-P2）** |
+| O12 | メモ列 | ellipsis | `notes` + `ellipsis` | **Fit** |
+| O13 | 行アクション | 📝 メモ、✏️ 編集（各行） | **操作**列: メモは Dialog（**notes＝要約** の説明＋「編集でメモを更新」）、編集は `#/one-to-ones/:id` | **Partial Fit（ONETOONES-P1/P3）:** contact_memos 連携は別 |
+| O14 | 新規登録 UI | **モーダル** | **クイック作成 Dialog**（一覧）＋ **`/one-to-ones/create` フルページ** | **Partial Fit（ONETOONES-P3）:** 主導線を Dialog に寄せた |
+| O15 | 新規フォーム項目 | 日付・時刻・相手・ステータス・関連例会・メモ | クイック: 相手・状態・**datetime-local**・`meeting_id`・**notes**。フル: Owner（**me 既定・変更可**）・他 | **Partial Fit:** Owner は一覧と Create で自動初期化。**Gap:** モックの日付+時刻分割 |
+
+### 6.3 まとめ（1 to 1）
+
+- **Fit:** 画面の位置づけ（1 to 1 一覧）、ヘッダーの「＋ 1to1を追加」「Connectionsへ」、テーブルの主列（日時・相手・メモ・**ステータス chip・例会ラベル**）、新規時のコア項目（相手・状態・日時・例会 ID・メモ）。バックエンドは index 用フィルタ・**stats**・**meeting_label**・単体 GET/PATCH まで揃っている（P1/P2）。
+- **Gap（優先度の目安）:**
+  1. （**ONETOONES-P4 で概ね解消**: stats は一覧 filter と連動。微差分が残れば FIT を更新。）
+  2. **モック級の補助文案**（例: 先月比、カード副文案の細部）。
+  3. **新規 UI:** モックの単一モーダルとは異なり **Dialog＋フルページ** の二段（ONETOONES-P3）。
+  4. **行メモ:** 一覧は `notes` 閲覧＋編集誘導。`contact_memos` 本格・Members 連携は未。
+
+### 6.4 実装メモ（ONETOONES-P1）
+
+- **Phase:** `docs/process/phases/PHASE_ONETOONES_LIST_FILTER_ACTIONS_*`（Registry: **ONETOONES-P1**）。
+- **API:** `GET /api/one-to-ones?q=…`（`IndexOneToOnesRequest`）、`GET/PATCH /api/one-to-ones/{id}`。
+- **UI:** フィルタ（`q`・相手・状態・日付・Owner ID）、件数、操作列（メモ Dialog・編集）。
+
+### 6.5 実装メモ（ONETOONES-P2）
+
+- **Phase:** `docs/process/phases/PHASE_ONETOONES_STATS_DISPLAY_*`（Registry: **ONETOONES-P2**）。
+- **API:** `GET /api/one-to-ones/stats`（`owner_member_id` 必須）。一覧 JSON に `meeting_label` 等を追加。
+- **UI:** サブタイトル、統計 4 カード、ステータス Chip、例会 Chip。
+
+### 6.6 実装メモ（ONETOONES-P3）
+
+- **Phase:** `docs/process/phases/PHASE_ONETOONES_CREATE_EDIT_UX_*`（Registry: **ONETOONES-P3**）。
+- **Owner:** `GET /api/users/me` → 一覧 `filterDefaultValues`・クイック作成・フル Create の初期値（`religoOwnerMemberId.js`）。
+- **UI:** `OneToOnesQuickCreateDialog`、`OneToOnesCreate` / `OneToOnesEdit`（分離ファイル）。`DATA_MODEL` §4.12 に **notes** と contact_memos の住み分け追記。
+
+### 6.7 実装メモ（ONETOONES-P4）
+
+- **Phase:** `docs/process/phases/PHASE_ONETOONES_P4_STATS_FILTER_MEMO_*`（Registry: **ONETOONES-P4**）。
+- **Stats:** `OneToOneIndexService::applyIndexFilters` を stats と共有。`OneToOnesList` は `filterValues` から stats query を構築。
+- **履歴メモ:** `GET/POST /api/one-to-ones/{id}/memos`、`OneToOnesEdit` 内 `OneToOneMemosPanel`。
+- **users/me:** 応答に `id`、`member_id`（= `owner_member_id`）。
 
 ---
 
@@ -226,7 +285,7 @@
   - Members の一覧アクション（メモ・1to1・1to1メモ・詳細）と 3 モーダル。
   - Settings Categories/Roles の注意書き・CRUD と Create/Edit フォーム項目。
   - Role History のフィルタ・列・役職 Chip・現任/終了表示。
-  - 1 to 1 の List＋Create とフィルタの概念。
+  - 1 to 1 の List＋Create＋Edit、フィルタ・件数・行操作（§6.4）に加え **統計（一覧 filter 連動）・サブタイトル・ステータス/例会**（§6.5–§6.7）、**Owner 既定・クイック作成**（§6.6）、**履歴メモ API＋Edit パネル**（§6.7）。**未:** モック級単一モーダル、Members 起点の 1to1メモ完全連携など。
 
 - **主なギャップ**
   - **一覧の表現:** Members がモックはカードグリッド、実装は Datagrid（表）。§4.1〜4.3 にモックのカード要素（.mcard 内の mc-hdr / mc-body / mc-act / mc-logs）と実装の要素別比較を記載。**推奨:** リスト形式とカード形式をスイッチで切替可能にすると、モックに近い「1 人分の情報が 1 枚で見える」体験と表の利便性の両立が可能。

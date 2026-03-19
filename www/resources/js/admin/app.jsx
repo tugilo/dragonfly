@@ -9,7 +9,9 @@ import { ReligoLayout } from './ReligoLayout';
 import { MembersList } from './pages/MembersList';
 import { MemberShow } from './pages/MemberShow';
 import { MeetingsList } from './pages/MeetingsList';
-import { OneToOnesList, OneToOnesCreate } from './pages/OneToOnesList';
+import { OneToOnesList } from './pages/OneToOnesList';
+import { OneToOnesCreate } from './pages/OneToOnesCreate';
+import { OneToOnesEdit } from './pages/OneToOnesEdit';
 import { RoleHistoryList } from './pages/RoleHistoryList';
 import { CategoriesList } from './pages/CategoriesList';
 import { CategoriesCreate } from './pages/CategoriesCreate';
@@ -30,7 +32,7 @@ if (root) {
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} options={{ label: 'Members' }} />
             <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings' }} />
-            <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} options={{ label: '1 to 1' }} />
+            <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} edit={OneToOnesEdit} options={{ label: '1 to 1' }} />
             <Resource name="role-history" list={RoleHistoryList} options={{ label: 'Role History' }} />
             <Resource name="categories" list={CategoriesList} create={CategoriesCreate} edit={CategoriesEdit} options={{ label: 'Categories' }} />
             <Resource name="roles" list={RolesList} create={RolesCreate} edit={RolesEdit} options={{ label: 'Roles' }} />

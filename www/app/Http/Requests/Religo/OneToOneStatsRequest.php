@@ -5,7 +5,7 @@ namespace App\Http\Requests\Religo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class IndexOneToOnesRequest extends FormRequest
+class OneToOneStatsRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -13,18 +13,19 @@ class IndexOneToOnesRequest extends FormRequest
     }
 
     /**
+     * 1 to 1 統計。GET /api/one-to-ones と同一の任意 filter を受け取り、同じ WHERE で集計（ONETOONES-P4）。
+     *
      * @return array<string, mixed>
      */
     public function rules(): array
     {
         return [
+            'owner_member_id' => ['required', 'integer', 'exists:members,id'],
             'workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
-            'owner_member_id' => ['nullable', 'integer', 'exists:members,id'],
             'target_member_id' => ['nullable', 'integer', 'exists:members,id'],
             'status' => ['nullable', 'string', Rule::in(['planned', 'completed', 'canceled'])],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
-            'limit' => ['nullable', 'integer', 'min:1', 'max:100'],
             'q' => ['nullable', 'string', 'max:200'],
         ];
     }

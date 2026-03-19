@@ -72,6 +72,10 @@
 | MEETINGS_UPDATE_IMPLEMENT | Meetings 更新（PATCH /api/meetings/{id}・一覧「編集」Dialog・index/POST 行形式に name 統一・テスト） | implement | completed | — | 2026-03-19 |
 | MEETINGS_DELETE_FIT_AND_GAP_CHECK | Meetings 削除の Fit & Gap・子データ/FK・案A〜E・推奨方針（docs のみ・実装なし） | docs | completed | — | 2026-03-19 |
 | MEETINGS_ARCHIVE_FIT_AND_GAP_CHECK | Meetings Archive（非表示/論理無効化/履歴保持）の要否・子データ/一覧/stats/Drawer 影響・案A〜F・推奨（docs のみ・実装なし） | docs | completed | — | 2026-03-19 |
+| ONETOONES-P1 | 1 to 1 一覧フィルタ強化（q・target_member_id）＋件数表示＋行アクション（メモ Dialog・編集 GET/PATCH） | implement | completed | feature/phase-onetoones-p1-list-filter-actions（想定） | 2026-03-20 |
+| ONETOONES-P2 | 1 to 1 統計4カード（GET /api/one-to-ones/stats）＋サブタイトル＋ステータス chip 日本語＋例会 meeting_label | implement | completed | feature/phase-onetoones-p2-stats-display（想定） | 2026-03-20 |
+| ONETOONES-P3 | 1 to 1 Create/Edit UX（Owner 既定・クイック作成 Dialog・notes 位置づけ・SSOT 追記） | implement | completed | feature/phase-onetoones-p3-create-edit-ux（想定） | 2026-03-20 |
+| ONETOONES-P4 | 1 to 1 統計フィルタ連動＋contact_memos 履歴 API・Edit UI・/api/users/me 拡張 | implement | completed | feature/phase-onetoones-p4-stats-memo（想定） | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

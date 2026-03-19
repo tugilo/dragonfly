@@ -47,7 +47,9 @@ class UserMeApiTest extends TestCase
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $data = $res->json();
+        $this->assertSame(1, $data['id']);
         $this->assertSame($this->memberId, $data['owner_member_id']);
+        $this->assertSame($this->memberId, $data['member_id']);
     }
 
     public function test_show_me_returns_null_when_not_set(): void
@@ -56,7 +58,9 @@ class UserMeApiTest extends TestCase
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $data = $res->json();
+        $this->assertSame(1, $data['id']);
         $this->assertNull($data['owner_member_id']);
+        $this->assertNull($data['member_id']);
     }
 
     public function test_show_me_returns_404_when_user_not_found(): void
@@ -71,7 +75,9 @@ class UserMeApiTest extends TestCase
         $res = $this->patchJson('/api/users/me', ['owner_member_id' => $this->memberId]);
         $res->assertOk();
         $data = $res->json();
+        $this->assertSame(1, $data['id']);
         $this->assertSame($this->memberId, $data['owner_member_id']);
+        $this->assertSame($this->memberId, $data['member_id']);
         $this->assertDatabaseHas('users', ['id' => 1, 'owner_member_id' => $this->memberId]);
     }
 

@@ -171,4 +171,68 @@ class OneToOneIndexTest extends TestCase
         $data = $res->json();
         $this->assertCount(2, $data);
     }
+
+    public function test_q_filter_matches_notes(): void
+    {
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'planned',
+            'notes' => 'UniqueKeywordXYZ',
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target2Id,
+            'status' => 'planned',
+            'notes' => 'Other',
+        ]);
+        $res = $this->getJson('/api/one-to-ones?q=' . urlencode('UniqueKeywordXYZ'));
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertCount(1, $data);
+        $this->assertSame('UniqueKeywordXYZ', $data[0]['notes']);
+    }
+
+    public function test_index_includes_meeting_label_when_meeting_set(): void
+    {
+        $meetingId = (int) DB::table('meetings')->insertGetId([
+            'number' => 199,
+            'held_on' => '2026-03-12',
+            'name' => 'Test meeting',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'meeting_id' => $meetingId,
+            'status' => 'planned',
+            'notes' => 'With meeting',
+        ]);
+        $res = $this->getJson('/api/one-to-ones');
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertCount(1, $data);
+        $this->assertSame('#199 — 2026-03-12', $data[0]['meeting_label']);
+        $this->assertSame(199, $data[0]['meeting_number']);
+    }
+
+    public function test_q_filter_matches_target_member_name(): void
+    {
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'planned',
+            'notes' => 'A',
+        ]);
+        $res = $this->getJson('/api/one-to-ones?q=' . urlencode('Target1'));
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertCount(1, $data);
+        $this->assertSame('Target1', $data[0]['target_name']);
+    }
 }
