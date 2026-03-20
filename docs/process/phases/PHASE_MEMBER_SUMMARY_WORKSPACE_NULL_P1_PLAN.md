@@ -25,12 +25,12 @@ implement（Query + SSOT + テスト）
 
 ## DoD
 
-- [ ] SSOT に `MemberSummaryQuery` の挙動が明記されている
-- [ ] `applyWorkspaceScopeForSummary` 相当で 3 テーブル統一
-- [ ] `$workspaceId === null` のとき従来どおり（workspace 列で絞らない）
-- [ ] テスト追加
-- [ ] `php artisan test` / `npm run build` 通過
-- [ ] develop merge + REPORT Merge Evidence + push
+- [x] SSOT に `MemberSummaryQuery` の挙動が明記されている
+- [x] `applyWorkspaceScopeForSummary` 相当で 3 テーブル統一
+- [x] `$workspaceId === null` のとき従来どおり（workspace 列で絞らない）
+- [x] テスト追加
+- [x] `php artisan test` / `npm run build` 通過
+- [x] develop merge + REPORT Merge Evidence + push
 
 ## モック比較
 
