@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\IndexDragonFlyMemberOneToOneStatusRequest;
 use App\Http\Requests\Api\IndexDragonFlyMembersRequest;
 use App\Models\Member;
 use App\Queries\Religo\MemberSummaryQuery;
+use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +16,18 @@ class DragonFlyMemberController extends Controller
     public function __construct(
         private MemberSummaryQuery $summaryQuery
     ) {}
+
+    /**
+     * GET /api/dragonfly/members/one-to-one-status — P5 リード一覧（{id} より上にルート定義すること）.
+     */
+    public function oneToOneStatus(
+        IndexDragonFlyMemberOneToOneStatusRequest $request,
+        MemberOneToOneLeadService $leadService
+    ): JsonResponse {
+        $owner = (int) $request->validated()['owner_member_id'];
+
+        return response()->json($leadService->indexForOwner($owner));
+    }
 
     /**
      * GET /api/dragonfly/members — 一覧（Autocomplete 等用）.

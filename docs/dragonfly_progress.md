@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **DASHBOARD-P7-1（develop 取り込み）:** `feature/phase-dashboard-p7-1-ui` を `develop` に merge（no-ff）。Dashboard を panel 分割・右列「次の 1to1 候補」。`origin/develop` に Leads API が無かったため **GET `/api/dragonfly/members/one-to-one-status` 最小実装**（`MemberOneToOneLeadService`・`religo.php`・テスト）を同一 merge に含める。`DASHBOARD_FIT_AND_GAP.md`・PLAN/WORKLOG/REPORT・INDEX・REGISTRY・本ファイル。`php artisan test`・`npm run build` 通過。Merge Evidence: `PHASE_DASHBOARD_P7_1_UI_REPORT` §8。 |
 | 2026-03-20 | **ONETOONES-P5（PLAN 起票）:** Members / Dashboard からの 1 to 1 行動導線（`one-to-one-status` API 案・Dashboard パネル・作成ボタン・want 優先）。`PHASE_ONETOONES_P5_LEADS_{PLAN,WORKLOG,REPORT}`・`PHASE_REGISTRY`（status: planned）・INDEX・本ファイル更新。実装は未着手。 |
 | 2026-03-20 | **ONETOONES P1〜P4 総括メモ:** `docs/process/ONETOONES_P1_P4_SUMMARY.md` を追加（到達状態・設計決定・Fit/Gap・優先順位）。INDEX 更新。コード変更なし。 |
 | 2026-03-20 | **ONETOONES-P4:** 1 to 1 統計を一覧と同一 filter（`applyIndexFilters` 共通化・`OneToOneStatsRequest` 拡充）で `GET /api/one-to-ones/stats` に連動。`GET/POST /api/one-to-ones/{id}/memos` で `contact_memos`（`one_to_one_id` 既存）履歴、`OneToOnesEdit` にパネル。`GET/PATCH /api/users/me` に `id`・`member_id` を追加（後方互換で `owner_member_id` 維持）。PLAN/WORKLOG/REPORT（`PHASE_ONETOONES_P4_STATS_FILTER_MEMO_*`）・REGISTRY・INDEX・SSOT 更新。`php artisan test` 286・`npm run build` 通過。 |
