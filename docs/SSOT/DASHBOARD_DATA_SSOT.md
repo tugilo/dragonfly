@@ -25,10 +25,24 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 | **Activity** | **最近何が起きたか** — メモ・1 to 1・つながりフラグ・BO 割当などの**時系列ログ**（判断の裏付け・思い出し）。 |
 | **Leads（右列）** | **関係強化の候補** — 全会員× owner の 1 to 1 状況・want 等から **誰と次に会うか** を探す補助（Tasks とは役割分担）。 |
 
-### workspace と Tasks / stale（DASHBOARD-TASKS-ALIGNMENT-P1, **STALE-WORKSPACE-SCOPE-P1**）
+### workspace と Tasks / stale（DASHBOARD-TASKS-ALIGNMENT-P1, **STALE-WORKSPACE-SCOPE-P1**, **STALE-WORKSPACE-P2**）
 
 - **Tasks（meeting_follow_up 以外の stale 系）:** `getSummaryLiteBatch` 第 3 引数は **`null`**（P1 どおり）。  
 - **stale（`stale_contacts_count`・`stale_follow` タスク）:** 同じく **`getSummaryLiteBatch(..., null)`** を用いる（**本 Phase で方針確定**）。
+
+#### stale peer の定義（**DASHBOARD-STALE-WORKSPACE-P2**）
+
+| 案 | peer 集合 | 結論 |
+|----|------------|------|
+| **案A** | owner 以外の **全 `members`** | **採用（現行）** — `DashboardService::stalePeerMemberIds` がこの集合を返す。 |
+| **案B** | owner と **同一 workspace（チャプター）** に所属する members のみ | **未採用** — `members` に **`workspace_id` が無い**（[DATA_MODEL.md](DATA_MODEL.md) §5.1・Future）。DB 上で peer の所属を突合できない。 |
+| **案C** | owner が関与したネットワーク上の相手のみ | **未採用** — 定義・集計コストが高い。将来の別検討。 |
+
+**`ReligoActorContext::resolveWorkspaceIdForUser()` を stale に渡さない理由（P2 で再確認）:**
+
+- 解決済み workspace は **ユーザーの所属** を表すが、**各 peer member の所属チャプター** を行レベルで比較する列がない。
+- peer を全会員のまま **`getSummaryLiteBatch(..., $workspaceId)`** にすると、memos/o2o/flags はチャプター文脈（OR NULL）になり、**同席由来の `last_contact` は引き続き全会議対象** — 「所属チャプター内の未接触」と説明が割れる。
+- **次条件（workspace 付き stale を検討する前に推奨）:** peer を **`members.workspace_id = 解決済み id`（等）で限定できる**スキーマまたは正式な導出ルール。**同席をチャプター内に寄せるか**は別途合意。
 
 #### stale の意味（owner 文脈・**現行実装＝案A**）
 
@@ -49,8 +63,8 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 **将来（別 Phase）の再検討条件（すべて満たすことを推奨）:**
 
 1. ~~`MemberSummaryQuery` の workspace 条件が **DATA_MODEL の NULL 許容**（解決済み workspace と **`workspace_id IS NULL`** の OR）に更新されている。~~ **実施済（MEMBER-SUMMARY-WORKSPACE-NULL-P1）。**  
-2. peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id` または正式な所属テーブル）。  
-3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて第 3 引数に渡しても **KPI・Tasks・Members 一覧 summary** と矛盾しないことが SSOT で宣言できる。
+2. peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id` または正式な所属テーブル）。**DASHBOARD-STALE-WORKSPACE-P2:** 現状 **未達**のため stale は **案A のまま**。  
+3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて stale の `getSummaryLiteBatch` 第 3 引数に渡しても、**peer 集合・同席スコープ・説明責任**が SSOT で一貫すると宣言できること（P2 では **未実施＝見送り**）。
 
 ---
 

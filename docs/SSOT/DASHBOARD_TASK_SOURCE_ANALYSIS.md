@@ -15,14 +15,15 @@
 | バックエンド | `DashboardController::tasks` → `DashboardService::getTasks` |
 | workspace | **`getSummaryLiteBatch` 第 3 引数は `null`**（`stale_follow`・**KPI の stale_contacts_count** も同様）。owner 以外の **全メンバーを peer**。 |
 
-### 1.1 stale / KPI と workspace（DASHBOARD-STALE-WORKSPACE-SCOPE-P1）
+### 1.1 stale / KPI と workspace（DASHBOARD-STALE-WORKSPACE-SCOPE-P1, **DASHBOARD-STALE-WORKSPACE-P2**）
 
 | 項目 | 内容 |
 |------|------|
 | **決定** | Dashboard の stale（Tasks `stale_follow`・`getStats` の `stale_contacts_count`）は **`getSummaryLiteBatch(..., null)` のまま**。 |
+| **stale peer（P2）** | **案A 採用:** owner 以外の **全 `members`**（`DashboardService::stalePeerMemberIds`）。**案B**（同一 workspace のみ）は **`members.workspace_id` 未整備**のため未採用。 |
 | **`workspaceId` 非 null のとき Query で起きること** | **MEMBER-SUMMARY-WORKSPACE-NULL-P1 以降:** `batchOneToOneCount` / `batchLastMemo` / `batchLastContactAt`（memos・o2o 部分）/ `batchFlags` が **`(workspace_id = :id OR workspace_id IS NULL)`**（DATA_MODEL §5.1）。**同席例会日は引き続きフィルタなし**。Dashboard の stale / KPI は **第 3 引数 `null`** のため従来どおり workspace 列は使わない。 |
-| **案B を見送り理由（要約）** | `members` に workspace が無く peer をチャプター限定できない／（旧）厳密一致と DATA_MODEL の単一 WS 扱いがずれたが **Query は OR 化済み**／last_contact の **同席 vs memos 混線**は stale に workspace を渡すまで残る。詳細は [DASHBOARD_DATA_SSOT §0](DASHBOARD_DATA_SSOT.md)。 |
-| **再検討** | peer のチャプター限定 + `DashboardService` から解決済み workspace を stale に渡す可否を **別 Phase** でレビュー（Query の OR 化は前提を満たした）。 |
+| **`resolveWorkspaceIdForUser` を stale に渡さない理由（P2）** | peer が全会員のまま workspace だけ渡すと **last_contact のチャプター説明が割れる**（memos/o2o/flags は文脈付き・同席は全会議）。**ユーザーの所属 workspace** と **各 peer の所属** を行で突合する列がない。 |
+| **再検討** | **`members.workspace_id`（等）で peer を限定できる**ようになってから、stale に解決済み workspace を渡す案を **別 Phase** でレビュー。 |
 
 ---
 

@@ -78,3 +78,7 @@ Religo では:
 `GET /api/dragonfly/members` の `with_summary=1` で任意の **`workspace_id` クエリ**を渡したとき、`MemberSummaryQuery::getSummaryLiteBatch` の第 3 引数にその ID が入る。単一チャプター運用の SSOT（[DATA_MODEL.md](DATA_MODEL.md) §5.1）に従い、`contact_memos` / `one_to_ones` / `dragonfly_contact_flags` には **`(workspace_id = :id OR workspace_id IS NULL)`** を適用する（legacy・未 backfill 行を現在所属チャプターに含める）。
 
 **Dashboard** の stale / KPI は **第 3 引数 `null`**（owner 全体）のまま。解決済み workspace（本ポリシーの `/1`〜`/4`）を stale に渡すかは別 Phase。
+
+### Dashboard stale と解決済み workspace（DASHBOARD-STALE-WORKSPACE-P2）
+
+`resolveWorkspaceIdForUser()` は **GET/PATCH `/api/users/me`・BO 監査・Members `summary_lite`** など **所属の説明**に使う。`stale_contacts_count` / `stale_follow` では **未使用** — peer の集合が **チャプター境界で DB 上から限定できない**（`members.workspace_id` 等が無い）うちは、**ユーザー所属 workspace だけ**を `getSummaryLiteBatch` に渡すと **last_contact の説明が割れる**（SSOT: [DASHBOARD_DATA_SSOT.md](DASHBOARD_DATA_SSOT.md) §0）。
