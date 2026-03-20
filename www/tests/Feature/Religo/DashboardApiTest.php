@@ -224,7 +224,7 @@ class DashboardApiTest extends TestCase
         ]);
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
         $res->assertOk();
-        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_memo_pending');
+        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
         $this->assertStringContainsString('あと3日', $meetingTask['meta']);
     }
@@ -239,7 +239,7 @@ class DashboardApiTest extends TestCase
         ]);
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
         $res->assertOk();
-        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_memo_pending');
+        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
         $this->assertStringContainsString('次回例会は未登録', $meetingTask['meta']);
     }
@@ -254,7 +254,7 @@ class DashboardApiTest extends TestCase
         ]);
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
         $res->assertOk();
-        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_memo_pending');
+        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertSame('本日開催', $meetingTask['meta']);
     }
 

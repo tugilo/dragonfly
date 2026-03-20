@@ -5,7 +5,7 @@ export const DASHBOARD_MSG = {
     KPI_NEED_OWNER: 'オーナーを設定すると、未接触件数や今月の活動量（KPI）が表示されます。',
     KPI_LOAD_ERROR: 'KPI を読み込めませんでした。画面を再読み込みしてください。',
     TASKS_NEED_OWNER: 'オーナーを設定すると、フォロー対象のタスクがここに表示されます。',
-    TASKS_EMPTY: 'いま表示するタスクはありません。未接触・予定の 1 to 1・例会タスクがあればここに出ます。',
+    TASKS_EMPTY: 'いま表示する優先アクションはありません。条件を満たす未接触・予定 1 to 1・例会フォローがあればここに出ます。',
     ACTIVITY_NEED_OWNER: 'オーナーを設定すると、直近のメモ・1 to 1・つながりの更新が表示されます。',
     ACTIVITY_EMPTY: '最近の活動はまだありません。メモや 1 to 1 を記録するとここに表示されます。',
 };
@@ -22,7 +22,7 @@ export const TASKS_FALLBACK = [
     { id: 's1', kind: 'stale_follow', title: '伊藤 勇樹', meta: '55日間未接触 — 1to1を検討', action: { label: '1to1予定', href: '/one-to-ones/create', disabled: false } },
     { id: 's2', kind: 'stale_follow', title: '水野 花菜', meta: '66日間未接触 — フォローアップ要', action: { label: 'メモ追加', href: '/members/2/show', disabled: false } },
     { id: 'o1', kind: 'one_to_one_planned', title: '田中 誠一 との1to1', meta: '本日 12:00 — CRM導入フォロー', badge: '予定', action: { label: '予定', href: null, disabled: true } },
-    { id: 'm1', kind: 'meeting_memo_pending', title: '例会 #248 メモ未整理', meta: '次回例会まであと5日', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
+    { id: 'm1', kind: 'meeting_follow_up', title: '例会 #248（次回・直近のフォロー）', meta: '次回例会まであと5日', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
 ];
 
 export const ACTIVITY_ICONS = {

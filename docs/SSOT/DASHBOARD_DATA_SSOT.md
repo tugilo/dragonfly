@@ -5,6 +5,33 @@
 
 ---
 
+## 0. Dashboard の役割（製品上の位置づけ）
+
+Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直後に **現状を把握し、「次にどの画面へ行き、何をするか」を判断するためのホーム** とする。
+
+| 観点 | 中身 |
+|------|------|
+| **誰のため** | チャプターに参加する **ユーザー（owner_member_id が示すメンバー）**。自分の紹介・フォロー・例会参加の文脈が主。 |
+| **開いた瞬間に分かるべきこと** | ① 要フォロー・今月の活動ペース（**KPI**）② **いま優先して進める具体行動（Tasks）** ③ **直近で起きたこと（Activity）** ④ 補助的に **1 to 1 の候補（Leads）**。 |
+| **詳細画面との違い** | Members / Meetings / 1 to 1 などは **1 テーマの深掘り・操作**。Dashboard は **横断したサマリと優先度の入口** に留め、編集本体は各画面へ委ねる。 |
+| **何を判断できれば十分か** | 「今日カレンダーのタスクを全部消化したか」ではなく、**次に触れるべき人・予定・例会に近いフォローはどれか** を 1 画面で掴めること。 |
+
+### ブロックごとの役割分担
+
+| ブロック | 役割 |
+|----------|------|
+| **KPI（4 統計）** | **状況把握** — 未接触規模・今月の 1 to 1 / メモのペースを数で示す。 |
+| **Tasks** | **次に動くべき具体行動** — 厳密な「今日の ToDo」ではなく、**優先して手を付けるとよい行動**（長期未接触・予定 1 to 1・次回/直近例会への導線）。 |
+| **Activity** | **最近何が起きたか** — メモ・1 to 1・つながりフラグ・BO 割当などの**時系列ログ**（判断の裏付け・思い出し）。 |
+| **Leads（右列）** | **関係強化の候補** — 全会員× owner の 1 to 1 状況・want 等から **誰と次に会うか** を探す補助（Tasks とは役割分担）。 |
+
+### workspace と Tasks（DASHBOARD-TASKS-ALIGNMENT-P1）
+
+- **Tasks の生成には `workspace_id` を渡さない**（`getSummaryLiteBatch` の第 3 引数は `null`）。**owner 軸のまま**とする。
+- **理由:** 現行の主軸は owner；チャプター別 stale の絞り込みは影響範囲が広く、本フェーズのスコープ外。将来 `workspace_id` を渡す場合は API・本 SSOT・タスク分析書を同時更新する。
+
+---
+
 ## 1. 対象と前提
 
 ### owner_member_id
@@ -38,15 +65,21 @@
 
 ## 3. tasks の定義（GET /api/dashboard/tasks）
 
+### Tasks の見出しと意味（UI）
+
+- 画面上のラベルは **「優先アクション（Tasks）」**。**カレンダー上の「今日」だけ**に限定したタスクリスト**ではない**（stale は 30 日超未接触、予定 1 to 1 は今日以降または日時未設定、例会行は次回または直近のフォロー誘導）。
+- **採らない案:** 見出し「今日やること」に合わせて **実装を今日限定に絞る**こと。優先フォロー・直近例会の動きまで落とすと Dashboard の役割が弱まるため、**案A（見出し・説明を実際の意味に寄せる）を採用**（DASHBOARD-TASKS-ALIGNMENT-P1）。
+
 ### kind と優先順位・件数上限
 | 順序 | kind | 内容 | 件数上限 |
 |------|------|------|----------|
-| 1 | **stale_follow** | 未接触 30 日以上の target。フォロー推奨。 | 最大 2 件。1 件目は「1to1予定」、2 件目は「メモ追加」。 |
-| 2 | **one_to_one_planned** | owner が予定している 1to1（status = planned、scheduled_at >= 今日 or null）。 | 1 件（最も直近の 1 件）。 |
-| 3 | **meeting_memo_pending** | 次回例会（held_on >= 今日）または直近例会の「メモ未整理」案内。 | 1 件。 |
+| 1 | **stale_follow** | `last_contact_at` が null または **30 日より前**の target（**厳密な「今日」ではなく「要フォロー」**）。Dashboard に出す理由: 関係が途切れそうな相手への **優先アクション** を置くため。 | 最大 2 件（一覧上の優先表示。**全件は KPI の未接触件数**を参照）。1 件目 CTA「1to1予定」→ `/one-to-ones/create`、2 件目「メモ追加」→ **`/members/{id}/show`**（Member 詳細でメモ・関係を更新）。 |
+| 2 | **one_to_one_planned** | owner の **planned** で、`scheduled_at` が **今日の暦日以降**または **null**（日時未設定の予定も可）。**意味:** すでに予定に載せた 1 to 1 を Dashboard で再認識し、当日・直近の実行を促す。並びは `scheduled_at` 昇順で先頭 1 件。 | 1 件。CTA は Chip「予定」（ href なし・仕様どおり）。 |
+| 3 | **meeting_follow_up** | **次回例会**（`held_on >= 今日` の先頭）が取れるときはそれについて、**無ければ直近終了の例会** 1 件について、**Meetings 一覧への導線**として提示する。**DB 上の「メモ未整理」フラグは見ない**（旧名 `meeting_memo_pending` は意味が紛らわしいため **kind を改名**）。 | 1 件。CTA「Meetingsへ」→ `/meetings`。 |
 
-### メモ追加が disabled の理由
-- 2 件目の stale_follow のアクション「メモ追加」は、**メモ追加 API を Dashboard から呼ぶ導線が未実装**のため、UI 上 disabled とする**意図**が SSOT にある。現行 API が `action.disabled: false` の場合は [DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md) を参照し、SSOT か実装を揃えること。Connections 等からはメモ追加可能。
+### stale_follow 2 件目「メモ追加」の disabled
+
+- **方針（P1）:** **disabled にしない。** **Member Show への deep link** が有効で、SSOT・実装・UX を **有効導線に統一**する（誤誘導にならない）。
 
 ### データ取得元（トレース）
 - Tasks の **UI → API → Service → DB** の対応は **[DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md)** を正とする（DASHBOARD-TASK-SOURCE-TRACE）。

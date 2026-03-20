@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P1:** Dashboard 役割（`DASHBOARD_DATA_SSOT` §0）、Tasks「優先アクション」、kind `meeting_follow_up`、stale メモ追加の SSOT＝有効 deep link、1to1 予定 meta 修正、`DashboardHeader` サブコピー。PLAN/WORKLOG/REPORT・REGISTRY・INDEX・分析/Fit&Gap 更新。**取り込み・Evidence:** REPORT §9。 |
 | 2026-03-20 | **DASHBOARD-TASK-SOURCE-TRACE:** `docs/SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md` を追加。Tasks は `GET /api/dashboard/tasks` → `DashboardService::getTasks` → DB（`MemberSummaryQuery`・`one_to_ones`・`meetings`）。フロント仮データなし。`getSummaryLiteBatch(..., null)` により Tasks は workspace 非スコープ。`DASHBOARD_DATA_SSOT` にトレースリンクと disabled 注記。INDEX 更新。 |
 | 2026-03-20 | **BO-AUDIT-P5（develop 取り込み）:** merge `1129f7d9272d7e6c184a3acf19cac1d2e7bdacd9`（`feature/phase-bo-audit-p5`）。`/#/settings` で所属チャプター選択・`PATCH /api/users/me` の `default_workspace_id`。既存 `GET /api/workspaces`。`CustomAppBar` 所属表示・`religo-workspace-changed`・`DashboardHeader` 名称リンク。`USER_ME`・`DASHBOARD_DATA_SSOT`・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。`php artisan test` **315**・`npm run build`。REPORT Merge Evidence 追記コミットあり。 |
 | 2026-03-20 | **WORKSPACE-SINGLE-CHAPTER-ASSUMPTION:** BNI 前提で **1 user = 1 workspace**・**チャプター ≒ workspace** を `DATA_MODEL` に固定。`default_workspace_id` を **所属 workspace** と SSOT 再定義（カラム名維持）。多対多スコープ外を明記。`WORKSPACE_RESOLUTION_POLICY`・`USER_ME`・`BO_AUDIT_LOG`・`DASHBOARD_DATA_SSOT` を「所属チャプター」で整合。`ReligoActorContext` / `UserController` / `BoAssignmentAuditLogWriter` docblock のみ。PLAN/WORKLOG/REPORT・REGISTRY・INDEX・progress。 |

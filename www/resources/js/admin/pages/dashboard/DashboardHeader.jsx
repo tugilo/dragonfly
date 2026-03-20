@@ -31,7 +31,7 @@ export default function DashboardHeader({
                     Dashboard
                 </Typography>
                 <Typography sx={{ fontSize: 12, color: 'text.secondary', mt: 0.375 }}>
-                    今日の活動・未アクション・KPI
+                    KPI で俯瞰し、優先アクションと直近の活動から次の一手を決める
                 </Typography>
                 {resolvedWorkspaceId != null && (
                     <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', mt: 0.25 }} component="span">
