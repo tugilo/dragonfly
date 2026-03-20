@@ -52,6 +52,7 @@ Route::put('/dragonfly/flags/{target_member_id}', [DragonFlyContactFlagControlle
     ->whereNumber('target_member_id');
 
 Route::get('/dragonfly/members', [DragonFlyMemberController::class, 'index']);
+Route::get('/dragonfly/members/one-to-one-status', [DragonFlyMemberController::class, 'oneToOneStatus']);
 Route::get('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'show'])->whereNumber('id');
 Route::put('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'update'])->whereNumber('id');
 
