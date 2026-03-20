@@ -32,7 +32,7 @@ class DashboardService
      */
     public function getStats(int $ownerMemberId): array
     {
-        $memberIds = Member::query()->where('id', '!=', $ownerMemberId)->pluck('id')->all();
+        $memberIds = $this->stalePeerMemberIds($ownerMemberId);
         $peerCount = count($memberIds);
         $staleCount = 0;
         if ($memberIds !== []) {
@@ -109,7 +109,7 @@ class DashboardService
     public function getTasks(int $ownerMemberId): array
     {
         $tasks = [];
-        $memberIds = Member::query()->where('id', '!=', $ownerMemberId)->pluck('id')->all();
+        $memberIds = $this->stalePeerMemberIds($ownerMemberId);
         $cutoff = now()->subDays(self::STALE_DAYS)->format('c');
 
         if ($memberIds !== []) {
@@ -190,6 +190,20 @@ class DashboardService
         }
 
         return $tasks;
+    }
+
+    /**
+     * Dashboard stale（KPI・`stale_follow`）で「未接触候補」に含める peer の member id 一覧.
+     *
+     * **定義（SSOT: docs/SSOT/DASHBOARD_DATA_SSOT.md §0 · DASHBOARD-STALE-WORKSPACE-P2）:** 案A —
+     * owner 本人を除く **全 `members`**。チャプター境界での peer 絞り込み（案B）は
+     * `members.workspace_id` 等が整うまで行わない。
+     *
+     * @return array<int>
+     */
+    private function stalePeerMemberIds(int $ownerMemberId): array
+    {
+        return Member::query()->where('id', '!=', $ownerMemberId)->pluck('id')->all();
     }
 
     /**
