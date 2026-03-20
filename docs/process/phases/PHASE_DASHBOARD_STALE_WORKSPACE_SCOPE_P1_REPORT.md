@@ -30,7 +30,8 @@ Dashboard の **stale**（`stale_contacts_count`・`stale_follow`）について
 
 ## 6. テスト結果
 
-- **（merge 後記載）** `php artisan test` / `npm run build`
+- **php artisan test（merge 後・develop）:** **318 passed**（1282 assertions）
+- **npm run build:** 成功
 
 ## 7. 未解決事項
 
@@ -48,7 +49,14 @@ Dashboard の **stale**（`stale_contacts_count`・`stale_follow`）について
 | 項目 | 値 |
 |------|-----|
 | merge method | `git merge --no-ff feature/phase-dashboard-stale-workspace-scope-p1` |
+| target branch | `develop` |
 | merged branch | `feature/phase-dashboard-stale-workspace-scope-p1` |
-| merge commit id | *（要記載）* |
-| feature last commit id | *（要記載）* |
-| notes | stale=案A維持、`getSummaryLiteBatch(..., null)`、案B見送り理由・再検討条件を SSOT 化 |
+| merge commit id | `8a9c0e99ebee4dd606a99d6de5dca9a55853f454` |
+| feature last commit id | `c876bb668eac6af19c2a2624966838e5b5181e24` |
+| merge 競合 | なし |
+| test result | **318 passed**（1282 assertions） |
+| build | success |
+| changed files（取り込み） | `docs/INDEX.md`, `docs/SSOT/DASHBOARD_DATA_SSOT.md`, `docs/SSOT/DASHBOARD_FIT_AND_GAP.md`, `docs/SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md`, `docs/dragonfly_progress.md`, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_DASHBOARD_STALE_WORKSPACE_SCOPE_P1_PLAN.md`, `docs/process/phases/PHASE_DASHBOARD_STALE_WORKSPACE_SCOPE_P1_REPORT.md`, `docs/process/phases/PHASE_DASHBOARD_STALE_WORKSPACE_SCOPE_P1_WORKLOG.md` |
+| notes | **stale 定義:** 案A・`getSummaryLiteBatch(..., null)`。**案B 見送り:** peer 境界・NULL 行・同席スコープの説明不能性。実装なし。 |
+
+**運用上の注記:** 本 §9 の追記は merge 後に `docs: add merge evidence for dashboard stale workspace scope p1` で `develop` に積む。
