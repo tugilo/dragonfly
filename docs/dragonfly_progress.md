@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **BO-AUDIT-P1（develop 取り込み）:** merge `4e82b932059b3b31d2d1b16b5e055ba5ab3114c2`（`feature/phase-bo-audit-p1`）。`bo_assignment_audit_logs`・`BoAssignmentAuditLogWriter`・breakouts / breakout-rounds 成功後に監査1行・Dashboard `getActivity` に `bo_assigned`。`meeting_csv_apply_logs` は流用せず。SSOT `BO_AUDIT_LOG_DESIGN.md`・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。`php artisan test` **303**・`npm run build` 通過。Deploy 時 `php artisan migrate`。REPORT §9 Merge Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-P7-3（develop 取り込み）:** merge `124e9c3b610b9eaf0fa74e878d2c93553d28bd72`（`feature/phase-dashboard-p7-3-finishing`）。空状態・Skeleton・空配列 API 修正。SSOT 整合・`DATA_MODEL` §4.12.2（BO 見送り）。`php artisan test` 302・`npm run build`。REPORT §10 Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-P7-2（develop 取り込み）:** merge `519ace29dc8a1f72c33ecff3686cd1b24129a15a`（`feature/phase-dashboard-p7-2-data-actions`）。`DashboardService` の KPI subtext・例会 meta・Tasks メモ `/members/:id/show`・Activity（`flag_changed`・`memo_introduction`）。`DashboardApiTest` 追加。SSOT・PLAN/WORKLOG/REPORT・REGISTRY・INDEX 更新。`php artisan test` 302・`npm run build` 通過。REPORT §10 Merge Evidence 追記コミット済み。 |
 | 2026-03-20 | **ONETOONES-P5/P6（develop 取り込み）:** merge `8f652b97503f5dc7bf647e80ebbb0d4702e1da56`（`feature/onetoones-p5-p6-leads-merge`）。Members 一覧/カードに **1to1（実施ベース）** 列・snippet・`1to1作成`。MemberShow・`OneToOnesCreate?target_member_id=`。`DATA_MODEL` §4.12.1・`FIT_AND_GAP` §2・P5 REPORT Merge Evidence。296 tests。 |

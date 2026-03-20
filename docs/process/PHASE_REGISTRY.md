@@ -81,7 +81,7 @@
 | DASHBOARD-P7-1 | Dashboard モック寄せ UI 再構成（上段KPI・左主列 Tasks/Shortcuts/Activity・右Leads補助・panel分割）＋右列用 `one-to-one-status` API 最小実装 | implement | completed | feature/phase-dashboard-p7-1-ui | 2026-03-20 |
 | DASHBOARD-P7-2 | Dashboard データ・導線（KPI subtext 動的化・次回例会日数・Tasks メモ deep link・Activity 拡張）＋ develop merge / Evidence | implement | completed | feature/phase-dashboard-p7-2-data-actions | 2026-03-20 |
 | DASHBOARD-P7-3 | Dashboard 仕上げ（空状態・ローディング Skeleton・SSOT 整合・BO 活動要件化）＋ develop merge / Evidence | implement | completed | feature/phase-dashboard-p7-3-finishing | 2026-03-20 |
-| BO-AUDIT-P1 | BO 保存の監査ログ（`bo_assignment_audit_logs`）設計＋Dashboard `bo_assigned` 最小実装＋ develop merge / Evidence | implement | in_progress | feature/phase-bo-audit-p1 | 2026-03-20 |
+| BO-AUDIT-P1 | BO 保存の監査ログ（`bo_assignment_audit_logs`）設計＋Dashboard `bo_assigned` 最小実装＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p1 | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

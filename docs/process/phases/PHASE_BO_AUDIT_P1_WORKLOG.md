@@ -32,4 +32,4 @@
 
 ### merge 時の競合
 
-- （Merge 実施後に WORKLOG 追記: なし / あり＋内容）
+- **なし**（`develop` に `feature/phase-bo-audit-p1` を `ort` で `--no-ff` merge）。

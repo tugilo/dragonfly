@@ -66,8 +66,8 @@ BO（breakout）保存の **説明可能な監査**として `bo_assignment_audi
 
 | コマンド | 結果 |
 |----------|------|
-| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | （merge 完了後に記載） |
-| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` | （merge 完了後に記載） |
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | **303 passed** |
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` | 成功 |
 
 ---
 
@@ -91,15 +91,15 @@ BO（breakout）保存の **説明可能な監査**として `bo_assignment_audi
 | merge method | `git merge --no-ff feature/phase-bo-audit-p1` |
 | merged branch | `feature/phase-bo-audit-p1` |
 | target branch | `develop` |
-| merge commit id | （merge 後に `git log -1 --format=%H develop`） |
-| feature last commit id | （merge 直前の feature `HEAD`） |
-| pushed at | （`git push` 完了後に記載・ISO8601 推奨） |
+| merge commit id | `4e82b932059b3b31d2d1b16b5e055ba5ab3114c2` |
+| feature last commit id | `96b3e15b22a07dabba2bbd9df2cc8924da208605` |
+| pushed at | `2026-03-20T03:00:57Z`（Evidence コミット push 時点で再確認可） |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
-| test result | （passed 数） |
+| test result | 303 passed |
 | build | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` |
-| notes | 最小監査＋Dashboard 表示まで実装。 |
+| notes | 最小監査＋Dashboard 表示まで実装。CSV apply ログと分離。 |
 
-**証跡追記コミット:** merge 直後に本表を埋めたうえで、必要なら `docs: add merge evidence for BO-AUDIT-P1` を別コミットで push。
+**証跡追記コミット:** 本表を埋めたうえで `docs: add merge evidence for BO-AUDIT-P1` を `develop` に push。
 
 ---
 
