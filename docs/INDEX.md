@@ -88,6 +88,7 @@
 | [MEETINGS_ARCHIVE_FIT_AND_GAP.md](SSOT/MEETINGS_ARCHIVE_FIT_AND_GAP.md) | Meetings **Archive**（非表示/論理無効化/履歴保持）の要否・Delete 代替との関係・子データ/一覧/stats/Drawer 影響・設計案A〜F・推奨・実装前の決定事項。**補足前提:** 初回は `archived_at` のみ・`show` 非破壊・`next_meeting` は未アーカイブのみ・初回 restore 不要（調査のみ・コード変更なし）。 |
 | [DASHBOARD_REQUIREMENTS.md](SSOT/DASHBOARD_REQUIREMENTS.md) | ダッシュボード画面をモック（religo-admin-mock2.html）に合わせるための要件。構成・ブロック・データ・チェックリスト。 |
 | [DASHBOARD_DATA_SSOT.md](SSOT/DASHBOARD_DATA_SSOT.md) | Dashboard のデータ定義 SSOT。stats/tasks/activity の定義・owner_member_id・件数上限・実装紐づけ。 |
+| [DASHBOARD_TASK_SOURCE_ANALYSIS.md](SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md) | 「今日やること（Tasks）」の取得元トレース（UI・API・DashboardService・DB・workspace 未適用・SSOT ギャップ）。 |
 | [DASHBOARD_FIT_AND_GAP.md](SSOT/DASHBOARD_FIT_AND_GAP.md) | Dashboard のモック v2 構造分解・データ要件・現行実装との Fit & Gap・実装方針・次 Phase。 |
 | [BO_AUDIT_LOG_DESIGN.md](SSOT/BO_AUDIT_LOG_DESIGN.md) | BO（breakout）割当保存の監査ログ設計・Dashboard `bo_assigned` のイベント源（BO-AUDIT-P1〜）。 |
 | [USER_ME_AND_ACTOR_RESOLUTION.md](SSOT/USER_ME_AND_ACTOR_RESOLUTION.md) | `/api/users/me`・BO 監査 actor・**所属チャプター**（workspace）解決の SSOT（BO-AUDIT-P3〜P4・WORKSPACE-SINGLE-CHAPTER-ASSUMPTION）。 |

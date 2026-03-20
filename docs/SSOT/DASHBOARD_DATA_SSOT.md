@@ -46,7 +46,10 @@
 | 3 | **meeting_memo_pending** | 次回例会（held_on >= 今日）または直近例会の「メモ未整理」案内。 | 1 件。 |
 
 ### メモ追加が disabled の理由
-- 2 件目の stale_follow のアクション「メモ追加」は、**メモ追加 API を Dashboard から呼ぶ導線が未実装**のため、UI 上 disabled。Connections 等からはメモ追加可能。将来 Phase で Dashboard からメモモーダルを開く実装を入れる。
+- 2 件目の stale_follow のアクション「メモ追加」は、**メモ追加 API を Dashboard から呼ぶ導線が未実装**のため、UI 上 disabled とする**意図**が SSOT にある。現行 API が `action.disabled: false` の場合は [DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md) を参照し、SSOT か実装を揃えること。Connections 等からはメモ追加可能。
+
+### データ取得元（トレース）
+- Tasks の **UI → API → Service → DB** の対応は **[DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md)** を正とする（DASHBOARD-TASK-SOURCE-TRACE）。
 
 ---
 

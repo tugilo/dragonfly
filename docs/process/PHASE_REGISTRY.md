@@ -87,6 +87,7 @@
 | BO-AUDIT-P4 | users.default_workspace_id・me/actor workspace 解決順一本化・Dashboard 補助表示＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p4 | 2026-03-20 |
 | BO-AUDIT-P5 | 所属チャプター設定 UI（/settings）・PATCH me・AppBar/Dashboard 整合＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p5 | 2026-03-20 |
 | WORKSPACE-SINGLE-CHAPTER-ASSUMPTION | BNI 前提の 1 user=1 workspace・所属 `default_workspace_id`・多対多スコープ外の SSOT 固定（doc + docblock） | docs | completed | develop | 2026-03-20 |
+| DASHBOARD-TASK-SOURCE-TRACE | Dashboard Tasks の UI→API→Service→DB トレース（`DASHBOARD_TASK_SOURCE_ANALYSIS.md`） | docs | completed | develop | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
