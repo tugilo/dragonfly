@@ -89,11 +89,11 @@
 | KPI② 今月1to1回数 | owner の今月 **completed** 件数 | `one_to_ones` | `status=completed` かつ `started_at` が当月範囲 |
 | KPI③ 紹介メモ（今月） | owner が今月作成した紹介メモ件数 | `contact_memos` | `memo_type=introduction`・`created_at` 当月 |
 | KPI④ 例会メモ（今月） | owner が今月作成した例会メモ件数 | `contact_memos` | `memo_type=meeting`・当月。補足「例会#247」は **表示用コピー** であり DB の必須項目ではない（要確認：動的に直近例会番号を出すか） |
-| KPI 補足「先月比 +2」 | 前月との差分 | 同上 KPI②（および類推） | 先月 completed count と比較。**現行 API は固定文言「先月比 +2」**（DASHBOARD_DATA_SSOT / DashboardService）。実データ連携は未 |
+| KPI 補足（先月比等） | 前月との差分・割合 | 同上 KPI②③④＋未接触割合（P7-2） | **P7-2 で動的化済**（`GET /api/dashboard/stats` の `subtexts`） |
 | Tasks stale×2 | 未接触 30 日以上の target から最大 2 件 | 同上 `last_contact_at` + `members` | 日数表示、1 件目 href 1to1 作成、2 件目はモックはメモ追加 |
 | Tasks 予定1to1 | 直近の planned | `one_to_ones` + `members`（target） | `scheduled_at` 当日以降 or null、並び最上位 1 件など（SSOT: DASHBOARD_DATA_SSOT） |
-| Tasks 例会メモ | 次回 `held_on >= today` の例会、なければ直近 | `meetings` | タイトルに例会番号、メタ「次回まであとN日」は **現行実装は固定「あと5日」**（モック見た目と一致だがロジックは要確認） |
-| 活動フィード | メモ・1to1・**BO 割当**・**フラグ変更** 等の時系列 | `contact_memos`, `one_to_ones`, **（BO 保存イベント）**, **（flags 変更）** | occurred_at 降順、limit N。**BO / フラグは現行 `getActivity` に未含有（§4）** |
+| Tasks 例会メモ | 次回 `held_on >= today` の例会、なければ直近 | `meetings` | タイトルに例会番号。**P7-2:** meta は `held_on` から「本日 / あとN日 / 次回未登録…」を動的算出 |
+| 活動フィード | メモ・1to1・**BO 割当**・**フラグ変更** 等の時系列 | `contact_memos`, `one_to_ones`, **`dragonfly_contact_flags`**, （BO は **未**） | occurred_at 降順、limit N。**P7-2:** memo / intro / 1to1 / `flag_changed`。**BO 保存イベントは P7-3 で要件化のみ（§8）** |
 | （実装のみ）1to1リード一覧 | 全会員×owner の 1to1 実施状況・want_1on1 | `one_to_ones`, `dragonfly_contact_flags`, `members` | `MemberOneToOneLeadService::indexForOwner`。**モック Dashboard には無い** |
 
 ---
@@ -108,11 +108,11 @@
 | 1to1 リードパネル | **実装済・モックに無し** | `GET /api/dragonfly/members/one-to-one-status`。Tasks の**上**に配置。全ターゲットの状況＋`1to1作成` リンク |
 | Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**。例会行 meta は `held_on` から**日数動的** |
 | クイックショートカット | **実装済** | React Router の `/connections` 等（モック hash とパスは異なるが導線同等） |
-| 最近の活動 | **部分実装** | `GET /api/dashboard/activity` は memos（**紹介は `memo_introduction`**）+ 1to1 + **`dragonfly_contact_flags`（`flag_changed`）** をマージ。**`bo_assigned` は未** |
-| ローディング | **実装のみ** | 「読込中…」表示 |
+| 最近の活動 | **部分実装** | `GET /api/dashboard/activity` は memos（**紹介は `memo_introduction`**）+ 1to1 + **`dragonfly_contact_flags`（`flag_changed`）** をマージ。**`bo_assigned` は未**（理由 §8） |
+| ローディング・空状態 | **実装済（P7-3）** | 初回・オーナー変更後の再取得でパネル単位 **Skeleton**。空配列 API を正しく表示。オーナー未設定・0 件・KPI 取得失敗を区別。凡例データ（旧フェールバック）は表示しない |
 | モックのモーダル（1to1 / メモ） | **未** | 実装は **ページ遷移**（`/one-to-ones/create`）が中心。メモは Dashboard 直書き不可 |
 
-**補足:** [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §2 は「Tasks/活動が静的」とあるが、**現行は API 連携済み**。同セクションを本書に合わせて更新することを推奨。
+**補足:** [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §2 は **P7-3 で API 連携・空状態・ローディング**まで反映済み。
 
 ---
 
@@ -157,7 +157,7 @@
 |----|------|
 | **P7-1** | **UI 構築** — モック v2 の余白・2 カラム・カードトーンに寄せた調整。リードパネルと Tasks の順序・見出しの整理（案C ならここで決定） |
 | **P7-2** | **データ連携（実装済・DASHBOARD-P7-2）** — subtext 動的化、例会日数、メモ deep link、activity に `flag_changed` / `memo_introduction`。BO 活動は別途 |
-| **P7-3** | **表示最適化** — ローディング・エンプティ・limit・パフォーマンス、`FIT_AND_GAP_MOCK_VS_UI` §2 の更新、（必要なら）`DASHBOARD_REQUIREMENTS.md` の INDEX 整合または復活 |
+| **P7-3** | **仕上げ（実装済・DASHBOARD-P7-3）** — 空状態・ローディング（Skeleton）、SSOT 整合、BO 活動の要件化（実装見送り）。`FIT_AND_GAP_MOCK_VS_UI` §2 更新 |
 
 ### P7-1 実装メモ（コード）
 
@@ -169,12 +169,17 @@
 - **実施:** `DASHBOARD-P7-2` — `DashboardService` で stats subtexts・例会 meta・Tasks href・activity を拡張。UI は `dashboardConstants.js`・`DashboardActivityPanel` のキャプション程度。
 - **ドキュメント:** `docs/process/phases/PHASE_DASHBOARD_P7_2_DATA_ACTIONS_*.md`
 
+### P7-3 実装メモ（コード）
+
+- **実施:** `DASHBOARD-P7-3` — `Dashboard.jsx` で `bootLoading` / `panelsRefreshing`、`loadDashboard` の空配列を正しく反映。`DashboardKpiGrid` / `Tasks` / `Activity` / `Leads` に Skeleton と `DASHBOARD_MSG` 空状態。`@mui/icons-material` の `InfoOutlined` で統一感。
+- **ドキュメント:** `docs/process/phases/PHASE_DASHBOARD_P7_3_FINISHING_*.md`
+
 ---
 
 ## §8 オープン（要確認）
 
-1. **活動の SSOT 範囲:** BO 割当・フラグ変更を「タイムライン必須」とするか、MVP はメモ＋1to1 に限定とするか。  
-2. **例会 Tasks のメタ:** 「次回例会まであとN日」を `meetings.held_on` から算出するルール（祝日・当日除外など）。  
+1. **`bo_assigned` / BO 割当を活動に載せるか（DASHBOARD-P7-3 判断）:** **いまは実装しない。** Connections の BO 保存に対応する**単一の活動イベント源**が無い。`meeting_csv_apply_logs` は参加者 CSV 反映用であり混在させない。**実装に必要:** BO 保存の監査または正規ログ、`occurred_at`・表示タイトル・例会番号の取り方の SSOT（`DATA_MODEL` §4.12.2 参照）。  
+2. **例会 Tasks のメタ:** P7-2 で `held_on` 暦日差に統一。祝日・当日の細則は必要なら別記。  
 3. **`DASHBOARD_REQUIREMENTS.md`:** INDEX とコードコメントが参照するがファイル未検出 — 削除・統合・復活のどれか。  
 4. **リードパネル:** モック非掲載の機能を Dashboard に置き続けるか、別画面へ移すか。
 

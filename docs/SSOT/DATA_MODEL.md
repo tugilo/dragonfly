@@ -326,6 +326,21 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 
 **代表日時:** 各行の completed について `COALESCE(ended_at, started_at, scheduled_at)` の最大。`planned` / `canceled` は実施件数・最終実施の算出に含めない。
 
+#### 4.12.2 Dashboard `GET /api/dashboard/activity`（活動フィード・P7-3）
+
+管理画面 Dashboard の「最近の活動」用。実装は `DashboardService::getActivity`。時系列は各ソースの日時をマージして降順、`limit` で打ち切り。
+
+| `kind`（API） | ソース |
+|---------------|--------|
+| `memo_added` | `contact_memos`（紹介以外） |
+| `memo_introduction` | `contact_memos`・`memo_type = introduction` |
+| `one_to_one_created` / `one_to_one_completed` | `one_to_ones` |
+| `flag_changed` | `dragonfly_contact_flags`・`updated_at` |
+
+**`bo_assigned`（モックの「例会 BO 割当保存」相当）:** **未実装（DASHBOARD-P7-3 で要件化のみ）。** Connections 画面の BO 割当**保存**を表す**単一の永続イベントストリーム**が無い。`meeting_csv_apply_logs`（参加者 CSV の participants / members / roles 反映ログ）は **別ドメイン**であり、活動フィードに無理に混ぜない。
+
+**将来実装に必要なもの:** BO 保存操作の監査ログまたは正規化された「保存完了」イベント（`occurred_at`、例会 id・番号、操作者）、Dashboard 用の表示タイトル規約を DATA_MODEL / `DASHBOARD_FIT_AND_GAP` で先に固定すること。
+
 ---
 
 ### 4.13 introductions（紹介）

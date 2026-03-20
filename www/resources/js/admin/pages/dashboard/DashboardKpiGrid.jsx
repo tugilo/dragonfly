@@ -1,11 +1,66 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography } from '@mui/material';
-import { STATS_DEFAULT, DASHBOARD_CARD_SX } from './dashboardConstants';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Box, Card, CardContent, Typography, Skeleton } from '@mui/material';
+import { STATS_DEFAULT, DASHBOARD_CARD_SX, DASHBOARD_MSG } from './dashboardConstants';
 
 /**
- * KPI 4 枚。`stats.subtexts` は P7-2 で API 差し替え前提。ここでは表示のみ。
+ * KPI 4 枚。P7-3: ローディング Skeleton・オーナー未設定・API 失敗を区別。
  */
-export default function DashboardKpiGrid({ stats }) {
+export default function DashboardKpiGrid({ stats, loading, ownerConfigured }) {
+    if (loading) {
+        return (
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: 1.5,
+                    mb: 2,
+                    '@media (max-width: 900px)': { gridTemplateColumns: 'repeat(2, 1fr)' },
+                    '@media (max-width: 600px)': { gridTemplateColumns: '1fr' },
+                }}
+            >
+                {[1, 2, 3, 4].map((k) => (
+                    <Card key={k} variant="outlined" sx={DASHBOARD_CARD_SX}>
+                        <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <Skeleton variant="rounded" width={40} height={40} />
+                            <Box sx={{ flex: 1 }}>
+                                <Skeleton variant="text" width="70%" height={14} sx={{ mb: 0.5 }} />
+                                <Skeleton variant="text" width={48} height={28} sx={{ mb: 0.5 }} />
+                                <Skeleton variant="text" width="90%" height={12} />
+                            </Box>
+                        </CardContent>
+                    </Card>
+                ))}
+            </Box>
+        );
+    }
+
+    if (!ownerConfigured) {
+        return (
+            <Card variant="outlined" sx={{ ...DASHBOARD_CARD_SX, mb: 2, bgcolor: 'grey.50' }}>
+                <CardContent sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+                    <InfoOutlinedIcon color="action" sx={{ fontSize: 20, mt: 0.25 }} />
+                    <Typography variant="body2" color="text.secondary">
+                        {DASHBOARD_MSG.KPI_NEED_OWNER}
+                    </Typography>
+                </CardContent>
+            </Card>
+        );
+    }
+
+    if (stats == null) {
+        return (
+            <Card variant="outlined" sx={{ ...DASHBOARD_CARD_SX, mb: 2, borderColor: 'warning.light' }}>
+                <CardContent sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+                    <InfoOutlinedIcon color="warning" sx={{ fontSize: 20, mt: 0.25 }} />
+                    <Typography variant="body2" color="text.secondary">
+                        {DASHBOARD_MSG.KPI_LOAD_ERROR}
+                    </Typography>
+                </CardContent>
+            </Card>
+        );
+    }
+
     const subtexts = stats.subtexts || STATS_DEFAULT.subtexts;
 
     const items = [

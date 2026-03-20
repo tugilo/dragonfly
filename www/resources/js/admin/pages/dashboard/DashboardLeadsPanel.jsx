@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography, Button, Chip } from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, Chip, Skeleton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import {
     religoOneToOneLeadStatusLabel,
@@ -15,7 +15,7 @@ import { DASHBOARD_CARD_SX } from './dashboardConstants';
 /**
  * 次の 1 to 1 候補（P5/P6）。右サイド補助。オーナー未設定時は説明のみ。
  */
-export default function DashboardLeadsPanel({ hasOwner, oneToOneLeads }) {
+export default function DashboardLeadsPanel({ hasOwner, oneToOneLeads, loading }) {
     return (
         <Card
             variant="outlined"
@@ -37,6 +37,12 @@ export default function DashboardLeadsPanel({ hasOwner, oneToOneLeads }) {
                     <Typography variant="body2" color="text.secondary" sx={{ py: 0.5 }}>
                         オーナーを設定すると、各メンバーとの 1 to 1 状況がここに表示されます。
                     </Typography>
+                ) : loading ? (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, py: 0.5 }}>
+                        <Skeleton variant="text" width="60%" height={20} />
+                        <Skeleton variant="rounded" height={72} sx={{ borderRadius: 1 }} />
+                        <Skeleton variant="rounded" height={72} sx={{ borderRadius: 1 }} />
+                    </Box>
                 ) : oneToOneLeads.length === 0 ? (
                     <Typography variant="body2" color="text.secondary" sx={{ py: 0.5 }}>
                         {RELIGO_DASHBOARD_LEADS_EMPTY}
