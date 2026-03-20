@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **DASHBOARD-P7-2（develop 取り込み）:** `feature/phase-dashboard-p7-2-data-actions` → `develop`（`--no-ff`）。`DashboardService` の KPI subtext・例会 meta・Tasks メモ `/members/:id/show`・Activity（`flag_changed`・`memo_introduction`）。`DashboardApiTest` 追加。SSOT（`DASHBOARD_FIT_AND_GAP`・`FIT_AND_GAP_MOCK_VS_UI` §2）・PLAN/WORKLOG/REPORT・REGISTRY・INDEX 更新。`php artisan test` 302・`npm run build` 通過。Merge Evidence は REPORT §10＋追記コミット。 |
 | 2026-03-20 | **ONETOONES-P5/P6（develop 取り込み）:** merge `8f652b97503f5dc7bf647e80ebbb0d4702e1da56`（`feature/onetoones-p5-p6-leads-merge`）。Members 一覧/カードに **1to1（実施ベース）** 列・snippet・`1to1作成`。MemberShow・`OneToOnesCreate?target_member_id=`。`DATA_MODEL` §4.12.1・`FIT_AND_GAP` §2・P5 REPORT Merge Evidence。296 tests。 |
 | 2026-03-20 | **DASHBOARD-P7-1（develop 取り込み）:** `feature/phase-dashboard-p7-1-ui` → `develop` merge commit `7b54fcd0e9bc4bff367bac06acfe3492dec77eb0`（no-ff）。Dashboard panel 分割・右列「次の 1to1 候補」。**GET `/api/dragonfly/members/one-to-one-status` 最小実装**を同梱（`MemberOneToOneLeadService`・`religo.php`・`MemberOneToOneStatusTest`）。`DASHBOARD_FIT_AND_GAP.md`・PLAN/WORKLOG/REPORT（§8 Merge Evidence 記載済）・INDEX・REGISTRY・本ファイル。`php artisan test` 296・`npm run build` 通過。証跡追記コミットあり。 |
 | 2026-03-20 | **ONETOONES-P5（PLAN 起票）:** Members / Dashboard からの 1 to 1 行動導線（`one-to-one-status` API 案・Dashboard パネル・作成ボタン・want 優先）。`PHASE_ONETOONES_P5_LEADS_{PLAN,WORKLOG,REPORT}`・`PHASE_REGISTRY`（status: planned）・INDEX・本ファイル更新。実装は未着手。 |

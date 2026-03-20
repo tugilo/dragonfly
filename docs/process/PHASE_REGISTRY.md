@@ -79,6 +79,7 @@
 | ONETOONES-P5 | 1 to 1 導線（Members/Dashboard 連携・next 1to1・want 優先・最小 status API） | implement | completed | feature/onetoones-p5-p6-leads-merge | 2026-03-20 |
 | ONETOONES-P6 | 1 to 1 リード磨き込み（閾値 config・Dashboard 空状態・completed 文言・DATA_MODEL §4.12.1）※API は DASHBOARD-P7-1 で先行マージ済みを本ブランチで UI/SSOT 完了 | implement | completed | feature/onetoones-p5-p6-leads-merge | 2026-03-20 |
 | DASHBOARD-P7-1 | Dashboard モック寄せ UI 再構成（上段KPI・左主列 Tasks/Shortcuts/Activity・右Leads補助・panel分割）＋右列用 `one-to-one-status` API 最小実装 | implement | completed | feature/phase-dashboard-p7-1-ui | 2026-03-20 |
+| DASHBOARD-P7-2 | Dashboard データ・導線（KPI subtext 動的化・次回例会日数・Tasks メモ deep link・Activity 拡張）＋ develop merge / Evidence | implement | completed | feature/phase-dashboard-p7-2-data-actions | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

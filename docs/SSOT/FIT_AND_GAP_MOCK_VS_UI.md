@@ -24,10 +24,10 @@
 |------|--------|------|-----------|
 | タイトル・説明 | 「Dashboard」「今日の活動・未アクション・KPI」 | 同一 | **Fit** |
 | ヘッダーアクション | 「Connectionsへ」「＋ 1to1追加」 | 同一（Connectionsへ、＋ 1to1追加） | **Fit** |
-| 統計カード 4 種 | 未接触(30日以上) / 今月の1to1回数 / 紹介メモ数 / 例会メモ数（数値・色・アイコン） | 同一構成・同一ラベル。アイコン色は MUI の error/primary/success/secondary | **Fit** |
-| 今日やること（Tasks） | 4 件（伊藤 … 等） | `GET /api/dashboard/tasks` で最大 4 系統。メモ追加 2 件目は Dashboard からは disabled（Connections 等で追加） | **Fit:** データ連携済。**Gap:** メモ Modal 直起動は未 |
+| 統計カード 4 種 | 未接触(30日以上) / 今月の1to1回数 / 紹介メモ数 / 例会メモ数（数値・色・アイコン・**補足行**） | 同一構成。補足は API の `subtexts`（**P7-2:** 先月比・未接触割合・直近例会番号など動的） | **Fit**（P7-2 で Gap 縮小） |
+| 今日やること（Tasks） | 4 件（伊藤 … 等） | `GET /api/dashboard/tasks`。メモ追加は **Member Show へ遷移**（`/members/:id/show`）。例会行は `held_on` から **あとN日 / 本日 / 次回未登録**表現（P7-2） | **Fit:** データ連携・導線あり。**Gap:** メモはモーダルではなく詳細遷移 |
 | クイックショートカット | Connections、Members一覧、＋1to1を追加、例会一覧 | 同一 4 ボタン | **Fit** |
-| 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ＋1to1 の混在時系列・limit） | **Gap:** BO/フラグイベントは API 未含有 |
+| 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ・**紹介メモ種別**・1to1・**つながりフラグ更新**・limit） | **Gap:** **BO 割当**イベントは依然 API 未含有 |
 | レイアウト | 左 Tasks+ショートカット、右 活動（モック） | **DASHBOARD-P7-1:** 左に Tasks→Shortcuts→**Activity**、右 **340px に「次の 1to1 候補」**（Leads API） | **Gap（意図的）:** Activity と Leads の左右を入替（主従整理）。 |
 
 ---
