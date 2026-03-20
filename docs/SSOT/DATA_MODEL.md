@@ -336,9 +336,9 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 | `memo_introduction` | `contact_memos`・`memo_type = introduction` |
 | `one_to_one_created` / `one_to_one_completed` | `one_to_ones` |
 | `flag_changed` | `dragonfly_contact_flags`・`updated_at` |
-| `bo_assigned` | **`bo_assignment_audit_logs`**（BO-AUDIT-P1/P2）。`actor_owner_member_id` で Dashboard owner に一致する行のみ。 |
+| `bo_assigned` | **`bo_assignment_audit_logs`**（BO-AUDIT-P1〜P3）。`actor_owner_member_id` で Dashboard owner に一致する行のみ。 |
 
-**`bo_assignment_audit_logs`:** 主線 breakouts / breakout-rounds・**レガシー** `PUT .../breakout-assignments`（PUT のみ）成功時に `BoAssignmentAuditLogWriter` が **1 行追加**。**`workspace_id`** は workspaces 先頭 id を既定で格納（無ければ null）。**actor** は `auth()->user()` 優先・無ければ先頭 User フォールバック。詳細は [BO_AUDIT_LOG_DESIGN.md](BO_AUDIT_LOG_DESIGN.md)。**`meeting_csv_apply_logs` とは別**（CSV 反映は BO 割当イベントではない）。
+**`bo_assignment_audit_logs`:** 主線 breakouts / breakout-rounds・**レガシー** `PUT .../breakout-assignments`（PUT のみ）成功時に `BoAssignmentAuditLogWriter` が **1 行追加**。**actor / workspace** は `ReligoActorContext` と **GET `/api/users/me`** と同一基準（BO-AUDIT-P3）。詳細は [BO_AUDIT_LOG_DESIGN.md](BO_AUDIT_LOG_DESIGN.md)、[USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。**`meeting_csv_apply_logs` とは別**。
 
 ---
 

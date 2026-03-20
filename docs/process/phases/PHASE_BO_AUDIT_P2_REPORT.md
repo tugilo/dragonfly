@@ -89,7 +89,7 @@
 | target branch | `develop` |
 | merge commit id | `ff500ac3f8a5982c9890321c57c1057ad1b5baf2` |
 | feature last commit id | `b2a16ba5a000e8998942faec024d40b17cf72473` |
-| pushed at | （`git push origin develop` 後に確定） |
+| pushed at | `2026-03-20T03:16:19Z` |
 | test result | 307 passed |
 | notes | レガシー PUT 監査実装。DELETE 見送り。actor auth+フォールバック、workspace 先頭 id。Dashboard.jsx `Box` import 同梱。 |
 

@@ -5,33 +5,24 @@ namespace App\Services\Religo;
 use App\Models\BoAssignmentAuditLog;
 use App\Models\Meeting;
 use App\Models\User;
-use App\Models\Workspace;
 
 /**
  * BO 保存成功後に監査行を1件追加。
  *
- * actor: `auth()->user()` が {@see User} ならそれを使用。未ログイン（現行 API は無認証が多い）では
- * **id 昇順の先頭 User** にフォールバック（UserController の暫定「me」と同趣旨・本番 auth 導入後は主に前者が使われる）。
- *
- * workspace_id: **workspaces を id 昇順で最初の 1 件**（単一チャプター運用の既定）。テーブル空なら null。
+ * actor / workspace は `ReligoActorContext` と `/api/users/me` と同一基準（BO-AUDIT-P3）。
  */
 final class BoAssignmentAuditLogWriter
 {
     public static function resolveActorUser(): ?User
     {
-        $u = auth()->user();
-        if ($u instanceof User) {
-            return $u;
-        }
-
-        return User::query()->orderBy('id')->first();
+        return ReligoActorContext::actingUser();
     }
 
-    public static function resolveWorkspaceIdForAudit(): ?int
+    public static function resolveWorkspaceIdForAudit(?User $actor = null): ?int
     {
-        $id = Workspace::query()->orderBy('id')->value('id');
+        $user = $actor ?? self::resolveActorUser();
 
-        return $id !== null ? (int) $id : null;
+        return ReligoActorContext::resolveWorkspaceIdForOwnerMember($user?->owner_member_id);
     }
 
     /**
@@ -90,7 +81,7 @@ final class BoAssignmentAuditLogWriter
             'meeting_id' => $meeting->id,
             'actor_user_id' => $user?->id,
             'actor_owner_member_id' => $user?->owner_member_id,
-            'workspace_id' => self::resolveWorkspaceIdForAudit(),
+            'workspace_id' => self::resolveWorkspaceIdForAudit($user),
             'source' => $source,
             'payload' => $payload,
             'occurred_at' => now(),
