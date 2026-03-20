@@ -28,7 +28,7 @@
 | 空状態・読込 | モックはデモデータ前提 | **P7-3:** オーナー未設定 / 0 件 / KPI 取得失敗を短文で区別。初回・オーナー変更直後は **Skeleton**（ダミー Tasks を出さない） | **Fit** |
 | 今日やること（Tasks） | 4 件（伊藤 … 等） | `GET /api/dashboard/tasks`。メモ追加は **Member Show へ遷移**（`/members/:id/show`）。例会行は `held_on` から **あとN日 / 本日 / 次回未登録**表現（P7-2） | **Fit:** データ連携・導線あり。**Gap:** メモはモーダルではなく詳細遷移 |
 | クイックショートカット | Connections、Members一覧、＋1to1を追加、例会一覧 | 同一 4 ボタン | **Fit** |
-| 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ・**紹介メモ種別**・1to1・**つながりフラグ更新**・limit） | **Gap:** **BO 割当**は **イベント源が無いため未実装**（P7-3・`DATA_MODEL` §4.12.2）。CSV 反映ログとは混同しない |
+| 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ・紹介・1to1・フラグ・**`bo_assigned`**（`bo_assignment_audit_logs`）） | **Fit（BO-AUDIT-P1）**。レガシー breakout-assignments のみの経路は未ログ |
 | レイアウト | 左 Tasks+ショートカット、右 活動（モック） | **DASHBOARD-P7-1:** 左に Tasks→Shortcuts→**Activity**、右 **340px に「次の 1to1 候補」**（Leads API） | **Gap（意図的）:** Activity と Leads の左右を入替（主従整理）。 |
 
 ---

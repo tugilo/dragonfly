@@ -50,7 +50,9 @@
 - **memo_added** — 接触メモ（contact_memos）の作成。
 - **one_to_one_created** — 1to1 の登録（status が planned 等）。
 - **one_to_one_completed** — 1to1 の実施完了（status = completed）。
-- （将来）flag_changed / bo_assigned 等は API で返す場合に kind を追加する。
+- **flag_changed** — Connections のフラグ変更（member_flags）。
+- **memo_introduction** — メモ更新による紹介ラインの追加・変更。
+- **bo_assigned** — BO（ブレイクアウト）割当の保存（`bo_assignment_audit_logs` を Dashboard で owner 軸に表示）。
 
 ### 並び順・limit
 - **並び順:** occurred_at の**新しい順**。メモと 1to1 を混在させて 1 本の時系列にしたうえでソート。
