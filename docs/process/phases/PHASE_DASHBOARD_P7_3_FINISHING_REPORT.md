@@ -95,13 +95,13 @@ Dashboard の **空状態・ローディング**をパネル単位で整理（Sk
 
 ## 10. Merge Evidence
 
-**（develop へ merge・push 後に追記し、`docs: add merge evidence for DASHBOARD P7-3` コミットで確定する）**
-
 | 項目 | 値 |
 |------|-----|
 | merge method | `git merge --no-ff feature/phase-dashboard-p7-3-finishing` |
 | merged branch | `feature/phase-dashboard-p7-3-finishing` |
-| merge commit id | *（追記）* |
-| feature last commit id | *（追記）* |
-| test result | `302 passed`（参照 §7） |
-| notes | BO: 実装見送り。競合: *（追記）* |
+| merge commit id | `124e9c3b610b9eaf0fa74e878d2c93553d28bd72` |
+| feature last commit id | `42d65872cd2e3cdb6cb3f5ea04eac9793a1bcee8` |
+| merge push (UTC) | `2026-03-20`（取り込み直後に `origin/develop` へ push） |
+| test result | `302 passed`（1219 assertions・merge 直後ローカル） |
+| build | `npm run build` 成功 |
+| notes | 競合なし。**BO:** `bo_assigned` は未実装（§6）。 |
