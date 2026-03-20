@@ -14,6 +14,9 @@ class BoAssignmentAuditLog extends Model
 
     public const SOURCE_BREAKOUT_ROUNDS = 'breakout_rounds';
 
+    /** PUT /api/dragonfly/meetings/{number}/breakout-assignments（MVP / participant ベース） */
+    public const SOURCE_DRAGONFLY_BREAKOUT_ASSIGNMENTS = 'dragonfly_breakout_assignments';
+
     protected $fillable = [
         'meeting_id',
         'actor_user_id',

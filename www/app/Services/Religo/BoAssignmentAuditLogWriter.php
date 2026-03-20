@@ -5,37 +5,49 @@ namespace App\Services\Religo;
 use App\Models\BoAssignmentAuditLog;
 use App\Models\Meeting;
 use App\Models\User;
+use App\Models\Workspace;
 
 /**
- * BO 保存成功後に監査行を1件追加。認証は現行どおり user id 1 固定（UserController 同様）。
+ * BO 保存成功後に監査行を1件追加。
+ *
+ * actor: `auth()->user()` が {@see User} ならそれを使用。未ログイン（現行 API は無認証が多い）では
+ * **id 昇順の先頭 User** にフォールバック（UserController の暫定「me」と同趣旨・本番 auth 導入後は主に前者が使われる）。
+ *
+ * workspace_id: **workspaces を id 昇順で最初の 1 件**（単一チャプター運用の既定）。テーブル空なら null。
  */
 final class BoAssignmentAuditLogWriter
 {
-    private const DEFAULT_ACTOR_USER_ID = 1;
+    public static function resolveActorUser(): ?User
+    {
+        $u = auth()->user();
+        if ($u instanceof User) {
+            return $u;
+        }
+
+        return User::query()->orderBy('id')->first();
+    }
+
+    public static function resolveWorkspaceIdForAudit(): ?int
+    {
+        $id = Workspace::query()->orderBy('id')->value('id');
+
+        return $id !== null ? (int) $id : null;
+    }
 
     /**
      * PUT /api/meetings/{id}/breakouts 成功後.
      *
      * @param  array<int, array{room_label: string, notes?: string|null, member_ids?: array}>  $rooms
      */
-    public static function logFromBreakoutsPayload(Meeting $meeting, array $rooms, string $source = BoAssignmentAuditLog::SOURCE_CONNECTIONS_BREAKOUTS): void
+    public static function logFromBreakoutsPayload(Meeting $meeting, array $rooms, string $source = BoAssignmentAuditLog::SOURCE_CONNECTIONS_BREAKOUTS, ?User $actor = null): void
     {
-        $user = User::find(self::DEFAULT_ACTOR_USER_ID);
-        BoAssignmentAuditLog::query()->create([
-            'meeting_id' => $meeting->id,
-            'actor_user_id' => $user?->id,
-            'actor_owner_member_id' => $user?->owner_member_id,
-            'workspace_id' => null,
-            'source' => $source,
-            'payload' => [
-                'rooms' => array_map(static fn (array $r) => [
-                    'room_label' => $r['room_label'] ?? '',
-                    'member_ids' => array_values(array_unique(array_map('intval', $r['member_ids'] ?? []))),
-                    'notes' => $r['notes'] ?? null,
-                ], $rooms),
-            ],
-            'occurred_at' => now(),
-        ]);
+        self::createLog($meeting, $source, [
+            'rooms' => array_map(static fn (array $r) => [
+                'room_label' => $r['room_label'] ?? '',
+                'member_ids' => array_values(array_unique(array_map('intval', $r['member_ids'] ?? []))),
+                'notes' => $r['notes'] ?? null,
+            ], $rooms),
+        ], $actor);
     }
 
     /**
@@ -43,16 +55,44 @@ final class BoAssignmentAuditLogWriter
      *
      * @param  array<int, mixed>  $rounds
      */
-    public static function logFromBreakoutRoundsPayload(Meeting $meeting, array $rounds): void
+    public static function logFromBreakoutRoundsPayload(Meeting $meeting, array $rounds, ?User $actor = null): void
     {
-        $user = User::find(self::DEFAULT_ACTOR_USER_ID);
+        self::createLog($meeting, BoAssignmentAuditLog::SOURCE_BREAKOUT_ROUNDS, ['rounds' => $rounds], $actor);
+    }
+
+    /**
+     * PUT /api/dragonfly/meetings/{number}/breakout-assignments 成功後（participant ベース・セション1/2）。
+     *
+     * DELETE（割当解除）は「保存」イベントと異なるため監査しない（BO-AUDIT-P2）。
+     *
+     * @param  array<int>  $roommateParticipantIds
+     */
+    public static function logFromDragonFlyBreakoutAssignment(
+        Meeting $meeting,
+        int $session,
+        int $participantId,
+        string $roomLabel,
+        array $roommateParticipantIds,
+        ?User $actor = null
+    ): void {
+        self::createLog($meeting, BoAssignmentAuditLog::SOURCE_DRAGONFLY_BREAKOUT_ASSIGNMENTS, [
+            'session' => $session,
+            'participant_id' => $participantId,
+            'room_label' => $roomLabel,
+            'roommate_participant_ids' => array_values(array_map('intval', $roommateParticipantIds)),
+        ], $actor);
+    }
+
+    private static function createLog(Meeting $meeting, string $source, array $payload, ?User $actor = null): void
+    {
+        $user = $actor ?? self::resolveActorUser();
         BoAssignmentAuditLog::query()->create([
             'meeting_id' => $meeting->id,
             'actor_user_id' => $user?->id,
             'actor_owner_member_id' => $user?->owner_member_id,
-            'workspace_id' => null,
-            'source' => BoAssignmentAuditLog::SOURCE_BREAKOUT_ROUNDS,
-            'payload' => ['rounds' => $rounds],
+            'workspace_id' => self::resolveWorkspaceIdForAudit(),
+            'source' => $source,
+            'payload' => $payload,
             'occurred_at' => now(),
         ]);
     }

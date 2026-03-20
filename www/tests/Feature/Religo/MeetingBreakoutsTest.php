@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Religo;
 
+use App\Models\BoAssignmentAuditLog;
 use App\Models\BreakoutRoom;
 use App\Models\Meeting;
 use App\Models\Participant;
@@ -141,5 +142,26 @@ class MeetingBreakoutsTest extends TestCase
         $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
         $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
         $this->assertSame([$this->member1], $bo1['member_ids']);
+    }
+
+    /** BO-AUDIT-P2: breakouts 保存監査に既定 workspace_id が載る */
+    public function test_put_breakouts_audit_row_has_workspace_when_workspaces_exist(): void
+    {
+        $wsId = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'W',
+            'slug' => 'w',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $log = BoAssignmentAuditLog::query()->where('meeting_id', $this->meetingId)->first();
+        $this->assertNotNull($log);
+        $this->assertSame($wsId, (int) $log->workspace_id);
     }
 }

@@ -344,6 +344,13 @@ class DashboardService
     private function formatBoAssignmentActivityMeta(BoAssignmentAuditLog $log): string
     {
         $payload = $log->payload ?? [];
+        if ($log->source === BoAssignmentAuditLog::SOURCE_DRAGONFLY_BREAKOUT_ASSIGNMENTS) {
+            $session = (int) ($payload['session'] ?? 0);
+            $mates = $payload['roommate_participant_ids'] ?? [];
+            $n = 1 + (is_array($mates) ? count($mates) : 0);
+
+            return 'DragonFly MVP・セッション' . $session . '・同席' . $n . '名（participant）';
+        }
         $memberIdSet = [];
         if ($log->source === BoAssignmentAuditLog::SOURCE_BREAKOUT_ROUNDS) {
             foreach ($payload['rounds'] ?? [] as $round) {

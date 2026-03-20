@@ -52,7 +52,7 @@
 - **one_to_one_completed** — 1to1 の実施完了（status = completed）。
 - **flag_changed** — Connections のフラグ変更（member_flags）。
 - **memo_introduction** — メモ更新による紹介ラインの追加・変更。
-- **bo_assigned** — BO（ブレイクアウト）割当の保存（`bo_assignment_audit_logs` を Dashboard で owner 軸に表示）。
+- **bo_assigned** — BO（ブレイクアウト）割当の保存（`bo_assignment_audit_logs`・owner 軸）。meta は保存経路により「BO1/BO2」「複数Round」または「DragonFly MVP・セッション…」など（`BO_AUDIT_LOG_DESIGN.md`）。
 
 ### 並び順・limit
 - **並び順:** occurred_at の**新しい順**。メモと 1to1 を混在させて 1 本の時系列にしたうえでソート。
