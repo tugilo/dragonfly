@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 /**
  * タイトル・補助文・Owner 切替・主要 CTA。E-4 owner 文脈は右側を薄く占有。
+ * BO-AUDIT-P5: 所属チャプター名表示（/settings で変更）。
  */
 export default function DashboardHeader({
     ownerMemberId,
@@ -12,6 +13,7 @@ export default function DashboardHeader({
     onOwnerChange,
     showOwnerSelect,
     resolvedWorkspaceId = null,
+    resolvedWorkspaceName = null,
 }) {
     return (
         <Box
@@ -32,8 +34,11 @@ export default function DashboardHeader({
                     今日の活動・未アクション・KPI
                 </Typography>
                 {resolvedWorkspaceId != null && (
-                    <Typography variant="caption" sx={{ display: 'block', color: 'text.disabled', mt: 0.25 }} component="span">
-                        解析用 workspace_id: {resolvedWorkspaceId}
+                    <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', mt: 0.25 }} component="span">
+                        所属チャプター:{' '}
+                        <Box component={Link} to="/settings" sx={{ color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}>
+                            {resolvedWorkspaceName ?? `#${resolvedWorkspaceId}`}
+                        </Box>
                     </Typography>
                 )}
             </Box>

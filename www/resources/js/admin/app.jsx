@@ -1,10 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Admin, Resource } from 'react-admin';
+import { Route } from 'react-router-dom';
+import { Admin, Resource, CustomRoutes } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';
 import { religoTheme } from './theme/religoTheme';
 import DragonFlyBoard from './pages/DragonFlyBoard';
 import Dashboard from './pages/Dashboard';
+import ReligoSettings from './pages/ReligoSettings';
 import { ReligoLayout } from './ReligoLayout';
 import { MembersList } from './pages/MembersList';
 import { MemberShow } from './pages/MemberShow';
@@ -29,6 +31,9 @@ if (root) {
             dashboard={Dashboard}
             theme={religoTheme}
         >
+            <CustomRoutes>
+                <Route path="/settings" element={<ReligoSettings />} />
+            </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} options={{ label: 'Members' }} />
             <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings' }} />

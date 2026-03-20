@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Box, IconButton, InputBase } from '@mui/material';
 import { SidebarToggleButton } from 'react-admin';
@@ -15,6 +15,7 @@ const PATH_TO_LABEL = {
     '/role-history': 'Role History',
     '/categories': 'Categories',
     '/roles': 'Roles',
+    '/settings': '設定',
 };
 
 const getLabel = (pathname) => {
@@ -34,6 +35,42 @@ const getLabel = (pathname) => {
 export const CustomAppBar = () => {
     const { pathname } = useLocation();
     const currentLabel = getLabel(pathname);
+    const [chapterLabel, setChapterLabel] = useState(null);
+
+    const loadChapterBadge = useCallback(async () => {
+        try {
+            const [meRes, wsRes] = await Promise.all([
+                fetch('/api/users/me', { headers: { Accept: 'application/json' } }),
+                fetch('/api/workspaces', { headers: { Accept: 'application/json' } }),
+            ]);
+            if (!meRes.ok) {
+                setChapterLabel(null);
+                return;
+            }
+            const me = await meRes.json();
+            const workspacesRaw = wsRes.ok ? await wsRes.json() : [];
+            const workspaces = Array.isArray(workspacesRaw) ? workspacesRaw : [];
+            const wid = me.workspace_id;
+            if (wid == null) {
+                setChapterLabel(null);
+                return;
+            }
+            const row = workspaces.find((w) => Number(w.id) === Number(wid));
+            setChapterLabel(row?.name ?? `Workspace #${wid}`);
+        } catch {
+            setChapterLabel(null);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadChapterBadge();
+    }, [pathname, loadChapterBadge]);
+
+    useEffect(() => {
+        const onWorkspaceChange = () => loadChapterBadge();
+        window.addEventListener('religo-workspace-changed', onWorkspaceChange);
+        return () => window.removeEventListener('religo-workspace-changed', onWorkspaceChange);
+    }, [loadChapterBadge]);
 
     return (
         <AppBar
@@ -113,6 +150,27 @@ export const CustomAppBar = () => {
                         inputProps={{ 'aria-label': '検索' }}
                     />
                 </Box>
+
+                {chapterLabel && (
+                    <Box
+                        component={Link}
+                        to="/settings"
+                        sx={{
+                            display: { xs: 'none', sm: 'block' },
+                            maxWidth: 180,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            fontSize: 12,
+                            color: '#637381',
+                            textDecoration: 'none',
+                            '&:hover': { color: '#1976d2' },
+                        }}
+                        title={chapterLabel}
+                    >
+                        所属: {chapterLabel}
+                    </Box>
+                )}
 
                 {/* 通知 .ab-ico（ダミー） */}
                 <IconButton

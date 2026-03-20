@@ -114,6 +114,14 @@ export const ReligoMenu = () => {
             >
                 Roles
             </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/settings"
+                selected={isActive('/settings')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                所属チャプター
+            </MenuItem>
         </Menu>
     );
 };
