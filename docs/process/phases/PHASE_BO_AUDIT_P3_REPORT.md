@@ -88,7 +88,7 @@
 | target branch | `develop` |
 | merge commit id | `2a66111b6b67518cf0bf12dcf2d94e0997aea1b2` |
 | feature last commit id | `8aa2cc1a749a11a2ddf77bd53385eb9331829357` |
-| pushed at | `2026-03-20T03:30:00Z` |
+| pushed at | `2026-03-20T03:56:18Z` |
 | test result | 311 passed |
 | notes | `ReligoActorContext`・users/me に workspace_id・BO audit workspace は owner 文脈優先。 |
 
