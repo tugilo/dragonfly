@@ -314,6 +314,18 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | completed | 実施済み |
 | canceled | キャンセル |
 
+#### 4.12.1 `one_to_one_status`（リード一覧・Members / Dashboard）
+
+API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に付与する**実施ベース**の列挙値。実装は `MemberOneToOneLeadService`。UI ラベルは `www/resources/js/admin/religoOneToOneLeadLabels.js` と一致させる。
+
+| 値 | 意味 |
+|------|------|
+| **none** | 当該 owner→target に **status = completed** の 1 to 1 が 0 件（未実施） |
+| **needs_action** | completed が 1 件以上かつ、最後の completed の代表日時が `config('religo.one_to_one_lead_needs_action_days')` 日（既定 30・`app.timezone` 基準）より**古い** |
+| **ok** | 最後の completed の代表日時が閾値**以内** |
+
+**代表日時:** 各行の completed について `COALESCE(ended_at, started_at, scheduled_at)` の最大。`planned` / `canceled` は実施件数・最終実施の算出に含めない。
+
 ---
 
 ### 4.13 introductions（紹介）

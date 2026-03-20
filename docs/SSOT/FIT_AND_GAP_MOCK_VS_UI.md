@@ -25,10 +25,10 @@
 | タイトル・説明 | 「Dashboard」「今日の活動・未アクション・KPI」 | 同一 | **Fit** |
 | ヘッダーアクション | 「Connectionsへ」「＋ 1to1追加」 | 同一（Connectionsへ、＋ 1to1追加） | **Fit** |
 | 統計カード 4 種 | 未接触(30日以上) / 今月の1to1回数 / 紹介メモ数 / 例会メモ数（数値・色・アイコン） | 同一構成・同一ラベル。アイコン色は MUI の error/primary/success/secondary | **Fit** |
-| 今日やること（Tasks） | 4 件（伊藤 勇樹 1to1予定、水野 花菜 メモ追加、田中 誠一 1to1、例会メモ未整理） | 2 件のみ（伊藤 勇樹、田中 誠一）。静的な表示 | **Gap:** 件数・内容は静的。モックは「水野」「例会メモ未整理」あり |
+| 今日やること（Tasks） | 4 件（伊藤 … 等） | `GET /api/dashboard/tasks` で最大 4 系統。メモ追加 2 件目は Dashboard からは disabled（Connections 等で追加） | **Fit:** データ連携済。**Gap:** メモ Modal 直起動は未 |
 | クイックショートカット | Connections、Members一覧、＋1to1を追加、例会一覧 | 同一 4 ボタン | **Fit** |
-| 最近の活動 | タイムライン 6 件（佐藤 メモ追加、田中 1to1登録、例会#247 BO割当…） | 3 件のみ静的表示 | **Gap:** 件数・実データ連携は未。実装に「表示は静的です」注記あり |
-| レイアウト | 左 1fr / 右 340px の two-col | Grid で md={8} / md={4} | **Fit** |
+| 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ＋1to1 の混在時系列・limit） | **Gap:** BO/フラグイベントは API 未含有 |
+| レイアウト | 左 Tasks+ショートカット、右 活動（モック） | **DASHBOARD-P7-1:** 左に Tasks→Shortcuts→**Activity**、右 **340px に「次の 1to1 候補」**（Leads API） | **Gap（意図的）:** Activity と Leads の左右を入替（主従整理）。 |
 
 ---
 

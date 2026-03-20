@@ -12,6 +12,8 @@ import {
     Stack,
     Button,
 } from '@mui/material';
+import { religoOneToOneLeadStatusLabel } from '../religoOneToOneLeadLabels';
+import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
 const API = '';
 const OWNER_MEMBER_ID = 1;
@@ -32,7 +34,26 @@ function MemberDetailContent() {
     const [loadingSummary, setLoadingSummary] = useState(true);
     const [loadingMemos, setLoadingMemos] = useState(true);
     const [loadingO2o, setLoadingO2o] = useState(true);
+    const [leadRow, setLeadRow] = useState(null);
     const id = record?.id;
+
+    const loadLeadStatus = useCallback(() => {
+        if (!id) return;
+        fetchReligoOwnerMemberId()
+            .then((me) => {
+                const owner = ownerMemberIdFallback(me);
+                return fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${owner}`);
+            })
+            .then((res) => (res.ok ? res.json() : []))
+            .then((rows) => {
+                if (!Array.isArray(rows)) {
+                    setLeadRow(null);
+                    return;
+                }
+                setLeadRow(rows.find((r) => Number(r.member_id) === Number(id)) ?? null);
+            })
+            .catch(() => setLeadRow(null));
+    }, [id]);
 
     const loadSummary = useCallback(() => {
         if (!id) return;
@@ -68,8 +89,9 @@ function MemberDetailContent() {
             loadSummary();
             loadMemos();
             loadO2o();
+            loadLeadStatus();
         }
-    }, [id]);
+    }, [id, loadLeadStatus, loadSummary, loadMemos, loadO2o]);
 
     if (!record) return null;
 
@@ -82,6 +104,12 @@ function MemberDetailContent() {
         ? (latestMemos[0].body || '').slice(0, 80) + ((latestMemos[0].body && latestMemos[0].body.length > 80) ? '…' : '')
         : (memos.length > 0 ? (memos[0].body || '').slice(0, 80) + ((memos[0].body && memos[0].body.length > 80) ? '…' : '') : null);
     const flags = summary?.flags ?? { interested: false, want_1on1: false };
+    const leadChipColor =
+        leadRow?.one_to_one_status === 'needs_action'
+            ? 'warning'
+            : leadRow?.one_to_one_status === 'ok'
+              ? 'success'
+              : 'default';
 
     return (
         <Box sx={{ pt: 1 }}>
@@ -106,9 +134,17 @@ function MemberDetailContent() {
                                     {!loadingSummary && (lastO2oAt !== '—') && <Chip size="small" label={`直近1to1 ${lastO2oAt}`} />}
                                     {flags.interested && <Chip size="small" color="primary" label="興味" />}
                                     {flags.want_1on1 && <Chip size="small" color="secondary" label="1to1希望" />}
+                                    {leadRow && (
+                                        <Chip size="small" label={religoOneToOneLeadStatusLabel(leadRow.one_to_one_status)} color={leadChipColor} />
+                                    )}
                                 </Stack>
                             </CardContent>
                         </Card>
+                        {leadRow && (
+                            <Button component={Link} to={`/one-to-ones/create?target_member_id=${id}`} size="small" variant="contained" color="secondary" sx={{ alignSelf: 'flex-start' }}>
+                                1 to 1 を記録（フォーム）
+                            </Button>
+                        )}
                         {lastMemoBody && (
                             <Card variant="outlined">
                                 <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
