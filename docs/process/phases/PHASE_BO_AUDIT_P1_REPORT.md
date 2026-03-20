@@ -93,7 +93,7 @@ BO（breakout）保存の **説明可能な監査**として `bo_assignment_audi
 | target branch | `develop` |
 | merge commit id | `4e82b932059b3b31d2d1b16b5e055ba5ab3114c2` |
 | feature last commit id | `96b3e15b22a07dabba2bbd9df2cc8924da208605` |
-| pushed at | `2026-03-20T03:00:57Z`（Evidence コミット push 時点で再確認可） |
+| pushed at | `2026-03-20T03:01:15Z`（`origin/develop` へ merge + evidence コミット反映） |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
 | test result | 303 passed |
 | build | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` |
@@ -109,4 +109,4 @@ BO（breakout）保存の **説明可能な監査**として `bo_assignment_audi
 |----------|------|
 | scope | OK（ Meetings / Dashboard 周辺のみ） |
 | ssot | `BO_AUDIT_LOG_DESIGN.md` 追加・既存 SSOT 更新済み |
-| dod | PLAN の DoD すべて満たす（merge・Evidence 追記後に完了） |
+| dod | OK（merge・Evidence・push・test/build 通過） |
