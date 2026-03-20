@@ -62,8 +62,8 @@
 
 | コマンド | 結果 |
 |----------|------|
-| `docker compose … exec app php artisan test` | *（merge 後記載）* |
-| `docker compose … exec node npm run build` | *（merge 後記載）* |
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | **315 passed** |
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` | 成功 |
 
 ---
 
@@ -86,10 +86,10 @@
 | merge method | `git merge --no-ff feature/phase-bo-audit-p5` |
 | merged branch | `feature/phase-bo-audit-p5` |
 | target branch | `develop` |
-| merge commit id | *（merge 後）* |
-| feature last commit id | *（merge 後）* |
-| pushed at | *（merge 後）* |
-| test result | *（merge 後）* |
-| notes | 所属チャプター UI・`religo-workspace-changed`・既存 GET /api/workspaces 利用。 |
+| merge commit id | `1129f7d9272d7e6c184a3acf19cac1d2e7bdacd9` |
+| feature last commit id | `fde9071bfcec375d6f89a1cadc398e4cd36d10fe` |
+| pushed at | `2026-03-20T08:50:02Z`（Evidence 追記コミット時点・UTC） |
+| test result | 315 passed、`npm run build` 成功 |
+| notes | `/settings`・PATCH `default_workspace_id`・AppBar/Dashboard・イベント同期。バックエンド変更なし。 |
 
 | scope / ssot / dod | OK |
