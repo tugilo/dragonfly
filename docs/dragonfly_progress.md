@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-03-20 | **MEMBER-SUMMARY-WORKSPACE-NULL-P1:** `MemberSummaryQuery` で workspace 指定時 **`(workspace_id = :id OR workspace_id IS NULL)`**（DATA_MODEL §5.1）。Dashboard は `null` 据え置き。テスト・SSOT・merge / Evidence（予定）。 |
+| 2026-03-20 | **MEMBER-SUMMARY-WORKSPACE-NULL-P1（develop 取り込み）:** merge `2bcee33cafa27b3c14b5d71400952e14b45603ee`。Query OR NULL・テスト **321**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-SCOPE-P1（develop 取り込み）:** merge `8a9c0e99ebee4dd606a99d6de5dca9a55853f454`。stale は **`getSummaryLiteBatch(..., null)`**（案A 確定）。SSOT・分析・Fit&Gap・PLAN/WORKLOG/REPORT。テスト **318**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P2（develop 取り込み）:** merge `3d9134f6f61834ec5a980834a140bf639407b5cc`。`meeting_follow_up` = 直近開催済み例会に **例会メモ（has_memo 同型）** が無いときのみ。`whereDate(held_on)`。テスト **318**。Evidence: `PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_REPORT` §8。 |
 | 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P1（develop 取り込み）:** merge `fe349925afe774332d661497dd3a20462c7820b1`（`feature/phase-dashboard-tasks-alignment-p1`）。Dashboard 役割 §0、Tasks「優先アクション」、kind `meeting_follow_up`、stale deep link SSOT 統一、1to1 予定 meta 修正、ヘッダサブコピー。`php artisan test` **315**・`npm run build` 通過。Merge Evidence: `PHASE_DASHBOARD_TASKS_ALIGNMENT_P1_REPORT.md` §9。 |

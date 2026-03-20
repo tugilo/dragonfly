@@ -91,7 +91,7 @@
 | DASHBOARD-TASKS-ALIGNMENT-P1 | Dashboard 役割整理 + Tasks 再定義 + SSOT/実装整合 + develop merge / Evidence | implement | completed | feature/phase-dashboard-tasks-alignment-p1 | 2026-03-20 |
 | DASHBOARD-TASKS-ALIGNMENT-P2 | meeting_follow_up 精度改善（contact_memos 突合・直近開催済み）+ merge / Evidence | implement | completed | feature/phase-dashboard-tasks-alignment-p2 | 2026-03-20 |
 | DASHBOARD-STALE-WORKSPACE-SCOPE-P1 | stale×workspace 設計（getSummaryLiteBatch 評価・案A 確定・SSOT のみ）+ merge / Evidence | docs | completed | feature/phase-dashboard-stale-workspace-scope-p1 | 2026-03-20 |
-| MEMBER-SUMMARY-WORKSPACE-NULL-P1 | MemberSummaryQuery workspace OR NULL 整合（DATA_MODEL §5.1）+ SSOT + テスト + merge / Evidence | implement | in_progress | feature/phase-member-summary-workspace-null-p1 | 2026-03-20 |
+| MEMBER-SUMMARY-WORKSPACE-NULL-P1 | MemberSummaryQuery workspace OR NULL 整合（DATA_MODEL §5.1）+ SSOT + テスト + merge / Evidence | implement | completed | feature/phase-member-summary-workspace-null-p1 | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -49,10 +49,10 @@
 |------|-----|
 | merge method | `git merge --no-ff` |
 | merged branch | `feature/phase-member-summary-workspace-null-p1` |
-| merge commit id | （merge 後に記載） |
-| feature last commit id | （merge 後に記載） |
-| pushed at | （merge 後に記載） |
+| merge commit id | `2bcee33cafa27b3c14b5d71400952e14b45603ee` |
+| feature last commit id | `f67037077a15a9248ecd6a229117599fe3b30f2b` |
+| pushed at | 2026-03-20（Evidence 追記コミット後に `origin/develop` へ push） |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
-| test result | （記載） |
-| build | `docker compose ... exec node npm run build` |
-| notes | NULL = legacy 行を現在チャプターに含める OR 条件。Dashboard は `null` のまま。 |
+| test result | **321 passed**（1290 assertions）— merge 後 develop で再実行 |
+| build | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` — 成功 |
+| notes | `applyWorkspaceScopeForSummary`: `(workspace_id = :id OR workspace_id IS NULL)`。Dashboard `getSummaryLiteBatch(..., null)` 不変。stale 再導入は peer 限定・別 Phase。 |

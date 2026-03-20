@@ -24,4 +24,4 @@
 
 ## merge
 
-- develop への `--no-ff` merge 後に REPORT §9 を更新。競合: （merge 後に記載）
+- develop への `--no-ff` merge 後に REPORT §9 を更新。競合: **なし**。
