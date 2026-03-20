@@ -113,7 +113,7 @@
 | Owner 初回設定 | **モックに無し・実装のみ** | 未設定時カード「オーナーを設定してください」＋メンバー選択。422 回避のための製品要件 |
 | KPI 統計 4 | **実装済** | `GET /api/dashboard/stats`。**DASHBOARD-P7-2:** `subtexts` は先月比・未接触割合・直近例会番号など**動的**。フォールバック定数あり（API 失敗時） |
 | 1to1 リードパネル | **実装済・モックに無し** | `GET /api/dragonfly/members/one-to-one-status`。Tasks の**上**に配置。全ターゲットの状況＋`1to1作成` リンク |
-| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**（**有効**。SSOT と一致）。**DASHBOARD-TASKS-ALIGNMENT-P1/P2:** 見出し「優先アクション」、**`meeting_follow_up`** は **直近開催済み例会の例会メモ未記録時のみ**（`contact_memos`・一覧 has_memo と同型）。 |
+| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**（**有効**。SSOT と一致）。**DASHBOARD-TASKS-ALIGNMENT-P1/P2:** 見出し「優先アクション」、**`meeting_follow_up`** は **直近開催済み例会の例会メモ未記録時のみ**（`contact_memos`・一覧 has_memo と同型）。**STALE-WORKSPACE-SCOPE-P1:** **`stale_follow`** は **`getSummaryLiteBatch(..., null)`**（所属 workspace での peer 絞り込みは **未実装・理由は DASHBOARD_DATA_SSOT §0**）。 |
 | クイックショートカット | **実装済** | React Router の `/connections` 等（モック hash とパスは異なるが導線同等） |
 | 最近の活動 | **実装済** | `GET /api/dashboard/activity` は memos + 1to1 + `flag_changed` + **`bo_assigned`**（`bo_assignment_audit_logs`・BO-AUDIT-P1）。SSOT: `BO_AUDIT_LOG_DESIGN.md` |
 | ローディング・空状態 | **実装済（P7-3）** | 初回・オーナー変更後の再取得でパネル単位 **Skeleton**。空配列 API を正しく表示。オーナー未設定・0 件・KPI 取得失敗を区別。凡例データ（旧フェールバック）は表示しない |

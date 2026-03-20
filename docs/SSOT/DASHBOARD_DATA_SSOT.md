@@ -25,10 +25,32 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 | **Activity** | **最近何が起きたか** — メモ・1 to 1・つながりフラグ・BO 割当などの**時系列ログ**（判断の裏付け・思い出し）。 |
 | **Leads（右列）** | **関係強化の候補** — 全会員× owner の 1 to 1 状況・want 等から **誰と次に会うか** を探す補助（Tasks とは役割分担）。 |
 
-### workspace と Tasks（DASHBOARD-TASKS-ALIGNMENT-P1）
+### workspace と Tasks / stale（DASHBOARD-TASKS-ALIGNMENT-P1, **STALE-WORKSPACE-SCOPE-P1**）
 
-- **Tasks の生成には `workspace_id` を渡さない**（`getSummaryLiteBatch` の第 3 引数は `null`）。**owner 軸のまま**とする。
-- **理由:** 現行の主軸は owner；チャプター別 stale の絞り込みは影響範囲が広く、本フェーズのスコープ外。将来 `workspace_id` を渡す場合は API・本 SSOT・タスク分析書を同時更新する。
+- **Tasks（meeting_follow_up 以外の stale 系）:** `getSummaryLiteBatch` 第 3 引数は **`null`**（P1 どおり）。  
+- **stale（`stale_contacts_count`・`stale_follow` タスク）:** 同じく **`getSummaryLiteBatch(..., null)`** を用いる（**本 Phase で方針確定**）。
+
+#### stale の意味（owner 文脈・**現行実装＝案A**）
+
+- **定義:** owner 以外の **全 `members` を peer** とみなし、各 peer について `MemberSummaryQuery::batchLastContactAt`（`workspaceId = null`）が組み立てる **last_contact_at** — **同席した例会の `held_on`** は workspace 非スコープ／**contact_memos・status ≠ canceled の one_to_ones・dragonfly_contact_flags** は **workspace 列で絞らない** — の最大時刻が **null または 30 日超過**なら未接触（stale）。
+- **Dashboard の位置づけ:** **個人の紹介活動の未完ペース**を広く見る指標。所属チャプターに**限定した**「会員名簿上の未完」のみではない。
+
+#### workspace スコープ（案B）を Dashboard stale に **今回入れない**理由
+
+| 論点 | 内容 |
+|------|------|
+| **peer の境界** | `members` に **workspace_id が無い**（DATA_MODEL は将来拡張）。チャプター内メンバーだけに peer を絞れない。 |
+| **Query の実態** | 第 3 引数に `workspaceId` を渡すと `contact_memos` / `one_to_ones` / `dragonfly_contact_flags` は **`workspace_id = X` のみ**を採用し、**`workspace_id IS NULL` の行は last_contact に載らない**（厳密一致）。DATA_MODEL が単一ワークスペースで許容する **NULL 行の扱い**と **不一致**になり、未接触が**水増し**しうる。 |
+| **last_contact の混線** | **同席由来**の日付は **引き続き全会議対象**なのに、memos/o2o/flags だけ workspace 絞り → **「チャプター内の未接触」と説明しにくい**中間状態になる。 |
+| **API** | Dashboard は **フロントから `workspace_id` クエリを増やさない**方針のまま。所属は `/api/users/me`・ヘッダ表示に利用。 |
+
+**採らなかった案:** **案B**（所属 workspace 内のみ stale）— 上記が揃うまで **見送り**。**案C**（補助絞り込み）— 説明コストが高いため採用しない。
+
+**将来（別 Phase）の再検討条件（すべて満たすことを推奨）:**
+
+1. `MemberSummaryQuery` の workspace 条件が **DATA_MODEL の NULL 許容**（解決済み workspace と **`workspace_id IS NULL`** の OR）に更新されている。  
+2. peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id` または正式な所属テーブル）。  
+3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて第 3 引数に渡しても **KPI・Tasks・Members 一覧 summary** と矛盾しないことが SSOT で宣言できる。
 
 ---
 
@@ -55,7 +77,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 
 | キー | 定義 | 補足 |
 |------|------|------|
-| **stale_contacts_count** | owner から見て「未接触 30 日以上」の target メンバー数。 | 未接触の定義: MemberSummaryQuery の last_contact_at が null、または last_contact_at が「基準日時の 30 日前」より前。基準日時はサーバー now()。除外条件: owner 本人は集計対象外。 |
+| **stale_contacts_count** | owner から見て「未接触 30 日以上」の target メンバー数。 | **算出:** `MemberSummaryQuery::getSummaryLiteBatch($owner, peers, null)`（**第 3 引数は常に null**・STALE-WORKSPACE-SCOPE-P1）。未接触の定義: 各 peer の `last_contact_at` が null、または「基準日時の 30 日前」より前。`last_contact_at` の内訳は分析書参照。基準日時はサーバー now()。除外条件: owner 本人は集計対象外。peers は **自分以外の全メンバー**。 |
 | **monthly_one_to_one_count** | owner の「今月」の 1to1 実施回数。 | status = completed、started_at が今月の開始日時〜終了日時（サーバー TZ）。 |
 | **monthly_intro_memo_count** | owner が「今月」作成した紹介メモ数。 | contact_memos の memo_type = introduction、created_at が今月。BO 含むは subtext の説明用。 |
 | **monthly_meeting_memo_count** | owner が「今月」作成した例会メモ数。 | contact_memos の memo_type = meeting、created_at が今月。例会番号の扱いは表示用（例: 例会#247 含む）で subtext に記載。 |
@@ -73,7 +95,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 ### kind と優先順位・件数上限
 | 順序 | kind | 内容 | 件数上限 |
 |------|------|------|----------|
-| 1 | **stale_follow** | `last_contact_at` が null または **30 日より前**の target（**厳密な「今日」ではなく「要フォロー」**）。Dashboard に出す理由: 関係が途切れそうな相手への **優先アクション** を置くため。 | 最大 2 件（一覧上の優先表示。**全件は KPI の未接触件数**を参照）。1 件目 CTA「1to1予定」→ `/one-to-ones/create`、2 件目「メモ追加」→ **`/members/{id}/show`**（Member 詳細でメモ・関係を更新）。 |
+| 1 | **stale_follow** | `last_contact_at` が null または **30 日より前**の target（**厳密な「今日」ではなく「要フォロー」**）。**`last_contact_at` は `getSummaryLiteBatch(..., null)` で算出**（workspace スコープなし・STALE-WORKSPACE-SCOPE-P1）。Dashboard に出す理由: 関係が途切れそうな相手への **優先アクション** を置くため。 | 最大 2 件（一覧上の優先表示。**全件は KPI の未接触件数**を参照）。1 件目 CTA「1to1予定」→ `/one-to-ones/create`、2 件目「メモ追加」→ **`/members/{id}/show`**（Member 詳細でメモ・関係を更新）。 |
 | 2 | **one_to_one_planned** | owner の **planned** で、`scheduled_at` が **今日の暦日以降**または **null**（日時未設定の予定も可）。**意味:** すでに予定に載せた 1 to 1 を Dashboard で再認識し、当日・直近の実行を促す。並びは `scheduled_at` 昇順で先頭 1 件。 | 1 件。CTA は Chip「予定」（ href なし・仕様どおり）。 |
 | 3 | **meeting_follow_up** | **直近開催済み例会** 1 件を対象とする。`held_on` の暦日が **今日以前**（`whereDate(held_on, <= today)`・サーバー TZ）の例会のうち、**最も新しい `held_on`**（同順 `id` DESC）。**表示条件:** 当該 `meetings.id` に対し、**例会メモが未記録**のときのみタスク化する。 **記録済みの定義:** `contact_memos` に **`meeting_id` = 当該例会 id かつ `memo_type` = `meeting` かつ `body` が null / 空文字でない**行が **1 件以上**存在すること（**Meeting 一覧の has_memo / `MeetingMemoController` と同型**。**owner_member_id は判定に使わない** — 例会メモは会議単位の 1 本 UI）。**未記録**なら CTA「Meetingsへ」→ `/meetings`。 | 最高 1 件（条件を満たすときのみ）。会議が存在しない／未来日のみの例会暦なら **出さない**。 |
 
