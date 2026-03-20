@@ -66,8 +66,8 @@
 
 | コマンド | 結果 |
 |----------|------|
-| `docker compose ... exec node npm run build` | merge 後に記載 |
-| `docker compose ... exec app php artisan test` | merge 後に記載 |
+| `docker compose ... exec node npm run build` | 成功（2026-03-20・develop 取り込み後） |
+| `docker compose ... exec app php artisan test` | **296 passed**（2026-03-20・develop 取り込み後） |
 
 ---
 
@@ -86,22 +86,48 @@
 
 ---
 
-## 8. Merge Evidence（develop 取り込み後に追記）
+## 8. Merge Evidence（develop 取り込み済）
+
+| 項目 | 値 |
+|------|-----|
+| **merge commit id** | `7b54fcd0e9bc4bff367bac06acfe3492dec77eb0` |
+| **source branch** | `feature/phase-dashboard-p7-1-ui` |
+| **target branch** | `develop` |
+| **phase id** | DASHBOARD-P7-1 |
+| **phase type** | implement |
+| **related ssot** | `DASHBOARD_FIT_AND_GAP.md`, `DASHBOARD_DATA_SSOT.md` |
+| **test command** | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
+| **test result** | **296 passed** (1199 assertions) |
+| **build** | `docker compose ... exec node npm run build` — 成功 |
+| **scope check** | OK（Dashboard UI + Leads 用 `one-to-one-status` 最小 API のみ） |
+| **ssot check** | OK |
+| **dod check** | OK |
+
+**changed files（merge で `develop` に入ったパス、`git diff --name-only HEAD^1 HEAD`）:**
 
 ```
-merge commit id:
-source branch: feature/phase-dashboard-p7-1-ui
-target branch: develop
-phase id: DASHBOARD-P7-1
-phase type: implement
-related ssot: DASHBOARD_FIT_AND_GAP, DASHBOARD_DATA_SSOT
-
-test command: php artisan test
-test result: （merge 後に記載）
-
-changed files: git diff --name-only develop^ develop
-
-scope check: OK
-ssot check: OK（DASHBOARD_FIT_AND_GAP に実施メモ追記）
-dod check: OK
+docs/INDEX.md
+docs/SSOT/DASHBOARD_FIT_AND_GAP.md
+docs/dragonfly_progress.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_DASHBOARD_P7_1_UI_PLAN.md
+docs/process/phases/PHASE_DASHBOARD_P7_1_UI_REPORT.md
+docs/process/phases/PHASE_DASHBOARD_P7_1_UI_WORKLOG.md
+www/app/Http/Controllers/Api/DragonFlyMemberController.php
+www/app/Http/Requests/Api/IndexDragonFlyMemberOneToOneStatusRequest.php
+www/app/Services/Religo/MemberOneToOneLeadService.php
+www/config/religo.php
+www/resources/js/admin/pages/Dashboard.jsx
+www/resources/js/admin/pages/dashboard/DashboardActivityPanel.jsx
+www/resources/js/admin/pages/dashboard/DashboardHeader.jsx
+www/resources/js/admin/pages/dashboard/DashboardKpiGrid.jsx
+www/resources/js/admin/pages/dashboard/DashboardLeadsPanel.jsx
+www/resources/js/admin/pages/dashboard/DashboardShortcutsPanel.jsx
+www/resources/js/admin/pages/dashboard/DashboardTasksPanel.jsx
+www/resources/js/admin/pages/dashboard/dashboardConstants.js
+www/resources/js/admin/religoOneToOneLeadLabels.js
+www/routes/api.php
+www/tests/Feature/Api/MemberOneToOneStatusTest.php
 ```
+
+**補足:** 作業ツリーに P5/P6/Members 以外の変更が混在していたため、`feature/phase-dashboard-p7-1-ui` 上では **P7-1 と右列 Leads 必須の API だけ**をコミットし、それを `develop` に merge した。
