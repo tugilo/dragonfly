@@ -72,6 +72,9 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 - **workspace 1:N meetings**  
   1 つの workspace に複数の meetings が属する。※ 現行では `meetings` に workspace_id なし。将来追加。
 
+- **user（Laravel `users`）→ 既定 workspace（BO-AUDIT-P4）**  
+  `users.default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）。管理画面の「現在ユーザー」の既定チャプター相当。解決順は [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。
+
 - **meeting 1:N participants**  
   1 回の meeting に複数の participants（参加者）がいる。participant は member を参照する。
 
@@ -112,6 +115,18 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 | **インデックス** | slug にユニークまたは検索用インデックスを検討 |
 
 ※ created_at / updated_at は Laravel 標準で付与する前提。
+
+---
+
+### 4.1a users（Laravel・Religo 管理画面ユーザー）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | 管理画面のログインユーザー。`owner_member_id` で Dashboard / Religo の「自分」メンバーと紐づく。 |
+| **主キー** | id（Laravel 既定） |
+| **外部キー（Religo 拡張）** | `owner_member_id` → `members.id`（nullable）。**`default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）**（BO-AUDIT-P4）。 |
+| **主要カラム（Religo 関連）** | `owner_member_id`, **`default_workspace_id`**（いずれも nullable） |
+| **補足** | 完全な認可・マルチテナントは未着手。`/api/users/me`・BO 監査の workspace は [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md) / [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
 
 ---
 
@@ -338,7 +353,7 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 | `flag_changed` | `dragonfly_contact_flags`・`updated_at` |
 | `bo_assigned` | **`bo_assignment_audit_logs`**（BO-AUDIT-P1〜P3）。`actor_owner_member_id` で Dashboard owner に一致する行のみ。 |
 
-**`bo_assignment_audit_logs`:** 主線 breakouts / breakout-rounds・**レガシー** `PUT .../breakout-assignments`（PUT のみ）成功時に `BoAssignmentAuditLogWriter` が **1 行追加**。**actor / workspace** は `ReligoActorContext` と **GET `/api/users/me`** と同一基準（BO-AUDIT-P3）。詳細は [BO_AUDIT_LOG_DESIGN.md](BO_AUDIT_LOG_DESIGN.md)、[USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。**`meeting_csv_apply_logs` とは別**。
+**`bo_assignment_audit_logs`:** 主線 breakouts / breakout-rounds・**レガシー** `PUT .../breakout-assignments`（PUT のみ）成功時に `BoAssignmentAuditLogWriter` が **1 行追加**。**actor / workspace** は `ReligoActorContext` と **GET `/api/users/me`** と同一基準（BO-AUDIT-P3〜P4）。詳細は [BO_AUDIT_LOG_DESIGN.md](BO_AUDIT_LOG_DESIGN.md)、[USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。**`meeting_csv_apply_logs` とは別**。
 
 ---
 

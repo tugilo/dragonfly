@@ -11,6 +11,7 @@ export default function DashboardHeader({
     savingOwner,
     onOwnerChange,
     showOwnerSelect,
+    resolvedWorkspaceId = null,
 }) {
     return (
         <Box
@@ -30,6 +31,11 @@ export default function DashboardHeader({
                 <Typography sx={{ fontSize: 12, color: 'text.secondary', mt: 0.375 }}>
                     今日の活動・未アクション・KPI
                 </Typography>
+                {resolvedWorkspaceId != null && (
+                    <Typography variant="caption" sx={{ display: 'block', color: 'text.disabled', mt: 0.25 }} component="span">
+                        解析用 workspace_id: {resolvedWorkspaceId}
+                    </Typography>
+                )}
             </Box>
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
                 {showOwnerSelect && (

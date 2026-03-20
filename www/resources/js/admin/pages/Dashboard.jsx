@@ -41,6 +41,8 @@ export default function Dashboard() {
     const [panelsRefreshing, setPanelsRefreshing] = useState(false);
     const [savingOwner, setSavingOwner] = useState(false);
     const [ownerError, setOwnerError] = useState('');
+    /** BO-AUDIT-P4: GET /api/users/me の解決済み workspace（Dashboard API には未送信・表示・説明用のみ） */
+    const [resolvedWorkspaceId, setResolvedWorkspaceId] = useState(null);
 
     const loadMe = useCallback(async () => {
         try {
@@ -48,10 +50,12 @@ export default function Dashboard() {
             const id = data.owner_member_id ?? null;
             setOwnerMemberId(id);
             setNeedOwnerSetup(id == null);
+            setResolvedWorkspaceId(data.workspace_id != null ? Number(data.workspace_id) : null);
             return id;
         } catch {
             setNeedOwnerSetup(true);
             setOwnerMemberId(null);
+            setResolvedWorkspaceId(null);
             return null;
         }
     }, []);
@@ -167,6 +171,7 @@ export default function Dashboard() {
                 savingOwner={savingOwner}
                 onOwnerChange={handleOwnerSelect}
                 showOwnerSelect={ownerMemberId != null && members.length > 0}
+                resolvedWorkspaceId={resolvedWorkspaceId}
             />
 
             {needOwnerSetup && (
