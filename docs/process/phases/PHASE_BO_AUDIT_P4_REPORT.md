@@ -97,10 +97,10 @@
 | merge method | `git merge --no-ff feature/phase-bo-audit-p4` |
 | merged branch | `feature/phase-bo-audit-p4` |
 | target branch | `develop` |
-| merge commit id | *（develop merge 後に `git log -1 --format=%H` で追記）* |
-| feature last commit id | *（追記）* |
-| pushed at | *（追記）* |
-| test result | *（追記）* |
-| notes | `default_workspace_id` 導入。me / BO workspace は `resolveWorkspaceIdForUser` 一本化。Dashboard は workspace 補助表示のみ。 |
+| merge commit id | `5cc3ca9df0777a62944386790224992ca2331ddc` |
+| feature last commit id | `658d4e41399c6bb06b247d7f07d8d82155fd6289` |
+| pushed at | `2026-03-20T04:51:58Z`（Evidence 追記コミット時点・UTC） |
+| test result | `php artisan test` **315 passed**（merge 後 develop 上）。`npm run build` 成功。 |
+| notes | `default_workspace_id` 導入。me / BO workspace は `resolveWorkspaceIdForUser` 一本化。Dashboard は workspace 補助表示のみ。競合なし。 |
 
 | scope / ssot / dod | OK |
