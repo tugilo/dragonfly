@@ -30,4 +30,4 @@ Dashboard **stale** の **peer 境界**と **`resolveWorkspaceIdForUser` を sta
 - [x] SSOT に peer 定義・見送り理由
 - [x] `stalePeerMemberIds` 追加
 - [x] test / build 通過
-- [x] develop merge + Merge Evidence
+- [x] develop merge + Merge Evidence + push

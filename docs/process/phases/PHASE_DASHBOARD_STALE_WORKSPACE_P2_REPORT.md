@@ -55,8 +55,9 @@
 |------|-----|
 | merge method | `git merge --no-ff` |
 | merged branch | `feature/phase-dashboard-stale-workspace-p2` |
-| merge commit id | （記載） |
-| feature last commit id | （記載） |
-| pushed at | （記載） |
-| test result | （記載） |
-| notes | peer=案A、`resolveWorkspaceIdForUser` は stale 未使用。 |
+| merge commit id | `fb8515b98acf7d7b9f4508599d5ed0dd6c9b09b5` |
+| feature last commit id | `994912c49fdbcf604c267cf97f34989e9e6ed856` |
+| pushed at | 2026-03-20（Evidence 追記コミット後に `origin/develop` へ push） |
+| test result | **321 passed**（1290 assertions）— merge 後 develop |
+| build | `npm run build` 成功 |
+| notes | peer=**案A**（owner 以外全員）。`resolveWorkspaceIdForUser` は stale **未使用**。`stalePeerMemberIds` のみ実装。 |

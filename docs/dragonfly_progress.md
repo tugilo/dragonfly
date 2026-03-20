@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-P2:** stale peer **案A** 確定・`stalePeerMemberIds`・`resolveWorkspaceIdForUser` は stale 未使用を SSOT 化。develop merge / Evidence 予定。 |
+| 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-P2（develop 取り込み）:** merge `fb8515b98acf7d7b9f4508599d5ed0dd6c9b09b5`。stale peer 案A・workspace 見送り理由・`stalePeerMemberIds`。テスト **321**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **MEMBER-SUMMARY-WORKSPACE-NULL-P1（develop 取り込み）:** merge `2bcee33cafa27b3c14b5d71400952e14b45603ee`。Query OR NULL・テスト **321**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-SCOPE-P1（develop 取り込み）:** merge `8a9c0e99ebee4dd606a99d6de5dca9a55853f454`。stale は **`getSummaryLiteBatch(..., null)`**（案A 確定）。SSOT・分析・Fit&Gap・PLAN/WORKLOG/REPORT。テスト **318**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P2（develop 取り込み）:** merge `3d9134f6f61834ec5a980834a140bf639407b5cc`。`meeting_follow_up` = 直近開催済み例会に **例会メモ（has_memo 同型）** が無いときのみ。`whereDate(held_on)`。テスト **318**。Evidence: `PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_REPORT` §8。 |

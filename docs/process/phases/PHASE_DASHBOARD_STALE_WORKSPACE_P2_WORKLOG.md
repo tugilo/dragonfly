@@ -22,4 +22,4 @@
 
 ## merge
 
-- （Evidence 追記後に記載）
+- develop へ `--no-ff` merge。競合: **なし**。
