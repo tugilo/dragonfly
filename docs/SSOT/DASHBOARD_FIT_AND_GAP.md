@@ -93,7 +93,7 @@
 | Tasks stale×2 | 未接触 30 日以上の target から最大 2 件 | 同上 `last_contact_at` + `members` | 日数表示、1 件目 href 1to1 作成、2 件目はモックはメモ追加 |
 | Tasks 予定1to1 | 直近の planned | `one_to_ones` + `members`（target） | `scheduled_at` 当日以降 or null、並び最上位 1 件など（SSOT: DASHBOARD_DATA_SSOT） |
 | Tasks 例会メモ | 次回 `held_on >= today` の例会、なければ直近 | `meetings` | タイトルに例会番号。**P7-2:** meta は `held_on` から「本日 / あとN日 / 次回未登録…」を動的算出 |
-| 活動フィード | メモ・1to1・**BO 割当**・**フラグ変更** 等の時系列 | `contact_memos`, `one_to_ones`, **`dragonfly_contact_flags`**, （BO は **未**） | occurred_at 降順、limit N。**P7-2:** memo / intro / 1to1 / `flag_changed`。**BO 保存イベントは P7-3 で要件化のみ（§8）** |
+| 活動フィード | メモ・1to1・**BO 割当**・**フラグ変更** 等の時系列 | `contact_memos`, `one_to_ones`, **`dragonfly_contact_flags`**, **`bo_assignment_audit_logs`** | occurred_at 降順、limit N。BO は **BO-AUDIT-P1**（`BO_AUDIT_LOG_DESIGN.md`）。CSV apply ログは含めない |
 | （実装のみ）1to1リード一覧 | 全会員×owner の 1to1 実施状況・want_1on1 | `one_to_ones`, `dragonfly_contact_flags`, `members` | `MemberOneToOneLeadService::indexForOwner`。**モック Dashboard には無い** |
 
 ---
@@ -108,7 +108,7 @@
 | 1to1 リードパネル | **実装済・モックに無し** | `GET /api/dragonfly/members/one-to-one-status`。Tasks の**上**に配置。全ターゲットの状況＋`1to1作成` リンク |
 | Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**。例会行 meta は `held_on` から**日数動的** |
 | クイックショートカット | **実装済** | React Router の `/connections` 等（モック hash とパスは異なるが導線同等） |
-| 最近の活動 | **部分実装** | `GET /api/dashboard/activity` は memos（**紹介は `memo_introduction`**）+ 1to1 + **`dragonfly_contact_flags`（`flag_changed`）** をマージ。**`bo_assigned` は未**（理由 §8） |
+| 最近の活動 | **実装済** | `GET /api/dashboard/activity` は memos + 1to1 + `flag_changed` + **`bo_assigned`**（`bo_assignment_audit_logs`・BO-AUDIT-P1）。SSOT: `BO_AUDIT_LOG_DESIGN.md` |
 | ローディング・空状態 | **実装済（P7-3）** | 初回・オーナー変更後の再取得でパネル単位 **Skeleton**。空配列 API を正しく表示。オーナー未設定・0 件・KPI 取得失敗を区別。凡例データ（旧フェールバック）は表示しない |
 | モックのモーダル（1to1 / メモ） | **未** | 実装は **ページ遷移**（`/one-to-ones/create`）が中心。メモは Dashboard 直書き不可 |
 
@@ -126,7 +126,7 @@
 | Tasks 件数・内容 | 最大 4 系統の型 | 同ロジック + **メモ deep link**（P7-2） | モックはメモ**モーダル**、実装は **Member Show 遷移** | P2 |
 | Tasks 例会メモ行 | 「あとN日」動的 | **`held_on` 基準で動的**（P7-2） | — | — |
 | クイックショートカット | 4 ボタン | 4 ボタン | **Fit** | — |
-| 活動 | 6 種イベント混在タイムライン | メモ（種別分け）＋1to1＋**フラグ更新**（P7-2） | **BO 割当保存イベント**が欠落 | P2 |
+| 活動 | 6 種イベント混在タイムライン | メモ＋1to1＋フラグ＋**BO 割当（監査ログ）**（BO-AUDIT-P1） | レガシー `breakout-assignments` API は監査未接続 | P3 |
 | インタラクション | メモ・1to1 をモーダル | 主にルーティング | **Dashboard 完結のメモ追加** なし | P2 |
 
 **優先度凡例:** P1＝モックの「判断材料」に直結、P2＝導線・拡張・整合。
@@ -178,7 +178,7 @@
 
 ## §8 オープン（要確認）
 
-1. **`bo_assigned` / BO 割当を活動に載せるか（DASHBOARD-P7-3 判断）:** **いまは実装しない。** Connections の BO 保存に対応する**単一の活動イベント源**が無い。`meeting_csv_apply_logs` は参加者 CSV 反映用であり混在させない。**実装に必要:** BO 保存の監査または正規ログ、`occurred_at`・表示タイトル・例会番号の取り方の SSOT（`DATA_MODEL` §4.12.2 参照）。  
+1. **`bo_assigned`（BO-AUDIT-P1 完了）:** `bo_assignment_audit_logs` と `BoAssignmentAuditLogWriter`。主発生源は `PUT .../breakouts` と `PUT .../breakout-rounds`。詳細は `docs/SSOT/BO_AUDIT_LOG_DESIGN.md`。レガシー DragonFly `breakout-assignments` の監査は **未**。  
 2. **例会 Tasks のメタ:** P7-2 で `held_on` 暦日差に統一。祝日・当日の細則は必要なら別記。  
 3. **`DASHBOARD_REQUIREMENTS.md`:** INDEX とコードコメントが参照するがファイル未検出 — 削除・統合・復活のどれか。  
 4. **リードパネル:** モック非掲載の機能を Dashboard に置き続けるか、別画面へ移すか。

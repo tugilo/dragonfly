@@ -2,6 +2,7 @@
 
 namespace App\Services\Religo;
 
+use App\Models\BoAssignmentAuditLog;
 use App\Models\ContactMemo;
 use App\Models\DragonflyContactFlag;
 use App\Models\Meeting;
@@ -234,6 +235,21 @@ class DashboardService
                 'id' => 'flag-' . $f->id,
             ];
         }
+        $boLogs = BoAssignmentAuditLog::query()
+            ->where('actor_owner_member_id', $ownerMemberId)
+            ->with('meeting:id,number')
+            ->orderByDesc('occurred_at')
+            ->limit($limit)
+            ->get();
+        foreach ($boLogs as $log) {
+            $rows[] = [
+                'occurred_at' => $log->occurred_at?->toIso8601String() ?? '',
+                'kind' => 'bo_assigned',
+                'title' => '例会 #' . ($log->meeting?->number ?? '?') . ' のBO割当を保存',
+                'meta' => $this->formatBoAssignmentActivityMeta($log),
+                'id' => 'bo-audit-' . $log->id,
+            ];
+        }
         $o2os = OneToOne::query()
             ->where('owner_member_id', $ownerMemberId)
             ->with('targetMember:id,name')
@@ -323,5 +339,31 @@ class DashboardService
         }
 
         return $parts !== [] ? implode('・', $parts) : 'フラグを更新';
+    }
+
+    private function formatBoAssignmentActivityMeta(BoAssignmentAuditLog $log): string
+    {
+        $payload = $log->payload ?? [];
+        $memberIdSet = [];
+        if ($log->source === BoAssignmentAuditLog::SOURCE_BREAKOUT_ROUNDS) {
+            foreach ($payload['rounds'] ?? [] as $round) {
+                foreach ($round['rooms'] ?? [] as $r) {
+                    foreach ($r['member_ids'] ?? [] as $mid) {
+                        $memberIdSet[(int) $mid] = true;
+                    }
+                }
+            }
+            $label = '複数Round';
+        } else {
+            foreach ($payload['rooms'] ?? [] as $r) {
+                foreach ($r['member_ids'] ?? [] as $mid) {
+                    $memberIdSet[(int) $mid] = true;
+                }
+            }
+            $label = 'BO1/BO2';
+        }
+        $n = count($memberIdSet);
+
+        return $label . '・割当 ' . $n . '名';
     }
 }

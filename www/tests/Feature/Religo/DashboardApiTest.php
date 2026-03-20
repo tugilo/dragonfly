@@ -258,6 +258,37 @@ class DashboardApiTest extends TestCase
         $this->assertSame('本日開催', $meetingTask['meta']);
     }
 
+    public function test_activity_includes_bo_assigned_after_breakout_save(): void
+    {
+        $this->createMeUser($this->ownerId);
+        $meetingId = (int) DB::table('meetings')->insertGetId([
+            'number' => 501,
+            'held_on' => now()->toDateString(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'BoMember',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->ownerId, $targetId]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$meetingId}/breakouts", $payload)->assertOk();
+        $res = $this->getJson('/api/dashboard/activity?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $items = $res->json();
+        $bo = collect($items)->firstWhere('kind', 'bo_assigned');
+        $this->assertNotNull($bo);
+        $this->assertStringContainsString('501', $bo['title']);
+        $this->assertStringContainsString('BO1/BO2', $bo['meta'] ?? '');
+    }
+
     public function test_activity_includes_flag_changed_and_intro_memo_kind(): void
     {
         $targetId = (int) DB::table('members')->insertGetId([
