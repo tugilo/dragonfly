@@ -41,8 +41,9 @@ export default function Dashboard() {
     const [panelsRefreshing, setPanelsRefreshing] = useState(false);
     const [savingOwner, setSavingOwner] = useState(false);
     const [ownerError, setOwnerError] = useState('');
-    /** BO-AUDIT-P4: GET /api/users/me の解決済み workspace（Dashboard API には未送信・表示・説明用のみ） */
+    /** GET /api/users/me の解決済み workspace_id（表示・BO 監査と同一式） */
     const [resolvedWorkspaceId, setResolvedWorkspaceId] = useState(null);
+    const [workspaceRows, setWorkspaceRows] = useState([]);
 
     const loadMe = useCallback(async () => {
         try {
@@ -57,6 +58,15 @@ export default function Dashboard() {
             setOwnerMemberId(null);
             setResolvedWorkspaceId(null);
             return null;
+        }
+    }, []);
+
+    const loadWorkspaceRows = useCallback(async () => {
+        try {
+            const data = await fetchJson('/api/workspaces');
+            setWorkspaceRows(Array.isArray(data) ? data : []);
+        } catch {
+            setWorkspaceRows([]);
         }
     }, []);
 
@@ -110,6 +120,8 @@ export default function Dashboard() {
         (async () => {
             const id = await loadMe();
             if (cancelled) return;
+            await loadWorkspaceRows();
+            if (cancelled) return;
             if (id != null) {
                 await Promise.all([loadDashboard(), loadMembers(), loadOneToOneLeads(id)]);
             } else {
@@ -122,7 +134,16 @@ export default function Dashboard() {
             if (!cancelled) setBootLoading(false);
         })();
         return () => { cancelled = true; };
-    }, [loadMe, loadMembers, loadDashboard, loadOneToOneLeads]);
+    }, [loadMe, loadWorkspaceRows, loadMembers, loadDashboard, loadOneToOneLeads]);
+
+    useEffect(() => {
+        const onChapterSaved = () => {
+            loadMe();
+            loadWorkspaceRows();
+        };
+        window.addEventListener('religo-workspace-changed', onChapterSaved);
+        return () => window.removeEventListener('religo-workspace-changed', onChapterSaved);
+    }, [loadMe, loadWorkspaceRows]);
 
     const saveOwner = useCallback(async (memberId) => {
         setSavingOwner(true);
@@ -162,6 +183,10 @@ export default function Dashboard() {
     const panelsBusy = bootLoading || panelsRefreshing;
     const ownerConfigured = ownerMemberId != null && !needOwnerSetup;
     const leadsReady = ownerConfigured;
+    const resolvedWorkspaceName =
+        resolvedWorkspaceId != null
+            ? workspaceRows.find((w) => Number(w.id) === Number(resolvedWorkspaceId))?.name ?? null
+            : null;
 
     return (
         <Container maxWidth="lg" sx={{ py: 0 }}>
@@ -172,6 +197,7 @@ export default function Dashboard() {
                 onOwnerChange={handleOwnerSelect}
                 showOwnerSelect={ownerMemberId != null && members.length > 0}
                 resolvedWorkspaceId={resolvedWorkspaceId}
+                resolvedWorkspaceName={resolvedWorkspaceName}
             />
 
             {needOwnerSetup && (

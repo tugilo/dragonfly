@@ -16,6 +16,12 @@
   3. **未設定時** — 上記のいずれも無い（null）場合は **422 Unprocessable Entity** を返し、`message` で初回設定を促す。暫定の固定値 1 は使用しない。
 - **解消済み:** 旧「暫定で固定値 1」は Phase E-4 で廃止し、上記の決定順に統一した。
 
+### 所属チャプター（workspace）UI（BO-AUDIT-P5）
+
+- **設定画面:** `GET /#/settings`（`ReligoSettings.jsx`）。`GET /api/workspaces` で一覧、`GET /api/users/me` の **`workspace_id`** を Select の初期値に使用（解決済み ID・一覧と整合）。保存は **`PATCH /api/users/me`** に `{ "default_workspace_id": <id> }`（所属 workspace のみ。サーバは `exists:workspaces`）。
+- **ヘッダ:** `CustomAppBar` に **所属: {name}**（`me.workspace_id` + workspace 一覧で名称解決）。保存成功時はカスタムイベント `religo-workspace-changed` で再取得。
+- **Dashboard ブロック:** `DashboardHeader` に **所属チャプター: {name}**（名前は `GET /api/workspaces` で解決）。リンクから `/settings` へ。
+
 ---
 
 ## 2. stats の定義（GET /api/dashboard/stats）
@@ -67,5 +73,6 @@
 | **エンドポイント** | GET /api/dashboard/stats、GET /api/dashboard/tasks、GET /api/dashboard/activity。Owner 設定: GET /api/users/me、PATCH /api/users/me |
 | **Controller** | App\Http\Controllers\Religo\DashboardController、App\Http\Controllers\Religo\UserController（showMe / updateMe） |
 | **Service** | App\Services\Religo\DashboardService（getStats / getTasks / getActivity） |
-| **フロント** | www/resources/js/admin/pages/Dashboard.jsx（GET /api/users/me で owner 取得。**BO-AUDIT-P4:** 同レスポンスの解決済み `workspace_id` をヘッダに補助表示のみ。Dashboard API への付与はしない）。未設定時は「オーナーを設定してください」ブロック＋members Select。設定済み時は右上 Owner セレクタで変更時自動保存。fetch で dashboard 3 エンドポイントを呼び出し |
+| **フロント** | www/resources/js/admin/pages/Dashboard.jsx（GET /api/users/me で owner 取得。**BO-AUDIT-P5:** `workspace_id` と `GET /api/workspaces` で **所属チャプター名**を DashboardHeader に表示。`/settings` で `default_workspace_id` を編集可）。Dashboard API への workspace クエリは付与しない。未設定時は「オーナーを設定してください」ブロック＋members Select。設定済み時は右上 Owner セレクタで変更時自動保存。fetch で dashboard 3 エンドポイントを呼び出し |
+| **設定 UI** | www/resources/js/admin/pages/ReligoSettings.jsx、`app.jsx` の `CustomRoutes`、`CustomAppBar.jsx`、`ReligoMenu.jsx`（/settings） |
 | **参照** | docs/SSOT/DASHBOARD_REQUIREMENTS.md（UI・モック合わせ）、docs/process/phases/PHASE_E4_OWNER_SETTINGS_PLAN.md（E-4 スコープ） |
