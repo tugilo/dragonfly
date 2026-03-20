@@ -85,6 +85,7 @@
 | BO-AUDIT-P2 | レガシー breakout-assignments 監査・workspace_id 既定・actor auth/fallback＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p2 | 2026-03-20 |
 | BO-AUDIT-P3 | /api/users/me auth+フォールバック・ReligoActorContext・BO workspace owner 文脈＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p3 | 2026-03-20 |
 | BO-AUDIT-P4 | users.default_workspace_id・me/actor workspace 解決順一本化・Dashboard 補助表示＋ develop merge / Evidence | implement | completed | feature/phase-bo-audit-p4 | 2026-03-20 |
+| WORKSPACE-SINGLE-CHAPTER-ASSUMPTION | BNI 前提の 1 user=1 workspace・所属 `default_workspace_id`・多対多スコープ外の SSOT 固定（doc + docblock） | docs | completed | develop | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

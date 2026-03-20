@@ -9,7 +9,8 @@ use App\Models\User;
 /**
  * BO 保存成功後に監査行を1件追加。
  *
- * actor / workspace は `ReligoActorContext` と `/api/users/me` と同一基準（BO-AUDIT-P3〜P4）。
+ * actor / workspace: same as ReligoActorContext and GET /api/users/me.
+ * workspace_id is the acting user's chapter workspace (default_workspace_id primary; see SSOT).
  */
 final class BoAssignmentAuditLogWriter
 {

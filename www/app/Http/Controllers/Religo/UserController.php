@@ -9,14 +9,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * GET/PATCH /api/users/me — 現在ユーザーの owner / default_workspace / workspace 文脈. E-4 / BO-AUDIT-P3〜P4.
+ * GET/PATCH /api/users/me — owner + membership workspace. E-4 / BO-AUDIT-P3〜P4.
+ *
+ * `default_workspace_id` is the user's BNI chapter workspace (DB column name unchanged).
+ * **戻り `workspace_id`:** resolved chapter id, same formula as BO audit (USER_ME + WORKSPACE_RESOLUTION_POLICY SSOT).
  *
  * **現在ユーザー:** `ReligoActorContext::actingUser()`（認証優先・無認証時は users id 昇順先頭）。
  */
 class UserController extends Controller
 {
     /**
-     * GET /api/users/me — id・owner・`default_workspace_id`（DB）・`workspace_id`（解決済み）.
+     * GET /api/users/me — id・owner・`default_workspace_id`（所属 workspace・DB）・`workspace_id`（解決済み・所属チャプター）.
      */
     public function showMe(): JsonResponse
     {
@@ -29,7 +32,7 @@ class UserController extends Controller
     }
 
     /**
-     * PATCH /api/users/me — `owner_member_id` および / または `default_workspace_id` を更新（acting user の行のみ）.
+     * PATCH /api/users/me — `owner_member_id` および / または `default_workspace_id`（所属 workspace）を更新（acting user の行のみ）.
      */
     public function updateMe(Request $request): JsonResponse
     {

@@ -1,6 +1,6 @@
 # BO 割当保存の監査ログ設計（BO-AUDIT-P1 / P2 / P3）
 
-**Phase:** P1 基盤 · P2 レガシーAPI · **P3** `/api/users/me` と actor/workspace 一本化 · **P4** `users.default_workspace_id` と解決順の明示  
+**Phase:** P1 基盤 · P2 レガシーAPI · **P3** `/api/users/me` と actor/workspace 一本化 · **P4** `users.default_workspace_id` と解決順の明示 · **WORKSPACE-SINGLE-CHAPTER-ASSUMPTION** BNI 前提の 1 user = 1 workspace SSOT 固定  
 **目的:** Dashboard Activity の `bo_assigned` を **説明可能な永続イベント**として扱う。CSV 反映ログ（`meeting_csv_apply_logs`）とは **責務を分離**する。
 
 **actor / workspace の単一情報源:** [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)（`ReligoActorContext`）。
@@ -35,7 +35,7 @@
 | meeting_id | FK meetings | 必須 |
 | actor_user_id | FK users nullable | **P3:** `ReligoActorContext::actingUser()` と `/api/users/me` の `id` と同一基準。 |
 | actor_owner_member_id | FK members nullable | 上記 User の `owner_member_id`。**Activity はこれでフィルタ** |
-| workspace_id | bigint nullable | **P4:** `ReligoActorContext::resolveWorkspaceIdForUser(actor_user)`（default_workspace_id → flags → 1to1 → memos → workspaces 先頭）。[WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
+| workspace_id | bigint nullable | **所属チャプター（workspace）。** `ReligoActorContext::resolveWorkspaceIdForUser(actor_user)`（**所属** `default_workspace_id` → legacy 補完 → システムフォールバック）。[WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
 | source | string(40) | `connections_breakouts` \| `breakout_rounds` \| `dragonfly_breakout_assignments` |
 | payload | json | 保存スナップショット |
 | occurred_at | datetime | 保存完了時刻 |

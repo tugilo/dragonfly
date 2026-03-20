@@ -1,9 +1,19 @@
-# `/api/users/me` と BO 監査 actor の解決（BO-AUDIT-P3〜P4）
+# `/api/users/me` と BO 監査 actor の解決（BO-AUDIT-P3〜P4 / WORKSPACE-SINGLE-CHAPTER-ASSUMPTION）
 
 **実装:** `App\Services\Religo\ReligoActorContext`  
 **利用者:** `UserController`（GET/PATCH `/api/users/me`）、`BoAssignmentAuditLogWriter`
 
-**workspace 解決の詳細順序:** [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)
+**workspace 解決の詳細順序:** [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)  
+**BNI 前提（1 user = 1 workspace）:** [DATA_MODEL.md](DATA_MODEL.md)「Workspace と User の関係」
+
+---
+
+## `workspace_id` の意味（API・BO 共通）
+
+GET `/api/users/me` の **`workspace_id`** および BO 監査ログの **`workspace_id`** は、どちらも **「その操作主体（acting user）に紐づく所属チャプター」**を示す workspace ID（nullable）である。
+
+- **基準:** 通常は **`users.default_workspace_id`（所属 workspace）** があればそれがそのまま解決値となる（[WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md) /1）。
+- **補足:** 未設定時のみ legacy 補完・システムフォールバックで埋める。意味の正は常に **所属 = `default_workspace_id`**。
 
 ---
 
@@ -22,23 +32,23 @@
 
 ## 2. `workspace_id`（chapter 文脈・解決済み）
 
-Religo / DragonFly では **1 `workspaces` 行 ≒ 1 BNI チャプター（会）** として扱う。複数 workspace はデータ上は存在しうるが、**Dashboard / owner の活動**はまず単一チャプター運用を前提とする。
+Religo / DragonFly では **1 `workspaces` 行 ≒ 1 BNI チャプター（会）** として扱う。**ユーザーは原則 1 チャプター＝1 workspace に所属**（[DATA_MODEL.md](DATA_MODEL.md)）。
 
-**`/api/users/me` の `workspace_id`:** 次を **この順で**適用した結果（nullable）。**`ReligoActorContext::resolveWorkspaceIdForUser($user)` と同一。**
+**`/api/users/me` の `workspace_id`:** 次を **この順で**適用した結果（nullable）。**`ReligoActorContext::resolveWorkspaceIdForUser($user)` と BO 監査と同一。**
 
-1. `users.default_workspace_id`（BO-AUDIT-P4 で追加・nullable）
-2. owner の既存データ — `dragonfly_contact_flags` → `one_to_ones` → `contact_memos` の `workspace_id`（`resolveWorkspaceIdFromOwnerMemberArtifacts`）
-3. `workspaces` id 昇順先頭
+1. **`users.default_workspace_id`** — **所属 workspace**（最優先・主たる値）
+2. **legacy 補完** — owner の既存データ `dragonfly_contact_flags` → `one_to_ones` → `contact_memos` の `workspace_id`（`resolveWorkspaceIdFromOwnerMemberArtifacts`）
+3. **システムフォールバック** — `workspaces` id 昇順先頭
 4. 行が無ければ null
 
-**応答フィールド `default_workspace_id`:** DB の生値。`workspace_id` は上記で解いた **運用上の章 ID**。
+**応答フィールド `default_workspace_id`:** DB の生値（**所属 workspace**）。`workspace_id` は上記で解いた **所属チャプターとしての workspace ID**。
 
 ---
 
 ## 3. PATCH `/api/users/me`
 
 - **`owner_member_id`** と **`default_workspace_id`** のいずれか一方以上を body に含めること（両方可）。どちらも無い場合は 422。
-- `default_workspace_id` に `null` を送ると **クリア**（FK nullable）。
+- `default_workspace_id` に `null` を送ると **所属 workspace をクリア**（FK nullable）。BNI 前提では運用上 **所属を未設定**に相当するため、速やかに再設定するか運用で扱う。
 
 ---
 

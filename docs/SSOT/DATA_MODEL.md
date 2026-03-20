@@ -44,11 +44,30 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 
 ---
 
+## Workspace と User の関係
+
+Religo は **BNI（Business Network International）運用**を前提としており、
+
+- **ユーザー（会員）は 1 チャプターにのみ所属可能**である、というプロダクト前提に立つ（BNI の会員ルールに整合）。
+- **チャプター ≒ workspace**（Religo 内では 1 チャプターを 1 `workspaces` 行として表す）。
+
+したがって本システムでは:
+
+**👉 1 user = 1 workspace（原則）**
+
+とする。
+
+`users.default_workspace_id` は **DB 上のカラム名は「default」のまま**（破壊的リネームは行わない）だが、意味論上は「デフォルト」ではなく **ユーザーが所属する workspace（所属チャプター）** として扱う。
+
+**user ⇄ workspace の多対多**や、**1 ユーザーが複数チャプターをまたぐ要件**は **現フェーズでは採用しない（スコープ外）**。将来別途要件が生じた場合は、本 SSOT を先に更新してから実装する。
+
+---
+
 ## 2. Entities
 
 | 記号 | エンティティ | テーブル名 | 備考 |
 |------|--------------|------------|------|
-| A | workspace | workspaces | 会／チャプター・プロジェクト単位。個人利用でも拡張できる土台。 |
+| A | workspace | workspaces | 会／チャプター単位。**BNI 前提では 1 チャプター = 1 行。** （`WORKSPACE-SINGLE-CHAPTER-ASSUMPTION` SSOT 参照） |
 | B | members | members | 誰がいるか。会にいる人。 |
 | B1 | categories | categories | カテゴリマスタ（大カテゴリ／実カテゴリ）。members が参照。 |
 | B2 | roles | roles | 役職マスタ。member_roles が参照。 |
@@ -72,8 +91,8 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 - **workspace 1:N meetings**  
   1 つの workspace に複数の meetings が属する。※ 現行では `meetings` に workspace_id なし。将来追加。
 
-- **user（Laravel `users`）→ 既定 workspace（BO-AUDIT-P4）**  
-  `users.default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）。管理画面の「現在ユーザー」の既定チャプター相当。解決順は [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。
+- **user（Laravel `users`）→ 所属 workspace（BO-AUDIT-P4・WORKSPACE-SINGLE-CHAPTER-ASSUMPTION）**  
+  `users.default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）。**意味論上はユーザーの所属チャプター（所属 workspace）**。カラム名は歴史的に `default_workspace_id` のまま。解決順・フォールバックは [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。
 
 - **meeting 1:N participants**  
   1 回の meeting に複数の participants（参加者）がいる。participant は member を参照する。
@@ -124,9 +143,9 @@ Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/
 |------|------|
 | **目的** | 管理画面のログインユーザー。`owner_member_id` で Dashboard / Religo の「自分」メンバーと紐づく。 |
 | **主キー** | id（Laravel 既定） |
-| **外部キー（Religo 拡張）** | `owner_member_id` → `members.id`（nullable）。**`default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）**（BO-AUDIT-P4）。 |
+| **外部キー（Religo 拡張）** | `owner_member_id` → `members.id`（nullable）。**`default_workspace_id` → `workspaces.id`（nullable, nullOnDelete）** — **所属 workspace**（カラム名は `default_*` のまま）。 |
 | **主要カラム（Religo 関連）** | `owner_member_id`, **`default_workspace_id`**（いずれも nullable） |
-| **補足** | 完全な認可・マルチテナントは未着手。`/api/users/me`・BO 監査の workspace は [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md) / [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
+| **補足** | BNI 前提では **1 user = 1 workspace**。完全な認可・別プロダクト向けマルチテナント UI は未着手。`/api/users/me`・BO 監査の workspace は [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md) / [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
 
 ---
 

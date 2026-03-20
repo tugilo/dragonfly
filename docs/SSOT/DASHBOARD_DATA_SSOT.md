@@ -9,10 +9,10 @@
 
 ### owner_member_id
 - **意味:** 「自分」を表すメンバー ID。Dashboard の stats / tasks / activity はすべて「このメンバーを owner として」集計する。
-- **スコープ:** 集計は引き続き **owner 軸**。`workspace_id` は BO-AUDIT-P4 で **GET /api/users/me と同一式**に解決できるようになったが、Dashboard の 3 API は **クエリに workspace を付けない**（単一チャプター運用・副作用防止）。将来 workspace スコープをかける場合は API と本 SSOT を同時に更新する。
+- **スコープ:** 集計は引き続き **owner 軸**。`workspace_id`（`GET /api/users/me`）は **所属チャプター**を示す解決済み値で、BO 監査と同一式（WORKSPACE-SINGLE-CHAPTER-ASSUMPTION / [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)）。Dashboard の 3 API は **クエリに workspace を付けない**（BNI 単一チャプター運用・副作用防止）。将来 workspace スコープをかける場合は API と本 SSOT を同時に更新する。
 - **決定順（E-4 で固定）:**  
   1. **クエリ** — リクエストに `owner_member_id` があればそれを使用（互換維持）。  
-  2. **ユーザー設定** — 無ければ現在ユーザーの `owner_member_id`（users.owner_member_id）を使用。GET /api/users/me で取得。応答の **`default_workspace_id`**（DB）と **`workspace_id`**（解決済み・nullable）は [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md) と一致。PATCH /api/users/me で `owner_member_id` / `default_workspace_id` を更新可（いずれか必須）。**現在ユーザー（BO-AUDIT-P3）:** 認証時は `auth` の User、無認証時は **users.id 昇順先頭**。SSOT: [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。  
+  2. **ユーザー設定** — 無ければ現在ユーザーの `owner_member_id`（users.owner_member_id）を使用。GET /api/users/me で取得。応答の **`default_workspace_id`** は **所属 workspace**、`workspace_id` は **所属チャプターとしての解決済み ID**（[DATA_MODEL.md](DATA_MODEL.md)「Workspace と User の関係」）。PATCH /api/users/me で `owner_member_id` / `default_workspace_id` を更新可（いずれか必須）。**現在ユーザー（BO-AUDIT-P3）:** 認証時は `auth` の User、無認証時は **users.id 昇順先頭**。SSOT: [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。  
   3. **未設定時** — 上記のいずれも無い（null）場合は **422 Unprocessable Entity** を返し、`message` で初回設定を促す。暫定の固定値 1 は使用しない。
 - **解消済み:** 旧「暫定で固定値 1」は Phase E-4 で廃止し、上記の決定順に統一した。
 

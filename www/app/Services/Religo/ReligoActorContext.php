@@ -11,11 +11,12 @@ use App\Models\Workspace;
 /**
  * Religo 管理画面の「現在ユーザー」と BO 監査 actor の共通解決。
  *
- * **workspace_id（解決済み・chapter 相当）** の優先順（BO-AUDIT-P4、`WORKSPACE_RESOLUTION_POLICY.md`）:
- * 1. `users.default_workspace_id`
- * 2. owner の既存データ（`dragonfly_contact_flags` → `one_to_ones` → `contact_memos` の `workspace_id`）
- * 3. `workspaces` id 昇順先頭
- * 4. 行が無ければ null
+ * Workspace resolution (SSOT: docs/SSOT/WORKSPACE_RESOLUTION_POLICY.md, DATA_MODEL §Workspace と User):
+ * BNI前提では 1 user = 1 workspace; `default_workspace_id` is the user's membership workspace
+ * (column name kept for API/DB compatibility), then legacy artifact hints, then single-row fallback.
+ *
+ * Order: 1) users.default_workspace_id 2) owner artifacts (flags → one_to_ones → contact_memos)
+ * 3) first workspaces row by id 4) null.
  *
  * SSOT: docs/SSOT/USER_ME_AND_ACTOR_RESOLUTION.md
  */
@@ -32,7 +33,8 @@ final class ReligoActorContext
     }
 
     /**
-     * owner 由来の workspace のみ（flags → 1to1 → memos）。先頭 workspace は含めない。
+     * Legacy complement only: workspace hints from owner-linked rows (flags → 1to1 → memos).
+     * Does not include users.default_workspace_id or first workspaces row.
      */
     public static function resolveWorkspaceIdFromOwnerMemberArtifacts(?int $ownerMemberId): ?int
     {
@@ -68,7 +70,7 @@ final class ReligoActorContext
     }
 
     /**
-     * GET /api/users/me の `workspace_id`・BO 監査 `workspace_id`・Dashboard 文脈で共有。
+     * Resolved chapter workspace for GET /api/users/me, BO audit rows, and shared admin context.
      */
     public static function resolveWorkspaceIdForUser(?User $user): ?int
     {
