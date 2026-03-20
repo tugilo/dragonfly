@@ -26,6 +26,7 @@
 | 新規 | `www/tests/Feature/Religo/DragonFlyBreakoutAssignmentAuditTest.php` |
 | 更新 | `www/tests/Feature/Religo/MeetingBreakoutsTest.php` |
 | 更新 | `docs/SSOT/BO_AUDIT_LOG_DESIGN.md` |
+| 更新 | `docs/SSOT/DASHBOARD_DATA_SSOT.md` |
 | 更新 | `docs/SSOT/DATA_MODEL.md` |
 | 新規 | `docs/process/phases/PHASE_BO_AUDIT_P2_PLAN.md` |
 | 新規 | `docs/process/phases/PHASE_BO_AUDIT_P2_WORKLOG.md` |
@@ -61,8 +62,8 @@
 
 | コマンド | 結果 |
 |----------|------|
-| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | （merge 完了後に記載） |
-| `docker compose ... exec node npm run build` | （同上） |
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | **307 passed** |
+| `docker compose ... exec node npm run build` | 成功 |
 
 ---
 
@@ -86,11 +87,11 @@
 | merge method | `git merge --no-ff feature/phase-bo-audit-p2` |
 | merged branch | `feature/phase-bo-audit-p2` |
 | target branch | `develop` |
-| merge commit id | （merge 後） |
-| feature last commit id | （merge 直前 feature HEAD） |
-| pushed at | （push 後） |
-| test result |  |
-| notes | レガシー PUT 監査実装。DELETE 見送り。 |
+| merge commit id | `ff500ac3f8a5982c9890321c57c1057ad1b5baf2` |
+| feature last commit id | `b2a16ba5a000e8998942faec024d40b17cf72473` |
+| pushed at | （`git push origin develop` 後に確定） |
+| test result | 307 passed |
+| notes | レガシー PUT 監査実装。DELETE 見送り。actor auth+フォールバック、workspace 先頭 id。Dashboard.jsx `Box` import 同梱。 |
 
 ---
 
@@ -98,4 +99,4 @@
 |----------|------|
 | scope | OK |
 | ssot | OK |
-| dod | merge・Evidence 後に完了 |
+| dod | OK |
