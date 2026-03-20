@@ -22,7 +22,7 @@ export const TASKS_FALLBACK = [
     { id: 's1', kind: 'stale_follow', title: '伊藤 勇樹', meta: '55日間未接触 — 1to1を検討', action: { label: '1to1予定', href: '/one-to-ones/create', disabled: false } },
     { id: 's2', kind: 'stale_follow', title: '水野 花菜', meta: '66日間未接触 — フォローアップ要', action: { label: 'メモ追加', href: '/members/2/show', disabled: false } },
     { id: 'o1', kind: 'one_to_one_planned', title: '田中 誠一 との1to1', meta: '本日 12:00 — CRM導入フォロー', badge: '予定', action: { label: '予定', href: null, disabled: true } },
-    { id: 'm1', kind: 'meeting_follow_up', title: '例会 #248（次回・直近のフォロー）', meta: '次回例会まであと5日', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
+    { id: 'm1', kind: 'meeting_follow_up', title: '例会 #248 のメモを記録', meta: '開催日 3/1 — 例会メモが未記録です（Meetings で入力）', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
 ];
 
 export const ACTIVITY_ICONS = {

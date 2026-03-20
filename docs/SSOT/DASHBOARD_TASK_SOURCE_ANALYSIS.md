@@ -88,9 +88,10 @@
    - `orderBy('scheduled_at')->first()` で 1 件のみ。  
    - `targetMember` を eager load。
 
-3. **meeting_follow_up（0〜1 件・常に push しうる）**（旧: `meeting_memo_pending`）  
-   - **次回例会:** `meetings.held_on >= today` を昇順で先頭。なければ **直近終了**の `meetings` を `orderByDesc('held_on')->first()`。  
-   - **メモ有無の DB 判定は行っていない**。文言・kind は **次回/直近例会へのフォロー（Meetings への導線）** に揃えた（DASHBOARD-TASKS-ALIGNMENT-P1）。
+3. **meeting_follow_up（0〜1 件・条件付き）**（旧: `meeting_memo_pending`） — **DASHBOARD-TASKS-ALIGNMENT-P2**  
+   - **対象例会:** `meetings` で **`whereDate(held_on, '<=', now())`**（暦日・サーバー TZ）に合致する行のうち **`held_on` 降順、`id` 降順で先頭 1 件**（**直近開催済み＝今日含む過去の最終例会**）。該当なし（例会が無い／暦上すべて未来）なら **タスクに含めない**。  
+   - **表示条件:** 上記例会 id に対し **`contact_memos` に `meeting_id` 一致・`memo_type = 'meeting'`・本文あり**の行が **存在しない**ときのみ push。  
+   - **owner_member_id は突合に使わない**（例会メモは `MeetingMemoController` / 一覧 has_memo と同じ **会議単位**判定）。
 
 ---
 
@@ -121,7 +122,8 @@
 
 | テーブル | 条件 |
 |----------|------|
-| `meetings` | まず `held_on >= today` 昇順 1 件、なければ `held_on` 降順 1 件 |
+| `meetings` | `whereDate(held_on, <= today)`、`orderByDesc(held_on)`、`orderByDesc(id)` で 1 件 |
+| `contact_memos` | 記録済み判定: `meeting_id` = 上記・`memo_type = meeting`・`body` が null/空でない行が存在 |
 
 ---
 
@@ -145,7 +147,7 @@
 - **UI ラベル:** **「優先アクション（Tasks）」**に変更（DASHBOARD-TASKS-ALIGNMENT-P1）。中身は **「今日」限定ではない**。  
   - stale: **30 日超未接触**（今日に限定しない）。  
   - planned 1to1: 今日以降の予定 or 日付未設定。  
-  - meeting 行: **次回例会または直近例会**へのフォロー（**メモ未整理の有無は未判定**）。
+  - meeting 行（**P2）:** **直近開催済み例会**に **例会メモが無い**ときのみ（`contact_memos` 突合）。
 
 ### owner / workspace 整合
 
@@ -156,13 +158,13 @@
 
 - **DASHBOARD_DATA_SSOT §3** の kind 順・件数上限はコードと **一致**（`meeting_follow_up` に改名済み）。  
 - **2 件目 stale の「メモ追加」:** **P1 で SSOT を実装に寄せ、`disabled: false`・Member Show deep link を正**とした。  
-- **meeting_follow_up:** **kind・タイトル・SSOT** を「次回/直近例会のフォロー」に統一（メモ未整理の自動判定は未実装のまま）。
+- **meeting_follow_up:** **P2** で **contact_memos** 突合済み（未記録時のみ）。`whereDate` で **日付境界の取りこぼし**を防止。
 
 ### 問題点（調査メモ）
 
 1. ~~**「今日」ヘッダと中身の温度差**~~ → **P1 で見出しを「優先アクション」に変更し SSOT で定義**。  
 2. **所属チャプター workspace と Tasks のデータ境界**は **P1 で「Tasks は workspace 未使用（owner 軸）」と固定**（将来の拡張は別フェーズ）。  
-3. **例会行とメモ未整理の連動**は **未実装**（文言はフォロー誘導に整合。memo 突合は別案・別 Phase）。
+3. ~~**例会行とメモ未整理の連動**~~ → **P2 で実装**（会議単位・`memo_type = meeting`）。
 
 ---
 
@@ -173,10 +175,9 @@
 - **disabled:** SSOT を **有効 deep link** に寄せて統一。  
 - **DASHBOARD_DATA_SSOT** に Dashboard 役割・Tasks 意味を追記。kind **`meeting_follow_up`** へ改名。
 
-### 案B（現実的）
+### 案B（現実的）— **meeting 突合は P2 で実施済み**
 
-- **meeting_follow_up 行:** `contact_memos`（`memo_type = meeting`, `meeting_id` 等）と突合し、**未記載のときだけ**タスク表示するなど、文言にさらに寄せる（別 Phase）。  
-- **getSummaryLiteBatch** に **解決済み workspace_id**（`ReligoActorContext` と同式）を渡し、**チャプター単位**の stale と揃える（SSOT の 1 user = 1 workspace と整合）。
+- **getSummaryLiteBatch** に **解決済み workspace_id** を渡す案は **未着手**（別 Phase）。
 
 ### 案C（理想）
 
