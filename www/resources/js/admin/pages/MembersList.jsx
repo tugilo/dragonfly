@@ -35,10 +35,19 @@ import {
     Card,
     CardContent,
 } from '@mui/material';
+import {
+    religoOneToOneLeadStatusLabel,
+    RELIGO_ONE_TO_ONE_LEAD_COLUMN_LABEL,
+    RELIGO_ONE_TO_ONE_LEAD_LAST_DATE_PREFIX,
+    RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED,
+} from '../religoOneToOneLeadLabels';
+import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
 const API = '';
 const OWNER_MEMBER_ID = 1;
 const CARD_LOGS_LIMIT = 3;
+
+const MembersOneToOneLeadContext = createContext({ leadByMemberId: {}, leadsLoading: true, reloadLeads: () => {} });
 
 async function fetchJson(url) {
     const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
@@ -333,6 +342,44 @@ function LastMemoField({ record }) {
     return <span title={body}>{body.length > 20 ? `${body.slice(0, 20)}…` : body}</span>;
 }
 
+function OneToOneLeadField({ record }) {
+    const { leadByMemberId, leadsLoading } = useContext(MembersOneToOneLeadContext);
+    if (!record?.id) return <span>—</span>;
+    if (leadsLoading) {
+        return <Typography variant="caption" color="text.secondary">…</Typography>;
+    }
+    const row = leadByMemberId[record.id];
+    if (!row) return <span>—</span>;
+    const chipColor =
+        row.one_to_one_status === 'needs_action' ? 'warning' : row.one_to_one_status === 'ok' ? 'success' : 'default';
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, alignItems: 'flex-start', maxWidth: 160 }}>
+            <Chip size="small" label={religoOneToOneLeadStatusLabel(row.one_to_one_status)} color={chipColor} sx={{ height: 22 }} />
+            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, lineHeight: 1.2 }}>
+                {row.last_one_to_one_at ? `${RELIGO_ONE_TO_ONE_LEAD_LAST_DATE_PREFIX} ${row.last_one_to_one_at}` : RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED}
+            </Typography>
+        </Box>
+    );
+}
+
+function MemberCardLeadSnippet({ memberId }) {
+    const { leadByMemberId, leadsLoading } = useContext(MembersOneToOneLeadContext);
+    if (leadsLoading || memberId == null) return null;
+    const row = leadByMemberId[memberId];
+    if (!row) return null;
+    const chipColor =
+        row.one_to_one_status === 'needs_action' ? 'warning' : row.one_to_one_status === 'ok' ? 'success' : 'default';
+    return (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center', mt: 0.5 }}>
+            <Typography variant="caption" color="text.secondary" sx={{ width: '100%', fontSize: 9, fontWeight: 600 }}>1to1（実施ベース）</Typography>
+            <Chip size="small" label={religoOneToOneLeadStatusLabel(row.one_to_one_status)} color={chipColor} sx={{ height: 22 }} />
+            <Button component={Link} to={`/one-to-ones/create?target_member_id=${memberId}`} size="small" variant="outlined" color="secondary" sx={{ py: 0.25 }}>
+                1to1作成
+            </Button>
+        </Box>
+    );
+}
+
 function MemberRowActions({ record }) {
     const ctx = useContext(MembersModalContext);
     if (!ctx || !record) return null;
@@ -340,6 +387,7 @@ function MemberRowActions({ record }) {
         <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', alignItems: 'center' }}>
             <Button size="small" variant="contained" onClick={() => ctx.openMemo(record)}>✏️ メモ</Button>
             <Button size="small" variant="outlined" onClick={() => ctx.openO2o(record)}>📅 1to1</Button>
+            <Button size="small" variant="contained" color="secondary" component={Link} to={`/one-to-ones/create?target_member_id=${record.id}`}>1to1作成</Button>
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
             <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary">🗺 Connections</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openFlagEdit(record)}>🚩 フラグ</Button>
@@ -452,10 +500,12 @@ function MemberCard({ record }) {
                     <Chip size="small" label="⭐ interested" variant={interested ? 'filled' : 'outlined'} color={interested ? 'success' : 'default'} sx={{ height: 22 }} onClick={() => ctx?.openFlagEdit(record)} />
                     <Chip size="small" label="🔁 want 1on1" variant={want1on1 ? 'filled' : 'outlined'} color={want1on1 ? 'primary' : 'default'} sx={{ height: 22 }} onClick={() => ctx?.openFlagEdit(record)} />
                 </Box>
+                <MemberCardLeadSnippet memberId={record.id} />
             </Box>
             <Box className="mc-act" sx={{ p: 1, borderTop: '1px solid', borderColor: 'grey.200', display: 'flex', gap: 0.5, flexWrap: 'wrap', bgcolor: 'grey.50' }}>
                 <Button size="small" variant="contained" onClick={() => ctx?.openMemo(record)}>✏️ メモ</Button>
                 <Button size="small" variant="outlined" onClick={() => ctx?.openO2o(record)}>📅 1to1</Button>
+                <Button size="small" variant="contained" color="secondary" component={Link} to={`/one-to-ones/create?target_member_id=${record.id}`}>1to1作成</Button>
                 <Button size="small" variant="text" onClick={() => ctx?.openO2oMemo(record)}>📝 1to1メモ</Button>
                 <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary" sx={{ flexShrink: 0 }}>🗺 Connections で見る</Button>
                 <Button size="small" variant="outlined" color="inherit" sx={{ ml: 'auto' }} onClick={() => ctx?.openDrawer(record)}>詳細 →</Button>
@@ -1021,6 +1071,7 @@ function MembersListInner() {
                     <TextField source="current_role" label="役職" emptyText="—" />
                     <FunctionField label="同室回数" render={(r) => <SameRoomCountField record={r} />} />
                     <FunctionField label="1to1回数" render={(r) => <OneToOneCountField record={r} />} />
+                    <FunctionField label={RELIGO_ONE_TO_ONE_LEAD_COLUMN_LABEL} render={(r) => <OneToOneLeadField record={r} />} />
                     <FunctionField label="最終接触" render={(r) => <LastContactField record={r} />} />
                     <FunctionField label="直近メモ" render={(r) => <LastMemoField record={r} />} />
                     <FunctionField label="フラグ" render={(r) => <FlagsField record={r} />} />
@@ -1034,6 +1085,33 @@ function MembersListInner() {
 }
 
 export function MembersList() {
+    const [leadByMemberId, setLeadByMemberId] = useState({});
+    const [leadsLoading, setLeadsLoading] = useState(true);
+    const reloadLeads = useCallback(() => {
+        setLeadsLoading(true);
+        fetchReligoOwnerMemberId()
+            .then((me) => {
+                const owner = ownerMemberIdFallback(me);
+                return fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${owner}`);
+            })
+            .then((res) => (res.ok ? res.json() : []))
+            .then((rows) => {
+                const map = {};
+                if (Array.isArray(rows)) {
+                    rows.forEach((r) => {
+                        map[r.member_id] = r;
+                    });
+                }
+                setLeadByMemberId(map);
+            })
+            .catch(() => setLeadByMemberId({}))
+            .finally(() => setLeadsLoading(false));
+    }, []);
+
+    useEffect(() => {
+        reloadLeads();
+    }, [reloadLeads]);
+
     const [memoOpen, setMemoOpen] = useState(false);
     const [memoMember, setMemoMember] = useState(null);
     const [o2oOpen, setO2oOpen] = useState(false);
@@ -1066,16 +1144,18 @@ export function MembersList() {
 
     const onSaved = useCallback(() => {
         refresh();
+        reloadLeads();
         drawerRef.current?.refetchMemos?.();
         drawerRef.current?.refetchO2o?.();
-    }, [refresh]);
+    }, [refresh, reloadLeads]);
     const onO2oSaved = useCallback(() => {
         refresh();
+        reloadLeads();
         drawerRef.current?.refetchO2o?.();
-    }, [refresh]);
+    }, [refresh, reloadLeads]);
 
     return (
-        <>
+        <MembersOneToOneLeadContext.Provider value={{ leadByMemberId, leadsLoading, reloadLeads }}>
             <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openFlagEdit, openDrawer }}>
                 <List
                     title={
@@ -1106,6 +1186,6 @@ export function MembersList() {
             <O2oModal open={o2oOpen} member={o2oMember} onClose={() => setO2oOpen(false)} onSaved={onO2oSaved} />
             <O2oMemoModal open={o2oMemoOpen} member={o2oMemoMember} onClose={() => setO2oMemoOpen(false)} onSaved={onSaved} />
             <FlagEditDialog open={!!flagEditMember} member={flagEditMember} onClose={() => setFlagEditMember(null)} onSaved={onSaved} />
-        </>
+        </MembersOneToOneLeadContext.Provider>
     );
 }

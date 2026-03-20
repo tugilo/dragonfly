@@ -14,6 +14,7 @@ import {
     useRedirect,
 } from 'react-admin';
 import { Typography } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import { OwnerScopedTargetSelect } from './OneToOnesFormParts';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
@@ -39,6 +40,7 @@ const CreateToolbar = () => (
 export function OneToOnesCreate() {
     const notify = useNotify();
     const redirect = useRedirect();
+    const [searchParams] = useSearchParams();
     const [workspaceId, setWorkspaceId] = useState(null);
     const [workspaceError, setWorkspaceError] = useState('');
     const [ownerChoices, setOwnerChoices] = useState([]);
@@ -63,9 +65,14 @@ export function OneToOnesCreate() {
                       }))
                     : [];
                 setOwnerChoices(owners);
+                const ownerId = ownerMemberIdFallback(meOwner);
+                const qTarget = searchParams.get('target_member_id');
+                const qNum = qTarget != null && /^\d+$/.test(String(qTarget)) ? Number(qTarget) : null;
+                const targetOk = qNum != null && qNum !== ownerId && members.some((m) => Number(m.id) === qNum);
                 setDefaultValues({
                     status: 'planned',
-                    owner_member_id: ownerMemberIdFallback(meOwner),
+                    owner_member_id: ownerId,
+                    ...(targetOk ? { target_member_id: qNum } : {}),
                 });
                 setFormReady(true);
             })
@@ -75,7 +82,7 @@ export function OneToOnesCreate() {
         return () => {
             cancelled = true;
         };
-    }, []);
+    }, [searchParams]);
 
     const transform = (data) => ({
         ...data,
