@@ -104,7 +104,7 @@ class DashboardService
     /**
      * GET /api/dashboard/tasks 用. 型は UI が扱いやすい形で返す.
      *
-     * @return array<int, array{id: string, kind: string, title: string, person_name: string|null, meeting_number: string|null, action: array{label: string, href: string|null, disabled: bool}, badge: string|null, meta?: string}>
+     * @return array<int, array{id: string, kind: 'stale_follow'|'one_to_one_planned'|'meeting_follow_up', title: string, person_name: string|null, meeting_number: string|null, action: array{label: string, href: string|null, disabled: bool}, badge: string|null, meta?: string}>
      */
     public function getTasks(int $ownerMemberId): array
     {
@@ -167,7 +167,7 @@ class DashboardService
                 'meeting_number' => null,
                 'action' => ['label' => '予定', 'href' => null, 'disabled' => true],
                 'badge' => '予定',
-                'meta' => $plannedO2o->scheduled_at ? $plannedO2o->scheduled_at->format('本日 H:i') . ' — ' : '',
+                'meta' => $this->buildPlannedOneToOneTaskMeta($plannedO2o->scheduled_at),
             ];
         }
 
@@ -181,9 +181,9 @@ class DashboardService
         }
         if ($nextMeeting) {
             $tasks[] = [
-                'id' => 'meeting-memo-' . $nextMeeting->id,
-                'kind' => 'meeting_memo_pending',
-                'title' => '例会 #' . $nextMeeting->number . ' メモ未整理',
+                'id' => 'meeting-follow-up-' . $nextMeeting->id,
+                'kind' => 'meeting_follow_up',
+                'title' => '例会 #' . $nextMeeting->number . '（次回・直近のフォロー）',
                 'person_name' => null,
                 'meeting_number' => (string) $nextMeeting->number,
                 'action' => ['label' => 'Meetingsへ', 'href' => '/meetings', 'disabled' => false],
@@ -300,6 +300,22 @@ class DashboardService
         }
 
         return $mom;
+    }
+
+    /**
+     * 予定 1to1 行の meta（本日 / 日付 / 未設定）。本文（notes）は Tasks では省略。
+     */
+    private function buildPlannedOneToOneTaskMeta(?Carbon $scheduledAt): string
+    {
+        if ($scheduledAt === null) {
+            return '日時未設定 — 予定済み';
+        }
+        $sched = $scheduledAt->copy();
+        if ($sched->isToday()) {
+            return '本日 ' . $sched->format('H:i') . ' — 予定';
+        }
+
+        return $sched->format('n/j H:i') . ' — 予定';
     }
 
     /**

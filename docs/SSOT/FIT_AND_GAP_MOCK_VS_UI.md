@@ -22,11 +22,11 @@
 
 | 観点 | モック | 実装 | Fit / Gap |
 |------|--------|------|-----------|
-| タイトル・説明 | 「Dashboard」「今日の活動・未アクション・KPI」 | 同一 | **Fit** |
+| タイトル・説明 | 「Dashboard」「今日の活動・未アクション・KPI」 | 「Dashboard」＋**「KPI で俯瞰し、優先アクションと直近の活動から次の一手を決める」**（DASHBOARD-TASKS-ALIGNMENT-P1） | **Gap（意図的）:** モックは短いキャッチ、実装は **Dashboard の役割**を明示 |
 | ヘッダーアクション | 「Connectionsへ」「＋ 1to1追加」 | 同一（Connectionsへ、＋ 1to1追加） | **Fit** |
 | 統計カード 4 種 | 未接触(30日以上) / 今月の1to1回数 / 紹介メモ数 / 例会メモ数（数値・色・アイコン・**補足行**） | 同一構成。補足は API の `subtexts`（**P7-2:** 先月比・未接触割合・直近例会番号など動的） | **Fit**（P7-2 で Gap 縮小） |
 | 空状態・読込 | モックはデモデータ前提 | **P7-3:** オーナー未設定 / 0 件 / KPI 取得失敗を短文で区別。初回・オーナー変更直後は **Skeleton**（ダミー Tasks を出さない） | **Fit** |
-| 今日やること（Tasks） | 4 件（伊藤 … 等） | `GET /api/dashboard/tasks`。メモ追加は **Member Show へ遷移**（`/members/:id/show`）。例会行は `held_on` から **あとN日 / 本日 / 次回未登録**表現（P7-2） | **Fit:** データ連携・導線あり。**Gap:** メモはモーダルではなく詳細遷移 |
+| 今日やること（Tasks） | 4 件（伊藤 … 等）・見出し「今日やること」 | **見出し「優先アクション（Tasks）」**、`GET /api/dashboard/tasks`。メモ追加は **Member Show**（有効）。例会は kind **`meeting_follow_up`**・タイトルは次回/直近**フォロー**表現（P7-2 meta + P1 改名） | **Fit:** データ連携・導線。**Gap:** モックはメモ**モーダル**／見出し文言は **役割優先**で実装を正とする（[DASHBOARD_DATA_SSOT §0–3](DASHBOARD_DATA_SSOT.md)） |
 | クイックショートカット | Connections、Members一覧、＋1to1を追加、例会一覧 | 同一 4 ボタン | **Fit** |
 | 最近の活動 | タイムライン 6 件（BO 割当・フラグ変更を含む） | `GET /api/dashboard/activity`（メモ・紹介・1to1・フラグ・**`bo_assigned`**（`bo_assignment_audit_logs`）） | **Fit（BO-AUDIT-P1）**。レガシー breakout-assignments のみの経路は未ログ |
 | レイアウト | 左 Tasks+ショートカット、右 活動（モック） | **DASHBOARD-P7-1:** 左に Tasks→Shortcuts→**Activity**、右 **340px に「次の 1to1 候補」**（Leads API） | **Gap（意図的）:** Activity と Leads の左右を入替（主従整理）。 |

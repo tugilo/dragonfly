@@ -5,15 +5,16 @@ import { Link } from 'react-router-dom';
 import { DASHBOARD_CARD_SX, DASHBOARD_MSG } from './dashboardConstants';
 
 /**
- * 今日やること。P7-3: ローディング・オーナー未設定・空リストを区別。
+ * 優先アクション（Tasks）。P7-3: ローディング・オーナー未設定・空リストを区別。
+ * DASHBOARD-TASKS-ALIGNMENT-P1: 「今日」限定ではなく owner にとっての優先行動のリスト（SSOT 参照）。
  */
 export default function DashboardTasksPanel({ tasks, loading, ownerConfigured }) {
     return (
         <Card variant="outlined" sx={{ ...DASHBOARD_CARD_SX, mb: 1.75 }}>
             <CardContent>
-                <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.25 }}>⚡ 今日やること（Tasks）</Typography>
+                <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.25 }}>⚡ 優先アクション（Tasks）</Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.25 }}>
-                    未接触のフォロー・予定の 1 to 1・例会メモの整理など、いま手を付けるべきことです。
+                    厳密には「今日の ToDo」ではなく、未接触フォロー・予定 1 to 1・次回/直近例会への動きなど、いま優先して進めるとよい行動です。
                 </Typography>
                 {loading ? (
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -40,9 +41,10 @@ export default function DashboardTasksPanel({ tasks, loading, ownerConfigured })
                         {tasks.map((task) => {
                             const isStale = task.kind === 'stale_follow';
                             const isO2o = task.kind === 'one_to_one_planned';
+                            const isMeetingFollowUp = task.kind === 'meeting_follow_up';
                             const bg = isStale ? '#fff3e0' : isO2o ? 'primary.light' : '#f8f9fa';
                             const borderColor = isStale ? 'warning.main' : isO2o ? 'primary.main' : '#ccc';
-                            const icon = isStale ? '⏰' : isO2o ? '📅' : '📝';
+                            const icon = isStale ? '⏰' : isO2o ? '📅' : isMeetingFollowUp ? '📋' : '📝';
                             const action = task.action || {};
                             const memoDisabled = isStale && action.label === 'メモ追加' && action.disabled;
 

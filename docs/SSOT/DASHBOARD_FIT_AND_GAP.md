@@ -23,6 +23,13 @@
 | Dashboard **ページ本体**（`#pg-dashboard`） | グローバル AppBar の検索・通知・プロフィール（→ [FIT_AND_GAP_MENU_HEADER.md](FIT_AND_GAP_MENU_HEADER.md)） |
 | 統計 4 枚・Tasks・クイックショートカット・最近の活動 | 他画面への遷移先の内部仕様 |
 
+### §1.1 Dashboard の役割（実装ラベル・DASHBOARD-TASKS-ALIGNMENT-P1）
+
+モックは主にレイアウト・情報の **並び** の SSOT。**製品上の役割**（KPI / Tasks / Activity / Leads の分担、Tasks が「今日限定」かどうか）は **[DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md)** を正とする。
+
+- **要約:** Dashboard は **現状把握**（KPI）と **次アクション決定**（Tasks）のホーム。Activity は **最近の事実**、Leads は **1 to 1 候補の補助**。
+- **Tasks の UI 見出し:** モックの「今日やること」に対し、実装は **「優先アクション（Tasks）」**（中身は厳密な「今日」ではない）。意図的な **意味上の Fit**（モックの固定文言と 1:1 ではない）。
+
 ---
 
 ## §2 モック構造
@@ -33,7 +40,7 @@
 |-------------|------|--------|------|
 | ページヘッダ | 画面の目的の宣言・主要アクション | h1「Dashboard」、サブ「今日の活動・未アクション・KPI」、右に 2 ボタン | Connections へ遷移、1to1 追加（モーダル起動のモック） |
 | KPI 統計（4） | 未アクションと今月の活動量の俯瞰 | `.stats` グリッド 4 列、各 `.stat` にアイコン・ラベル・主数値・補足 1 行 | なし（閲覧のみ） |
-| 今日やること（Tasks） | 今日フォローすべき人・予定・例会メモ整理の催促 | 左カラム上部 `.card`、縦リスト、種類別の背景・左ボーダー、アイコン | 1to1 予定 → `openModal('mol-1on1create')`、メモ追加 → `openMemoModal`、予定は Chip、例会 → `#/meetings` |
+| 今日やること（Tasks） | 今日フォローすべき人・予定・例会まわりの催促（モック文言） | 左カラム上部 `.card`、縦リスト、種類別の背景・左ボーダー、アイコン | 1to1 予定 → `openModal('mol-1on1create')`、メモ追加 → `openMemoModal`、予定は Chip、例会 → `#/meetings`。**実装ラベルは「優先アクション」**（[DASHBOARD_DATA_SSOT §3](DASHBOARD_DATA_SSOT.md)）。 |
 | クイックショートカット | よく使う画面へのワンクリック | 左カラム下部 `.card`、横並びボタン 4 つ | Connections / Members / 1to1 追加（モーダル）/ Meetings |
 | 最近の活動 | 直近の記録を時系列で把握 | 右カラム `.card`、`.timeline` 縦リスト（ドット＋タイトル＋メタ） | なし（閲覧のみ・モックは行クリックなし） |
 
@@ -106,7 +113,7 @@
 | Owner 初回設定 | **モックに無し・実装のみ** | 未設定時カード「オーナーを設定してください」＋メンバー選択。422 回避のための製品要件 |
 | KPI 統計 4 | **実装済** | `GET /api/dashboard/stats`。**DASHBOARD-P7-2:** `subtexts` は先月比・未接触割合・直近例会番号など**動的**。フォールバック定数あり（API 失敗時） |
 | 1to1 リードパネル | **実装済・モックに無し** | `GET /api/dragonfly/members/one-to-one-status`。Tasks の**上**に配置。全ターゲットの状況＋`1to1作成` リンク |
-| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**。例会行 meta は `held_on` から**日数動的** |
+| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**（**有効**。SSOT と一致）。**DASHBOARD-TASKS-ALIGNMENT-P1:** 見出し「優先アクション」、kind **`meeting_follow_up`**（次回/直近例会フォロー）。 |
 | クイックショートカット | **実装済** | React Router の `/connections` 等（モック hash とパスは異なるが導線同等） |
 | 最近の活動 | **実装済** | `GET /api/dashboard/activity` は memos + 1to1 + `flag_changed` + **`bo_assigned`**（`bo_assignment_audit_logs`・BO-AUDIT-P1）。SSOT: `BO_AUDIT_LOG_DESIGN.md` |
 | ローディング・空状態 | **実装済（P7-3）** | 初回・オーナー変更後の再取得でパネル単位 **Skeleton**。空配列 API を正しく表示。オーナー未設定・0 件・KPI 取得失敗を区別。凡例データ（旧フェールバック）は表示しない |
