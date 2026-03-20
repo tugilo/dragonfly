@@ -11,7 +11,7 @@
 
 ## 1. 実施内容サマリ
 
-Dashboard API（`DashboardService`）と軽微な UI 定数で、**KPI 補足文の動的化**、**次回例会までの日数**、**Tasks のメモ deep link**、**Activity（紹介メモ種別・フラグ更新）**を実装した。P7-1 のレイアウトは維持。Feature テストを `DashboardApiTest` に追加し、**merge 後**に本 REPORT の Merge Evidence を追記するコミットまで完了する。
+Dashboard API（`DashboardService`）と軽微な UI 定数で、**KPI 補足文の動的化**、**次回例会までの日数**、**Tasks のメモ deep link**、**Activity（紹介メモ種別・フラグ更新）**を実装した。P7-1 のレイアウトは維持。Feature テストを `DashboardApiTest` に追加。`develop` へ `--no-ff` merge・push、本 REPORT §10 Merge Evidence 追記コミットまで完了。
 
 ---
 
@@ -87,14 +87,13 @@ Dashboard API（`DashboardService`）と軽微な UI 定数で、**KPI 補足文
 
 ## 10. Merge Evidence
 
-**（`develop` へ merge し push した直後に `git log` で取得し、以下を埋める。追記専用コミットを 1 回行う。）**
-
 | 項目 | 値 |
 |------|-----|
 | merge method | `git merge --no-ff feature/phase-dashboard-p7-2-data-actions` |
 | merged branch | `feature/phase-dashboard-p7-2-data-actions` |
-| merge commit id | *（追記）* |
-| feature last commit id | *（追記）* |
-| pushed at | *（追記・JST 目安）* |
-| test result | `302 passed`（参照: §7） |
-| notes | 競合: なし |
+| merge commit id | `519ace29dc8a1f72c33ecff3686cd1b24129a15a` |
+| feature last commit id | `0a7c74b481624d45037a7a61ae5f4b3791b51d30` |
+| first push develop (merge) | `2026-03-20T02:16:51Z`（UTC・merge push 直前タイムスタンプ） |
+| test result | `302 passed`（1219 assertions・merge 直後ローカル） |
+| build | `npm run build` 成功（merge 直後） |
+| notes | 競合なし。Evidence 本文確定後に `docs` のみコミットして `develop` を再 push |
