@@ -39,8 +39,8 @@ Dashboard の**役割**を `DASHBOARD_DATA_SSOT.md` §0 で定義し、**Tasks**
 
 ## 6. テスト結果
 
-- **（merge 前に記載）:** `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` — 実行後に件数を記載。  
-- **（merge 前に記載）:** `docker compose ... exec node npm run build` — 成功を記載。
+- **php artisan test（merge 後・develop）:** **315 passed**（1271 assertions）。`docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`
+- **npm run build（merge 後・develop）:** 成功（`exec node npm run build`、exit 0）
 
 ## 7. 未解決事項
 
@@ -56,19 +56,22 @@ Dashboard の**役割**を `DASHBOARD_DATA_SSOT.md` §0 で定義し、**Tasks**
 
 ## 9. Merge Evidence
 
-**（merge 完了・追記コミット後に記載）**
-
 | 項目 | 値 |
 |------|-----|
 | merge method | `git merge --no-ff feature/phase-dashboard-tasks-alignment-p1` |
+| target branch | `develop` |
 | merged branch | `feature/phase-dashboard-tasks-alignment-p1` |
-| merge commit id | *（要記載）* |
-| feature last commit id | *（要記載）* |
-| pushed at | *（要記載）* |
+| merge commit id | `fe349925afe774332d661497dd3a20462c7820b1` |
+| feature last commit id | `c37d12c7a6c4fa47ab0e2c25d2cf21f26c7a174c` |
+| merge 競合 | なし（ort strategy） |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
-| test result | *（要記載）* |
-| build | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` |
-| notes | Dashboard §0 役割、Tasks=優先アクション、`meeting_follow_up`、workspace 未使用固定 |
+| test result | **315 passed**（1271 assertions） |
+| build command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` |
+| build result | success（exit 0） |
+| changed files（develop 取り込み範囲） | `docs/INDEX.md`, `docs/SSOT/DASHBOARD_DATA_SSOT.md`, `docs/SSOT/DASHBOARD_FIT_AND_GAP.md`, `docs/SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md`, `docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md`, `docs/dragonfly_progress.md`, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P1_PLAN.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P1_REPORT.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P1_WORKLOG.md`, `www/app/Services/Religo/DashboardService.php`, `www/resources/js/admin/pages/dashboard/DashboardHeader.jsx`, `www/resources/js/admin/pages/dashboard/DashboardTasksPanel.jsx`, `www/resources/js/admin/pages/dashboard/dashboardConstants.js`, `www/tests/Feature/Religo/DashboardApiTest.php` |
+| notes | **Dashboard 役割:** `DASHBOARD_DATA_SSOT` §0。**Tasks:** 見出し「優先アクション」、案A採用。**`meeting_follow_up`:** 次回/直近例会フォロー表現に改名。**workspace:** Tasks 生成は引き続き未使用（owner 軸）。 |
+
+**運用上の注記:** §6・§9 の内容は merge 直後に `develop` へ `docs: add merge evidence for dashboard tasks alignment p1` としてコミットした（`git log develop --grep=merge evidence` で確認）。
 
 ### scope / ssot / dod
 

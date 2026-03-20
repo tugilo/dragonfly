@@ -32,10 +32,10 @@
 
 ### merge 時の競合
 
-- **（merge 実行後に WORKLOG 追記）**
+- **なし。** `git merge --no-ff feature/phase-dashboard-tasks-alignment-p1` は ort strategy で自動マージ完了。
 
 ---
 
 ## メンテナンス
 
-- merge 完了後、下記を追記すること: merge 競合の有無、`git merge` の結果。
+- Merge commit on `develop`: `fe349925afe774332d661497dd3a20462c7820b1`（REPORT §9 と同一）。
