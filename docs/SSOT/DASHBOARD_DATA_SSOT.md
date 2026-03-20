@@ -12,7 +12,7 @@
 - **スコープ:** 現行は workspace 未適用（単一 workspace 前提）。将来 workspace スコープをかける場合は API と本 SSOT を同時に更新する。
 - **決定順（E-4 で固定）:**  
   1. **クエリ** — リクエストに `owner_member_id` があればそれを使用（互換維持）。  
-  2. **ユーザー設定** — 無ければ現在ユーザーの `owner_member_id`（users.owner_member_id）を使用。GET /api/users/me で取得、PATCH /api/users/me で更新。認証なしの場合は user id 1 を「現在ユーザー」とする。  
+  2. **ユーザー設定** — 無ければ現在ユーザーの `owner_member_id`（users.owner_member_id）を使用。GET /api/users/me で取得（応答に **`workspace_id`** 推定あり・nullable）、PATCH /api/users/me で更新。**現在ユーザー（BO-AUDIT-P3）:** 認証時は `auth` の User、無認証時は **users.id 昇順先頭**（旧「id 1 固定」の一般化）。SSOT: [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)。  
   3. **未設定時** — 上記のいずれも無い（null）場合は **422 Unprocessable Entity** を返し、`message` で初回設定を促す。暫定の固定値 1 は使用しない。
 - **解消済み:** 旧「暫定で固定値 1」は Phase E-4 で廃止し、上記の決定順に統一した。
 
