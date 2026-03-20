@@ -212,4 +212,57 @@ class MeetingBreakoutsTest extends TestCase
         $this->assertSame($wsPreferred, (int) $log->workspace_id);
         $this->assertNotSame($wsFirst, (int) $log->workspace_id);
     }
+
+    /** BO-AUDIT-P4: users.default_workspace_id があれば owner の flag より優先 */
+    public function test_put_breakouts_audit_workspace_uses_user_default_workspace_over_owner_flag(): void
+    {
+        $wsFirst = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'First',
+            'slug' => 'first-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsFromFlag = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'FromFlag',
+            'slug' => 'from-flag-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsDefault = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'UserDefault',
+            'slug' => 'user-default-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $uId = (int) DB::table('users')->insertGetId([
+            'name' => 'Op',
+            'email' => 'op-bo-p4@example.com',
+            'password' => Hash::make('x'),
+            'owner_member_id' => $this->member1,
+            'default_workspace_id' => $wsDefault,
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DragonflyContactFlag::create([
+            'owner_member_id' => $this->member1,
+            'target_member_id' => $this->member2,
+            'interested' => false,
+            'want_1on1' => false,
+            'workspace_id' => $wsFromFlag,
+        ]);
+        $this->actingAs(User::find($uId));
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $log = BoAssignmentAuditLog::query()->where('meeting_id', $this->meetingId)->first();
+        $this->assertNotNull($log);
+        $this->assertSame($wsDefault, (int) $log->workspace_id);
+        $this->assertNotSame($wsFromFlag, (int) $log->workspace_id);
+        $this->assertNotSame($wsFirst, (int) $log->workspace_id);
+    }
 }

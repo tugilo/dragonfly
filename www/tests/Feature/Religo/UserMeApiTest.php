@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 /**
- * GET /api/users/me, PATCH /api/users/me. E-4 / BO-AUDIT-P3.
+ * GET /api/users/me, PATCH /api/users/me. E-4 / BO-AUDIT-P3〜P4.
  * 現在ユーザー: 認証時はその User、無認証時は users.id 昇順先頭。
  */
 class UserMeApiTest extends TestCase
@@ -38,7 +38,7 @@ class UserMeApiTest extends TestCase
         ]);
     }
 
-    private function createMeUser(?int $ownerMemberId, int $id = 1): void
+    private function createMeUser(?int $ownerMemberId, int $id = 1, ?int $defaultWorkspaceId = null): void
     {
         DB::table('users')->insert([
             'id' => $id,
@@ -49,6 +49,7 @@ class UserMeApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
             'owner_member_id' => $ownerMemberId,
+            'default_workspace_id' => $defaultWorkspaceId,
         ]);
     }
 
@@ -61,6 +62,8 @@ class UserMeApiTest extends TestCase
         $this->assertSame(1, $data['id']);
         $this->assertSame($this->memberId, $data['owner_member_id']);
         $this->assertSame($this->memberId, $data['member_id']);
+        $this->assertArrayHasKey('default_workspace_id', $data);
+        $this->assertNull($data['default_workspace_id']);
         $this->assertArrayHasKey('workspace_id', $data);
         $this->assertNull($data['workspace_id']);
     }
@@ -74,6 +77,7 @@ class UserMeApiTest extends TestCase
         $this->assertSame(1, $data['id']);
         $this->assertNull($data['owner_member_id']);
         $this->assertNull($data['member_id']);
+        $this->assertNull($data['default_workspace_id']);
         $this->assertNull($data['workspace_id']);
     }
 
@@ -116,6 +120,34 @@ class UserMeApiTest extends TestCase
         $this->assertSame($wsId, $res->json('workspace_id'));
     }
 
+    public function test_show_me_resolved_workspace_id_prefers_default_workspace_over_artifacts(): void
+    {
+        $wsFromFlag = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'FromFlag',
+            'slug' => 'from-flag',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsDefault = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'Default',
+            'slug' => 'default',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $this->createMeUser($this->memberId, 1, $wsDefault);
+        DragonflyContactFlag::create([
+            'owner_member_id' => $this->memberId,
+            'target_member_id' => $this->otherMemberId,
+            'interested' => true,
+            'want_1on1' => false,
+            'workspace_id' => $wsFromFlag,
+        ]);
+        $res = $this->getJson('/api/users/me');
+        $res->assertOk();
+        $this->assertSame($wsDefault, $res->json('workspace_id'));
+        $this->assertSame($wsDefault, $res->json('default_workspace_id'));
+    }
+
     public function test_update_me_saves_owner_member_id(): void
     {
         $this->createMeUser(null);
@@ -147,11 +179,42 @@ class UserMeApiTest extends TestCase
         $res->assertStatus(422);
     }
 
-    public function test_update_me_returns_422_when_owner_member_id_missing(): void
+    public function test_update_me_returns_422_when_no_updatable_keys_in_body(): void
     {
         $this->createMeUser(null);
         $res = $this->patchJson('/api/users/me', []);
         $res->assertStatus(422);
+    }
+
+    public function test_update_me_saves_default_workspace_id_without_owner_change(): void
+    {
+        $wsId = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'Ch',
+            'slug' => 'ch',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $this->createMeUser($this->memberId);
+        $res = $this->patchJson('/api/users/me', ['default_workspace_id' => $wsId]);
+        $res->assertOk();
+        $this->assertSame($wsId, $res->json('default_workspace_id'));
+        $this->assertSame($wsId, $res->json('workspace_id'));
+        $this->assertDatabaseHas('users', ['id' => 1, 'default_workspace_id' => $wsId, 'owner_member_id' => $this->memberId]);
+    }
+
+    public function test_update_me_can_clear_default_workspace_id(): void
+    {
+        $wsId = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'Ch',
+            'slug' => 'ch2',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $this->createMeUser($this->memberId, 1, $wsId);
+        $res = $this->patchJson('/api/users/me', ['default_workspace_id' => null]);
+        $res->assertOk();
+        $this->assertNull($res->json('default_workspace_id'));
+        $this->assertDatabaseHas('users', ['id' => 1, 'default_workspace_id' => null]);
     }
 
     public function test_update_me_returns_404_when_user_not_found(): void

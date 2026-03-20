@@ -9,7 +9,7 @@ use App\Models\User;
 /**
  * BO 保存成功後に監査行を1件追加。
  *
- * actor / workspace は `ReligoActorContext` と `/api/users/me` と同一基準（BO-AUDIT-P3）。
+ * actor / workspace は `ReligoActorContext` と `/api/users/me` と同一基準（BO-AUDIT-P3〜P4）。
  */
 final class BoAssignmentAuditLogWriter
 {
@@ -22,7 +22,7 @@ final class BoAssignmentAuditLogWriter
     {
         $user = $actor ?? self::resolveActorUser();
 
-        return ReligoActorContext::resolveWorkspaceIdForOwnerMember($user?->owner_member_id);
+        return ReligoActorContext::resolveWorkspaceIdForUser($user);
     }
 
     /**

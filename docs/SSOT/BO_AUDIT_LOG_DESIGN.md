@@ -1,6 +1,6 @@
 # BO 割当保存の監査ログ設計（BO-AUDIT-P1 / P2 / P3）
 
-**Phase:** P1 基盤 · P2 レガシーAPI · **P3** `/api/users/me` と actor/workspace 一本化  
+**Phase:** P1 基盤 · P2 レガシーAPI · **P3** `/api/users/me` と actor/workspace 一本化 · **P4** `users.default_workspace_id` と解決順の明示  
 **目的:** Dashboard Activity の `bo_assigned` を **説明可能な永続イベント**として扱う。CSV 反映ログ（`meeting_csv_apply_logs`）とは **責務を分離**する。
 
 **actor / workspace の単一情報源:** [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)（`ReligoActorContext`）。
@@ -35,7 +35,7 @@
 | meeting_id | FK meetings | 必須 |
 | actor_user_id | FK users nullable | **P3:** `ReligoActorContext::actingUser()` と `/api/users/me` の `id` と同一基準。 |
 | actor_owner_member_id | FK members nullable | 上記 User の `owner_member_id`。**Activity はこれでフィルタ** |
-| workspace_id | bigint nullable | **P3:** `ReligoActorContext::resolveWorkspaceIdForOwnerMember(actor_owner_member_id)`（flags → 1to1 → memos → workspaces 先頭）。 |
+| workspace_id | bigint nullable | **P4:** `ReligoActorContext::resolveWorkspaceIdForUser(actor_user)`（default_workspace_id → flags → 1to1 → memos → workspaces 先頭）。[WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。 |
 | source | string(40) | `connections_breakouts` \| `breakout_rounds` \| `dragonfly_breakout_assignments` |
 | payload | json | 保存スナップショット |
 | occurred_at | datetime | 保存完了時刻 |
@@ -62,4 +62,4 @@
 ## 6. 既知の制限（将来）
 
 - **users.me:** `UserController` は認証優先・無認証時フォールバック。**複数 User が無認証で共有運用される**場合は最小 id が「me」になる点に注意。
-- **workspace:** owner に紐づく flags/o2o/memo が無い場合は常に **先頭 workspace**。
+- **workspace:** `default_workspace_id` が無く、owner 由来の flags/o2o/memo にも workspace が無い場合は **先頭 workspace**。全体の順序は [WORKSPACE_RESOLUTION_POLICY.md](WORKSPACE_RESOLUTION_POLICY.md)。

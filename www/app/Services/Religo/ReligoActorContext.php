@@ -11,11 +11,11 @@ use App\Models\Workspace;
 /**
  * Religo 管理画面の「現在ユーザー」と BO 監査 actor の共通解決。
  *
- * - **認証:** `auth()->user()` が `App\Models\User` なら採用。
- * - **フォールバック:** users を id 昇順で先頭（**認証未導入の単一管理者**運用。複数 User かつ未ログイン時は最小 id が「既定オペレータ」になる）。
- *
- * workspace_id（chapter 相当）: **owner_member_id 文脈**で flags → 1to1 → contact_memos の既存行から
- * `workspace_id` を探索し、無ければ **workspaces 先頭**（DragonFly 単一チャプター既定）。
+ * **workspace_id（解決済み・chapter 相当）** の優先順（BO-AUDIT-P4、`WORKSPACE_RESOLUTION_POLICY.md`）:
+ * 1. `users.default_workspace_id`
+ * 2. owner の既存データ（`dragonfly_contact_flags` → `one_to_ones` → `contact_memos` の `workspace_id`）
+ * 3. `workspaces` id 昇順先頭
+ * 4. 行が無ければ null
  *
  * SSOT: docs/SSOT/USER_ME_AND_ACTOR_RESOLUTION.md
  */
@@ -32,37 +32,52 @@ final class ReligoActorContext
     }
 
     /**
-     * Dashboard owner・BO 監査・/api/users/me の workspace 文脈（nullable）。
-     *
-     * Religo では **1 workspace ≒ 1 BNI チャプター（DragonFly）** として運用する前提（複数 workspace は将来拡張）。
+     * owner 由来の workspace のみ（flags → 1to1 → memos）。先頭 workspace は含めない。
      */
-    public static function resolveWorkspaceIdForOwnerMember(?int $ownerMemberId): ?int
+    public static function resolveWorkspaceIdFromOwnerMemberArtifacts(?int $ownerMemberId): ?int
     {
-        if ($ownerMemberId !== null) {
-            $fromFlag = DragonflyContactFlag::query()
-                ->where('owner_member_id', $ownerMemberId)
-                ->whereNotNull('workspace_id')
-                ->orderBy('id')
-                ->value('workspace_id');
-            if ($fromFlag !== null) {
-                return (int) $fromFlag;
-            }
-            $fromO2o = OneToOne::query()
-                ->where('owner_member_id', $ownerMemberId)
-                ->whereNotNull('workspace_id')
-                ->orderBy('id')
-                ->value('workspace_id');
-            if ($fromO2o !== null) {
-                return (int) $fromO2o;
-            }
-            $fromMemo = ContactMemo::query()
-                ->where('owner_member_id', $ownerMemberId)
-                ->whereNotNull('workspace_id')
-                ->orderBy('id')
-                ->value('workspace_id');
-            if ($fromMemo !== null) {
-                return (int) $fromMemo;
-            }
+        if ($ownerMemberId === null) {
+            return null;
+        }
+        $fromFlag = DragonflyContactFlag::query()
+            ->where('owner_member_id', $ownerMemberId)
+            ->whereNotNull('workspace_id')
+            ->orderBy('id')
+            ->value('workspace_id');
+        if ($fromFlag !== null) {
+            return (int) $fromFlag;
+        }
+        $fromO2o = OneToOne::query()
+            ->where('owner_member_id', $ownerMemberId)
+            ->whereNotNull('workspace_id')
+            ->orderBy('id')
+            ->value('workspace_id');
+        if ($fromO2o !== null) {
+            return (int) $fromO2o;
+        }
+        $fromMemo = ContactMemo::query()
+            ->where('owner_member_id', $ownerMemberId)
+            ->whereNotNull('workspace_id')
+            ->orderBy('id')
+            ->value('workspace_id');
+        if ($fromMemo !== null) {
+            return (int) $fromMemo;
+        }
+
+        return null;
+    }
+
+    /**
+     * GET /api/users/me の `workspace_id`・BO 監査 `workspace_id`・Dashboard 文脈で共有。
+     */
+    public static function resolveWorkspaceIdForUser(?User $user): ?int
+    {
+        if ($user !== null && $user->default_workspace_id !== null) {
+            return (int) $user->default_workspace_id;
+        }
+        $fromArtifacts = self::resolveWorkspaceIdFromOwnerMemberArtifacts($user?->owner_member_id);
+        if ($fromArtifacts !== null) {
+            return $fromArtifacts;
         }
 
         return self::defaultChapterWorkspaceId();
