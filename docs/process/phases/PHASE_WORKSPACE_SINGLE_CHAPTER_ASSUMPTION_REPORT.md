@@ -81,7 +81,8 @@ BNI 前提の **1 user = 1 workspace（原則）** と **チャプター ≒ wor
 
 | 項目 | 値 |
 |------|-----|
-| 種別 | docs 中心・ローカルコミット（PR なし運用に従い develop へ直接コミット可） |
-| notes | SSOT 固定のみ。テスト対象のロジック変更なし。 |
+| 種別 | docs 中心・`develop` へ直接コミット（本 Phase は feature ブランチ未使用） |
+| develop commit | `d9470a0` — `docs(ssot): BNI 1 user=1 workspace assumption (WORKSPACE-SINGLE-CHAPTER-ASSUMPTION)` |
+| notes | SSOT 固定 + PHP docblock のみ。ロジック変更なし。 |
 
 | scope / ssot / dod | OK |
