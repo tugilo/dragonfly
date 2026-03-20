@@ -9,7 +9,7 @@ export default function DashboardActivityPanel({ items }) {
             <CardContent>
                 <Typography sx={{ fontSize: 13, fontWeight: 700, mb: 0.25 }}>🕐 最近の活動</Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1.25 }}>
-                    メモと 1 to 1 の更新を新しい順に表示しています。
+                    メモ・1 to 1・つながりフラグの更新を新しい順に表示しています。
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                     {items.map((item, i) => (

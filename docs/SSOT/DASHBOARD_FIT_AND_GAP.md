@@ -104,11 +104,11 @@
 |------------|----------|------|
 | ページヘッダ | **実装済** | モック同文言。追加で **Owner セレクタ**（E-4）：`users.owner_member_id` と連携 |
 | Owner 初回設定 | **モックに無し・実装のみ** | 未設定時カード「オーナーを設定してください」＋メンバー選択。422 回避のための製品要件 |
-| KPI 統計 4 | **実装済** | `GET /api/dashboard/stats`。フォールバック定数あり（API 失敗時）。色は MUI theme 依存でモックと微妙に相違し得る |
+| KPI 統計 4 | **実装済** | `GET /api/dashboard/stats`。**DASHBOARD-P7-2:** `subtexts` は先月比・未接触割合・直近例会番号など**動的**。フォールバック定数あり（API 失敗時） |
 | 1to1 リードパネル | **実装済・モックに無し** | `GET /api/dragonfly/members/one-to-one-status`。Tasks の**上**に配置。全ターゲットの状況＋`1to1作成` リンク |
-| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**2 件目 stale の「メモ追加」は disabled**（DASHBOARD_DATA_SSOT：Dashboard からのメモ API 未接続） |
+| Tasks | **実装済** | `GET /api/dashboard/tasks`。kind 別スタイルはモックに準拠。**DASHBOARD-P7-2:** 2 件目「メモ追加」は **`/members/:id/show` deep link**。例会行 meta は `held_on` から**日数動的** |
 | クイックショートカット | **実装済** | React Router の `/connections` 等（モック hash とパスは異なるが導線同等） |
-| 最近の活動 | **部分実装** | `GET /api/dashboard/activity` は **contact_memos 作成 + one_to_ones** のみマージ。`bo_assigned` / `flag_changed` は **API 未返却**。フロントは `ACTIVITY_ICONS` にキーはあるがデータが来ない |
+| 最近の活動 | **部分実装** | `GET /api/dashboard/activity` は memos（**紹介は `memo_introduction`**）+ 1to1 + **`dragonfly_contact_flags`（`flag_changed`）** をマージ。**`bo_assigned` は未** |
 | ローディング | **実装のみ** | 「読込中…」表示 |
 | モックのモーダル（1to1 / メモ） | **未** | 実装は **ページ遷移**（`/one-to-ones/create`）が中心。メモは Dashboard 直書き不可 |
 
@@ -121,12 +121,12 @@
 | セクション | モック（意味） | 実装 | Gap | 優先度 |
 |------------|----------------|------|-----|--------|
 | ヘッダ CTA | Connections + 1to1 追加 | 同種＋Owner セレクタ | Owner UI はモック外の追加要件 | P2（仕様どおり維持） |
-| KPI 数値 | 実データに基づく件数 | API 集計 | **先月比** 等 subtext が **固定文字列** | P1 |
+| KPI 数値 | 実データに基づく件数 | API 集計 + **動的 subtext**（P7-2） | 未接触の**前月比**は未 | P2 |
 | KPI 体験 | 統計のみ | 統計＋（別枠）リード一覧 | **リード一覧はモックに無い**（製品強化か要否判断） | P2 |
-| Tasks 件数・内容 | 最大 4 系統の型 | 同ロジック（API） | **2 件目メモ** がモックはモーダル、実装は disabled | P1 |
-| Tasks 例会メモ行 | 「あとN日」動的 | 固定「あと5日」 | **日数計算**がモック意図と一致しない可能性 | P1 |
+| Tasks 件数・内容 | 最大 4 系統の型 | 同ロジック + **メモ deep link**（P7-2） | モックはメモ**モーダル**、実装は **Member Show 遷移** | P2 |
+| Tasks 例会メモ行 | 「あとN日」動的 | **`held_on` 基準で動的**（P7-2） | — | — |
 | クイックショートカット | 4 ボタン | 4 ボタン | **Fit** | — |
-| 活動 | 6 種イベント混在タイムライン | メモ＋1to1 のみ | **BO 保存・フラグ変更が欠落** | P1 |
+| 活動 | 6 種イベント混在タイムライン | メモ（種別分け）＋1to1＋**フラグ更新**（P7-2） | **BO 割当保存イベント**が欠落 | P2 |
 | インタラクション | メモ・1to1 をモーダル | 主にルーティング | **Dashboard 完結のメモ追加** なし | P2 |
 
 **優先度凡例:** P1＝モックの「判断材料」に直結、P2＝導線・拡張・整合。
@@ -156,13 +156,18 @@
 | ID | 内容 |
 |----|------|
 | **P7-1** | **UI 構築** — モック v2 の余白・2 カラム・カードトーンに寄せた調整。リードパネルと Tasks の順序・見出しの整理（案C ならここで決定） |
-| **P7-2** | **データ連携** — `activity` の kind 拡張または仕様の明示的スコープ化、Tasks の「次回例会まであとN日」計算、stats subtext の先月比（定義確定後）、Dashboard からのメモ追加導線 |
+| **P7-2** | **データ連携（実装済・DASHBOARD-P7-2）** — subtext 動的化、例会日数、メモ deep link、activity に `flag_changed` / `memo_introduction`。BO 活動は別途 |
 | **P7-3** | **表示最適化** — ローディング・エンプティ・limit・パフォーマンス、`FIT_AND_GAP_MOCK_VS_UI` §2 の更新、（必要なら）`DASHBOARD_REQUIREMENTS.md` の INDEX 整合または復活 |
 
 ### P7-1 実装メモ（コード）
 
 - **実施:** `DASHBOARD-P7-1` — `www/resources/js/admin/pages/dashboard/*` に panel 分割、**左列:** Tasks → Shortcuts → **Activity**、**右列（340px）:** Leads 補助（sticky・スクロール制限）。モック v2 と異なり Activity を左主列に移したのは仕様（主従整理・Leads を右補助に固定）。
 - **ドキュメント:** `docs/process/phases/PHASE_DASHBOARD_P7_1_UI_*.md`
+
+### P7-2 実装メモ（コード）
+
+- **実施:** `DASHBOARD-P7-2` — `DashboardService` で stats subtexts・例会 meta・Tasks href・activity を拡張。UI は `dashboardConstants.js`・`DashboardActivityPanel` のキャプション程度。
+- **ドキュメント:** `docs/process/phases/PHASE_DASHBOARD_P7_2_DATA_ACTIONS_*.md`
 
 ---
 

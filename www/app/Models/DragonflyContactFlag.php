@@ -10,6 +10,7 @@ class DragonflyContactFlag extends Model
     protected $table = 'dragonfly_contact_flags';
 
     protected $fillable = [
+        'workspace_id',
         'owner_member_id',
         'target_member_id',
         'interested',

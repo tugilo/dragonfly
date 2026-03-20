@@ -10,12 +10,19 @@ export const STATS_DEFAULT = {
 
 export const TASKS_FALLBACK = [
     { id: 's1', kind: 'stale_follow', title: '伊藤 勇樹', meta: '55日間未接触 — 1to1を検討', action: { label: '1to1予定', href: '/one-to-ones/create', disabled: false } },
-    { id: 's2', kind: 'stale_follow', title: '水野 花菜', meta: '66日間未接触 — フォローアップ要', action: { label: 'メモ追加', href: null, disabled: true } },
+    { id: 's2', kind: 'stale_follow', title: '水野 花菜', meta: '66日間未接触 — フォローアップ要', action: { label: 'メモ追加', href: '/members/2/show', disabled: false } },
     { id: 'o1', kind: 'one_to_one_planned', title: '田中 誠一 との1to1', meta: '本日 12:00 — CRM導入フォロー', badge: '予定', action: { label: '予定', href: null, disabled: true } },
     { id: 'm1', kind: 'meeting_memo_pending', title: '例会 #248 メモ未整理', meta: '次回例会まであと5日', action: { label: 'Meetingsへ', href: '/meetings', disabled: false } },
 ];
 
-export const ACTIVITY_ICONS = { memo_added: '✏️', one_to_one_created: '📅', one_to_one_completed: '🤝', flag_changed: '⭐', bo_assigned: '📋' };
+export const ACTIVITY_ICONS = {
+    memo_added: '✏️',
+    memo_introduction: '🎯',
+    one_to_one_created: '📅',
+    one_to_one_completed: '🤝',
+    flag_changed: '⭐',
+    bo_assigned: '📋',
+};
 
 export const ACTIVITY_FALLBACK = [
     { id: 'a1', kind: 'memo_added', title: '佐藤 美咲 にメモ追加', meta: 'セミナー案件・1to1メモ — 2分前' },
