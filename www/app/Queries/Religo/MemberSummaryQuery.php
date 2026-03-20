@@ -2,12 +2,18 @@
 
 namespace App\Queries\Religo;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
  * Religo メンバー summary-lite バッチ取得用クエリ.
- * SSOT: docs/SSOT/DATA_MODEL.md §5. N+1 を避け一覧用に複数 target を一括取得する.
+ * SSOT: docs/SSOT/DATA_MODEL.md §5.1（単一チャプター運用時の workspace スコープ）.
+ * N+1 を避け一覧用に複数 target を一括取得する.
+ *
+ * `workspaceId` 非 null のとき、`contact_memos` / `one_to_ones` / `dragonfly_contact_flags` には
+ * `(workspace_id = :id OR workspace_id IS NULL)` を適用する（legacy 行を現在チャプターに含める）。
+ * `workspaceId` が null のときは workspace 列で絞らない（Dashboard stale 等）。
  */
 final class MemberSummaryQuery
 {
@@ -59,6 +65,19 @@ final class MemberSummaryQuery
     }
 
     /**
+     * 単一チャプター運用: workspace 指定時は「= :id OR NULL」で legacy 行を含める（DATA_MODEL §5.1）.
+     */
+    private function applyWorkspaceScopeForSummary(Builder $q, string $table, bool $useWorkspace, ?int $workspaceId): void
+    {
+        if (! $useWorkspace || $workspaceId === null || ! Schema::hasColumn($table, 'workspace_id')) {
+            return;
+        }
+        $q->where(function ($w) use ($workspaceId) {
+            $w->whereNull('workspace_id')->orWhere('workspace_id', $workspaceId);
+        });
+    }
+
+    /**
      * @return array<int, int>
      */
     private function batchSameRoomCount(int $ownerMemberId, array $targetMemberIds): array
@@ -91,9 +110,7 @@ final class MemberSummaryQuery
             ->where('owner_member_id', $ownerMemberId)
             ->whereIn('target_member_id', $targetMemberIds)
             ->where('status', 'completed');
-        if ($useWorkspace && $workspaceId !== null && Schema::hasColumn('one_to_ones', 'workspace_id')) {
-            $q->where('workspace_id', $workspaceId);
-        }
+        $this->applyWorkspaceScopeForSummary($q, 'one_to_ones', $useWorkspace, $workspaceId);
         $rows = $q->selectRaw('target_member_id, COUNT(*) AS cnt')->groupBy('target_member_id')->get();
         $out = array_fill_keys($targetMemberIds, 0);
         foreach ($rows as $r) {
@@ -110,9 +127,7 @@ final class MemberSummaryQuery
         $sub = DB::table('contact_memos')
             ->where('owner_member_id', $ownerMemberId)
             ->whereIn('target_member_id', $targetMemberIds);
-        if ($useWorkspace && $workspaceId !== null && Schema::hasColumn('contact_memos', 'workspace_id')) {
-            $sub->where('workspace_id', $workspaceId);
-        }
+        $this->applyWorkspaceScopeForSummary($sub, 'contact_memos', $useWorkspace, $workspaceId);
         $sub->orderByDesc('created_at');
         $rows = (clone $sub)->select('id', 'target_member_id', 'memo_type', 'created_at', 'body')
             ->orderByDesc('created_at')
@@ -169,9 +184,7 @@ final class MemberSummaryQuery
             ->where('owner_member_id', $ownerMemberId)
             ->whereIn('target_member_id', $targetMemberIds)
             ->whereNotNull('created_at');
-        if ($useWorkspace && $workspaceId !== null && Schema::hasColumn('contact_memos', 'workspace_id')) {
-            $memos->where('workspace_id', $workspaceId);
-        }
+        $this->applyWorkspaceScopeForSummary($memos, 'contact_memos', $useWorkspace, $workspaceId);
         foreach ($memos->select('target_member_id', 'created_at')->get() as $r) {
             $tid = (int) $r->target_member_id;
             if (isset($candidates[$tid])) {
@@ -183,9 +196,7 @@ final class MemberSummaryQuery
             ->where('owner_member_id', $ownerMemberId)
             ->whereIn('target_member_id', $targetMemberIds)
             ->where('status', '!=', 'canceled');
-        if ($useWorkspace && $workspaceId !== null && Schema::hasColumn('one_to_ones', 'workspace_id')) {
-            $o2o->where('workspace_id', $workspaceId);
-        }
+        $this->applyWorkspaceScopeForSummary($o2o, 'one_to_ones', $useWorkspace, $workspaceId);
         foreach ($o2o->select('target_member_id', 'started_at', 'scheduled_at')->get() as $r) {
             $tid = (int) $r->target_member_id;
             if (isset($candidates[$tid])) {
@@ -221,9 +232,7 @@ final class MemberSummaryQuery
         $q = DB::table('dragonfly_contact_flags')
             ->where('owner_member_id', $ownerMemberId)
             ->whereIn('target_member_id', $targetMemberIds);
-        if ($useWorkspace && $workspaceId !== null && Schema::hasColumn('dragonfly_contact_flags', 'workspace_id')) {
-            $q->where('workspace_id', $workspaceId);
-        }
+        $this->applyWorkspaceScopeForSummary($q, 'dragonfly_contact_flags', $useWorkspace, $workspaceId);
         $rows = $q->select('target_member_id', 'interested', 'want_1on1')->get();
         $out = [];
         foreach ($targetMemberIds as $tid) {

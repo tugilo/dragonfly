@@ -40,7 +40,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 | 論点 | 内容 |
 |------|------|
 | **peer の境界** | `members` に **workspace_id が無い**（DATA_MODEL は将来拡張）。チャプター内メンバーだけに peer を絞れない。 |
-| **Query の実態** | 第 3 引数に `workspaceId` を渡すと `contact_memos` / `one_to_ones` / `dragonfly_contact_flags` は **`workspace_id = X` のみ**を採用し、**`workspace_id IS NULL` の行は last_contact に載らない**（厳密一致）。DATA_MODEL が単一ワークスペースで許容する **NULL 行の扱い**と **不一致**になり、未接触が**水増し**しうる。 |
+| **Query の実態（更新）** | **MEMBER-SUMMARY-WORKSPACE-NULL-P1** 以降、第 3 引数に `workspaceId` を渡すと上記 3 テーブルは **`(workspace_id = X OR workspace_id IS NULL)`**（DATA_MODEL §5.1）。**Dashboard stale は引き続き第 3 引数 `null`** のため、この行は **Members 一覧 `summary_lite`（`workspace_id` クエリあり）の整合**向け。**当時**の厳密一致は撤廃済み。 |
 | **last_contact の混線** | **同席由来**の日付は **引き続き全会議対象**なのに、memos/o2o/flags だけ workspace 絞り → **「チャプター内の未接触」と説明しにくい**中間状態になる。 |
 | **API** | Dashboard は **フロントから `workspace_id` クエリを増やさない**方針のまま。所属は `/api/users/me`・ヘッダ表示に利用。 |
 
@@ -48,7 +48,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 
 **将来（別 Phase）の再検討条件（すべて満たすことを推奨）:**
 
-1. `MemberSummaryQuery` の workspace 条件が **DATA_MODEL の NULL 許容**（解決済み workspace と **`workspace_id IS NULL`** の OR）に更新されている。  
+1. ~~`MemberSummaryQuery` の workspace 条件が **DATA_MODEL の NULL 許容**（解決済み workspace と **`workspace_id IS NULL`** の OR）に更新されている。~~ **実施済（MEMBER-SUMMARY-WORKSPACE-NULL-P1）。**  
 2. peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id` または正式な所属テーブル）。  
 3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて第 3 引数に渡しても **KPI・Tasks・Members 一覧 summary** と矛盾しないことが SSOT で宣言できる。
 
