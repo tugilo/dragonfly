@@ -30,8 +30,8 @@
 
 ## 5. テスト結果
 
-- **php artisan test（feature）:** **318 passed**（1282 assertions）  
-- **npm run build:** 成功
+- **php artisan test（merge 後・develop）:** **318 passed**（1282 assertions）。`docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`  
+- **npm run build:** 成功（同上 `exec node npm run build`）
 
 ## 6. 未解決事項
 
@@ -48,8 +48,15 @@
 | 項目 | 値 |
 |------|-----|
 | merge method | `git merge --no-ff feature/phase-dashboard-tasks-alignment-p2` |
+| target branch | `develop` |
 | merged branch | `feature/phase-dashboard-tasks-alignment-p2` |
-| merge commit id | *（要記載）* |
-| feature last commit id | *（要記載）* |
-| test result | *（要記載）* |
-| notes | meeting memo = memo_type meeting + meeting_id + body。対象=直近開催済み。owner 突合なし。whereDate。workspace Tasks 未使用。 |
+| merge commit id | `3d9134f6f61834ec5a980834a140bf639407b5cc` |
+| feature last commit id | `f2ea2034ae6bb4af2f8cd8d6bd6062f4990ea32c` |
+| merge 競合 | なし |
+| test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
+| test result | **318 passed**（1282 assertions） |
+| build | `exec node npm run build` — success |
+| changed files | `docs/INDEX.md`, `docs/SSOT/DASHBOARD_DATA_SSOT.md`, `docs/SSOT/DASHBOARD_FIT_AND_GAP.md`, `docs/SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md`, `docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md`, `docs/dragonfly_progress.md`, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_PLAN.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_REPORT.md`, `docs/process/phases/PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_WORKLOG.md`, `www/app/Services/Religo/DashboardService.php`, `www/resources/js/admin/pages/dashboard/dashboardConstants.js`, `www/tests/Feature/Religo/DashboardApiTest.php` |
+| notes | **記録済み:** `contact_memos` meeting + meeting_id + 非空 body（会議単位・has_memo 同型）。**対象例会:** `whereDate(held_on, <= today)` で直近 1 件。**owner:** 突合に不使用。**workspace:** Tasks 未使用維持。 |
+
+**運用上の注記:** 本 §8 の追記は merge 後に `docs: add merge evidence for dashboard tasks alignment p2` コミットで `develop` に積む。

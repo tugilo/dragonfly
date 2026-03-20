@@ -29,4 +29,4 @@
 
 ### merge 競合
 
-- **（merge 後に追記）**
+- **なし。** merge commit `3d9134f6f61834ec5a980834a140bf639407b5cc`。
