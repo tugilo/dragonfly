@@ -89,6 +89,7 @@
 | WORKSPACE-SINGLE-CHAPTER-ASSUMPTION | BNI 前提の 1 user=1 workspace・所属 `default_workspace_id`・多対多スコープ外の SSOT 固定（doc + docblock） | docs | completed | develop | 2026-03-20 |
 | DASHBOARD-TASK-SOURCE-TRACE | Dashboard Tasks の UI→API→Service→DB トレース（`DASHBOARD_TASK_SOURCE_ANALYSIS.md`） | docs | completed | develop | 2026-03-20 |
 | DASHBOARD-TASKS-ALIGNMENT-P1 | Dashboard 役割整理 + Tasks 再定義 + SSOT/実装整合 + develop merge / Evidence | implement | completed | feature/phase-dashboard-tasks-alignment-p1 | 2026-03-20 |
+| DASHBOARD-TASKS-ALIGNMENT-P2 | meeting_follow_up 精度改善（contact_memos 突合・直近開催済み）+ merge / Evidence | implement | in_progress | feature/phase-dashboard-tasks-alignment-p2 | 2026-03-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

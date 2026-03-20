@@ -214,7 +214,8 @@ class DashboardApiTest extends TestCase
         $this->assertFalse($second['action']['disabled']);
     }
 
-    public function test_tasks_meeting_row_shows_dynamic_days_until_next_meeting(): void
+    /** P2: 開催済み例会が無い（未来のみ）→ meeting_follow_up は出さない */
+    public function test_tasks_meeting_follow_up_absent_when_only_future_meetings(): void
     {
         $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
         Meeting::create([
@@ -225,14 +226,14 @@ class DashboardApiTest extends TestCase
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
-        $this->assertNotNull($meetingTask);
-        $this->assertStringContainsString('あと3日', $meetingTask['meta']);
+        $this->assertNull($meetingTask);
     }
 
-    public function test_tasks_meeting_row_when_only_past_meeting_shows_no_next_copy(): void
+    /** P2: 直近開催済みがあり例会メモ無し→ task 表示 */
+    public function test_tasks_meeting_follow_up_when_last_held_has_no_meeting_memo(): void
     {
         $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
-        Meeting::create([
+        $m = Meeting::create([
             'number' => 50,
             'held_on' => '2026-03-01',
             'name' => 'Past',
@@ -241,21 +242,116 @@ class DashboardApiTest extends TestCase
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
-        $this->assertStringContainsString('次回例会は未登録', $meetingTask['meta']);
+        $this->assertSame((string) $m->number, $meetingTask['meeting_number']);
+        $this->assertStringContainsString('未記録', $meetingTask['meta']);
+        $this->assertStringContainsString('3/1', $meetingTask['meta']);
     }
 
-    public function test_tasks_meeting_row_shows_today_when_held_same_calendar_day(): void
+    /** P2: 開催日が本日・メモ無し（held_on は travelTo 後の now() と同一暦日に揃える） */
+    public function test_tasks_meeting_follow_up_meta_today_when_held_today_without_memo(): void
     {
         $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
         Meeting::create([
             'number' => 901,
-            'held_on' => '2026-03-20',
+            'held_on' => now()->toDateString(),
             'name' => 'This week',
         ]);
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
-        $this->assertSame('本日開催', $meetingTask['meta']);
+        $this->assertNotNull($meetingTask);
+        $this->assertStringContainsString('本日', $meetingTask['meta']);
+        $this->assertStringContainsString('未記録', $meetingTask['meta']);
+    }
+
+    /** P2: 例会メモあり→ task なし（owner 行は見ない・会議単位で Meeting 一覧 has_memo と整合） */
+    public function test_tasks_meeting_follow_up_hidden_when_meeting_memo_exists(): void
+    {
+        $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'MemoPeer',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $m = Meeting::create([
+            'number' => 51,
+            'held_on' => '2026-03-01',
+            'name' => 'PastWithMemo',
+        ]);
+        ContactMemo::create([
+            'owner_member_id' => $targetId,
+            'target_member_id' => $this->ownerId,
+            'meeting_id' => $m->id,
+            'memo_type' => 'meeting',
+            'body' => '例会の記録あり',
+        ]);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $this->assertNull(collect($res->json())->firstWhere('kind', 'meeting_follow_up'));
+    }
+
+    /** P2: 紹介メモだけでは「記録済み」にしない */
+    public function test_tasks_meeting_follow_up_still_shows_when_only_introduction_memo_on_meeting(): void
+    {
+        $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'IntroPeer',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $m = Meeting::create([
+            'number' => 52,
+            'held_on' => '2026-03-02',
+            'name' => 'PastIntroOnly',
+        ]);
+        ContactMemo::create([
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $targetId,
+            'meeting_id' => $m->id,
+            'memo_type' => 'introduction',
+            'body' => '紹介だけ',
+        ]);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
+        $this->assertNotNull($meetingTask);
+        $this->assertSame((string) $m->number, $meetingTask['meeting_number']);
+    }
+
+    /** P2: 別例会のメモは「直近」判定に影響しない（直近にメモが無ければ出す） */
+    public function test_tasks_meeting_follow_up_uses_last_held_only_for_memo_check(): void
+    {
+        $this->travelTo(Carbon::parse('2026-03-20 10:00:00', config('app.timezone')));
+        $older = Meeting::create([
+            'number' => 60,
+            'held_on' => '2026-02-01',
+            'name' => 'Older',
+        ]);
+        $latest = Meeting::create([
+            'number' => 61,
+            'held_on' => '2026-03-10',
+            'name' => 'Latest',
+        ]);
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'X',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        ContactMemo::create([
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $targetId,
+            'meeting_id' => $older->id,
+            'memo_type' => 'meeting',
+            'body' => '古い方だけ記録',
+        ]);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
+        $this->assertNotNull($meetingTask);
+        $this->assertSame((string) $latest->number, $meetingTask['meeting_number']);
     }
 
     public function test_activity_includes_bo_assigned_after_breakout_save(): void

@@ -171,24 +171,21 @@ class DashboardService
             ];
         }
 
-        $nextMeeting = Meeting::query()
-            ->where('held_on', '>=', now()->toDateString())
-            ->orderBy('held_on')
+        $lastHeldMeeting = Meeting::query()
+            ->whereDate('held_on', '<=', now())
+            ->orderByDesc('held_on')
+            ->orderByDesc('id')
             ->first();
-        $hasUpcomingMeeting = $nextMeeting !== null;
-        if (! $nextMeeting) {
-            $nextMeeting = Meeting::query()->orderByDesc('held_on')->first();
-        }
-        if ($nextMeeting) {
+        if ($lastHeldMeeting !== null && ! $this->hasMeetingMemoRecordedForMeeting((int) $lastHeldMeeting->id)) {
             $tasks[] = [
-                'id' => 'meeting-follow-up-' . $nextMeeting->id,
+                'id' => 'meeting-follow-up-' . $lastHeldMeeting->id,
                 'kind' => 'meeting_follow_up',
-                'title' => '例会 #' . $nextMeeting->number . '（次回・直近のフォロー）',
+                'title' => '例会 #' . $lastHeldMeeting->number . ' のメモを記録',
                 'person_name' => null,
-                'meeting_number' => (string) $nextMeeting->number,
+                'meeting_number' => (string) $lastHeldMeeting->number,
                 'action' => ['label' => 'Meetingsへ', 'href' => '/meetings', 'disabled' => false],
                 'badge' => null,
-                'meta' => $this->buildMeetingMemoTaskMeta($nextMeeting, $hasUpcomingMeeting),
+                'meta' => $this->buildMeetingFollowUpTaskMeta($lastHeldMeeting),
             ];
         }
 
@@ -319,25 +316,31 @@ class DashboardService
     }
 
     /**
-     * 次回例会タスクの meta。日付は app timezone の暦日で丸める。
+     * 当該例会に「例会メモ」行があるか（Meeting 一覧 has_memo / MeetingMemoController と同型）。
+     * memo_type = meeting かつ meeting_id が一致し、本文が空でない行が 1 件以上ある。
      */
-    private function buildMeetingMemoTaskMeta(Meeting $meeting, bool $hasUpcomingMeeting): string
+    private function hasMeetingMemoRecordedForMeeting(int $meetingId): bool
     {
-        $held = Carbon::parse($meeting->held_on)->startOfDay();
+        return ContactMemo::query()
+            ->where('meeting_id', $meetingId)
+            ->where('memo_type', 'meeting')
+            ->whereNotNull('body')
+            ->where('body', '!=', '')
+            ->exists();
+    }
+
+    /**
+     * meeting_follow_up 行の meta（直近開催済み例会・メモ未記録時のみ表示）。
+     */
+    private function buildMeetingFollowUpTaskMeta(Meeting $lastHeldMeeting): string
+    {
+        $held = Carbon::parse($lastHeldMeeting->held_on)->startOfDay();
         $today = now()->startOfDay();
-        if ($hasUpcomingMeeting) {
-            $days = (int) $today->diffInDays($held, false);
-            if ($days === 0) {
-                return '本日開催';
-            }
-            if ($days > 0) {
-                return '次回例会まであと' . $days . '日';
-            }
+        $dateLabel = $held->equalTo($today)
+            ? '開催日 本日'
+            : '開催日 ' . $held->format('n/j');
 
-            return '終了済み';
-        }
-
-        return '次回例会は未登録（直近 例会#' . $meeting->number . '・終了済み）';
+        return $dateLabel . ' — 例会メモが未記録です（Meetings で入力）';
     }
 
     private function formatFlagActivityMeta(DragonflyContactFlag $f): string
