@@ -104,4 +104,5 @@ Dashboard の **空状態・ローディング**をパネル単位で整理（Sk
 | merge push (UTC) | `2026-03-20`（取り込み直後に `origin/develop` へ push） |
 | test result | `302 passed`（1219 assertions・merge 直後ローカル） |
 | build | `npm run build` 成功 |
+| merge evidence docs commit | `51c44a3452d70e9e2cdf973c642f173b8fc427cb`（`docs: add merge evidence for DASHBOARD P7-3`） |
 | notes | 競合なし。**BO:** `bo_assigned` は未実装（§6）。 |
