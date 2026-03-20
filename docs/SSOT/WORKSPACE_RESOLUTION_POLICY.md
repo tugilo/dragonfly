@@ -70,3 +70,11 @@ Religo では:
 - 本ポリシーは **workspace 切替 UI 全画面**ではなく、**BNI 単一チャプター所属**を説明の軸に固定するもの。
 
 詳細文脈: [USER_ME_AND_ACTOR_RESOLUTION.md](USER_ME_AND_ACTOR_RESOLUTION.md)
+
+---
+
+## MemberSummaryQuery と workspace（MEMBER-SUMMARY-WORKSPACE-NULL-P1）
+
+`GET /api/dragonfly/members` の `with_summary=1` で任意の **`workspace_id` クエリ**を渡したとき、`MemberSummaryQuery::getSummaryLiteBatch` の第 3 引数にその ID が入る。単一チャプター運用の SSOT（[DATA_MODEL.md](DATA_MODEL.md) §5.1）に従い、`contact_memos` / `one_to_ones` / `dragonfly_contact_flags` には **`(workspace_id = :id OR workspace_id IS NULL)`** を適用する（legacy・未 backfill 行を現在所属チャプターに含める）。
+
+**Dashboard** の stale / KPI は **第 3 引数 `null`**（owner 全体）のまま。解決済み workspace（本ポリシーの `/1`〜`/4`）を stale に渡すかは別 Phase。

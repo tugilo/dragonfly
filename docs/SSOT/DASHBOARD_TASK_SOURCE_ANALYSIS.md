@@ -20,9 +20,9 @@
 | 項目 | 内容 |
 |------|------|
 | **決定** | Dashboard の stale（Tasks `stale_follow`・`getStats` の `stale_contacts_count`）は **`getSummaryLiteBatch(..., null)` のまま**。 |
-| **`workspaceId` 非 null のとき Query で起きること** | `batchOneToOneCount` / `batchLastMemo` / `batchLastContactAt`（memos・o2o 部分）/ `batchFlags` が **`workspace_id` 厳密一致**。**`workspace_id IS NULL` の行は集計に入らない**。**同席例会日は引き続きフィルタなし**。 |
-| **案B を見送り理由（要約）** | `members` に workspace が無く peer をチャプター限定できない／NULL 行除外と DATA_MODEL の単一 WS 扱いがずれる／last_contact の説明が混線。詳細は [DASHBOARD_DATA_SSOT §0](DASHBOARD_DATA_SSOT.md)。 |
-| **再検討** | `MemberSummaryQuery` の NULL 許容 OR 化 + peer のチャプター限定が揃った **別 Phase** で `ReligoActorContext::resolveWorkspaceIdForUser` を渡す案をレビュー。 |
+| **`workspaceId` 非 null のとき Query で起きること** | **MEMBER-SUMMARY-WORKSPACE-NULL-P1 以降:** `batchOneToOneCount` / `batchLastMemo` / `batchLastContactAt`（memos・o2o 部分）/ `batchFlags` が **`(workspace_id = :id OR workspace_id IS NULL)`**（DATA_MODEL §5.1）。**同席例会日は引き続きフィルタなし**。Dashboard の stale / KPI は **第 3 引数 `null`** のため従来どおり workspace 列は使わない。 |
+| **案B を見送り理由（要約）** | `members` に workspace が無く peer をチャプター限定できない／（旧）厳密一致と DATA_MODEL の単一 WS 扱いがずれたが **Query は OR 化済み**／last_contact の **同席 vs memos 混線**は stale に workspace を渡すまで残る。詳細は [DASHBOARD_DATA_SSOT §0](DASHBOARD_DATA_SSOT.md)。 |
+| **再検討** | peer のチャプター限定 + `DashboardService` から解決済み workspace を stale に渡す可否を **別 Phase** でレビュー（Query の OR 化は前提を満たした）。 |
 
 ---
 
@@ -186,7 +186,7 @@
 
 ### 案B（現実的）— **meeting 突合は P2 で実施済み**
 
-- **getSummaryLiteBatch** に **解決済み workspace_id** を渡す案は **未着手**（別 Phase）。
+- **Dashboard** から **getSummaryLiteBatch** に **解決済み workspace_id** を渡す案は **未着手**（別 Phase）。**Members 一覧の summary_lite** は **Query 側で OR NULL 対応済み**（MEMBER-SUMMARY-WORKSPACE-NULL-P1）。
 
 ### 案C（理想）
 
