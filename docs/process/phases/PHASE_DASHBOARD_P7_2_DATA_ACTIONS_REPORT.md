@@ -96,4 +96,5 @@ Dashboard API（`DashboardService`）と軽微な UI 定数で、**KPI 補足文
 | first push develop (merge) | `2026-03-20T02:16:51Z`（UTC・merge push 直前タイムスタンプ） |
 | test result | `302 passed`（1219 assertions・merge 直後ローカル） |
 | build | `npm run build` 成功（merge 直後） |
-| notes | 競合なし。Evidence 本文確定後に `docs` のみコミットして `develop` を再 push |
+| merge evidence docs commit | `ce5dfdba627807e2cb353a295bbc91211acea331`（`docs: add merge evidence for DASHBOARD P7-2`） |
+| notes | 競合なし |
