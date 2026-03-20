@@ -30,9 +30,9 @@ export const RELIGO_DASHBOARD_LEADS_TITLE = '次の 1to1 候補';
 export const RELIGO_DASHBOARD_LEADS_HELPER =
     '状態は「実施済み（completed）」のみを集計しています。並び: 未実施 → 要対応 → 実施済（詳細は DATA_MODEL §4.12.1）。';
 
-/** 候補 0 件時（P6: 空状態を明示して運用で迷わないようにする） */
+/** 候補 0 件時（P6 文脈・P7-3 で短文に整理） */
 export const RELIGO_DASHBOARD_LEADS_EMPTY =
-    'いま優先して実施すべき 1 to 1 候補はありません。（実施ベースでの並び上、該当者がいない状態です。詳細は Members 一覧で確認できます。）';
+    '現在、優先して実施すべき 1 to 1 候補はありません。Members 一覧でも状況を確認できます。';
 
 /**
  * Dashboard のリード一覧で表示する最大件数（UI 切替はしない）。

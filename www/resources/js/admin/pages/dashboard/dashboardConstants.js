@@ -1,5 +1,15 @@
 /** Dashboard フォールバック・表示用定数。API 失敗時・P7-2 で subtext 動的化時の差し替えポイント。 */
 
+/** 空状態・エラー（P7-3）。長文にしない。 */
+export const DASHBOARD_MSG = {
+    KPI_NEED_OWNER: 'オーナーを設定すると、未接触件数や今月の活動量（KPI）が表示されます。',
+    KPI_LOAD_ERROR: 'KPI を読み込めませんでした。画面を再読み込みしてください。',
+    TASKS_NEED_OWNER: 'オーナーを設定すると、フォロー対象のタスクがここに表示されます。',
+    TASKS_EMPTY: 'いま表示するタスクはありません。未接触・予定の 1 to 1・例会タスクがあればここに出ます。',
+    ACTIVITY_NEED_OWNER: 'オーナーを設定すると、直近のメモ・1 to 1・つながりの更新が表示されます。',
+    ACTIVITY_EMPTY: '最近の活動はまだありません。メモや 1 to 1 を記録するとここに表示されます。',
+};
+
 export const STATS_DEFAULT = {
     stale_contacts_count: 3,
     monthly_one_to_one_count: 5,

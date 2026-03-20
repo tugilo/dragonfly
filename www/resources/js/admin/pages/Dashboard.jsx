@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Card, CardContent, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Card, CardContent, Container, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import DashboardHeader from './dashboard/DashboardHeader';
 import DashboardKpiGrid from './dashboard/DashboardKpiGrid';
 import DashboardTasksPanel from './dashboard/DashboardTasksPanel';
 import DashboardShortcutsPanel from './dashboard/DashboardShortcutsPanel';
 import DashboardActivityPanel from './dashboard/DashboardActivityPanel';
 import DashboardLeadsPanel from './dashboard/DashboardLeadsPanel';
-import { STATS_DEFAULT, TASKS_FALLBACK, ACTIVITY_FALLBACK } from './dashboard/dashboardConstants';
 
 const API_BASE = '';
 
@@ -28,17 +27,18 @@ async function fetchJson(url, options = {}) {
 
 /**
  * Religo Dashboard. SSOT: docs/SSOT/DASHBOARD_FIT_AND_GAP.md, DASHBOARD_DATA_SSOT.md.
- * E-4: owner を user 設定で保存し、未設定時は設定UI・設定済みは Header 内 Owner セレクタ。
+ * E-4: owner を user 設定で保存。P7-3: 空状態・ローディングをパネル単位で整理（フェールバック凡例データは出さない）。
  */
 export default function Dashboard() {
     const [ownerMemberId, setOwnerMemberId] = useState(null);
     const [needOwnerSetup, setNeedOwnerSetup] = useState(false);
     const [members, setMembers] = useState([]);
-    const [stats, setStats] = useState(STATS_DEFAULT);
-    const [tasks, setTasks] = useState(TASKS_FALLBACK);
-    const [activity, setActivity] = useState(ACTIVITY_FALLBACK);
+    const [stats, setStats] = useState(null);
+    const [tasks, setTasks] = useState([]);
+    const [activity, setActivity] = useState([]);
     const [oneToOneLeads, setOneToOneLeads] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [bootLoading, setBootLoading] = useState(true);
+    const [panelsRefreshing, setPanelsRefreshing] = useState(false);
     const [savingOwner, setSavingOwner] = useState(false);
     const [ownerError, setOwnerError] = useState('');
 
@@ -72,10 +72,18 @@ export default function Dashboard() {
                 dashboardRequest('tasks').catch(() => null),
                 dashboardRequest('activity', { limit: 6 }).catch(() => null),
             ]);
-            if (s && typeof s.stale_contacts_count === 'number') setStats(s);
-            if (Array.isArray(t) && t.length > 0) setTasks(t);
-            if (Array.isArray(a) && a.length > 0) setActivity(a);
-        } catch (_) {}
+            if (s && typeof s.stale_contacts_count === 'number') {
+                setStats(s);
+            } else {
+                setStats(null);
+            }
+            setTasks(Array.isArray(t) ? t : []);
+            setActivity(Array.isArray(a) ? a : []);
+        } catch {
+            setStats(null);
+            setTasks([]);
+            setActivity([]);
+        }
     }, []);
 
     const loadOneToOneLeads = useCallback(async (ownerId) => {
@@ -84,9 +92,7 @@ export default function Dashboard() {
             return;
         }
         try {
-            const rows = await fetchJson(
-                `/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerId}`
-            );
+            const rows = await fetchJson(`/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerId}`);
             setOneToOneLeads(Array.isArray(rows) ? rows : []);
         } catch {
             setOneToOneLeads([]);
@@ -95,7 +101,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         let cancelled = false;
-        setLoading(true);
+        setBootLoading(true);
         setOwnerError('');
         (async () => {
             const id = await loadMe();
@@ -105,8 +111,11 @@ export default function Dashboard() {
             } else {
                 await loadMembers();
                 setOneToOneLeads([]);
+                setStats(null);
+                setTasks([]);
+                setActivity([]);
             }
-            if (!cancelled) setLoading(false);
+            if (!cancelled) setBootLoading(false);
         })();
         return () => { cancelled = true; };
     }, [loadMe, loadMembers, loadDashboard, loadOneToOneLeads]);
@@ -127,8 +136,13 @@ export default function Dashboard() {
             }
             setOwnerMemberId(data.owner_member_id);
             setNeedOwnerSetup(false);
-            await loadDashboard();
-            await loadOneToOneLeads(data.owner_member_id);
+            setPanelsRefreshing(true);
+            try {
+                await loadDashboard();
+                await loadOneToOneLeads(data.owner_member_id);
+            } finally {
+                setPanelsRefreshing(false);
+            }
         } catch {
             setOwnerError('保存に失敗しました');
         } finally {
@@ -141,9 +155,9 @@ export default function Dashboard() {
         if (Number.isInteger(id)) saveOwner(id);
     };
 
-    const tasksToShow = tasks.length > 0 ? tasks : TASKS_FALLBACK;
-    const activityToShow = activity.length > 0 ? activity : ACTIVITY_FALLBACK;
-    const leadsReady = ownerMemberId != null && !needOwnerSetup;
+    const panelsBusy = bootLoading || panelsRefreshing;
+    const ownerConfigured = ownerMemberId != null && !needOwnerSetup;
+    const leadsReady = ownerConfigured;
 
     return (
         <Container maxWidth="lg" sx={{ py: 0 }}>
@@ -181,11 +195,7 @@ export default function Dashboard() {
                 </Card>
             )}
 
-            {loading && (
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>読込中…</Typography>
-            )}
-
-            <DashboardKpiGrid stats={stats} />
+            <DashboardKpiGrid stats={stats} loading={panelsBusy} ownerConfigured={ownerConfigured} />
 
             <Box
                 sx={{
@@ -196,11 +206,15 @@ export default function Dashboard() {
                 }}
             >
                 <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                    <DashboardTasksPanel tasks={tasksToShow} />
+                    <DashboardTasksPanel tasks={tasks} loading={panelsBusy} ownerConfigured={ownerConfigured} />
                     <DashboardShortcutsPanel />
-                    <DashboardActivityPanel items={activityToShow} />
+                    <DashboardActivityPanel items={activity} loading={panelsBusy} ownerConfigured={ownerConfigured} />
                 </Box>
-                <DashboardLeadsPanel hasOwner={leadsReady} oneToOneLeads={oneToOneLeads} />
+                <DashboardLeadsPanel
+                    hasOwner={leadsReady}
+                    oneToOneLeads={oneToOneLeads}
+                    loading={panelsBusy && leadsReady}
+                />
             </Box>
         </Container>
     );
