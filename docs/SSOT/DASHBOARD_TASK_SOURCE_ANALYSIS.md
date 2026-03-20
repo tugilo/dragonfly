@@ -13,7 +13,16 @@
 | データ取得元 | **実データ**（DB 参照）。フロントにハードコードされた仮タスクは **ない**。 |
 | API | **`GET /api/dashboard/tasks`**（JSON 配列） |
 | バックエンド | `DashboardController::tasks` → `DashboardService::getTasks` |
-| workspace | **Tasks 生成では `workspace_id` は渡さない**（`MemberSummaryQuery` に `null`）。owner のみで全ピア対象。 |
+| workspace | **`getSummaryLiteBatch` 第 3 引数は `null`**（`stale_follow`・**KPI の stale_contacts_count** も同様）。owner 以外の **全メンバーを peer**。 |
+
+### 1.1 stale / KPI と workspace（DASHBOARD-STALE-WORKSPACE-SCOPE-P1）
+
+| 項目 | 内容 |
+|------|------|
+| **決定** | Dashboard の stale（Tasks `stale_follow`・`getStats` の `stale_contacts_count`）は **`getSummaryLiteBatch(..., null)` のまま**。 |
+| **`workspaceId` 非 null のとき Query で起きること** | `batchOneToOneCount` / `batchLastMemo` / `batchLastContactAt`（memos・o2o 部分）/ `batchFlags` が **`workspace_id` 厳密一致**。**`workspace_id IS NULL` の行は集計に入らない**。**同席例会日は引き続きフィルタなし**。 |
+| **案B を見送り理由（要約）** | `members` に workspace が無く peer をチャプター限定できない／NULL 行除外と DATA_MODEL の単一 WS 扱いがずれる／last_contact の説明が混線。詳細は [DASHBOARD_DATA_SSOT §0](DASHBOARD_DATA_SSOT.md)。 |
+| **再検討** | `MemberSummaryQuery` の NULL 許容 OR 化 + peer のチャプター限定が揃った **別 Phase** で `ReligoActorContext::resolveWorkspaceIdForUser` を渡す案をレビュー。 |
 
 ---
 

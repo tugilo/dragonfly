@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-SCOPE-P1:** stale は **`getSummaryLiteBatch(..., null)` 維持**（案A）。案B 見送り理由・再検討条件を `DASHBOARD_DATA_SSOT` §0・分析・Fit&Gap に記載。実装差分なし。**取り込み・Evidence:** REPORT §9。 |
 | 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P2（develop 取り込み）:** merge `3d9134f6f61834ec5a980834a140bf639407b5cc`。`meeting_follow_up` = 直近開催済み例会に **例会メモ（has_memo 同型）** が無いときのみ。`whereDate(held_on)`。テスト **318**。Evidence: `PHASE_DASHBOARD_TASKS_ALIGNMENT_P2_REPORT` §8。 |
 | 2026-03-20 | **DASHBOARD-TASKS-ALIGNMENT-P1（develop 取り込み）:** merge `fe349925afe774332d661497dd3a20462c7820b1`（`feature/phase-dashboard-tasks-alignment-p1`）。Dashboard 役割 §0、Tasks「優先アクション」、kind `meeting_follow_up`、stale deep link SSOT 統一、1to1 予定 meta 修正、ヘッダサブコピー。`php artisan test` **315**・`npm run build` 通過。Merge Evidence: `PHASE_DASHBOARD_TASKS_ALIGNMENT_P1_REPORT.md` §9。 |
 | 2026-03-20 | **DASHBOARD-TASK-SOURCE-TRACE:** `docs/SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md` を追加。Tasks は `GET /api/dashboard/tasks` → `DashboardService::getTasks` → DB（`MemberSummaryQuery`・`one_to_ones`・`meetings`）。フロント仮データなし。`getSummaryLiteBatch(..., null)` により Tasks は workspace 非スコープ。`DASHBOARD_DATA_SSOT` にトレースリンクと disabled 注記。INDEX 更新。 |
