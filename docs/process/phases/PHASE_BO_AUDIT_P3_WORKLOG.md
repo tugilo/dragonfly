@@ -28,4 +28,4 @@
 
 ### merge 時の競合
 
-- （merge 後に追記）
+- **なし**（`develop` に `feature/phase-bo-audit-p3` を `--no-ff` merge）。

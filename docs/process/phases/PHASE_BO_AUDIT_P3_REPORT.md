@@ -61,8 +61,8 @@
 
 | コマンド | 結果 |
 |----------|------|
-| `php artisan test` | （merge 後記載） |
-| `npm run build` | （merge 後記載） |
+| `php artisan test` | **311 passed** |
+| `npm run build` | 成功 |
 
 ---
 
@@ -86,10 +86,10 @@
 | merge method | `git merge --no-ff feature/phase-bo-audit-p3` |
 | merged branch | `feature/phase-bo-audit-p3` |
 | target branch | `develop` |
-| merge commit id |  |
-| feature last commit id |  |
-| pushed at |  |
-| test result |  |
-| notes | users/me と BO actor 一本化、workspace owner 文脈 |
+| merge commit id | `2a66111b6b67518cf0bf12dcf2d94e0997aea1b2` |
+| feature last commit id | `8aa2cc1a749a11a2ddf77bd53385eb9331829357` |
+| pushed at | `2026-03-20T03:30:00Z` |
+| test result | 311 passed |
+| notes | `ReligoActorContext`・users/me に workspace_id・BO audit workspace は owner 文脈優先。 |
 
 | scope / ssot / dod | OK |
