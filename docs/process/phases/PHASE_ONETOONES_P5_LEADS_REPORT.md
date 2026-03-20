@@ -43,7 +43,7 @@ Members 一覧（List/Card）・Member 詳細・1 to 1 作成フォームを **`
 
 | 項目 | 値 |
 |------|-----|
-| merge commit id | _本 merge 直後に `git log -1 --format=%H develop` で追記_ |
+| merge commit id | `8f652b97503f5dc7bf647e80ebbb0d4702e1da56` |
 | source branch | `feature/onetoones-p5-p6-leads-merge` |
 | target branch | `develop` |
 | phase id | ONETOONES-P5（P6 同時完了 を REGISTRY 参照） |
