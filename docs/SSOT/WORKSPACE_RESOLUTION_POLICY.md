@@ -81,4 +81,4 @@ Religo では:
 
 ### Dashboard stale と解決済み workspace（DASHBOARD-STALE-WORKSPACE-P2）
 
-`resolveWorkspaceIdForUser()` は **GET/PATCH `/api/users/me`・BO 監査・Members `summary_lite`** など **所属の説明**に使う。`stale_contacts_count` / `stale_follow` では **未使用** — peer の集合が **チャプター境界で DB 上から限定できない**（`members.workspace_id` 等が無い）うちは、**ユーザー所属 workspace だけ**を `getSummaryLiteBatch` に渡すと **last_contact の説明が割れる**（SSOT: [DASHBOARD_DATA_SSOT.md](DASHBOARD_DATA_SSOT.md) §0）。
+`resolveWorkspaceIdForUser()` は **GET/PATCH `/api/users/me`・BO 監査・Members `summary_lite`** など **所属の説明**に使う。`stale_contacts_count` / `stale_follow` では **未使用** — **`members.workspace_id` は列として存在するが**（[MEMBERS_WORKSPACE_ASSIGNMENT_POLICY.md](MEMBERS_WORKSPACE_ASSIGNMENT_POLICY.md)）、**Dashboard が peer をチャプター境界で絞り込んでいない**うちは、**ユーザー所属 workspace だけ**を `getSummaryLiteBatch` に渡すと **last_contact の説明が割れる**（SSOT: [DASHBOARD_DATA_SSOT.md](DASHBOARD_DATA_SSOT.md) §0）。
