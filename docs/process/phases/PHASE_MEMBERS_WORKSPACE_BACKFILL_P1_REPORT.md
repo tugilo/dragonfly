@@ -48,8 +48,9 @@
 |------|-----|
 | merge method | `git merge --no-ff` |
 | merged branch | `feature/phase-members-workspace-backfill-p1` |
-| merge commit id | （記載） |
-| feature last commit id | （記載） |
-| pushed at | （記載） |
-| test result | （記載） |
-| notes | 列追加 + backfill。stale 未変更。 |
+| merge commit id | `e3ecd1ee614f5adc093202d11889bee33369943e` |
+| feature last commit id | `5cecf58530c61593b1d5b5452dc30224f1e7c429` |
+| pushed at | 2026-03-20（Evidence 追記コミット後に `origin/develop` へ push） |
+| test result | **325 passed**（1296 assertions）— merge 後 develop で再実行 |
+| build | `npm run build` 成功 |
+| notes | `members.workspace_id` + `MemberWorkspaceBackfillService` 初期 backfill。Dashboard stale・`stalePeerMemberIds` は **未変更**。 |
