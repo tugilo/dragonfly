@@ -16,6 +16,7 @@ class Member extends Model
         'name',
         'name_kana',
         'category_id',
+        'workspace_id',
         'type',
         'display_no',
         'introducer_member_id',
@@ -25,6 +26,12 @@ class Member extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /** 所属チャプター（BNI 前提では 1 member = 1 workspace）. SSOT: MEMBERS_WORKSPACE_ASSIGNMENT_POLICY.md */
+    public function workspace(): BelongsTo
+    {
+        return $this->belongsTo(Workspace::class, 'workspace_id');
     }
 
     public function memberRoles(): HasMany

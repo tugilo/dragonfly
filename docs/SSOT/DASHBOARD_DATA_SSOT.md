@@ -53,7 +53,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 
 | 論点 | 内容 |
 |------|------|
-| **peer の境界** | `members` に **workspace_id が無い**（DATA_MODEL は将来拡張）。チャプター内メンバーだけに peer を絞れない。 |
+| **peer の境界** | **`members.workspace_id` は列として追加済（MEMBERS-WORKSPACE-BACKFILL-P1）** が、Dashboard の **stale peer はまだ案A（owner 以外全員）**。案B（所属 workspace に一致する members のみ）へ切り替えるには **`DashboardService::stalePeerMemberIds` の変更 + `getSummaryLiteBatch` 第3引数の設計**が別 Phase。 |
 | **Query の実態（更新）** | **MEMBER-SUMMARY-WORKSPACE-NULL-P1** 以降、第 3 引数に `workspaceId` を渡すと上記 3 テーブルは **`(workspace_id = X OR workspace_id IS NULL)`**（DATA_MODEL §5.1）。**Dashboard stale は引き続き第 3 引数 `null`** のため、この行は **Members 一覧 `summary_lite`（`workspace_id` クエリあり）の整合**向け。**当時**の厳密一致は撤廃済み。 |
 | **last_contact の混線** | **同席由来**の日付は **引き続き全会議対象**なのに、memos/o2o/flags だけ workspace 絞り → **「チャプター内の未接触」と説明しにくい**中間状態になる。 |
 | **API** | Dashboard は **フロントから `workspace_id` クエリを増やさない**方針のまま。所属は `/api/users/me`・ヘッダ表示に利用。 |
@@ -63,8 +63,8 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 **将来（別 Phase）の再検討条件（すべて満たすことを推奨）:**
 
 1. ~~`MemberSummaryQuery` の workspace 条件が **DATA_MODEL の NULL 許容**（解決済み workspace と **`workspace_id IS NULL`** の OR）に更新されている。~~ **実施済（MEMBER-SUMMARY-WORKSPACE-NULL-P1）。**  
-2. peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id` または正式な所属テーブル）。**DASHBOARD-STALE-WORKSPACE-P2:** 現状 **未達**のため stale は **案A のまま**。  
-3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて stale の `getSummaryLiteBatch` 第 3 引数に渡しても、**peer 集合・同席スコープ・説明責任**が SSOT で一貫すると宣言できること（P2 では **未実施＝見送り**）。
+2. ~~peer 候補を **チャプター相当に限定**できる（例: `members.workspace_id`）~~ **列は追加済（MEMBERS-WORKSPACE-BACKFILL-P1）・backfill 済みまたは null 許容**。**Dashboard で peer を `members.workspace_id = 解決済み` に絞る実装**は **未着手**のため stale は **案A のまま**。  
+3. `DashboardService` が **`ReligoActorContext::resolveWorkspaceIdForUser(actingUser())`** を用いて stale の `getSummaryLiteBatch` 第 3 引数に渡しても、**peer 集合・同席スコープ・説明責任**が SSOT で一貫すると宣言できること（**次 Phase で peer 絞り込みとセットで検討**）。
 
 ---
 
