@@ -40,6 +40,9 @@ export const dragonflyDataProvider = {
             if (f.target_member_id != null && String(f.target_member_id).trim() !== '') {
                 q.set('target_member_id', String(f.target_member_id).trim());
             }
+            if (f.exclude_canceled !== undefined && f.exclude_canceled !== null && f.exclude_canceled !== '') {
+                q.set('exclude_canceled', f.exclude_canceled ? '1' : '0');
+            }
             const qText = f.q != null ? String(f.q).trim() : '';
             if (qText !== '') q.set('q', qText);
             const url = `/api/one-to-ones${q.toString() ? `?${q.toString()}` : ''}`;

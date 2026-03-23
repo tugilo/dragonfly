@@ -212,7 +212,12 @@ export function OneToOnesEdit() {
                     validate={[required()]}
                 />
                 <OwnerScopedTargetSelect />
-                <SelectInput source="status" choices={STATUS_CHOICES} label="状態" />
+                <SelectInput
+                    source="status"
+                    choices={STATUS_CHOICES}
+                    label="状態"
+                    helperText="キャンセルは「予定が無効になった事実」を残す業務状態です。レコードの削除は行いません（製品方針）。"
+                />
                 <DateTimeInput source="scheduled_at" label="予定日時" />
                 <DateTimeInput source="started_at" label="開始日時" />
                 <DateTimeInput source="ended_at" label="終了日時" />

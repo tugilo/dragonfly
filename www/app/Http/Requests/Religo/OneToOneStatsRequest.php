@@ -27,6 +27,8 @@ class OneToOneStatsRequest extends FormRequest
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
             'q' => ['nullable', 'string', 'max:200'],
+            /** 一覧と同一（ONETOONES-DELETE-POLICY-P1） */
+            'exclude_canceled' => ['nullable', 'boolean'],
         ];
     }
 }
