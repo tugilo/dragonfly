@@ -30,14 +30,24 @@ const NOTES_HELPER_EDIT =
  * @param {number} props.durationMinutes
  * @param {(n: number) => void} props.onDurationChange
  * @param {string} [props.statusHelperText] — Edit 用（キャンセル方針など）
+ * @param {boolean} [props.suppressCreateOwnerHint] — create 時の Owner 説明 Typography を出さない（一覧 Quick Create 等）
+ * @param {boolean} [props.ownerInputDisabled] — Owner 欄を無効化（一覧フィルタと固定したいとき）
  */
-export function OneToOneFormFields({ mode, ownerMemberOptions, durationMinutes, onDurationChange, statusHelperText }) {
+export function OneToOneFormFields({
+    mode,
+    ownerMemberOptions,
+    durationMinutes,
+    onDurationChange,
+    statusHelperText,
+    suppressCreateOwnerHint = false,
+    ownerInputDisabled = false,
+}) {
     const { control } = useFormContext();
     const status = useWatch({ control, name: 'status' });
 
     return (
         <>
-            {mode === 'create' && (
+            {mode === 'create' && !suppressCreateOwnerHint && (
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                     Owner（自分）は Dashboard の設定が初期値です。別メンバーで記録する場合のみ変更してください。
                 </Typography>
@@ -46,7 +56,8 @@ export function OneToOneFormFields({ mode, ownerMemberOptions, durationMinutes, 
                 source="owner_member_id"
                 label="Owner（自分）"
                 options={ownerMemberOptions}
-                validate={[required()]}
+                disabled={ownerInputDisabled}
+                validate={ownerInputDisabled ? [] : [required()]}
             />
             <OwnerScopedTargetSelect />
             <TargetMemberSummaryCard />

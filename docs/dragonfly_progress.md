@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-23 | **ONETOONES_QUICK_CREATE_UX_P3（develop 取り込み）:** 一覧 **Quick Create Dialog** を Create/Edit と **`OneToOneFormFields` + `buildOneToOnePayload`** に統一。Owner は一覧フィルタ固定（`ownerInputDisabled`）。SSOT `ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md`・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_QUICK_CREATE_UX_P3_REPORT` §8。 |
 | 2026-03-23 | **ONETOONES_EDIT_UX_P2（develop 取り込み）:** 1 to 1 **Edit を Create UX に揃える**。共有 `OneToOneFormFields`・`buildOneToOnePayload`（`oneToOnesTransform.js`）・相手サマリ・所要時間チップ・`OneToOneMeetingReferenceInput`・completed 時のみ実績日時・`EditContextHeader` 削除。SSOT §8・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_EDIT_UX_P2_REPORT` §8。 |
 | 2026-03-23 | **ONETOONES-DELETE-POLICY-P1（develop 取り込み）:** 1 to 1 **削除不採用**を SSOT 固定・`canceled` 業務定義・`GET /api/one-to-ones` に `exclude_canceled`・一覧既定でキャンセル行を除く・編集 helperText。`php artisan test` 326・`npm run build` OK。PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_DELETE_POLICY_P1_REPORT` §9。 |
 | 2026-03-23 | **1 to 1 Create UX 要件（docs）:** `docs/SSOT/ONETOONES_CREATE_UX_REQUIREMENTS.md` を追加。相手サマリ・予定開始＋所要時間で終了予定・例会の一覧選択。現状 Create の課題・DoD・未決定事項。`docs/INDEX.md` 更新。コード変更なし。 |
