@@ -15,7 +15,7 @@ import {
     useRecordContext,
 } from 'react-admin';
 import { Box, Button, CircularProgress, Stack, TextField as MuiTextField, Typography } from '@mui/material';
-import { OwnerScopedTargetSelect } from './OneToOnesFormParts';
+import { MemberSearchAutocompleteInput, OwnerScopedTargetSelect } from './OneToOnesFormParts';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -175,21 +175,12 @@ function EditContextHeader() {
 export function OneToOnesEdit() {
     const notify = useNotify();
     const redirect = useRedirect();
-    const [ownerChoices, setOwnerChoices] = useState([]);
+    const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
 
     useEffect(() => {
         fetchJson('/api/dragonfly/members')
-            .then((arr) =>
-                setOwnerChoices(
-                    Array.isArray(arr)
-                        ? arr.map((m) => ({
-                              id: m.id,
-                              name: `${m.display_no != null ? `#${m.display_no} ` : ''}${m.name}`.trim() || `#${m.id}`,
-                          }))
-                        : []
-                )
-            )
-            .catch(() => setOwnerChoices([]));
+            .then((arr) => setOwnerMemberOptions(Array.isArray(arr) ? arr : []))
+            .catch(() => setOwnerMemberOptions([]));
     }, []);
 
     return (
@@ -205,10 +196,10 @@ export function OneToOnesEdit() {
         >
             <SimpleForm toolbar={<EditToolbar />}>
                 <EditContextHeader />
-                <SelectInput
+                <MemberSearchAutocompleteInput
                     source="owner_member_id"
-                    choices={ownerChoices}
                     label="Owner（自分）"
+                    options={ownerMemberOptions}
                     validate={[required()]}
                 />
                 <OwnerScopedTargetSelect />

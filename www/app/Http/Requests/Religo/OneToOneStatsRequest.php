@@ -20,7 +20,8 @@ class OneToOneStatsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_member_id' => ['required', 'integer', 'exists:members,id'],
+            /** GET /api/one-to-ones と同様（未指定なら全 Owner の行を集計） */
+            'owner_member_id' => ['nullable', 'integer', 'exists:members,id'],
             'workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
             'target_member_id' => ['nullable', 'integer', 'exists:members,id'],
             'status' => ['nullable', 'string', Rule::in(['planned', 'completed', 'canceled'])],

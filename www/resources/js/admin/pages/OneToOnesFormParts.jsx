@@ -1,19 +1,92 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
-    SelectInput,
     FormDataConsumer,
     required,
     DateTimeInput,
     ReferenceInput,
     AutocompleteInput,
+    useInput,
 } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box } from '@mui/material';
 
 async function fetchJson(url) {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
+}
+
+/** Connections（DragonFlyBoard）のメンバー検索と同じフィルタ */
+export function memberFilterMatches(member, inputValue) {
+    const q = String(inputValue ?? '').trim().toLowerCase();
+    if (!q) {
+        return true;
+    }
+    const name = `${member.display_no ?? ''} ${member.name ?? ''}`.trim().toLowerCase();
+    const cat =
+        (member.category?.group_name || '') +
+        (member.category?.name || '') +
+        (member.current_role || '');
+    return name.includes(q) || cat.toLowerCase().includes(q);
+}
+
+export function memberOptionLabel(m) {
+    if (!m) {
+        return '';
+    }
+    return `${m.display_no ?? ''} ${m.name ?? ''}`.trim() || `#${m.id}`;
+}
+
+/**
+ * Connections BO と同様の検索付きメンバー選択（MUI Autocomplete）。
+ * options は GET /api/dragonfly/members の要素（id, display_no, name, category, current_role）を想定。
+ */
+export function MemberSearchAutocompleteInput(props) {
+    const {
+        options = [],
+        label,
+        disabled,
+        helperText,
+        placeholder = 'メンバーを検索',
+        loading = false,
+        fullWidth = true,
+        sx,
+    } = props;
+    const { field, fieldState, isRequired } = useInput(props);
+    const selected = useMemo(
+        () => options.find((o) => String(o.id) === String(field.value)) ?? null,
+        [options, field.value]
+    );
+
+    return (
+        <Autocomplete
+            size="small"
+            fullWidth={fullWidth}
+            disabled={disabled}
+            loading={loading}
+            options={options}
+            getOptionLabel={(o) => memberOptionLabel(o)}
+            isOptionEqualToValue={(a, b) => String(a.id) === String(b.id)}
+            value={selected}
+            onChange={(_, v) => field.onChange(v?.id ?? null)}
+            onBlur={field.onBlur}
+            filterOptions={(opts, state) => opts.filter((m) => memberFilterMatches(m, state.inputValue))}
+            noOptionsText="該当なし"
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label={label}
+                    required={isRequired}
+                    error={!!fieldState.error}
+                    helperText={helperText ?? fieldState.error?.message}
+                    placeholder={placeholder}
+                    sx={sx}
+                />
+            )}
+        />
+    );
 }
 
 export function addMinutesToEndIso(scheduledAt, minutes) {
@@ -33,45 +106,71 @@ export function addMinutesToEndIso(scheduledAt, minutes) {
  * Owner（自分）に連動した相手メンバー一覧（GET /api/dragonfly/members?owner_member_id=）.
  */
 function ScopedTargetSelect({ ownerMemberId }) {
-    const [choices, setChoices] = useState([]);
+    const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const { setValue, watch, getValues } = useFormContext();
+    const targetId = watch('target_member_id');
 
     useEffect(() => {
         if (ownerMemberId == null || ownerMemberId === '') {
-            setChoices([]);
+            const tid = getValues('target_member_id');
+            if (tid != null && tid !== '') {
+                setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
+            }
+        }
+    }, [ownerMemberId, setValue, getValues]);
+
+    useEffect(() => {
+        if (ownerMemberId == null || ownerMemberId === '') {
+            setOptions([]);
             return;
         }
         let cancelled = false;
+        setLoading(true);
         fetchJson(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerMemberId))}`)
             .then((arr) => {
                 if (cancelled || !Array.isArray(arr)) return;
-                setChoices(
-                    arr.map((m) => ({
-                        id: m.id,
-                        name: `${m.display_no != null ? `#${m.display_no} ` : ''}${m.name}`.trim() || `#${m.id}`,
-                    }))
-                );
+                setOptions(arr);
             })
             .catch(() => {
-                if (!cancelled) setChoices([]);
+                if (!cancelled) setOptions([]);
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
             });
         return () => {
             cancelled = true;
         };
     }, [ownerMemberId]);
 
-    if (ownerMemberId == null || ownerMemberId === '') {
-        return (
-            <SelectInput
-                source="target_member_id"
-                label="相手"
-                choices={[]}
-                emptyText="先に Owner（自分）を選択してください"
-                validate={[required()]}
-            />
-        );
-    }
+    useEffect(() => {
+        if (ownerMemberId == null || ownerMemberId === '') {
+            return;
+        }
+        if (targetId == null || targetId === '') {
+            return;
+        }
+        if (options.length === 0) {
+            return;
+        }
+        if (!options.some((o) => String(o.id) === String(targetId))) {
+            setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
+        }
+    }, [ownerMemberId, options, targetId, setValue]);
 
-    return <SelectInput source="target_member_id" label="相手" choices={choices} validate={[required()]} />;
+    const disabled = ownerMemberId == null || ownerMemberId === '';
+
+    return (
+        <MemberSearchAutocompleteInput
+            source="target_member_id"
+            label="相手"
+            options={options}
+            disabled={disabled}
+            loading={loading}
+            helperText={disabled ? '先に Owner（自分）を選択してください' : undefined}
+            validate={disabled ? [] : [required()]}
+        />
+    );
 }
 
 /** SimpleForm 内: owner_member_id の値に応じて相手候補を loaded */
@@ -90,7 +189,8 @@ function formatCategoryLine(m) {
     return line || '—';
 }
 
-function TargetMemberSummaryInner({ targetMemberId }) {
+/** GET /api/dragonfly/members/{id} で相手のカテゴリ・役職を表示（作成フォーム・モーダル共通） */
+export function TargetMemberSummaryById({ targetMemberId }) {
     const [member, setMember] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -175,7 +275,7 @@ function TargetMemberSummaryInner({ targetMemberId }) {
 export function TargetMemberSummaryCard() {
     return (
         <FormDataConsumer>
-            {({ formData }) => <TargetMemberSummaryInner targetMemberId={formData?.target_member_id} />}
+            {({ formData }) => <TargetMemberSummaryById targetMemberId={formData?.target_member_id} />}
         </FormDataConsumer>
     );
 }
@@ -224,7 +324,7 @@ export function OneToOneCreateScheduleFields({ duration, onDurationChange }) {
     );
 }
 
-function meetingOptionLabel(record) {
+export function meetingOptionLabel(record) {
     if (!record) return '';
     const num = record.number != null ? record.number : '—';
     const held = record.held_on ?? '—';

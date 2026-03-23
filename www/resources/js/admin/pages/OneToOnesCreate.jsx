@@ -14,11 +14,11 @@ import {
 import { Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import {
+    MemberSearchAutocompleteInput,
     OwnerScopedTargetSelect,
     TargetMemberSummaryCard,
     OneToOneCreateScheduleFields,
     OneToOneMeetingReferenceInput,
-    addMinutesToEndIso,
 } from './OneToOnesFormParts';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
@@ -47,7 +47,7 @@ export function OneToOnesCreate() {
     const [searchParams] = useSearchParams();
     const [workspaceId, setWorkspaceId] = useState(null);
     const [workspaceError, setWorkspaceError] = useState('');
-    const [ownerChoices, setOwnerChoices] = useState([]);
+    const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
     const [formReady, setFormReady] = useState(false);
     const [defaultValues, setDefaultValues] = useState({ status: 'planned' });
     const [durationMinutes, setDurationMinutes] = useState(60);
@@ -63,13 +63,8 @@ export function OneToOnesCreate() {
                 }
                 setWorkspaceId(wsArr[0].id);
                 setWorkspaceError('');
-                const owners = Array.isArray(members)
-                    ? members.map((m) => ({
-                          id: m.id,
-                          name: `${m.display_no != null ? `#${m.display_no} ` : ''}${m.name}`.trim() || `#${m.id}`,
-                      }))
-                    : [];
-                setOwnerChoices(owners);
+                const owners = Array.isArray(members) ? members : [];
+                setOwnerMemberOptions(owners);
                 const ownerId = ownerMemberIdFallback(meOwner);
                 const qTarget = searchParams.get('target_member_id');
                 const qNum = qTarget != null && /^\d+$/.test(String(qTarget)) ? Number(qTarget) : null;
@@ -91,19 +86,38 @@ export function OneToOnesCreate() {
 
     const transform = useCallback(
         (data) => {
-            const meetingId = data.meeting_id;
-            const meeting_id =
-                meetingId === '' || meetingId === undefined || meetingId === null ? null : Number(meetingId);
+            let meetingId = data.meeting_id;
+            if (meetingId != null && typeof meetingId === 'object' && meetingId.id != null) {
+                meetingId = meetingId.id;
+            }
+            let meeting_id =
+                meetingId === '' || meetingId === undefined || meetingId === null
+                    ? null
+                    : Number(meetingId);
+            if (meeting_id !== null && Number.isNaN(meeting_id)) {
+                meeting_id = null;
+            }
 
+            // scheduled_at と ended_at を同一の Date から toISOString し、PHP strtotime の解釈ずれを防ぐ
+            let scheduled_at = data.scheduled_at;
             let ended_at = null;
-            if (data.scheduled_at && durationMinutes) {
-                ended_at = addMinutesToEndIso(data.scheduled_at, durationMinutes);
+            if (data.scheduled_at) {
+                const start = new Date(data.scheduled_at);
+                if (!Number.isNaN(start.getTime())) {
+                    scheduled_at = start.toISOString();
+                    if (durationMinutes > 0) {
+                        const end = new Date(start.getTime());
+                        end.setMinutes(end.getMinutes() + durationMinutes);
+                        ended_at = end.toISOString();
+                    }
+                }
             }
 
             return {
                 ...data,
                 workspace_id: workspaceId ?? undefined,
                 started_at: null,
+                scheduled_at,
                 ended_at,
                 meeting_id,
             };
@@ -134,10 +148,10 @@ export function OneToOnesCreate() {
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                     Owner（自分）は Dashboard の設定が初期値です。別メンバーで記録する場合のみ変更してください。
                 </Typography>
-                <SelectInput
+                <MemberSearchAutocompleteInput
                     source="owner_member_id"
-                    choices={ownerChoices}
                     label="Owner（自分）"
+                    options={ownerMemberOptions}
                     validate={[required()]}
                 />
                 <OwnerScopedTargetSelect />
