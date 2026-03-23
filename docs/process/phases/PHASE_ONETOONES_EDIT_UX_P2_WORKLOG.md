@@ -63,7 +63,9 @@
 ## Step 7 — merge 作業
 
 - **競合:** なし（`develop` から `feature/phase-onetoones-edit-ux-p2` を切り、文書・実装をコミット後 `merge --no-ff`）。
-- **取り込み後:** REPORT の「取り込み証跡」に merge commit id 等を追記し、`develop` に push。
+- **merge commit id:** `c1e52601c1e2bb97f6c29b138e21d567b64ed001`（`Merge feature/phase-onetoones-edit-ux-p2 into develop`）。
+- **feature tip:** `a1f7d0687094c8971be31127060998b0f3fde4c5`。
+- **取り込み後:** REPORT §8 に証跡を確定し、追記コミットで `origin/develop` に push。
 
 ---
 

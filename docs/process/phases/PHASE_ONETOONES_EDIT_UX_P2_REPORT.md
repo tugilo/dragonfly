@@ -57,12 +57,10 @@
 
 ## 5. テスト結果
 
-| コマンド | 結果（merge 前の feature 上での確認） |
-|----------|----------------------------------------|
-| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | 328 passed |
+| コマンド | 結果（feature 上・`develop` merge 後の両方で確認） |
+|----------|------------------------------------------------------|
+| `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` | 328 passed（1310 assertions） |
 | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` | 成功 |
-
-_merge 後に同一コマンドで再実行し、§8 に最終結果を記載する。_
 
 ---
 
@@ -87,16 +85,20 @@ _merge 後に同一コマンドで再実行し、§8 に最終結果を記載す
 
 ## 8. Merge Evidence（取り込み証跡）
 
-`develop` への `--no-ff` merge 完了後、下表を確定し、必要なら **追記コミット**（`docs: add merge evidence for onetoones edit ux p2`）を `develop` に追加する。
-
 | 項目 | 内容 |
 |------|------|
 | merge method | `git merge --no-ff feature/phase-onetoones-edit-ux-p2` |
 | merged branch | `feature/phase-onetoones-edit-ux-p2` |
 | target branch | `develop` |
-| merge commit id | _（merge 後に `git log -1 --format=%H develop` で記入）_ |
-| feature last commit id | _（merge 直前の feature tip）_ |
-| pushed at | _（merge evidence 追記コミット push 日時）_ |
+| merge commit id | `c1e52601c1e2bb97f6c29b138e21d567b64ed001` |
+| feature last commit id | `a1f7d0687094c8971be31127060998b0f3fde4c5` |
+| pushed at | 2026-03-23T13:26Z UTC（evidence 追記コミットを `origin/develop` に push した時刻・目安） |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` / `exec node npm run build` |
-| test result | _（merge 後の件数・build）_ |
-| notes | Create と揃えた項目（サマリ・duration・例会・transform）。未解決は §6 参照。 |
+| test result | 328 passed / build OK（merge 後の `develop` で再実行） |
+| notes | Create と揃えた項目（相手サマリ・所要時間・例会 Autocomplete・`buildOneToOnePayload`）。未解決は §6。競合なし。 |
+
+---
+
+## 9. Merge Evidence 追記コミット
+
+`develop` への merge 後、§8 の merge commit id・feature tip・§5 の最終テスト結果を確定する変更を、コミットメッセージ `docs: add merge evidence for onetoones edit ux p2` で `develop` に追加した（本セクション・§8 はそのコミットで確定）。
