@@ -39,31 +39,50 @@ export function OneToOnesCreate() {
 
     useEffect(() => {
         let cancelled = false;
-        Promise.all([fetchJson('/api/workspaces'), fetchReligoOwnerMemberId(), fetchJson('/api/dragonfly/members')])
-            .then(([wsArr, meOwner, members]) => {
-                if (cancelled) return;
+        (async () => {
+            try {
+                const [wsArr, meOwner, allMembers] = await Promise.all([
+                    fetchJson('/api/workspaces'),
+                    fetchReligoOwnerMemberId(),
+                    fetchJson('/api/dragonfly/members'),
+                ]);
+                if (cancelled) {
+                    return;
+                }
                 if (!Array.isArray(wsArr) || wsArr.length === 0) {
                     setWorkspaceError('ワークスペースがありません');
                     return;
                 }
                 setWorkspaceId(wsArr[0].id);
                 setWorkspaceError('');
-                const owners = Array.isArray(members) ? members : [];
+                const owners = Array.isArray(allMembers) ? allMembers : [];
                 setOwnerMemberOptions(owners);
                 const ownerId = ownerMemberIdFallback(meOwner);
+                const scoped = await fetchJson(
+                    `/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerId))}`
+                );
+                if (cancelled) {
+                    return;
+                }
+                const scopedList = Array.isArray(scoped) ? scoped : [];
                 const qTarget = searchParams.get('target_member_id');
                 const qNum = qTarget != null && /^\d+$/.test(String(qTarget)) ? Number(qTarget) : null;
-                const targetOk = qNum != null && qNum !== ownerId && members.some((m) => Number(m.id) === qNum);
+                const targetOk =
+                    qNum != null &&
+                    qNum !== ownerId &&
+                    scopedList.some((m) => Number(m.id) === qNum);
                 setDefaultValues({
                     status: 'planned',
                     owner_member_id: ownerId,
                     ...(targetOk ? { target_member_id: qNum } : {}),
                 });
                 setFormReady(true);
-            })
-            .catch(() => {
-                if (!cancelled) setWorkspaceError('初期データの取得に失敗しました');
-            });
+            } catch {
+                if (!cancelled) {
+                    setWorkspaceError('初期データの取得に失敗しました');
+                }
+            }
+        })();
         return () => {
             cancelled = true;
         };
