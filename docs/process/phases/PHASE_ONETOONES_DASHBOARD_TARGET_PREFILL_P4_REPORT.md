@@ -74,14 +74,14 @@
 | merge method | `git merge --no-ff feature/phase-onetoones-dashboard-target-prefill-p4` |
 | merged branch | `feature/phase-onetoones-dashboard-target-prefill-p4` |
 | target branch | `develop` |
-| merge commit id | _（merge 後）_ |
-| feature last commit id | _（merge 後）_ |
-| pushed at | _（evidence 追記後）_ |
-| test result | _（merge 後）_ |
-| notes | URL クエリを正とし、Create scoped 検証・Tasks stale リンク・Quick Create URL prefill。 |
+| merge commit id | `9a4c07cf2157f38aa97b3703b8afbdd323ac2ba9` |
+| feature last commit id | `1954174ba0e371752960487119a03d1ba4211aa3` |
+| pushed at | 2026-03-23T14:45Z UTC 目安（evidence 追記コミットを `origin/develop` に push した時刻） |
+| test result | 328 passed（1312 assertions）/ `npm run build` OK（merge 後の `develop` で再実行） |
+| notes | URL クエリを正とし、Create scoped 検証・Tasks stale の `?target_member_id=`・Quick Create 一覧 URL prefill。競合なし。 |
 
 ---
 
 ## 9. Merge Evidence 追記コミット
 
-`docs: add merge evidence for onetoones dashboard target prefill p4` で `develop` に追記する。
+`develop` への merge 後、§8 を確定する変更を、コミットメッセージ `docs: add merge evidence for onetoones dashboard target prefill p4` で `develop` に追加した（本セクション・§8 はそのコミットで確定）。

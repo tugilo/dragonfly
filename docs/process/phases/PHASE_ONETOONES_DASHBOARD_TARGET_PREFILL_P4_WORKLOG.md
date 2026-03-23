@@ -50,4 +50,6 @@
 
 ## Step 7 — merge
 
-- **競合:** _（merge 後に記録）_
+- **競合:** なし。
+- **merge commit id:** `9a4c07cf2157f38aa97b3703b8afbdd323ac2ba9`。
+- **feature tip:** `1954174ba0e371752960487119a03d1ba4211aa3`。
