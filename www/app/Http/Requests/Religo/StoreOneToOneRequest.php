@@ -25,7 +25,7 @@ class StoreOneToOneRequest extends FormRequest
             'status' => ['nullable', 'string', Rule::in(['planned', 'completed', 'canceled'])],
             'scheduled_at' => ['nullable', 'date'],
             'started_at' => ['nullable', 'date'],
-            'ended_at' => ['nullable', 'date'],
+            'ended_at' => ['nullable', 'date', 'after:scheduled_at'],
             'notes' => ['nullable', 'string'],
         ];
     }

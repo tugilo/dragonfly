@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     Create,
     SimpleForm,
     SelectInput,
-    DateTimeInput,
-    NumberInput,
     TextInput,
     Toolbar,
     SaveButton,
@@ -15,7 +13,13 @@ import {
 } from 'react-admin';
 import { Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import { OwnerScopedTargetSelect } from './OneToOnesFormParts';
+import {
+    OwnerScopedTargetSelect,
+    TargetMemberSummaryCard,
+    OneToOneCreateScheduleFields,
+    OneToOneMeetingReferenceInput,
+    addMinutesToEndIso,
+} from './OneToOnesFormParts';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
 const STATUS_CHOICES = [
@@ -46,6 +50,7 @@ export function OneToOnesCreate() {
     const [ownerChoices, setOwnerChoices] = useState([]);
     const [formReady, setFormReady] = useState(false);
     const [defaultValues, setDefaultValues] = useState({ status: 'planned' });
+    const [durationMinutes, setDurationMinutes] = useState(60);
 
     useEffect(() => {
         let cancelled = false;
@@ -84,10 +89,27 @@ export function OneToOnesCreate() {
         };
     }, [searchParams]);
 
-    const transform = (data) => ({
-        ...data,
-        workspace_id: workspaceId ?? undefined,
-    });
+    const transform = useCallback(
+        (data) => {
+            const meetingId = data.meeting_id;
+            const meeting_id =
+                meetingId === '' || meetingId === undefined || meetingId === null ? null : Number(meetingId);
+
+            let ended_at = null;
+            if (data.scheduled_at && durationMinutes) {
+                ended_at = addMinutesToEndIso(data.scheduled_at, durationMinutes);
+            }
+
+            return {
+                ...data,
+                workspace_id: workspaceId ?? undefined,
+                started_at: null,
+                ended_at,
+                meeting_id,
+            };
+        },
+        [workspaceId, durationMinutes]
+    );
 
     const onSuccess = () => {
         notify('1 to 1 を登録しました');
@@ -119,11 +141,10 @@ export function OneToOnesCreate() {
                     validate={[required()]}
                 />
                 <OwnerScopedTargetSelect />
+                <TargetMemberSummaryCard />
                 <SelectInput source="status" choices={STATUS_CHOICES} label="状態" />
-                <DateTimeInput source="scheduled_at" label="予定日時" />
-                <DateTimeInput source="started_at" label="開始日時" />
-                <DateTimeInput source="ended_at" label="終了日時" />
-                <NumberInput source="meeting_id" label="Meeting ID（任意）" />
+                <OneToOneCreateScheduleFields duration={durationMinutes} onDurationChange={setDurationMinutes} />
+                <OneToOneMeetingReferenceInput />
                 <TextInput
                     source="notes"
                     label="メモ（この1to1の記録・目的・アジェンダ）"

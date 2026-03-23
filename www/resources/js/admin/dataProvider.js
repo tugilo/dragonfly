@@ -142,6 +142,21 @@ export const dragonflyDataProvider = {
             const data = await request(`/api/one-to-ones/${params.id}`);
             return { data };
         }
+        if (resource === 'meetings') {
+            const j = await request(`/api/meetings/${params.id}`);
+            const m = j.meeting;
+            if (!m?.id) {
+                throw new Error('Meeting not found');
+            }
+            return {
+                data: {
+                    id: m.id,
+                    number: m.number,
+                    held_on: m.held_on,
+                    name: m.name ?? null,
+                },
+            };
+        }
         throw new Error(`getOne not implemented for ${resource}`);
     },
 

@@ -296,6 +296,7 @@ class MeetingController extends Controller
                 'id' => $meeting->id,
                 'number' => $meeting->number,
                 'held_on' => $meeting->held_on?->format('Y-m-d'),
+                'name' => $meeting->name,
                 'breakout_count' => (int) $meeting->breakout_rooms_count,
                 'has_memo' => (bool) $meeting->has_memo,
             ],
