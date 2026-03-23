@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
     List,
     Datagrid,
@@ -14,6 +14,8 @@ import {
     useListContext,
     useRefresh,
     useNotify,
+    Form,
+    SaveButton,
 } from 'react-admin';
 import { Link } from 'react-router-dom';
 import {
@@ -28,23 +30,10 @@ import {
     CardContent,
     Chip,
     CircularProgress,
-    TextField as MuiTextField,
-    MenuItem,
-    FormControl,
-    InputLabel,
-    Select,
 } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import {
-    addMinutesToEndIso,
-    memberFilterMatches,
-    memberOptionLabel,
-    meetingOptionLabel,
-    TargetMemberSummaryById,
-} from './OneToOnesFormParts';
+import { OneToOneFormFields } from './OneToOneFormFields';
+import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
-
-const QUICK_CREATE_DURATION_CHOICES = [30, 60, 90];
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -360,105 +349,81 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
     const notify = useNotify();
     const ownerId = ownerMemberIdFallback(filterValues?.owner_member_id);
 
-    const [targetMember, setTargetMember] = useState(null);
-    const [status, setStatus] = useState('planned');
-    const [scheduledAt, setScheduledAt] = useState('');
-    const [durationMinutes, setDurationMinutes] = useState(60);
-    const [notes, setNotes] = useState('');
-    const [meetingRecord, setMeetingRecord] = useState(null);
-    const [members, setMembers] = useState([]);
-    const [meetings, setMeetings] = useState([]);
     const [workspaceId, setWorkspaceId] = useState(null);
+    const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
-
-    const previewEndIso = scheduledAt ? addMinutesToEndIso(scheduledAt, durationMinutes) : null;
-    let previewEndText = '—';
-    if (previewEndIso) {
-        try {
-            previewEndText = new Date(previewEndIso).toLocaleString('ja-JP', { dateStyle: 'short', timeStyle: 'short' });
-        } catch {
-            previewEndText = previewEndIso;
-        }
-    }
+    const [durationMinutes, setDurationMinutes] = useState(60);
+    const [formSession, setFormSession] = useState(0);
 
     useEffect(() => {
-        if (!open) return;
-        setTargetMember(null);
-        setStatus('planned');
-        setScheduledAt('');
+        if (!open) {
+            return;
+        }
+        setFormSession((s) => s + 1);
         setDurationMinutes(60);
-        setNotes('');
-        setMeetingRecord(null);
         setError('');
+    }, [open]);
+
+    useEffect(() => {
+        if (!open) {
+            return;
+        }
         let cancelled = false;
         setLoading(true);
-        Promise.all([
-            fetchJson('/api/workspaces'),
-            fetchJson(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerId))}`),
-            fetchJson('/api/meetings'),
-        ])
-            .then(([ws, mem, mtg]) => {
-                if (cancelled) return;
-                if (Array.isArray(ws) && ws.length > 0) setWorkspaceId(ws[0].id);
-                else setWorkspaceId(null);
-                setMembers(Array.isArray(mem) ? mem : []);
-                setMeetings(Array.isArray(mtg) ? mtg : []);
+        Promise.all([fetchJson('/api/workspaces'), fetchJson('/api/dragonfly/members')])
+            .then(([wsArr, members]) => {
+                if (cancelled) {
+                    return;
+                }
+                if (!Array.isArray(wsArr) || wsArr.length === 0) {
+                    setWorkspaceId(null);
+                    setOwnerMemberOptions([]);
+                    setError('ワークスペースがありません');
+                    return;
+                }
+                setWorkspaceId(wsArr[0].id);
+                setOwnerMemberOptions(Array.isArray(members) ? members : []);
             })
             .catch(() => {
                 if (!cancelled) {
                     setWorkspaceId(null);
-                    setMembers([]);
-                    setMeetings([]);
+                    setOwnerMemberOptions([]);
                     setError('初期データの取得に失敗しました');
                 }
             })
             .finally(() => {
-                if (!cancelled) setLoading(false);
+                if (!cancelled) {
+                    setLoading(false);
+                }
             });
         return () => {
             cancelled = true;
         };
-    }, [open, ownerId]);
+    }, [open]);
 
-    const handleSave = async () => {
+    const defaultValues = useMemo(
+        () => ({
+            owner_member_id: ownerId,
+            status: 'planned',
+            target_member_id: null,
+            scheduled_at: null,
+            meeting_id: null,
+            notes: '',
+        }),
+        [ownerId, formSession]
+    );
+
+    const handleSubmit = async (data) => {
         if (!workspaceId) {
             notify('ワークスペースがありません', { type: 'warning' });
-            return;
-        }
-        if (!targetMember?.id) {
-            notify('相手を選択してください', { type: 'warning' });
             return;
         }
         setSaving(true);
         setError('');
         try {
-            let scheduled_at = null;
-            let ended_at = null;
-            if (scheduledAt?.trim()) {
-                const start = new Date(scheduledAt);
-                if (!Number.isNaN(start.getTime())) {
-                    scheduled_at = start.toISOString();
-                    if (durationMinutes > 0) {
-                        const end = new Date(start.getTime());
-                        end.setMinutes(end.getMinutes() + durationMinutes);
-                        ended_at = end.toISOString();
-                    }
-                }
-            }
-
-            const body = {
-                workspace_id: workspaceId,
-                owner_member_id: ownerId,
-                target_member_id: Number(targetMember.id),
-                status,
-                started_at: null,
-                scheduled_at,
-                ended_at,
-                notes: notes.trim() || null,
-                meeting_id: meetingRecord?.id != null ? Number(meetingRecord.id) : null,
-            };
+            const body = buildOneToOnePayload(data, durationMinutes, { mode: 'create', workspaceId });
             const res = await fetch(`${API}/api/one-to-ones`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -472,124 +437,78 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
             refresh();
             onClose();
         } catch (e) {
-            setError(e.message || '保存に失敗しました');
+            const msg = e.message || '保存に失敗しました';
+            setError(msg);
+            notify(msg, { type: 'error' });
         } finally {
             setSaving(false);
         }
     };
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth scroll="paper">
             <DialogTitle>
                 📅 1 to 1 を追加
                 <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
                     Owner（自分）: {ownerId}（一覧のフィルタと同じ。変更はフィルタで）
                 </Typography>
             </DialogTitle>
-            <DialogContent>
-                {loading && (
+            {loading && (
+                <DialogContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, py: 2 }}>
                         <CircularProgress size={22} />
                         <Typography variant="body2">読込中…</Typography>
                     </Box>
-                )}
-                {error && (
-                    <Typography color="error" variant="body2" sx={{ mb: 1 }}>
-                        {error}
-                    </Typography>
-                )}
-                {!loading && (
-                    <Stack spacing={2} sx={{ mt: 1 }}>
-                        <Typography variant="body2" color="text.secondary">
+                </DialogContent>
+            )}
+            {!loading && workspaceId != null && (
+                <Form key={formSession} onSubmit={handleSubmit} defaultValues={defaultValues}>
+                    <DialogContent
+                        dividers
+                        sx={{
+                            maxHeight: { xs: '65vh', sm: '70vh' },
+                            overflowY: 'auto',
+                        }}
+                    >
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                             相手は一覧の Owner にスコープされたメンバーから検索して選びます（作成フォームと同じ）。
                         </Typography>
-                        <Autocomplete
-                            size="small"
-                            fullWidth
-                            options={members}
-                            loading={loading}
-                            value={targetMember}
-                            onChange={(_, v) => setTargetMember(v)}
-                            getOptionLabel={(m) => memberOptionLabel(m)}
-                            isOptionEqualToValue={(a, b) => String(a.id) === String(b.id)}
-                            filterOptions={(opts, state) => opts.filter((m) => memberFilterMatches(m, state.inputValue))}
-                            noOptionsText="該当なし"
-                            renderInput={(params) => (
-                                <MuiTextField {...params} label="相手" required placeholder="メンバーを検索" />
-                            )}
+                        {error ? (
+                            <Typography color="error" variant="body2" sx={{ mb: 1 }}>
+                                {error}
+                            </Typography>
+                        ) : null}
+                        <OneToOneFormFields
+                            mode="create"
+                            ownerMemberOptions={ownerMemberOptions}
+                            durationMinutes={durationMinutes}
+                            onDurationChange={setDurationMinutes}
+                            suppressCreateOwnerHint
+                            ownerInputDisabled
                         />
-                        <TargetMemberSummaryById targetMemberId={targetMember?.id ?? null} />
-                        <FormControl fullWidth size="small">
-                            <InputLabel id="qc-status-label">状態</InputLabel>
-                            <Select labelId="qc-status-label" label="状態" value={status} onChange={(e) => setStatus(e.target.value)}>
-                                {STATUS_CHOICES.map((c) => (
-                                    <MenuItem key={c.id} value={c.id}>
-                                        {c.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <MuiTextField
-                            label="開始予定（任意）"
-                            type="datetime-local"
-                            size="small"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            value={scheduledAt}
-                            onChange={(e) => setScheduledAt(e.target.value)}
-                        />
-                        <Typography variant="caption" color="text.secondary" display="block">
-                            所要時間（終了予定を自動計算）
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={onClose} disabled={saving}>
+                            キャンセル
+                        </Button>
+                        <SaveButton label={saving ? '保存中…' : '保存'} disabled={saving} />
+                    </DialogActions>
+                </Form>
+            )}
+            {!loading && workspaceId == null && error ? (
+                <>
+                    <DialogContent>
+                        <Typography color="error" variant="body2">
+                            {error}
                         </Typography>
-                        <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ gap: 1 }}>
-                            {QUICK_CREATE_DURATION_CHOICES.map((min) => (
-                                <Chip
-                                    key={min}
-                                    label={`${min}分`}
-                                    color={durationMinutes === min ? 'primary' : 'default'}
-                                    variant={durationMinutes === min ? 'filled' : 'outlined'}
-                                    onClick={() => setDurationMinutes(min)}
-                                    size="small"
-                                />
-                            ))}
-                        </Stack>
-                        <Typography variant="body2" color="text.secondary">
-                            終了予定（自動）: {previewEndText}
-                        </Typography>
-                        <Autocomplete
-                            size="small"
-                            fullWidth
-                            options={meetings}
-                            value={meetingRecord}
-                            onChange={(_, v) => setMeetingRecord(v)}
-                            getOptionLabel={(r) => meetingOptionLabel(r)}
-                            isOptionEqualToValue={(a, b) => String(a.id) === String(b.id)}
-                            noOptionsText="該当なし"
-                            renderInput={(params) => (
-                                <MuiTextField {...params} label="関連例会（任意）" placeholder="例会を検索" />
-                            )}
-                        />
-                        <MuiTextField
-                            label="メモ（この1to1の記録・目的・アジェンダ）"
-                            size="small"
-                            fullWidth
-                            multiline
-                            minRows={3}
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
-                            helperText="会話の時系列ログは contact_memos 側で将来拡張する想定。この欄は当該1to1レコードの要約メモとして使います。"
-                        />
-                    </Stack>
-                )}
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={onClose} disabled={saving}>
-                    キャンセル
-                </Button>
-                <Button variant="contained" onClick={handleSave} disabled={saving || loading}>
-                    {saving ? '保存中…' : '保存'}
-                </Button>
-            </DialogActions>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="contained" onClick={onClose}>
+                            閉じる
+                        </Button>
+                    </DialogActions>
+                </>
+            ) : null}
         </Dialog>
     );
 }

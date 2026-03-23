@@ -99,6 +99,14 @@ export function buildOneToOnePayload(data, durationMinutes, options = {}) {
         started_at = null;
     }
 
+    const notesRaw = data.notes;
+    const notesTrimmed =
+        notesRaw == null || notesRaw === ''
+            ? null
+            : String(notesRaw).trim() === ''
+              ? null
+              : String(notesRaw).trim();
+
     const payload = {
         owner_member_id: data.owner_member_id,
         target_member_id: data.target_member_id,
@@ -107,7 +115,7 @@ export function buildOneToOnePayload(data, durationMinutes, options = {}) {
         scheduled_at,
         started_at,
         ended_at,
-        notes: data.notes ?? null,
+        notes: notesTrimmed,
     };
 
     if (mode === 'create') {
