@@ -89,9 +89,9 @@
 | merge method | `git merge --no-ff feature/phase-onetoones-delete-policy-p1` |
 | merged branch | `feature/phase-onetoones-delete-policy-p1` |
 | target branch | `develop` |
-| merge commit id | （merge 後に `git log -1 --format=%H develop` で追記） |
-| feature last commit id | （merge 直前の feature 先端） |
-| test command | `docker compose … exec app php artisan test` / `exec node npm run build` |
+| merge commit id | `1a25e89a173e907488f2b693bd2642d732454680` |
+| feature last commit id | `a17ee6e1ec57917226c5e75d49193c15c9a01d20` |
+| test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` / `exec node npm run build` |
 | test result | 326 passed / build OK |
 | notes | 削除不採用・`canceled` 正規化・一覧既定 `exclude_canceled` |
 
@@ -99,4 +99,4 @@
 
 ## 10. Merge Evidence 追記コミット
 
-Evidence 追記コミット id: （`docs: add merge evidence for onetoones delete policy p1` 実行後に追記）
+`develop` への merge 後、§9 の merge commit id・feature tip・`WORKLOG` の merge 記述を確定する変更を、コミットメッセージ `docs: add merge evidence for onetoones delete policy p1` で `develop` に追加した。

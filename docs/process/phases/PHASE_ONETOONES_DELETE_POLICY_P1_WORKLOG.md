@@ -30,4 +30,4 @@
 
 ### merge
 
-- （Merge Evidence 追記後に記載）
+- `develop` に `--no-ff` で取り込み。競合なし。Merge Evidence は `PHASE_ONETOONES_DELETE_POLICY_P1_REPORT.md` §9。
