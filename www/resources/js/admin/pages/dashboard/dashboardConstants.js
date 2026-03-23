@@ -15,7 +15,13 @@ export const STATS_DEFAULT = {
     monthly_one_to_one_count: 5,
     monthly_intro_memo_count: 8,
     monthly_meeting_memo_count: 4,
-    subtexts: { stale: '要フォロー', one_to_one: '先月比 +2', intro: 'BO含む', meeting: '例会#247 含む' },
+    subtexts: {
+        stale: '要フォロー',
+        one_to_one: '先月比 +2',
+        one_to_one_inventory: '登録計 0 件（予定 0・キャンセル 0）',
+        intro: 'BO含む',
+        meeting: '例会#247 含む',
+    },
 };
 
 export const TASKS_FALLBACK = [

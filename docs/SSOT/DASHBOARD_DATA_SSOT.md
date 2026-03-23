@@ -92,10 +92,13 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 | キー | 定義 | 補足 |
 |------|------|------|
 | **stale_contacts_count** | owner から見て「未接触 30 日以上」の target メンバー数。 | **算出:** `MemberSummaryQuery::getSummaryLiteBatch($owner, peers, null)`（**第 3 引数は常に null**・STALE-WORKSPACE-SCOPE-P1）。未接触の定義: 各 peer の `last_contact_at` が null、または「基準日時の 30 日前」より前。`last_contact_at` の内訳は分析書参照。基準日時はサーバー now()。除外条件: owner 本人は集計対象外。peers は **自分以外の全メンバー**。 |
-| **monthly_one_to_one_count** | owner の「今月」の 1to1 実施回数。 | status = completed、started_at が今月の開始日時〜終了日時（サーバー TZ）。 |
+| **monthly_one_to_one_count** | owner の「今月」の 1to1 **実施**回数（**主 KPI**）。 | `status = completed` かつ `started_at` が今月の開始日時〜終了日時（サーバー TZ）。**予定のみ・キャンセルのみでは増えない**（DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1）。 |
+| **one_to_one_total_count** | owner の 1to1 **登録総数**（全期間・全ステータス）。 | `one_to_ones` で `owner_member_id = owner` の行数。 |
+| **one_to_one_planned_count** | owner の **予定**件数（全期間）。 | `status = planned`。 |
+| **one_to_one_canceled_count** | owner の **キャンセル**件数（全期間）。 | `status = canceled`。 |
 | **monthly_intro_memo_count** | owner が「今月」作成した紹介メモ数。 | contact_memos の memo_type = introduction、created_at が今月。BO 含むは subtext の説明用。 |
 | **monthly_meeting_memo_count** | owner が「今月」作成した例会メモ数。 | contact_memos の memo_type = meeting、created_at が今月。例会番号の扱いは表示用（例: 例会#247 含む）で subtext に記載。 |
-| **subtexts** | UI の補足文言。 | stale: 要フォロー、one_to_one: 先月比 +2、intro: BO含む、meeting: 例会#247 含む。固定または将来 API で差し替え可。 |
+| **subtexts** | UI の補足文言。 | stale: 要フォロー、**one_to_one:** 先月比（今月実施）、**one_to_one_inventory:** 登録総数・予定・キャンセルの内訳一行、intro / meeting: 同上。固定または将来 API で差し替え可。 |
 
 ---
 
@@ -148,3 +151,95 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 | **フロント** | www/resources/js/admin/pages/Dashboard.jsx（GET /api/users/me で owner 取得。**BO-AUDIT-P5:** `workspace_id` と `GET /api/workspaces` で **所属チャプター名**を DashboardHeader に表示。`/settings` で `default_workspace_id` を編集可）。Dashboard API への workspace クエリは付与しない。未設定時は「オーナーを設定してください」ブロック＋members Select。設定済み時は右上 Owner セレクタで変更時自動保存。fetch で dashboard 3 エンドポイントを呼び出し |
 | **設定 UI** | www/resources/js/admin/pages/ReligoSettings.jsx、`app.jsx` の `CustomRoutes`、`CustomAppBar.jsx`、`ReligoMenu.jsx`（/settings） |
 | **参照** | docs/SSOT/DASHBOARD_REQUIREMENTS.md（UI・モック合わせ）、docs/process/phases/PHASE_E4_OWNER_SETTINGS_PLAN.md（E-4 スコープ） |
+
+---
+
+## 6. 実数検証（Raw SQL と `DashboardService` の対応）
+
+**目的:** KPI（`GET /api/dashboard/stats`）が「曖昧な数」ではなく **定義どおりの集計**になっていることを、DB 直の集計と突き合わせて確認する。
+
+**実装の正:** `App\Services\Religo\DashboardService`（`getStats` / `countStaleContacts`）。本節は **照合用の SQL テンプレート** と **自動検証** の入口。
+
+**命名メモ:** コード上のメソッドは **`getStats`**（旧称の `getSummary` ではない）。
+
+### 6.1 前提（owner・タイムゾーン・削除）
+
+| 項目 | 内容 |
+|------|------|
+| **owner** | すべて `owner_member_id = :owner`（stats の数値 KPI は owner 軸）。 |
+| **「今月」** | `config('app.timezone')` 上の `now()` で月初〜月末（`DashboardService` は `startOfMonth()`〜`endOfMonth()->endOfDay()`）。**MySQL の `NOW()` だけ**と比較すると TZ ずれの可能性あり → **アプリと同じ境界を使うこと**。 |
+| **soft delete** | `one_to_ones` / `contact_memos` は **現行スキーマで `deleted_at` なし**（モデルにも SoftDeletes なし）。将来追加したら SSOT・検証サービスを同時更新。 |
+| **stale** | **単一 SELECT では表現しない。** `MemberSummaryQuery::getSummaryLiteBatch(..., null)` の **`last_contact_at`**（同席・メモ・1to1・フラグ由来の合成）と **30 日閾値** による。検証は **`countStaleContacts` と `getStats` の一致** で担保（§6.3）。 |
+
+### 6.2 照合用 SQL（`:owner` を対象 owner に置換）
+
+**今月の 1to1 完了数（`monthly_one_to_one_count`）**
+
+実装は **`status = 'completed'` かつ `started_at` が今月**（`held_on` 列は使わない）。
+
+```sql
+-- アプリと同じ月初・月末をバインドする（Carbon で算出した文字列をそのまま使うのが確実）
+SELECT COUNT(*) AS cnt
+FROM one_to_ones
+WHERE owner_member_id = :owner
+  AND status = 'completed'
+  AND started_at BETWEEN :month_start AND :month_end;
+```
+
+**1to1 登録総数・予定・キャンセル（`one_to_one_total_count` / `one_to_one_planned_count` / `one_to_one_canceled_count`）**
+
+```sql
+SELECT COUNT(*) AS cnt FROM one_to_ones WHERE owner_member_id = :owner;
+
+SELECT COUNT(*) AS cnt FROM one_to_ones WHERE owner_member_id = :owner AND status = 'planned';
+
+SELECT COUNT(*) AS cnt FROM one_to_ones WHERE owner_member_id = :owner AND status = 'canceled';
+```
+
+**今月の紹介メモ数（`monthly_intro_memo_count`）**
+
+```sql
+SELECT COUNT(*) AS cnt
+FROM contact_memos
+WHERE owner_member_id = :owner
+  AND memo_type = 'introduction'
+  AND created_at BETWEEN :month_start AND :month_end;
+```
+
+**今月の例会メモ数（`monthly_meeting_memo_count`）**
+
+```sql
+SELECT COUNT(*) AS cnt
+FROM contact_memos
+WHERE owner_member_id = :owner
+  AND memo_type = 'meeting'
+  AND created_at BETWEEN :month_start AND :month_end;
+```
+
+**未接触件数（`stale_contacts_count`）**
+
+- **定義の内訳:** [§0](#0-dashboard-の役割製品上の位置づけ)・`MemberSummaryQuery::batchLastContactAt`（`workspaceId = null`）。
+- **検証観点:** `last_contact_at IS NULL OR last_contact_at < (now - 30 days)` を **peer 全員**に対して数えた件数 = `DashboardService::countStaleContacts($owner)` = `getStats()['stale_contacts_count']`。
+
+### 6.3 自動検証（推奨）
+
+| 手段 | 説明 |
+|------|------|
+| **Artisan** | `php artisan dashboard:verify-summary {owner_member_id}` — `DB::table` の件数と `getStats` の差分を表示。exit `0` = 一致。 |
+| **HTTP（local のみ）** | `GET /api/debug/dashboard-summary?owner_member_id={id}` — JSON で `db_raw` / `service` / `diff` / `all_match`。**`APP_ENV=local` のときだけ** `routes/api.php` に登録される。 |
+
+実装: `App\Services\Religo\DashboardSummaryVerificationService`。
+
+### 6.4 手動チェックリスト（そのままコピペ可）
+
+| # | 指標 | SQL / 手順 | Service（比較先） | 一致 |
+|---|------|--------------|-------------------|------|
+| 1 | 今月の 1to1 | §6.2 `one_to_ones` | `getStats` → `monthly_one_to_one_count` | OK / NG |
+| 2 | 今月の紹介メモ | §6.2 `contact_memos` introduction | `monthly_intro_memo_count` | OK / NG |
+| 3 | 今月の例会メモ | §6.2 `contact_memos` meeting | `monthly_meeting_memo_count` | OK / NG |
+| 4 | 未接触（stale） | `dashboard:verify-summary` または `countStaleContacts` = `getStats` の stale | `stale_contacts_count` | OK / NG |
+| 5 | 1to1 登録総数 | §6.2 `COUNT(*)` | `one_to_one_total_count` | OK / NG |
+| 6 | 1to1 予定 | §6.2 `status=planned` | `one_to_one_planned_count` | OK / NG |
+| 7 | 1to1 キャンセル | §6.2 `status=canceled` | `one_to_one_canceled_count` | OK / NG |
+
+**Tasks（`getTasks`）** は件数 KPI ではなく **優先行動のリスト** のため、別紙 [DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md)・§3 を正とする。

@@ -98,6 +98,7 @@
 | ONETOONES_EDIT_UX_P2 | 1 to 1 Edit を Create UX に揃える（共有フォーム・`buildOneToOnePayload`・相手サマリ・例会選択・completed 時実績）+ docs + merge / Evidence | implement | completed | feature/phase-onetoones-edit-ux-p2 | 2026-03-23 |
 | ONETOONES_QUICK_CREATE_UX_P3 | 1 to 1 一覧 Quick Create Dialog を `OneToOneFormFields` + `buildOneToOnePayload` に統一 + SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-quick-create-ux-p3 | 2026-03-23 |
 | ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | `target_member_id` URL プリフィル統一（Create scoped 検証・Tasks stale リンク・Quick Create URL）+ SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-dashboard-target-prefill-p4 | 2026-03-23 |
+| DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1 | Dashboard 1to1 KPI 拡張（総登録・予定・キャンセル・inventory subtext・verify-summary）+ SSOT + merge / Evidence | implement | completed | feature/phase-dashboard-onetoones-summary-expansion-p1 | 2026-03-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

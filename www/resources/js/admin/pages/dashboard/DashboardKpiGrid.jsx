@@ -78,9 +78,10 @@ export default function DashboardKpiGrid({ stats, loading, ownerConfigured }) {
             icon: '🤝',
             iconBg: 'primary.light',
             iconColor: 'primary.contrastText',
-            label: '今月の1to1回数',
+            label: '今月の1to1（実施）',
             value: stats.monthly_one_to_one_count,
             sub: subtexts.one_to_one,
+            sub2: subtexts.one_to_one_inventory ?? '',
         },
         {
             key: 'intro',
@@ -144,9 +145,14 @@ export default function DashboardKpiGrid({ stats, loading, ownerConfigured }) {
                             >
                                 {it.value}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10 }}>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, display: 'block' }}>
                                 {it.sub}
                             </Typography>
+                            {it.sub2 ? (
+                                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, display: 'block', mt: 0.25 }}>
+                                    {it.sub2}
+                                </Typography>
+                            ) : null}
                         </Box>
                     </CardContent>
                 </Card>

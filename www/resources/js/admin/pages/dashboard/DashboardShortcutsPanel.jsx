@@ -14,7 +14,7 @@ export default function DashboardShortcutsPanel() {
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 1.25, flexWrap: 'wrap' }}>
                     <Button component={Link} to="/connections" variant="contained" size="small">
-                        🗺 Connections（会の地図）
+                        🗺 Connections
                     </Button>
                     <Button component={Link} to="/members" variant="outlined" size="small">
                         👥 Members一覧

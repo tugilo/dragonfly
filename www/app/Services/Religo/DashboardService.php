@@ -26,25 +26,58 @@ class DashboardService
     ) {}
 
     /**
+     * 「未接触 30 日超」peer 数（KPI stale_contacts_count と同一）.
+     *
+     * SSOT: docs/SSOT/DASHBOARD_DATA_SSOT.md §2 · §6。単一 SQL ではなく MemberSummaryQuery の last_contact_at 最大値で判定。
+     */
+    public function countStaleContacts(int $ownerMemberId): int
+    {
+        $memberIds = $this->stalePeerMemberIds($ownerMemberId);
+        $staleCount = 0;
+        if ($memberIds === []) {
+            return 0;
+        }
+        $batch = $this->summaryQuery->getSummaryLiteBatch($ownerMemberId, $memberIds, null);
+        $cutoff = now()->subDays(self::STALE_DAYS)->format('c');
+        foreach ($batch as $lite) {
+            $at = $lite['last_contact_at'] ?? null;
+            if ($at === null || $at < $cutoff) {
+                $staleCount++;
+            }
+        }
+
+        return $staleCount;
+    }
+
+    /**
      * GET /api/dashboard/stats 用.
      *
-     * @return array{stale_contacts_count: int, monthly_one_to_one_count: int, monthly_intro_memo_count: int, monthly_meeting_memo_count: int, subtexts: array<string, string>}
+     * @return array{
+     *   stale_contacts_count: int,
+     *   monthly_one_to_one_count: int,
+     *   one_to_one_total_count: int,
+     *   one_to_one_planned_count: int,
+     *   one_to_one_canceled_count: int,
+     *   monthly_intro_memo_count: int,
+     *   monthly_meeting_memo_count: int,
+     *   subtexts: array<string, string>
+     * }
      */
     public function getStats(int $ownerMemberId): array
     {
         $memberIds = $this->stalePeerMemberIds($ownerMemberId);
         $peerCount = count($memberIds);
-        $staleCount = 0;
-        if ($memberIds !== []) {
-            $batch = $this->summaryQuery->getSummaryLiteBatch($ownerMemberId, $memberIds, null);
-            $cutoff = now()->subDays(self::STALE_DAYS)->format('c');
-            foreach ($batch as $lite) {
-                $at = $lite['last_contact_at'] ?? null;
-                if ($at === null || $at < $cutoff) {
-                    $staleCount++;
-                }
-            }
-        }
+        $staleCount = $this->countStaleContacts($ownerMemberId);
+
+        $oneToOneTotal = OneToOne::query()->where('owner_member_id', $ownerMemberId)->count();
+        $oneToOnePlanned = OneToOne::query()
+            ->where('owner_member_id', $ownerMemberId)
+            ->where('status', 'planned')
+            ->count();
+        $oneToOneCanceled = OneToOne::query()
+            ->where('owner_member_id', $ownerMemberId)
+            ->where('status', 'canceled')
+            ->count();
 
         $startOfMonth = now()->copy()->startOfMonth()->toDateTimeString();
         $endOfMonth = now()->copy()->endOfMonth()->endOfDay()->toDateTimeString();
@@ -90,11 +123,15 @@ class DashboardService
         return [
             'stale_contacts_count' => $staleCount,
             'monthly_one_to_one_count' => $monthlyOneToOne,
+            'one_to_one_total_count' => $oneToOneTotal,
+            'one_to_one_planned_count' => $oneToOnePlanned,
+            'one_to_one_canceled_count' => $oneToOneCanceled,
             'monthly_intro_memo_count' => $monthlyIntroMemo,
             'monthly_meeting_memo_count' => $monthlyMeetingMemo,
             'subtexts' => [
                 'stale' => $this->buildStaleSubtext($staleCount, $peerCount),
                 'one_to_one' => $this->buildMoMCountSubtext($monthlyOneToOne, $prevOneToOne),
+                'one_to_one_inventory' => $this->buildOneToOneInventorySubtext($oneToOneTotal, $oneToOnePlanned, $oneToOneCanceled),
                 'intro' => $this->buildMoMCountSubtext($monthlyIntroMemo, $prevIntro),
                 'meeting' => $this->buildMeetingMemoSubtext($monthlyMeetingMemo, $prevMeetingMemo, $latestMeeting),
             ],
@@ -301,6 +338,14 @@ class DashboardService
         }
 
         return sprintf('先月 %d 件・%s%d', $previous, $delta > 0 ? '増 ' : '減 ', abs($delta));
+    }
+
+    /**
+     * 1to1 KPI 補助行: 登録全体の内訳（今月実施数とは別軸）.
+     */
+    private function buildOneToOneInventorySubtext(int $total, int $planned, int $canceled): string
+    {
+        return sprintf('登録計 %d 件（予定 %d・キャンセル %d）', $total, $planned, $canceled);
     }
 
     private function buildMeetingMemoSubtext(int $current, int $previous, ?Meeting $latest): string

@@ -59,7 +59,7 @@
 | # | ラベル（意味） | モック主数値（例） | 補足行（意味） |
 |---|----------------|-------------------|----------------|
 | 1 | 未接触（30日以上）— *要フォロー優先度の件数* | 4（warn 色） | 要フォロー |
-| 2 | 今月の1to1回数 — *実施ペース* | 7 | 先月比 +2 |
+| 2 | 今月の1to1（実施）— *当月の completed のみ*。補助行で **登録総数・予定・キャンセル**件数（DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1） | 7 | 先月比 +2／登録計 N（予定 x・キャンセル y） |
 | 3 | 紹介メモ数（今月）— *紹介系メモの活動量* | 12 | BO含む |
 | 4 | 例会メモ数（今月）— *例会メモの活動量* | 31 | 例会#247 含む |
 
@@ -93,7 +93,7 @@
 | セクション | データ内容 | テーブル / ソース | ロジック |
 |------------|------------|-------------------|----------|
 | KPI① 未接触30日+ | owner 以外のメンバーで、最終接触が null または 30 日前より古い件数 | `members` + **派生** `last_contact_at`（MemberSummaryQuery / ContactSummary 系） | count；owner 自身除外。基準日はサーバー now |
-| KPI② 今月1to1回数 | owner の今月 **completed** 件数 | `one_to_ones` | `status=completed` かつ `started_at` が当月範囲 |
+| KPI② 今月1to1（実施） | owner の今月 **completed** 件数（主数値） | `one_to_ones` | `status=completed` かつ `started_at` が当月範囲。**補助:** KPI カード 2 行目に **登録総数・予定・キャンセル**（全期間・`subtexts.one_to_one_inventory`）。API: `one_to_one_total_count` 等（DASHBOARD_DATA_SSOT §2） |
 | KPI③ 紹介メモ（今月） | owner が今月作成した紹介メモ件数 | `contact_memos` | `memo_type=introduction`・`created_at` 当月 |
 | KPI④ 例会メモ（今月） | owner が今月作成した例会メモ件数 | `contact_memos` | `memo_type=meeting`・当月。補足「例会#247」は **表示用コピー** であり DB の必須項目ではない（要確認：動的に直近例会番号を出すか） |
 | KPI 補足（先月比等） | 前月との差分・割合 | 同上 KPI②③④＋未接触割合（P7-2） | **P7-2 で動的化済**（`GET /api/dashboard/stats` の `subtexts`） |
