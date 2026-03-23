@@ -86,7 +86,7 @@
 | [MEETINGS_CREATE_FIT_AND_GAP.md](SSOT/MEETINGS_CREATE_FIT_AND_GAP.md) | Meetings 例会マスタ（新規作成・編集・削除）の要否・現状実装・Fit/Gap・案A/B/C・推奨方針（調査 SSOT）。 |
 | [MEETINGS_DELETE_FIT_AND_GAP.md](SSOT/MEETINGS_DELETE_FIT_AND_GAP.md) | Meetings **削除**の業務要否・子データ/FK影響・案A〜E・推奨・実装前の決定事項（調査のみ・コード変更なし）。 |
 | [MEETINGS_ARCHIVE_FIT_AND_GAP.md](SSOT/MEETINGS_ARCHIVE_FIT_AND_GAP.md) | Meetings **Archive**（非表示/論理無効化/履歴保持）の要否・Delete 代替との関係・子データ/一覧/stats/Drawer 影響・設計案A〜F・推奨・実装前の決定事項。**補足前提:** 初回は `archived_at` のみ・`show` 非破壊・`next_meeting` は未アーカイブのみ・初回 restore 不要（調査のみ・コード変更なし）。 |
-| [ONETOONES_DELETE_REQUIREMENTS.md](SSOT/ONETOONES_DELETE_REQUIREMENTS.md) | 1 to 1（`one_to_ones`）**削除**の業務要否・API/UI 未実装の現状・`canceled` 代替・`contact_memos` の FK（`nullOnDelete`）・物理/論理削除の論点・実装前の決定事項（調査 SSOT）。 |
+| [ONETOONES_DELETE_REQUIREMENTS.md](SSOT/ONETOONES_DELETE_REQUIREMENTS.md) | 1 to 1 **削除不採用**の製品方針・`canceled` の業務定義・`exclude_canceled` 一覧既定・物理削除を見送る理由（SSOT）。 |
 | [ONETOONES_CREATE_UX_REQUIREMENTS.md](SSOT/ONETOONES_CREATE_UX_REQUIREMENTS.md) | 1 to 1 **Create** UX：相手選択時のサマリ表示・予定開始＋所要時間（30/60/90 分等）で終了予定を自動入力・例会は ID 直打ちではなく一覧選択。未実装・要件 SSOT。 |
 | [DASHBOARD_REQUIREMENTS.md](SSOT/DASHBOARD_REQUIREMENTS.md) | ダッシュボード画面をモック（religo-admin-mock2.html）に合わせるための要件。構成・ブロック・データ・チェックリスト。 |
 | [DASHBOARD_DATA_SSOT.md](SSOT/DASHBOARD_DATA_SSOT.md) | Dashboard のデータ定義 SSOT。stats/tasks/activity の定義・owner_member_id・件数上限・実装紐づけ。 |
