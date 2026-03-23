@@ -53,7 +53,8 @@ Dashboard の 1to1 KPI を、**今月実施（主）**と**登録全体の内訳
 |------|------|
 | **merge method** | `git merge --no-ff` |
 | **merged branch** | `feature/phase-dashboard-onetoones-summary-expansion-p1` |
-| **merge commit id** | （merge 後に `git log -1 --format=%H develop` で追記） |
-| **feature 最終コミット** | （merge 前に `git log -1 --format=%H feature/...` で追記） |
-| **test result** | `php artisan test` — 329 passed |
-| **notes** | 1to1 補助件数 3 つ + inventory subtext。verify-summary 7 行比較に拡張。UI は 1 カード 2 行目のみ。 |
+| **merge commit id** | `8199f5caa02ce1c3e02a811e169137052aec8ee5` |
+| **feature 最終コミット** | `81634766bcdd82237b9fbb0e535909e2e8a87f75` |
+| **pushed at** | 2026-03-23（`origin/develop` へ push 実行時） |
+| **test result（merge 前）** | `php artisan test` — 329 passed |
+| **notes** | 1to1 補助件数 3 つ + `subtexts.one_to_one_inventory`。`dashboard:verify-summary` は 7 メトリクス行。KPI は 1 カード 2 行目。Dashboard 検証コマンド・local debug ルートは本ブランチで develop に初回同梱。 |
