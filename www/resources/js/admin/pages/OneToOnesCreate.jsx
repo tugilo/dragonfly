@@ -2,31 +2,16 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
     Create,
     SimpleForm,
-    SelectInput,
-    TextInput,
     Toolbar,
     SaveButton,
     ListButton,
-    required,
     useNotify,
     useRedirect,
 } from 'react-admin';
-import { Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import {
-    MemberSearchAutocompleteInput,
-    OwnerScopedTargetSelect,
-    TargetMemberSummaryCard,
-    OneToOneCreateScheduleFields,
-    OneToOneMeetingReferenceInput,
-} from './OneToOnesFormParts';
+import { OneToOneFormFields } from './OneToOneFormFields';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
-
-const STATUS_CHOICES = [
-    { id: 'planned', name: '予定' },
-    { id: 'completed', name: '実施済み' },
-    { id: 'canceled', name: 'キャンセル' },
-];
+import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 
 async function fetchJson(url) {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
@@ -85,43 +70,7 @@ export function OneToOnesCreate() {
     }, [searchParams]);
 
     const transform = useCallback(
-        (data) => {
-            let meetingId = data.meeting_id;
-            if (meetingId != null && typeof meetingId === 'object' && meetingId.id != null) {
-                meetingId = meetingId.id;
-            }
-            let meeting_id =
-                meetingId === '' || meetingId === undefined || meetingId === null
-                    ? null
-                    : Number(meetingId);
-            if (meeting_id !== null && Number.isNaN(meeting_id)) {
-                meeting_id = null;
-            }
-
-            // scheduled_at と ended_at を同一の Date から toISOString し、PHP strtotime の解釈ずれを防ぐ
-            let scheduled_at = data.scheduled_at;
-            let ended_at = null;
-            if (data.scheduled_at) {
-                const start = new Date(data.scheduled_at);
-                if (!Number.isNaN(start.getTime())) {
-                    scheduled_at = start.toISOString();
-                    if (durationMinutes > 0) {
-                        const end = new Date(start.getTime());
-                        end.setMinutes(end.getMinutes() + durationMinutes);
-                        ended_at = end.toISOString();
-                    }
-                }
-            }
-
-            return {
-                ...data,
-                workspace_id: workspaceId ?? undefined,
-                started_at: null,
-                scheduled_at,
-                ended_at,
-                meeting_id,
-            };
-        },
+        (data) => buildOneToOnePayload(data, durationMinutes, { mode: 'create', workspaceId }),
         [workspaceId, durationMinutes]
     );
 
@@ -145,27 +94,11 @@ export function OneToOnesCreate() {
     return (
         <Create transform={transform} mutationOptions={{ onSuccess }} title="1 to 1 を追加">
             <SimpleForm toolbar={<CreateToolbar />} defaultValues={defaultValues}>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    Owner（自分）は Dashboard の設定が初期値です。別メンバーで記録する場合のみ変更してください。
-                </Typography>
-                <MemberSearchAutocompleteInput
-                    source="owner_member_id"
-                    label="Owner（自分）"
-                    options={ownerMemberOptions}
-                    validate={[required()]}
-                />
-                <OwnerScopedTargetSelect />
-                <TargetMemberSummaryCard />
-                <SelectInput source="status" choices={STATUS_CHOICES} label="状態" />
-                <OneToOneCreateScheduleFields duration={durationMinutes} onDurationChange={setDurationMinutes} />
-                <OneToOneMeetingReferenceInput />
-                <TextInput
-                    source="notes"
-                    label="メモ（この1to1の記録・目的・アジェンダ）"
-                    multiline
-                    fullWidth
-                    minRows={3}
-                    helperText="会話の時系列ログは contact_memos 側で将来拡張する想定。この欄は当該1to1レコードの要約メモとして使います。"
+                <OneToOneFormFields
+                    mode="create"
+                    ownerMemberOptions={ownerMemberOptions}
+                    durationMinutes={durationMinutes}
+                    onDurationChange={setDurationMinutes}
                 />
             </SimpleForm>
         </Create>

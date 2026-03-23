@@ -1,10 +1,10 @@
 # 1 to 1 Create 画面 UX 改善 — 要件整理（SSOT）
 
 **作成日:** 2026-03-23  
-**ステータス:** **Create 画面（`/one-to-ones/create`）の P1 は実装済み**（`feature/phase-onetoones-create-ux-p1`）。Edit / クイック Dialog は後続 Phase。  
+**ステータス:** **Create 画面（`/one-to-ones/create`）の P1 は実装済み**（`feature/phase-onetoones-create-ux-p1`）。**Edit** は **ONETOONES_EDIT_UX_P2** で Create と同型のフォーム・`buildOneToOnePayload` に追随済み（[ONETOONES_EDIT_UI_FIT_AND_GAP.md](ONETOONES_EDIT_UI_FIT_AND_GAP.md) §8）。クイック Dialog は後続 Phase。  
 **種別:** UX / 画面要件 SSOT
 
-**関連:** [DATA_MODEL.md](DATA_MODEL.md) §4.12（`one_to_ones`）、[FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §6（ONETOONES-P3）、`www/resources/js/admin/pages/OneToOnesCreate.jsx`・`OneToOnesFormParts.jsx`
+**関連:** [DATA_MODEL.md](DATA_MODEL.md) §4.12（`one_to_ones`）、[FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §6（ONETOONES-P3）、`www/resources/js/admin/pages/OneToOnesCreate.jsx`・`OneToOneFormFields.jsx`・`oneToOnesTransform.js`
 
 ---
 

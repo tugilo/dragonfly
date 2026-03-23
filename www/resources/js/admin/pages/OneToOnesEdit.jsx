@@ -1,27 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     Edit,
     SimpleForm,
-    SelectInput,
-    DateTimeInput,
-    NumberInput,
-    TextInput,
     Toolbar,
     SaveButton,
     ListButton,
-    required,
     useNotify,
     useRedirect,
     useRecordContext,
 } from 'react-admin';
 import { Box, Button, CircularProgress, Stack, TextField as MuiTextField, Typography } from '@mui/material';
-import { MemberSearchAutocompleteInput, OwnerScopedTargetSelect } from './OneToOnesFormParts';
-
-const STATUS_CHOICES = [
-    { id: 'planned', name: '予定' },
-    { id: 'completed', name: '実施済み' },
-    { id: 'canceled', name: 'キャンセル' },
-];
+import { OneToOneFormFields } from './OneToOneFormFields';
+import { buildOneToOnePayload, inferDurationMinutes } from '../utils/oneToOnesTransform';
 
 async function fetchJson(url) {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
@@ -35,6 +25,27 @@ const EditToolbar = () => (
         <ListButton label="一覧へ戻る" />
     </Toolbar>
 );
+
+const STATUS_HELPER_EDIT =
+    'キャンセルは「予定が無効になった事実」を残す業務状態です。レコードの削除は行いません（製品方針）。';
+
+/** レコード読込後に所要時間チップを scheduled/ended から推定（ONETOONES_EDIT_UX_P2） */
+function EditDurationInitializer({ setDurationMinutes }) {
+    const record = useRecordContext();
+    const prevIdRef = useRef(null);
+
+    useEffect(() => {
+        if (!record?.id) {
+            return;
+        }
+        if (prevIdRef.current !== record.id) {
+            prevIdRef.current = record.id;
+            setDurationMinutes(inferDurationMinutes(record.scheduled_at, record.ended_at, record.status));
+        }
+    }, [record, setDurationMinutes]);
+
+    return null;
+}
 
 function OneToOneMemosPanel() {
     const record = useRecordContext();
@@ -152,36 +163,22 @@ function OneToOneMemosPanel() {
     );
 }
 
-function EditContextHeader() {
-    const record = useRecordContext();
-    if (!record) return null;
-    const when = record.started_at ?? record.scheduled_at;
-    let whenShort = '';
-    if (when) {
-        try {
-            whenShort = new Date(when).toLocaleString('ja-JP', { dateStyle: 'short', timeStyle: 'short' });
-        } catch {
-            whenShort = String(when);
-        }
-    }
-    return (
-        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2, fontWeight: 600 }}>
-            {record.target_name ? `相手: ${record.target_name}` : '相手: —'}
-            {whenShort ? ` ・ ${whenShort}` : ''}
-        </Typography>
-    );
-}
-
 export function OneToOnesEdit() {
     const notify = useNotify();
     const redirect = useRedirect();
     const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
+    const [durationMinutes, setDurationMinutes] = useState(60);
 
     useEffect(() => {
         fetchJson('/api/dragonfly/members')
             .then((arr) => setOwnerMemberOptions(Array.isArray(arr) ? arr : []))
             .catch(() => setOwnerMemberOptions([]));
     }, []);
+
+    const transform = useCallback(
+        (data) => buildOneToOnePayload(data, durationMinutes, { mode: 'edit' }),
+        [durationMinutes]
+    );
 
     return (
         <Edit
@@ -194,32 +191,14 @@ export function OneToOnesEdit() {
                 },
             }}
         >
-            <SimpleForm toolbar={<EditToolbar />}>
-                <EditContextHeader />
-                <MemberSearchAutocompleteInput
-                    source="owner_member_id"
-                    label="Owner（自分）"
-                    options={ownerMemberOptions}
-                    validate={[required()]}
-                />
-                <OwnerScopedTargetSelect />
-                <SelectInput
-                    source="status"
-                    choices={STATUS_CHOICES}
-                    label="状態"
-                    helperText="キャンセルは「予定が無効になった事実」を残す業務状態です。レコードの削除は行いません（製品方針）。"
-                />
-                <DateTimeInput source="scheduled_at" label="予定日時" />
-                <DateTimeInput source="started_at" label="開始日時" />
-                <DateTimeInput source="ended_at" label="終了日時" />
-                <NumberInput source="meeting_id" label="Meeting ID（任意）" emptyText="—" />
-                <TextInput
-                    source="notes"
-                    label="メモ（要約・一覧プレビュー）"
-                    multiline
-                    fullWidth
-                    minRows={4}
-                    helperText="一覧の「📝 メモ」と同じ要約です。下の「履歴メモ」で会話ログを追記できます。"
+            <SimpleForm toolbar={<EditToolbar />} transform={transform}>
+                <EditDurationInitializer setDurationMinutes={setDurationMinutes} />
+                <OneToOneFormFields
+                    mode="edit"
+                    ownerMemberOptions={ownerMemberOptions}
+                    durationMinutes={durationMinutes}
+                    onDurationChange={setDurationMinutes}
+                    statusHelperText={STATUS_HELPER_EDIT}
                 />
                 <OneToOneMemosPanel />
             </SimpleForm>
