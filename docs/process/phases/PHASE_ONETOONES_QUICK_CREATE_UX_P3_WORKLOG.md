@@ -62,5 +62,6 @@
 
 ## Step 7 — merge
 
-- **競合:** _（merge 後に記録）_  
-- **merge commit id:** _（REPORT §8）_
+- **競合:** なし。
+- **merge commit id:** `701378161a55d3bddeff5ce8e888100eb3da0ee4`（`Merge feature/phase-onetoones-quick-create-ux-p3 into develop`）。
+- **feature tip:** `bd0b7bdd4b07b5f378daf04b49c48cd85e54d8d2`。

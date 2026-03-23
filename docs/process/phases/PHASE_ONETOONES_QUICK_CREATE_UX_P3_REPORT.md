@@ -75,21 +75,19 @@
 
 ## 8. Merge Evidence（取り込み証跡）
 
-`develop` への `--no-ff` merge 完了後に下表を確定し、追記コミットで `origin/develop` に反映する。
-
 | 項目 | 内容 |
 |------|------|
 | merge method | `git merge --no-ff feature/phase-onetoones-quick-create-ux-p3` |
 | merged branch | `feature/phase-onetoones-quick-create-ux-p3` |
 | target branch | `develop` |
-| merge commit id | _（merge 後に記入）_ |
-| feature last commit id | _（merge 直前の feature tip）_ |
-| pushed at | _（evidence 追記コミット push 時刻）_ |
-| test result | _（merge 後の test / build）_ |
-| notes | Quick Create を `OneToOneFormFields` + `buildOneToOnePayload` に統一。Owner は一覧フィルタ固定。 |
+| merge commit id | `701378161a55d3bddeff5ce8e888100eb3da0ee4` |
+| feature last commit id | `bd0b7bdd4b07b5f378daf04b49c48cd85e54d8d2` |
+| pushed at | 2026-03-23T14:05Z UTC 目安（evidence 追記コミットを `origin/develop` に push した時刻） |
+| test result | 328 passed / `npm run build` OK（merge 後の `develop` で再実行） |
+| notes | Quick Create を `OneToOneFormFields` + `buildOneToOnePayload` に統一。Owner は一覧フィルタ固定（`ownerInputDisabled`）。`notes` trim は transform 共通。競合なし。 |
 
 ---
 
 ## 9. Merge Evidence 追記コミット
 
-`develop` への merge 後、§8 を確定する変更をコミットメッセージ `docs: add merge evidence for onetoones quick create ux p3` で `develop` に追加する。
+`develop` への merge 後、§8 の merge commit id・feature tip・§5 を確定する変更を、コミットメッセージ `docs: add merge evidence for onetoones quick create ux p3` で `develop` に追加した（本セクション・§8 はそのコミットで確定）。
