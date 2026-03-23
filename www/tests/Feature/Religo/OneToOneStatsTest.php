@@ -44,10 +44,41 @@ class OneToOneStatsTest extends TestCase
         ]);
     }
 
-    public function test_stats_requires_owner_member_id(): void
+    public function test_stats_without_owner_aggregates_like_index(): void
     {
+        Carbon::setTestNow(Carbon::parse('2026-03-15 12:00:00', config('app.timezone')));
+
+        $ownerB = (int) DB::table('members')->insertGetId([
+            'name' => 'OwnerB',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->targetId,
+            'status' => 'completed',
+            'started_at' => '2026-03-10 10:00:00',
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $ownerB,
+            'target_member_id' => $this->targetId,
+            'status' => 'completed',
+            'started_at' => '2026-03-11 10:00:00',
+        ]);
+
         $res = $this->getJson('/api/one-to-ones/stats');
-        $res->assertStatus(422);
+        $res->assertOk();
+        $res->assertJsonPath('completed_this_month_count', 2);
+
+        $resOwner = $this->getJson('/api/one-to-ones/stats?owner_member_id=' . $this->ownerId);
+        $resOwner->assertOk();
+        $resOwner->assertJsonPath('completed_this_month_count', 1);
+
+        Carbon::setTestNow();
     }
 
     public function test_stats_returns_counts(): void
@@ -111,6 +142,30 @@ class OneToOneStatsTest extends TestCase
         $res = $this->getJson('/api/one-to-ones/stats?owner_member_id=' . $this->ownerId);
         $res->assertOk();
         $res->assertJsonPath('completed_this_month_count', 0);
+
+        Carbon::setTestNow();
+    }
+
+    /**
+     * 一覧の日付表示（started_at ?? scheduled_at）と同じ優先度で「今月」を判定する。
+     * ended_at だけが先月・一覧は started_at で今月、のときに完了カウントへ含める。
+     */
+    public function test_completed_this_month_matches_list_effective_date_not_ended_at_first(): void
+    {
+        Carbon::setTestNow(Carbon::parse('2026-03-15 12:00:00', config('app.timezone')));
+
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->targetId,
+            'status' => 'completed',
+            'started_at' => '2026-03-10 10:00:00',
+            'ended_at' => '2026-02-28 11:00:00',
+        ]);
+
+        $res = $this->getJson('/api/one-to-ones/stats?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $res->assertJsonPath('completed_this_month_count', 1);
 
         Carbon::setTestNow();
     }
