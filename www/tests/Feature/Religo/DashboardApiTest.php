@@ -54,11 +54,45 @@ class DashboardApiTest extends TestCase
         $this->assertIsArray($data);
         $this->assertArrayHasKey('stale_contacts_count', $data);
         $this->assertArrayHasKey('monthly_one_to_one_count', $data);
+        $this->assertArrayHasKey('one_to_one_total_count', $data);
+        $this->assertArrayHasKey('one_to_one_planned_count', $data);
+        $this->assertArrayHasKey('one_to_one_canceled_count', $data);
         $this->assertArrayHasKey('monthly_intro_memo_count', $data);
         $this->assertArrayHasKey('monthly_meeting_memo_count', $data);
         $this->assertArrayHasKey('subtexts', $data);
         $this->assertIsInt($data['stale_contacts_count']);
         $this->assertIsArray($data['subtexts']);
+        $this->assertArrayHasKey('one_to_one_inventory', $data['subtexts']);
+    }
+
+    public function test_stats_one_to_one_inventory_matches_status_counts(): void
+    {
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'Peer',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        OneToOne::create([
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'planned',
+            'scheduled_at' => now()->addDay(),
+        ]);
+        OneToOne::create([
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'canceled',
+        ]);
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertSame(2, $data['one_to_one_total_count']);
+        $this->assertSame(1, $data['one_to_one_planned_count']);
+        $this->assertSame(1, $data['one_to_one_canceled_count']);
+        $this->assertStringContainsString('登録計 2', $data['subtexts']['one_to_one_inventory']);
+        $this->assertStringContainsString('予定 1', $data['subtexts']['one_to_one_inventory']);
+        $this->assertStringContainsString('キャンセル 1', $data['subtexts']['one_to_one_inventory']);
     }
 
     public function test_stats_returns_404_when_owner_not_found(): void

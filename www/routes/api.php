@@ -22,6 +22,7 @@ use App\Http\Controllers\Religo\MeetingParticipantImportController;
 use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
 use App\Http\Controllers\Religo\DashboardController;
+use App\Http\Controllers\Religo\DashboardDebugController;
 use App\Http\Controllers\Religo\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +76,10 @@ Route::get('/workspaces', [WorkspaceController::class, 'index']);
 Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
 Route::get('/dashboard/tasks', [DashboardController::class, 'tasks']);
 Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+
+if (app()->environment('local')) {
+    Route::get('/debug/dashboard-summary', [DashboardDebugController::class, 'verifySummary']);
+}
 
 Route::get('/users/me', [UserController::class, 'showMe']);
 Route::patch('/users/me', [UserController::class, 'updateMe']);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\DashboardVerifySummaryCommand;
 use App\Console\Commands\ImportParticipantsCsvCommand;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withCommands([
+        DashboardVerifySummaryCommand::class,
         ImportParticipantsCsvCommand::class,
     ])
     ->create();
