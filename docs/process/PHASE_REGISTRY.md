@@ -97,6 +97,7 @@
 | ONETOONES-DELETE-POLICY-P1 | 1 to 1 削除不採用の SSOT 固定・`canceled` 正規化・一覧 `exclude_canceled` 既定・docs + merge / Evidence | implement | completed | feature/phase-onetoones-delete-policy-p1 | 2026-03-23 |
 | ONETOONES_EDIT_UX_P2 | 1 to 1 Edit を Create UX に揃える（共有フォーム・`buildOneToOnePayload`・相手サマリ・例会選択・completed 時実績）+ docs + merge / Evidence | implement | completed | feature/phase-onetoones-edit-ux-p2 | 2026-03-23 |
 | ONETOONES_QUICK_CREATE_UX_P3 | 1 to 1 一覧 Quick Create Dialog を `OneToOneFormFields` + `buildOneToOnePayload` に統一 + SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-quick-create-ux-p3 | 2026-03-23 |
+| ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | `target_member_id` URL プリフィル統一（Create scoped 検証・Tasks stale リンク・Quick Create URL）+ SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-dashboard-target-prefill-p4 | 2026-03-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

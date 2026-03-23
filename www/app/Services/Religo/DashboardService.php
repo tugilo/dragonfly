@@ -139,7 +139,7 @@ class DashboardService
                     'meeting_number' => null,
                     'action' => [
                         'label' => $i === 0 ? '1to1予定' : 'メモ追加',
-                        'href' => $i === 0 ? '/one-to-ones/create' : '/members/' . $tid . '/show',
+                        'href' => $i === 0 ? '/one-to-ones/create?target_member_id=' . $tid : '/members/' . $tid . '/show',
                         'disabled' => false,
                     ],
                     'badge' => null,

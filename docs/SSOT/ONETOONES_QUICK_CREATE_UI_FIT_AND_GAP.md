@@ -60,6 +60,6 @@ P3 では **react-admin `Form` + `OneToOneFormFields`（`mode="create"`）+ `bui
 
 | 候補 | 内容 |
 |------|------|
-| ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | Dashboard / Leads から Create への `target_member_id` 自動プリフィル（本 SSOT の対象外）。 |
+| ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | **実装済み（別 SSOT）:** `?target_member_id=` を一覧 URL に付いたとき Quick Create Dialog の初期値に反映。[ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md](ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md) 参照。 |
 | ONETOONES_DURATION_CUSTOM_P5 | 30/60/90 以外の所要時間。 |
 | 任意 | Quick Create の `POST` を `dataProvider.create('one-to-ones', …)` に統一して通信経路まで一本化するかは要検討（現状は body 整合で十分）。 |

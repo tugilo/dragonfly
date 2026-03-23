@@ -109,7 +109,7 @@ Religo の **Dashboard** は、**一覧の代替ではなく**、ログイン直
 ### kind と優先順位・件数上限
 | 順序 | kind | 内容 | 件数上限 |
 |------|------|------|----------|
-| 1 | **stale_follow** | `last_contact_at` が null または **30 日より前**の target（**厳密な「今日」ではなく「要フォロー」**）。**`last_contact_at` は `getSummaryLiteBatch(..., null)` で算出**（workspace スコープなし・STALE-WORKSPACE-SCOPE-P1）。Dashboard に出す理由: 関係が途切れそうな相手への **優先アクション** を置くため。 | 最大 2 件（一覧上の優先表示。**全件は KPI の未接触件数**を参照）。1 件目 CTA「1to1予定」→ `/one-to-ones/create`、2 件目「メモ追加」→ **`/members/{id}/show`**（Member 詳細でメモ・関係を更新）。 |
+| 1 | **stale_follow** | `last_contact_at` が null または **30 日より前**の target（**厳密な「今日」ではなく「要フォロー」**）。**`last_contact_at` は `getSummaryLiteBatch(..., null)` で算出**（workspace スコープなし・STALE-WORKSPACE-SCOPE-P1）。Dashboard に出す理由: 関係が途切れそうな相手への **優先アクション** を置くため。 | 最大 2 件（一覧上の優先表示。**全件は KPI の未接触件数**を参照）。1 件目 CTA「1to1予定」→ **`/one-to-ones/create?target_member_id={member_id}`**（ONETOONES_DASHBOARD_TARGET_PREFILL_P4）、2 件目「メモ追加」→ **`/members/{id}/show`**（Member 詳細でメモ・関係を更新）。 |
 | 2 | **one_to_one_planned** | owner の **planned** で、`scheduled_at` が **今日の暦日以降**または **null**（日時未設定の予定も可）。**意味:** すでに予定に載せた 1 to 1 を Dashboard で再認識し、当日・直近の実行を促す。並びは `scheduled_at` 昇順で先頭 1 件。 | 1 件。CTA は Chip「予定」（ href なし・仕様どおり）。 |
 | 3 | **meeting_follow_up** | **直近開催済み例会** 1 件を対象とする。`held_on` の暦日が **今日以前**（`whereDate(held_on, <= today)`・サーバー TZ）の例会のうち、**最も新しい `held_on`**（同順 `id` DESC）。**表示条件:** 当該 `meetings.id` に対し、**例会メモが未記録**のときのみタスク化する。 **記録済みの定義:** `contact_memos` に **`meeting_id` = 当該例会 id かつ `memo_type` = `meeting` かつ `body` が null / 空文字でない**行が **1 件以上**存在すること（**Meeting 一覧の has_memo / `MeetingMemoController` と同型**。**owner_member_id は判定に使わない** — 例会メモは会議単位の 1 本 UI）。**未記録**なら CTA「Meetingsへ」→ `/meetings`。 | 最高 1 件（条件を満たすときのみ）。会議が存在しない／未来日のみの例会暦なら **出さない**。 |
 

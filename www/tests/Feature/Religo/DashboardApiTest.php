@@ -208,6 +208,9 @@ class DashboardApiTest extends TestCase
         $res->assertOk();
         $staleTasks = array_values(array_filter($res->json(), fn ($t) => ($t['kind'] ?? '') === 'stale_follow'));
         $this->assertGreaterThanOrEqual(2, count($staleTasks));
+        $first = $staleTasks[0];
+        $this->assertSame('1to1予定', $first['action']['label']);
+        $this->assertMatchesRegularExpression('#^/one-to-ones/create\?target_member_id=\d+$#', $first['action']['href']);
         $second = $staleTasks[1];
         $this->assertSame('メモ追加', $second['action']['label']);
         $this->assertSame('/members/' . $highId . '/show', $second['action']['href']);

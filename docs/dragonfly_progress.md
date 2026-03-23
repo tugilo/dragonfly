@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-23 | **ONETOONES_DASHBOARD_TARGET_PREFILL_P4（develop 取り込み）:** **`target_member_id` URL プリフィル**を SSOT 化。Create は **オーナースコープ**で target 検証。Dashboard **Tasks stale** の「1to1予定」に `?target_member_id=`。Quick Create は一覧 URL クエリを反映。`ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md`・`DASHBOARD_DATA_SSOT` §3 更新。Merge Evidence: `PHASE_ONETOONES_DASHBOARD_TARGET_PREFILL_P4_REPORT` §8。 |
 | 2026-03-23 | **ONETOONES_QUICK_CREATE_UX_P3（develop 取り込み）:** 一覧 **Quick Create Dialog** を Create/Edit と **`OneToOneFormFields` + `buildOneToOnePayload`** に統一。Owner は一覧フィルタ固定（`ownerInputDisabled`）。SSOT `ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md`・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_QUICK_CREATE_UX_P3_REPORT` §8。 |
 | 2026-03-23 | **ONETOONES_EDIT_UX_P2（develop 取り込み）:** 1 to 1 **Edit を Create UX に揃える**。共有 `OneToOneFormFields`・`buildOneToOnePayload`（`oneToOnesTransform.js`）・相手サマリ・所要時間チップ・`OneToOneMeetingReferenceInput`・completed 時のみ実績日時・`EditContextHeader` 削除。SSOT §8・PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_EDIT_UX_P2_REPORT` §8。 |
 | 2026-03-23 | **ONETOONES-DELETE-POLICY-P1（develop 取り込み）:** 1 to 1 **削除不採用**を SSOT 固定・`canceled` 業務定義・`GET /api/one-to-ones` に `exclude_canceled`・一覧既定でキャンセル行を除く・編集 helperText。`php artisan test` 326・`npm run build` OK。PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_DELETE_POLICY_P1_REPORT` §9。 |

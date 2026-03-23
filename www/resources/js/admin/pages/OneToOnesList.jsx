@@ -17,7 +17,7 @@ import {
     Form,
     SaveButton,
 } from 'react-admin';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
     Dialog,
     DialogTitle,
@@ -347,6 +347,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
     const { filterValues } = useListContext();
     const refresh = useRefresh();
     const notify = useNotify();
+    const [searchParams] = useSearchParams();
     const ownerId = ownerMemberIdFallback(filterValues?.owner_member_id);
 
     const [workspaceId, setWorkspaceId] = useState(null);
@@ -356,6 +357,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
     const [error, setError] = useState('');
     const [durationMinutes, setDurationMinutes] = useState(60);
     const [formSession, setFormSession] = useState(0);
+    const [prefillTargetId, setPrefillTargetId] = useState(null);
 
     useEffect(() => {
         if (!open) {
@@ -364,6 +366,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         setFormSession((s) => s + 1);
         setDurationMinutes(60);
         setError('');
+        setPrefillTargetId(null);
     }, [open]);
 
     useEffect(() => {
@@ -372,47 +375,67 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         }
         let cancelled = false;
         setLoading(true);
-        Promise.all([fetchJson('/api/workspaces'), fetchJson('/api/dragonfly/members')])
-            .then(([wsArr, members]) => {
+        (async () => {
+            try {
+                const [wsArr, allMembers] = await Promise.all([
+                    fetchJson('/api/workspaces'),
+                    fetchJson('/api/dragonfly/members'),
+                ]);
                 if (cancelled) {
                     return;
                 }
                 if (!Array.isArray(wsArr) || wsArr.length === 0) {
                     setWorkspaceId(null);
                     setOwnerMemberOptions([]);
+                    setPrefillTargetId(null);
                     setError('ワークスペースがありません');
                     return;
                 }
                 setWorkspaceId(wsArr[0].id);
-                setOwnerMemberOptions(Array.isArray(members) ? members : []);
-            })
-            .catch(() => {
+                setOwnerMemberOptions(Array.isArray(allMembers) ? allMembers : []);
+                const scoped = await fetchJson(
+                    `/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerId))}`
+                );
+                if (cancelled) {
+                    return;
+                }
+                const scopedList = Array.isArray(scoped) ? scoped : [];
+                const qs = searchParams.get('target_member_id');
+                const qNum =
+                    qs != null && /^\d+$/.test(String(qs).trim()) ? Number(String(qs).trim()) : null;
+                const ok =
+                    qNum != null &&
+                    qNum !== ownerId &&
+                    scopedList.some((m) => Number(m.id) === qNum);
+                setPrefillTargetId(ok ? qNum : null);
+            } catch {
                 if (!cancelled) {
                     setWorkspaceId(null);
                     setOwnerMemberOptions([]);
+                    setPrefillTargetId(null);
                     setError('初期データの取得に失敗しました');
                 }
-            })
-            .finally(() => {
+            } finally {
                 if (!cancelled) {
                     setLoading(false);
                 }
-            });
+            }
+        })();
         return () => {
             cancelled = true;
         };
-    }, [open]);
+    }, [open, ownerId, searchParams]);
 
     const defaultValues = useMemo(
         () => ({
             owner_member_id: ownerId,
             status: 'planned',
-            target_member_id: null,
+            target_member_id: prefillTargetId,
             scheduled_at: null,
             meeting_id: null,
             notes: '',
         }),
-        [ownerId, formSession]
+        [ownerId, formSession, prefillTargetId]
     );
 
     const handleSubmit = async (data) => {
