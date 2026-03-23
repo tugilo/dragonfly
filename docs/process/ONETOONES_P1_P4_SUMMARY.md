@@ -179,3 +179,15 @@
 ## 8. 一言でまとめると
 
 **1 to 1 を「記録」から「運用できる仕組み」に変えたフェーズ。**
+
+---
+
+## 9. 削除ポリシー（ONETOONES-DELETE-POLICY-P1・2026-03-23 追記）
+
+P1〜P4 完了後、**1 to 1 を「履歴を残す前提の記録システム」として定義し直す**フェーズを実施した。
+
+- **物理削除は採用しない**（DELETE API なし）。不足ではなく **製品方針**。
+- **`canceled`** は削除の代替ではなく、**予定無効化を履歴として残す正規状態**。
+- **一覧**は既定で **キャンセル行を除く**（`exclude_canceled`）。必要時にフィルタで「キャンセル」も閲覧可能。
+
+詳細は [ONETOONES_DELETE_REQUIREMENTS.md](../SSOT/ONETOONES_DELETE_REQUIREMENTS.md)、`PHASE_ONETOONES_DELETE_POLICY_P1_PLAN.md`（process/phases）。

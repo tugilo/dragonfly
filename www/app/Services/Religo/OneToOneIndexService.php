@@ -14,7 +14,7 @@ class OneToOneIndexService
     /**
      * Index / Stats 共通の WHERE。一覧の filter と統計がズレないようにする（ONETOONES-P4）。
      *
-     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string}  $filters
+     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string, exclude_canceled?: bool|int|string}  $filters
      */
     public function applyIndexFilters(Builder $query, array $filters): void
     {
@@ -29,6 +29,8 @@ class OneToOneIndexService
         }
         if (! empty($filters['status'])) {
             $query->where('status', $filters['status']);
+        } elseif ($this->shouldExcludeCanceled($filters)) {
+            $query->where('status', '!=', 'canceled');
         }
         if (! empty($filters['from'])) {
             $query->whereRaw('COALESCE(started_at, scheduled_at) >= ?', [$filters['from']]);
@@ -51,9 +53,31 @@ class OneToOneIndexService
     }
 
     /**
+     * 一覧の既定: キャンセル行を除く（ONETOONES-DELETE-POLICY-P1）。`status` が明示指定されているときは適用しない。
+     */
+    private function shouldExcludeCanceled(array $filters): bool
+    {
+        if (! array_key_exists('exclude_canceled', $filters)) {
+            return false;
+        }
+        $v = $filters['exclude_canceled'];
+        if ($v === true || $v === 1 || $v === '1') {
+            return true;
+        }
+        if ($v === false || $v === 0 || $v === '0') {
+            return false;
+        }
+        if (is_string($v)) {
+            return filter_var($v, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        return false;
+    }
+
+    /**
      * フィルタ・ソート済みの一覧を取得。owner/target 名を含む。
      *
-     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string}  $filters
+     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string, exclude_canceled?: bool|int|string}  $filters
      * @return array<int, array<string, mixed>>
      */
     public function getIndex(array $filters = []): array

@@ -8,6 +8,9 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-23 | **ONETOONES-DELETE-POLICY-P1（develop 取り込み）:** 1 to 1 **削除不採用**を SSOT 固定・`canceled` 業務定義・`GET /api/one-to-ones` に `exclude_canceled`・一覧既定でキャンセル行を除く・編集 helperText。`php artisan test` 326・`npm run build` OK。PLAN/WORKLOG/REPORT・REGISTRY・INDEX。Merge Evidence: `PHASE_ONETOONES_DELETE_POLICY_P1_REPORT` §9。 |
+| 2026-03-23 | **1 to 1 Create UX 要件（docs）:** `docs/SSOT/ONETOONES_CREATE_UX_REQUIREMENTS.md` を追加。相手サマリ・予定開始＋所要時間で終了予定・例会の一覧選択。現状 Create の課題・DoD・未決定事項。`docs/INDEX.md` 更新。コード変更なし。 |
+| 2026-03-23 | **1 to 1 削除要件（docs）:** `docs/SSOT/ONETOONES_DELETE_REQUIREMENTS.md` を追加。DELETE API/UI なし・`canceled` 代替・`contact_memos` の `nullOnDelete`・物理/論理削除の決定論点・DoD 案。`docs/INDEX.md` 更新。コード変更なし。 |
 | 2026-03-20 | **MEMBERS-WORKSPACE-BACKFILL-P1（develop 取り込み）:** merge `e3ecd1ee614f5adc093202d11889bee33369943e`。`members.workspace_id`・`MemberWorkspaceBackfillService`・`MEMBERS_WORKSPACE_ASSIGNMENT_POLICY.md`。テスト **325**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **DASHBOARD-STALE-WORKSPACE-P2（develop 取り込み）:** merge `fb8515b98acf7d7b9f4508599d5ed0dd6c9b09b5`。stale peer 案A・workspace 見送り理由・`stalePeerMemberIds`。テスト **321**・build OK。Evidence 追記コミットあり。 |
 | 2026-03-20 | **MEMBER-SUMMARY-WORKSPACE-NULL-P1（develop 取り込み）:** merge `2bcee33cafa27b3c14b5d71400952e14b45603ee`。Query OR NULL・テスト **321**・build OK。Evidence 追記コミットあり。 |

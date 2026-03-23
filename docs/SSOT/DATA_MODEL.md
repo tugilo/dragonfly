@@ -344,9 +344,16 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 
 | 値 | 意味 |
 |----|------|
-| planned | 予定 |
+| planned | 予定・準備中 |
 | completed | 実施済み |
-| canceled | キャンセル |
+| canceled | 予定が無効になった事実を残す**業務上の正規状態**（キャンセル）。「削除の代わり」ではなく、**無効化を履歴として残す**ための値。 |
+
+**削除ポリシー（ONETOONES-DELETE-POLICY-P1・SSOT）:**
+
+- **`one_to_ones` を物理削除する API / UI は採用しない**（製品方針）。レコードは **関係性の履歴**として保持する。
+- 予定を取り消す・誤登録を手当てする場合は **`status = canceled`** に変更する（または `planned` のまま編集で修正する）。重複登録は **当面 `canceled` で片方を無効化** して運用し、将来の重複警告は別 Phase で検討する。
+- テスト・開発用のデータ掃除は **UI からの削除ではなく DB 運用**（Artisan / SQL 等）で行う。
+- 物理削除を入れると `contact_memos.one_to_one_id` の `nullOnDelete`・Dashboard / Members 集計・Activity の意味が変わるため、現時点では見送る。詳細は [ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md) を参照。
 
 #### 4.12.1 `one_to_one_status`（リード一覧・Members / Dashboard）
 

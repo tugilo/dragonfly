@@ -94,6 +94,7 @@
 | MEMBER-SUMMARY-WORKSPACE-NULL-P1 | MemberSummaryQuery workspace OR NULL 整合（DATA_MODEL §5.1）+ SSOT + テスト + merge / Evidence | implement | completed | feature/phase-member-summary-workspace-null-p1 | 2026-03-20 |
 | DASHBOARD-STALE-WORKSPACE-P2 | stale peer 定義・workspace 見送り理由・stalePeerMemberIds + SSOT + merge / Evidence | implement | completed | feature/phase-dashboard-stale-workspace-p2 | 2026-03-20 |
 | MEMBERS-WORKSPACE-BACKFILL-P1 | members.workspace_id migration + MemberWorkspaceBackfillService + SSOT + merge / Evidence | implement | completed | feature/phase-members-workspace-backfill-p1 | 2026-03-20 |
+| ONETOONES-DELETE-POLICY-P1 | 1 to 1 削除不採用の SSOT 固定・`canceled` 正規化・一覧 `exclude_canceled` 既定・docs + merge / Evidence | implement | completed | feature/phase-onetoones-delete-policy-p1 | 2026-03-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

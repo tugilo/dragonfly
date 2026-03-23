@@ -185,7 +185,7 @@
 | O10 | ステータス列 | chip ＋ 日本語（予定/完了/キャンセル系） | MUI **Chip**＋日本語（未知キーはフォールバック） | **Fit（ONETOONES-P2）** |
 | O11 | Meeting 列 | `#247 — 日付` 形式の chip | **`meeting_label`（Chip）**＋ API で `meeting_number` / `meeting_held_on` 付与 | **Fit（ONETOONES-P2）** |
 | O12 | メモ列 | ellipsis | `notes` + `ellipsis` | **Fit** |
-| O13 | 行アクション | 📝 メモ、✏️ 編集（各行） | **操作**列: メモは Dialog（**notes＝要約** の説明＋「編集でメモを更新」）、編集は `#/one-to-ones/:id` | **Partial Fit（ONETOONES-P1/P3）:** contact_memos 連携は別 |
+| O13 | 行アクション | 📝 メモ、✏️ 編集（各行） | **操作**列: メモは Dialog（**notes＝要約** の説明＋「編集でメモを更新」）、編集は `#/one-to-ones/:id`。**削除なし** | **Partial Fit（ONETOONES-P1/P3）:** contact_memos 連携は別。**Gap:** 削除 UI/API は未実装（要件整理は [ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md)） |
 | O14 | 新規登録 UI | **モーダル** | **クイック作成 Dialog**（一覧）＋ **`/one-to-ones/create` フルページ** | **Partial Fit（ONETOONES-P3）:** 主導線を Dialog に寄せた |
 | O15 | 新規フォーム項目 | 日付・時刻・相手・ステータス・関連例会・メモ | クイック: 相手・状態・**datetime-local**・`meeting_id`・**notes**。フル: Owner（**me 既定・変更可**）・他 | **Partial Fit:** Owner は一覧と Create で自動初期化。**Gap:** モックの日付+時刻分割 |
 
@@ -197,6 +197,7 @@
   2. **モック級の補助文案**（例: 先月比、カード副文案の細部）。
   3. **新規 UI:** モックの単一モーダルとは異なり **Dialog＋フルページ** の二段（ONETOONES-P3）。
   4. **行メモ:** 一覧は `notes` 閲覧＋編集誘導。`contact_memos` 本格・Members 連携は未。
+  5. **削除:** モックにも **DELETE 導線は無い**が、現状の実装にも **DELETE API / 削除 UI は無い**（`status` で `canceled` は可）。製品として削除を要するかは [ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md) を参照。
 
 ### 6.4 実装メモ（ONETOONES-P1）
 
@@ -222,6 +223,19 @@
 - **Stats:** `OneToOneIndexService::applyIndexFilters` を stats と共有。`OneToOnesList` は `filterValues` から stats query を構築。
 - **履歴メモ:** `GET/POST /api/one-to-ones/{id}/memos`、`OneToOnesEdit` 内 `OneToOneMemosPanel`。
 - **users/me:** 応答に `id`、`member_id`（= `owner_member_id`）。
+
+### 6.8 削除ポリシー（製品方針として確定・ONETOONES-DELETE-POLICY-P1）
+
+- **API:** `DELETE /api/one-to-ones/{id}` は **なし**（**不足ではなく未採用**）。
+- **UI:** 削除ボタンなし。無効化は **`status = canceled`**（DATA_MODEL §4.12・[ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md)）。
+- **一覧:** 既定で **キャンセル行を一覧から除く**（`exclude_canceled`）。必要時はフィルタで「状態」や「キャンセルを一覧から除く」を変更。
+
+### 6.9 Create UX 改善（要件 SSOT・未実装）
+
+- **相手:** 選択後にメンバー情報サマリを表示したい（現状は `#番号 名前` の Select のみ）。
+- **日時:** `scheduled_at` + 所要時間（30/60/90 分等）で終了予定（`ended_at`）を自動入力する導線（現状は 3 つの `DateTimeInput`）。
+- **例会:** `meeting_id` の数値直打ちではなく、例会一覧から選択したい。
+- 詳細: [ONETOONES_CREATE_UX_REQUIREMENTS.md](ONETOONES_CREATE_UX_REQUIREMENTS.md)。
 
 ---
 

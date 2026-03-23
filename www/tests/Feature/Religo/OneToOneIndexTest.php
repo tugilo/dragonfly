@@ -235,4 +235,37 @@ class OneToOneIndexTest extends TestCase
         $this->assertCount(1, $data);
         $this->assertSame('Target1', $data[0]['target_name']);
     }
+
+    public function test_exclude_canceled_filters_out_canceled_when_owner_scoped(): void
+    {
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'planned',
+            'notes' => 'P',
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target2Id,
+            'status' => 'canceled',
+            'notes' => 'X',
+        ]);
+        $base = '/api/one-to-ones?owner_member_id=' . $this->ownerId;
+        $all = $this->getJson($base);
+        $all->assertOk();
+        $this->assertCount(2, $all->json());
+
+        $ex = $this->getJson($base . '&exclude_canceled=1');
+        $ex->assertOk();
+        $data = $ex->json();
+        $this->assertCount(1, $data);
+        $this->assertSame('planned', $data[0]['status']);
+
+        $onlyCanceled = $this->getJson($base . '&status=canceled');
+        $onlyCanceled->assertOk();
+        $this->assertCount(1, $onlyCanceled->json());
+        $this->assertSame('canceled', $onlyCanceled->json()[0]['status']);
+    }
 }

@@ -7,6 +7,7 @@ import {
     TextInput,
     NumberInput,
     SelectInput,
+    BooleanInput,
     Filter,
     TopToolbar,
     Button,
@@ -108,6 +109,10 @@ function buildOneToOneStatsQuery(filterValues) {
     }
     if (filterValues?.to) {
         q.set('to', filterValues.to);
+    }
+    const ex = filterValues?.exclude_canceled;
+    if (ex !== undefined && ex !== null && ex !== '') {
+        q.set('exclude_canceled', ex ? '1' : '0');
     }
     const qText = filterValues?.q != null ? String(filterValues.q).trim() : '';
     if (qText !== '') {
@@ -310,6 +315,7 @@ export function OneToOnesListFilters() {
     return (
         <Filter>
             <NumberInput source="owner_member_id" label="Owner（自分）ID" alwaysOn />
+            <BooleanInput source="exclude_canceled" label="キャンセルを一覧から除く" alwaysOn />
             <TextInput source="q" label="検索（相手名・メモ）" resettable />
             <TargetMemberFilterSelect />
             <SelectInput source="status" choices={STATUS_CHOICES} label="状態" emptyText="すべて" />
@@ -518,7 +524,7 @@ function OneToOnesListBody({ onMemoOpen }) {
     return (
         <>
             <Typography variant="body2" color="text.secondary" sx={{ px: 2, pt: 1.5, pb: 0, maxWidth: 720 }}>
-                予定・実施・キャンセル履歴の管理
+                予定・実施・キャンセル履歴の管理。1 to 1 は関係性の履歴として保持し、レコード削除は行いません。予定を無効化する場合は状態を「キャンセル」に変更してください。
             </Typography>
             <OneToOnesStatsCards />
             {!isLoading && (
@@ -589,13 +595,13 @@ export function OneToOnesList() {
     const [memoRecord, setMemoRecord] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
     const [listReady, setListReady] = useState(false);
-    const [filterDefaults, setFilterDefaults] = useState({ owner_member_id: 1 });
+    const [filterDefaults, setFilterDefaults] = useState({ owner_member_id: 1, exclude_canceled: true });
 
     useEffect(() => {
         let cancelled = false;
         fetchReligoOwnerMemberId().then((id) => {
             if (!cancelled) {
-                setFilterDefaults({ owner_member_id: ownerMemberIdFallback(id) });
+                setFilterDefaults({ owner_member_id: ownerMemberIdFallback(id), exclude_canceled: true });
                 setListReady(true);
             }
         });
