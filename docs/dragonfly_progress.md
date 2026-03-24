@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-24 | **CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT:** `DragonFlyBoard.jsx` に `formatMemberPrimaryLine` / `formatMemberSecondaryLine` / `formatMemberAutocompleteLabel`。左ペイン・BO 割当行・Autocomplete・Relationship Log 見出し・メンバー詳細モーダルで表示統一。API 変更なし。`npm run build` OK。PLAN/WORKLOG/REPORT・REGISTRY・INDEX 更新。 |
+| 2026-03-24 | **Connections BO カテゴリ表示 要件・Fit/Gap（docs）:** `CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY.md` を追加。BO 割当リスト・Autocomplete・Relationship Log 見出しで **名前＋カテゴリ**を左ペインと揃える要件。現状 Gap（F2〜F4）と API は変更不要のメモ。`docs/INDEX.md` 更新。コード変更なし。 |
 | 2026-03-23 | **DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1（develop 取り込み）:** Dashboard 1to1 KPI に **総登録・予定・キャンセル**（`one_to_one_*_count`）と `subtexts.one_to_one_inventory`。主指標は従来どおり **今月実施**。KPI カード「今月の1to1（実施）」2 行目。`verify-summary` 拡張。`DASHBOARD_DATA_SSOT`・`DASHBOARD_FIT_AND_GAP`。PLAN/WORKLOG/REPORT・REGISTRY・INDEX。`php artisan test` 329・`npm run build` OK。Merge Evidence: `PHASE_DASHBOARD_ONETOONES_SUMMARY_EXPANSION_P1_REPORT` §8。 |
 | 2026-03-23 | **Dashboard stats 実数検証:** `DASHBOARD_DATA_SSOT` **§6**（Raw SQL テンプレ・TZ 注意・チェックリスト）。`DashboardService::countStaleContacts` 抽出。`DashboardSummaryVerificationService`・`php artisan dashboard:verify-summary {owner}`・**local のみ** `GET /api/debug/dashboard-summary?owner_member_id=`。`docs/INDEX.md`。`php artisan test` 328 通過。 |
 | 2026-03-23 | **ONETOONES_DASHBOARD_TARGET_PREFILL_P4（develop 取り込み）:** **`target_member_id` URL プリフィル**を SSOT 化。Create は **オーナースコープ**で target 検証。Dashboard **Tasks stale** の「1to1予定」に `?target_member_id=`。Quick Create は一覧 URL クエリを反映。`ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md`・`DASHBOARD_DATA_SSOT` §3 更新。Merge Evidence: `PHASE_ONETOONES_DASHBOARD_TARGET_PREFILL_P4_REPORT` §8。 |
