@@ -35,6 +35,7 @@ Connections（`DragonFlyBoard`）において、BO 割当済み行・BO 追加 A
 - `docs/process/PHASE_REGISTRY.md`
 - `docs/INDEX.md`
 - `docs/dragonfly_progress.md`
+- `docs/SSOT/CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY.md`
 
 ---
 
@@ -42,9 +43,9 @@ Connections（`DragonFlyBoard`）において、BO 割当済み行・BO 追加 A
 
 | 確認 | 結果 |
 |------|------|
-| `npm run build` | 成功 |
-| `php artisan test` | **329 passed**（バックエンド変更なし・回帰確認） |
-| ブラウザ手動 | 未実施（検証観点は WORKLOG / §5） |
+| `npm run build` | 成功（実装直後・および **merge 後の develop 上で再実行**） |
+| `php artisan test` | **329 passed**（実装時・**merge 後 develop 上で再実行**） |
+| ブラウザ手動 | **実施済み**（問題なし） |
 
 ---
 
@@ -60,19 +61,24 @@ Connections（`DragonFlyBoard`）において、BO 割当済み行・BO 追加 A
 
 ## 6. 残課題
 
-- **develop への merge / push** は本レポート作成時点では未実施。運用ルールに従い、別途 `feature` ブランチでコミット後、`--no-ff` merge と `php artisan test` を実施してから push すること。
+- **なし**（`develop` への `--no-ff` merge・`origin/develop` push・本 REPORT の Merge Evidence 追記まで完了）。
 
 ---
 
-## 7. Merge Evidence（取り込み時に追記）
+## 7. Merge Evidence（取り込み証跡）
 
 | 項目 | 値 |
 |------|-----|
-| merge commit id | （取り込み後に記入） |
+| feature commit id | `a6633f2ca7f06718e765e066cd95606bb25ad90c` |
+| merge commit id | `64fa80afe11aa6a69683371d80e39746fa93c6cc` |
 | source branch | `feature/phase-connections-bo-member-category-display-implement` |
 | target branch | `develop` |
-| test command | `php artisan test`（フロントのみ Phase のため任意） |
-| test result | （記入） |
+| merge コマンド | `git merge --no-ff feature/phase-connections-bo-member-category-display-implement -m "Merge feature/phase-connections-bo-member-category-display-implement into develop"` |
+| push | `git push origin develop`（**完了**） |
+| feature ブランチ push | `git push origin feature/phase-connections-bo-member-category-display-implement`（参照用・**完了**） |
+| `php artisan test` | **329 passed**（merge 後 develop） |
+| `npm run build` | 成功（merge 後 develop） |
+| 記録日時 | 2026-03-24（JST 前提・ローカル記録） |
 
 ---
 
@@ -80,7 +86,7 @@ Connections（`DragonFlyBoard`）において、BO 割当済み行・BO 追加 A
 
 - scope check: **OK**（`DragonFlyBoard.jsx` 中心 + 必須 process/docs）
 - ssot check: **OK**
-- dod check: **OK**（コード・ドキュメント・記録完了。merge は運用側）
+- dod check: **OK**（コード・ドキュメント・記録・**merge / push / Evidence** 完了）
 
 ---
 
