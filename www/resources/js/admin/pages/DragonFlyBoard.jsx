@@ -127,7 +127,7 @@ function calculateIntroductionHints(members, calculateRelationshipScoreFn) {
         return score >= 2;
     });
     const categoryKey = (m) => (m.category?.name || m.category?.group_name || '').trim();
-    const nameStr = (m) => `${m.display_no || ''} ${m.name}`.trim() || m.name || `#${m.id}`;
+    const nameStr = (m) => formatMemberPrimaryLine(m) || m.name || `#${m.id}`;
     const pairs = [];
     for (let i = 0; i < withContact.length; i++) {
         for (let j = i + 1; j < withContact.length; j++) {
@@ -165,6 +165,35 @@ async function putMeetingBreakouts(meetingId, payload) {
         throw new Error(j.message || `PUT breakouts ${res.status}`);
     }
     return res.json();
+}
+
+/**
+ * Connections 共通: 1 行目（主表示）— display_no + name。空なら #id
+ * SSOT: CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY.md §4
+ */
+function formatMemberPrimaryLine(member) {
+    if (!member || member.id == null) return '';
+    const line = `${member.display_no || ''} ${member.name || ''}`.trim();
+    return line || `#${member.id}`;
+}
+
+/**
+ * Connections 共通: 2 行目（副表示）— 大/実カテゴリ、なければ current_role。どちらも無ければ null（行を出さない）
+ */
+function formatMemberSecondaryLine(member) {
+    if (!member) return null;
+    const cat = [member.category?.group_name, member.category?.name].filter(Boolean).join(' / ');
+    if (cat) return cat;
+    const role = (member.current_role || '').trim();
+    return role || null;
+}
+
+/** Autocomplete の filter / 入力補助用: 主＋副を 1 文字列に（副が無ければ主のみ） */
+function formatMemberAutocompleteLabel(member) {
+    if (!member) return '';
+    const p = formatMemberPrimaryLine(member);
+    const s = formatMemberSecondaryLine(member);
+    return s ? `${p} ${s}` : p;
 }
 
 export default function DragonFlyBoard() {
@@ -790,8 +819,8 @@ export default function DragonFlyBoard() {
                     </Box>
                     <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
                         {filteredMembers.map((m) => {
-                            const name = `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`;
-                            const sub = [m.category?.group_name, m.category?.name].filter(Boolean).join(' / ') || m.current_role || '';
+                            const name = formatMemberPrimaryLine(m);
+                            const sub = formatMemberSecondaryLine(m);
                             const isSel = targetMember?.id === m.id;
                             const hasBoRooms = selectedMeetingId && roundsEdit[0]?.rooms?.length > 0;
                             const openAssignMenu = (e) => {
@@ -1023,8 +1052,26 @@ export default function DragonFlyBoard() {
                                                         value={null}
                                                         sx={{ width: '100%', mb: 1 }}
                                                         options={members.filter((x) => !assignedInThisRoom.has(x.id))}
-                                                        getOptionLabel={(m) => `${m.display_no || ''} ${m.name}`.trim() || `#${m.id}`}
+                                                        getOptionLabel={(m) => formatMemberAutocompleteLabel(m)}
                                                         onChange={(_, v) => v && toggleRoundMember(0, roomLabel, v.id)}
+                                                        renderOption={(props, option) => {
+                                                            const { key: optKey, ...optionProps } = props;
+                                                            const sec = formatMemberSecondaryLine(option);
+                                                            return (
+                                                                <Box key={optKey ?? option.id} component="li" {...optionProps}>
+                                                                    <Box sx={{ py: 0.25 }}>
+                                                                        <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
+                                                                            {formatMemberPrimaryLine(option)}
+                                                                        </Typography>
+                                                                        {sec ? (
+                                                                            <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>
+                                                                                {sec}
+                                                                            </Typography>
+                                                                        ) : null}
+                                                                    </Box>
+                                                                </Box>
+                                                            );
+                                                        }}
                                                         renderInput={(params) => (
                                                             <TextField
                                                                 {...params}
@@ -1036,13 +1083,15 @@ export default function DragonFlyBoard() {
                                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mb: 1 }}>
                                                         {(room.member_ids ?? []).map((id) => {
                                                             const mem = members.find((x) => x.id === id);
-                                                            const label = mem ? `${mem.display_no || ''} ${mem.name}`.trim() || `#${id}` : `#${id}`;
+                                                            const primary = mem ? formatMemberPrimaryLine(mem) : `#${id}`;
+                                                            const secondary = mem ? formatMemberSecondaryLine(mem) : null;
+                                                            const ariaBase = primary;
                                                             return (
                                                                 <Box
                                                                     key={id}
                                                                     sx={{
                                                                         display: 'flex',
-                                                                        alignItems: 'center',
+                                                                        alignItems: 'flex-start',
                                                                         justifyContent: 'space-between',
                                                                         gap: 0.5,
                                                                         py: 0.75,
@@ -1067,19 +1116,24 @@ export default function DragonFlyBoard() {
                                                                             cursor: mem ? 'pointer' : 'default',
                                                                             py: 0.25,
                                                                             px: 0,
-                                                                            fontSize: 13,
-                                                                            fontWeight: 600,
                                                                             color: 'text.primary',
                                                                             '&:hover': mem ? { color: 'primary.main' } : {},
                                                                         }}
                                                                     >
-                                                                        {label}
+                                                                        <Typography sx={{ fontSize: 13, fontWeight: 600, display: 'block' }}>
+                                                                            {primary}
+                                                                        </Typography>
+                                                                        {secondary ? (
+                                                                            <Typography sx={{ fontSize: 10, color: 'text.secondary', display: 'block', mt: 0.125 }}>
+                                                                                {secondary}
+                                                                            </Typography>
+                                                                        ) : null}
                                                                     </Box>
                                                                     <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                                                                         <IconButton
                                                                             size="small"
                                                                             onClick={() => openMemoDialogForMeetingMember(selectedMeetingId, id, round.label, roomLabel)}
-                                                                            aria-label={`${label}にメモ`}
+                                                                            aria-label={`${ariaBase}にメモ`}
                                                                             sx={{ p: 0.35 }}
                                                                         >
                                                                             <EditNoteIcon fontSize="small" />
@@ -1087,7 +1141,7 @@ export default function DragonFlyBoard() {
                                                                         <IconButton
                                                                             size="small"
                                                                             onClick={() => toggleRoundMember(0, roomLabel, id)}
-                                                                            aria-label={`${label}を削除`}
+                                                                            aria-label={`${ariaBase}を削除`}
                                                                             sx={{ p: 0.35 }}
                                                                         >
                                                                             <Typography component="span" sx={{ fontSize: 16, lineHeight: 1, color: 'text.secondary' }}>×</Typography>
@@ -1183,9 +1237,23 @@ export default function DragonFlyBoard() {
                         <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
                             🔗 Relationship Log
                         </Typography>
-                        <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>
-                            {targetMember ? `${targetMember.display_no || ''} ${targetMember.name}`.trim() || targetMember.name : '← メンバーを選択'}
-                        </Typography>
+                        {targetMember ? (() => {
+                            const rlSec = formatMemberSecondaryLine(targetMember);
+                            return (
+                                <Box>
+                                    <Typography sx={{ fontSize: 12, fontWeight: 600, color: 'text.primary' }}>
+                                        {formatMemberPrimaryLine(targetMember)}
+                                    </Typography>
+                                    {rlSec ? (
+                                        <Typography sx={{ fontSize: 10, color: 'text.secondary', mt: 0.25 }}>
+                                            {rlSec}
+                                        </Typography>
+                                    ) : null}
+                                </Box>
+                            );
+                        })() : (
+                            <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>← メンバーを選択</Typography>
+                        )}
                     </Box>
                     <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
                         {!targetMember && (
@@ -1430,10 +1498,10 @@ export default function DragonFlyBoard() {
                                 </Box>
                                 <Box sx={{ minWidth: 0 }}>
                                     <Typography variant="h6" sx={{ fontSize: 16 }}>
-                                        {`${memberDetailModalMember.display_no || ''} ${memberDetailModalMember.name}`.trim() || memberDetailModalMember.name || `#${memberDetailModalMember.id}`}
+                                        {formatMemberPrimaryLine(memberDetailModalMember)}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
-                                        {[memberDetailModalMember.category?.group_name, memberDetailModalMember.category?.name].filter(Boolean).join(' / ') || memberDetailModalMember.current_role || '—'}
+                                        {formatMemberSecondaryLine(memberDetailModalMember) ?? '—'}
                                     </Typography>
                                 </Box>
                             </Box>

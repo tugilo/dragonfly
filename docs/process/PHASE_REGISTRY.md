@@ -99,6 +99,7 @@
 | ONETOONES_QUICK_CREATE_UX_P3 | 1 to 1 一覧 Quick Create Dialog を `OneToOneFormFields` + `buildOneToOnePayload` に統一 + SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-quick-create-ux-p3 | 2026-03-23 |
 | ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | `target_member_id` URL プリフィル統一（Create scoped 検証・Tasks stale リンク・Quick Create URL）+ SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-dashboard-target-prefill-p4 | 2026-03-23 |
 | DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1 | Dashboard 1to1 KPI 拡張（総登録・予定・キャンセル・inventory subtext・verify-summary）+ SSOT + merge / Evidence | implement | completed | feature/phase-dashboard-onetoones-summary-expansion-p1 | 2026-03-23 |
+| CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT | Connections BO 周り・Relationship Log 見出しにカテゴリ/役職副行（左ペインと同一ヘルパー）+ PLAN/WORKLOG/REPORT | implement | completed | feature/phase-connections-bo-member-category-display-implement | 2026-03-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
