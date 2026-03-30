@@ -11,6 +11,11 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box } from '@mui/material';
+import {
+    formatMemberPrimaryLine,
+    formatMemberSecondaryLine,
+    formatMemberAutocompleteLabel,
+} from '../utils/memberDisplay';
 
 async function fetchJson(url) {
     const res = await fetch(url, { headers: { Accept: 'application/json' } });
@@ -32,11 +37,9 @@ export function memberFilterMatches(member, inputValue) {
     return name.includes(q) || cat.toLowerCase().includes(q);
 }
 
+/** @deprecated 直接は formatMemberPrimaryLine を使用可 */
 export function memberOptionLabel(m) {
-    if (!m) {
-        return '';
-    }
-    return `${m.display_no ?? ''} ${m.name ?? ''}`.trim() || `#${m.id}`;
+    return formatMemberPrimaryLine(m);
 }
 
 /**
@@ -67,13 +70,27 @@ export function MemberSearchAutocompleteInput(props) {
             disabled={disabled}
             loading={loading}
             options={options}
-            getOptionLabel={(o) => memberOptionLabel(o)}
+            getOptionLabel={(o) => formatMemberAutocompleteLabel(o)}
             isOptionEqualToValue={(a, b) => String(a.id) === String(b.id)}
             value={selected}
             onChange={(_, v) => field.onChange(v?.id ?? null)}
             onBlur={field.onBlur}
             filterOptions={(opts, state) => opts.filter((m) => memberFilterMatches(m, state.inputValue))}
             noOptionsText="該当なし"
+            renderOption={(props, option) => {
+                const { key: optKey, ...optionProps } = props;
+                const sec = formatMemberSecondaryLine(option);
+                return (
+                    <Box key={optKey ?? option.id} component="li" {...optionProps}>
+                        <Box sx={{ py: 0.25 }}>
+                            <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{formatMemberPrimaryLine(option)}</Typography>
+                            {sec ? (
+                                <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sec}</Typography>
+                            ) : null}
+                        </Box>
+                    </Box>
+                );
+            }}
             renderInput={(params) => (
                 <TextField
                     {...params}

@@ -1,0 +1,2283 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>鐘庵本部</LastAuthor>
+  <Created>2026-03-25T13:59:40Z</Created>
+  <LastSaved>2026-03-25T13:59:26Z</LastSaved>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <SupBook>
+   <Path>/Library/Application Support/Microsoft/Office365/User Content.localized/Startup/Excel/AcrobatExcelAddin.xlam</Path>
+   <SheetName>Sheet1</SheetName>
+   <Xct>
+    <Count>0</Count>
+    <SheetIndex>0</SheetIndex>
+   </Xct>
+  </SupBook>
+  <WindowHeight>17360</WindowHeight>
+  <WindowWidth>28300</WindowWidth>
+  <WindowTopX>32767</WindowTopX>
+  <WindowTopY>3060</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="游ゴシック" x:CharSet="128" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="m46803041944">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="m46803041964">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="m46803041984">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s113">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#E6E8ED" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s114">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#E6E8ED" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s115">
+   <Font ss:FontName="游ゴシック" x:CharSet="128" ss:Size="16" ss:Color="#000000"/>
+  </Style>
+  <Style ss:ID="s116">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#E6E8ED" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s117">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#E6E8ED" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s118">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#E6E8ED" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="[$-411]yyyy&quot;年&quot;mm&quot;月&quot;dd&quot;日&quot;\ h:mm:ss\ AM/PM"/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s119">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s120">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s121">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s122">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s123">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s124">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000" ss:Bold="1"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s125">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s126">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s129">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s132">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s133">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#FFFFFF"/>
+   <Interior ss:Color="#CF2030" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s134">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s135">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s136">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s137">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#F5F7F7" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s138">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#F5F7F7" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s139">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#F5F7F7" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s140">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s141">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders/>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s142">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s144">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s146">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#000000"/>
+   </Borders>
+   <Font ss:FontName="sans-serif" ss:Size="16" ss:Color="#000000"/>
+   <Interior ss:Color="#F5F7F7" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Names>
+  <NamedRange ss:Name="__bookmark_1" ss:RefersTo="=Report!R36C1:R90C21"/>
+  <NamedRange ss:Name="_recreated__bookmark__10" ss:RefersTo="=Report!R7C1:R34C10"/>
+  <NamedRange ss:Name="_recreated__bookmark__11" ss:RefersTo="=Report!R7C11:R9C22"/>
+  <NamedRange ss:Name="_recreated__bookmark__9" ss:RefersTo="=Report!R6C1:R35C22"/>
+  <NamedRange ss:Name="auto_generated_bookmark_0" ss:RefersTo="=Report!R1C1"/>
+  <NamedRange ss:Name="auto_generated_bookmark_1" ss:RefersTo="=Report!R3C5"/>
+  <NamedRange ss:Name="auto_generated_bookmark_2" ss:RefersTo="=Report!R2C1:R3C22"/>
+  <NamedRange ss:Name="auto_generated_bookmark_3" ss:RefersTo="=Report!R1C1:R3C22"/>
+  <NamedRange ss:Name="parameter_table" ss:RefersTo="=Report!R4C1:R5C22"/>
+ </Names>
+ <Worksheet ss:Name="Report">
+  <Table ss:ExpandedColumnCount="22" ss:ExpandedRowCount="90" x:FullColumns="1"
+   x:FullRows="1" ss:StyleID="s115" ss:DefaultColumnWidth="75"
+   ss:DefaultRowHeight="27">
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="322"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="44"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="69"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="10"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="55"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="22" ss:Span="1"/>
+   <Column ss:Index="8" ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="38"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="101"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="51"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="129"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="24"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="20"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="18"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="27"/>
+   <Column ss:StyleID="s115" ss:Width="22"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="8"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="19"/>
+   <Column ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="14"/>
+   <Column ss:StyleID="s115" ss:Width="22" ss:Span="1"/>
+   <Column ss:Index="22" ss:StyleID="s115" ss:AutoFitWidth="0" ss:Width="125"/>
+   <Row>
+    <Cell ss:MergeAcross="16" ss:StyleID="s113"><Data ss:Type="String">チャプター&gt; メンバーリスト</Data><NamedCell
+      ss:Name="auto_generated_bookmark_0"/><NamedCell
+      ss:Name="auto_generated_bookmark_3"/></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s114"><NamedCell
+      ss:Name="auto_generated_bookmark_3"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="3" ss:StyleID="s116"><Data ss:Type="String">オペレーター</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s116"><Data ss:Type="String">レポート日</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s116"><Data ss:Type="String">カントリー</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s116"><Data ss:Type="String">リージョン</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s116"><Data ss:Type="String">チャプター</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="3" ss:StyleID="s117"><Data ss:Type="String">次廣 淳</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s118"><Data ss:Type="DateTime">2026-03-25T22:53:25.000</Data><NamedCell
+      ss:Name="auto_generated_bookmark_1"/><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s117"><Data ss:Type="String">Japan</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s117"><Data ss:Type="String">BNI Tokyo NE 東京N.E.</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+    <Cell ss:MergeAcross="4" ss:StyleID="s117"><Data ss:Type="String">BNI DragonFly</Data><NamedCell
+      ss:Name="auto_generated_bookmark_3"/><NamedCell
+      ss:Name="auto_generated_bookmark_2"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="21" ss:StyleID="s114"><Data ss:Type="String">パラメーター</Data><NamedCell
+      ss:Name="parameter_table"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="9" ss:StyleID="s114"><Data ss:Type="String">チャプター:</Data><NamedCell
+      ss:Name="parameter_table"/></Cell>
+    <Cell ss:MergeAcross="11" ss:StyleID="s114"><Data ss:Type="String">BNI DragonFly</Data><NamedCell
+      ss:Name="parameter_table"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="9" ss:StyleID="s119"><Data ss:Type="String">役員</Data><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="11" ss:StyleID="s119"><Data ss:Type="String">リージョン・リーダー</Data><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s120"><Data ss:Type="String">プレジデント</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s121"><Data ss:Type="String">福上 大輝</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s140"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s121"><Data ss:Type="String">090-7864-6125</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s120"><Data ss:Type="String">エリアディレクター</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s121"><Data ss:Type="String">山崎 勇一</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s121"><Data ss:Type="String">03-6416-3821</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">バイスプレジデント</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">小中 貴晃</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">07014438808</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s122"><Data ss:Type="String">ディレクターコンサルタント</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">山崎 勇一</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">03-6416-3821</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">書記兼会計</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">舩杉 牧子</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">080-3437-2828</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="25" ss:StyleID="s124"><Data
+      ss:Type="String">アンバサダー</Data><NamedCell ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="25" ss:StyleID="s125"><Data
+      ss:Type="String">藤田 磨紀</Data><NamedCell ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="25" ss:StyleID="s125"><Data
+      ss:Type="String">090-2229-7444</Data><NamedCell
+      ss:Name="_recreated__bookmark__11"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">吉田 俊之</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">0778-51-8080</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">山本 三那子</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">0476-89-8811</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">松倉 健治</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">047-705-3543</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">船津 麻理子</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">080-3553-5220</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">中村 啓吾</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">0868-57-3577</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">海沼 功</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">0798-66-7661</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">加藤 隆太</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">03-3649-5370</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">ビジターホスト</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">槇村 翔磨</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">080-2063-8455</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">エデュケーション・コーディネーター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">西浦 雅</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">070-9092-8474</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">Event Co.(旧役職)</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンターコーディネーター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">平山 真由美</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">080-4805-4866</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">越賀 淑恵</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">090-4548-3941</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">今西 俊明</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">P</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">054-641-0245</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">廣田 誠悟</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">0256-62-4368</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">紀川 和弘</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">090-3894-9124</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会（ディベロップメント担当）</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会（審査担当）</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会（評価担当）</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">メンバーシップ委員会（規定運用担当）</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">Growth Co.(旧役職)</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><NamedCell ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">チャプターウェブマスター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">倉持 賢一</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">090-8309-4866</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">チャプターウェブマスター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">斎藤 和貴</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">018-827-5888</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">チャプターウェブマスター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">望月 雅幸</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">055-268-3322</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s122"><Data ss:Type="String">チャプターウェブマスター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s123"><Data ss:Type="String">飯田 千帆</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s141"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s123"><Data ss:Type="String">090-5187-2659</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="1" ss:StyleID="s124"><Data ss:Type="String">チャプターウェブマスター</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s125"><Data ss:Type="String">渡邊 真大</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:StyleID="s142"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s125"><Data ss:Type="String">080-3726-3989</Data><NamedCell
+      ss:Name="_recreated__bookmark__10"/><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="9" ss:StyleID="s126"><Data ss:Type="String">53 メンバー</Data><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+    <Cell ss:MergeAcross="11" ss:StyleID="s126"><Data ss:Type="String">与=リファーラル提供 受=リファーラル受領 ビ=ビジター 遅=遅刻 欠=欠席</Data><NamedCell
+      ss:Name="_recreated__bookmark__9"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:MergeAcross="2" ss:StyleID="s119"><Data ss:Type="String">メンバー名</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="m46803041944"><Data
+      ss:Type="String">専門</Data><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:MergeDown="1" ss:StyleID="m46803041964"><Data
+      ss:Type="String">会社名</Data><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:MergeDown="1" ss:StyleID="m46803041984"><Data
+      ss:Type="String">電話</Data><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="9" ss:StyleID="s119"><Data ss:Type="String">過去90日のデータ</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s129"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s119"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:Index="12" ss:MergeAcross="1" ss:StyleID="s132"><Data ss:Type="String">与</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s132"><Data ss:Type="String">受</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s133"><Data ss:Type="String">ビ</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s132"><Data ss:Type="String">1-1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s133"><Data ss:Type="String">遅</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s133"><Data ss:Type="String">欠</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">太田 一誠</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">販売（Retail） &gt; * 販売（Retail） &gt; ウルトラファインバブル</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-6183-1439</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">40</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">30</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">6</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">32</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">山本 三那子</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">法務・会計（Legal &amp; Accounting） &gt; 法務―相続関連（Estate Planning Law） &gt; 法務―相続関連（Estate Planning Law）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">フォルテ行政書士事務所</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0476-89-8811</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">23</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">26</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">22</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">清原 佳彩美</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; 化粧品・スキンケア（Cosmetics/Skin Care） &gt; 化粧品・スキンケア（Cosmetics/Skin Care）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社u'i</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-1840-9039</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">11</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">36</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">27</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">吉田 俊之</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">販売（Retail） &gt; ギフト（Gifts） &gt; ギフト（Gifts）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社 吉田屋漆器</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0778-51-8080</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">21</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">22</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">今西 俊明</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">P</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">IT（Computer &amp; Programming） &gt; アプリ開発（App Developer）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社アイエルシー</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">054-641-0245</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">19</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">21</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">23</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">木村 健悟</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">販売（Retail） &gt; 衣料品販売（Clothing &amp; Accessories Retailer） &gt; 衣料品販売（Clothing &amp; Accessories Retailer）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社ハート・プランニング</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">086-425-7371</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">19</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">18</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">9</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">松倉 健治</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">職人・設備工事・建設（Construction） &gt; * 職人・設備工事・建設（Construction） &gt; ガラスフィルム</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社松和</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">047-705-3543</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">25</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">14</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">54</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">西岡 優希</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">採用・人事（Employment Activities） &gt; 外国人労働者雇用（Employment of Foreign Workers） &gt; 外国人労働者雇用（Employment of Foreign Workers）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">協同組合優京</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-9814-1192</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">9</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">5</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">29</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">里見 允二</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">製造（Manufacturing） &gt; 包装用品（Packaging）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">サトミ紙工株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0868-28-1155</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">30</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">5</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">大村 凌弥</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; 動画撮影・映像制作（Videographer/Film Producer） &gt; 動画撮影・映像制作（Videographer/Film Producer）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">Heart Creation合同会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-9613-4572</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">6</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">福士 利明</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">交通・輸送（Transport &amp; Shipping） &gt; 配送（Courier） &gt; 配送（Courier）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社ユニバースプロダクツ</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0284-22-4124</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">30</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">7</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">22</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">海沼 功</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell><Data ss:Type="String">V</Data><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―一般（Business Consultant） &gt; ビジネスコンサルタント―一般（Business Consultant）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社Financial Intelligence</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0798-66-7661</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">13</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">7</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">12</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">飯田 千帆</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; 占星（Astrologist） &gt; 占星（Astrologist）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String"></Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">090-5187-2659</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">13</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">38</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">24</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">今村 千絵</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">医療・健康（Health &amp; Wellness） &gt; エッセンシャルオイル・アロマ（Essential Oils） &gt; ウェルネスコーチ、リンパケア</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">Latte Hua</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">090-7739-9826</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">19</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">41</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">18</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">紀川 和弘</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">金融・保険（Finance &amp; Insurance） &gt; 保険―損害（Property &amp; Casualty Insurance） &gt; 保険―損害（Property &amp; Casualty Insurance）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社AZZURRO</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">090-3894-9124</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">14</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">6</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">11</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">高野 和義</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">建築・インテリア・造園（Architecture &amp; Engineering） &gt; 建築サービス（Architectural Services） &gt; 建築サービス（Architectural Services）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社 T-エフォート</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0438-97-5631</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">13</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">11</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">22</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">斎藤 和貴</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; デジタルマーケティング（Digital Marketing） &gt; デジタルマーケティング（Digital Marketing）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社コンダクター</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">018-827-5888</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">39</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">中村 啓吾</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">製造（Manufacturing） &gt; アパレル・衣服（Apparel）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社笏本縫製</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0868-57-3577</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">18</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">46</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">33</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">平岡 国彦</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">職人・設備工事・建設（Construction） &gt; 解体（Demolition Contractor）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社 ZERO</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">047-629-5511</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">77</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">35</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">4</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">51</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">福上 大輝</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">職人・設備工事・建設（Construction） &gt; 改装・リノベーション（Renovations/Remodeling  ） &gt; 改装・リノベーション（Renovations/Remodeling  ）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">Fukugami株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">090-7864-6125</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">31</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">25</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">50</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">横山 尚武</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―一般（Business Consultant） &gt; ビジネスコンサルタント―一般（Business Consultant）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-5282-0144</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">12</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">7</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">33</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">後藤 岳久</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">C</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">旅行（Travel） &gt; 旅行代理店（Travel Agent）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">島田バス株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0547-36-8111</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">24</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">19</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">芳賀 崇利</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; メディアサービス（Media Services） &gt; メディアサービス（Media Services）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社いまじん</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">049-999-5471</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">30</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">3</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">25</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">佐久間 康丞</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスアドバイザー（Business Advisor） &gt; ビジネスアドバイザー（Business Advisor）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">tetote行政書士法人</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">022-212-5880</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">8</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">37</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">田渕 恭平</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">建築・インテリア・造園（Architecture &amp; Engineering） &gt; ガーデン/景観設計（Garden and landscape architect） &gt; ガーデン/景観設計（Garden and landscape architect）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">田渕石材株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-2998-1912</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">6</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">15</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">藤井 恵理子</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">販売（Retail） &gt; * 販売（Retail） &gt; 日傘製造</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">HiraTen</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-9122-7780</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">17</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">38</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">49</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">畠山 憲之</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">飲食（Food &amp; Beverage） &gt; 食品サービス（Food Service）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">有限会社いさみや</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0226-42-3056</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">15</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">74</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">11</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">佐藤 拓斗</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">採用・人事（Employment Activities） &gt; 採用・就職（Employment Agency） &gt; 採用・就職（Employment Agency）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社BrightLink</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">052-990-0349</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">25</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">27</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">54</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">軍司 敦哉</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; ソーシャルメディア（Social Media） &gt; ソーシャルメディア（Social Media）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">Conduct</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-8219-0430</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">5</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">岡元 智美</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; 販売促進（Sales Promotion）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String"></Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-3995-2410</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">33</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">50</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">58</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">梅澤 朗広</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―中小企業（Small Business） &gt; ビジネスコンサルタント―中小企業（Small Business）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">ＳＤＧｕｓサポーターズ株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">07039764443</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">28</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">9</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">27</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">山本 洸太</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; ウェブデザイン（Web Design） &gt; ウェブデザイン（Web Design）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">株式会社Quolia (クオリア)</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">050-5490-4009</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">54</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">62</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">74</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">立岡 海人</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">製造（Manufacturing） &gt; 革製品（Leather Products）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">立岡靴工房</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-3882-9078</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">12</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">15</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">越賀 淑恵</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―中小企業（Small Business） &gt; ビジネスコンサルタント―中小企業（Small Business）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">ケイティ＆アソシエイツ</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">090-4548-3941</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">34</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">23</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">3</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">63</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">次廣 淳</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">IT（Computer &amp; Programming） &gt; ITコンサルタント（IT Consultants） &gt; AI業務改善システム構築</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">tugilo</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">090-9917-1742</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">5</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">舩杉 牧子</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; * 個人向けサービス（Personal Services） &gt; 結婚相談所</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">FOTOSINTESI PARK</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-3437-2828</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">59</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">32</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">91</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">渡邊 真大</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; * 個人向けサービス（Personal Services） &gt; 着物に強い出張買取</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社プライスマイル</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-3726-3989</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">31</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">36</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">8</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">27</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">平山 真由美</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; * 個人向けサービス（Personal Services） &gt; シングルマザーコミュニティ、中古車</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">jewel bouquet</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-4805-4866</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">37</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">64</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">85</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">大竹 絵理香</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―一般（Business Consultant） &gt; ビジネスコンサルタント―一般（Business Consultant）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社ZERO</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0476-29-5511</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">17</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">24</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">42</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">槇村 翔磨</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">職人・設備工事・建設（Construction） &gt; 便利屋（Handyman）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">有限会社江南興業所</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-2063-8455</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">11</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">4</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">山口 薫</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">通信（Telecommunications） &gt; 通信関連商品/サービス（Telecommunications Products/Services） &gt; 通信関連商品/サービス（Telecommunications Products/Services）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社オンインオン</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-6236-7600</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">6</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">野口 裕子</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">個人向けサービス（Personal Services） &gt; 美容・理容・ヘアスタイリスト（Hair Stylist） &gt; 美容・理容・ヘアスタイリスト（Hair Stylist）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">ヘアーサロンViV</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">047-685-7101</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">廣田 誠悟</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">製造（Manufacturing） &gt; 金属加工（Steel Fabrication） &gt; 金属加工（Steel Fabrication）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">有限会社　広一化学工業</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0256-62-4368</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">21</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">28</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">長谷川 貴志</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">不動産・建物・メンテナンス（Real Estate Services） &gt; 住宅用不動産（Residential Real Estate Agent） &gt; 住宅用不動産（Residential Real Estate Agent）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">カクチョー不動産</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">0256-53-6464</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">14</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">13</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">小中 貴晃</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスアドバイザー（Business Advisor） &gt; ビジネスアドバイザー（Business Advisor）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">EFC株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">07014438808</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">34</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">29</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">倉持 賢一</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; 販売促進（Sales Promotion） &gt; 販売促進（Sales Promotion）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">合同会社ティーボックス</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">090-8309-4866</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">28</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">27</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">50</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">増本 重孝</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">P</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">職人・設備工事・建設（Construction） &gt; 有害生物防除（Pest Control）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社ワイエス</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">0547329779</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">89</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">25</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">5</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">208</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">加藤 隆太</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">法務・会計（Legal &amp; Accounting） &gt; 会計サービス（Accounting Services）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">阿久津公一税理士事務所</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">03-3649-5370</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">21</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">22</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">56</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">西浦 雅</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">広告 ・メディア ・ マーケティング（Advertising &amp; Marketing） &gt; オンラインマーケティング（Online Marketing） &gt; オンラインマーケティング（Online Marketing）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社Myria-mu</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">070-9092-8474</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">30</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">49</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">40</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">望月 雅幸</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">コンサルティング（Consulting） &gt; ビジネスコンサルタント―中小企業（Small Business） &gt; ビジネスコンサルタント―中小企業（Small Business）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">合同会社 Moon light</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">055-268-3322</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">13</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">8</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">14</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">飯田 香</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">医療・健康（Health &amp; Wellness） &gt; 健康・ヘルスケア製品（Health &amp; Wellness Products） &gt; 健康・ヘルスケア製品（Health &amp; Wellness Products）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String"></Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-1151-9256</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">21</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">1</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">34</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s146"><Data ss:Type="String">竹内 駿太</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s146"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s137"><Data ss:Type="String">金融・保険（Finance &amp; Insurance） &gt; 保険―生命・障害年金（Life and Disability Insurance）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s137"><Data ss:Type="String">ジブラルタ生命保険株式会社</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="String">080-2252-1645</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">20</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s138"><Data ss:Type="Number">16</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s138"><Data ss:Type="Number">10</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s139"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">船津 麻理子</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><Data ss:Type="String">V</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s144"><NamedCell ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s134"><Data ss:Type="String">医療・健康（Health &amp; Wellness） &gt; 眼科・アイケア（Eye Care） &gt; 眼科・アイケア（Eye Care）</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s134"><Data ss:Type="String">株式会社DEFi</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="String">080-3553-5220</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">43</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="s135"><Data ss:Type="Number">42</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">2</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s135"><Data ss:Type="Number">72</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+    <Cell ss:StyleID="s136"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="__bookmark_1"/></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.25" x:Left="0.25" x:Right="0.25" x:Top="0.25"/>
+   </PageSetup>
+   <Selected/>
+   <TopRowVisible>71</TopRowVisible>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>86</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

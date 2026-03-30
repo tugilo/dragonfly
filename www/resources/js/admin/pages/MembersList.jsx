@@ -42,6 +42,8 @@ import {
     RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED,
 } from '../religoOneToOneLeadLabels';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
+import { formatMemberPrimaryLine } from '../utils/memberDisplay';
+import { CONTACT_HELP_STALE_LINE, CONTACT_HELP_ONE_TO_ONE_COMPLETED_LINE } from '../contactUiCopy';
 
 const API = '';
 const OWNER_MEMBER_ID = 1;
@@ -99,6 +101,18 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
 
 const MembersModalContext = createContext(null);
 const ViewModeContext = createContext({ viewMode: 'list', setViewMode: () => {}, displaySortKey: 'display_no_asc', setDisplaySortKey: () => {} });
+
+function MembersContactHelpNote() {
+    return (
+        <Box sx={{ mb: 2, px: 0.5 }}>
+            <Typography variant="caption" color="text.secondary" component="div" sx={{ fontSize: 10, lineHeight: 1.5 }}>
+                {CONTACT_HELP_STALE_LINE}
+                <br />
+                {CONTACT_HELP_ONE_TO_ONE_COMPLETED_LINE}
+            </Typography>
+        </Box>
+    );
+}
 
 const MembersListActions = () => {
     return (
@@ -328,7 +342,7 @@ function CategoryField({ record }) {
 
 function LastContactField({ record }) {
     const d = record?.summary_lite?.last_contact_at;
-    if (!d) return <span>—</span>;
+    if (!d) return <span title="BO同席・メモ・1to1のいずれも日付が取れない場合">接触記録なし</span>;
     try {
         return <span>{new Date(d).toLocaleDateString('ja-JP')}</span>;
     } catch {
@@ -437,7 +451,7 @@ function MemberCard({ record }) {
     const sameRoom = s.same_room_count != null ? s.same_room_count : '—';
     const lastContact = s.last_contact_at
         ? (() => { try { return new Date(s.last_contact_at).toLocaleDateString('ja-JP'); } catch { return s.last_contact_at; } })()
-        : '—';
+        : '接触記録なし';
     const lastMemo = s.last_memo?.body_short;
     const interested = !!s.interested;
     const want1on1 = !!s.want_1on1;
@@ -464,7 +478,7 @@ function MemberCard({ record }) {
                     <Typography component="span" className="mc-no" variant="caption" sx={{ height: 19, px: 0.875, borderRadius: '9px', bgcolor: 'grey.200', color: 'grey.700', fontWeight: 700, display: 'inline-flex', alignItems: 'center' }}>#{no}</Typography>
                     <Chip size="small" label={role} sx={{ height: 22 }} />
                 </Box>
-                <Typography className="mc-name" variant="subtitle1" fontWeight={700}>{record.name}</Typography>
+                <Typography className="mc-name" variant="subtitle1" fontWeight={700}>{formatMemberPrimaryLine(record)}</Typography>
                 <Typography className="mc-kana" variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.25 }}>{(record.name_kana != null && String(record.name_kana).trim() !== '') ? String(record.name_kana).trim() : '—'}</Typography>
             </Box>
             <Box className="mc-body" sx={{ p: 1.5, flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -480,7 +494,9 @@ function MemberCard({ record }) {
                     </Box>
                     <Box sx={{ bgcolor: 'grey.50', borderRadius: 1, p: 0.75 }}>
                         <Typography variant="caption" color="text.secondary" display="block" sx={{ fontSize: '9px', fontWeight: 600, textTransform: 'uppercase' }}>最終接触</Typography>
-                        {contactWarn ? (
+                        {!s.last_contact_at ? (
+                            <Typography variant="caption" fontWeight={600} color="text.secondary">接触記録なし</Typography>
+                        ) : contactWarn ? (
                             <Typography variant="caption" color="warning.main" fontWeight={700}>⚠ {Math.floor((Date.now() - new Date(s.last_contact_at).getTime()) / 86400000)}日未接触</Typography>
                         ) : (
                             <Typography variant="body2" fontWeight={700}>{lastContact}</Typography>
@@ -967,7 +983,7 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const summary = member?.summary_lite || {};
     const lastContact = summary.last_contact_at
         ? (() => { try { return new Date(summary.last_contact_at).toLocaleDateString('ja-JP'); } catch { return summary.last_contact_at; } })()
-        : '—';
+        : '接触記録なし';
     const lastMemoBody = summary.last_memo?.body_short || (memos.length > 0 ? (memos[0].body || '').slice(0, 80) + ((memos[0].body && memos[0].body.length > 80) ? '…' : '') : null);
 
     return (
@@ -1055,13 +1071,14 @@ function MembersListInner() {
     return (
         <ViewModeContext.Provider value={{ viewMode, setViewMode, displaySortKey, setDisplaySortKey }}>
             <MembersStatsCards />
+            <MembersContactHelpNote />
             <MembersFilterBar />
             {viewMode === 'list' ? (
                     <Datagrid rowClick={false}>
                     <TextField source="display_no" label="番号" emptyText="—" sortable />
                     <FunctionField label="名前" sortable sortBy="name" source="name" render={(r) => (
                         <Box>
-                            <Typography variant="body2" component="span">{r?.name ?? '—'}</Typography>
+                            <Typography variant="body2" component="span">{r ? formatMemberPrimaryLine(r) : '—'}</Typography>
                             {(r?.name_kana != null && String(r.name_kana).trim() !== '') && (
                                 <Typography variant="caption" display="block" color="text.secondary">{String(r.name_kana).trim()}</Typography>
                             )}

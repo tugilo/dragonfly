@@ -62,7 +62,7 @@
 
 ## 6. 実装時のメモ（実装 Phase 向け）
 
-- **ヘルパー化:** `formatMemberPrimaryLine(m)` / `formatMemberSecondaryLine(m)` のように共通化すると、左・中央・右で表記がずれない。
+- **ヘルパー化:** `formatMemberPrimaryLine(m)` / `formatMemberSecondaryLine(m)` は **`www/resources/js/admin/utils/memberDisplay.js`** に集約（Connections 以外の画面からも import）。
 - **Autocomplete:** `getOptionLabel` を 1 行に詰めると長くなる場合は、`renderOption` で 2 行表示（主＋副）を検討。
 - **アクセシビリティ:** `aria-label` に全文を入れすぎないよう、必要なら「名前」のみ短く残し、視覚表示でカテゴリを補うか、規約を決めて統一。
 - **検索:** 左ペインのフィルタは既にカテゴリ文字列を含む。Autocomplete の `filterOptions` は MUI デフォルトで `getOptionLabel` 全体にマッチするため、**ラベルにカテゴリを含めると検索挙動が変わる** — 意図した挙動か確認する。

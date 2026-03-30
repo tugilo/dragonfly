@@ -6,6 +6,7 @@ import DashboardTasksPanel from './dashboard/DashboardTasksPanel';
 import DashboardShortcutsPanel from './dashboard/DashboardShortcutsPanel';
 import DashboardActivityPanel from './dashboard/DashboardActivityPanel';
 import DashboardLeadsPanel from './dashboard/DashboardLeadsPanel';
+import { formatMemberPrimaryLine } from '../utils/memberDisplay';
 
 const API_BASE = '';
 
@@ -217,7 +218,7 @@ export default function Dashboard() {
                                 disabled={savingOwner || members.length === 0}
                             >
                                 {members.map((m) => (
-                                    <MenuItem key={m.id} value={String(m.id)}>{m.name}</MenuItem>
+                                    <MenuItem key={m.id} value={String(m.id)}>{formatMemberPrimaryLine(m)}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>

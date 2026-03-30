@@ -21,8 +21,8 @@ export const RELIGO_ONE_TO_ONE_LEAD_COLUMN_LABEL = '1to1（実施ベース）';
 /** 日付行・Chip 用（completed の最終代表日） */
 export const RELIGO_ONE_TO_ONE_LEAD_LAST_DATE_PREFIX = '最終（実施済）';
 
-/** completed が無いときの補助文 */
-export const RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED = '実施済記録なし';
+/** completed が無いときの補助文（completed のみが「実施」とカウントされることを示す） */
+export const RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED = '1to1完了記録なし';
 
 /** Dashboard パネル */
 export const RELIGO_DASHBOARD_LEADS_TITLE = '次の 1to1 候補';

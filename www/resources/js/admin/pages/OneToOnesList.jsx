@@ -33,6 +33,7 @@ import {
 } from '@mui/material';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
+import { formatMemberPrimaryLine } from '../utils/memberDisplay';
 import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
 
 const STATUS_CHOICES = [
@@ -289,7 +290,7 @@ function TargetMemberFilterSelect() {
                     { id: '', name: '相手: すべて' },
                     ...arr.map((m) => ({
                         id: m.id,
-                        name: `${m.display_no != null ? `#${m.display_no} ` : ''}${m.name}`.trim() || `#${m.id}`,
+                        name: formatMemberPrimaryLine(m) || `#${m.id}`,
                     })),
                 ]);
             })

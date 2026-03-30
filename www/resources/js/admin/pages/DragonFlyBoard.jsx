@@ -23,6 +23,11 @@ import {
     Snackbar,
 } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import {
+    formatMemberPrimaryLine,
+    formatMemberSecondaryLine,
+    formatMemberAutocompleteLabel,
+} from '../utils/memberDisplay';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -165,35 +170,6 @@ async function putMeetingBreakouts(meetingId, payload) {
         throw new Error(j.message || `PUT breakouts ${res.status}`);
     }
     return res.json();
-}
-
-/**
- * Connections 共通: 1 行目（主表示）— display_no + name。空なら #id
- * SSOT: CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY.md §4
- */
-function formatMemberPrimaryLine(member) {
-    if (!member || member.id == null) return '';
-    const line = `${member.display_no || ''} ${member.name || ''}`.trim();
-    return line || `#${member.id}`;
-}
-
-/**
- * Connections 共通: 2 行目（副表示）— 大/実カテゴリ、なければ current_role。どちらも無ければ null（行を出さない）
- */
-function formatMemberSecondaryLine(member) {
-    if (!member) return null;
-    const cat = [member.category?.group_name, member.category?.name].filter(Boolean).join(' / ');
-    if (cat) return cat;
-    const role = (member.current_role || '').trim();
-    return role || null;
-}
-
-/** Autocomplete の filter / 入力補助用: 主＋副を 1 文字列に（副が無ければ主のみ） */
-function formatMemberAutocompleteLabel(member) {
-    if (!member) return '';
-    const p = formatMemberPrimaryLine(member);
-    const s = formatMemberSecondaryLine(member);
-    return s ? `${p} ${s}` : p;
 }
 
 export default function DragonFlyBoard() {

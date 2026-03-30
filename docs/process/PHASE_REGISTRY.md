@@ -100,6 +100,9 @@
 | ONETOONES_DASHBOARD_TARGET_PREFILL_P4 | `target_member_id` URL プリフィル統一（Create scoped 検証・Tasks stale リンク・Quick Create URL）+ SSOT + docs + merge / Evidence | implement | completed | feature/phase-onetoones-dashboard-target-prefill-p4 | 2026-03-23 |
 | DASHBOARD-ONETOONES-SUMMARY-EXPANSION-P1 | Dashboard 1to1 KPI 拡張（総登録・予定・キャンセル・inventory subtext・verify-summary）+ SSOT + merge / Evidence | implement | completed | feature/phase-dashboard-onetoones-summary-expansion-p1 | 2026-03-23 |
 | CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT | Connections BO 周り・Relationship Log 見出しにカテゴリ/役職副行（左ペインと同一ヘルパー）+ PLAN/WORKLOG/REPORT | implement | completed | feature/phase-connections-bo-member-category-display-implement | 2026-03-24 |
+| CONTACT_LOGIC_ALIGNMENT_ANALYSIS | CONTACT_LOGIC_ALIGNMENT.md（接触・999・completed）SSOT 整理 + PLAN/WORKLOG/REPORT | docs | completed | develop | 2026-03-24 |
+| CONTACT_DISPLAY_IMPROVEMENT_IMPLEMENT | 999 UI 読み替え・補助文・1to1 補助ラベル（API/DB 変更なし）+ PLAN/WORKLOG/REPORT | implement | completed | develop | 2026-03-24 |
+| MEMBER_DISPLAY_HELPER_UNIFICATION | `utils/memberDisplay.js` 集約・DragonFlyBoard/Members/Dashboard/1to1 フォーム接続 | implement | completed | develop | 2026-03-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

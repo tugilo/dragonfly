@@ -6,6 +6,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | Spec ID | Spec Name | File | Status |
 |---|---|---|---|
 | SPEC-001 | Religo システム全体仕様 | system_requirements.md | draft |
+| SPEC-002 | 接触ロジック整合（last_contact・999・1to1 completed） | ../SSOT/CONTACT_LOGIC_ALIGNMENT.md | active |
 
 ## Statusの値
 - active     : 現在有効なSSOT

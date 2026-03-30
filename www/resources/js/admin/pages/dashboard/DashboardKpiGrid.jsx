@@ -2,6 +2,7 @@ import React from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Card, CardContent, Typography, Skeleton } from '@mui/material';
 import { STATS_DEFAULT, DASHBOARD_CARD_SX, DASHBOARD_MSG } from './dashboardConstants';
+import { CONTACT_HELP_STALE_LINE } from '../../contactUiCopy';
 
 /**
  * KPI 4 枚。P7-3: ローディング Skeleton・オーナー未設定・API 失敗を区別。
@@ -157,6 +158,14 @@ export default function DashboardKpiGrid({ stats, loading, ownerConfigured }) {
                     </CardContent>
                 </Card>
             ))}
+            <Typography
+                component="div"
+                variant="caption"
+                color="text.secondary"
+                sx={{ gridColumn: '1 / -1', fontSize: 10, lineHeight: 1.45, mt: -0.5 }}
+            >
+                {CONTACT_HELP_STALE_LINE}
+            </Typography>
         </Box>
     );
 }

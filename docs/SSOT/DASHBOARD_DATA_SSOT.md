@@ -243,3 +243,5 @@ WHERE owner_member_id = :owner
 | 7 | 1to1 キャンセル | §6.2 `status=canceled` | `one_to_one_canceled_count` | OK / NG |
 
 **Tasks（`getTasks`）** は件数 KPI ではなく **優先行動のリスト** のため、別紙 [DASHBOARD_TASK_SOURCE_ANALYSIS.md](DASHBOARD_TASK_SOURCE_ANALYSIS.md)・§3 を正とする。
+
+**補足（stale_follow の「999日間未接触」）:** `last_contact_at` が null のとき API は表示用に **999** を代入する（実日数ではない）。**UI 上の読み替え・利用者向け説明**は [CONTACT_LOGIC_ALIGNMENT.md](CONTACT_LOGIC_ALIGNMENT.md) を参照。
