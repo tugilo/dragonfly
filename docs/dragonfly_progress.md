@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-03-30 | **軍司様向け Lステップ Webhook × AI 提案書:** `docs/meetings/2026-03-30_gunji_lstep_webhook_ai_proposal.md` を作成・リライト（Webhook 実現性・START/GROW/SHIFT・経営視点ベネフィット・協業ストーリー・1日の流れ）。`docs/INDEX.md` 会議メモ一覧にリンク。Religo アプリコード変更なし。 |
+| 2026-03-24 | **CONTACT_LOGIC_ALIGNMENT_ANALYSIS + CONTACT_DISPLAY_IMPROVEMENT + MEMBER_DISPLAY_HELPER_UNIFICATION:** SSOT `CONTACT_LOGIC_ALIGNMENT.md`。999 を UI で「接触記録なし」に読み替え、Dashboard/Members 補助文、1to1 補助「1to1完了記録なし」。`utils/memberDisplay.js`・`contactDisplayFormat.js`・`contactUiCopy.js`。DragonFlyBoard import 化。PLAN×3/WORKLOG×3/REPORT×3・INDEX・REGISTRY・`DASHBOARD_DATA_SSOT` 補足。`npm run build` / `php artisan test`。 |
 | 2026-03-24 | **CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT（develop 取り込み）:** merge `64fa80afe11aa6a69683371d80e39746fa93c6cc`。`PHASE_CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT_REPORT` §7 Merge Evidence。`php artisan test` 329・`npm run build` OK。Evidence 追記コミットあり。 |
 | 2026-03-24 | **CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT:** `DragonFlyBoard.jsx` に `formatMemberPrimaryLine` / `formatMemberSecondaryLine` / `formatMemberAutocompleteLabel`。左ペイン・BO 割当行・Autocomplete・Relationship Log 見出し・メンバー詳細モーダルで表示統一。API 変更なし。`npm run build` OK。PLAN/WORKLOG/REPORT・REGISTRY・INDEX 更新。 |
 | 2026-03-24 | **Connections BO カテゴリ表示 要件・Fit/Gap（docs）:** `CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY.md` を追加。BO 割当リスト・Autocomplete・Relationship Log 見出しで **名前＋カテゴリ**を左ペインと揃える要件。現状 Gap（F2〜F4）と API は変更不要のメモ。`docs/INDEX.md` 更新。コード変更なし。 |

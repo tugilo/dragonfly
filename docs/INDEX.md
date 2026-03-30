@@ -38,6 +38,7 @@
 | [2025-03-12_1to1_kimura_system_concept.md](meetings/2025-03-12_1to1_kimura_system_concept.md) | 木村健悟様 1 to 1（2025/3/12）システム構想メモ。振り返り用。tugilo整理。 |
 | [2025-03-12_kimura_system_concept_proposal.md](meetings/2025-03-12_kimura_system_concept_proposal.md) | 木村様向け提案書：業務整理と仕組みづくりの構想メモ（2025/3/12）。クライアント共有用。 |
 | [2025-03-16_1to1_okamoto.md](meetings/2025-03-16_1to1_okamoto.md) | 岡元様 1 to 1（2025/3/16）初回打合せメモ。福岡県・勝てるプレゼンカテゴリー。tugilo整理。 |
+| [2026-03-30_gunji_lstep_webhook_ai_proposal.md](meetings/2026-03-30_gunji_lstep_webhook_ai_proposal.md) | 軍司様向け提案書（2026/3/30）：Lステップ Webhook × AI チャットボット構築・協業（START / GROW / SHIFT プラン・展開）。クライアント／パートナー共有用。 |
 
 ### tugilo AI DevOS v4.3
 
