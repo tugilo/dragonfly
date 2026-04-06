@@ -105,6 +105,7 @@
 | CONTACT_DISPLAY_IMPROVEMENT_IMPLEMENT | 999 UI 読み替え・補助文・1to1 補助ラベル（API/DB 変更なし）+ PLAN/WORKLOG/REPORT | implement | completed | develop | 2026-03-24 |
 | MEMBER_DISPLAY_HELPER_UNIFICATION | `utils/memberDisplay.js` 集約・DragonFlyBoard/Members/Dashboard/1to1 フォーム接続 | implement | completed | develop | 2026-03-24 |
 | AXIOS-SC-2026-03 | axios サプライチェーン侵害（2026/03）影響調査・記録 | docs | completed | — | 2026-04-01 |
+| ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP | `/settings` ゲート例外・1to1 owner フィルタ削除・§5.1 SSOT 補足・religoOwnerMemberId 削除・`ReligoOwnerContext` 前提実装同梱 | implement | completed | feature/phase-admin-global-owner-spec003-followup | 2026-04-06 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

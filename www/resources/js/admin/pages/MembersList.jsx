@@ -41,12 +41,11 @@ import {
     RELIGO_ONE_TO_ONE_LEAD_LAST_DATE_PREFIX,
     RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED,
 } from '../religoOneToOneLeadLabels';
-import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
+import { useReligoOwner } from '../ReligoOwnerContext';
 import { formatMemberPrimaryLine } from '../utils/memberDisplay';
 import { CONTACT_HELP_STALE_LINE, CONTACT_HELP_ONE_TO_ONE_COMPLETED_LINE } from '../contactUiCopy';
 
 const API = '';
-const OWNER_MEMBER_ID = 1;
 const CARD_LOGS_LIMIT = 3;
 
 const MembersOneToOneLeadContext = createContext({ leadByMemberId: {}, leadsLoading: true, reloadLeads: () => {} });
@@ -440,21 +439,22 @@ const RELATIONSHIP_SCORE_STARS = ['☆☆☆☆☆', '★☆☆☆☆', '★★�
 
 // Card view: mcard structure per SSOT FIT_AND_GAP §4.1
 function MemberCard({ record }) {
+    const { ownerMemberId } = useReligoOwner();
     const ctx = useContext(MembersModalContext);
     const [recentLogs, setRecentLogs] = useState([]);
     const [loadingLogs, setLoadingLogs] = useState(false);
 
     useEffect(() => {
-        if (!record?.id) return;
+        if (!record?.id || ownerMemberId == null) return;
         setLoadingLogs(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${record.id}&limit=${CARD_LOGS_LIMIT}`)
+        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${record.id}&limit=${CARD_LOGS_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((data) => {
                 setRecentLogs(Array.isArray(data) ? data : []);
             })
             .catch(() => setRecentLogs([]))
             .finally(() => setLoadingLogs(false));
-    }, [record?.id]);
+    }, [record?.id, ownerMemberId]);
 
     if (!record) return null;
     const no = record.display_no != null ? String(record.display_no).padStart(2, '0') : record.id;
@@ -628,6 +628,7 @@ function MembersCardGrid() {
 }
 
 function FlagEditDialog({ open, member, onClose, onSaved }) {
+    const { ownerMemberId } = useReligoOwner();
     const [interested, setInterested] = useState(false);
     const [want_1on1, setWant_1on1] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -644,11 +645,11 @@ function FlagEditDialog({ open, member, onClose, onSaved }) {
     }, [open, member?.id]);
 
     const handleSave = async () => {
-        if (!member?.id) return;
+        if (!member?.id || ownerMemberId == null) return;
         setLoading(true);
         setError('');
         try {
-            await putFlags(OWNER_MEMBER_ID, member.id, { interested, want_1on1 });
+            await putFlags(ownerMemberId, member.id, { interested, want_1on1 });
             notify('フラグを更新しました');
             onSaved?.();
             onClose();
@@ -685,6 +686,7 @@ function FlagEditDialog({ open, member, onClose, onSaved }) {
 }
 
 function MemoModal({ open, member, onClose, onSaved }) {
+    const { ownerMemberId } = useReligoOwner();
     const [memoType, setMemoType] = useState('other');
     const [body, setBody] = useState('');
     const [meetingId, setMeetingId] = useState('');
@@ -711,11 +713,11 @@ function MemoModal({ open, member, onClose, onSaved }) {
     }, [open]);
 
     const handleSave = async () => {
-        if (!member?.id || !body.trim()) return;
+        if (!member?.id || !body.trim() || ownerMemberId == null) return;
         setLoading(true);
         setError('');
         const payload = {
-            owner_member_id: OWNER_MEMBER_ID,
+            owner_member_id: ownerMemberId,
             target_member_id: member.id,
             memo_type: memoType,
             body: body.trim(),
@@ -774,6 +776,7 @@ function MemoModal({ open, member, onClose, onSaved }) {
 }
 
 function O2oModal({ open, member, onClose, onSaved }) {
+    const { ownerMemberId } = useReligoOwner();
     const [workspaceId, setWorkspaceId] = useState(null);
     const [scheduledAt, setScheduledAt] = useState('');
     const [status, setStatus] = useState('planned');
@@ -805,15 +808,15 @@ function O2oModal({ open, member, onClose, onSaved }) {
     }, [open]);
 
     const handleSave = async () => {
-        if (!member?.id || !workspaceId) {
-            setError('ワークスペースが取得できていません');
+        if (!member?.id || !workspaceId || ownerMemberId == null) {
+            setError(ownerMemberId == null ? 'Owner が未設定です' : 'ワークスペースが取得できていません');
             return;
         }
         setLoading(true);
         setError('');
         const payload = {
             workspace_id: workspaceId,
-            owner_member_id: OWNER_MEMBER_ID,
+            owner_member_id: ownerMemberId,
             target_member_id: member.id,
             status,
             notes: notes.trim() || undefined,
@@ -875,6 +878,7 @@ function O2oModal({ open, member, onClose, onSaved }) {
 }
 
 function O2oMemoModal({ open, member, onClose, onSaved }) {
+    const { ownerMemberId } = useReligoOwner();
     const [body, setBody] = useState('');
     const [oneToOneId, setOneToOneId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -887,22 +891,22 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
     }, [open, member?.id]);
 
     useEffect(() => {
-        if (!open || !member?.id) return;
-        fetch(`${API}/api/one-to-ones?owner_member_id=${OWNER_MEMBER_ID}`)
+        if (!open || !member?.id || ownerMemberId == null) return;
+        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}`)
             .then((res) => res.ok ? res.json() : [])
             .then((arr) => {
                 const forTarget = Array.isArray(arr) ? arr.filter((o) => Number(o.target_member_id) === Number(member.id)) : [];
                 setOtoList(forTarget);
             })
             .catch(() => setOtoList([]));
-    }, [open, member?.id]);
+    }, [open, member?.id, ownerMemberId]);
 
     const handleSave = async () => {
-        if (!member?.id || !body.trim()) return;
+        if (!member?.id || !body.trim() || ownerMemberId == null) return;
         setLoading(true);
         setError('');
         const payload = {
-            owner_member_id: OWNER_MEMBER_ID,
+            owner_member_id: ownerMemberId,
             target_member_id: member.id,
             memo_type: 'one_to_one',
             body: body.trim(),
@@ -957,6 +961,7 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
 const MEMO_LIMIT = 20;
 
 const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o, onMemberUpdated }, ref) {
+    const { ownerMemberId } = useReligoOwner();
     const [tab, setTab] = useState(0);
     const [memos, setMemos] = useState([]);
     const [o2oList, setO2oList] = useState([]);
@@ -967,24 +972,24 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const [ncastError, setNcastError] = useState(null);
 
     const refetchMemos = useCallback(() => {
-        if (!member?.id || !open) return;
+        if (!member?.id || !open || ownerMemberId == null) return;
         setLoadingMemos(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then(setMemos)
             .catch(() => setMemos([]))
             .finally(() => setLoadingMemos(false));
-    }, [member?.id, open]);
+    }, [member?.id, open, ownerMemberId]);
 
     const refetchO2o = useCallback(() => {
-        if (!member?.id || !open) return;
+        if (!member?.id || !open || ownerMemberId == null) return;
         setLoadingO2o(true);
-        fetch(`${API}/api/one-to-ones?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then(setO2oList)
             .catch(() => setO2oList([]))
             .finally(() => setLoadingO2o(false));
-    }, [member?.id, open]);
+    }, [member?.id, open, ownerMemberId]);
 
     useImperativeHandle(ref, () => ({ refetchMemos, refetchO2o }), [refetchMemos, refetchO2o]);
 
@@ -1164,15 +1169,17 @@ function MembersListInner() {
 }
 
 export function MembersList() {
+    const { ownerMemberId } = useReligoOwner();
     const [leadByMemberId, setLeadByMemberId] = useState({});
     const [leadsLoading, setLeadsLoading] = useState(true);
     const reloadLeads = useCallback(() => {
+        if (ownerMemberId == null) {
+            setLeadByMemberId({});
+            setLeadsLoading(false);
+            return;
+        }
         setLeadsLoading(true);
-        fetchReligoOwnerMemberId()
-            .then((me) => {
-                const owner = ownerMemberIdFallback(me);
-                return fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${owner}`);
-            })
+        fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((rows) => {
                 const map = {};
@@ -1185,7 +1192,7 @@ export function MembersList() {
             })
             .catch(() => setLeadByMemberId({}))
             .finally(() => setLeadsLoading(false));
-    }, []);
+    }, [ownerMemberId]);
 
     useEffect(() => {
         reloadLeads();

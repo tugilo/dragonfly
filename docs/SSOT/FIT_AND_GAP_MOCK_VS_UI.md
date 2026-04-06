@@ -214,7 +214,7 @@
 ### 6.6 実装メモ（ONETOONES-P3）
 
 - **Phase:** `docs/process/phases/PHASE_ONETOONES_CREATE_EDIT_UX_*`（Registry: **ONETOONES-P3**）。
-- **Owner:** `GET /api/users/me` → 一覧 `filterDefaultValues`・クイック作成・フル Create の初期値（`religoOwnerMemberId.js`）。
+- **Owner:** `GET /api/users/me` → `ReligoOwnerContext` / `religoOwnerStore` 経由で一覧・クイック作成・フル Create と整合（旧 `religoOwnerMemberId.js` は削除済み）。
 - **UI:** `OneToOnesQuickCreateDialog`、`OneToOnesCreate` / `OneToOnesEdit`（分離ファイル）。`DATA_MODEL` §4.12 に **notes** と contact_memos の住み分け追記。
 
 ### 6.7 実装メモ（ONETOONES-P4）

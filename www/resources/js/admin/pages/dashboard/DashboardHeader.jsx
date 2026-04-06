@@ -1,17 +1,12 @@
 import React from 'react';
-import { Box, Typography, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 /**
- * タイトル・補助文・Owner 切替・主要 CTA。E-4 owner 文脈は右側を薄く占有。
+ * タイトル・補助文・主要 CTA。Owner 選択はグローバル AppBar（ADMIN_GLOBAL_OWNER_SELECTION）。
  * BO-AUDIT-P5: 所属チャプター名表示（/settings で変更）。
  */
 export default function DashboardHeader({
-    ownerMemberId,
-    members,
-    savingOwner,
-    onOwnerChange,
-    showOwnerSelect,
     resolvedWorkspaceId = null,
     resolvedWorkspaceName = null,
 }) {
@@ -43,22 +38,6 @@ export default function DashboardHeader({
                 )}
             </Box>
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
-                {showOwnerSelect && (
-                    <FormControl size="small" sx={{ minWidth: 140 }}>
-                        <InputLabel id="dashboard-owner-label">Owner</InputLabel>
-                        <Select
-                            labelId="dashboard-owner-label"
-                            label="Owner"
-                            value={String(ownerMemberId)}
-                            onChange={onOwnerChange}
-                            disabled={savingOwner}
-                        >
-                            {members.map((m) => (
-                                <MenuItem key={m.id} value={String(m.id)}>{m.name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                )}
                 <Button component={Link} to="/connections" variant="contained" size="small">
                     🗺 Connectionsへ
                 </Button>

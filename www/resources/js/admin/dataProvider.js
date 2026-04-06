@@ -1,7 +1,17 @@
+import { religoOwnerStore } from './religoOwnerStore';
+
 const API_BASE = '';
 
-function getOwnerMemberId(params) {
-    return params?.filter?.owner_member_id ?? 1;
+/** SSOT: ADMIN_GLOBAL_OWNER_SELECTION §5.1 — マジックナンバー 1 禁止 */
+function assertOwnerResolved() {
+    if (religoOwnerStore.isLoading()) {
+        throw new Error('Owner context is still loading');
+    }
+    const id = religoOwnerStore.getOwnerMemberId();
+    if (id == null) {
+        throw new Error('Owner is not selected');
+    }
+    return id;
 }
 
 async function request(url, options = {}) {
@@ -19,7 +29,7 @@ async function request(url, options = {}) {
 export const dragonflyDataProvider = {
     getList: async (resource, params) => {
         if (resource === 'dragonflyFlags') {
-            const owner = getOwnerMemberId(params);
+            const owner = assertOwnerResolved();
             const url = `/api/dragonfly/flags?owner_member_id=${owner}`;
             console.log('[DataProvider] getList dragonflyFlags', url);
             const data = await request(url);
@@ -28,11 +38,10 @@ export const dragonflyDataProvider = {
             return { data: Array.isArray(data) ? data : [], total };
         }
         if (resource === 'one-to-ones') {
+            const owner = assertOwnerResolved();
             const q = new URLSearchParams();
+            q.set('owner_member_id', String(owner));
             const f = params?.filter ?? {};
-            if (f.owner_member_id != null && String(f.owner_member_id).trim() !== '') {
-                q.set('owner_member_id', String(f.owner_member_id).trim());
-            }
             if (f.status) q.set('status', f.status);
             if (f.from) q.set('from', f.from);
             if (f.to) q.set('to', f.to);
@@ -51,7 +60,7 @@ export const dragonflyDataProvider = {
             return { data: arr, total: arr.length };
         }
         if (resource === 'members') {
-            const owner = getOwnerMemberId(params);
+            const owner = assertOwnerResolved();
             const q = new URLSearchParams();
             q.set('owner_member_id', String(owner));
             q.set('with_summary', '1');
@@ -119,7 +128,7 @@ export const dragonflyDataProvider = {
 
     getOne: async (resource, params) => {
         if (resource === 'dragonflySummary') {
-            const owner = getOwnerMemberId(params);
+            const owner = assertOwnerResolved();
             const url = `/api/dragonfly/contacts/${params.id}/summary?owner_member_id=${owner}`;
             console.log('[DataProvider] getOne dragonflySummary', url);
             const data = await request(url);
@@ -162,7 +171,7 @@ export const dragonflyDataProvider = {
 
     update: async (resource, params) => {
         if (resource === 'dragonflyFlags') {
-            const owner = params.data?.owner_member_id ?? getOwnerMemberId(params);
+            const owner = params.data?.owner_member_id ?? assertOwnerResolved();
             const url = `/api/dragonfly/flags/${params.id}?owner_member_id=${owner}`;
             console.log('[DataProvider] update dragonflyFlags', url, params.data);
             const data = await request(url, {
