@@ -8,6 +8,38 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-04-06 10:51 JST | **develop へプッシュ（作業一式）:** SSOT（ADMIN_GLOBAL_OWNER_SELECTION・SPEC-003）、汎用/専用 SSOT 改善プロンプト、INDEX・SSOT_REGISTRY・DATA_MODEL 等ドキュメント。管理画面: 1to1 一覧/クイック作成の Owner 解決（`1` フォールバック排除）、Members/MemberShow/MemberEdit・dataProvider 関連。`ncast_profile_url` マイグレーション・API・Feature テスト。会議/1to1・workshop・strategy・process phases・pdf/photo 等の追記・配置。`.cursorrules` / PHASE_REGISTRY / meetings README。`git push origin develop`。 |
+| 2026-04-16 | **SSOT 改善プロンプト:** `docs/process/PROMPT_SSOT_IMPROVEMENT.md`（tugilo流・コピペ用）。`docs/02_specifications/SSOT_REGISTRY.md` にリンク、`docs/INDEX.md` process 節に追記。コード変更なし。 |
+| 2026-04-06 | **PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT:** `docs/process/PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md` 新規（ADMIN_GLOBAL_OWNER_SELECTION 専用・実戦版プロンプト）。`docs/INDEX.md`・`ADMIN_GLOBAL_OWNER_SELECTION.md` 関連リンク・`PROMPT_SSOT_IMPROVEMENT.md` から相互参照。 |
+| 2026-04-06 | **PROMPT_SSOT_IMPROVEMENT:** `docs/process/PROMPT_SSOT_IMPROVEMENT.md` を tugilo 流（実務でブレない）説明・「得られるもの」・ADMIN_GLOBAL_OWNER への導線で拡張。INDEX は既存リンク維持。 |
+| 2026-04-06 | **ADMIN_GLOBAL_OWNER_SELECTION SSOT:** `docs/SSOT/ADMIN_GLOBAL_OWNER_SELECTION.md` 新規（グローバルヘッダーに Owner 選択を集約・全画面で同一 `owner_member_id`・認証後は UI 削除も API/スコープ維持）。`docs/INDEX.md`・`docs/02_specifications/SSOT_REGISTRY.md`（SPEC-003）更新。実装は未着手。 |
+| 2026-04-03 | **木村健悟1to1:** `1to1_kimura_kengo_mfg_retail.md` に **本人の自己紹介シート全文**を統合（会社・連絡先・G.A.I.N.S・顧客・推薦インサイト等）。INDEX 更新。コード変更なし。 |
+| 2026-04-03 | **岡元智美（RyoTen）1to1:** `1to1_okamoto_kachiteru_present.md` をプロフィール確定版に全面更新（公式サイトお客様の声・About、ユーザー提供実績・メモ、tugilo連携戦略）。INDEX 説明更新。コード変更なし。 |
+| 2026-04-03 | **1to1 tugilo式統合:** 岡元・木村・軍司の旧ファイルを `1to1_okamoto_kachiteru_present.md` / `1to1_kimura_kengo_mfg_retail.md` / `1to1_gunji_lstep_webhook.md` に統合（YAML `first_session_*`・全セクション）。旧3ファイルは削除（内容は新ファイルに保持）。INDEX・`BNI_Tsugihiro_*`・`meetings/1to1/README.md` 更新。コード変更なし。 |
+| 2026-04-03 | **ドキュメントルール:** `.cursorrules`・`docs/process/README.md` に **日付だけでなく時刻まで取得してから反映** を追記。佐藤1to1第1回を **2026-04-03 JST 07:15–08:15** に確定（過去の誤日付 04-15 を訂正）。`1to1_sato_takuto_brightlink.md`・INDEX 更新。コード変更なし。 |
+| 2026-04-03 | **1to1 ドキュメント配置:** `docs/meetings/1to1/` を新設。1to1 を直下から移動し命名規約（`1to1_<slug>.md`）を README に定義。佐藤ファイルは `1to1_sato_takuto_brightlink.md`。INDEX・ライブドキュメントのパス更新。コード変更なし。 |
+| 2026-04-03 | **佐藤拓斗様 1to1:** BNIプロフィール（BrightLink・所在地等）を統合、リファーラル節追加。第1回＝2026-04-15・時刻TODO。`docs/meetings/1to1/1to1_sato_takuto_brightlink.md`（旧 `2026-04-15_1to1_sato_tsugihiro.md`）。`docs/INDEX.md` 更新。コード変更なし。 |
+| 2026-04-15 | **佐藤拓斗様 1to1 議事要約:** `docs/meetings/1to1/1to1_sato_takuto_brightlink.md`（リスト自動化・法務調査・5月中旬対面）。`docs/INDEX.md` 会議メモにリンク。コード変更なし。 |
+| 2026-04-02 | **リファーラルWS フィードバック反映:** 個人事業主をターゲットに追加。**事例と効果**（匿名3型＋効果の言い方）をレッスン2 Script／ワークフロー／実戦台本§⑧に反映。 |
+| 2026-04-02 | **レッスン2ワークフロー:** メタ・■①〜④・参考を [Lesson2 Script](./workshop/BNI_KeySkills_Lesson2_Referral_Script_Tsugihiro_202604.md) と**同一文・同一語彙**で統一。 |
+| 2026-04-02 | **レッスン2:** 紹介文・■①〜④を**専門語なしのやさしい言い方**に改稿。WP原文ブロックはワークフローで維持。 |
+| 2026-04-02 | **レッスン2・BO議事録:** 表記を **AI業務改善システム構築の次廣**に統一（紹介文2ファイル・BO見出し）。 |
+| 2026-04-02 | **KeySkills レッスン2:** ワークフローを **■①〜④素材のみ**に再編（紹介文は参考節）。WP §2.1固定。 |
+| 2026-04-02 | **KeySkills レッスン2:** 受講ガイド「進め方」（10分・内省4点・1人想定）をワークフローに組み込み。`BNI_KeySkills_Lesson2_Referral_Workflow_Tsugihiro_202604.md`。 |
+| 2026-04-02 | **KeySkills レッスン2:** 紹介文を **ウィークリー§2.1** と完全一致に更新（`BNI_KeySkills_Lesson2_Referral_Workflow_Tsugihiro_202604.md`）。ライブドキュメントSSOT明記。 |
+| 2026-04-02 | **KeySkills レッスン2:** `BNI_KeySkills_Lesson2_Referral_Workflow_Tsugihiro_202604.md`（①②③・1人ターゲット・紹介文）。汎用紹介文ファイルと相互リンク。 |
+| 2026-04-02 | **KeySkills レッスン2:** `BNI_KeySkills_Lesson2_Referral_Script_Tsugihiro_202604.md`（第三者紹介文・紹介先5件・キーワード）。INDEX・README・実戦台本関連。 |
+| 2026-04-02 | **WS BO議事録:** `docs/workshop/BNI_DragonFly_BO_Step1_Referral_Minutes_20260402.md`（リファー視点・次廣アクション）。INDEX・workshop README・実戦台本「関連」にリンク。 |
+| 2026-04-02 | **KeySkills台本:** レッスン1 **■自慢** に猫4匹を1行追加。 |
+| 2026-04-02 | **KeySkills台本:** レッスン1用 **計画・不満・自慢**（事実のみ）を `BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md` に追加。 |
+| 2026-04-02 | **KeySkills台本:** タイトル直下に **抜き打ちテスト対策（即答用）**（Q1〜6・判定ルール・本質1行）を追加。`BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md`。 |
+| 2026-04-02 | **KeySkills台本:** DragonFly 表記 **AI業務改善システム構築＋次廣** に統一（名乗り・紹介文テンプレ）。 |
+| 2026-04-02 | **KeySkillsリファーラルWS実戦台本化:** `docs/workshop/BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md` を即答カード・レベル断定表・10/30/60秒紹介・紹介者/被紹介者台本・ヒアリング→紹介文・RP・攻略メモに再構成。INDEX・workshop README 説明文更新。 |
+| 2026-04-02 | **KeySkills準備ファイルリネーム:** `BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md`（1to1ワークショップ別と明確化）。INDEX・README・ライブドキュメント更新。 |
+| 2026-04-02 | **KeySkills WS 開催時刻:** `BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md` に **2026/4/2 16:30〜18:30** を追記。 |
+| 2026-04-02 | **KeySkills リファーラル向けWS事前準備:** `docs/workshop/` に集約。INDEX（ワークショップ節）・ライブドキュメント参照を更新。アプリコード変更なし。 |
+| 2026-04-01 | **AXIOS-SC-2026-03（axios サプライチェーン調査）:** `docs/process/phases/PHASE_AXIOS_SUPPLY_CHAIN_INVESTIGATION_{PLAN,WORKLOG,REPORT}.md`。ロック・コンテナ `npm ls` で **axios@1.13.6**、危険版 1.14.1/0.30.4 **未使用**。`plain-crypto-js` / `sfrclak.com` **ヒットなし**。GitHub Actions 未定義。結論 **SAFE**。INDEX・PHASE_REGISTRY 更新。アプリコード変更なし。 |
+| 2026-03-31 | **次廣 BNI 紹介ライブドキュメント:** `docs/strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md` を新規作成（BO・25秒WP・朝礼/例会・キーワード・変更ログを1か所に集約）。`docs/INDEX.md` BNI 活動戦略にリンク。アプリコード変更なし。 |
 | 2026-03-30 | **軍司様向け Lステップ Webhook × AI 提案書:** `docs/meetings/2026-03-30_gunji_lstep_webhook_ai_proposal.md` を作成・リライト（Webhook 実現性・START/GROW/SHIFT・経営視点ベネフィット・協業ストーリー・1日の流れ）。`docs/INDEX.md` 会議メモ一覧にリンク。Religo アプリコード変更なし。 |
 | 2026-03-24 | **CONTACT_LOGIC_ALIGNMENT_ANALYSIS + CONTACT_DISPLAY_IMPROVEMENT + MEMBER_DISPLAY_HELPER_UNIFICATION:** SSOT `CONTACT_LOGIC_ALIGNMENT.md`。999 を UI で「接触記録なし」に読み替え、Dashboard/Members 補助文、1to1 補助「1to1完了記録なし」。`utils/memberDisplay.js`・`contactDisplayFormat.js`・`contactUiCopy.js`。DragonFlyBoard import 化。PLAN×3/WORKLOG×3/REPORT×3・INDEX・REGISTRY・`DASHBOARD_DATA_SSOT` 補足。`npm run build` / `php artisan test`。 |
 | 2026-03-24 | **CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT（develop 取り込み）:** merge `64fa80afe11aa6a69683371d80e39746fa93c6cc`。`PHASE_CONNECTIONS_BO_MEMBER_CATEGORY_DISPLAY_IMPLEMENT_REPORT` §7 Merge Evidence。`php artisan test` 329・`npm run build` OK。Evidence 追記コミットあり。 |

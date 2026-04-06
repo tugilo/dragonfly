@@ -99,6 +99,19 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
     return res.json();
 }
 
+async function putDragonflyMember(memberId, data) {
+    const res = await fetch(`${API}/api/dragonfly/members/${memberId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message || `PUT members ${res.status}`);
+    }
+    return res.json();
+}
+
 const MembersModalContext = createContext(null);
 const ViewModeContext = createContext({ viewMode: 'list', setViewMode: () => {}, displaySortKey: 'display_no_asc', setDisplaySortKey: () => {} });
 
@@ -805,7 +818,12 @@ function O2oModal({ open, member, onClose, onSaved }) {
             status,
             notes: notes.trim() || undefined,
         };
-        if (scheduledAt) payload.scheduled_at = scheduledAt.replace('T', ' ').slice(0, 19) + ':00';
+        if (scheduledAt) {
+            const d = new Date(scheduledAt);
+            if (!Number.isNaN(d.getTime())) {
+                payload.scheduled_at = d.toISOString();
+            }
+        }
         if (meetingId) payload.meeting_id = parseInt(meetingId, 10);
         try {
             await postOneToOne(payload);
@@ -938,12 +956,15 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
 
 const MEMO_LIMIT = 20;
 
-const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o }, ref) {
+const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o, onMemberUpdated }, ref) {
     const [tab, setTab] = useState(0);
     const [memos, setMemos] = useState([]);
     const [o2oList, setO2oList] = useState([]);
     const [loadingMemos, setLoadingMemos] = useState(false);
     const [loadingO2o, setLoadingO2o] = useState(false);
+    const [ncastDraft, setNcastDraft] = useState('');
+    const [ncastSaving, setNcastSaving] = useState(false);
+    const [ncastError, setNcastError] = useState(null);
 
     const refetchMemos = useCallback(() => {
         if (!member?.id || !open) return;
@@ -973,13 +994,31 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
             refetchMemos();
             refetchO2o();
         }
-    }, [open, member?.id]);
+    }, [open, member?.id, refetchMemos, refetchO2o]);
+
+    useEffect(() => {
+        if (!member?.id) return;
+        setNcastDraft(member.ncast_profile_url ?? '');
+        setNcastError(null);
+    }, [member?.id, member?.ncast_profile_url]);
 
     if (!member) return null;
+
+    const handleSaveNcast = () => {
+        setNcastSaving(true);
+        setNcastError(null);
+        putDragonflyMember(member.id, { ncast_profile_url: ncastDraft.trim() || null })
+            .then((json) => {
+                onMemberUpdated?.(json);
+            })
+            .catch((e) => setNcastError(e instanceof Error ? e.message : String(e)))
+            .finally(() => setNcastSaving(false));
+    };
 
     const categoryLabel = member?.category
         ? `${member.category.group_name} / ${member.category.name}`
         : '—';
+    const ncastOpenHref = (ncastDraft.trim() || (member.ncast_profile_url != null ? String(member.ncast_profile_url).trim() : '')) || '';
     const summary = member?.summary_lite || {};
     const lastContact = summary.last_contact_at
         ? (() => { try { return new Date(summary.last_contact_at).toLocaleDateString('ja-JP'); } catch { return summary.last_contact_at; } })()
@@ -1019,6 +1058,29 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
                                     <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>{lastMemoBody}</Typography>
                                 </CardContent></Card>
                             )}
+                            <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                                <Typography variant="caption" color="text.secondary">Nキャス 自己紹介ページ</Typography>
+                                <MuiTextField
+                                    size="small"
+                                    fullWidth
+                                    placeholder="https://…"
+                                    value={ncastDraft}
+                                    onChange={(e) => setNcastDraft(e.target.value)}
+                                    sx={{ mt: 1 }}
+                                    disabled={ncastSaving}
+                                />
+                                {ncastError && <Typography variant="body2" color="error" sx={{ mt: 1 }}>{ncastError}</Typography>}
+                                <Stack direction="row" spacing={1} sx={{ mt: 1 }} alignItems="center" flexWrap="wrap">
+                                    <Button size="small" variant="outlined" onClick={handleSaveNcast} disabled={ncastSaving}>
+                                        {ncastSaving ? '保存中…' : 'URL を保存'}
+                                    </Button>
+                                    {ncastOpenHref !== '' && (
+                                        <Button size="small" href={ncastOpenHref} target="_blank" rel="noopener noreferrer">
+                                            開く
+                                        </Button>
+                                    )}
+                                </Stack>
+                            </CardContent></Card>
                             <Stack direction="row" gap={1}>
                                 <Button size="small" variant="contained" onClick={() => openMemo(member)}>✏️ メモ追加</Button>
                                 <Button size="small" variant="outlined" onClick={() => openO2o(member)}>📅 1to1予定</Button>
@@ -1171,6 +1233,19 @@ export function MembersList() {
         drawerRef.current?.refetchO2o?.();
     }, [refresh, reloadLeads]);
 
+    const onMemberProfileSaved = useCallback((json) => {
+        setDrawerMember((m) => {
+            if (!m || Number(m.id) !== Number(json.id)) return m;
+            return {
+                ...m,
+                ...json,
+                category: json.category ?? m.category,
+                summary_lite: m.summary_lite,
+            };
+        });
+        refresh();
+    }, [refresh]);
+
     return (
         <MembersOneToOneLeadContext.Provider value={{ leadByMemberId, leadsLoading, reloadLeads }}>
             <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openFlagEdit, openDrawer }}>
@@ -1198,6 +1273,7 @@ export function MembersList() {
                 onClose={() => setDrawerMember(null)}
                 openMemo={openMemo}
                 openO2o={openO2o}
+                onMemberUpdated={onMemberProfileSaved}
             />
             <MemoModal open={memoOpen} member={memoMember} onClose={() => setMemoOpen(false)} onSaved={onSaved} />
             <O2oModal open={o2oOpen} member={o2oMember} onClose={() => setO2oOpen(false)} onSaved={onO2oSaved} />

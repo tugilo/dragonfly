@@ -34,7 +34,7 @@ import {
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 import { formatMemberPrimaryLine } from '../utils/memberDisplay';
-import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
+import { fetchReligoOwnerMemberId } from '../religoOwnerMemberId';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -274,12 +274,20 @@ function EffectiveDateField({ record, ...props }) {
 
 function TargetMemberFilterSelect() {
     const { filterValues } = useListContext();
-    const ownerId = ownerMemberIdFallback(filterValues?.owner_member_id);
+    const raw = filterValues?.owner_member_id;
+    const ownerId =
+        raw != null && String(raw).trim() !== '' ? Number(String(raw).trim()) : null;
     const [choices, setChoices] = useState([{ id: '', name: '相手: すべて' }]);
 
     useEffect(() => {
         let cancelled = false;
-        const id = ownerId != null && String(ownerId).trim() !== '' ? String(ownerId).trim() : '1';
+        if (ownerId == null || Number.isNaN(ownerId)) {
+            setChoices([{ id: '', name: '相手: すべて' }]);
+            return () => {
+                cancelled = true;
+            };
+        }
+        const id = String(ownerId);
         fetch(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(id)}`, {
             headers: { Accept: 'application/json' },
         })
@@ -344,13 +352,32 @@ function OneToOnesListActions({ onQuickCreate }) {
     );
 }
 
+function formatLaravel422Message(payload) {
+    if (!payload || typeof payload !== 'object') {
+        return null;
+    }
+    if (payload.message && typeof payload.message === 'string') {
+        return payload.message;
+    }
+    const err = payload.errors;
+    if (!err || typeof err !== 'object') {
+        return null;
+    }
+    const firstKey = Object.keys(err)[0];
+    const first = firstKey != null ? err[firstKey] : null;
+    if (Array.isArray(first) && first[0]) {
+        return `${firstKey}: ${first[0]}`;
+    }
+    return null;
+}
+
 function OneToOnesQuickCreateDialog({ open, onClose }) {
     const { filterValues } = useListContext();
     const refresh = useRefresh();
     const notify = useNotify();
     const [searchParams] = useSearchParams();
-    const ownerId = ownerMemberIdFallback(filterValues?.owner_member_id);
 
+    const [resolvedOwnerId, setResolvedOwnerId] = useState(null);
     const [workspaceId, setWorkspaceId] = useState(null);
     const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -368,6 +395,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         setDurationMinutes(60);
         setError('');
         setPrefillTargetId(null);
+        setResolvedOwnerId(null);
     }, [open]);
 
     useEffect(() => {
@@ -378,6 +406,32 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         setLoading(true);
         (async () => {
             try {
+                setError('');
+                const rawFilter = filterValues?.owner_member_id;
+                let owner = null;
+                if (rawFilter != null && String(rawFilter).trim() !== '') {
+                    owner = Number(String(rawFilter).trim());
+                } else {
+                    const mid = await fetchReligoOwnerMemberId();
+                    if (mid != null && mid !== '') {
+                        owner = Number(mid);
+                    }
+                }
+                if (cancelled) {
+                    return;
+                }
+                if (owner == null || Number.isNaN(owner)) {
+                    setResolvedOwnerId(null);
+                    setWorkspaceId(null);
+                    setOwnerMemberOptions([]);
+                    setPrefillTargetId(null);
+                    setError(
+                        'Owner（自分）が未設定です。一覧の「Owner（自分）ID」に有効なメンバーIDを入力するか、Settings で owner を設定してください。'
+                    );
+                    return;
+                }
+                setResolvedOwnerId(owner);
+
                 const [wsArr, allMembers] = await Promise.all([
                     fetchJson('/api/workspaces'),
                     fetchJson('/api/dragonfly/members'),
@@ -395,7 +449,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
                 setWorkspaceId(wsArr[0].id);
                 setOwnerMemberOptions(Array.isArray(allMembers) ? allMembers : []);
                 const scoped = await fetchJson(
-                    `/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerId))}`
+                    `/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(owner))}`
                 );
                 if (cancelled) {
                     return;
@@ -406,11 +460,12 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
                     qs != null && /^\d+$/.test(String(qs).trim()) ? Number(String(qs).trim()) : null;
                 const ok =
                     qNum != null &&
-                    qNum !== ownerId &&
+                    qNum !== owner &&
                     scopedList.some((m) => Number(m.id) === qNum);
                 setPrefillTargetId(ok ? qNum : null);
             } catch {
                 if (!cancelled) {
+                    setResolvedOwnerId(null);
                     setWorkspaceId(null);
                     setOwnerMemberOptions([]);
                     setPrefillTargetId(null);
@@ -425,23 +480,30 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         return () => {
             cancelled = true;
         };
-    }, [open, ownerId, searchParams]);
+    }, [open, filterValues?.owner_member_id, searchParams]);
 
     const defaultValues = useMemo(
         () => ({
-            owner_member_id: ownerId,
+            owner_member_id: resolvedOwnerId,
             status: 'planned',
             target_member_id: prefillTargetId,
             scheduled_at: null,
             meeting_id: null,
             notes: '',
         }),
-        [ownerId, formSession, prefillTargetId]
+        [resolvedOwnerId, formSession, prefillTargetId]
     );
 
     const handleSubmit = async (data) => {
         if (!workspaceId) {
             notify('ワークスペースがありません', { type: 'warning' });
+            return;
+        }
+        if (resolvedOwnerId == null || data.owner_member_id == null || data.owner_member_id === '') {
+            notify(
+                'Owner（自分）が無効です。一覧の Owner フィルタを確認するか、Settings で owner を設定してください。',
+                { type: 'warning' }
+            );
             return;
         }
         setSaving(true);
@@ -455,7 +517,8 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
             });
             const j = await res.json().catch(() => ({}));
             if (!res.ok) {
-                throw new Error(j.message || `保存に失敗しました (${res.status})`);
+                const detail = formatLaravel422Message(j) || j.message || `保存に失敗しました (${res.status})`;
+                throw new Error(detail);
             }
             notify('1 to 1 を登録しました');
             refresh();
@@ -469,12 +532,15 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         }
     };
 
+    const ownerLabel =
+        resolvedOwnerId != null && !Number.isNaN(resolvedOwnerId) ? String(resolvedOwnerId) : '未設定';
+
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth scroll="paper">
             <DialogTitle>
                 📅 1 to 1 を追加
                 <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
-                    Owner（自分）: {ownerId}（一覧のフィルタと同じ。変更はフィルタで）
+                    Owner（自分）: {ownerLabel}（一覧のフィルタを優先。未入力時は Settings の owner）
                 </Typography>
             </DialogTitle>
             {loading && (
@@ -485,8 +551,12 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
                     </Box>
                 </DialogContent>
             )}
-            {!loading && workspaceId != null && (
-                <Form key={formSession} onSubmit={handleSubmit} defaultValues={defaultValues}>
+            {!loading && workspaceId != null && resolvedOwnerId != null && (
+                <Form
+                    key={`o2o-${formSession}-${resolvedOwnerId}-${prefillTargetId ?? ''}`}
+                    onSubmit={handleSubmit}
+                    defaultValues={defaultValues}
+                >
                     <DialogContent
                         dividers
                         sx={{
@@ -614,13 +684,18 @@ export function OneToOnesList() {
     const [memoRecord, setMemoRecord] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
     const [listReady, setListReady] = useState(false);
-    const [filterDefaults, setFilterDefaults] = useState({ owner_member_id: 1, exclude_canceled: true });
+    /** owner は me からのみ。未設定時に 1 を既定にすると members.id=1 が無い DB で GET が 422 になるため、未設定時は付けない（全 Owner）。 */
+    const [filterDefaults, setFilterDefaults] = useState({ exclude_canceled: true });
 
     useEffect(() => {
         let cancelled = false;
         fetchReligoOwnerMemberId().then((id) => {
             if (!cancelled) {
-                setFilterDefaults({ owner_member_id: ownerMemberIdFallback(id), exclude_canceled: true });
+                const next = { exclude_canceled: true };
+                if (id != null && id !== '') {
+                    next.owner_member_id = Number(id);
+                }
+                setFilterDefaults(next);
                 setListReady(true);
             }
         });

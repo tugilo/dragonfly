@@ -59,6 +59,12 @@ export function MemberEdit() {
                     ]}
                     fullWidth
                 />
+                <TextInput
+                    source="ncast_profile_url"
+                    label="Nキャス 自己紹介ページ URL"
+                    fullWidth
+                    helperText="未設定の場合は空のままにしてください"
+                />
             </SimpleForm>
         </Edit>
     );

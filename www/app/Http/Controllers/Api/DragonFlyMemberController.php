@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Queries\Religo\MemberSummaryQuery;
 use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DragonFlyMemberController extends Controller
@@ -39,7 +40,7 @@ class DragonFlyMemberController extends Controller
         $query = Member::query()
             ->with('category')
             ->with('memberRoles.role')
-            ->select('id', 'display_no', 'name', 'name_kana', 'category_id');
+            ->select('id', 'display_no', 'name', 'name_kana', 'category_id', 'ncast_profile_url');
 
         if ($request->filled('q')) {
             $q = '%' . addcslashes($request->input('q'), '%_\\') . '%';
@@ -177,6 +178,14 @@ class DragonFlyMemberController extends Controller
         if (array_key_exists('category_id', $request->all())) {
             $member->category_id = $categoryId ? (int) $categoryId : null;
         }
+        if ($request->exists('ncast_profile_url')) {
+            $request->validate([
+                'ncast_profile_url' => ['nullable', 'string', 'max:2048'],
+            ]);
+            $url = $request->input('ncast_profile_url');
+            $member->ncast_profile_url = ($url !== null && $url !== '') ? $url : null;
+        }
+
         $member->fill($request->only(['name', 'name_kana', 'type', 'display_no', 'introducer_member_id', 'attendant_member_id']));
         $member->save();
 

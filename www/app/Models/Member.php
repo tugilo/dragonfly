@@ -19,6 +19,7 @@ class Member extends Model
         'workspace_id',
         'type',
         'display_no',
+        'ncast_profile_url',
         'introducer_member_id',
         'attendant_member_id',
     ];

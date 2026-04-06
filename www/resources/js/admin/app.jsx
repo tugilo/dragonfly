@@ -10,6 +10,7 @@ import ReligoSettings from './pages/ReligoSettings';
 import { ReligoLayout } from './ReligoLayout';
 import { MembersList } from './pages/MembersList';
 import { MemberShow } from './pages/MemberShow';
+import { MemberEdit } from './pages/MemberEdit';
 import { MeetingsList } from './pages/MeetingsList';
 import { OneToOnesList } from './pages/OneToOnesList';
 import { OneToOnesCreate } from './pages/OneToOnesCreate';
@@ -35,7 +36,7 @@ if (root) {
                 <Route path="/settings" element={<ReligoSettings />} />
             </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
-            <Resource name="members" list={MembersList} show={MemberShow} options={{ label: 'Members' }} />
+            <Resource name="members" list={MembersList} show={MemberShow} edit={MemberEdit} options={{ label: 'Members' }} />
             <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings' }} />
             <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} edit={OneToOnesEdit} options={{ label: '1 to 1' }} />
             <Resource name="role-history" list={RoleHistoryList} options={{ label: 'Role History' }} />

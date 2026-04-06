@@ -229,6 +229,13 @@ export const dragonflyDataProvider = {
             });
             return { data };
         }
+        if (resource === 'members') {
+            const data = await request(`/api/dragonfly/members/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(params.data),
+            });
+            return { data };
+        }
         throw new Error(`update not implemented for ${resource}`);
     },
 

@@ -66,6 +66,7 @@
 | M7-FINAL-CHECK | CSV 同期フロー最終確認（実装横断レビュー・ドキュメントのみ） | docs | completed | — | 2026-03-17 |
 | M8 | 参加者CSV unresolved あいまい一致 + 候補提示（suggestions API・UI・自動確定なし） | implement | completed | — | 2026-03-17 |
 | M8.5 | 参加者CSV member 解決順の統一（resolution → 名前・preview=apply・MeetingCsvMemberResolver） | implement | completed | — | 2026-03-17 |
+| M8.6 | members.ncast_profile_url SSOT反映（DATA_MODEL 整合・PLAN/WORKLOG/REPORT） | docs | completed | — | 2026-03-31 |
 | M9 | 参加者CSV resolution 管理UI強化 + 同名member警告（一覧/解除/再マップ・duplicate メタ・MeetingsList） | implement | completed | — | 2026-03-19 |
 | MEETINGS_CREATE_FIT_AND_GAP_CHECK | Meetings 新規作成機能の Fit & Gap 調査（要件・実装・案A/B/C・推奨方針） | docs | completed | — | 2026-03-19 |
 | MEETINGS_CREATE_IMPLEMENT | Meetings 新規作成（POST /api/meetings・一覧「＋ 新規例会」Dialog・テスト） | implement | completed | — | 2026-03-19 |
@@ -103,6 +104,7 @@
 | CONTACT_LOGIC_ALIGNMENT_ANALYSIS | CONTACT_LOGIC_ALIGNMENT.md（接触・999・completed）SSOT 整理 + PLAN/WORKLOG/REPORT | docs | completed | develop | 2026-03-24 |
 | CONTACT_DISPLAY_IMPROVEMENT_IMPLEMENT | 999 UI 読み替え・補助文・1to1 補助ラベル（API/DB 変更なし）+ PLAN/WORKLOG/REPORT | implement | completed | develop | 2026-03-24 |
 | MEMBER_DISPLAY_HELPER_UNIFICATION | `utils/memberDisplay.js` 集約・DragonFlyBoard/Members/Dashboard/1to1 フォーム接続 | implement | completed | develop | 2026-03-24 |
+| AXIOS-SC-2026-03 | axios サプライチェーン侵害（2026/03）影響調査・記録 | docs | completed | — | 2026-04-01 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

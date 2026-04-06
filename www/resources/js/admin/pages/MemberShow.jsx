@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Show, useRecordContext } from 'react-admin';
+import { Show, useRecordContext, EditButton, TopToolbar } from 'react-admin';
 import { Link } from 'react-router-dom';
 import {
     Box,
@@ -140,6 +140,18 @@ function MemberDetailContent() {
                                 </Stack>
                             </CardContent>
                         </Card>
+                        {(record?.ncast_profile_url != null && String(record.ncast_profile_url).trim() !== '') && (
+                            <Button
+                                href={String(record.ncast_profile_url).trim()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                size="small"
+                                variant="outlined"
+                                sx={{ alignSelf: 'flex-start' }}
+                            >
+                                Nキャス 自己紹介を開く
+                            </Button>
+                        )}
                         {leadRow && (
                             <Button component={Link} to={`/one-to-ones/create?target_member_id=${id}`} size="small" variant="contained" color="secondary" sx={{ alignSelf: 'flex-start' }}>
                                 1 to 1 を記録（フォーム）
@@ -199,9 +211,20 @@ function MemberDetailContent() {
     );
 }
 
+function MemberShowActions() {
+    return (
+        <TopToolbar>
+            <EditButton />
+        </TopToolbar>
+    );
+}
+
 export function MemberShow() {
     return (
-        <Show title={(r) => (r?.name ? `メンバー詳細 — ${r.name}` : 'メンバー詳細')}>
+        <Show
+            actions={<MemberShowActions />}
+            title={(r) => (r?.name ? `メンバー詳細 — ${r.name}` : 'メンバー詳細')}
+        >
             <MemberDetailContent />
         </Show>
     );
