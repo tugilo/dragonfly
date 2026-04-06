@@ -51,11 +51,11 @@ SPEC-003 の follow-up として、`owner_member_id` 未設定時でも **`/sett
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後に追記） |
-| source branch | `feature/phase-admin-global-owner-spec003-followup`（推奨） |
-| target branch | develop |
-| test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build` / `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
-| test result | `npm run build` 成功（exit 0）。`php artisan test`：**332 passed**（1332 assertions）、Duration 約 6.7s |
+| merge commit id | `55d3521ccdd00f88edf93989d824fe7742194645` |
+| source branch | `feature/phase-admin-global-owner-spec003-followup` |
+| target branch | `develop` |
+| test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build`；`docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
+| test result | `npm run build` 成功（exit 0）。`php artisan test`：**332 passed**（1332 assertions）、Duration 約 4.74s（merge 後 `develop` で実行） |
 
 ## 変更ファイル
 
