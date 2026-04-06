@@ -37,5 +37,5 @@ PLAN §10 の判断に従い、(1) `ReligoLayout` に `useLocation` による **
 
 ## 次アクション
 
-- feature ブランチでコミットし、`develop` へ **merge --no-ff** 後、`php artisan test` 再実行・push。REPORT に **Merge Evidence**（merge commit id 等）を追記。
+- **完了:** `feature/phase-admin-global-owner-spec003-followup` を `develop` に merge（`55d3521ccdd00f88edf93989d824fe7742194645`）、`php artisan test` / `npm run build` 再実行・`origin/develop` へ push。REPORT Merge Evidence 記載・`dragonfly_progress` 追記（コミット `096d475` / `87bbc82`）。
 - スコープ外の候補：Owner Select 検索付き、直 fetch の共通ラッパ、サーバ側 owner 整合（PLAN §3.3）。
