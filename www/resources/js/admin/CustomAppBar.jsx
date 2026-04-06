@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Box, IconButton, InputBase } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, InputBase, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { SidebarToggleButton } from 'react-admin';
+import { useReligoOwner } from './ReligoOwnerContext';
+import { formatMemberPrimaryLine } from './utils/memberDisplay';
 
 const APPBAR_HEIGHT = 56;
 
@@ -29,48 +31,29 @@ const getLabel = (pathname) => {
 
 /**
  * Religo 管理画面用カスタム AppBar。モック v2 #appbar 準拠。
- * パンくず・検索（ダミー）・通知（ダミー）・ME アバター。
- * SSOT: docs/SSOT/FIT_AND_GAP_MENU_HEADER.md
+ * グローバル Owner Select — SSOT: ADMIN_GLOBAL_OWNER_SELECTION §4
  */
 export const CustomAppBar = () => {
     const { pathname } = useLocation();
     const currentLabel = getLabel(pathname);
-    const [chapterLabel, setChapterLabel] = useState(null);
+    const {
+        ownerMemberId,
+        members,
+        savingOwner,
+        patchOwner,
+        resolvedWorkspaceId,
+        resolvedWorkspaceName,
+    } = useReligoOwner();
 
-    const loadChapterBadge = useCallback(async () => {
-        try {
-            const [meRes, wsRes] = await Promise.all([
-                fetch('/api/users/me', { headers: { Accept: 'application/json' } }),
-                fetch('/api/workspaces', { headers: { Accept: 'application/json' } }),
-            ]);
-            if (!meRes.ok) {
-                setChapterLabel(null);
-                return;
-            }
-            const me = await meRes.json();
-            const workspacesRaw = wsRes.ok ? await wsRes.json() : [];
-            const workspaces = Array.isArray(workspacesRaw) ? workspacesRaw : [];
-            const wid = me.workspace_id;
-            if (wid == null) {
-                setChapterLabel(null);
-                return;
-            }
-            const row = workspaces.find((w) => Number(w.id) === Number(wid));
-            setChapterLabel(row?.name ?? `Workspace #${wid}`);
-        } catch {
-            setChapterLabel(null);
-        }
-    }, []);
+    const chapterLabel =
+        resolvedWorkspaceId != null ? resolvedWorkspaceName ?? `Workspace #${resolvedWorkspaceId}` : null;
 
-    useEffect(() => {
-        loadChapterBadge();
-    }, [pathname, loadChapterBadge]);
-
-    useEffect(() => {
-        const onWorkspaceChange = () => loadChapterBadge();
-        window.addEventListener('religo-workspace-changed', onWorkspaceChange);
-        return () => window.removeEventListener('religo-workspace-changed', onWorkspaceChange);
-    }, [loadChapterBadge]);
+    const handleOwnerChange = (e) => {
+        const v = e.target.value;
+        if (v === '' || v == null) return;
+        const n = Number(v);
+        if (Number.isInteger(n)) patchOwner(n);
+    };
 
     return (
         <AppBar
@@ -150,6 +133,29 @@ export const CustomAppBar = () => {
                         inputProps={{ 'aria-label': '検索' }}
                     />
                 </Box>
+
+                <FormControl size="small" sx={{ minWidth: { xs: 120, sm: 160 } }}>
+                    <InputLabel id="religo-global-owner-label">Owner</InputLabel>
+                    <Select
+                        labelId="religo-global-owner-label"
+                        label="Owner"
+                        value={ownerMemberId != null ? String(ownerMemberId) : ''}
+                        onChange={handleOwnerChange}
+                        disabled={savingOwner || members.length === 0}
+                        displayEmpty
+                    >
+                        {ownerMemberId == null && (
+                            <MenuItem value="">
+                                <em>選択してください</em>
+                            </MenuItem>
+                        )}
+                        {members.map((m) => (
+                            <MenuItem key={m.id} value={String(m.id)}>
+                                {formatMemberPrimaryLine(m)}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
 
                 {chapterLabel && (
                     <Box

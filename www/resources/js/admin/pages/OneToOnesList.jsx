@@ -5,7 +5,6 @@ import {
     TextField,
     FunctionField,
     TextInput,
-    NumberInput,
     SelectInput,
     BooleanInput,
     Filter,
@@ -34,7 +33,7 @@ import {
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 import { formatMemberPrimaryLine } from '../utils/memberDisplay';
-import { fetchReligoOwnerMemberId } from '../religoOwnerMemberId';
+import { useReligoOwner } from '../ReligoOwnerContext';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -93,7 +92,7 @@ function MeetingLabelChip({ record }) {
 
 function buildOneToOneStatsQuery(filterValues) {
     const q = new URLSearchParams();
-    // 一覧 getList（dataProvider）と同じ: owner が空ならクエリに付けない（全 Owner を表示）
+    // 呼び出し側が Context 由来の owner_member_id をマージした filterValues を渡す（一覧フィルタでは持たない）
     const ownerRaw = filterValues?.owner_member_id;
     if (ownerRaw != null && String(ownerRaw).trim() !== '') {
         q.set('owner_member_id', String(ownerRaw).trim());
@@ -126,13 +125,17 @@ function buildOneToOneStatsQuery(filterValues) {
 
 function OneToOnesStatsCards() {
     const { filterValues } = useListContext();
-    const filterKey = JSON.stringify(filterValues ?? {});
+    const { ownerMemberId } = useReligoOwner();
+    const filterKey = JSON.stringify(filterValues ?? {}) + String(ownerMemberId ?? '');
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let cancelled = false;
-        const fv = filterValues ?? {};
+        const fv = { ...(filterValues ?? {}) };
+        if (ownerMemberId != null) {
+            fv.owner_member_id = ownerMemberId;
+        }
         const qs = buildOneToOneStatsQuery(fv);
         setLoading(true);
         fetch(`/api/one-to-ones/stats?${qs}`, {
@@ -273,8 +276,8 @@ function EffectiveDateField({ record, ...props }) {
 }
 
 function TargetMemberFilterSelect() {
-    const { filterValues } = useListContext();
-    const raw = filterValues?.owner_member_id;
+    const { ownerMemberId } = useReligoOwner();
+    const raw = ownerMemberId;
     const ownerId =
         raw != null && String(raw).trim() !== '' ? Number(String(raw).trim()) : null;
     const [choices, setChoices] = useState([{ id: '', name: '相手: すべて' }]);
@@ -325,7 +328,6 @@ function TargetMemberFilterSelect() {
 export function OneToOnesListFilters() {
     return (
         <Filter>
-            <NumberInput source="owner_member_id" label="Owner（自分）ID" alwaysOn />
             <BooleanInput source="exclude_canceled" label="キャンセルを一覧から除く" alwaysOn />
             <TextInput source="q" label="検索（相手名・メモ）" resettable />
             <TargetMemberFilterSelect />
@@ -372,7 +374,7 @@ function formatLaravel422Message(payload) {
 }
 
 function OneToOnesQuickCreateDialog({ open, onClose }) {
-    const { filterValues } = useListContext();
+    const { ownerMemberId: globalOwnerMemberId } = useReligoOwner();
     const refresh = useRefresh();
     const notify = useNotify();
     const [searchParams] = useSearchParams();
@@ -407,15 +409,9 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         (async () => {
             try {
                 setError('');
-                const rawFilter = filterValues?.owner_member_id;
                 let owner = null;
-                if (rawFilter != null && String(rawFilter).trim() !== '') {
-                    owner = Number(String(rawFilter).trim());
-                } else {
-                    const mid = await fetchReligoOwnerMemberId();
-                    if (mid != null && mid !== '') {
-                        owner = Number(mid);
-                    }
+                if (globalOwnerMemberId != null) {
+                    owner = Number(globalOwnerMemberId);
                 }
                 if (cancelled) {
                     return;
@@ -425,9 +421,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
                     setWorkspaceId(null);
                     setOwnerMemberOptions([]);
                     setPrefillTargetId(null);
-                    setError(
-                        'Owner（自分）が未設定です。一覧の「Owner（自分）ID」に有効なメンバーIDを入力するか、Settings で owner を設定してください。'
-                    );
+                    setError('Owner（自分）が未設定です。画面上部の Owner でメンバーを選んでください。');
                     return;
                 }
                 setResolvedOwnerId(owner);
@@ -480,7 +474,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         return () => {
             cancelled = true;
         };
-    }, [open, filterValues?.owner_member_id, searchParams]);
+    }, [open, searchParams, globalOwnerMemberId]);
 
     const defaultValues = useMemo(
         () => ({
@@ -500,10 +494,9 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
             return;
         }
         if (resolvedOwnerId == null || data.owner_member_id == null || data.owner_member_id === '') {
-            notify(
-                'Owner（自分）が無効です。一覧の Owner フィルタを確認するか、Settings で owner を設定してください。',
-                { type: 'warning' }
-            );
+            notify('Owner（自分）が無効です。画面上部の Owner を確認するか、/settings で設定してください。', {
+                type: 'warning',
+            });
             return;
         }
         setSaving(true);
@@ -540,7 +533,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
             <DialogTitle>
                 📅 1 to 1 を追加
                 <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
-                    Owner（自分）: {ownerLabel}（一覧のフィルタを優先。未入力時は Settings の owner）
+                    Owner（自分）: {ownerLabel}（ヘッダーと同じ解決済み ID）
                 </Typography>
             </DialogTitle>
             {loading && (
@@ -680,29 +673,18 @@ function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOp
     );
 }
 
+const ONETOONES_FILTER_DEFAULTS = { exclude_canceled: true };
+
 export function OneToOnesList() {
+    const { loading: ownerLoading } = useReligoOwner();
     const [memoRecord, setMemoRecord] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
     const [listReady, setListReady] = useState(false);
-    /** owner は me からのみ。未設定時に 1 を既定にすると members.id=1 が無い DB で GET が 422 になるため、未設定時は付けない（全 Owner）。 */
-    const [filterDefaults, setFilterDefaults] = useState({ exclude_canceled: true });
 
     useEffect(() => {
-        let cancelled = false;
-        fetchReligoOwnerMemberId().then((id) => {
-            if (!cancelled) {
-                const next = { exclude_canceled: true };
-                if (id != null && id !== '') {
-                    next.owner_member_id = Number(id);
-                }
-                setFilterDefaults(next);
-                setListReady(true);
-            }
-        });
-        return () => {
-            cancelled = true;
-        };
-    }, []);
+        if (ownerLoading) return;
+        setListReady(true);
+    }, [ownerLoading]);
 
     if (!listReady) {
         return (
@@ -721,7 +703,7 @@ export function OneToOnesList() {
             title="1 to 1"
             actions={<OneToOnesListActions onQuickCreate={() => setCreateOpen(true)} />}
             perPage={25}
-            filterDefaultValues={filterDefaults}
+            filterDefaultValues={ONETOONES_FILTER_DEFAULTS}
         >
             <OneToOnesListInner
                 memoRecord={memoRecord}

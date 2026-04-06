@@ -10,7 +10,7 @@ import {
 } from 'react-admin';
 import { useSearchParams } from 'react-router-dom';
 import { OneToOneFormFields } from './OneToOneFormFields';
-import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
+import { useReligoOwner } from '../ReligoOwnerContext';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 
 async function fetchJson(url) {
@@ -30,6 +30,7 @@ export function OneToOnesCreate() {
     const notify = useNotify();
     const redirect = useRedirect();
     const [searchParams] = useSearchParams();
+    const { ownerMemberId, loading: ownerLoading } = useReligoOwner();
     const [workspaceId, setWorkspaceId] = useState(null);
     const [workspaceError, setWorkspaceError] = useState('');
     const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
@@ -38,12 +39,15 @@ export function OneToOnesCreate() {
     const [durationMinutes, setDurationMinutes] = useState(60);
 
     useEffect(() => {
+        if (ownerLoading || ownerMemberId == null) {
+            setFormReady(false);
+            return;
+        }
         let cancelled = false;
         (async () => {
             try {
-                const [wsArr, meOwner, allMembers] = await Promise.all([
+                const [wsArr, allMembers] = await Promise.all([
                     fetchJson('/api/workspaces'),
-                    fetchReligoOwnerMemberId(),
                     fetchJson('/api/dragonfly/members'),
                 ]);
                 if (cancelled) {
@@ -57,7 +61,7 @@ export function OneToOnesCreate() {
                 setWorkspaceError('');
                 const owners = Array.isArray(allMembers) ? allMembers : [];
                 setOwnerMemberOptions(owners);
-                const ownerId = ownerMemberIdFallback(meOwner);
+                const ownerId = ownerMemberId;
                 const scoped = await fetchJson(
                     `/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerId))}`
                 );
@@ -86,7 +90,7 @@ export function OneToOnesCreate() {
         return () => {
             cancelled = true;
         };
-    }, [searchParams]);
+    }, [searchParams, ownerMemberId, ownerLoading]);
 
     const transform = useCallback(
         (data) => buildOneToOnePayload(data, durationMinutes, { mode: 'create', workspaceId }),
@@ -106,7 +110,7 @@ export function OneToOnesCreate() {
         );
     }
 
-    if (!formReady || workspaceId == null) {
+    if (!formReady || workspaceId == null || ownerLoading || ownerMemberId == null) {
         return <div style={{ padding: 16 }}>Loading...</div>;
     }
 

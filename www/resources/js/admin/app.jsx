@@ -8,6 +8,7 @@ import DragonFlyBoard from './pages/DragonFlyBoard';
 import Dashboard from './pages/Dashboard';
 import ReligoSettings from './pages/ReligoSettings';
 import { ReligoLayout } from './ReligoLayout';
+import { ReligoOwnerProvider } from './ReligoOwnerContext';
 import { MembersList } from './pages/MembersList';
 import { MemberShow } from './pages/MemberShow';
 import { MemberEdit } from './pages/MemberEdit';
@@ -26,6 +27,7 @@ import { RolesEdit } from './pages/RolesEdit';
 const root = document.getElementById('admin-root');
 if (root) {
     createRoot(root).render(
+        <ReligoOwnerProvider>
         <Admin
             dataProvider={dragonflyDataProvider}
             layout={ReligoLayout}
@@ -43,5 +45,6 @@ if (root) {
             <Resource name="categories" list={CategoriesList} create={CategoriesCreate} edit={CategoriesEdit} options={{ label: 'Categories' }} />
             <Resource name="roles" list={RolesList} create={RolesCreate} edit={RolesEdit} options={{ label: 'Roles' }} />
         </Admin>
+        </ReligoOwnerProvider>
     );
 }

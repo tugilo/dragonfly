@@ -2,7 +2,9 @@
 
 **目的:** メニュー（サイドバー）とヘッダー（AppBar）をモックに合わせるための調査結果。実装時の参照用。  
 **SSOT モック:** `www/public/mock/religo-admin-mock-v2.html`  
-**比較 URL:** モック http://localhost/mock/religo-admin-mock-v2.html ／ 実装 http://localhost/admin
+**比較 URL:** モック http://localhost/mock/religo-admin-mock-v2.html ／ 実装 http://localhost/admin  
+
+**更新（2026-04-06）:** §4・§5.2 を **現行実装**（カスタム AppBar・`ReligoOwnerProvider`・グローバル Owner）に合わせて追記・修正。[ADMIN_GLOBAL_OWNER_SELECTION.md](ADMIN_GLOBAL_OWNER_SELECTION.md)（SPEC-003）・Phase `ADMIN_GLOBAL_OWNER_SPEC003_DOCS` の記録に整合。
 
 ---
 
@@ -91,10 +93,12 @@
 
 ## 4. 実装の現状
 
-### 4.1 レイアウト
+### 4.1 レイアウト（ReligoLayout.jsx）
 
-- **ReligoLayout.jsx:** react-admin の `<Layout menu={ReligoMenu} />` をそのまま使用。カスタム AppBar / Sidebar は渡していない。
-- **react-admin Layout:** デフォルトで Sidebar（メニュー）＋ AppBar ＋ Content。AppBar の内容は react-admin 標準（メニュー開閉・タイトル・ユーザーメニュー等）。
+- **react-admin の `<Layout>`** に **`menu={ReligoMenu}`**、**`sidebar={CustomSidebar}`**、**`appBar={CustomAppBar}`** を渡している（デフォルト AppBar ではない）。
+- **`ReligoOwnerProvider`:** `www/resources/js/admin/app.jsx` で **`<Admin>` 全体をラップ**。`GET /api/users/me`・`GET /api/dragonfly/members`（Owner 選択肢）・所属チャプター表示用の workspace 解決を Context に集約。
+- **初期ロード（`loading === true`）:** メイン領域は **全画面スピナー**（`CircularProgress`）。この間は Sidebar / AppBar は出さない。
+- **`owner_member_id` 未設定（`loading === false` かつ `ownerMemberId == null`）:** **原則**メインコンテンツは「Ownerを選択してください」に差し替え。**例外:** **`pathname === '/settings'`** のときは **ReligoSettings** を表示。**AppBar・Sidebar は表示**され、ヘッダーの Owner `Select` で選択可能（[ADMIN_GLOBAL_OWNER_SELECTION.md](ADMIN_GLOBAL_OWNER_SELECTION.md) §4.4）。
 
 ### 4.2 メニュー（ReligoMenu.jsx）
 
@@ -102,11 +106,22 @@
 - **並び:** Dashboard → Connections → Members → Meetings → 1 to 1 → Role History → Divider → "SETTINGS" → Categories → Roles。
 - **アイコン:** 各項目に emoji（📊 🗺 👥 📋 🤝 🏅）。Settings 配下の Categories / Roles はアイコンなし。
 - **アクティブ:** `path === href || path.startsWith(href)` で selected、左 3px primary ボーダー。
-- **リンク先:** `/`, `/connections`, `/members`, `/meetings`, `/one-to-ones`, `/role-history`, `/categories`, `/roles`（**Settings はパスに含まない**）。
+- **リンク先:** `/`, `/connections`, `/members`, `/meetings`, `/one-to-ones`, `/role-history`, `/categories`, `/roles`（**Settings はパスに含まない**）。チャプター設定は **`/settings`**（`CustomRoutes`）。
 
-### 4.3 AppBar（実装）
+### 4.3 AppBar（CustomAppBar.jsx）
 
-- react-admin 標準の AppBar。モックのような「パンくず」「検索ボックス」「🔔」「ME」の組み合わせは未実装。タイトル・メニュー開閉・テーマ切替・更新・ユーザーメニュー等は react-admin デフォルト。
+- **カスタム実装**（react-admin 標準ではない）。
+- **パンくず:** 「Religo」リンク（`/`）› 現在ページラベル（pathname から変換）。
+- **検索:** モック同様の **見た目のボックス**（`InputBase`、**disabled**・ダミー）。
+- **Owner（SPEC-003）:** MUI **`Select`**（ラベル「Owner」）。選択肢は `GET /api/dragonfly/members`。変更時 **`PATCH /api/users/me`**。未選択時はプレースホルダ行。
+- **所属チャプター:** `resolvedWorkspaceId` があるとき **「所属: {名}」** を表示し **`/settings` へリンク**（Context の解決名）。
+- **通知:** 🔔 の **IconButton**（ダミー）。
+- **アバター:** 32px 円・「ME」・グラデ（モックの `.av` に近い）。
+
+### 4.4 データ取得と React Admin（補足）
+
+- **React Admin の `dataProvider`**（`dragonflyDataProvider`）は、owner 依存リソースで **`assertOwnerResolved()`**（`religoOwnerStore` と同期）を用いる。未解決・ロード中はエラー。
+- **CustomRoutes** や **コンポーネント内 `fetch`** は dataProvider 外のため、**`useReligoOwner().ownerMemberId`** で同一の解決済み ID を参照する方針（詳細は SPEC-003 §5.1・実装棚卸し）。
 
 ---
 
@@ -129,12 +144,14 @@
 
 ### 5.2 AppBar（ヘッダー）
 
-| # | 観点 | モック v2 | 実装 | Fit / Gap |
-|---|------|-----------|------|-----------|
-| A1 | パンくず | Religo › [現在ページ]。Religo クリックで Dashboard | react-admin の Breadcrumb またはタイトル。表現が異なる可能性 | **Gap:** モックと同じ「Religo › ページ名」のパンくずなし |
-| A2 | 検索ボックス | 角丸・placeholder「検索…」・幅 210px | なし | **Gap:** 未実装 |
-| A3 | 通知アイコン | 🔔 円ボタン | なし | **Gap:** 未実装 |
-| A4 | アバター | 32px 円「ME」、グラデ | react-admin はユーザーメニュー（別UI）。モックと同じ「ME」アバターは未 | **Gap:** モックと同じ見た目のアバター未実装 |
+| # | 観点 | モック v2 | 実装（CustomAppBar.jsx） | Fit / Gap |
+|---|------|-----------|---------------------------|-----------|
+| A1 | パンくず | Religo › [現在ページ]。Religo クリックで Dashboard | 「Religo」リンク（`/`）› 現在ページ名（`PATH_TO_LABEL` 等） | **Fit**（表記はモックと同等の意図） |
+| A2 | 検索ボックス | 角丸・placeholder「検索…」・幅 210px | 同形状の **ダミー**（disabled） | **Partial:** 見た目は近いが機能なし |
+| A3 | 通知アイコン | 🔔 円ボタン | 🔔 `IconButton`（ダミー） | **Fit**（機能はダミー） |
+| A4 | アバター | 32px 円「ME」、グラデ | 32px 円「ME」グラデ | **Fit** |
+| A5 | **Owner Select**（SPEC-003） | （モック v2 には明示なし・本プロダクト要件） | ラベル「Owner」・`PATCH /api/users/me` で保存 | **Fit**（要件は [ADMIN_GLOBAL_OWNER_SELECTION](ADMIN_GLOBAL_OWNER_SELECTION.md)） |
+| A6 | 所属チャプター | （モックは別要素で表現可） | 「所属: …」リンク `/settings` | **Fit**（BO-AUDIT 系の既存導線と整合） |
 
 ---
 
@@ -145,6 +162,7 @@
 - メニュー項目の**順序**と**アイコン**（Dashboard 〜 Role History）。
 - SETTINGS の**階層**（見出し＋Categories / Roles）と**インデント**。
 - **アクティブ状態**の左ボーダー（3px primary）。
+- **AppBar（CustomAppBar）:** パンくず風の **Religo › 現在ページ**、検索欄の**枠**（ダミー）、通知・ME アバター、**グローバル Owner Select**（[ADMIN_GLOBAL_OWNER_SELECTION](ADMIN_GLOBAL_OWNER_SELECTION.md)）、**所属チャプター**リンク。
 
 ### 6.2 Gap（モックに合わせるなら対応したいところ）
 
@@ -152,9 +170,9 @@
 |--------|------|------|
 | 高 | サイドバー上部 | **ロゴブロック**（R マーク＋「Religo」＋「DragonFly Chapter」）を追加 |
 | 高 | サイドバー下部 | **ユーザー表示**（アバター＋「メンバー管理者」＋メール）を追加 |
-| 高 | AppBar | **パンくず**「Religo › 現在ページ」を表示 |
-| 中 | AppBar | **検索ボックス**（placeholder「検索…」、幅 210px 程度） |
-| 中 | AppBar | **通知アイコン**（🔔）と**アバター**（ME） |
+| ~~高~~ | ~~AppBar パンくず~~ | **2026-04 実装済み**（§4.3・§5.2 A1）。残タスクから除外してよい。 |
+| 中 | AppBar 検索 | **検索を有効化**するかは別要件（現状はダミー・§5.2 A2） |
+| ~~中~~ | ~~AppBar 通知・アバター~~ | **ダミー通知・ME アバターは実装済み**（§5.2 A3・A4）。装飾・挙動のモック完全一致は未 |
 | 低 | ルート | /categories → /settings/categories 等、モックと URL を揃えるかは要件次第 |
 | 低 | サイドバー幅 | 240px を明示 |
 
@@ -162,7 +180,7 @@
 
 - **モックの見た目:** http://localhost/mock/religo-admin-mock-v2.html を開き、サイドバー・AppBar の構造とスタイルを確認。
 - **CSS 変数・クラス:** 本ドキュメント §2・§3 および `religo-admin-mock-v2.html` の `<style>` 内の `#sidebar`, `#appbar`, `.sb-*`, `.ab-*`, `.nav`, `.nav-sub` を参照。
-- **React Admin のカスタム:** `Layout` に `appBar` / `sidebar` を渡してカスタムコンポーネントに差し替える必要あり。react-admin の Layout API を確認すること。
+- **React Admin のカスタム:** 実装では `ReligoLayout` が **`Layout` に `appBar={CustomAppBar}` / `sidebar={CustomSidebar}`** を渡している（§4.1）。追加改修時は `www/resources/js/admin/ReligoLayout.jsx`・`CustomAppBar.jsx`・`CustomSidebar.jsx` を参照。
 
 ---
 

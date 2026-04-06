@@ -28,6 +28,7 @@ import {
     formatMemberSecondaryLine,
     formatMemberAutocompleteLabel,
 } from '../utils/memberDisplay';
+import { useReligoOwner } from '../ReligoOwnerContext';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -173,7 +174,7 @@ async function putMeetingBreakouts(meetingId, payload) {
 }
 
 export default function DragonFlyBoard() {
-    const [ownerMemberId, setOwnerMemberId] = useState(1);
+    const { ownerMemberId } = useReligoOwner();
     const [members, setMembers] = useState([]);
     const [targetMember, setTargetMember] = useState(null);
     const [summary, setSummary] = useState(null);

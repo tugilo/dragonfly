@@ -13,10 +13,9 @@ import {
     Button,
 } from '@mui/material';
 import { religoOneToOneLeadStatusLabel } from '../religoOneToOneLeadLabels';
-import { fetchReligoOwnerMemberId, ownerMemberIdFallback } from '../religoOwnerMemberId';
+import { useReligoOwner } from '../ReligoOwnerContext';
 
 const API = '';
-const OWNER_MEMBER_ID = 1;
 const MEMO_LIMIT = 20;
 
 async function fetchJson(url) {
@@ -26,6 +25,7 @@ async function fetchJson(url) {
 }
 
 function MemberDetailContent() {
+    const { ownerMemberId } = useReligoOwner();
     const record = useRecordContext();
     const [tab, setTab] = useState(0);
     const [summary, setSummary] = useState(null);
@@ -38,12 +38,8 @@ function MemberDetailContent() {
     const id = record?.id;
 
     const loadLeadStatus = useCallback(() => {
-        if (!id) return;
-        fetchReligoOwnerMemberId()
-            .then((me) => {
-                const owner = ownerMemberIdFallback(me);
-                return fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${owner}`);
-            })
+        if (!id || ownerMemberId == null) return;
+        fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((rows) => {
                 if (!Array.isArray(rows)) {
@@ -53,45 +49,45 @@ function MemberDetailContent() {
                 setLeadRow(rows.find((r) => Number(r.member_id) === Number(id)) ?? null);
             })
             .catch(() => setLeadRow(null));
-    }, [id]);
+    }, [id, ownerMemberId]);
 
     const loadSummary = useCallback(() => {
-        if (!id) return;
+        if (!id || ownerMemberId == null) return;
         setLoadingSummary(true);
-        fetchJson(`/api/dragonfly/contacts/${id}/summary?owner_member_id=${OWNER_MEMBER_ID}`)
+        fetchJson(`/api/dragonfly/contacts/${id}/summary?owner_member_id=${ownerMemberId}`)
             .then(setSummary)
             .catch(() => setSummary(null))
             .finally(() => setLoadingSummary(false));
-    }, [id]);
+    }, [id, ownerMemberId]);
 
     const loadMemos = useCallback(() => {
-        if (!id) return;
+        if (!id || ownerMemberId == null) return;
         setLoadingMemos(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
+        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((arr) => setMemos(Array.isArray(arr) ? arr : []))
             .catch(() => setMemos([]))
             .finally(() => setLoadingMemos(false));
-    }, [id]);
+    }, [id, ownerMemberId]);
 
     const loadO2o = useCallback(() => {
-        if (!id) return;
+        if (!id || ownerMemberId == null) return;
         setLoadingO2o(true);
-        fetch(`${API}/api/one-to-ones?owner_member_id=${OWNER_MEMBER_ID}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
+        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((arr) => setO2oList(Array.isArray(arr) ? arr : []))
             .catch(() => setO2oList([]))
             .finally(() => setLoadingO2o(false));
-    }, [id]);
+    }, [id, ownerMemberId]);
 
     useEffect(() => {
-        if (id) {
+        if (id && ownerMemberId != null) {
             loadSummary();
             loadMemos();
             loadO2o();
             loadLeadStatus();
         }
-    }, [id, loadLeadStatus, loadSummary, loadMemos, loadO2o]);
+    }, [id, ownerMemberId, loadLeadStatus, loadSummary, loadMemos, loadO2o]);
 
     if (!record) return null;
 
