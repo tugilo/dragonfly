@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * GET /api/dashboard/stats, tasks, activity. SSOT: DASHBOARD_REQUIREMENTS.md §5.
+ * GET /api/dashboard/stats, tasks, activity, weekly-presentation. SSOT: DASHBOARD_REQUIREMENTS.md §5, SPEC-004.
  * owner: query > acting user の owner_member_id > 422（E-4 / BO-AUDIT-P4）.
  */
 class DashboardController extends Controller
@@ -80,5 +80,26 @@ class DashboardController extends Controller
         $limit = max(1, min(50, $limit));
         $data = $this->dashboardService->getActivity($ownerMemberId, $limit);
         return response()->json($data);
+    }
+
+    /**
+     * GET /api/dashboard/weekly-presentation — Owner メンバーのウィークリープレゼン原稿（TEXT）.
+     */
+    public function weeklyPresentation(Request $request): JsonResponse
+    {
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return response()->json(['message' => 'オーナーが未設定です。ダッシュボード上でオーナーを選択してください。'], 422);
+        }
+        $member = Member::query()->find($ownerMemberId);
+        if (! $member) {
+            return response()->json(['message' => 'Owner member not found.'], 404);
+        }
+        $raw = $member->weekly_presentation_body;
+        $normalized = ($raw === null || $raw === '') ? null : $raw;
+
+        return response()->json([
+            'weekly_presentation_body' => $normalized,
+        ]);
     }
 }

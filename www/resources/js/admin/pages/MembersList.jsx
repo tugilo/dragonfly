@@ -866,7 +866,7 @@ function O2oModal({ open, member, onClose, onSaved }) {
                         ))}
                     </Select>
                 </FormControl>
-                <MuiTextField label="メモ / アジェンダ" multiline rows={3} fullWidth placeholder="打ち合わせ内容、目的など…" value={notes} onChange={(e) => setNotes(e.target.value)} sx={{ mt: 2 }} />
+                <MuiTextField label="この回のメモ（話した内容・アジェンダ）" multiline rows={3} fullWidth placeholder="この回で話す・話した内容、次アクションなど（1行＝1回の1to1）" value={notes} onChange={(e) => setNotes(e.target.value)} sx={{ mt: 2 }} />
                 {error && <Typography color="error" variant="body2" sx={{ mt: 2 }}>{error}</Typography>}
             </DialogContent>
             <DialogActions sx={{ bgcolor: 'grey.50' }}>

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Container } from '@mui/material';
 import DashboardHeader from './dashboard/DashboardHeader';
 import DashboardKpiGrid from './dashboard/DashboardKpiGrid';
-import DashboardTasksPanel from './dashboard/DashboardTasksPanel';
-import DashboardShortcutsPanel from './dashboard/DashboardShortcutsPanel';
+import DashboardWeeklyPresentationPanel from './dashboard/DashboardWeeklyPresentationPanel';
 import DashboardActivityPanel from './dashboard/DashboardActivityPanel';
 import DashboardLeadsPanel from './dashboard/DashboardLeadsPanel';
 import { useReligoOwner } from '../ReligoOwnerContext';
@@ -28,34 +27,47 @@ async function fetchJson(url, options = {}) {
 
 /**
  * Religo Dashboard. SSOT: docs/SSOT/DASHBOARD_FIT_AND_GAP.md, DASHBOARD_DATA_SSOT.md.
+ * 優先アクション（Tasks）パネルは Dashboard から出さない（`GET /api/dashboard/tasks` は呼ばない）。
  * Owner はグローバルヘッダー（ReligoOwnerContext）と同期。ADMIN_GLOBAL_OWNER_SELECTION。
  */
 export default function Dashboard() {
     const { ownerMemberId, resolvedWorkspaceId, resolvedWorkspaceName } = useReligoOwner();
     const [stats, setStats] = useState(null);
-    const [tasks, setTasks] = useState([]);
     const [activity, setActivity] = useState([]);
     const [oneToOneLeads, setOneToOneLeads] = useState([]);
     const [panelsBusy, setPanelsBusy] = useState(true);
+    const [weeklyPresentation, setWeeklyPresentation] = useState({
+        loaded: false,
+        body: null,
+        error: false,
+    });
 
     const loadDashboard = useCallback(async () => {
+        setWeeklyPresentation({ loaded: false, body: null, error: false });
         try {
-            const [s, t, a] = await Promise.all([
+            const [s, a, w] = await Promise.all([
                 dashboardRequest('stats').catch(() => null),
-                dashboardRequest('tasks').catch(() => null),
                 dashboardRequest('activity', { limit: 6 }).catch(() => null),
+                dashboardRequest('weekly-presentation').catch(() => null),
             ]);
             if (s && typeof s.stale_contacts_count === 'number') {
                 setStats(s);
             } else {
                 setStats(null);
             }
-            setTasks(Array.isArray(t) ? t : []);
             setActivity(Array.isArray(a) ? a : []);
+            if (w && typeof w === 'object' && 'weekly_presentation_body' in w) {
+                const raw = w.weekly_presentation_body;
+                const body =
+                    raw === null || raw === undefined || String(raw).trim() === '' ? null : String(raw);
+                setWeeklyPresentation({ loaded: true, body, error: false });
+            } else {
+                setWeeklyPresentation({ loaded: true, body: null, error: true });
+            }
         } catch {
             setStats(null);
-            setTasks([]);
             setActivity([]);
+            setWeeklyPresentation({ loaded: true, body: null, error: true });
         }
     }, []);
 
@@ -105,19 +117,26 @@ export default function Dashboard() {
                 resolvedWorkspaceName={resolvedWorkspaceName}
             />
 
+            {ownerConfigured && (
+                <DashboardWeeklyPresentationPanel
+                    loading={panelsBusy}
+                    body={weeklyPresentation.body}
+                    loadError={weeklyPresentation.error}
+                    prominent
+                />
+            )}
+
             <DashboardKpiGrid stats={stats} loading={panelsBusy} ownerConfigured={ownerConfigured} />
 
             <Box
                 sx={{
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', md: '1fr 340px' },
+                    gridTemplateColumns: { xs: '1fr', md: 'minmax(0, 1fr) minmax(380px, 440px)' },
                     gap: 1.75,
                     alignItems: 'start',
                 }}
             >
                 <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                    <DashboardTasksPanel tasks={tasks} loading={panelsBusy} ownerConfigured={ownerConfigured} />
-                    <DashboardShortcutsPanel />
                     <DashboardActivityPanel items={activity} loading={panelsBusy} ownerConfigured={ownerConfigured} />
                 </Box>
                 <DashboardLeadsPanel

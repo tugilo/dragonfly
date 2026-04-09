@@ -134,6 +134,7 @@
 - 新規 SSOT ファイルを増やしたら **SSOT_REGISTRY に Spec ID を足す**（運用ルール）。
 - **グローバル Owner** など横断仕様を練るときは、[ADMIN_GLOBAL_OWNER_SELECTION.md](../SSOT/ADMIN_GLOBAL_OWNER_SELECTION.md) を対象に本プロンプトをかけると、実装 Phase のブレを早めに潰せる。
 - 同じ SSOT を **より実装粒度まで詰めたい**ときは、専用の [PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md](PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md)（観点8・出力4部・Phase 順）を使う。
+- **コード実装**に入るときは [PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md](PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md)（Context・dataProvider・Phase1〜5）。**設計を最優先**するなら [PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md](PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md)。**Phase を順に最後まで**進めるなら [PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md](PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md)。
 
 ---
 
@@ -141,6 +142,9 @@
 
 | 日付 | 内容 |
 |------|------|
+| 2026-04-06 | Phase Runner [PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md](PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md) を運用メモに追加。 |
+| 2026-04-06 | 統合実行 [PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md](PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md) を運用メモに追加。 |
+| 2026-04-06 | 実装プロンプト [PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md](PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md) を運用メモに追加。 |
 | 2026-04-06 | 専用プロンプト [PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md](PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md) への相互参照を運用メモに追加。 |
 | 2026-04-06 | tugilo 流の説明表・「得られるもの」・ADMIN_GLOBAL_OWNER への導線を追記。レビュー観点・本文は維持。 |
 | 2026-04-16 | 初版。レビュー観点7・出力形式3部・dragonfly 文脈・上級オプションを `docs/process` に整理 |

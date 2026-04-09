@@ -2,6 +2,7 @@
 
 namespace App\Services\Religo;
 
+use App\Models\Category;
 use App\Models\DragonflyContactFlag;
 use App\Models\Member;
 use App\Models\OneToOne;
@@ -22,13 +23,21 @@ use Carbon\Carbon;
  *
  * **要対応閾値:** `config('religo.one_to_one_lead_needs_action_days')`（既定 30）。
  * `now(app.timezone)->copy()->subDays($days)` との厳密比較（`lt`）。端の日付解釈は P5 以来変更なし。
+ *
+ * **並び順（Dashboard / Members 整合）:** 応答配列は **会員番号の数値昇順**（`Member::orderByDisplayNoNumeric` — `display_no` が文字列でも 1,2,…,10,11… になる）。ステータス tier・want_1on1 による二次ソートは行わない。
+ *
+ * **対象から除外する members.type:** `guest`（ゲスト）・`visitor`（ビジター）は名簿上の在籍メンバーではないため **リード一覧に含めない**（`active` / `inactive` 等のみ）。
  */
 class MemberOneToOneLeadService
 {
+    /** Dashboard「次の1to1候補」の target から除外する members.type */
+    private const EXCLUDED_LEAD_TARGET_TYPES = ['guest', 'visitor'];
+
     /**
      * @return list<array{
      *     member_id: int,
      *     name: string,
+     *     category_label: string|null,
      *     last_one_to_one_at: string|null,
      *     one_to_one_status: string,
      *     want_1on1: bool
@@ -55,8 +64,8 @@ class MemberOneToOneLeadService
 
         $targetIds = Member::query()
             ->where('id', '!=', $ownerMemberId)
-            ->orderByRaw('display_no IS NULL, display_no ASC')
-            ->orderBy('id')
+            ->whereNotIn('type', self::EXCLUDED_LEAD_TARGET_TYPES)
+            ->orderByDisplayNoNumeric('asc')
             ->pluck('id')
             ->all();
 
@@ -71,10 +80,10 @@ class MemberOneToOneLeadService
             ->keyBy('target_member_id');
 
         $members = Member::query()
+            ->with('category')
             ->whereIn('id', $targetIds)
-            ->orderByRaw('display_no IS NULL, display_no ASC')
-            ->orderBy('id')
-            ->get(['id', 'display_no', 'name']);
+            ->orderByDisplayNoNumeric('asc')
+            ->get(['id', 'display_no', 'name', 'category_id']);
 
         $rows = [];
         foreach ($members as $m) {
@@ -104,28 +113,27 @@ class MemberOneToOneLeadService
             $rows[] = [
                 'member_id' => $tid,
                 'name' => $displayName,
+                'category_label' => $this->formatCategoryLabel($m->category),
                 'last_one_to_one_at' => $lastDate,
                 'one_to_one_status' => $status,
                 'want_1on1' => $want,
             ];
         }
 
-        usort($rows, function (array $a, array $b): int {
-            $tier = ['none' => 0, 'needs_action' => 1, 'ok' => 2];
-            $ta = $tier[$a['one_to_one_status']] ?? 99;
-            $tb = $tier[$b['one_to_one_status']] ?? 99;
-            if ($ta !== $tb) {
-                return $ta <=> $tb;
-            }
-            if ($a['want_1on1'] !== $b['want_1on1']) {
-                return $b['want_1on1'] <=> $a['want_1on1'];
-            }
-            $da = $a['last_one_to_one_at'] ?? '';
-            $db = $b['last_one_to_one_at'] ?? '';
-
-            return strcmp($da, $db);
-        });
-
         return $rows;
+    }
+
+    /**
+     * categories の一覧表示と同じ規則（group_name === name なら name のみ）。
+     */
+    private function formatCategoryLabel(?Category $category): ?string
+    {
+        if ($category === null) {
+            return null;
+        }
+        $g = (string) $category->group_name;
+        $n = (string) $category->name;
+
+        return $g === $n ? $n : $g.' / '.$n;
     }
 }

@@ -74,6 +74,69 @@ class MemberOneToOneStatusTest extends TestCase
         $this->assertSame($target, $data[0]['member_id']);
         $this->assertSame('none', $data[0]['one_to_one_status']);
         $this->assertFalse($data[0]['want_1on1']);
+        $this->assertNull($data[0]['category_label']);
+    }
+
+    public function test_excludes_guest_and_visitor_from_targets(): void
+    {
+        $owner = $this->insertMember('Owner', '1');
+        $active = $this->insertMember('Active', '2');
+        DB::table('members')->insert([
+            'name' => 'Guest',
+            'name_kana' => null,
+            'type' => 'guest',
+            'display_no' => 'G1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->insert([
+            'name' => 'Visitor',
+            'name_kana' => null,
+            'type' => 'visitor',
+            'display_no' => 'V1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $response = $this->getJson("/api/dragonfly/members/one-to-one-status?owner_member_id={$owner}");
+        $response->assertOk();
+        $data = $response->json();
+        $this->assertCount(1, $data);
+        $this->assertSame($active, $data[0]['member_id']);
+    }
+
+    public function test_includes_category_label_when_member_has_category(): void
+    {
+        $owner = $this->insertMember('Owner', '1');
+        $catId = (int) DB::table('categories')->insertGetId([
+            'group_name' => 'IT',
+            'name' => 'Web制作',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $target = $this->insertMember('Target', '2');
+        DB::table('members')->where('id', $target)->update(['category_id' => $catId]);
+
+        $response = $this->getJson("/api/dragonfly/members/one-to-one-status?owner_member_id={$owner}");
+        $response->assertOk();
+        $this->assertSame('IT / Web制作', $response->json()[0]['category_label']);
+    }
+
+    public function test_category_label_collapses_when_group_equals_name(): void
+    {
+        $owner = $this->insertMember('Owner', '1');
+        $catId = (int) DB::table('categories')->insertGetId([
+            'group_name' => '士業',
+            'name' => '士業',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $target = $this->insertMember('Target', '2');
+        DB::table('members')->where('id', $target)->update(['category_id' => $catId]);
+
+        $response = $this->getJson("/api/dragonfly/members/one-to-one-status?owner_member_id={$owner}");
+        $response->assertOk();
+        $this->assertSame('士業', $response->json()[0]['category_label']);
     }
 
     public function test_none_when_only_planned_exists(): void
@@ -135,7 +198,7 @@ class MemberOneToOneStatusTest extends TestCase
         $this->assertSame('2026-03-10', $row['last_one_to_one_at']);
     }
 
-    public function test_want_1on1_reflected_and_sorted_first_within_tier(): void
+    public function test_want_1on1_reflected_order_by_display_no(): void
     {
         Carbon::setTestNow(Carbon::parse('2026-03-20 12:00:00', 'Asia/Tokyo'));
 
@@ -157,12 +220,32 @@ class MemberOneToOneStatusTest extends TestCase
         $response->assertOk();
         $data = $response->json();
         $this->assertCount(2, $data);
+        // 番号昇順: #2 Want → #3 Plain（tier / want では並べ替えない）
         $this->assertSame($tWant, $data[0]['member_id']);
         $this->assertTrue($data[0]['want_1on1']);
+        $this->assertSame($tPlain, $data[1]['member_id']);
         $this->assertFalse($data[1]['want_1on1']);
     }
 
-    public function test_sorts_none_before_ok(): void
+    public function test_order_follows_display_no_not_one_to_one_status_tier(): void
+    {
+        Carbon::setTestNow(Carbon::parse('2026-03-20 12:00:00', 'Asia/Tokyo'));
+
+        $owner = $this->insertMember('Owner', '1');
+        // display_no は string 型のため、'10' と '2' だと辞書順で逆転する。桁を揃えた番号で「小さい番号が先」を検証する。
+        $tLaterNone = $this->insertMember('LaterNone', '09');
+        $tEarlyOk = $this->insertMember('EarlyOk', '02');
+
+        $this->insertCompletedOneToOne($owner, $tEarlyOk, '2026-03-15 10:00:00');
+        // $tLaterNone: completed なし → none
+
+        $response = $this->getJson("/api/dragonfly/members/one-to-one-status?owner_member_id={$owner}");
+        $response->assertOk();
+        $ids = array_column($response->json(), 'member_id');
+        $this->assertSame([$tEarlyOk, $tLaterNone], $ids);
+    }
+
+    public function test_sorts_by_display_no_asc_even_when_none_after_ok_by_status(): void
     {
         Carbon::setTestNow(Carbon::parse('2026-03-20 12:00:00', 'Asia/Tokyo'));
 

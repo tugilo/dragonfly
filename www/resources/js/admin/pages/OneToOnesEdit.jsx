@@ -116,7 +116,7 @@ function OneToOneMemosPanel() {
                 履歴メモ（contact_memos）
             </Typography>
             <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1.5 }}>
-                会話・フォローを時系列で残します。上欄は一覧用の要約（notes）です。
+                上の「この回で話した内容」（notes）がその回の主記録です。ここでは追記・分割を時系列で足す場合に使います（任意）。
             </Typography>
             {loading ? (
                 <CircularProgress size={22} sx={{ my: 1 }} />

@@ -95,7 +95,11 @@ class DragonFlyMemberController extends Controller
         if (! in_array($sort, IndexDragonFlyMembersRequest::SORT_FIELDS, true)) {
             $sort = 'id';
         }
-        $query->orderBy($sort, $order);
+        if ($sort === 'display_no') {
+            $query->orderByDisplayNoNumeric($order);
+        } else {
+            $query->orderBy($sort, $order);
+        }
 
         $members = $query->get();
 

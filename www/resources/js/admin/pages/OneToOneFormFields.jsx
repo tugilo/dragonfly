@@ -16,11 +16,11 @@ export const ONE_TO_ONE_STATUS_CHOICES = [
     { id: 'canceled', name: 'キャンセル' },
 ];
 
-const NOTES_LABEL = 'メモ（この1to1の記録・目的・アジェンダ）';
+const NOTES_LABEL = 'この回で話した内容（1レコード＝1回の1 to 1）';
 const NOTES_HELPER_CREATE =
-    '会話の時系列ログは contact_memos 側で将来拡張する想定。この欄は当該1to1レコードの要約メモとして使います。';
+    '同一相手とも定期的に実施する前提で、予定・実施ごとに行が分かれます。この欄に当該回の議題・話したこと・次アクションなどを書きます。';
 const NOTES_HELPER_EDIT =
-    '一覧の「📝 メモ」と同じ要約です。下の「履歴メモ」で会話ログを追記できます。';
+    'その回の記録の本体です。追記だけ時系列で分けたい場合は下の「履歴メモ（contact_memos）」も利用できます。';
 
 /**
  * Create / Edit 共通の 1to1 フォーム本体（ONETOONES_EDIT_UX_P2）。

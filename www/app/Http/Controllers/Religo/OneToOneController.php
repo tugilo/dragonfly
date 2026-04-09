@@ -97,7 +97,7 @@ class OneToOneController extends Controller
     }
 
     /**
-     * POST /api/one-to-ones/{id}/memos — 履歴メモ追加（memo_type = one_to_one、owner/target は 1to1 から複製）。
+     * POST /api/one-to-ones/{id}/memos — 履歴メモ追加（任意の追記。主記録は one_to_ones.notes）。memo_type = one_to_one、owner/target は 1to1 から複製。
      */
     public function memosStore(StoreOneToOneMemoRequest $request, OneToOne $oneToOne): JsonResponse
     {

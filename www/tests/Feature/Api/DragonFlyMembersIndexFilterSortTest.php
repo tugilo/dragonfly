@@ -68,6 +68,24 @@ class DragonFlyMembersIndexFilterSortTest extends TestCase
         $this->assertSame('30', $displayNos[3]);
     }
 
+    /** display_no は文字列カラムのため、単純な辞書順だと 10 が 2 より先になる。数値としてソートする。 */
+    public function test_sort_display_no_asc_is_numeric_not_lexicographic(): void
+    {
+        DB::table('members')->insert([
+            ['name' => 'Ten', 'display_no' => '10', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Two', 'display_no' => '2', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        $response = $this->getJson('/api/dragonfly/members?sort=display_no&order=asc');
+        $response->assertOk();
+        $displayNos = array_column($response->json(), 'display_no');
+        $idx2 = array_search('2', $displayNos, true);
+        $idx10 = array_search('10', $displayNos, true);
+        $this->assertNotFalse($idx2);
+        $this->assertNotFalse($idx10);
+        $this->assertLessThan($idx10, $idx2, '2 must sort before 10');
+    }
+
     public function test_interested_filter_returns_only_members_with_flag(): void
     {
         $target1 = (int) DB::table('members')->insertGetId([

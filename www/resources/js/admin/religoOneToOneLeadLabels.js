@@ -28,7 +28,7 @@ export const RELIGO_ONE_TO_ONE_LEAD_NO_COMPLETED = '1to1完了記録なし';
 export const RELIGO_DASHBOARD_LEADS_TITLE = '次の 1to1 候補';
 
 export const RELIGO_DASHBOARD_LEADS_HELPER =
-    '状態は「実施済み（completed）」のみを集計しています。並び: 未実施 → 要対応 → 実施済（詳細は DATA_MODEL §4.12.1）。';
+    '状態は「実施済み（completed）」のみを集計しています。並び: 会員番号（数値）昇順（Members と同じ）。ラベルは DATA_MODEL §4.12.1。';
 
 /** 候補 0 件時（P6 文脈・P7-3 で短文に整理） */
 export const RELIGO_DASHBOARD_LEADS_EMPTY =

@@ -106,6 +106,7 @@
 | MEMBER_DISPLAY_HELPER_UNIFICATION | `utils/memberDisplay.js` 集約・DragonFlyBoard/Members/Dashboard/1to1 フォーム接続 | implement | completed | develop | 2026-03-24 |
 | AXIOS-SC-2026-03 | axios サプライチェーン侵害（2026/03）影響調査・記録 | docs | completed | — | 2026-04-01 |
 | ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP | `/settings` ゲート例外・1to1 owner フィルタ削除・§5.1 SSOT 補足・religoOwnerMemberId 削除・`ReligoOwnerContext` 前提実装同梱 | implement | completed | feature/phase-admin-global-owner-spec003-followup | 2026-04-06 |
+| DASHBOARD-WEEKLY-P1 | Dashboard ウィークリープレゼン原稿表示（SPEC-004・members 拡張・GET dashboard/weekly-presentation・UI カード） | implement | completed | feature/phase-dashboard-weekly-p1 | 2026-04-07 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

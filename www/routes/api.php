@@ -76,6 +76,7 @@ Route::get('/workspaces', [WorkspaceController::class, 'index']);
 Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
 Route::get('/dashboard/tasks', [DashboardController::class, 'tasks']);
 Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
+Route::get('/dashboard/weekly-presentation', [DashboardController::class, 'weeklyPresentation']);
 
 if (app()->environment('local')) {
     Route::get('/debug/dashboard-summary', [DashboardDebugController::class, 'verifySummary']);

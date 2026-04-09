@@ -455,4 +455,34 @@ class DashboardApiTest extends TestCase
         $this->assertContains('flag_changed', $kinds);
         $this->assertContains('memo_introduction', $kinds);
     }
+
+    public function test_weekly_presentation_returns_200_with_null_when_not_registered(): void
+    {
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $data = $res->json();
+        $this->assertArrayHasKey('weekly_presentation_body', $data);
+        $this->assertNull($data['weekly_presentation_body']);
+    }
+
+    public function test_weekly_presentation_returns_body_when_set(): void
+    {
+        $text = "AI業務改善の次廣です。\n2行目";
+        DB::table('members')->where('id', $this->ownerId)->update(['weekly_presentation_body' => $text]);
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $this->assertSame($text, $res->json('weekly_presentation_body'));
+    }
+
+    public function test_weekly_presentation_returns_422_without_owner(): void
+    {
+        $res = $this->getJson('/api/dashboard/weekly-presentation');
+        $res->assertStatus(422);
+    }
+
+    public function test_weekly_presentation_returns_404_when_owner_member_not_found(): void
+    {
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=99999');
+        $res->assertStatus(404);
+    }
 }
