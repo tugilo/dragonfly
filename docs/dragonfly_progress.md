@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-04-13 23:30 JST | **1to1ドキュメント／CSVインポート修正／ロケール（develop へ push）:** 議事録（平山・倉持第2回・船津・畠山）・INDEX・ライブドキュメント本エントリまで反映。`ImportParticipantsCsvCommand` は氏名+type で既存メンバーを照合し **`members.id` を維持**（CSV の No は `display_no`＝名簿表示。DocBlock 追記）。`config/app.php` 既定 `ja`・`Asia/Tokyo`、`www/.env.example` 同期。`ImportParticipantsCsvCommandTest` に席入替退行テスト。ローカル `one_to_ones` 手修正は DB のみ。 |
+| 2026-04-13 23:30 JST | **1to1ドキュメント／CSVインポート修正／ロケール（develop へ push）:** 議事録（平山・倉持第2回・船津・畠山）・INDEX・ライブドキュメント本エントリまで反映。`ImportParticipantsCsvCommand` は氏名+type で既存メンバーを照合し **`members.id` を維持**（CSV の No は `display_no`＝名簿表示。DocBlock 追記）。`config/app.php` 既定 `ja`・`Asia/Tokyo`、`www/.env.example` 同期。`ImportParticipantsCsvCommandTest` に席入替退行テスト。ローカル `one_to_ones` 手修正は DB のみ。ブランチ `feature/docs-1to1-import-locale-20260413` → develop **merge `600f4c34637de7c97f52e46c389d30977dd75750`**。`php artisan test` **343 passed**。 |
 | 2026-04-14 JST | **1to1 議事録＋DB（畠山 憲之・2026-04-13 18:00）:** `1to1_hatakeyama_noriyuki_wagashi_oem.md` 新規、`one_to_ones.id=16`。INDEX・ライブドキュメント更新。 |
 | 2026-04-14 JST | **1to1 議事録＋DB（船津 麻理子・2026-04-13）:** `1to1_funatsu_mariko_aicare_lab.md` 新規、`one_to_ones.id=15`。INDEX・ライブドキュメント更新。 |
 | 2026-04-14 JST | **1to1 議事録（倉持 賢一・第2回 2026-04-13）:** `docs/meetings/1to1/1to1_kuramoto_kenichi_webmaster.md` 新規（tugilo式・第1回4/2要約・INDEX・ライブドキュメントリンク）。コード変更なし。 |
