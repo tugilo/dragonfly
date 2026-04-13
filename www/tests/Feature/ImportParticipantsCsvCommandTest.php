@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Category;
 use App\Models\Meeting;
 use App\Models\Member;
+use App\Models\OneToOne;
 use App\Models\Participant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
@@ -112,6 +113,28 @@ class ImportParticipantsCsvCommandTest extends TestCase
         }
     }
 
+    public function test_attendant_multi_name_resolves_first_match(): void
+    {
+        $path = $this->createCsvWithMultiAttendant();
+        $exitCode = Artisan::call('dragonfly:import-participants-csv', [
+            'meeting_number' => '990',
+            'csv_path' => $path,
+            '--held_on' => '2026-01-01',
+        ]);
+        $this->assertSame(0, $exitCode);
+        $first = Member::where('name', '甲　一郎')->where('type', 'member')->first();
+        $second = Member::where('name', '乙　二郎')->where('type', 'member')->first();
+        $visitor = Member::where('name', 'Vテスト')->where('type', 'visitor')->first();
+        $this->assertNotNull($first);
+        $this->assertNotNull($second);
+        $this->assertNotNull($visitor);
+        $this->assertNull($visitor->introducer_member_id);
+        $this->assertSame($first->id, $visitor->attendant_member_id);
+        $p = Participant::where('member_id', $visitor->id)->first();
+        $this->assertNotNull($p);
+        $this->assertSame($first->id, $p->attendant_member_id);
+    }
+
     public function test_unresolved_introducer_produces_warning(): void
     {
         $minimalCsv = $this->createMinimalCsvWithUnknownIntroducer();
@@ -163,15 +186,92 @@ class ImportParticipantsCsvCommandTest extends TestCase
         $this->assertSame(1, $exitCode);
     }
 
+    /**
+     * 席番（CSV の No）だけ入替しても、member.id と one_to_ones.target の人物がずれないこと。
+     * （display_no のみを updateOrCreate キーにしていたときの退行防止）
+     */
+    public function test_seat_number_shuffle_preserves_member_id_for_one_to_one_fk(): void
+    {
+        $dir = storage_path('app/test_csv');
+        if (! File::isDirectory($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+        $path1 = $dir.'/seat_swap_round1.csv';
+        $path2 = $dir.'/seat_swap_round2.csv';
+        $header = "種別,No,名前,よみがな,大カテゴリー,カテゴリー,役職,紹介者,アテンド,オリエン\n";
+        File::put($path1, $header
+            ."メンバー,1,佐藤　拓斗,さとう,,,,,,\n"
+            ."メンバー,2,原田　里織,はらだ,,,,,,\n");
+        File::put($path2, $header
+            ."メンバー,1,原田　里織,はらだ,,,,,,\n"
+            ."メンバー,2,佐藤　拓斗,さとう,,,,,,\n");
+
+        Artisan::call('dragonfly:import-participants-csv', [
+            'meeting_number' => '880',
+            'csv_path' => $path1,
+            '--held_on' => '2026-04-01',
+        ]);
+        $sato = Member::where('name', '佐藤　拓斗')->where('type', 'member')->first();
+        $harada = Member::where('name', '原田　里織')->where('type', 'member')->first();
+        $this->assertNotNull($sato);
+        $this->assertNotNull($harada);
+        $this->assertSame('1', $sato->display_no);
+        $this->assertSame('2', $harada->display_no);
+
+        $owner = Member::create([
+            'name' => 'オーナー用',
+            'type' => 'member',
+            'display_no' => 'O1',
+        ]);
+        $o2o = OneToOne::create([
+            'owner_member_id' => $owner->id,
+            'target_member_id' => $sato->id,
+            'status' => 'completed',
+            'ended_at' => '2026-04-03 08:00:00',
+        ]);
+
+        Artisan::call('dragonfly:import-participants-csv', [
+            'meeting_number' => '881',
+            'csv_path' => $path2,
+            '--held_on' => '2026-04-08',
+        ]);
+
+        $sato->refresh();
+        $harada->refresh();
+        $this->assertSame('2', $sato->display_no);
+        $this->assertSame('1', $harada->display_no);
+        $this->assertSame('佐藤　拓斗', $sato->name);
+        $o2o->refresh();
+        $this->assertSame($sato->id, $o2o->target_member_id);
+        $this->assertSame('佐藤　拓斗', $o2o->targetMember->name);
+    }
+
     private function createMinimalCsvWithUnknownIntroducer(): string
     {
         $dir = storage_path('app/test_csv');
         if (! File::isDirectory($dir)) {
             File::makeDirectory($dir, 0755, true);
         }
-        $path = $dir . '/minimal_unknown_introducer.csv';
+        $path = $dir.'/minimal_unknown_introducer.csv';
         $csv = "種別,No,名前,よみがな,大カテゴリー,カテゴリー,役職,紹介者,アテンド,オリエン\n";
         $csv .= "ビジター,,テスト ビジター,てすと,,IT,,存在しない紹介者,存在しないアテンド,\n";
+        File::put($path, $csv);
+
+        return $path;
+    }
+
+    /** アテンド「甲、乙」で両方メンバーに存在する場合、先頭（甲）が attendant に紐づく */
+    private function createCsvWithMultiAttendant(): string
+    {
+        $dir = storage_path('app/test_csv');
+        if (! File::isDirectory($dir)) {
+            File::makeDirectory($dir, 0755, true);
+        }
+        $path = $dir.'/multi_attendant.csv';
+        $csv = "種別,No,名前,よみがな,大カテゴリー,カテゴリー,役職,紹介者,アテンド,オリエン\n";
+        $csv .= "メンバー,1,甲　一郎,か,,,,,,\n";
+        $csv .= "メンバー,2,乙　二郎,おつ,,,,,,\n";
+        $csv .= "ビジター,,Vテスト,てすと,,,,,甲　一郎、乙　二郎,\n";
         File::put($path, $csv);
 
         return $path;

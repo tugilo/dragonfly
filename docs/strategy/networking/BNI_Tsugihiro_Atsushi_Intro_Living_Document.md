@@ -4,7 +4,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| **最終更新** | 2026-04-15 |
+| **最終更新** | 2026-04-14 |
 | **チャプター** | DragonFly（BNI・オンライン） |
 | **会員上のカテゴリ** | AI業務改善システム構築 |
 | **ブランド／屋号** | tugilo |
@@ -20,6 +20,10 @@
   - [1to1_okamoto_kachiteru_present.md](../../meetings/1to1/1to1_okamoto_kachiteru_present.md) … 1to1 向けの自己紹介・事業・他SEとの違い
   - [BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md](../../workshop/BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md) … **KeySkills・リファーラルWS 実戦台本**（※1to1WSとは別。即答・紹介文型・RP）
   - [1to1_sato_takuto_brightlink.md](../../meetings/1to1/1to1_sato_takuto_brightlink.md) … **佐藤 拓斗 様との初回1to1**（採用×システム・テレアポリスト検討・アクション）
+  - [1to1_hirayama_mayumi_lifesupport.md](../../meetings/1to1/1to1_hirayama_mayumi_lifesupport.md) … **平山 真由美 様との1to1**（ウェブマスター支援・40人リスト・カーマッチ／神山氏紹介・第1回 2026-04-08）
+  - [1to1_kuramoto_kenichi_webmaster.md](../../meetings/1to1/1to1_kuramoto_kenichi_webmaster.md) … **倉持 賢一 様との1to1**（WEBマスター・第2回 2026-04-13 協業機会整理）
+  - [1to1_funatsu_mariko_aicare_lab.md](../../meetings/1to1/1to1_funatsu_mariko_aicare_lab.md) … **船津 麻理子 様との1to1**（アイケアラボ・第1回 2026-04-13）
+  - [1to1_hatakeyama_noriyuki_wagashi_oem.md](../../meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md) … **畠山 憲之 様との1to1**（和スイーツOEM・第1回 2026-04-13）
 
 ---
 
@@ -155,4 +159,8 @@ AI業務改善システム構築の次廣でした。
 |------|----------|
 | 2026-04-03 | 1to1 メモのリンク先を `docs/meetings/1to1/` 配下に統一（`1to1_okamoto_kachiteru_present.md` / `1to1_sato_takuto_brightlink.md`） |
 | 2026-04-15 | 関連リンクに佐藤拓斗様初回1to1要約を追加（ファイル名 `1to1_sato_takuto_brightlink.md`） |
+| 2026-04-13 | 関連リンクに平山真由美様1to1（`1to1_hirayama_mayumi_lifesupport.md`）を追加 |
+| 2026-04-14 | 関連リンクに倉持賢一様1to1（`1to1_kuramoto_kenichi_webmaster.md`、第2回 2026-04-13）を追加 |
+| 2026-04-14 | 関連リンクに船津麻理子様1to1（`1to1_funatsu_mariko_aicare_lab.md`、第1回 2026-04-13）を追加 |
+| 2026-04-14 | 関連リンクに畠山憲之様1to1（`1to1_hatakeyama_noriyuki_wagashi_oem.md`、第1回 2026-04-13）を追加 |
 | 2026-03-31 | 初版。BO用・25秒（2稿）・朝礼/例会・参照表を `BNI_DragonFly_*`・1to1メモから集約 |

@@ -8,6 +8,11 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-04-13 23:30 JST | **1to1ドキュメント／CSVインポート修正／ロケール（develop へ push）:** 議事録（平山・倉持第2回・船津・畠山）・INDEX・ライブドキュメント本エントリまで反映。`ImportParticipantsCsvCommand` は氏名+type で既存メンバーを照合し **`members.id` を維持**（CSV の No は `display_no`＝名簿表示。DocBlock 追記）。`config/app.php` 既定 `ja`・`Asia/Tokyo`、`www/.env.example` 同期。`ImportParticipantsCsvCommandTest` に席入替退行テスト。ローカル `one_to_ones` 手修正は DB のみ。 |
+| 2026-04-14 JST | **1to1 議事録＋DB（畠山 憲之・2026-04-13 18:00）:** `1to1_hatakeyama_noriyuki_wagashi_oem.md` 新規、`one_to_ones.id=16`。INDEX・ライブドキュメント更新。 |
+| 2026-04-14 JST | **1to1 議事録＋DB（船津 麻理子・2026-04-13）:** `1to1_funatsu_mariko_aicare_lab.md` 新規、`one_to_ones.id=15`。INDEX・ライブドキュメント更新。 |
+| 2026-04-14 JST | **1to1 議事録（倉持 賢一・第2回 2026-04-13）:** `docs/meetings/1to1/1to1_kuramoto_kenichi_webmaster.md` 新規（tugilo式・第1回4/2要約・INDEX・ライブドキュメントリンク）。コード変更なし。 |
+| 2026-04-13 23:04 JST | **1to1 議事録（平山 真由美・ライフサポート）:** `docs/meetings/1to1/1to1_hirayama_mayumi_lifesupport.md` を新規作成（第1回 2026-04-08・tugilo式議事録体裁・YAML・サマリー／累積）。`docs/INDEX.md`・`BNI_Tsugihiro_Atsushi_Intro_Living_Document.md` 関連リンク更新。コード変更なし。 |
 | 2026-04-08 | **1to1 ドキュメント（米澤 侑桂・Comechan Design）:** `1to1_yonezawa_yuka_comechan_design.md` — 要約入力で **協業合意**を反映（求人サイトアプリ化フロント依頼・腰回収リッチメニュー2件・単価帯）。**新 §10〜14**、旧ヒアリング系は **§15〜18** に繰り下げ。INDEX 更新。コード変更なし。 |
 | 2026-04-08 | 同上ドキュメント: **第1回1to1 実施日時** **JST 09:00–10:00** を YAML・§1 に反映。コード変更なし。 |
 | 2026-04-07 11:57 JST | **SPEC-005:** [DASHBOARD_ONETOONE_LEADS_REQUIREMENTS.md](SSOT/DASHBOARD_ONETOONE_LEADS_REQUIREMENTS.md) — 次の1to1候補にカテゴリ表示。`GET /api/dragonfly/members/one-to-one-status` に `category_label` 追加（`MemberOneToOneLeadService`）。Dashboard 絞り込みを名前・カテゴリ対応。DATA_MODEL・INDEX・SSOT_REGISTRY 更新。`php artisan test --filter=MemberOneToOneStatus` 通過。 |

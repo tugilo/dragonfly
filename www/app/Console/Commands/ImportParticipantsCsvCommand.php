@@ -13,6 +13,9 @@ use Illuminate\Console\Command;
 /**
  * 定例会参加者CSVを members / participants に投入する汎用コマンド.
  *
+ * CSV の「No」は名簿・リスト上の表示番号であり、`members.display_no` に保存する（例会ごとに変わり得る）。
+ * `members.id` は DB の主キー（自動採番）であり、CSV の No とは別物。人物の同一性は type＋氏名で合わせる。
+ *
  * 使用例:
  *   php artisan dragonfly:import-participants-csv 200 database/csv/dragonfly_59people.csv --held_on=2026-03-10
  */
@@ -65,6 +68,10 @@ class ImportParticipantsCsvCommand extends Command
             return self::SUCCESS;
         }
 
+        // メンバー行を No 昇順で先に処理する（席番の入替で display_no だけをキーにすると
+        // 同一 member.id の氏名が別人で上書きされ、one_to_ones 等の FK がずれるのを防ぐ）
+        $rows = $this->reorderRowsForStableMemberImport($rows);
+
         $meeting = $this->resolveMeeting((int) $meetingNumber, $heldOn);
         $nameToMemberId = [];
         $visitorIndex = 0;
@@ -93,7 +100,7 @@ class ImportParticipantsCsvCommand extends Command
             );
         }
 
-        $this->info("Imported {$meeting->number} meeting: " . count($rows) . ' participants.');
+        $this->info("Imported {$meeting->number} meeting: ".count($rows).' participants.');
         if ($this->warningCount > 0) {
             $this->warn("Warnings: {$this->warningCount}");
         }
@@ -173,7 +180,7 @@ class ImportParticipantsCsvCommand extends Command
             }
             $row = array_combine($headers, array_slice($values, 0, count($headers)));
             if ($row === false) {
-                $this->warn("Row " . ($lineNum + 2) . ": column count mismatch, skipped.");
+                $this->warn('Row '.($lineNum + 2).': column count mismatch, skipped.');
                 $this->warningCount++;
 
                 continue;
@@ -183,7 +190,7 @@ class ImportParticipantsCsvCommand extends Command
             $kind = $row['種別'] ?? '';
             $name = $row['名前'] ?? '';
             if ($name === '') {
-                $this->warn("Row " . ($lineNum + 2) . ": 名前 is empty, skipped.");
+                $this->warn('Row '.($lineNum + 2).': 名前 is empty, skipped.');
                 $this->warningCount++;
 
                 continue;
@@ -193,6 +200,34 @@ class ImportParticipantsCsvCommand extends Command
         }
 
         return $rows;
+    }
+
+    /**
+     * メンバー行を一覧の No（数値）昇順に並べ、それ以外は元の順のまま後ろに付ける。
+     * インポート時に「席番だけ入替・人物は同一」の更新が、display_no 昇順で揃うようにする。
+     *
+     * @param  array<int, array<string, mixed>>  $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function reorderRowsForStableMemberImport(array $rows): array
+    {
+        $members = [];
+        $others = [];
+        foreach ($rows as $row) {
+            if (trim((string) ($row['種別'] ?? '')) === 'メンバー') {
+                $members[] = $row;
+            } else {
+                $others[] = $row;
+            }
+        }
+        usort($members, function (array $a, array $b): int {
+            $na = (int) preg_replace('/\D/', '', (string) ($a['No'] ?? '0'));
+            $nb = (int) preg_replace('/\D/', '', (string) ($b['No'] ?? '0'));
+
+            return $na <=> $nb;
+        });
+
+        return array_merge($members, $others);
     }
 
     private function stripBom(string $content): string
@@ -272,7 +307,8 @@ class ImportParticipantsCsvCommand extends Command
         $this->syncCurrentRole($member, $roleName);
 
         $introducerId = $this->resolveMemberIdByName($introducerName, $nameToMemberId, '紹介者', $name);
-        $attendantId = $this->resolveMemberIdByName($attendantName, $nameToMemberId, 'アテンド', $name);
+        // アテンドは「、」区切りで複数名が入るため、先頭から順に解決して最初の一致を採用する
+        $attendantId = $this->resolveAttendantFromMultiName($attendantName, $nameToMemberId, $name);
 
         $member->update([
             'introducer_member_id' => $introducerId,
@@ -300,17 +336,17 @@ class ImportParticipantsCsvCommand extends Command
         if ($kind === 'ビジター') {
             $visitorIndex++;
 
-            return 'V' . $visitorIndex;
+            return 'V'.$visitorIndex;
         }
         if ($kind === 'ゲスト') {
             $guestIndex++;
 
-            return 'G' . $guestIndex;
+            return 'G'.$guestIndex;
         }
         if ($kind === '代理出席') {
             $proxyIndex++;
 
-            return 'P' . $proxyIndex;
+            return 'P'.$proxyIndex;
         }
 
         return $no !== '' ? $no : '?';
@@ -341,22 +377,35 @@ class ImportParticipantsCsvCommand extends Command
         ?string $attendantName,
         array $nameToMemberId
     ): Member {
-        $key = $type === 'member'
-            ? ['type' => $type, 'display_no' => $displayNo]
-            : ['type' => $type, 'display_no' => $displayNo];
+        // 席番（display_no）だけを一意キーにすると、例会ごとに No がずれたとき
+        // 別人のデータで同一 id が上書きされ、one_to_ones.target_member_id などが意味を失う。
+        // 同一チャプター内では氏名を主たる合わせキーとし、席番は属性として更新する。
+        $existing = Member::query()
+            ->where('type', $type)
+            ->where('name', $name)
+            ->first();
 
-        return Member::updateOrCreate(
-            $key,
-            [
-                'name' => $name,
+        if ($existing !== null) {
+            $existing->update([
                 'name_kana' => $nameKana,
                 'category_id' => $categoryId,
-                'type' => $type,
                 'display_no' => $displayNo,
                 'introducer_member_id' => null,
                 'attendant_member_id' => null,
-            ]
-        );
+            ]);
+
+            return $existing->fresh();
+        }
+
+        return Member::create([
+            'name' => $name,
+            'name_kana' => $nameKana,
+            'category_id' => $categoryId,
+            'type' => $type,
+            'display_no' => $displayNo,
+            'introducer_member_id' => null,
+            'attendant_member_id' => null,
+        ]);
     }
 
     private function syncCurrentRole(Member $member, ?string $roleNotes): void
@@ -381,21 +430,66 @@ class ImportParticipantsCsvCommand extends Command
         );
     }
 
+    /**
+     * 紹介者など 1 名のみ想定。未解決時は warning。
+     */
     private function resolveMemberIdByName(?string $name, array $nameToMemberId, string $label, string $rowName): ?int
     {
         if ($name === null) {
             return null;
         }
-        $id = $nameToMemberId[$name] ?? null;
+        $id = $this->lookupMemberIdByName($name, $nameToMemberId);
         if ($id === null) {
-            $existing = Member::where('name', $name)->first();
-            if ($existing !== null) {
-                return $existing->id;
-            }
             $this->warn("{$label} not found: {$name} (row: {$rowName})");
             $this->warningCount++;
         }
 
         return $id;
+    }
+
+    /**
+     * アテンド列は「氏名1、氏名2、氏名3」のように複数が入る。DB は 1 FK のため先頭から順に照合し最初の一致を採用する。
+     */
+    private function resolveAttendantFromMultiName(?string $raw, array $nameToMemberId, string $rowName): ?int
+    {
+        if ($raw === null) {
+            return null;
+        }
+        $trimmed = trim($raw);
+        if ($trimmed === '' || $trimmed === '-') {
+            return null;
+        }
+        $parts = preg_split('/[、,]/u', $trimmed, -1, PREG_SPLIT_NO_EMPTY);
+        if ($parts === false || $parts === []) {
+            return $this->lookupMemberIdByName($trimmed, $nameToMemberId);
+        }
+        foreach ($parts as $part) {
+            $segment = trim($part);
+            if ($segment === '') {
+                continue;
+            }
+            $id = $this->lookupMemberIdByName($segment, $nameToMemberId);
+            if ($id !== null) {
+                return $id;
+            }
+        }
+        $this->warn("アテンド not found (any of): {$trimmed} (row: {$rowName})");
+        $this->warningCount++;
+
+        return null;
+    }
+
+    private function lookupMemberIdByName(string $name, array $nameToMemberId): ?int
+    {
+        if ($name === '') {
+            return null;
+        }
+        $id = $nameToMemberId[$name] ?? null;
+        if ($id !== null) {
+            return $id;
+        }
+        $existing = Member::where('name', $name)->first();
+
+        return $existing?->id;
     }
 }
