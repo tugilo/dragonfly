@@ -48,6 +48,10 @@
 | [meetings/1to1/1to1_kimura_kengo_mfg_retail.md](meetings/1to1/1to1_kimura_kengo_mfg_retail.md) | 木村健悟（**ハート・プランニング／倉敷屋**）。**自己紹介シート統合済**（G.A.I.N.S・Top3・推薦インサイト）・付録に旧システム構想全文（2025-03-12・時刻TODO）。 |
 | [meetings/1to1/1to1_gunji_lstep_webhook.md](meetings/1to1/1to1_gunji_lstep_webhook.md) | 軍司・Lステップ×Webhook×AI。**付録にアジェンダ全文**。実施日時はYAML **TODO**。 |
 | [meetings/1to1/1to1_yonezawa_yuka_comechan_design.md](meetings/1to1/1to1_yonezawa_yuka_comechan_design.md) | **米澤 侑桂（Comechan Design）**。**§10〜14**＝協業合意・案件・スキル・稼働・成功要因（2026-04-08）。**§15〜18**＝再現用ヒアリング／台本。**求人サイトアプリ化＋腰回収リッチメニュー** 合意。 |
+| [meetings/1to1/1to1_hirayama_mayumi_lifesupport.md](meetings/1to1/1to1_hirayama_mayumi_lifesupport.md) | **平山 真由美（ライフサポート／シングルマザー専門事業コンシェルジュ）**。**第1回 2026-04-08 JST 11:00〜**（終了時刻 TODO）・Zoom。**議事録体裁**（概要・決定・アクション・協業案・次回 RF 11/9）。 |
+| [meetings/1to1/1to1_kuramoto_kenichi_webmaster.md](meetings/1to1/1to1_kuramoto_kenichi_webmaster.md) | **倉持 賢一（WEBマスター／中国向け物販支援）**。**第2回 2026-04-13 JST 11:00–12:00**・Zoom。ITウェブパワーチーム・坂木氏・双葉企画・エアコン案件等。**第1回** 2026-04-02 要約あり。 |
+| [meetings/1to1/1to1_funatsu_mariko_aicare_lab.md](meetings/1to1/1to1_funatsu_mariko_aicare_lab.md) | **船津 麻理子（アイケアラボ／眼の整体）**。**第1回 2026-04-13 JST 14:30–15:30**・Zoom。リファラル・FC本部システム・顧客管理（DB `one_to_ones.id` 15）。 |
+| [meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md](meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md) | **畠山 憲之（和スイーツOEM／BCP担当）**。**第1回 2026-04-13 JST 18:00–19:00**・Zoom。業務課題整理・再1on1合意（DB `one_to_ones.id` 16）。 |
 
 #### 提案書・その他（docs/meetings/ 直下）
 
