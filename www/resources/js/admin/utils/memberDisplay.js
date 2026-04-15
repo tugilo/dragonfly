@@ -11,6 +11,26 @@ export function formatMemberPrimaryLine(member) {
     return line || `#${member.id}`;
 }
 
+/** 所属チャプター（workspace）名。API の workspace_name を使用 */
+export function formatMemberWorkspaceName(member) {
+    if (!member) return null;
+    const n = member.workspace_name;
+    return n && String(n).trim() !== '' ? String(n).trim() : null;
+}
+
+/**
+ * 主行 + チャプター名（1to1 / Autocomplete 用）。
+ * workspace_name があれば「氏名（チャプター）」形式。
+ */
+export function formatMemberWithChapterPrimary(member) {
+    const p = formatMemberPrimaryLine(member);
+    const ch = formatMemberWorkspaceName(member);
+    if (ch) {
+        return `${p}（${ch}）`;
+    }
+    return p;
+}
+
 /** 2 行目: 大/実カテゴリ → なければ current_role。無ければ null */
 export function formatMemberSecondaryLine(member) {
     if (!member) return null;
@@ -20,10 +40,10 @@ export function formatMemberSecondaryLine(member) {
     return role || null;
 }
 
-/** Autocomplete の getOptionLabel 用: 主＋副（検索にカテゴリ文字列を含める） */
+/** Autocomplete の getOptionLabel 用: 主（チャプター付き可）＋副（検索にカテゴリ文字列を含める） */
 export function formatMemberAutocompleteLabel(member) {
     if (!member) return '';
-    const p = formatMemberPrimaryLine(member);
+    const p = formatMemberWithChapterPrimary(member);
     const s = formatMemberSecondaryLine(member);
     return s ? `${p} ${s}` : p;
 }

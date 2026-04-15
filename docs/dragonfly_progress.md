@@ -8,6 +8,13 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-04-08 JST | **ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1:** `countries` / `regions` / `workspaces.region_id`・1to1 API（`is_cross_chapter`・target 所属）・Members/Workspaces API 拡張・管理画面 1to1 一覧/相手表示・[PLAN/WORKLOG/REPORT](process/phases/PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md)・DATA_MODEL / SPEC-006 / INDEX。**ブランチ:** `feature/phase-onetoones-cross-chapter-ws-hierarchy-p1`（merge は別途）。`php artisan test` 345 passed、`npm run build` 成功。 |
+| 2026-04-03 JST | **SPEC-006:** [ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md) — チャプター外 BNI メンバーとの 1 to 1 の目的・効果・要件たたき台・workspace/members リレーション実装確認・ギャップ。`docs/02_specifications/SSOT_REGISTRY.md`・`docs/INDEX.md` 更新。コード変更なし。 |
+| 2026-04-16 JST | **メインプレ5分原稿:** `BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md` §4 — **ユーザー確定稿**反映（普段システム開発・👉強調・属人化・金の卵／ガチョウ）。改善版から確定稿へ。CHANGELOG 追記。コード変更なし。 |
+| 2026-04-15 JST | **BNI 自己紹介／メインプレ冒頭:** `BNI_Tsugihiro_Atsushi_Intro_Living_Document.md` に **§0 冒頭ナラティブ** 追加。`BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md` §2・§4 を同一文に同期。コード変更なし。 |
+| 2026-04-15 JST | **メインプレゼン抜き打ちテスト:** `BNI_MainPresentation_PopQuiz_Answers.md` 正解を **4／3／6／5／2週間前**（受講者ガイド準拠）に更新。INDEX説明同期。コード変更なし。 |
+| 2026-04-14 JST | **KeySkills メインプレゼン:** `BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md` — **25秒・BOから積み上げ**・**DragonFly定例会観察（人となり→本題）** を §2/§3/§4 に反映。コード変更なし。 |
+| 2026-04-14 JST | **佐藤（BrightLink）提案ブリーフ:** `docs/proposals/2026-04-14_sato_brightlink_listing_pipeline_proposal_brief.md`（旧 `docs/meetings/` から移動）。`docs/proposals/README.md` 新規。`docs/INDEX.md`・1to1 相互リンク更新。コード変更なし。 |
 | 2026-04-13 23:30 JST | **1to1ドキュメント／CSVインポート修正／ロケール（develop へ push）:** 議事録（平山・倉持第2回・船津・畠山）・INDEX・ライブドキュメント本エントリまで反映。`ImportParticipantsCsvCommand` は氏名+type で既存メンバーを照合し **`members.id` を維持**（CSV の No は `display_no`＝名簿表示。DocBlock 追記）。`config/app.php` 既定 `ja`・`Asia/Tokyo`、`www/.env.example` 同期。`ImportParticipantsCsvCommandTest` に席入替退行テスト。ローカル `one_to_ones` 手修正は DB のみ。ブランチ `feature/docs-1to1-import-locale-20260413` → develop **merge `600f4c34637de7c97f52e46c389d30977dd75750`**。`php artisan test` **343 passed**。 |
 | 2026-04-14 JST | **1to1 議事録＋DB（畠山 憲之・2026-04-13 18:00）:** `1to1_hatakeyama_noriyuki_wagashi_oem.md` 新規、`one_to_ones.id=16`。INDEX・ライブドキュメント更新。 |
 | 2026-04-14 JST | **1to1 議事録＋DB（船津 麻理子・2026-04-13）:** `1to1_funatsu_mariko_aicare_lab.md` 新規、`one_to_ones.id=15`。INDEX・ライブドキュメント更新。 |

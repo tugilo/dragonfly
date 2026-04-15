@@ -13,7 +13,25 @@ class WorkspaceController extends Controller
 {
     public function index(): JsonResponse
     {
-        $workspaces = Workspace::orderBy('id')->get(['id', 'name', 'slug']);
-        return response()->json($workspaces);
+        $workspaces = Workspace::query()
+            ->with(['region.country'])
+            ->orderBy('id')
+            ->get(['id', 'name', 'slug', 'region_id']);
+
+        $data = $workspaces->map(function (Workspace $w) {
+            $r = $w->region;
+
+            return [
+                'id' => $w->id,
+                'name' => $w->name,
+                'slug' => $w->slug,
+                'region_id' => $w->region_id,
+                'region_name' => $r?->name,
+                'country_id' => $r?->country_id,
+                'country_name' => $r?->country?->name,
+            ];
+        })->values()->all();
+
+        return response()->json($data);
     }
 }

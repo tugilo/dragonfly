@@ -10,6 +10,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-003 | 管理画面グローバル Owner 選択 | ../SSOT/ADMIN_GLOBAL_OWNER_SELECTION.md | implemented（主要コード）／記録: Phase ADMIN_GLOBAL_OWNER_SPEC003_DOCS |
 | SPEC-004 | Dashboard ウィークリープレゼン原稿表示 | ../SSOT/DASHBOARD_WEEKLY_PRESENTATION_REQUIREMENTS.md | implemented（主要コード）／記録: Phase DASHBOARD-WEEKLY-P1 |
 | SPEC-005 | Dashboard 次の1to1候補のカテゴリ表示 | ../SSOT/DASHBOARD_ONETOONE_LEADS_REQUIREMENTS.md | implemented（主要コード） |
+| SPEC-006 | 1 to 1 とチャプター外（他チャプター BNI メンバー）— 解釈A・階層・API/UI | ../SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md | implemented（主要コード）／記録: Phase ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 |
 
 ## Statusの値
 - active     : 現在有効なSSOT

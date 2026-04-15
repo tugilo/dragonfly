@@ -15,6 +15,7 @@ import {
     formatMemberPrimaryLine,
     formatMemberSecondaryLine,
     formatMemberAutocompleteLabel,
+    formatMemberWithChapterPrimary,
 } from '../utils/memberDisplay';
 
 async function fetchJson(url) {
@@ -30,11 +31,12 @@ export function memberFilterMatches(member, inputValue) {
         return true;
     }
     const name = `${member.display_no ?? ''} ${member.name ?? ''}`.trim().toLowerCase();
+    const ws = (member.workspace_name || '').toLowerCase();
     const cat =
         (member.category?.group_name || '') +
         (member.category?.name || '') +
         (member.current_role || '');
-    return name.includes(q) || cat.toLowerCase().includes(q);
+    return name.includes(q) || ws.includes(q) || cat.toLowerCase().includes(q);
 }
 
 /** @deprecated 直接は formatMemberPrimaryLine を使用可 */
@@ -83,7 +85,9 @@ export function MemberSearchAutocompleteInput(props) {
                 return (
                     <Box key={optKey ?? option.id} component="li" {...optionProps}>
                         <Box sx={{ py: 0.25 }}>
-                            <Typography sx={{ fontSize: 13, fontWeight: 600 }}>{formatMemberPrimaryLine(option)}</Typography>
+                            <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
+                                {formatMemberWithChapterPrimary(option)}
+                            </Typography>
                             {sec ? (
                                 <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sec}</Typography>
                             ) : null}
@@ -282,6 +286,11 @@ export function TargetMemberSummaryById({ targetMemberId }) {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     役職: {member.current_role ?? '—'}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    所属チャプター: {member.workspace_name ?? '—'}
+                    {member.region_name ? ` / ${member.region_name}` : ''}
+                    {member.country_name ? ` / ${member.country_name}` : ''}
                 </Typography>
             </CardContent>
         </Card>
