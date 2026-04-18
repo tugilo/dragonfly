@@ -4,6 +4,7 @@ namespace App\Services\Religo;
 
 use App\Models\Meeting;
 use App\Models\OneToOne;
+use App\Support\MemberWorkspaceAttributes;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -83,7 +84,12 @@ class OneToOneIndexService
     public function getIndex(array $filters = []): array
     {
         $query = OneToOne::query()
-            ->with(['ownerMember:id,name', 'targetMember:id,name', 'meeting:id,number,held_on']);
+            ->with([
+                'workspace.region.country',
+                'ownerMember:id,name',
+                'targetMember.workspace.region.country',
+                'meeting:id,number,held_on',
+            ]);
 
         $this->applyIndexFilters($query, $filters);
 
@@ -106,12 +112,23 @@ class OneToOneIndexService
      */
     public function formatRecord(OneToOne $o): array
     {
-        $o->loadMissing(['ownerMember:id,name', 'targetMember:id,name', 'meeting:id,number,held_on']);
+        $o->loadMissing([
+            'workspace.region.country',
+            'ownerMember:id,name',
+            'targetMember.workspace.region.country',
+            'meeting:id,number,held_on',
+        ]);
         $meeting = $o->meeting;
+        $targetFlat = MemberWorkspaceAttributes::flatForMember($o->targetMember);
+        $recordingWsId = $o->workspace_id;
+        $targetWsId = $targetFlat['workspace_id'];
+        $isCrossChapter = $recordingWsId !== null && $targetWsId !== null
+            && (int) $recordingWsId !== (int) $targetWsId;
 
         return [
             'id' => $o->id,
             'workspace_id' => $o->workspace_id,
+            'recording_workspace_name' => $o->workspace?->name,
             'owner_member_id' => $o->owner_member_id,
             'target_member_id' => $o->target_member_id,
             'status' => $o->status,
@@ -127,6 +144,13 @@ class OneToOneIndexService
             'updated_at' => $o->updated_at?->toIso8601String(),
             'owner_name' => $o->ownerMember?->name,
             'target_name' => $o->targetMember?->name,
+            'target_workspace_id' => $targetFlat['workspace_id'],
+            'target_workspace_name' => $targetFlat['workspace_name'],
+            'target_region_id' => $targetFlat['region_id'],
+            'target_region_name' => $targetFlat['region_name'],
+            'target_country_id' => $targetFlat['country_id'],
+            'target_country_name' => $targetFlat['country_name'],
+            'is_cross_chapter' => $isCrossChapter,
         ];
     }
 

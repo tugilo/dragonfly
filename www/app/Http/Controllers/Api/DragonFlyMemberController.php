@@ -7,6 +7,7 @@ use App\Http\Requests\Api\IndexDragonFlyMemberOneToOneStatusRequest;
 use App\Http\Requests\Api\IndexDragonFlyMembersRequest;
 use App\Models\Member;
 use App\Queries\Religo\MemberSummaryQuery;
+use App\Support\MemberWorkspaceAttributes;
 use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,9 +39,8 @@ class DragonFlyMemberController extends Controller
     public function index(IndexDragonFlyMembersRequest $request): JsonResponse
     {
         $query = Member::query()
-            ->with('category')
-            ->with('memberRoles.role')
-            ->select('id', 'display_no', 'name', 'name_kana', 'category_id', 'ncast_profile_url');
+            ->with(['category', 'memberRoles.role', 'workspace.region.country'])
+            ->select('id', 'display_no', 'name', 'name_kana', 'category_id', 'ncast_profile_url', 'workspace_id');
 
         if ($request->filled('q')) {
             $q = '%' . addcslashes($request->input('q'), '%_\\') . '%';
@@ -113,6 +113,8 @@ class DragonFlyMemberController extends Controller
             $members = $members->map(function ($m) use ($batch) {
                 $lite = $batch[$m->id] ?? null;
                 $arr = $m->toArray();
+                unset($arr['workspace']);
+                $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($m));
                 $arr['category'] = $m->category ? [
                     'id' => $m->category->id,
                     'group_name' => $m->category->group_name,
@@ -134,6 +136,8 @@ class DragonFlyMemberController extends Controller
         } else {
             $members = $members->map(function ($m) {
                 $arr = $m->toArray();
+                unset($arr['workspace']);
+                $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($m));
                 $arr['category'] = $m->category ? [
                     'id' => $m->category->id,
                     'group_name' => $m->category->group_name,
@@ -152,11 +156,13 @@ class DragonFlyMemberController extends Controller
      */
     public function show(int $id): JsonResponse
     {
-        $member = Member::with('category', 'memberRoles.role')->find($id);
+        $member = Member::with('category', 'memberRoles.role', 'workspace.region.country')->find($id);
         if (! $member) {
             return response()->json(['message' => 'Member not found.'], 404);
         }
         $arr = $member->toArray();
+        unset($arr['workspace']);
+        $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($member));
         $arr['category'] = $member->category ? [
             'id' => $member->category->id,
             'group_name' => $member->category->group_name,
@@ -206,8 +212,10 @@ class DragonFlyMemberController extends Controller
             }
         }
 
-        $member->load('category', 'memberRoles.role');
+        $member->load('category', 'memberRoles.role', 'workspace.region.country');
         $arr = $member->toArray();
+        unset($arr['workspace']);
+        $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($member));
         $arr['category'] = $member->category ? [
             'id' => $member->category->id,
             'group_name' => $member->category->group_name,

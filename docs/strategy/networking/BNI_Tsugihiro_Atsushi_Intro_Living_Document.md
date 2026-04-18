@@ -4,7 +4,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| **最終更新** | 2026-04-14 |
+| **最終更新** | 2026-04-15 |
 | **チャプター** | DragonFly（BNI・オンライン） |
 | **会員上のカテゴリ** | AI業務改善システム構築 |
 | **ブランド／屋号** | tugilo |
@@ -19,11 +19,40 @@
   - [BNI_DragonFly_Guest_Strategy_202603.md](./BNI_DragonFly_Guest_Strategy_202603.md) … ゲスト時のポジション・25秒・別稿
   - [1to1_okamoto_kachiteru_present.md](../../meetings/1to1/1to1_okamoto_kachiteru_present.md) … 1to1 向けの自己紹介・事業・他SEとの違い
   - [BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md](../../workshop/BNI_KeySkills_Referral_Workshop_Prep_Tsugihiro_202604.md) … **KeySkills・リファーラルWS 実戦台本**（※1to1WSとは別。即答・紹介文型・RP）
+  - [BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md](../../academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) … **KeySkills・メインプレゼン（5分）** — **§2.1 25秒・§1 BOから順に埋める**（アカデミー・PGワークショップ）
   - [1to1_sato_takuto_brightlink.md](../../meetings/1to1/1to1_sato_takuto_brightlink.md) … **佐藤 拓斗 様との初回1to1**（採用×システム・テレアポリスト検討・アクション）
   - [1to1_hirayama_mayumi_lifesupport.md](../../meetings/1to1/1to1_hirayama_mayumi_lifesupport.md) … **平山 真由美 様との1to1**（ウェブマスター支援・40人リスト・カーマッチ／神山氏紹介・第1回 2026-04-08）
   - [1to1_kuramoto_kenichi_webmaster.md](../../meetings/1to1/1to1_kuramoto_kenichi_webmaster.md) … **倉持 賢一 様との1to1**（WEBマスター・第2回 2026-04-13 協業機会整理）
   - [1to1_funatsu_mariko_aicare_lab.md](../../meetings/1to1/1to1_funatsu_mariko_aicare_lab.md) … **船津 麻理子 様との1to1**（アイケアラボ・第1回 2026-04-13）
   - [1to1_hatakeyama_noriyuki_wagashi_oem.md](../../meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md) … **畠山 憲之 様との1to1**（和スイーツOEM・第1回 2026-04-13）
+
+---
+
+## 0. 冒頭ナラティブ（メインプレ・長めのストーリー導入）
+
+**想定時間:** 約1分30秒〜2分（声の速さによる）。**メインプレ（5分）**では [KeySkills 5分原稿](../../academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) §4 と組み合わせ、**本文と重複しないよう**調整する。
+
+**ひな型（そのまま読み上げ可）**
+
+人を増やす前に、構造を変える。
+
+AI業務改善システム構築の次廣です。
+
+私はもともとシステム開発をしているのですが、現場の話を聞く中で、「もっと楽にできるのに」と感じる場面が本当に多くありました。
+
+例えば、Excelで管理している業務。同じ内容を何度も入力していたり、ファイルがいくつもあってどれが正しいのか分からなかったり、担当者がいないと回らない状態になっていたりします。
+
+実際に多くの会社さんとお話ししていても、「Excelでやっているけど、正直もう限界なんだよね」という声を本当によく聞きます。
+
+本来であれば、もっとシンプルに、誰でも分かる形で回るはずなのに、人の頑張りでなんとか回している状態になっている。
+
+そういった現場を変えるために、業務を分解して整理し、仕組みとして再設計しています。
+
+その中で、AIはあくまで「目的」ではなく、👉 より少ない手間で、より自然に業務を回すための手段として使っています。
+
+だからこそ、人に依存せず、1回の入力で回る状態を作ることができる。
+
+そういった現場を増やしたいと思い、この仕事をしています。
 
 ---
 
@@ -106,6 +135,15 @@ AI業務改善システム構築の次廣でした。
 
 ## 3. 朝礼・例会など用（短い段落）
 
+### BNIに参加した目的（ビジネスを拡大するには）
+
+**目的（一言）**  
+信頼に基づく紹介で事業を広げるため。
+
+**チャプターで拡大に効く2つ**  
+1. **紹介** — 誰に何を紹介してほしいかを短く言い続け、リファーラルを育てる。  
+2. **関係** — 例会・1to1で接点と信頼を積み、紹介の質と再現性を上げる。
+
 ### DragonFlyを選んだ理由（朝礼イメージ）
 
 私は、既存のツールでは対応しきれない業務を、現場に合わせてオーダーメイドで仕組みにしていく仕事をしています。DragonFlyはオンラインだからこそ地域を超えてつながり、困っている人にちゃんとつながれる場だと感じて選びました。このチャプターにしっかり貢献していきたいと思っています。
@@ -157,10 +195,14 @@ AI業務改善システム構築の次廣でした。
 
 | 日付 | 変更内容 |
 |------|----------|
+| 2026-04-15 | **§0 冒頭ナラティブ**（メインプレ用・フック＋現場観察＋仕事の理由）を追加。最終更新日を更新。 |
+| 2026-04-14 | 関連リンクに KeySkills・メインプレゼン（5分）（`BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md`）— **25秒・BOから積み上げ** |
 | 2026-04-03 | 1to1 メモのリンク先を `docs/meetings/1to1/` 配下に統一（`1to1_okamoto_kachiteru_present.md` / `1to1_sato_takuto_brightlink.md`） |
 | 2026-04-15 | 関連リンクに佐藤拓斗様初回1to1要約を追加（ファイル名 `1to1_sato_takuto_brightlink.md`） |
 | 2026-04-13 | 関連リンクに平山真由美様1to1（`1to1_hirayama_mayumi_lifesupport.md`）を追加 |
 | 2026-04-14 | 関連リンクに倉持賢一様1to1（`1to1_kuramoto_kenichi_webmaster.md`、第2回 2026-04-13）を追加 |
 | 2026-04-14 | 関連リンクに船津麻理子様1to1（`1to1_funatsu_mariko_aicare_lab.md`、第1回 2026-04-13）を追加 |
 | 2026-04-14 | 関連リンクに畠山憲之様1to1（`1to1_hatakeyama_noriyuki_wagashi_oem.md`、第1回 2026-04-13）を追加 |
+| 2026-04-14 | 「BNIに参加した目的」を一言＋チャプター拡大の2要素（紹介／関係）に整理 |
+| 2026-04-14 | 朝礼・例会セクションに「BNIに参加した目的（ビジネスを拡大するには）」を追記 |
 | 2026-03-31 | 初版。BO用・25秒（2稿）・朝礼/例会・参照表を `BNI_DragonFly_*`・1to1メモから集約 |

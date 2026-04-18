@@ -32,7 +32,7 @@ import {
 } from '@mui/material';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
-import { formatMemberPrimaryLine } from '../utils/memberDisplay';
+import { formatMemberPrimaryLine, formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
 
 const STATUS_CHOICES = [
@@ -265,6 +265,22 @@ function OneToOnesStatsCards() {
     );
 }
 
+function OneToOneTargetDisplay({ record }) {
+    const name = record?.target_name ?? '—';
+    const ch = record?.target_workspace_name;
+    const cross = record?.is_cross_chapter;
+    return (
+        <Stack direction="row" alignItems="center" spacing={0.5} flexWrap="wrap" useFlexGap>
+            <Typography component="span" variant="body2" sx={{ wordBreak: 'break-word' }}>
+                {ch ? `${name}（${ch}）` : name}
+            </Typography>
+            {cross ? (
+                <Chip size="small" label="他チャプター" color="info" variant="outlined" sx={{ height: 22 }} />
+            ) : null}
+        </Stack>
+    );
+}
+
 function EffectiveDateField({ record, ...props }) {
     const v = record?.started_at ?? record?.scheduled_at;
     if (!v) return <span>—</span>;
@@ -301,7 +317,7 @@ function TargetMemberFilterSelect() {
                     { id: '', name: '相手: すべて' },
                     ...arr.map((m) => ({
                         id: m.id,
-                        name: formatMemberPrimaryLine(m) || `#${m.id}`,
+                        name: formatMemberWithChapterPrimary(m) || `#${m.id}`,
                     })),
                 ]);
             })
@@ -616,7 +632,7 @@ function OneToOnesListBody({ onMemoOpen }) {
             )}
             <Datagrid rowClick={false} bulkActionButtons={false}>
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
-                <TextField source="target_name" label="相手" />
+                <FunctionField label="相手" render={(r) => <OneToOneTargetDisplay record={r} />} />
                 <FunctionField label="状態" render={(record) => <OneToOneStatusChip record={record} />} />
                 <TextField source="notes" label="メモ" ellipsis />
                 <FunctionField label="例会" render={(record) => <MeetingLabelChip record={record} />} />
