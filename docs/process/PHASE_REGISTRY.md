@@ -108,6 +108,7 @@
 | ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP | `/settings` ゲート例外・1to1 owner フィルタ削除・§5.1 SSOT 補足・religoOwnerMemberId 削除・`ReligoOwnerContext` 前提実装同梱 | implement | completed | feature/phase-admin-global-owner-spec003-followup | 2026-04-06 |
 | DASHBOARD-WEEKLY-P1 | Dashboard ウィークリープレゼン原稿表示（SPEC-004・members 拡張・GET dashboard/weekly-presentation・UI カード） | implement | completed | feature/phase-dashboard-weekly-p1 | 2026-04-07 |
 | ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 | クロスチャプター1to1正式化（解釈A）・countries/regions/workspace階層・API/UI・SPEC-006 | implement | completed | feature/phase-onetoones-cross-chapter-ws-hierarchy-p1 | 2026-04-08 |
+| WORKSPACE_CHAPTER_FIT_GAP_P1 | workspace vs Chapter Fit&Gap（**Member 1 Chapter 専属**前提・案A/B・2026-04-17 ドキュメント再整合） | docs | completed | — | 2026-04-03 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
