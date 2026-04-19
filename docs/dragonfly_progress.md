@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-04-18 JST | **develop マージ＆ push 実施:** `feature/phase-onetoones-cross-chapter-ws-hierarchy-p1` を **`--no-ff`** で develop にマージ（**merge commit `93afccb`**）。同ブランチに含まれていた **ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 実装（`153ae79`）** も合流し、**develop 入りが確定**（先行エントリの「merge は別途」を解消）。今回の docs コミット（`80671e5`）に **Gensparkスライド（`docs/pdf/threebiz_tugilo_intro_20260418074133.pdf`）** と本進捗追記（`docs/dragonfly_progress.md`）を同梱し、develop 直コミット＋ push で運用確定。`git push origin develop`。コード変更なし（本コミット分）。 |
 | 2026-04-17 JST | **スリーバイス 1toMany（4/21）原稿＋Gensparkスライドプロンプト:** `docs/meetings/Dragonfly_team_1toMany_Tsugihiro_202604.md` 新規。メインプレ確定稿を基に、**パワーチーム候補7名向け**に再構成（チーム前提表・4連携パターン＝軍司LINE／斎藤・山本Web／横山・芳賀オンライン展開／**小中さんは同業SEの共同参画＋メタ設計**／重点募集カテゴリ貢献宣言／リーダー「パワーチーム組んだことがない」への応答）。**5分45秒・1,843字**。Genspark 13枚構成プロンプト併載（構成図＋4パターン図＋呼び出しフレーズ）。出典：`docs/pdf/260414/dragonfly_205_20260414_all.csv`・`tugilo_site/www/tugilo_site/docs/pages/{02_concept,04_cases,05_results,07_about}.md`。コード変更なし。 |
 | 2026-04-17 JST | **メインプレ5分原稿:** `BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md` §4 冒頭に **屋号 tugilo** の由来（次廣×ligilo・エスペラント＝19世紀末〜国際補助語／**インターネット比喩は削除**・想いに「人と人をつなぐ」）。INDEX・CHANGELOG 同期。コード変更なし。 |
 | 2026-04-17 JST | **WORKSPACE_CHAPTER_FIT_GAP_P1（再整合）:** [workspace_vs_chapter_fit_gap_20260403.md](02_specifications/workspace_vs_chapter_fit_gap_20260403.md) — **業務ルール確定**（Chapter＝正式所属、**Member は 1 Chapter 専属**、workspace≠chapter 常時同義でない、Country>Region>Chapter）。多所属前提の含みを削除し検索範囲と区別。PLAN/WORKLOG/REPORT・INDEX 更新。コード変更なし。 |
