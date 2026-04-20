@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-04-20 22:28 JST | **develop へ push 実施:** SPEC-007（§0 Phase 0〜6）・CONN 系（participants 整合・BO participant 必須・左ペイン meeting スコープ・BO UX ガード）・MEMBERS 系（dedup runbook・member merge API/UI・`RELIGO_MEMBER_MERGE_TOKEN`）を **1 コミット**で `develop` に反映し `git push origin develop`。`php artisan test`・`npm run build` 成功。 |
+| 2026-04-20 22:28 JST | **develop へ push 実施:** SPEC-007（§0 Phase 0〜6）・CONN 系（participants 整合・BO participant 必須・左ペイン meeting スコープ・BO UX ガード）・MEMBERS 系（dedup runbook・member merge API/UI・`RELIGO_MEMBER_MERGE_TOKEN`）を **1 コミット**で `develop` に反映し `git push origin develop`（**`cc13c1f`**）。`php artisan test` 356 passed・`npm run build` 成功。 |
 | 2026-04-20 22:26 JST | **SPEC-007:** [MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md](SSOT/MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md) に **§0 Phase 0〜6** を追加（前提 SSOT・CONN-/MEMBERS- Phase ID 対応表・到達状態の要約）。`docs/INDEX.md` 説明を同期。コード変更なし。 |
 | 2026-04-20 22:18 JST | **ドキュメント運用:** `docs/process/README.md` に日付・時刻の記載ルールを追記（取得コマンド例: `TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'`）。進捗表の MEMBERS 系・CONN 系の日時表記を整理。 |
 | 2026-04-20 22:18 JST | **MEMBERS-MERGE-ASSIST-P1:** [PLAN](process/phases/PHASE_MEMBERS_MERGE_ASSIST_P1_PLAN.md) / [WORKLOG](process/phases/PHASE_MEMBERS_MERGE_ASSIST_P1_WORKLOG.md) / [REPORT](process/phases/PHASE_MEMBERS_MERGE_ASSIST_P1_REPORT.md) — 管理者向け member マージ（`MemberMergeService`・`POST /api/admin/member-merge/preview|execute`・`RELIGO_MEMBER_MERGE_TOKEN`・UI `/member-merge`）。SPEC-008 §7.1・SPEC-007 §3.4 更新。`php artisan test` 356 passed、`npm run build` 成功。 |
