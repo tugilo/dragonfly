@@ -87,6 +87,15 @@ export const ReligoMenu = () => {
                     backgroundColor: 'transparent',
                 }}
             />
+            <MenuItem
+                component={Link}
+                to="/member-merge"
+                selected={isActive('/member-merge')}
+                sx={{ '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                <span style={{ marginRight: 8 }}>🔀</span>
+                Member merge
+            </MenuItem>
             <ListSubheader
                 disableSticky
                 sx={{

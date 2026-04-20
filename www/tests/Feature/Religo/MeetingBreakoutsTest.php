@@ -43,6 +43,13 @@ class MeetingBreakoutsTest extends TestCase
         $this->member3 = (int) DB::table('members')->insertGetId([
             'name' => 'M3', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
         ]);
+        foreach ([$this->member1, $this->member2, $this->member3] as $mid) {
+            Participant::create([
+                'meeting_id' => $this->meetingId,
+                'member_id' => $mid,
+                'type' => 'regular',
+            ]);
+        }
     }
 
     public function test_put_then_get_returns_same_member_ids_and_notes(): void
@@ -129,9 +136,26 @@ class MeetingBreakoutsTest extends TestCase
         ]);
     }
 
-    public function test_member_without_participant_gets_participant_created_and_assigned(): void
+    /** SPEC-007: participant 未登録の member_id は BO 保存で拒否（自動作成しない） */
+    public function test_put_breakouts_fails_when_member_has_no_participant_row(): void
     {
-        $this->assertSame(0, Participant::where('meeting_id', $this->meetingId)->count());
+        $memberOrphan = (int) DB::table('members')->insertGetId([
+            'name' => 'Orphan', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$memberOrphan]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+        $this->assertStringContainsString((string) $memberOrphan, implode(' ', $res->json('errors.rooms')));
+    }
+
+    public function test_put_breakouts_succeeds_when_participant_is_regular(): void
+    {
         $payload = [
             'rooms' => [
                 ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
@@ -139,12 +163,37 @@ class MeetingBreakoutsTest extends TestCase
             ],
         ];
         $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
-        $p = Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->first();
-        $this->assertNotNull($p);
-        $this->assertSame('regular', $p->type);
         $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
         $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
         $this->assertSame([$this->member1], $bo1['member_ids']);
+    }
+
+    public function test_put_breakouts_fails_when_participant_is_absent(): void
+    {
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->update(['type' => 'absent']);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+    }
+
+    public function test_put_breakouts_fails_when_participant_is_proxy(): void
+    {
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->update(['type' => 'proxy']);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
     }
 
     /** BO-AUDIT-P2: breakouts 保存監査に既定 workspace_id が載る */

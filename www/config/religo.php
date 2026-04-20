@@ -14,4 +14,15 @@ return [
     */
     'one_to_one_lead_needs_action_days' => max(0, (int) env('RELIGO_ONE_TO_ONE_LEAD_NEEDS_ACTION_DAYS', 30)),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Member マージ API（管理者・手動）
+    |--------------------------------------------------------------------------
+    |
+    | 空のとき POST /api/admin/member-merge/* は 404。値を設定し、リクエストヘッダ
+    | X-Religo-Member-Merge-Token に同じ値を付与する。
+    |
+    */
+    'member_merge_token' => env('RELIGO_MEMBER_MERGE_TOKEN'),
+
 ];

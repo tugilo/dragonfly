@@ -7,6 +7,7 @@ import { religoTheme } from './theme/religoTheme';
 import DragonFlyBoard from './pages/DragonFlyBoard';
 import Dashboard from './pages/Dashboard';
 import ReligoSettings from './pages/ReligoSettings';
+import MemberMerge from './pages/MemberMerge';
 import { ReligoLayout } from './ReligoLayout';
 import { ReligoOwnerProvider } from './ReligoOwnerContext';
 import { MembersList } from './pages/MembersList';
@@ -36,6 +37,7 @@ if (root) {
         >
             <CustomRoutes>
                 <Route path="/settings" element={<ReligoSettings />} />
+                <Route path="/member-merge" element={<MemberMerge />} />
             </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} edit={MemberEdit} options={{ label: 'Members' }} />

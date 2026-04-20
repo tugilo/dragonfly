@@ -109,6 +109,12 @@
 | DASHBOARD-WEEKLY-P1 | Dashboard ウィークリープレゼン原稿表示（SPEC-004・members 拡張・GET dashboard/weekly-presentation・UI カード） | implement | completed | feature/phase-dashboard-weekly-p1 | 2026-04-07 |
 | ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 | クロスチャプター1to1正式化（解釈A）・countries/regions/workspace階層・API/UI・SPEC-006 | implement | completed | feature/phase-onetoones-cross-chapter-ws-hierarchy-p1 | 2026-04-08 |
 | WORKSPACE_CHAPTER_FIT_GAP_P1 | workspace vs Chapter Fit&Gap（**Member 1 Chapter 専属**前提・案A/B・2026-04-17 ドキュメント再整合） | docs | completed | — | 2026-04-03 |
+| CONN-PARTICIPANTS-ALIGN-P0 | Connections BO・participants・members 整合調査（SPEC-007・自動生成・左ペイン・CSV キー・**実装なし**） | docs | completed | — | 2026-03-31 |
+| CONN-BO-PARTICIPANT-REQUIRED-P1 | BO 保存時 participant 自動作成禁止・未参加者 422（SPEC-007・breakouts / breakout-rounds） | implement | completed | — | 2026-03-31 |
+| CONN-LEFT-PANE-MEETING-P1 | Connections 左ペインを選択例会の参加者のみ表示（GET members に meeting_id・欠席除外・proxy 区別） | implement | completed | — | 2026-03-31 |
+| CONN-BO-UX-GUARDS-P1 | Connections BO 割当のクライアント側ガード（保存前・422 表示・BO1→BO2 フィルタ・SPEC-007） | implement | completed | — | 2026-03-31 |
+| MEMBERS-DEDUP-RUNBOOK-P0 | members 重複統合の仕様・運用・補助実装案（SPEC-007/008・Import キー調査・Runbook・実装なし） | docs | completed | — | 2026-04-20 |
+| MEMBERS-MERGE-ASSIST-P1 | 管理者向け member マージ補助（トークン API・/member-merge・MemberMergeService・SPEC-008） | implement | completed | — | 2026-04-20 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -23,8 +23,20 @@ use App\Http\Controllers\Religo\MemberRoleController;
 use App\Http\Controllers\Religo\OneToOneController;
 use App\Http\Controllers\Religo\DashboardController;
 use App\Http\Controllers\Religo\DashboardDebugController;
+use App\Http\Controllers\Religo\MemberMergeController;
 use App\Http\Controllers\Religo\UserController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Admin: member merge（トークン必須・RELIGO_MEMBER_MERGE_TOKEN）
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['religo.member_merge'])->prefix('admin/member-merge')->group(function () {
+    Route::post('/preview', [MemberMergeController::class, 'preview']);
+    Route::post('/execute', [MemberMergeController::class, 'execute']);
+});
 
 /*
 |--------------------------------------------------------------------------

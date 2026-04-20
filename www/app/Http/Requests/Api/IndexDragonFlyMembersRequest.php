@@ -36,6 +36,8 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'want_1on1' => ['nullable', 'boolean'],
             'sort' => ['nullable', 'string', Rule::in(self::SORT_FIELDS)],
             'order' => ['nullable', 'string', Rule::in(self::ORDER_VALUES)],
+            /** Connections: 当該例会の参加者（欠席除く）に紐づく member のみ。レスに participant_type / bo_assignable を付与。 */
+            'meeting_id' => ['nullable', 'integer', 'exists:meetings,id'],
         ];
     }
 }

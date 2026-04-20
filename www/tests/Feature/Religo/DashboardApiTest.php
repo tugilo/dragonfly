@@ -6,6 +6,7 @@ use App\Models\ContactMemo;
 use App\Models\DragonflyContactFlag;
 use App\Models\Meeting;
 use App\Models\OneToOne;
+use App\Models\Participant;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -406,6 +407,13 @@ class DashboardApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        foreach ([$this->ownerId, $targetId] as $mid) {
+            Participant::create([
+                'meeting_id' => $meetingId,
+                'member_id' => $mid,
+                'type' => 'regular',
+            ]);
+        }
         $payload = [
             'rooms' => [
                 ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->ownerId, $targetId]],

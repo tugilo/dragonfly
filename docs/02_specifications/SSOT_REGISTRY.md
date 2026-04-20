@@ -11,6 +11,8 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-004 | Dashboard ウィークリープレゼン原稿表示 | ../SSOT/DASHBOARD_WEEKLY_PRESENTATION_REQUIREMENTS.md | implemented（主要コード）／記録: Phase DASHBOARD-WEEKLY-P1 |
 | SPEC-005 | Dashboard 次の1to1候補のカテゴリ表示 | ../SSOT/DASHBOARD_ONETOONE_LEADS_REQUIREMENTS.md | implemented（主要コード） |
 | SPEC-006 | 1 to 1 とチャプター外（他チャプター BNI メンバー）— 解釈A・階層・API/UI | ../SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md | implemented（主要コード）／記録: Phase ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 |
+| SPEC-007 | ビジター・ゲスト入会、代理出席、Connections と participants の業務・データ方針 | ../SSOT/MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md | active |
+| SPEC-008 | members 重複の発生条件・影響・マージ運用（Runbook・案 A/B/C） | ../SSOT/MEMBERS_DEDUPLICATION_RUNBOOK.md | active |
 
 ## Statusの値
 - active     : 現在有効なSSOT

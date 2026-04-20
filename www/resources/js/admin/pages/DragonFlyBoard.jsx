@@ -21,14 +21,21 @@ import {
     Chip,
     IconButton,
     Snackbar,
+    Alert,
 } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import {
     formatMemberPrimaryLine,
     formatMemberSecondaryLine,
     formatMemberAutocompleteLabel,
 } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
+import {
+    collectBoSaveValidationErrors,
+    filterBoAssignableMemberIds,
+    getBoAssignBlockReason,
+} from '../utils/boAssignmentGuards';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -168,7 +175,20 @@ async function putMeetingBreakouts(meetingId, payload) {
     });
     if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.message || `PUT breakouts ${res.status}`);
+        const roomErr = j.errors?.rooms;
+        const roundsErr = j.errors?.rounds;
+        const parts = []
+            .concat(roomErr ?? [], roundsErr ?? [])
+            .flat()
+            .filter(Boolean);
+        const detail = parts.length ? parts.join(' ') : '';
+        const prefix =
+            res.status === 422
+                ? 'BO割当を保存できませんでした。'
+                : 'BO割当の保存に失敗しました。';
+        const fallback = j.message || `HTTP ${res.status}`;
+        const msg = detail ? `${prefix} ${detail}` : `${prefix} ${fallback}`;
+        throw new Error(msg.trim());
     }
     return res.json();
 }
@@ -229,6 +249,15 @@ export default function DragonFlyBoard() {
         });
     }, [members, memberSearch]);
 
+    /** 例会スコープの members 一覧から member_id → 行（BO 割当ガード用） */
+    const membersById = useMemo(() => {
+        const map = new Map();
+        for (const m of members) {
+            map.set(Number(m.id), m);
+        }
+        return map;
+    }, [members]);
+
     // メモモーダル（BO から開くときの文脈）
     const [memoContextTargetMemberId, setMemoContextTargetMemberId] = useState(null);
     const [memoContextMeetingId, setMemoContextMeetingId] = useState(null);
@@ -243,11 +272,21 @@ export default function DragonFlyBoard() {
     // BO メンバーチップタップで表示するメンバー詳細モーダル
     const [memberDetailModalMember, setMemberDetailModalMember] = useState(null);
 
+    /** 選択例会の参加者のみ（GET members に meeting_id）。未選択時は空。 */
     const refetchMembers = useCallback(() => {
-        fetchJson(`/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1`)
+        if (!ownerMemberId) {
+            return;
+        }
+        if (!selectedMeetingId) {
+            setMembers([]);
+            return;
+        }
+        fetchJson(
+            `/api/dragonfly/members?owner_member_id=${ownerMemberId}&with_summary=1&meeting_id=${selectedMeetingId}`
+        )
             .then(setMembers)
             .catch((e) => console.error('members load failed', e));
-    }, [ownerMemberId]);
+    }, [ownerMemberId, selectedMeetingId]);
 
     useEffect(() => {
         refetchMembers();
@@ -559,16 +598,31 @@ export default function DragonFlyBoard() {
     };
 
     const toggleRoundMember = (roundIndex, roomLabel, memberId) => {
-        setDirty(true);
+        const mid = Number(memberId);
         setRoundsEdit((prev) => {
+            const round = prev[roundIndex];
+            const room = round?.rooms?.find((rm) => rm.room_label === roomLabel);
+            const rawIds = room?.member_ids ?? [];
+            const isIn = rawIds.some((id) => Number(id) === mid);
+            if (!isIn) {
+                const mem = membersById.get(mid);
+                const block = getBoAssignBlockReason(mem, mid);
+                if (block) {
+                    setSnackbarMessage(block);
+                    return prev;
+                }
+            }
+            setDirty(true);
             const next = prev.map((r, i) => {
                 if (i !== roundIndex) return r;
-                const rooms = r.rooms.map((room) => {
-                    if (room.room_label !== roomLabel) return room;
-                    const ids = room.member_ids.includes(memberId)
-                        ? room.member_ids.filter((id) => id !== memberId)
-                        : [...room.member_ids, memberId];
-                    return { ...room, member_ids: ids };
+                const rooms = r.rooms.map((rm) => {
+                    if (rm.room_label !== roomLabel) return rm;
+                    const ids = rm.member_ids ?? [];
+                    const inRoom = ids.some((id) => Number(id) === mid);
+                    const nextIds = inRoom
+                        ? ids.filter((id) => Number(id) !== mid)
+                        : [...ids, mid];
+                    return { ...rm, member_ids: nextIds };
                 });
                 return { ...r, rooms };
             });
@@ -591,6 +645,13 @@ export default function DragonFlyBoard() {
 
     /** メンバーを指定 BO に割り当て（他 BO からは外す） */
     const assignMemberToRoom = (memberId, toRoomLabel) => {
+        const mid = Number(memberId);
+        const mem = membersById.get(mid);
+        const block = getBoAssignBlockReason(mem, mid);
+        if (block) {
+            setSnackbarMessage(block);
+            return;
+        }
         setDirty(true);
         setRoundsEdit((prev) => {
             if (prev.length === 0) return prev;
@@ -598,10 +659,10 @@ export default function DragonFlyBoard() {
                 if (i !== 0) return r;
                 const rooms = (r.rooms ?? []).map((room) => {
                     const ids = room.member_ids ?? [];
-                    const hasMember = ids.includes(memberId);
+                    const hasMember = ids.some((id) => Number(id) === mid);
                     const isTarget = room.room_label === toRoomLabel;
-                    if (isTarget && !hasMember) return { ...room, member_ids: [...ids, memberId] };
-                    if (hasMember && !isTarget) return { ...room, member_ids: ids.filter((id) => id !== memberId) };
+                    if (isTarget && !hasMember) return { ...room, member_ids: [...ids, mid] };
+                    if (hasMember && !isTarget) return { ...room, member_ids: ids.filter((id) => Number(id) !== mid) };
                     return room;
                 });
                 return { ...r, rooms };
@@ -612,13 +673,14 @@ export default function DragonFlyBoard() {
 
     /** メンバーを指定 BO から外す */
     const removeMemberFromRoom = (memberId, roomLabel) => {
+        const mid = Number(memberId);
         setDirty(true);
         setRoundsEdit((prev) =>
             prev.map((r, i) => {
                 if (i !== 0) return r;
                 const rooms = (r.rooms ?? []).map((room) =>
                     room.room_label === roomLabel
-                        ? { ...room, member_ids: (room.member_ids ?? []).filter((id) => id !== memberId) }
+                        ? { ...room, member_ids: (room.member_ids ?? []).filter((id) => Number(id) !== mid) }
                         : room
                 );
                 return { ...r, rooms };
@@ -647,8 +709,15 @@ export default function DragonFlyBoard() {
         const payloadRooms = rooms.map((room) => ({
             room_label: room.room_label,
             notes: room.notes || null,
-            member_ids: [...new Set(room.member_ids ?? [])],
+            member_ids: [...new Set((room.member_ids ?? []).map((id) => Number(id)))],
         }));
+        const preErrors = collectBoSaveValidationErrors(payloadRooms, membersById);
+        if (preErrors.length > 0) {
+            setRoundsError(preErrors.join('\n'));
+            setSnackbarMessage('割当に問題があるため保存できません。内容を確認してください。');
+            setSaveStatus('idle');
+            return;
+        }
         setRoundsSaving(true);
         setRoundsError('');
         setSaveStatus('loading');
@@ -765,9 +834,18 @@ export default function DragonFlyBoard() {
                             flexShrink: 0,
                         }}
                     >
-                        <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 1 }}>
+                        <Typography component="h3" sx={{ fontSize: 13, fontWeight: 700, mb: 0.25 }}>
                             👥 Members
                         </Typography>
+                        {!selectedMeetingId ? (
+                            <Typography sx={{ fontSize: 10, color: 'text.secondary', mb: 1 }}>
+                                例会を選択すると参加者が表示されます（欠席は除く）
+                            </Typography>
+                        ) : (
+                            <Typography sx={{ fontSize: 10, color: 'text.secondary', mb: 1 }}>
+                                この例会の参加者のみ（代理は表示・BO割当は不可）
+                            </Typography>
+                        )}
                         <Box
                             sx={{
                                 display: 'flex',
@@ -800,6 +878,8 @@ export default function DragonFlyBoard() {
                             const sub = formatMemberSecondaryLine(m);
                             const isSel = targetMember?.id === m.id;
                             const hasBoRooms = selectedMeetingId && roundsEdit[0]?.rooms?.length > 0;
+                            const canAssignBo =
+                                hasBoRooms && m.bo_assignable !== false;
                             const openAssignMenu = (e) => {
                                 e.stopPropagation();
                                 setAssignToBoMember(m);
@@ -810,7 +890,7 @@ export default function DragonFlyBoard() {
                                     key={m.id}
                                     component="button"
                                     type="button"
-                                    onClick={hasBoRooms ? openAssignMenu : () => setTargetMember(m)}
+                                    onClick={canAssignBo ? openAssignMenu : () => setTargetMember(m)}
                                     sx={{
                                         display: 'flex',
                                         alignItems: 'center',
@@ -846,12 +926,17 @@ export default function DragonFlyBoard() {
                                         {(m.name || '?').charAt(0)}
                                     </Box>
                                     <Box sx={{ minWidth: 0, flex: 1 }}>
-                                        <Typography sx={{ fontSize: 12, fontWeight: 600 }}>{name}</Typography>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+                                            <Typography sx={{ fontSize: 12, fontWeight: 600 }}>{name}</Typography>
+                                            {m.participant_type === 'proxy' ? (
+                                                <Chip label="代理" size="small" sx={{ height: 18, fontSize: 9 }} />
+                                            ) : null}
+                                        </Box>
                                         {sub && (
                                             <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sub}</Typography>
                                         )}
                                     </Box>
-                                    {hasBoRooms && (
+                                    {canAssignBo && (
                                         <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>＋</Typography>
                                     )}
                                 </Box>
@@ -878,12 +963,20 @@ export default function DragonFlyBoard() {
                         {assignToBoMember && roundsEdit[0]?.rooms?.map((room, roomIdx) => {
                             const roomLabel = room.room_label;
                             const boDisplayLabel = `BO${roomIdx + 1}`;
-                            const isIn = (room.member_ids ?? []).includes(assignToBoMember.id);
+                            const mid = Number(assignToBoMember.id);
+                            const isIn = (room.member_ids ?? []).some((id) => Number(id) === mid);
+                            const addBlocked = !isIn && assignToBoMember.bo_assignable === false;
                             return (
                                 <MenuItem
                                     key={roomLabel}
+                                    disabled={addBlocked}
+                                    title={
+                                        addBlocked
+                                            ? '代理出席・欠席相当など、BO に入れない区分です。'
+                                            : undefined
+                                    }
                                     onClick={() => {
-                                        const mid = assignToBoMember.id;
+                                        if (addBlocked) return;
                                         if (isIn) {
                                             removeMemberFromRoom(mid, roomLabel);
                                         } else {
@@ -949,9 +1042,9 @@ export default function DragonFlyBoard() {
                     </Box>
                     <Box sx={{ flex: 1, overflowY: 'auto', p: 1.25 }}>
                         {roundsError && (
-                            <Typography color="error" variant="body2" sx={{ mb: 1 }}>
+                            <Alert severity="error" sx={{ mb: 1, '& .MuiAlert-message': { width: '100%', whiteSpace: 'pre-wrap' } }}>
                                 {roundsError}
-                            </Typography>
+                            </Alert>
                         )}
                         {roundsLoading && <Typography color="text.secondary">Loading...</Typography>}
                         {!roundsLoading && selectedMeetingId && roundsEdit.length > 0 && (() => {
@@ -963,7 +1056,9 @@ export default function DragonFlyBoard() {
                                         const roomLabel = room.room_label;
                                         const boDisplayLabel = `BO${roomIndex + 1}`;
                                         // G11: この BO に未割当のメンバーのみ候補。他 BO には同じ member を入れてよい。
-                                        const assignedInThisRoom = new Set(room.member_ids ?? []);
+                                        const assignedInThisRoom = new Set(
+                                            (room.member_ids ?? []).map((id) => Number(id))
+                                        );
                                         return (
                                             <Box
                                                 key={`${selectedMeetingId}-${roomLabel}`}
@@ -1004,8 +1099,20 @@ export default function DragonFlyBoard() {
                                                                             const r0 = prev[0];
                                                                             const rs = r0?.rooms ?? [];
                                                                             const bo1Room = rs.find((r) => r.room_label === 'BO1');
+                                                                            const rawBo1Ids = bo1Room?.member_ids ?? [];
+                                                                            const filteredIds = filterBoAssignableMemberIds(rawBo1Ids, membersById);
+                                                                            const dropped = rawBo1Ids.length - filteredIds.length;
+                                                                            if (dropped > 0) {
+                                                                                setSnackbarMessage(
+                                                                                    `BO2 には割当可能なメンバーのみコピーしました（${dropped}名を除外）。`
+                                                                                );
+                                                                            }
                                                                             const bo2Copy = bo1Room
-                                                                                ? { room_label: 'BO2', notes: bo1Room.notes ?? '', member_ids: [...(bo1Room.member_ids ?? [])] }
+                                                                                ? {
+                                                                                    room_label: 'BO2',
+                                                                                    notes: bo1Room.notes ?? '',
+                                                                                    member_ids: filteredIds,
+                                                                                }
                                                                                 : { room_label: 'BO2', notes: '', member_ids: [] };
                                                                             const nextRooms = rs.filter((r) => r.room_label !== 'BO2').concat(bo2Copy);
                                                                             return [{ ...r0, rooms: nextRooms }];
@@ -1028,9 +1135,15 @@ export default function DragonFlyBoard() {
                                                         size="small"
                                                         value={null}
                                                         sx={{ width: '100%', mb: 1 }}
-                                                        options={members.filter((x) => !assignedInThisRoom.has(x.id))}
+                                                        options={members.filter(
+                                                            (x) =>
+                                                                !assignedInThisRoom.has(Number(x.id)) &&
+                                                                x.bo_assignable !== false
+                                                        )}
                                                         getOptionLabel={(m) => formatMemberAutocompleteLabel(m)}
-                                                        onChange={(_, v) => v && toggleRoundMember(0, roomLabel, v.id)}
+                                                        onChange={(_, v) =>
+                                                            v && toggleRoundMember(0, roomLabel, Number(v.id))
+                                                        }
                                                         renderOption={(props, option) => {
                                                             const { key: optKey, ...optionProps } = props;
                                                             const sec = formatMemberSecondaryLine(option);
@@ -1059,13 +1172,17 @@ export default function DragonFlyBoard() {
                                                     />
                                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mb: 1 }}>
                                                         {(room.member_ids ?? []).map((id) => {
-                                                            const mem = members.find((x) => x.id === id);
+                                                            const nid = Number(id);
+                                                            const mem = membersById.get(nid);
                                                             const primary = mem ? formatMemberPrimaryLine(mem) : `#${id}`;
                                                             const secondary = mem ? formatMemberSecondaryLine(mem) : null;
                                                             const ariaBase = primary;
+                                                            const blockReason = getBoAssignBlockReason(mem, nid);
+                                                            const warnRow = Boolean(blockReason);
                                                             return (
                                                                 <Box
                                                                     key={id}
+                                                                    title={blockReason ?? undefined}
                                                                     sx={{
                                                                         display: 'flex',
                                                                         alignItems: 'flex-start',
@@ -1074,10 +1191,10 @@ export default function DragonFlyBoard() {
                                                                         py: 0.75,
                                                                         px: 1,
                                                                         borderRadius: 1,
-                                                                        bgcolor: 'grey.50',
+                                                                        bgcolor: warnRow ? 'warning.50' : 'grey.50',
                                                                         border: '1px solid',
-                                                                        borderColor: 'divider',
-                                                                        '&:hover': { bgcolor: 'grey.100' },
+                                                                        borderColor: warnRow ? 'warning.light' : 'divider',
+                                                                        '&:hover': { bgcolor: warnRow ? 'warning.100' : 'grey.100' },
                                                                     }}
                                                                 >
                                                                     <Box
@@ -1097,12 +1214,26 @@ export default function DragonFlyBoard() {
                                                                             '&:hover': mem ? { color: 'primary.main' } : {},
                                                                         }}
                                                                     >
-                                                                        <Typography sx={{ fontSize: 13, fontWeight: 600, display: 'block' }}>
-                                                                            {primary}
-                                                                        </Typography>
+                                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, minWidth: 0 }}>
+                                                                            {warnRow ? (
+                                                                                <WarningAmberIcon
+                                                                                    fontSize="small"
+                                                                                    color="warning"
+                                                                                    sx={{ flexShrink: 0 }}
+                                                                                />
+                                                                            ) : null}
+                                                                            <Typography sx={{ fontSize: 13, fontWeight: 600, display: 'block' }}>
+                                                                                {primary}
+                                                                            </Typography>
+                                                                        </Box>
                                                                         {secondary ? (
                                                                             <Typography sx={{ fontSize: 10, color: 'text.secondary', display: 'block', mt: 0.125 }}>
                                                                                 {secondary}
+                                                                            </Typography>
+                                                                        ) : null}
+                                                                        {warnRow && blockReason ? (
+                                                                            <Typography sx={{ fontSize: 10, color: 'warning.dark', display: 'block', mt: 0.25 }}>
+                                                                                {blockReason}
                                                                             </Typography>
                                                                         ) : null}
                                                                     </Box>
@@ -1117,7 +1248,7 @@ export default function DragonFlyBoard() {
                                                                         </IconButton>
                                                                         <IconButton
                                                                             size="small"
-                                                                            onClick={() => toggleRoundMember(0, roomLabel, id)}
+                                                                            onClick={() => toggleRoundMember(0, roomLabel, nid)}
                                                                             aria-label={`${ariaBase}を削除`}
                                                                             sx={{ p: 0.35 }}
                                                                         >

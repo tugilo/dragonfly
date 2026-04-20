@@ -35,12 +35,26 @@ class DragonFlyMemberController extends Controller
      * GET /api/dragonfly/members — 一覧（Autocomplete 等用）.
      * with_summary=1 かつ owner_member_id ありの場合、各 member に summary_lite を同梱（N+1 回避のためバッチ取得）。
      * M-3c: q, category_id, group_name, role_id, interested, want_1on1, sort, order で検索・フィルタ・ソート対応。
+     * meeting_id: 当該例会の参加者に限定（participants.type が absent の行は除外）。各要素に participant_type / bo_assignable（proxy は false）を付与。SPEC-007。
      */
     public function index(IndexDragonFlyMembersRequest $request): JsonResponse
     {
+        $meetingScopeId = $request->filled('meeting_id') ? (int) $request->validated()['meeting_id'] : null;
+
         $query = Member::query()
             ->with(['category', 'memberRoles.role', 'workspace.region.country'])
             ->select('id', 'display_no', 'name', 'name_kana', 'category_id', 'ncast_profile_url', 'workspace_id');
+
+        if ($meetingScopeId !== null) {
+            $query->whereHas('participants', function ($q) use ($meetingScopeId) {
+                $q->where('meeting_id', $meetingScopeId)
+                    ->where('type', '!=', 'absent');
+            });
+            $query->with(['participants' => function ($q) use ($meetingScopeId) {
+                $q->where('meeting_id', $meetingScopeId)
+                    ->where('type', '!=', 'absent');
+            }]);
+        }
 
         if ($request->filled('q')) {
             $q = '%' . addcslashes($request->input('q'), '%_\\') . '%';
@@ -110,10 +124,11 @@ class DragonFlyMemberController extends Controller
             $targetIds = $members->pluck('id')->all();
             $batch = $this->summaryQuery->getSummaryLiteBatch($ownerMemberId, $targetIds, $workspaceId);
 
-            $members = $members->map(function ($m) use ($batch) {
+            $members = $members->map(function ($m) use ($batch, $meetingScopeId) {
                 $lite = $batch[$m->id] ?? null;
                 $arr = $m->toArray();
                 unset($arr['workspace']);
+                unset($arr['participants']);
                 $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($m));
                 $arr['category'] = $m->category ? [
                     'id' => $m->category->id,
@@ -121,6 +136,11 @@ class DragonFlyMemberController extends Controller
                     'name' => $m->category->name,
                 ] : null;
                 $arr['current_role'] = $m->currentRole()?->name;
+                if ($meetingScopeId !== null) {
+                    $p = $m->participants->first();
+                    $arr['participant_type'] = $p?->type;
+                    $arr['bo_assignable'] = $p !== null && $p->type !== 'proxy';
+                }
                 if ($lite !== null) {
                     $arr['summary_lite'] = [
                         'same_room_count' => $lite['same_room_count'],
@@ -134,9 +154,10 @@ class DragonFlyMemberController extends Controller
                 return $arr;
             });
         } else {
-            $members = $members->map(function ($m) {
+            $members = $members->map(function ($m) use ($meetingScopeId) {
                 $arr = $m->toArray();
                 unset($arr['workspace']);
+                unset($arr['participants']);
                 $arr = array_merge($arr, MemberWorkspaceAttributes::flatForMember($m));
                 $arr['category'] = $m->category ? [
                     'id' => $m->category->id,
@@ -144,6 +165,11 @@ class DragonFlyMemberController extends Controller
                     'name' => $m->category->name,
                 ] : null;
                 $arr['current_role'] = $m->currentRole()?->name;
+                if ($meetingScopeId !== null) {
+                    $p = $m->participants->first();
+                    $arr['participant_type'] = $p?->type;
+                    $arr['bo_assignable'] = $p !== null && $p->type !== 'proxy';
+                }
                 return $arr;
             });
         }

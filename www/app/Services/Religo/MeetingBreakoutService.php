@@ -6,6 +6,7 @@ use App\Models\BreakoutRoom;
 use App\Models\Meeting;
 use App\Models\Participant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換）.
@@ -62,6 +63,11 @@ class MeetingBreakoutService
 
     /**
      * PUT 用: BO1/BO2 の rooms を保存.
+     *
+     * 各 member_id には当該例会の participants 行が必須。無い場合は自動作成せず ValidationException。
+     * SPEC-007 / CONN-BO-PARTICIPANT-REQUIRED-P1.
+     *
+     * @throws ValidationException
      */
     public function updateBreakouts(Meeting $meeting, array $rooms): void
     {
@@ -81,28 +87,61 @@ class MeetingBreakoutService
                 $roomMap[$label] = ['room' => $room, 'member_ids' => $memberIds];
             }
 
+            $allMemberIds = [];
+            foreach ($roomMap as $data) {
+                foreach ($data['member_ids'] as $memberId) {
+                    $allMemberIds[] = $memberId;
+                }
+            }
+            $uniqueMemberIds = array_values(array_unique($allMemberIds));
+
+            $participantsByMemberId = null;
+            if ($uniqueMemberIds !== []) {
+                $participantsByMemberId = Participant::query()
+                    ->where('meeting_id', $meeting->id)
+                    ->whereIn('member_id', $uniqueMemberIds)
+                    ->get()
+                    ->keyBy('member_id');
+
+                $missing = [];
+                $ineligible = [];
+                foreach ($uniqueMemberIds as $memberId) {
+                    $p = $participantsByMemberId->get($memberId);
+                    if ($p === null) {
+                        $missing[] = $memberId;
+                    } elseif (in_array($p->type, ['absent', 'proxy'], true)) {
+                        $ineligible[] = $memberId;
+                    }
+                }
+                if ($missing !== []) {
+                    sort($missing);
+                    throw ValidationException::withMessages([
+                        'rooms' => [
+                            sprintf(
+                                '当該例会の参加者に存在しない member_id です: %s。CSVまたは参加者登録で登録してからBOに割り当ててください。',
+                                implode(', ', $missing)
+                            ),
+                        ],
+                    ]);
+                }
+                if ($ineligible !== []) {
+                    sort($ineligible);
+                    throw ValidationException::withMessages([
+                        'rooms' => [
+                            sprintf(
+                                '欠席または代理出席のためBOに含められない member_id です: %s。',
+                                implode(', ', $ineligible)
+                            ),
+                        ],
+                    ]);
+                }
+            }
+
             $participantIdsByRoom = [];
             foreach ($roomMap as $label => $data) {
                 $participantIds = [];
                 foreach ($data['member_ids'] as $memberId) {
-                    $participant = Participant::firstWhere([
-                        'meeting_id' => $meeting->id,
-                        'member_id' => $memberId,
-                    ]);
-                    if ($participant) {
-                        if (in_array($participant->type, ['absent', 'proxy'], true)) {
-                            throw \Illuminate\Validation\ValidationException::withMessages([
-                                'rooms' => ["member_id {$memberId} は欠席/代理のため割当に含められません。"],
-                            ]);
-                        }
-                    } else {
-                        $participant = Participant::create([
-                            'meeting_id' => $meeting->id,
-                            'member_id' => $memberId,
-                            'type' => 'regular',
-                        ]);
-                    }
-                    $participantIds[] = $participant->id;
+                    $participantIds[] = $participantsByMemberId->get($memberId)->id;
                 }
                 $participantIdsByRoom[$label] = $participantIds;
             }

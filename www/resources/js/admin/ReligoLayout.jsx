@@ -27,7 +27,7 @@ export function ReligoLayout(props) {
         );
     }
 
-    const settingsBypass = pathname === '/settings';
+    const settingsBypass = pathname === '/settings' || pathname === '/member-merge';
 
     const main =
         settingsBypass || ownerMemberId != null ? (
