@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会員向け案件共有掲示板 モック</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --surface-muted: #f8fafc;
+      --border: #d9e1ea;
+      --border-strong: #c6d2de;
+      --text: #1f2a37;
+      --text-soft: #5d6b7c;
+      --primary: #2f5d8a;
+      --primary-soft: #e8f0f7;
+      --accent: #54789b;
+      --success: #2f7d59;
+      --warning: #8f6b2f;
+      --shadow: 0 10px 24px rgba(31, 42, 55, 0.08);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --max-width: 1380px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+      background: linear-gradient(180deg, #edf2f7 0%, var(--bg) 220px);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #324f6d 0%, #3c6389 100%);
+      color: #fff;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.75rem, 2vw, 2.4rem);
+      line-height: 1.25;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hero-badge {
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .mock-tabs {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tab-button {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-button:hover,
+    .tab-button.is-active {
+      background: #fff;
+      color: var(--primary);
+      border-color: #fff;
+    }
+
+    .meta-note {
+      margin-top: 12px;
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .screen {
+      display: none;
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .screen.is-active {
+      display: block;
+    }
+
+    .screen-header {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .screen-subtitle {
+      margin: 0 0 6px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .screen-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .screen-title {
+      margin: 0;
+      font-size: 1.55rem;
+    }
+
+    .screen-toolbar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: min(360px, 100%);
+      flex: 1 1 320px;
+    }
+
+    .search-box input {
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      background: #fff;
+      border-radius: 999px;
+      padding: 13px 18px 13px 42px;
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-box::before {
+      content: "⌕";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-soft);
+      font-size: 1.05rem;
+    }
+
+    .button-primary,
+    .button-secondary {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .button-primary:hover,
+    .button-secondary:hover {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .button-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .button-secondary {
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .screen-body {
+      padding: 24px;
+    }
+
+    .board-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .panel-muted {
+      background: var(--surface-muted);
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
+
+    .panel-note {
+      margin: 10px 0 0;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .category-item.is-active {
+      background: var(--primary-soft);
+      border-color: #b8cadb;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .category-count {
+      background: rgba(47, 93, 138, 0.08);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .sort-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .sort-label {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .post-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .post-card:hover {
+      border-color: #c7d8e6;
+      box-shadow: 0 8px 20px rgba(47, 93, 138, 0.08);
+    }
+
+    .post-title {
+      margin: 0;
+      font-size: 1.07rem;
+      line-height: 1.45;
+    }
+
+    .post-excerpt {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.94rem;
+    }
+
+    .meta-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      color: var(--text-soft);
+      font-size: 0.86rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .pagination span {
+      min-width: 38px;
+      text-align: center;
+      padding: 9px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text-soft);
+    }
+
+    .pagination .current {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .empty-state {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px dashed #bfd0df;
+      border-radius: 16px;
+      background: #f8fbfd;
+    }
+
+    .empty-state h4 {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.9rem;
+    }
+
+    .detail-layout {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+
+    .article-card,
+    .comment-card,
+    .form-card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      padding: 22px;
+    }
+
+    .article-header {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .article-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      line-height: 1.4;
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .article-body {
+      color: #2b3642;
+      font-size: 0.98rem;
+    }
+
+    .article-body p {
+      margin: 0 0 1em;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .comment-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .comment-item {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--surface-muted);
+      border: 1px solid var(--border);
+    }
+
+    .comment-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .comment-body {
+      margin: 0;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 18px;
+      max-width: 960px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+
+    .field .label-inline-note {
+      font-weight: 500;
+      color: var(--text-soft);
+      font-size: 0.84rem;
+      margin-left: 8px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 13px 14px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 240px;
+      resize: vertical;
+    }
+
+    .help-box {
+      border: 1px solid #d4e1ec;
+      background: #f7fbff;
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .help-box strong {
+      color: var(--primary);
+    }
+
+    .inline-hints {
+      display: grid;
+      gap: 10px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .status-note {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 0.84rem;
+    }
+
+    .section-caption {
+      margin-bottom: 14px;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 1040px) {
+      .board-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 14px;
+      }
+
+      .hero,
+      .screen-header,
+      .screen-body {
+        padding: 18px;
+      }
+
+      .search-box {
+        min-width: 100%;
+      }
+
+      .screen-title-row,
+      .screen-toolbar,
+      .sort-row,
+      .comment-header {
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- モック全体の説明エリア -->
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>会員向け案件共有掲示板 モック</h1>
+          <p>
+            会員向けの「投稿・案件共有型」掲示板を想定した確認用モックです。
+            チャット型ではなく、投稿一覧から情報を探し、詳細で本文やコメントを確認し、
+            会員が必要に応じて新規投稿する流れを表現しています。
+          </p>
+          <div class="hero-badges">
+            <span class="hero-badge">会員向け</span>
+            <span class="hero-badge">投稿・案件共有型</span>
+            <span class="hero-badge">カテゴリは管理者管理</span>
+            <span class="hero-badge">一覧 / 詳細 / 新規投稿</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 画面切り替えボタン -->
+      <div class="mock-tabs" role="tablist" aria-label="モック画面切り替え">
+        <button class="tab-button is-active" data-target="screen-list" role="tab" aria-selected="true">1. 投稿一覧画面</button>
+        <button class="tab-button" data-target="screen-detail" role="tab" aria-selected="false">2. 投稿詳細画面</button>
+        <button class="tab-button" data-target="screen-create" role="tab" aria-selected="false">3. 投稿作成画面</button>
+      </div>
+      <p class="meta-note">※ 画面下部に「WordPress標準投稿ベース想定」の小さな注記のみ配置しています。</p>
+    </header>
+
+    <!-- 投稿一覧画面 -->
+    <section id="screen-list" class="screen is-active" aria-labelledby="screen-list-title">
+      <div class="screen-header">
+        <p class="screen-subtitle">会員向け掲示板 / 一覧イメージ</p>
+        <div class="screen-title-row">
+          <h2 id="screen-list-title" class="screen-title">案件共有掲示板</h2>
+          <div class="screen-toolbar">
+            <div class="search-box">
+              <input type="text" value="" placeholder="キーワードで投稿を検索">
+            </div>
+            <button class="button-primary">新規投稿</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-body">
+        <div class="board-layout">
+          <!-- 左サイドバー: カテゴリ一覧 -->
+          <aside class="panel panel-muted">
+            <h3 class="panel-title">カテゴリ</h3>
+            <div class="category-list">
+              <a href="#" class="category-item">
+                <span>すべて</span>
+                <span class="category-count">24</span>
+              </a>
+              <a href="#" class="category-item is-active">
+                <span>案件相談</span>
+                <span class="category-count">8</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>技術共有</span>
+                <span class="category-count">6</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>事務連絡</span>
+                <span class="category-count">5</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>エリア情報</span>
+                <span class="category-count">5</span>
+              </a>
+            </div>
+            <p class="panel-note">カテゴリの追加・編集・削除は管理者が行います。会員は投稿時に選択のみ行います。</p>
+          </aside>
+
+          <!-- 右カラム: 投稿カード一覧 -->
+          <div>
+            <div class="sort-row">
+              <div class="sort-label">「案件相談」で絞り込み中 / 新着順</div>
+              <div class="chip">会員のみ閲覧・投稿可</div>
+            </div>
+
+            <div class="card-grid">
+              <!-- ダミー投稿カード -->
+              <article class="post-card">
+                <div>
+                  <span class="chip">案件相談</span>
+                  <h3 class="post-title">関東で外壁塗装の協力会社を探しています</h3>
+                  <p class="post-excerpt">
+                    千葉県・埼玉県周辺で対応可能な協力会社さまがいればご相談したいです。
+                    4月後半着工予定で、戸建て2件分の見積相談をしたい状況です。
+                  </p>
+                </div>
+                <div class="meta-stack">
+                  <span>投稿者: 山田 太郎</span>
+                  <span>投稿日: 2026/04/23</span>
+                  <span>コメント: 2件</span>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <div>
+                  <span class="chip">技術共有</span>
+                  <h3 class="post-title">雨天時の現場対応について共有です</h3>
+                  <p class="post-excerpt">
+                    足場・資材・近隣連絡の観点で、当社で運用している雨天時対応フローを共有します。
+                    現場ごとに差はありますが、参考になればと思います。
+                  </p>
+                </div>
+                <div class="meta-stack">
+                  <span>投稿者: 西村 亮</span>
+                  <span>投稿日: 2026/04/22</span>
+                  <span>コメント: 1件</span>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <div>
+                  <span class="chip">案件相談</span>
+                  <h3 class="post-title">見積提出の流れを確認したいです</h3>
+                  <p class="post-excerpt">
+                    初回訪問から見積提出までの標準的な流れについて、会員の皆さまのやり方を知りたいです。
+                    使っているテンプレートや注意点もあれば教えてください。
+                  </p>
+                </div>
+                <div class="meta-stack">
+                  <span>投稿者: 小林 恒一</span>
+                  <span>投稿日: 2026/04/21</span>
+                  <span>コメント: 4件</span>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <div>
+                  <span class="chip">エリア情報</span>
+                  <h3 class="post-title">関西エリアの案件相談です</h3>
+                  <p class="post-excerpt">
+                    大阪・兵庫エリアで対応可能な施工会社さまを探しています。
+                    現地調査の候補日を先に確保したいので、ご対応可能な方はコメントください。
+                  </p>
+                </div>
+                <div class="meta-stack">
+                  <span>投稿者: 中村 美咲</span>
+                  <span>投稿日: 2026/04/20</span>
+                  <span>コメント: 3件</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="pagination" aria-label="ページネーション">
+              <span>‹</span>
+              <span class="current">1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>›</span>
+            </div>
+
+            <!-- 0件表示の例 -->
+            <div class="empty-state">
+              <h4>検索結果 0 件の表示例</h4>
+              <p>
+                「北海道」で検索した結果、該当する投稿はありませんでした。
+                キーワードを変えるか、カテゴリを「すべて」に戻して再度お試しください。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 投稿詳細画面 -->
+    <section id="screen-detail" class="screen" aria-labelledby="screen-detail-title">
+      <div class="screen-header">
+        <p class="screen-subtitle">会員向け掲示板 / 詳細イメージ</p>
+        <div class="screen-title-row">
+          <h2 id="screen-detail-title" class="screen-title">投稿詳細</h2>
+        </div>
+      </div>
+
+      <div class="screen-body">
+        <div class="detail-layout">
+          <a class="back-link" href="#">← 一覧に戻る</a>
+
+          <article class="article-card">
+            <div class="article-header">
+              <span class="chip">案件相談</span>
+              <h3 class="article-title">関東で外壁塗装の協力会社を探しています</h3>
+              <div class="article-meta">
+                <span>投稿者: 山田 太郎</span>
+                <span>投稿日: 2026/04/23</span>
+                <span>コメント: 2件</span>
+              </div>
+            </div>
+
+            <div class="article-body">
+              <p>
+                千葉県・埼玉県周辺で対応可能な協力会社さまを探しています。
+                4月後半から5月上旬にかけて、戸建て2件分の現地確認と見積の相談をしたい状況です。
+              </p>
+              <p>
+                施工内容は外壁塗装が中心で、現場は住宅街です。近隣対応や足場手配も含めて
+                柔軟にご相談できる会社さまがいらっしゃれば、お声がけいただけると助かります。
+              </p>
+              <p>
+                対応エリア・概算のスケジュール感・これまでの実績などをコメントいただければ、
+                こちらから詳細をお送りします。よろしくお願いいたします。
+              </p>
+            </div>
+          </article>
+
+          <section class="comment-card">
+            <div class="comment-header">
+              <h3 class="panel-title">コメント</h3>
+              <span class="status-note">会員のみコメント可能</span>
+            </div>
+
+            <div class="comment-list">
+              <div class="comment-item">
+                <div class="comment-meta">
+                  <span>佐藤 健一</span>
+                  <span>2026/04/23 10:18</span>
+                </div>
+                <p class="comment-body">
+                  埼玉南部であれば対応可能です。工期の目安や現地調査の希望日が分かれば、
+                  こちらで調整できます。必要であれば個別に連絡先も共有します。
+                </p>
+              </div>
+
+              <div class="comment-item">
+                <div class="comment-meta">
+                  <span>村上 直人</span>
+                  <span>2026/04/23 11:02</span>
+                </div>
+                <p class="comment-body">
+                  千葉側で動けます。足場込みでの相談も可能です。
+                  もし急ぎであれば今週中に一度オンラインで要件確認できます。
+                </p>
+              </div>
+            </div>
+
+            <!-- コメント入力エリア -->
+            <div class="field">
+              <label for="comment-body">コメントを入力</label>
+              <textarea id="comment-body" placeholder="会員向けのコメントを入力してください"></textarea>
+            </div>
+            <div class="action-row" style="margin-top: 14px;">
+              <button class="button-primary">コメント送信</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- 投稿作成画面 -->
+    <section id="screen-create" class="screen" aria-labelledby="screen-create-title">
+      <div class="screen-header">
+        <p class="screen-subtitle">会員向け掲示板 / 投稿作成イメージ</p>
+        <div class="screen-title-row">
+          <h2 id="screen-create-title" class="screen-title">新規投稿</h2>
+        </div>
+      </div>
+
+      <div class="screen-body">
+        <div class="form-grid">
+          <div class="inline-hints">
+            <div class="help-box">
+              <strong>会員のみ投稿可能</strong><br>
+              この画面はログイン済み会員のみ利用できます。投稿後は一覧に表示される想定です。
+            </div>
+            <div class="help-box">
+              <strong>カテゴリは管理者が管理しています</strong><br>
+              カテゴリの追加・編集・削除は管理者が行います。会員は投稿時に既存カテゴリを選択します。
+            </div>
+          </div>
+
+          <section class="form-card">
+            <!-- 投稿フォーム本体 -->
+            <div class="field">
+              <label for="post-title">タイトル</label>
+              <input id="post-title" type="text" value="見積提出の流れを確認したいです" placeholder="投稿タイトルを入力">
+            </div>
+
+            <div class="field">
+              <label for="post-category">カテゴリ</label>
+              <select id="post-category">
+                <option>案件相談</option>
+                <option selected>技術共有</option>
+                <option>事務連絡</option>
+                <option>エリア情報</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="post-tags">
+                タグ
+                <span class="label-inline-note">※ 初期は任意。使わない運用にもできます。</span>
+              </label>
+              <input id="post-tags" type="text" value="見積, 運用フロー" placeholder="例: 見積, 協力会社, 現場対応">
+            </div>
+
+            <div class="field">
+              <label for="post-body">本文</label>
+              <textarea id="post-body" placeholder="会員向けに共有したい内容を入力してください">初回訪問から見積提出までの流れを整理したく、皆さまの運用を参考にしたいです。
+
+現地確認 → 見積作成 → 提出 → 受注までの間で、
+特に「ここは統一しておくと動きやすい」というポイントがあれば教えてください。
+
+テンプレートの使い方や、お客様への説明の工夫も共有いただけると助かります。</textarea>
+            </div>
+
+            <div class="action-row">
+              <button class="button-primary">投稿する</button>
+              <button class="button-secondary">下書き保存</button>
+              <span class="status-note">※ 下書きボタンは運用に応じて省略可能です。</span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">このモックは、WordPress標準の投稿機能をベースにした会員向け掲示板の確認用イメージです。</p>
+  </div>
+
+  <script>
+    // シンプルなタブ切り替え。1ファイル内で3画面を見せるための最小限の処理。
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const screens = document.querySelectorAll(".screen");
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.target;
+
+        tabButtons.forEach((btn) => {
+          btn.classList.remove("is-active");
+          btn.setAttribute("aria-selected", "false");
+        });
+
+        screens.forEach((screen) => {
+          screen.classList.remove("is-active");
+        });
+
+        button.classList.add("is-active");
+        button.setAttribute("aria-selected", "true");
+
+        const targetScreen = document.getElementById(targetId);
+        if (targetScreen) {
+          targetScreen.classList.add("is-active");
+          targetScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
