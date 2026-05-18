@@ -121,7 +121,7 @@
 | 121 | チャプター外1to1相手の所属チャプター補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-17 |
 | 122 | SPEC-009 製品既定 + DATA_MODEL（リファーラル / internal_referrals） | docs | completed | feature/phase122-referral-spec009-datamodel（推奨） | 2026-05-18 |
 | 123 | リファーラル DB/API（referral_kind・internal_referrals・SPEC-009 P1） | implement | completed | feature/phase123-referral-api-implement（推奨） | 2026-05-18 |
-| 124 | Connections BO 保存時・Owner 未所属なら BO1 自動追加（last_contact 整合） | implement | in_progress | feature/phase124-bo-owner-auto-include（推奨） | 2026-05-18 |
+| 124 | Connections BO 保存時・Owner 未所属なら BO1 自動追加（last_contact 整合） | implement | completed | feature/merge-wip-20260518（develop へ merge） | 2026-05-18 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

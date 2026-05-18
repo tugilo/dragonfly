@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-18 09:05 JST | **develop へ merge / push:** `feature/merge-wip-20260518` を `--no-ff` で取り込み。merge commit `ce278b26`。`php artisan test` 371 passed の後 `git push origin develop` 済み。Phase 124 REPORT・`PHASE_REGISTRY` に取り込み証跡追記（フォローコミット）。 |
 | 2026-05-18 09:02 JST | **Phase 124（implement）/ Connections BO・Owner 自動 BO1:** `PUT /api/meetings/{id}/breakouts` に任意 `owner_member_id`。どの BO にも含まれないとき **BO1 にマージ**（既に BO2 のみにいる場合は変更なし）。`DragonFlyBoard` 保存時にグローバル Owner を送信。`MeetingBreakoutsTest` 追加、`CONTACT_LOGIC_ALIGNMENT` 追記。`php artisan test` 371 passed、`npm run build` 成功。merge / push は未。 |
 | 2026-05-18 07:29 JST | **Phase 123（implement）/ SPEC-009 API P1:** `introductions.referral_kind`（default external）・`internal_referrals` テーブル・モデル・`GET|POST|PATCH /api/introductions`・`GET|POST|PATCH /api/internal-referrals`（owner スコープ・`ResolvesReligoOwner`）・`MemberMergeService` 付け替え・`ReferralApiTest`。`DATA_MODEL`・`REFERRAL_RECORDING` §10 更新。`php artisan test` 369 passed。UI・Dashboard KPI 連動は未着手。 |
 | 2026-05-18 07:25 JST | **Phase 122（docs）/ SPEC-009 確定:** `REFERRAL_RECORDING_REQUIREMENTS.md` を active 化し §9 製品既定（買い手＝メンバー必須、金額任意・owner 閲覧から開始、既存 introductions＝外部+`referral_kind`、`last_contact`/Hint に内部不含）。`DATA_MODEL.md` に `introductions.referral_kind` と `internal_referrals` §4.14・Entities/Overview 追記。`SSOT_REGISTRY` SPEC-009 active、`PHASE_REGISTRY`・INDEX・Phase 122 PLAN/WORKLOG/REPORT。コード変更なし。 |

@@ -24,12 +24,15 @@
 
 ## 取り込み証跡（Merge Evidence）
 
- develop へ merge 後に追記すること:
+- **merge commit id:** `ce278b26fa5ef6d285e88f9e72bf589777267e88`
+- **source branch:** `feature/merge-wip-20260518`（同一バッチに Phase 118–123・その他 docs を含む）
+- **target branch:** `develop`
+- **test command:** `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`
+- **test result:** 371 passed（merge 直後）
+- **scope check:** OK
+- **ssot check:** OK（CONTACT_LOGIC_ALIGNMENT 更新済み）
 
-- merge commit id:
-- source branch:
-- test command / result:
-- changed files: `git diff --name-only merge-base...`
+変更ファイル一覧は merge commit の親に対する diff で参照（87 files）。
 
 ## チェック
 
