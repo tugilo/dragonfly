@@ -64,8 +64,19 @@ class UserMeApiTest extends TestCase
         $this->assertSame($this->memberId, $data['member_id']);
         $this->assertArrayHasKey('default_workspace_id', $data);
         $this->assertNull($data['default_workspace_id']);
-        $this->assertArrayHasKey('workspace_id', $data);
-        $this->assertNull($data['workspace_id']);
+        $this->assertArrayHasKey('religo_role', $data);
+        $this->assertSame('member', $data['religo_role']);
+    }
+
+    public function test_show_me_returns_stored_religo_role(): void
+    {
+        $this->createMeUser($this->memberId);
+        DB::table('users')->where('id', 1)->update([
+            'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN,
+        ]);
+        $res = $this->getJson('/api/users/me');
+        $res->assertOk();
+        $this->assertSame(User::RELIGO_ROLE_CHAPTER_ADMIN, $res->json('religo_role'));
     }
 
     public function test_show_me_returns_null_when_not_set(): void
@@ -79,6 +90,7 @@ class UserMeApiTest extends TestCase
         $this->assertNull($data['member_id']);
         $this->assertNull($data['default_workspace_id']);
         $this->assertNull($data['workspace_id']);
+        $this->assertSame('member', $data['religo_role']);
     }
 
     public function test_show_me_returns_404_when_user_not_found(): void

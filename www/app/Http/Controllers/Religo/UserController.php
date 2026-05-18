@@ -66,7 +66,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return array{id: int, owner_member_id: int|null, member_id: int|null, default_workspace_id: int|null, workspace_id: int|null}
+     * @return array{id: int, owner_member_id: int|null, member_id: int|null, default_workspace_id: int|null, workspace_id: int|null, religo_role: string}
      */
     private static function mePayload(User $user): array
     {
@@ -77,6 +77,7 @@ class UserController extends Controller
             'id' => $user->id,
             'owner_member_id' => $ownerId,
             'member_id' => $ownerId,
+            'religo_role' => $user->religo_role ?? User::RELIGO_ROLE_MEMBER,
             'default_workspace_id' => $dws !== null ? (int) $dws : null,
             'workspace_id' => ReligoActorContext::resolveWorkspaceIdForUser($user),
         ];
