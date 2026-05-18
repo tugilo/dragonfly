@@ -8,6 +8,10 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-18 10:11 JST | **Git 運用 SSOT 追記:** 「**Phase ごとに develop へ merge したら同一作業のうちに `git push origin develop`**」を [GIT_WORKFLOW.md](GIT_WORKFLOW.md)・[git/PRLESS_MERGE_FLOW.md](git/PRLESS_MERGE_FLOW.md)・`.cursorrules`・`devos-v4.mdc`・[process/README.md](process/README.md)・INDEX に明示。 |
+| 2026-05-18 10:09 JST | **Phase 126（docs）/ SPEC-010 確定:** `AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS` を **active** 化。`SSOT_REGISTRY`・`DATA_MODEL`（owner 定義に SPEC-010 参照）・`REFERRAL_RECORDING` §7 補足・`PHASE_REGISTRY`・INDEX・Phase 126 PLAN/WORKLOG/REPORT。認証コードは未着手。 |
+| 2026-05-18 09:46 JST | **SPEC-010（docs / draft）:** ユーザーログイン導入時に **ログインアカウントと Owner 紐づけ** を整理した SSOT [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md) を追加。`SSOT_REGISTRY`・`INDEX`・`ADMIN_GLOBAL_OWNER_SELECTION`（§6・§7・関連・変更履歴）を同期。コード変更なし。 |
+| 2026-05-18 09:30 JST | **Phase 125（implement）/ 接触チャネル別 summary_lite:** `MemberSummaryQuery::batchContactBreakdown` で BO・1to1・メモの最終日時を算出し、`GET /api/dragonfly/members?with_summary=1` と Members 一覧「最終接触」に表示。新テーブルなし（派生）。`php artisan test` 372 passed、`npm run build` 成功。 |
 | 2026-05-18 09:05 JST | **develop へ merge / push:** `feature/merge-wip-20260518` を `--no-ff` で取り込み。merge commit `ce278b26`。`php artisan test` 371 passed の後 `git push origin develop` 済み。Phase 124 REPORT・`PHASE_REGISTRY` に取り込み証跡追記（フォローコミット）。 |
 | 2026-05-18 09:02 JST | **Phase 124（implement）/ Connections BO・Owner 自動 BO1:** `PUT /api/meetings/{id}/breakouts` に任意 `owner_member_id`。どの BO にも含まれないとき **BO1 にマージ**（既に BO2 のみにいる場合は変更なし）。`DragonFlyBoard` 保存時にグローバル Owner を送信。`MeetingBreakoutsTest` 追加、`CONTACT_LOGIC_ALIGNMENT` 追記。`php artisan test` 371 passed、`npm run build` 成功。merge / push は未。 |
 | 2026-05-18 07:29 JST | **Phase 123（implement）/ SPEC-009 API P1:** `introductions.referral_kind`（default external）・`internal_referrals` テーブル・モデル・`GET|POST|PATCH /api/introductions`・`GET|POST|PATCH /api/internal-referrals`（owner スコープ・`ResolvesReligoOwner`）・`MemberMergeService` 付け替え・`ReferralApiTest`。`DATA_MODEL`・`REFERRAL_RECORDING` §10 更新。`php artisan test` 369 passed。UI・Dashboard KPI 連動は未着手。 |

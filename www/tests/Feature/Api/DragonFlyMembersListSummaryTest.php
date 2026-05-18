@@ -55,6 +55,9 @@ class DragonFlyMembersListSummaryTest extends TestCase
             $this->assertArrayHasKey('same_room_count', $lite);
             $this->assertArrayHasKey('one_to_one_count', $lite);
             $this->assertArrayHasKey('last_contact_at', $lite);
+            $this->assertArrayHasKey('last_bo_contact_at', $lite);
+            $this->assertArrayHasKey('last_one_to_one_contact_at', $lite);
+            $this->assertArrayHasKey('last_memo_contact_at', $lite);
             $this->assertArrayHasKey('last_memo', $lite);
             $this->assertArrayHasKey('interested', $lite);
             $this->assertArrayHasKey('want_1on1', $lite);

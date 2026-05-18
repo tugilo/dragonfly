@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Queries;
 
+use App\Models\BreakoutRoom;
+use App\Models\Participant;
 use App\Queries\Religo\MemberSummaryQuery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -134,5 +136,67 @@ class MemberSummaryQueryWorkspaceScopeTest extends TestCase
 
         $this->assertArrayHasKey($targetId, $batch);
         $this->assertNotNull($batch[$targetId]['last_contact_at']);
+    }
+
+    public function test_contact_breakdown_exposes_bo_and_one_to_one_maxima(): void
+    {
+        $meetingId = (int) DB::table('meetings')->insertGetId([
+            'number' => 501,
+            'held_on' => '2026-03-10',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $ownerId = (int) DB::table('members')->insertGetId([
+            'name' => 'O', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'T', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        foreach ([$ownerId, $targetId] as $mid) {
+            Participant::create([
+                'meeting_id' => $meetingId,
+                'member_id' => $mid,
+                'type' => 'regular',
+            ]);
+        }
+        $room = BreakoutRoom::create([
+            'meeting_id' => $meetingId,
+            'room_label' => 'BO1',
+            'sort_order' => 1,
+        ]);
+        $po = Participant::query()->where('meeting_id', $meetingId)->where('member_id', $ownerId)->firstOrFail();
+        $pt = Participant::query()->where('meeting_id', $meetingId)->where('member_id', $targetId)->firstOrFail();
+        $now = now()->format('Y-m-d H:i:s');
+        DB::table('participant_breakout')->insert([
+            ['participant_id' => $po->id, 'breakout_room_id' => $room->id, 'created_at' => $now, 'updated_at' => $now],
+            ['participant_id' => $pt->id, 'breakout_room_id' => $room->id, 'created_at' => $now, 'updated_at' => $now],
+        ]);
+
+        $started = '2026-04-21 14:00:00';
+        DB::table('one_to_ones')->insert([
+            'workspace_id' => null,
+            'owner_member_id' => $ownerId,
+            'target_member_id' => $targetId,
+            'meeting_id' => null,
+            'scheduled_at' => null,
+            'started_at' => $started,
+            'ended_at' => null,
+            'status' => 'completed',
+            'notes' => null,
+            'created_at' => $started,
+            'updated_at' => $started,
+        ]);
+
+        $query = app(MemberSummaryQuery::class);
+        $batch = $query->getSummaryLiteBatch($ownerId, [$targetId], null);
+
+        $this->assertNotNull($batch[$targetId]['last_bo_contact_at']);
+        $this->assertNotNull($batch[$targetId]['last_one_to_one_contact_at']);
+        $this->assertNull($batch[$targetId]['last_memo_contact_at']);
+        $boTs = strtotime($batch[$targetId]['last_bo_contact_at']);
+        $o2oTs = strtotime($batch[$targetId]['last_one_to_one_contact_at']);
+        $combinedTs = strtotime($batch[$targetId]['last_contact_at']);
+        $this->assertGreaterThan($boTs, $o2oTs);
+        $this->assertSame($o2oTs, $combinedTs);
     }
 }

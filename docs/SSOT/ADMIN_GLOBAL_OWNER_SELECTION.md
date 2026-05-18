@@ -3,7 +3,7 @@
 | 項目 | 内容 |
 |------|------|
 | 状態 | **実装あり（管理画面）** — 主要コードは `ReligoOwnerProvider` 等に反映済み。**記録・FIT/GAP:** Phase `ADMIN_GLOBAL_OWNER_SPEC003_DOCS`（[PLAN](../process/phases/PHASE_ADMIN_GLOBAL_OWNER_SPEC003_DOCS_PLAN.md)）。**follow-up:** Phase `ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP`（[REPORT](../process/phases/PHASE_ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP_REPORT.md)）で `/settings` ゲート例外・1 to 1 の owner フィルタ削除・§5.1 補足・`religoOwnerMemberId.js` 削除を反映。 |
-| 関連 | [DATA_MODEL.md](DATA_MODEL.md)（User・Member）、[FIT_AND_GAP_MENU_HEADER.md](FIT_AND_GAP_MENU_HEADER.md)、[DASHBOARD_DATA_SSOT.md](DASHBOARD_DATA_SSOT.md)、[PROMPT_SSOT_IMPROVEMENT.md](../process/PROMPT_SSOT_IMPROVEMENT.md)（汎用）、[PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md)（**SSOT 文書のレビュー**）、[PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md)（**実装手順**）、[PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md)（**統合実行**）、[**PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md**](../process/PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md)（**Phase1〜5 連続実行・司令**） |
+| 関連 | [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md)（**SPEC-010**・ログインと Owner 要件）、[DATA_MODEL.md](DATA_MODEL.md)（User・Member）、[FIT_AND_GAP_MENU_HEADER.md](FIT_AND_GAP_MENU_HEADER.md)、[DASHBOARD_DATA_SSOT.md](DASHBOARD_DATA_SSOT.md)、[PROMPT_SSOT_IMPROVEMENT.md](../process/PROMPT_SSOT_IMPROVEMENT.md)（汎用）、[PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_SSOT_IMPROVEMENT.md)（**SSOT 文書のレビュー**）、[PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_IMPLEMENT.md)（**実装手順**）、[PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_TUGILO_EXECUTION.md)（**統合実行**）、[**PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md**](../process/PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md)（**Phase1〜5 連続実行・司令**） |
 | API | `GET/PATCH /api/users/me`（`owner_member_id`） |
 
 ---
@@ -136,6 +136,8 @@
 
 ## 6. 将来：ユーザー認証を追加したとき
 
+**詳細要件（サーバ検証・UI ロック・移行）:** [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md)（**SPEC-010**）。
+
 ### 6.1 UI
 
 - **グローバルヘッダーの Owner 選択 UI は削除（または管理者のみ表示）**してよい。
@@ -159,7 +161,7 @@
 ## 7. 非目標（本ドキュメントの範囲外）
 
 - 多テナント・複数チャプター同時操作の詳細設計（Workspace との優先順位は既存 Religo SSOT に従う）。
-- サーバ側の権限チェック（誰がどの `owner_member_id` を指定できるか）の詳細—認証 Phase で別途。
+- サーバ側の権限チェック（誰がどの `owner_member_id` を指定できるか）の詳細—**[SPEC-010](AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md)** に委譲（本ファイル §6 は概要）。
 
 ---
 
@@ -211,6 +213,7 @@
 
 | 日付 | 内容 |
 |------|------|
+| 2026-05-18 09:45 JST | §6 に **SPEC-010** [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md) を追加。メタ「関連」に SPEC-010 を追記。 |
 | 2026-04-06 JST | **Phase ADMIN_GLOBAL_OWNER_SPEC003_FOLLOWUP:** §4.4 に `/settings` ゲート例外を追記。§5.1 に「独自付与禁止」と Context 由来 ID のクエリ許容の補足を追記。 |
 | 2026-04-06 JST | **Phase ADMIN_GLOBAL_OWNER_SPEC003_DOCS:** [FIT_AND_GAP_MENU_HEADER.md](FIT_AND_GAP_MENU_HEADER.md) を現行 AppBar・Owner・ゲートに更新。§8 DoD チェックを運用メモ付きで更新。PLAN/WORKLOG/REPORT（[PLAN](../process/phases/PHASE_ADMIN_GLOBAL_OWNER_SPEC003_DOCS_PLAN.md)）。 |
 | 2026-04-06 13:54 JST | [PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md](../process/PROMPT_ADMIN_GLOBAL_OWNER_PHASE_RUNNER.md) 新規。§9 表・メタ表・INDEX。 |

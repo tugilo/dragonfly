@@ -34,6 +34,7 @@ class DragonFlyMemberController extends Controller
     /**
      * GET /api/dragonfly/members — 一覧（Autocomplete 等用）.
      * with_summary=1 かつ owner_member_id ありの場合、各 member に summary_lite を同梱（N+1 回避のためバッチ取得）。
+     * summary_lite には last_contact_at に加え last_bo_contact_at / last_one_to_one_contact_at / last_memo_contact_at（Phase125・派生）を含む。
      * M-3c: q, category_id, group_name, role_id, interested, want_1on1, sort, order で検索・フィルタ・ソート対応。
      * meeting_id: 当該例会の参加者に限定（participants.type が absent の行は除外）。各要素に participant_type / bo_assignable（proxy は false）を付与。SPEC-007。
      */
@@ -146,6 +147,9 @@ class DragonFlyMemberController extends Controller
                         'same_room_count' => $lite['same_room_count'],
                         'one_to_one_count' => $lite['one_to_one_count'],
                         'last_contact_at' => $lite['last_contact_at'],
+                        'last_bo_contact_at' => $lite['last_bo_contact_at'],
+                        'last_one_to_one_contact_at' => $lite['last_one_to_one_contact_at'],
+                        'last_memo_contact_at' => $lite['last_memo_contact_at'],
                         'last_memo' => $lite['last_memo'],
                         'interested' => $lite['interested'],
                         'want_1on1' => $lite['want_1on1'],

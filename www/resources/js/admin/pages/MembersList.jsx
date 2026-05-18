@@ -353,13 +353,37 @@ function CategoryField({ record }) {
 }
 
 function LastContactField({ record }) {
-    const d = record?.summary_lite?.last_contact_at;
-    if (!d) return <span title="BO同席・メモ・1to1のいずれも日付が取れない場合">接触記録なし</span>;
-    try {
-        return <span>{new Date(d).toLocaleDateString('ja-JP')}</span>;
-    } catch {
-        return <span>{String(d)}</span>;
+    const s = record?.summary_lite;
+    const d = s?.last_contact_at;
+    const bo = s?.last_bo_contact_at;
+    const o2o = s?.last_one_to_one_contact_at;
+    const memo = s?.last_memo_contact_at;
+    const fmt = (x) => {
+        if (!x) return null;
+        try {
+            return new Date(x).toLocaleDateString('ja-JP');
+        } catch {
+            return String(x);
+        }
+    };
+    const lines = [];
+    if (bo) lines.push(`例会BO ${fmt(bo)}`);
+    if (o2o) lines.push(`1to1 ${fmt(o2o)}`);
+    if (memo) lines.push(`メモ ${fmt(memo)}`);
+    if (!d) {
+        return <span title="BO同席・メモ・1to1のいずれも日付が取れない場合">接触記録なし</span>;
     }
+    const detail = lines.join(' · ');
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, maxWidth: 200 }}>
+            <span title={detail || 'チャネル別の最終日（グローバル Owner 基準）'}>{fmt(d)}</span>
+            {detail ? (
+                <Typography variant="caption" color="text.secondary" sx={{ fontSize: 10, lineHeight: 1.25 }}>
+                    {detail}
+                </Typography>
+            ) : null}
+        </Box>
+    );
 }
 
 function LastMemoField({ record }) {

@@ -18,7 +18,7 @@ alwaysApply: true
 6. PRは禁止。mergeはローカルで実施する。ブランチ名は feature/phaseXXX-name 形式。
 7. REPORTにMerge Evidenceを必ず記録する。
 8. Phase完了時に PHASE_REGISTRY.md を更新する。
-9. pushは1Phase完了時に1回のみ。
+9. push は 1 Phase 完了時に 1 回（feature 側・必要なら）。**加えて、`develop` に merge したあと必ず `git push origin develop`** し、フェーズごとにリモート統合ブランチを更新する（ローカルだけ先行を溜めない）。
 10. Scope違反・SSOT不明・DoD未定義を検出したら即座に作業停止する。
 
 ## Phase開始時の確認手順（必須・省略禁止）

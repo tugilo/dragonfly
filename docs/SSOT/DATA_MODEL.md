@@ -40,7 +40,7 @@
 
 Religo では BNI 正式用語に合わせて「1 to 1」を扱う。表記: UI/文章は "1 to 1"、テーブル名は one_to_ones、memo_type の値は one_to_one。1 to 1 は「予定」「実施」「キャンセル」を持つイベントとして扱う。**同一ペアで複数回実施する前提とし、各 `one_to_ones` 行の `notes` には当該回で話した内容（その回の記録・つながり）を保存する。** 追加の時系列追記が必要な場合は `contact_memos`（`memo_type = one_to_one`, `one_to_one_id`）を併用する。
 
-**owner** は「自分（利用者）」を意味する。個人利用では `owner_member_id` ＝ 自分。将来 multi-user 化しても破綻しないよう owner を軸にする。
+**owner** は「自分（利用者）」を意味する。個人利用では `owner_member_id` ＝ 自分。将来 multi-user 化しても破綻しないよう owner を軸にする。**ログイン認証を導入した場合のユーザー↔Owner バインドと API 側の検証要件は [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md)（SPEC-010） を正とする。**
 
 **接触履歴が無い状態の表現:** 同室・メモ・1 to 1 のいずれも無くても、dragonfly_contact_flags（interested / want_1on1）で「会ったことはないが興味がある」「1 to 1 したい」という状態を表現できる。last_contact_at が NULL かつ flags が ON の組み合わせで「会ったことないが興味ある」と解釈する。
 
@@ -462,6 +462,9 @@ Religo では以下を**関係指標**として算出する。
 | **introduction_count** | introductions の (owner_member_id, from_member_id, to_member_id) の組み合わせ、または owner が関与する紹介の件数。要件に応じて集計範囲を定義。 |
 | **last_introduction** | introductions の (owner_member_id, from_member_id, to_member_id) など owner が関与する紹介のうち、created_at 降順の先頭 1 件。last_contact_at の候補の一つ。 |
 | **last_contact_at** | **必須指標。** owner→target の「最後の接触」を **1 つの datetime** で表す。**比較規則:** (1) meeting.held_on（date）はその日の 00:00:00 として datetime に変換して比較する。(2) contact_memos.created_at, one_to_ones の **started_at / scheduled_at / created_at**（**status = canceled の行は除外**・日時未設定の 1 to 1 は **created_at で接触あり**）, introductions.created_at はそのまま datetime として扱う。(3) 上記の「存在する値」の MAX をとる。NULL は無視する。全て NULL なら last_contact_at は NULL。数式実装では datetime 同士で MAX をとること。**`internal_referrals` は last_contact の合成に含めない**（SPEC-009）。 |
+| **last_bo_contact_at** | **派生（Phase 125）。** owner→target の **例会 BO 同席のみ**の最終日時。`participant_breakout` で同一 `breakout_room` かつ `meetings.held_on` が非 NULL の組のうち、`held_on` を各日 00:00 として比較した MAX。`last_contact_at` の BO 成分と同一ソース。 |
+| **last_one_to_one_contact_at** | **派生（Phase 125）。** `one_to_ones` で owner→target・**canceled 以外**の `started_at` / `scheduled_at` / `created_at` の実効日時の MAX（日時未設定は `created_at`）。`last_contact_at` の 1to1 成分と同一ソース。 |
+| **last_memo_contact_at** | **派生（Phase 125）。** `contact_memos`（owner→target）の `created_at` の MAX。workspace スコープは `MemberSummaryQuery::getSummaryLiteBatch` と同一（§5.1）。 |
 | **relationship_score** | **現時点では未定義。** 重み・正規化・数式は別 SSOT（未作成）または Future extensions で定義する。本 SSOT では入力候補の列挙（same_room_count, last_same_room_meeting, last_memo の有無, one_to_one_count, introduction_count 等）までを正とし、**数式・スコア値の実装は禁止**とする。実装する場合は別ドキュメントで定義したうえで行う。 |
 
 ---

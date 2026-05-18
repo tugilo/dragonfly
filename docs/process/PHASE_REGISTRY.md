@@ -122,6 +122,8 @@
 | 122 | SPEC-009 製品既定 + DATA_MODEL（リファーラル / internal_referrals） | docs | completed | feature/phase122-referral-spec009-datamodel（推奨） | 2026-05-18 |
 | 123 | リファーラル DB/API（referral_kind・internal_referrals・SPEC-009 P1） | implement | completed | feature/phase123-referral-api-implement（推奨） | 2026-05-18 |
 | 124 | Connections BO 保存時・Owner 未所属なら BO1 自動追加（last_contact 整合） | implement | completed | feature/merge-wip-20260518（develop へ merge） | 2026-05-18 |
+| 125 | Owner 基準・接触チャネル別最終日時（summary_lite・Members 一覧） | implement | completed | （ローカル実装・merge 未指定） | 2026-05-18 |
+| 126 | SPEC-010 ログインと Owner 紐づけ要件（Registry・DATA_MODEL 同期・**active**） | docs | completed | develop（推奨） | 2026-05-18 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

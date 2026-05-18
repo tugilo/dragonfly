@@ -14,6 +14,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-007 | ビジター・ゲスト入会、代理出席、Connections と participants の業務・データ方針 | ../SSOT/MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md | active |
 | SPEC-008 | members 重複の発生条件・影響・マージ運用（Runbook・案 A/B/C） | ../SSOT/MEMBERS_DEDUPLICATION_RUNBOOK.md | active |
 | SPEC-009 | リファーラル記録（外部・内部／TYFCB 相当） | ../SSOT/REFERRAL_RECORDING_REQUIREMENTS.md | active／記録: Phase 122 |
+| SPEC-010 | ユーザーログインと Owner（オーナー）紐づけ | ../SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md | active／記録: Phase 126 |
 
 ## Statusの値
 - active     : 現在有効なSSOT

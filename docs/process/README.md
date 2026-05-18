@@ -21,6 +21,9 @@
    - **過去に実際に起きた事実**の日付で、当時の時刻が不明な場合は `2026-03-31 12:00 JST` のように **日付＋時刻を補う**か、本文で **TODO** と明記する。  
    打合せ・1to1 等の記録でも同様。リポジトリ直下の `.cursorrules`（ドキュメント節）も参照。
 
+5. **Phase 完了時は develop をリモートまで**  
+   implement / refactor の Phase は [docs/GIT_WORKFLOW.md](../GIT_WORKFLOW.md) に従い、**`develop` に merge したあと `git push origin develop` まで済ませる**（詳細: [docs/git/PRLESS_MERGE_FLOW.md](../git/PRLESS_MERGE_FLOW.md)）。docs のみの Phase も同様を推奨。
+
 ## 例
 
 - 進捗の要約・履歴 → `docs/fluo_progress.md` に追記

@@ -23,7 +23,17 @@ final class MemberSummaryQuery
      * 複数 target に対する summary-lite を一括取得.
      *
      * @param  array<int>  $targetMemberIds
-     * @return array<int, array{same_room_count: int, one_to_one_count: int, last_contact_at: string|null, last_memo: array|null, interested: bool, want_1on1: bool}>
+     * @return array<int, array{
+     *   same_room_count: int,
+     *   one_to_one_count: int,
+     *   last_contact_at: string|null,
+     *   last_bo_contact_at: string|null,
+     *   last_one_to_one_contact_at: string|null,
+     *   last_memo_contact_at: string|null,
+     *   last_memo: array|null,
+     *   interested: bool,
+     *   want_1on1: bool
+     * }>
      */
     public function getSummaryLiteBatch(int $ownerMemberId, array $targetMemberIds, ?int $workspaceId = null): array
     {
@@ -35,13 +45,18 @@ final class MemberSummaryQuery
         $sameRoom = $this->batchSameRoomCount($ownerMemberId, $targetMemberIds);
         $oneToOneCount = $this->batchOneToOneCount($ownerMemberId, $targetMemberIds, $useWorkspace, $workspaceId);
         $lastMemos = $this->batchLastMemo($ownerMemberId, $targetMemberIds, $useWorkspace, $workspaceId);
-        $lastContactAt = $this->batchLastContactAt($ownerMemberId, $targetMemberIds, $useWorkspace, $workspaceId);
+        $contactBreakdown = $this->batchContactBreakdown($ownerMemberId, $targetMemberIds, $useWorkspace, $workspaceId);
         $flags = $this->batchFlags($ownerMemberId, $targetMemberIds, $useWorkspace, $workspaceId);
 
         $result = [];
         foreach ($targetMemberIds as $tid) {
             $memo = $lastMemos[$tid] ?? null;
-            $contactAt = $lastContactAt[$tid] ?? null;
+            $bd = $contactBreakdown[$tid] ?? [
+                'last_contact_at' => null,
+                'last_bo_contact_at' => null,
+                'last_one_to_one_contact_at' => null,
+                'last_memo_contact_at' => null,
+            ];
             if ($memo !== null && isset($memo['body']) && mb_strlen($memo['body']) > self::BODY_SHORT_LEN) {
                 $memo['body_short'] = mb_substr($memo['body'], 0, self::BODY_SHORT_LEN).'…';
             } elseif ($memo !== null) {
@@ -54,7 +69,10 @@ final class MemberSummaryQuery
             $result[$tid] = [
                 'same_room_count' => $sameRoom[$tid] ?? 0,
                 'one_to_one_count' => $oneToOneCount[$tid] ?? 0,
-                'last_contact_at' => $contactAt,
+                'last_contact_at' => $bd['last_contact_at'],
+                'last_bo_contact_at' => $bd['last_bo_contact_at'],
+                'last_one_to_one_contact_at' => $bd['last_one_to_one_contact_at'],
+                'last_memo_contact_at' => $bd['last_memo_contact_at'],
                 'last_memo' => $memo,
                 'interested' => $flags[$tid]['interested'] ?? false,
                 'want_1on1' => $flags[$tid]['want_1on1'] ?? false,
@@ -151,14 +169,26 @@ final class MemberSummaryQuery
     }
 
     /**
-     * last_contact_at: MAX( BO同席日(held_on), メモ created_at, 1to1 の started_at|scheduled_at|created_at )。
-     * BO は participant_breakout で同一 breakout_room が必要（一度同席すれば接触候補）。
+     * Owner→target ごとに接触チャネル別の最終日時と合成 last_contact_at。
+     * BO: participant_breakout 同一ルーム × meetings.held_on（日付は 00:00）。
+     * メモ / 1to1: last_contact_at と同一規則（DATA_MODEL §5 · CONTACT_LOGIC_ALIGNMENT）。
+     *
+     * @return array<int, array{
+     *   last_contact_at: string|null,
+     *   last_bo_contact_at: string|null,
+     *   last_one_to_one_contact_at: string|null,
+     *   last_memo_contact_at: string|null
+     * }>
      */
-    private function batchLastContactAt(int $ownerMemberId, array $targetMemberIds, bool $useWorkspace, ?int $workspaceId): array
+    private function batchContactBreakdown(int $ownerMemberId, array $targetMemberIds, bool $useWorkspace, ?int $workspaceId): array
     {
-        $candidates = [];
+        $boByTarget = [];
+        $memoByTarget = [];
+        $o2oByTarget = [];
         foreach ($targetMemberIds as $tid) {
-            $candidates[$tid] = [];
+            $boByTarget[$tid] = [];
+            $memoByTarget[$tid] = [];
+            $o2oByTarget[$tid] = [];
         }
 
         $sameRoomMeetings = DB::table('participant_breakout as pbo')
@@ -179,8 +209,8 @@ final class MemberSummaryQuery
 
         foreach ($sameRoomMeetings as $r) {
             $tid = (int) $r->target_id;
-            if (isset($candidates[$tid])) {
-                $candidates[$tid][] = (new \DateTime($r->held_on))->setTime(0, 0, 0)->format('c');
+            if (isset($boByTarget[$tid])) {
+                $boByTarget[$tid][] = (new \DateTime($r->held_on))->setTime(0, 0, 0)->format('c');
             }
         }
 
@@ -191,8 +221,8 @@ final class MemberSummaryQuery
         $this->applyWorkspaceScopeForSummary($memos, 'contact_memos', $useWorkspace, $workspaceId);
         foreach ($memos->select('target_member_id', 'created_at')->get() as $r) {
             $tid = (int) $r->target_member_id;
-            if (isset($candidates[$tid])) {
-                $candidates[$tid][] = (new \DateTime($r->created_at))->format('c');
+            if (isset($memoByTarget[$tid])) {
+                $memoByTarget[$tid][] = (new \DateTime($r->created_at))->format('c');
             }
         }
 
@@ -203,30 +233,48 @@ final class MemberSummaryQuery
         $this->applyWorkspaceScopeForSummary($o2o, 'one_to_ones', $useWorkspace, $workspaceId);
         foreach ($o2o->select('target_member_id', 'started_at', 'scheduled_at', 'created_at')->get() as $r) {
             $tid = (int) $r->target_member_id;
-            if (! isset($candidates[$tid])) {
+            if (! isset($o2oByTarget[$tid])) {
                 continue;
             }
-            // 日時未設定の予定・実施でも「1 to 1 をしている」ことは登録日で接触として扱う（Dashboard 未接触 KPI と整合）
             $effective = $r->started_at ?? $r->scheduled_at ?? $r->created_at;
             if ($effective !== null && $effective !== '') {
-                $candidates[$tid][] = (new \DateTime($effective))->format('c');
+                $o2oByTarget[$tid][] = (new \DateTime($effective))->format('c');
             }
         }
 
         $out = [];
         foreach ($targetMemberIds as $tid) {
-            $arr = $candidates[$tid] ?? [];
-            if ($arr === []) {
-                $out[$tid] = null;
-            } else {
-                $out[$tid] = max(array_map(function ($c) {
-                    return (new \DateTime($c))->getTimestamp();
-                }, $arr));
-                $out[$tid] = (new \DateTime)->setTimestamp($out[$tid])->format('c');
+            $lastBo = $this->maxIso8601Contact($boByTarget[$tid]);
+            $lastMemo = $this->maxIso8601Contact($memoByTarget[$tid]);
+            $lastO2o = $this->maxIso8601Contact($o2oByTarget[$tid]);
+            $combined = array_values(array_filter([$lastBo, $lastMemo, $lastO2o], static fn ($v) => $v !== null && $v !== ''));
+            $lastContact = null;
+            if ($combined !== []) {
+                $ts = max(array_map(static fn ($c) => (new \DateTime($c))->getTimestamp(), $combined));
+                $lastContact = (new \DateTime)->setTimestamp($ts)->format('c');
             }
+            $out[$tid] = [
+                'last_contact_at' => $lastContact,
+                'last_bo_contact_at' => $lastBo,
+                'last_one_to_one_contact_at' => $lastO2o,
+                'last_memo_contact_at' => $lastMemo,
+            ];
         }
 
         return $out;
+    }
+
+    /**
+     * @param  array<int, string>  $isoCandidates
+     */
+    private function maxIso8601Contact(array $isoCandidates): ?string
+    {
+        if ($isoCandidates === []) {
+            return null;
+        }
+        $ts = max(array_map(static fn ($c) => (new \DateTime($c))->getTimestamp(), $isoCandidates));
+
+        return (new \DateTime)->setTimestamp($ts)->format('c');
     }
 
     /**
