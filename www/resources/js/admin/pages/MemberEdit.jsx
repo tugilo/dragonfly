@@ -29,6 +29,12 @@ export function MemberEdit() {
                 <TextInput source="display_no" label="番号" fullWidth />
                 <TextInput source="name" label="名前" fullWidth />
                 <TextInput source="name_kana" label="ふりがな" fullWidth />
+                <TextInput
+                    source="email"
+                    label="メール（連絡先）"
+                    fullWidth
+                    helperText="ログイン・招待用。チャプター内で重複できません（SPEC-010）。未使用なら空欄。"
+                />
                 <SelectInput
                     source="category_id"
                     label="カテゴリー"
