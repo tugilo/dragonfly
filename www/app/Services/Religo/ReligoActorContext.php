@@ -24,9 +24,18 @@ final class ReligoActorContext
 {
     public static function actingUser(): ?User
     {
-        $u = auth()->user();
-        if ($u instanceof User) {
-            return $u;
+        $sanctum = auth('sanctum')->user();
+        if ($sanctum instanceof User) {
+            return $sanctum;
+        }
+
+        $web = auth('web')->user();
+        if ($web instanceof User) {
+            return $web;
+        }
+
+        if (! config('religo.acting_user_fallback', true)) {
+            return null;
         }
 
         return User::query()->orderBy('id')->first();

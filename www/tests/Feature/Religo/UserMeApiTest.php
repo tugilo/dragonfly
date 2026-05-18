@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 /**
  * GET /api/users/me, PATCH /api/users/me. E-4 / BO-AUDIT-P3〜P4.
- * 現在ユーザー: 認証時はその User、無認証時は users.id 昇順先頭。
+ * 現在ユーザー: Sanctum Bearer または web（actingAs）優先。Bearer 無しは RELIGO_ACTING_USER_FALLBACK=true のとき先頭ユーザー。
  */
 class UserMeApiTest extends TestCase
 {

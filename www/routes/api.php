@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DragonFlyBreakoutAssignmentController;
 use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
@@ -28,6 +29,9 @@ use App\Http\Controllers\Religo\DashboardDebugController;
 use App\Http\Controllers\Religo\MemberMergeController;
 use App\Http\Controllers\Religo\UserController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 /*
 |--------------------------------------------------------------------------
