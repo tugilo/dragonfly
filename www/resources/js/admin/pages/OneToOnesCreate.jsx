@@ -12,9 +12,10 @@ import { useSearchParams } from 'react-router-dom';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { useReligoOwner } from '../ReligoOwnerContext';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
+import { religoFetch } from '../religoApiFetch';
 
 async function fetchJson(url) {
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }

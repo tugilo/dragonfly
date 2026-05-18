@@ -17,9 +17,10 @@ import {
     formatMemberAutocompleteLabel,
     formatMemberWithChapterPrimary,
 } from '../utils/memberDisplay';
+import { religoFetch } from '../religoApiFetch';
 
 async function fetchJson(url) {
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }

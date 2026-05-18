@@ -36,6 +36,7 @@ import {
     filterBoAssignableMemberIds,
     getBoAssignBlockReason,
 } from '../utils/boAssignmentGuards';
+import { religoFetch } from '../religoApiFetch';
 
 const API = '';
 const TOGGLE_DEBOUNCE_MS = 300;
@@ -52,13 +53,13 @@ const O2O_STATUSES = [
 ];
 
 async function fetchJson(url) {
-    const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function putFlags(ownerMemberId, targetMemberId, data) {
-    const res = await fetch(
+    const res = await religoFetch(
         `${API}/api/dragonfly/flags/${targetMemberId}?owner_member_id=${ownerMemberId}`,
         {
             method: 'PUT',
@@ -71,7 +72,7 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
 }
 
 async function postContactMemo(payload) {
-    const res = await fetch(`${API}/api/contact-memos`, {
+    const res = await religoFetch(`${API}/api/contact-memos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -84,7 +85,7 @@ async function postContactMemo(payload) {
 }
 
 async function postOneToOne(payload) {
-    const res = await fetch(`${API}/api/one-to-ones`, {
+    const res = await religoFetch(`${API}/api/one-to-ones`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -168,7 +169,7 @@ async function getMeetings() {
 }
 
 async function putMeetingBreakouts(meetingId, payload) {
-    const res = await fetch(`${API}/api/meetings/${meetingId}/breakouts`, {
+    const res = await religoFetch(`${API}/api/meetings/${meetingId}/breakouts`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),

@@ -14,12 +14,13 @@ import {
 } from '@mui/material';
 import { religoOneToOneLeadStatusLabel } from '../religoOneToOneLeadLabels';
 import { useReligoOwner } from '../ReligoOwnerContext';
+import { religoFetch } from '../religoApiFetch';
 
 const API = '';
 const MEMO_LIMIT = 20;
 
 async function fetchJson(url) {
-    const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
@@ -39,7 +40,7 @@ function MemberDetailContent() {
 
     const loadLeadStatus = useCallback(() => {
         if (!id || ownerMemberId == null) return;
-        fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
+        religoFetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((rows) => {
                 if (!Array.isArray(rows)) {
@@ -63,7 +64,7 @@ function MemberDetailContent() {
     const loadMemos = useCallback(() => {
         if (!id || ownerMemberId == null) return;
         setLoadingMemos(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
+        religoFetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((arr) => setMemos(Array.isArray(arr) ? arr : []))
             .catch(() => setMemos([]))
@@ -73,7 +74,7 @@ function MemberDetailContent() {
     const loadO2o = useCallback(() => {
         if (!id || ownerMemberId == null) return;
         setLoadingO2o(true);
-        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
+        religoFetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((arr) => setO2oList(Array.isArray(arr) ? arr : []))
             .catch(() => setO2oList([]))

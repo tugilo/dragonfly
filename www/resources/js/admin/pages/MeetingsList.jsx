@@ -44,11 +44,12 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
+import { religoFetch } from '../religoApiFetch';
 
 const API_BASE = '';
 
 async function fetchMeetingDetail(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) throw new Error(`API ${res.status}`);
@@ -56,7 +57,7 @@ async function fetchMeetingDetail(meetingId) {
 }
 
 async function fetchMeetingMemo(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/memo`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/memo`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) throw new Error(`API ${res.status}`);
@@ -65,7 +66,7 @@ async function fetchMeetingMemo(meetingId) {
 }
 
 async function putMeetingMemo(meetingId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/memo`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/memo`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ body: body == null ? '' : String(body).trim() }),
@@ -75,13 +76,13 @@ async function putMeetingMemo(meetingId, body) {
 }
 
 async function fetchMeetingsStats() {
-    const res = await fetch(`${API_BASE}/api/meetings/stats`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API_BASE}/api/meetings/stats`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function postMeeting(payload) {
-    const res = await fetch(`${API_BASE}/api/meetings`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -97,7 +98,7 @@ async function postMeeting(payload) {
 }
 
 async function patchMeeting(meetingId, payload) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -115,7 +116,7 @@ async function patchMeeting(meetingId, payload) {
 async function postParticipantImport(meetingId, file) {
     const form = new FormData();
     form.append('pdf', file);
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/participants/import`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/participants/import`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: form,
@@ -130,7 +131,7 @@ async function postParticipantImport(meetingId, file) {
 async function postCsvImport(meetingId, file) {
     const form = new FormData();
     form.append('csv', file);
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: form,
@@ -143,7 +144,7 @@ async function postCsvImport(meetingId, file) {
 }
 
 async function fetchCsvPreview(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/preview`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/preview`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -154,7 +155,7 @@ async function fetchCsvPreview(meetingId) {
 }
 
 async function fetchCsvDiffPreview(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/diff-preview`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/diff-preview`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -165,7 +166,7 @@ async function fetchCsvDiffPreview(meetingId) {
 }
 
 async function fetchCsvMemberDiffPreview(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/member-diff-preview`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/member-diff-preview`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -176,7 +177,7 @@ async function fetchCsvMemberDiffPreview(meetingId) {
 }
 
 async function fetchCsvRoleDiffPreview(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/role-diff-preview`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/role-diff-preview`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -187,7 +188,7 @@ async function fetchCsvRoleDiffPreview(meetingId) {
 }
 
 async function postCsvMemberApply(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/member-apply`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/member-apply`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: '{}',
@@ -200,7 +201,7 @@ async function postCsvMemberApply(meetingId) {
 }
 
 async function postCsvRoleApply(meetingId, body = {}) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/role-apply`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/role-apply`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body && Object.keys(body).length ? body : {}),
@@ -213,7 +214,7 @@ async function postCsvRoleApply(meetingId, body = {}) {
 }
 
 async function postCsvImportApply(meetingId, body = {}) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/apply`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/apply`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: Object.keys(body).length ? JSON.stringify(body) : undefined,
@@ -226,7 +227,7 @@ async function postCsvImportApply(meetingId, body = {}) {
 }
 
 async function postParticipantImportParse(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/parse`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/parse`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
     });
@@ -239,27 +240,27 @@ async function postParticipantImportParse(meetingId) {
 
 async function fetchMemberSearch(q) {
     const params = new URLSearchParams({ q: String(q || '').trim() });
-    const res = await fetch(`${API_BASE}/api/members/search?${params}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API_BASE}/api/members/search?${params}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function fetchCategorySearch(q) {
     const params = new URLSearchParams({ q: String(q || '').trim() });
-    const res = await fetch(`${API_BASE}/api/categories/search?${params}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API_BASE}/api/categories/search?${params}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function fetchRoleSearch(q) {
     const params = new URLSearchParams({ q: String(q || '').trim() });
-    const res = await fetch(`${API_BASE}/api/roles/search?${params}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API_BASE}/api/roles/search?${params}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function fetchCsvUnresolved(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/unresolved`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/unresolved`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -270,7 +271,7 @@ async function fetchCsvUnresolved(meetingId) {
 }
 
 async function fetchCsvUnresolvedSuggestions(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/unresolved-suggestions`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/unresolved-suggestions`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -281,7 +282,7 @@ async function fetchCsvUnresolvedSuggestions(meetingId) {
 }
 
 async function postCsvResolution(meetingId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -294,7 +295,7 @@ async function postCsvResolution(meetingId, body) {
 }
 
 async function postCsvResolutionCreateMember(meetingId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-member`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-member`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -307,7 +308,7 @@ async function postCsvResolutionCreateMember(meetingId, body) {
 }
 
 async function postCsvResolutionCreateCategory(meetingId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-category`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-category`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -320,7 +321,7 @@ async function postCsvResolutionCreateCategory(meetingId, body) {
 }
 
 async function postCsvResolutionCreateRole(meetingId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-role`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/create-role`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -333,7 +334,7 @@ async function postCsvResolutionCreateRole(meetingId, body) {
 }
 
 async function fetchCsvResolutionsList(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions`, {
         headers: { Accept: 'application/json' },
     });
     if (!res.ok) {
@@ -344,7 +345,7 @@ async function fetchCsvResolutionsList(meetingId) {
 }
 
 async function putCsvResolution(meetingId, resolutionId, body) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/${resolutionId}`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/${resolutionId}`, {
         method: 'PUT',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -357,7 +358,7 @@ async function putCsvResolution(meetingId, resolutionId, body) {
 }
 
 async function deleteCsvResolution(meetingId, resolutionId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/${resolutionId}`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/csv-import/resolutions/${resolutionId}`, {
         method: 'DELETE',
         headers: { Accept: 'application/json' },
     });
@@ -383,7 +384,7 @@ async function putParticipantImportCandidates(meetingId, candidates) {
         }
         return out;
     }).filter((c) => c.name !== '');
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/candidates`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/candidates`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ candidates: body }),
@@ -396,7 +397,7 @@ async function putParticipantImportCandidates(meetingId, candidates) {
 }
 
 async function postParticipantImportApply(meetingId) {
-    const res = await fetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/apply`, {
+    const res = await religoFetch(`${API_BASE}/api/meetings/${meetingId}/participants/import/apply`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
     });
