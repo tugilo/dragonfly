@@ -39,16 +39,18 @@ export default function Dashboard() {
     const [weeklyPresentation, setWeeklyPresentation] = useState({
         loaded: false,
         body: null,
+        startDashBody: null,
         error: false,
     });
 
-    const loadDashboard = useCallback(async () => {
-        setWeeklyPresentation({ loaded: false, body: null, error: false });
+    const loadDashboard = useCallback(async (ownerId) => {
+        setWeeklyPresentation({ loaded: false, body: null, startDashBody: null, error: false });
+        const ownerParam = ownerId != null ? { owner_member_id: ownerId } : {};
         try {
             const [s, a, w] = await Promise.all([
-                dashboardRequest('stats').catch(() => null),
-                dashboardRequest('activity', { limit: 6 }).catch(() => null),
-                dashboardRequest('weekly-presentation').catch(() => null),
+                dashboardRequest('stats', ownerParam).catch(() => null),
+                dashboardRequest('activity', { limit: 6, ...ownerParam }).catch(() => null),
+                dashboardRequest('weekly-presentation', ownerParam).catch(() => null),
             ]);
             if (s && typeof s.stale_contacts_count === 'number') {
                 setStats(s);
@@ -60,14 +62,19 @@ export default function Dashboard() {
                 const raw = w.weekly_presentation_body;
                 const body =
                     raw === null || raw === undefined || String(raw).trim() === '' ? null : String(raw);
-                setWeeklyPresentation({ loaded: true, body, error: false });
+                const rawStartDash = w.start_dash_presentation_body;
+                const startDashBody =
+                    rawStartDash === null || rawStartDash === undefined || String(rawStartDash).trim() === ''
+                        ? null
+                        : String(rawStartDash);
+                setWeeklyPresentation({ loaded: true, body, startDashBody, error: false });
             } else {
-                setWeeklyPresentation({ loaded: true, body: null, error: true });
+                setWeeklyPresentation({ loaded: true, body: null, startDashBody: null, error: true });
             }
         } catch {
             setStats(null);
             setActivity([]);
-            setWeeklyPresentation({ loaded: true, body: null, error: true });
+            setWeeklyPresentation({ loaded: true, body: null, startDashBody: null, error: true });
         }
     }, []);
 
@@ -89,7 +96,7 @@ export default function Dashboard() {
         let cancelled = false;
         setPanelsBusy(true);
         (async () => {
-            await Promise.all([loadDashboard(), loadOneToOneLeads(ownerMemberId)]);
+            await Promise.all([loadDashboard(ownerMemberId), loadOneToOneLeads(ownerMemberId)]);
             if (!cancelled) setPanelsBusy(false);
         })();
         return () => {
@@ -100,7 +107,7 @@ export default function Dashboard() {
     useEffect(() => {
         const onWs = () => {
             if (ownerMemberId != null) {
-                loadDashboard();
+                loadDashboard(ownerMemberId);
             }
         };
         window.addEventListener('religo-workspace-changed', onWs);
@@ -121,6 +128,7 @@ export default function Dashboard() {
                 <DashboardWeeklyPresentationPanel
                     loading={panelsBusy}
                     body={weeklyPresentation.body}
+                    startDashBody={weeklyPresentation.startDashBody}
                     loadError={weeklyPresentation.error}
                     prominent
                 />

@@ -1,26 +1,30 @@
 import React, { useState, useCallback } from 'react';
-import { Box, Button, Card, CardContent, Snackbar, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Snackbar, Tab, Tabs, Typography } from '@mui/material';
 import { DASHBOARD_CARD_SX } from './dashboardConstants';
 
 /**
  * ウィークリープレゼン原稿（SPEC-004）. Owner 未設定時は親が描画しない。
  * prominent: ヘッダー直下で目立たせる（Dashboard 先頭表示用）。
  */
-export default function DashboardWeeklyPresentationPanel({ loading, body, loadError, prominent = false }) {
+export default function DashboardWeeklyPresentationPanel({ loading, body, startDashBody, loadError, prominent = false }) {
+    const [activeTab, setActiveTab] = useState('weekly');
     const [snack, setSnack] = useState('');
 
+    const activeBody = activeTab === 'startDash' ? startDashBody : body;
+    const activeLabel = activeTab === 'startDash' ? 'スタートダッシュプレゼン原稿' : 'ウィークリープレゼン原稿';
+
     const handleCopy = useCallback(async () => {
-        if (body == null || body === '') return;
+        if (activeBody == null || activeBody === '') return;
         try {
-            await navigator.clipboard.writeText(body);
+            await navigator.clipboard.writeText(activeBody);
             setSnack('コピーしました');
         } catch {
             setSnack('コピーに失敗しました');
         }
-    }, [body]);
+    }, [activeBody]);
 
-    const showEmpty = !loadError && !loading && body == null;
-    const showBody = !loadError && !loading && body != null && body !== '';
+    const showEmpty = !loadError && !loading && activeBody == null;
+    const showBody = !loadError && !loading && activeBody != null && activeBody !== '';
 
     const cardSx = prominent
         ? {
@@ -37,10 +41,6 @@ export default function DashboardWeeklyPresentationPanel({ loading, body, loadEr
           }
         : { ...DASHBOARD_CARD_SX, mb: 1.75 };
 
-    const bodyMaxHeight = prominent
-        ? { xs: 'min(52vh, 320px)', sm: 'min(45vh, 340px)' }
-        : { xs: 220, sm: 240 };
-
     return (
         <>
             <Card variant="outlined" sx={cardSx}>
@@ -53,11 +53,31 @@ export default function DashboardWeeklyPresentationPanel({ loading, body, loadEr
                             color: prominent ? 'primary.main' : 'inherit',
                         }}
                     >
-                        ウィークリープレゼン原稿
+                        プレゼン原稿
                     </Typography>
                     <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: prominent ? 1.25 : 1 }}>
-                        例会の25秒などで話す確定文案です（グローバル Owner に紐づくメンバー）。
+                        例会で話す確定文案です（グローバル Owner に紐づくメンバー）。
                     </Typography>
+
+                    <Tabs
+                        value={activeTab}
+                        onChange={(_, value) => setActiveTab(value)}
+                        variant="scrollable"
+                        allowScrollButtonsMobile
+                        sx={{ minHeight: 36, mb: 1 }}
+                        aria-label="プレゼン原稿の種類"
+                    >
+                        <Tab
+                            value="weekly"
+                            label="ウィークリープレゼン"
+                            sx={{ minHeight: 36, py: 0.5, px: 1.25, fontSize: 13 }}
+                        />
+                        <Tab
+                            value="startDash"
+                            label="スタートダッシュ"
+                            sx={{ minHeight: 36, py: 0.5, px: 1.25, fontSize: 13 }}
+                        />
+                    </Tabs>
 
                     {loading && (
                         <Typography variant="body2" color="text.secondary">
@@ -73,7 +93,7 @@ export default function DashboardWeeklyPresentationPanel({ loading, body, loadEr
 
                     {!loading && showEmpty && (
                         <Typography variant="body2" color="text.secondary">
-                            原稿が未登録です。
+                            {activeLabel}が未登録です。
                         </Typography>
                     )}
 
@@ -81,8 +101,6 @@ export default function DashboardWeeklyPresentationPanel({ loading, body, loadEr
                         <>
                             <Box
                                 sx={{
-                                    maxHeight: bodyMaxHeight,
-                                    overflow: 'auto',
                                     p: 1.25,
                                     borderRadius: 1,
                                     bgcolor: prominent ? 'background.paper' : 'action.hover',
@@ -94,14 +112,14 @@ export default function DashboardWeeklyPresentationPanel({ loading, body, loadEr
                                     lineHeight: 1.65,
                                 }}
                             >
-                                {body}
+                                {activeBody}
                             </Box>
                             <Box sx={{ mt: 1.25 }}>
                                 <Button
                                     variant="outlined"
                                     size="small"
                                     onClick={handleCopy}
-                                    aria-label="ウィークリープレゼン原稿を全文コピー"
+                                    aria-label={`${activeLabel}を全文コピー`}
                                 >
                                     全文をコピー
                                 </Button>

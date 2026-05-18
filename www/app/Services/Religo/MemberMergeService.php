@@ -132,6 +132,11 @@ final class MemberMergeService
                 DB::table('introductions')->where($col, $mergeId)->update([$col => $canonicalId]);
             }
 
+            // 8b) internal_referrals（SPEC-009）
+            foreach (['owner_member_id', 'buyer_member_id', 'seller_member_id'] as $col) {
+                DB::table('internal_referrals')->where($col, $mergeId)->update([$col => $canonicalId]);
+            }
+
             // 9) 負け member 削除（restrict 参照は上で解消済み）
             Member::query()->where('id', $mergeId)->delete();
         });
@@ -266,6 +271,13 @@ final class MemberMergeService
                     $q->where('owner_member_id', $mergeId)
                         ->orWhere('from_member_id', $mergeId)
                         ->orWhere('to_member_id', $mergeId);
+                })
+                ->count(),
+            'internal_referrals_refs' => (int) DB::table('internal_referrals')
+                ->where(function ($q) use ($mergeId) {
+                    $q->where('owner_member_id', $mergeId)
+                        ->orWhere('buyer_member_id', $mergeId)
+                        ->orWhere('seller_member_id', $mergeId);
                 })
                 ->count(),
         ];

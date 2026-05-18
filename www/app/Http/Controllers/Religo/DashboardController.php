@@ -33,7 +33,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * GET /api/dashboard/stats — 未接触件数・今月1to1・紹介メモ・例会メモ.
+     * GET /api/dashboard/stats — 未接触件数・今月1to1・リファーラル件数（紹介メモ集計）・例会メモ.
      */
     public function stats(Request $request): JsonResponse
     {
@@ -83,7 +83,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * GET /api/dashboard/weekly-presentation — Owner メンバーのウィークリープレゼン原稿（TEXT）.
+     * GET /api/dashboard/weekly-presentation — Owner メンバーのプレゼン原稿（TEXT）.
      */
     public function weeklyPresentation(Request $request): JsonResponse
     {
@@ -95,11 +95,14 @@ class DashboardController extends Controller
         if (! $member) {
             return response()->json(['message' => 'Owner member not found.'], 404);
         }
-        $raw = $member->weekly_presentation_body;
-        $normalized = ($raw === null || $raw === '') ? null : $raw;
-
         return response()->json([
-            'weekly_presentation_body' => $normalized,
+            'weekly_presentation_body' => $this->normalizePresentationBody($member->weekly_presentation_body),
+            'start_dash_presentation_body' => $this->normalizePresentationBody($member->start_dash_presentation_body),
         ]);
+    }
+
+    private function normalizePresentationBody(?string $body): ?string
+    {
+        return ($body === null || $body === '') ? null : $body;
     }
 }

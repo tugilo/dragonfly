@@ -43,7 +43,7 @@ final class MemberSummaryQuery
             $memo = $lastMemos[$tid] ?? null;
             $contactAt = $lastContactAt[$tid] ?? null;
             if ($memo !== null && isset($memo['body']) && mb_strlen($memo['body']) > self::BODY_SHORT_LEN) {
-                $memo['body_short'] = mb_substr($memo['body'], 0, self::BODY_SHORT_LEN) . '…';
+                $memo['body_short'] = mb_substr($memo['body'], 0, self::BODY_SHORT_LEN).'…';
             } elseif ($memo !== null) {
                 $memo['body_short'] = $memo['body'] ?? '';
             }
@@ -98,6 +98,7 @@ final class MemberSummaryQuery
         foreach ($rows as $r) {
             $out[(int) $r->target_id] = (int) $r->cnt;
         }
+
         return $out;
     }
 
@@ -116,6 +117,7 @@ final class MemberSummaryQuery
         foreach ($rows as $r) {
             $out[(int) $r->target_member_id] = (int) $r->cnt;
         }
+
         return $out;
     }
 
@@ -144,11 +146,13 @@ final class MemberSummaryQuery
                 ];
             }
         }
+
         return $byTarget;
     }
 
     /**
-     * @return array<int, string|null>
+     * last_contact_at: MAX( BO同席日(held_on), メモ created_at, 1to1 の started_at|scheduled_at|created_at )。
+     * BO は participant_breakout で同一 breakout_room が必要（一度同席すれば接触候補）。
      */
     private function batchLastContactAt(int $ownerMemberId, array $targetMemberIds, bool $useWorkspace, ?int $workspaceId): array
     {
@@ -197,15 +201,15 @@ final class MemberSummaryQuery
             ->whereIn('target_member_id', $targetMemberIds)
             ->where('status', '!=', 'canceled');
         $this->applyWorkspaceScopeForSummary($o2o, 'one_to_ones', $useWorkspace, $workspaceId);
-        foreach ($o2o->select('target_member_id', 'started_at', 'scheduled_at')->get() as $r) {
+        foreach ($o2o->select('target_member_id', 'started_at', 'scheduled_at', 'created_at')->get() as $r) {
             $tid = (int) $r->target_member_id;
-            if (isset($candidates[$tid])) {
-                if ($r->started_at) {
-                    $candidates[$tid][] = (new \DateTime($r->started_at))->format('c');
-                }
-                if ($r->scheduled_at) {
-                    $candidates[$tid][] = (new \DateTime($r->scheduled_at))->format('c');
-                }
+            if (! isset($candidates[$tid])) {
+                continue;
+            }
+            // 日時未設定の予定・実施でも「1 to 1 をしている」ことは登録日で接触として扱う（Dashboard 未接触 KPI と整合）
+            $effective = $r->started_at ?? $r->scheduled_at ?? $r->created_at;
+            if ($effective !== null && $effective !== '') {
+                $candidates[$tid][] = (new \DateTime($effective))->format('c');
             }
         }
 
@@ -218,9 +222,10 @@ final class MemberSummaryQuery
                 $out[$tid] = max(array_map(function ($c) {
                     return (new \DateTime($c))->getTimestamp();
                 }, $arr));
-                $out[$tid] = (new \DateTime())->setTimestamp($out[$tid])->format('c');
+                $out[$tid] = (new \DateTime)->setTimestamp($out[$tid])->format('c');
             }
         }
+
         return $out;
     }
 
@@ -244,6 +249,7 @@ final class MemberSummaryQuery
                 'want_1on1' => (bool) $r->want_1on1,
             ];
         }
+
         return $out;
     }
 }

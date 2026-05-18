@@ -89,7 +89,7 @@ export default function DashboardKpiGrid({ stats, loading, ownerConfigured }) {
             icon: '📝',
             iconBg: 'success.light',
             iconColor: 'success.contrastText',
-            label: '紹介メモ数（今月）',
+            label: 'リファーラル件数（今月）',
             value: stats.monthly_intro_memo_count,
             sub: subtexts.intro,
         },

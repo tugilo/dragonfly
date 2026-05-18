@@ -19,7 +19,15 @@ use Illuminate\Support\Facades\DB;
 class DashboardService
 {
     private const STALE_DAYS = 30;
+
     private const ACTIVITY_DEFAULT_LIMIT = 6;
+
+    /**
+     * 未接触 KPI の peer から除外する members.type（在籍名簿に載せない最小レコード）。
+     *
+     * @see MemberOneToOneLeadService（リード一覧と同じ除外）
+     */
+    private const EXCLUDED_STALE_PEER_TYPES = ['guest', 'visitor'];
 
     public function __construct(
         private MemberSummaryQuery $summaryQuery
@@ -84,10 +92,12 @@ class DashboardService
         $prevStart = now()->copy()->subMonthNoOverflow()->startOfMonth()->toDateTimeString();
         $prevEnd = now()->copy()->subMonthNoOverflow()->endOfMonth()->endOfDay()->toDateTimeString();
 
+        // 「実施日」の代理: started_at 優先。未入力の完了レコードは scheduled_at → updated_at（インポート・旧データ整合）。
+        $effectiveO2oAt = DB::raw('COALESCE(started_at, scheduled_at, updated_at)');
         $monthlyOneToOne = OneToOne::query()
             ->where('owner_member_id', $ownerMemberId)
             ->where('status', 'completed')
-            ->whereBetween('started_at', [$startOfMonth, $endOfMonth])
+            ->whereBetween($effectiveO2oAt, [$startOfMonth, $endOfMonth])
             ->count();
 
         $monthlyIntroMemo = ContactMemo::query()
@@ -105,7 +115,7 @@ class DashboardService
         $prevOneToOne = OneToOne::query()
             ->where('owner_member_id', $ownerMemberId)
             ->where('status', 'completed')
-            ->whereBetween('started_at', [$prevStart, $prevEnd])
+            ->whereBetween($effectiveO2oAt, [$prevStart, $prevEnd])
             ->count();
         $prevIntro = ContactMemo::query()
             ->where('owner_member_id', $ownerMemberId)
@@ -161,7 +171,7 @@ class DashboardService
             }
             foreach (array_slice($staleTargets, 0, 2) as $i => $tid) {
                 $m = $members->get($tid);
-                $name = $m ? $m->name : ('#' . $tid);
+                $name = $m ? $m->name : ('#'.$tid);
                 $days = null;
                 if (isset($batch[$tid]['last_contact_at']) && $batch[$tid]['last_contact_at']) {
                     $days = (int) Carbon::parse($batch[$tid]['last_contact_at'])->diffInDays(now());
@@ -169,18 +179,18 @@ class DashboardService
                     $days = 999;
                 }
                 $tasks[] = [
-                    'id' => 'stale-' . $tid,
+                    'id' => 'stale-'.$tid,
                     'kind' => 'stale_follow',
                     'title' => $name,
                     'person_name' => $name,
                     'meeting_number' => null,
                     'action' => [
                         'label' => $i === 0 ? '1to1予定' : 'メモ追加',
-                        'href' => $i === 0 ? '/one-to-ones/create?target_member_id=' . $tid : '/members/' . $tid . '/show',
+                        'href' => $i === 0 ? '/one-to-ones/create?target_member_id='.$tid : '/members/'.$tid.'/show',
                         'disabled' => false,
                     ],
                     'badge' => null,
-                    'meta' => $days . '日間未接触 — ' . ($i === 0 ? '1to1を検討' : 'フォローアップ要'),
+                    'meta' => $days.'日間未接触 — '.($i === 0 ? '1to1を検討' : 'フォローアップ要'),
                 ];
             }
         }
@@ -197,9 +207,9 @@ class DashboardService
             ->first();
         if ($plannedO2o) {
             $tasks[] = [
-                'id' => 'oto-' . $plannedO2o->id,
+                'id' => 'oto-'.$plannedO2o->id,
                 'kind' => 'one_to_one_planned',
-                'title' => ($plannedO2o->targetMember?->name ?? '') . ' との1to1',
+                'title' => ($plannedO2o->targetMember?->name ?? '').' との1to1',
                 'person_name' => $plannedO2o->targetMember?->name,
                 'meeting_number' => null,
                 'action' => ['label' => '予定', 'href' => null, 'disabled' => true],
@@ -215,9 +225,9 @@ class DashboardService
             ->first();
         if ($lastHeldMeeting !== null && ! $this->hasMeetingMemoRecordedForMeeting((int) $lastHeldMeeting->id)) {
             $tasks[] = [
-                'id' => 'meeting-follow-up-' . $lastHeldMeeting->id,
+                'id' => 'meeting-follow-up-'.$lastHeldMeeting->id,
                 'kind' => 'meeting_follow_up',
-                'title' => '例会 #' . $lastHeldMeeting->number . ' のメモを記録',
+                'title' => '例会 #'.$lastHeldMeeting->number.' のメモを記録',
                 'person_name' => null,
                 'meeting_number' => (string) $lastHeldMeeting->number,
                 'action' => ['label' => 'Meetingsへ', 'href' => '/meetings', 'disabled' => false],
@@ -232,15 +242,23 @@ class DashboardService
     /**
      * Dashboard stale（KPI・`stale_follow`）で「未接触候補」に含める peer の member id 一覧.
      *
-     * **定義（SSOT: docs/SSOT/DASHBOARD_DATA_SSOT.md §0 · DASHBOARD-STALE-WORKSPACE-P2）:** 案A —
-     * owner 本人を除く **全 `members`**。チャプター境界での peer 絞り込み（案B）は
-     * `members.workspace_id` 等が整うまで行わない。
+     * **定義（SSOT: docs/SSOT/DASHBOARD_DATA_SSOT.md §0）:** owner と **同一 `members.workspace_id`
+     * （所属チャプター）** のメンバーに限定し、`type` が **guest / visitor** の行は除外する（クロスチャプター用の最小レコード等は名簿に含めない）。
+     * owner の `workspace_id` が null のときのみ従来どおり「自分以外の全メンバー」から上記 type 除外（データ未整備時のフォールバック）。
      *
      * @return array<int>
      */
     private function stalePeerMemberIds(int $ownerMemberId): array
     {
-        return Member::query()->where('id', '!=', $ownerMemberId)->pluck('id')->all();
+        $ownerWorkspaceId = Member::query()->whereKey($ownerMemberId)->value('workspace_id');
+        $q = Member::query()
+            ->where('id', '!=', $ownerMemberId)
+            ->whereNotIn('type', self::EXCLUDED_STALE_PEER_TYPES);
+        if ($ownerWorkspaceId !== null) {
+            $q->where('workspace_id', $ownerWorkspaceId);
+        }
+
+        return $q->pluck('id')->all();
     }
 
     /**
@@ -259,13 +277,13 @@ class DashboardService
             ->get();
         foreach ($memos as $m) {
             $isIntro = ($m->memo_type ?? '') === 'introduction';
-            $label = $isIntro ? ' に紹介メモ' : ' にメモ追加';
+            $label = $isIntro ? 'へのリファーラル記録' : ' にメモ追加';
             $rows[] = [
                 'occurred_at' => $m->created_at?->toIso8601String() ?? '',
                 'kind' => $isIntro ? 'memo_introduction' : 'memo_added',
-                'title' => ($m->targetMember?->name ?? '') . $label,
-                'meta' => mb_substr($m->body ?? '', 0, 30) . (mb_strlen($m->body ?? '') > 30 ? '…' : ''),
-                'id' => 'memo-' . $m->id,
+                'title' => ($m->targetMember?->name ?? '').$label,
+                'meta' => mb_substr($m->body ?? '', 0, 30).(mb_strlen($m->body ?? '') > 30 ? '…' : ''),
+                'id' => 'memo-'.$m->id,
             ];
         }
         $flags = DragonflyContactFlag::query()
@@ -278,9 +296,9 @@ class DashboardService
             $rows[] = [
                 'occurred_at' => $f->updated_at?->toIso8601String() ?? '',
                 'kind' => 'flag_changed',
-                'title' => ($f->targetMember?->name ?? '') . ' とのつながりを更新',
+                'title' => ($f->targetMember?->name ?? '').' とのつながりを更新',
                 'meta' => $this->formatFlagActivityMeta($f),
-                'id' => 'flag-' . $f->id,
+                'id' => 'flag-'.$f->id,
             ];
         }
         $boLogs = BoAssignmentAuditLog::query()
@@ -293,9 +311,9 @@ class DashboardService
             $rows[] = [
                 'occurred_at' => $log->occurred_at?->toIso8601String() ?? '',
                 'kind' => 'bo_assigned',
-                'title' => '例会 #' . ($log->meeting?->number ?? '?') . ' のBO割当を保存',
+                'title' => '例会 #'.($log->meeting?->number ?? '?').' のBO割当を保存',
                 'meta' => $this->formatBoAssignmentActivityMeta($log),
-                'id' => 'bo-audit-' . $log->id,
+                'id' => 'bo-audit-'.$log->id,
             ];
         }
         $o2os = OneToOne::query()
@@ -308,22 +326,23 @@ class DashboardService
             $rows[] = [
                 'occurred_at' => ($o->started_at ?? $o->scheduled_at ?? $o->created_at)?->toIso8601String() ?? '',
                 'kind' => $o->status === 'completed' ? 'one_to_one_completed' : 'one_to_one_created',
-                'title' => ($o->targetMember?->name ?? '') . ' 1to1' . ($o->status === 'completed' ? '完了' : '登録'),
-                'meta' => $o->notes ? mb_substr($o->notes, 0, 25) . (mb_strlen($o->notes) > 25 ? '…' : '') : '',
-                'id' => 'oto-' . $o->id,
+                'title' => ($o->targetMember?->name ?? '').' 1to1'.($o->status === 'completed' ? '完了' : '登録'),
+                'meta' => $o->notes ? mb_substr($o->notes, 0, 25).(mb_strlen($o->notes) > 25 ? '…' : '') : '',
+                'id' => 'oto-'.$o->id,
             ];
         }
         usort($rows, function ($a, $b) {
             return strcmp($b['occurred_at'], $a['occurred_at']);
         });
         $rows = array_slice($rows, 0, $limit);
+
         return array_values($rows);
     }
 
     private function buildStaleSubtext(int $staleCount, int $peerCount): string
     {
         if ($peerCount <= 0) {
-            return '比較対象メンバーなし（自分以外が未登録）';
+            return '所属チャプター内に比較対象メンバーなし（自分以外・同一所属が未登録）';
         }
         $pct = (int) round(100 * $staleCount / $peerCount);
 
@@ -352,7 +371,7 @@ class DashboardService
     {
         $mom = $this->buildMoMCountSubtext($current, $previous);
         if ($latest !== null) {
-            return $mom . '・直近登録 例会#' . $latest->number;
+            return $mom.'・直近登録 例会#'.$latest->number;
         }
 
         return $mom;
@@ -368,10 +387,10 @@ class DashboardService
         }
         $sched = $scheduledAt->copy();
         if ($sched->isToday()) {
-            return '本日 ' . $sched->format('H:i') . ' — 予定';
+            return '本日 '.$sched->format('H:i').' — 予定';
         }
 
-        return $sched->format('n/j H:i') . ' — 予定';
+        return $sched->format('n/j H:i').' — 予定';
     }
 
     /**
@@ -397,9 +416,9 @@ class DashboardService
         $today = now()->startOfDay();
         $dateLabel = $held->equalTo($today)
             ? '開催日 本日'
-            : '開催日 ' . $held->format('n/j');
+            : '開催日 '.$held->format('n/j');
 
-        return $dateLabel . ' — 例会メモが未記録です（Meetings で入力）';
+        return $dateLabel.' — 例会メモが未記録です（Meetings で入力）';
     }
 
     private function formatFlagActivityMeta(DragonflyContactFlag $f): string
@@ -427,7 +446,7 @@ class DashboardService
             $mates = $payload['roommate_participant_ids'] ?? [];
             $n = 1 + (is_array($mates) ? count($mates) : 0);
 
-            return 'DragonFly MVP・セッション' . $session . '・同席' . $n . '名（participant）';
+            return 'DragonFly MVP・セッション'.$session.'・同席'.$n.'名（participant）';
         }
         $memberIdSet = [];
         if ($log->source === BoAssignmentAuditLog::SOURCE_BREAKOUT_ROUNDS) {
@@ -449,6 +468,6 @@ class DashboardService
         }
         $n = count($memberIdSet);
 
-        return $label . '・割当 ' . $n . '名';
+        return $label.'・割当 '.$n.'名';
     }
 }

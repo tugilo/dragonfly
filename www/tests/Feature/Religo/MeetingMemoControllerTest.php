@@ -3,6 +3,7 @@
 namespace Tests\Feature\Religo;
 
 use App\Models\ContactMemo;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -66,6 +67,8 @@ class MeetingMemoControllerTest extends TestCase
             'updated_at' => now(),
         ]);
         DB::table('members')->insert(['id' => 1, 'name' => 'First', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()]);
+        $user = User::factory()->create(['owner_member_id' => 1]);
+        $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'New body']);
         $res->assertOk();
@@ -91,6 +94,8 @@ class MeetingMemoControllerTest extends TestCase
             'memo_type' => 'meeting',
             'body' => 'Existing',
         ]);
+        $user = User::factory()->create(['owner_member_id' => $memberId]);
+        $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => '']);
         $res->assertOk();
@@ -116,10 +121,29 @@ class MeetingMemoControllerTest extends TestCase
             'memo_type' => 'meeting',
             'body' => 'Old',
         ]);
+        $user = User::factory()->create(['owner_member_id' => $memberId]);
+        $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'Updated text']);
         $res->assertOk();
         $res->assertJson(['body' => 'Updated text', 'has_memo' => true]);
         $this->assertDatabaseHas('contact_memos', ['meeting_id' => $meetingId, 'body' => 'Updated text']);
+    }
+
+    public function test_update_returns_422_when_actor_has_no_owner_member(): void
+    {
+        $meetingId = (int) DB::table('meetings')->insertGetId([
+            'number' => 305,
+            'held_on' => '2026-04-06',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->insert(['id' => 2, 'name' => 'Actorless', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()]);
+        $user = User::factory()->create(['owner_member_id' => null]);
+        $this->actingAs($user);
+
+        $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'x'])
+            ->assertStatus(422)
+            ->assertJsonStructure(['message']);
     }
 }

@@ -20,6 +20,8 @@ use App\Http\Controllers\Religo\MeetingCsvImportController;
 use App\Http\Controllers\Religo\RoleSearchController;
 use App\Http\Controllers\Religo\MeetingParticipantImportController;
 use App\Http\Controllers\Religo\MemberRoleController;
+use App\Http\Controllers\Religo\IntroductionController;
+use App\Http\Controllers\Religo\InternalReferralController;
 use App\Http\Controllers\Religo\OneToOneController;
 use App\Http\Controllers\Religo\DashboardController;
 use App\Http\Controllers\Religo\DashboardDebugController;
@@ -110,6 +112,16 @@ Route::get('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosIn
 Route::post('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosStore']);
 Route::get('/one-to-ones/{oneToOne}', [OneToOneController::class, 'show']);
 Route::patch('/one-to-ones/{oneToOne}', [OneToOneController::class, 'update']);
+
+Route::get('/introductions', [IntroductionController::class, 'index']);
+Route::post('/introductions', [IntroductionController::class, 'store']);
+Route::get('/introductions/{introduction}', [IntroductionController::class, 'show']);
+Route::patch('/introductions/{introduction}', [IntroductionController::class, 'update']);
+
+Route::get('/internal-referrals', [InternalReferralController::class, 'index']);
+Route::post('/internal-referrals', [InternalReferralController::class, 'store']);
+Route::get('/internal-referrals/{internalReferral}', [InternalReferralController::class, 'show']);
+Route::patch('/internal-referrals/{internalReferral}', [InternalReferralController::class, 'update']);
 
 Route::get('/member-roles', [MemberRoleController::class, 'index']);
 

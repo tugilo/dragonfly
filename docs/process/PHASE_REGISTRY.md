@@ -115,6 +115,13 @@
 | CONN-BO-UX-GUARDS-P1 | Connections BO 割当のクライアント側ガード（保存前・422 表示・BO1→BO2 フィルタ・SPEC-007） | implement | completed | — | 2026-03-31 |
 | MEMBERS-DEDUP-RUNBOOK-P0 | members 重複統合の仕様・運用・補助実装案（SPEC-007/008・Import キー調査・Runbook・実装なし） | docs | completed | — | 2026-04-20 |
 | MEMBERS-MERGE-ASSIST-P1 | 管理者向け member マージ補助（トークン API・/member-merge・MemberMergeService・SPEC-008） | implement | completed | — | 2026-04-20 |
+| 118 | 鈴木健介 1to1 Zoom要約整理（合同会社スタジオ鈴・BNI Diana） | docs | completed | — | 2026-05-17 |
+| 119 | Dashboard プレゼン原稿タブ化（ウィークリー / スタートダッシュ60秒） | implement | completed | feature/phase119-dashboard-weekly-tabs | 2026-05-17 |
+| 120 | 1to1議事録のDB登録 | implement | completed | develop（既存未コミット変更あり） | 2026-05-17 |
+| 121 | チャプター外1to1相手の所属チャプター補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-17 |
+| 122 | SPEC-009 製品既定 + DATA_MODEL（リファーラル / internal_referrals） | docs | completed | feature/phase122-referral-spec009-datamodel（推奨） | 2026-05-18 |
+| 123 | リファーラル DB/API（referral_kind・internal_referrals・SPEC-009 P1） | implement | completed | feature/phase123-referral-api-implement（推奨） | 2026-05-18 |
+| 124 | Connections BO 保存時・Owner 未所属なら BO1 自動追加（last_contact 整合） | implement | in_progress | feature/phase124-bo-owner-auto-include（推奨） | 2026-05-18 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

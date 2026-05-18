@@ -49,7 +49,7 @@ class DashboardApiTest extends TestCase
 
     public function test_stats_returns_200_with_required_keys(): void
     {
-        $res = $this->getJson('/api/dashboard/stats?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $data = $res->json();
         $this->assertIsArray($data);
@@ -85,7 +85,7 @@ class DashboardApiTest extends TestCase
             'target_member_id' => $targetId,
             'status' => 'canceled',
         ]);
-        $res = $this->getJson('/api/dashboard/stats?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $data = $res->json();
         $this->assertSame(2, $data['one_to_one_total_count']);
@@ -126,7 +126,7 @@ class DashboardApiTest extends TestCase
 
     public function test_tasks_returns_200_array(): void
     {
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $data = $res->json();
         $this->assertIsArray($data);
@@ -146,7 +146,7 @@ class DashboardApiTest extends TestCase
 
     public function test_activity_returns_200_array_with_required_keys(): void
     {
-        $res = $this->getJson('/api/dashboard/activity?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $data = $res->json();
         $this->assertIsArray($data);
@@ -180,7 +180,7 @@ class DashboardApiTest extends TestCase
                 'body' => "Memo {$i}",
             ]);
         }
-        $res = $this->getJson('/api/dashboard/activity?owner_member_id=' . $this->ownerId . '&limit=3');
+        $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId.'&limit=3');
         $res->assertOk();
         $data = $res->json();
         $this->assertCount(3, $data);
@@ -219,9 +219,95 @@ class DashboardApiTest extends TestCase
             'status' => 'completed',
             'started_at' => '2026-03-12 11:00:00',
         ]);
-        $res = $this->getJson('/api/dashboard/stats?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $this->assertStringContainsString('先月', $res->json('subtexts.one_to_one'));
+    }
+
+    /** 完了レコードで started_at が空でも scheduled_at で今月カウント（インポート整合） */
+    public function test_stats_monthly_one_to_one_uses_scheduled_at_when_started_at_null(): void
+    {
+        $this->travelTo(Carbon::parse('2026-03-15 12:00:00', config('app.timezone')));
+        $targetId = (int) DB::table('members')->insertGetId([
+            'name' => 'T2',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        OneToOne::create([
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'completed',
+            'started_at' => null,
+            'scheduled_at' => '2026-03-14 10:00:00',
+        ]);
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+        $this->assertSame(1, $res->json('monthly_one_to_one_count'));
+    }
+
+    public function test_stats_stale_peer_denominator_is_owner_workspace_members_only(): void
+    {
+        $wsA = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'DragonFly Test', 'slug' => null, 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $wsB = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'Other Chapter', 'slug' => null, 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        DB::table('members')->where('id', $this->ownerId)->update(['workspace_id' => $wsA]);
+        DB::table('members')->insert([
+            'name' => 'Peer Same WS',
+            'type' => 'active',
+            'workspace_id' => $wsA,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->insert([
+            'name' => 'Peer Other WS',
+            'type' => 'active',
+            'workspace_id' => $wsB,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+        $this->assertStringContainsString('/ 1 人', $res->json('subtexts.stale'));
+        $this->assertSame(1, $res->json('stale_contacts_count'));
+    }
+
+    public function test_stats_stale_peer_excludes_visitor_and_guest(): void
+    {
+        $wsA = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'DragonFly Test 2', 'slug' => null, 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        DB::table('members')->where('id', $this->ownerId)->update(['workspace_id' => $wsA]);
+        DB::table('members')->insert([
+            'name' => 'Active Chapter Mate',
+            'type' => 'active',
+            'workspace_id' => $wsA,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->insert([
+            'name' => 'CrossChapter Visitor',
+            'type' => 'visitor',
+            'workspace_id' => $wsA,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->insert([
+            'name' => 'Guest Row',
+            'type' => 'guest',
+            'workspace_id' => $wsA,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $res = $this->getJson('/api/dashboard/stats?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+        $this->assertStringContainsString('/ 1 人', $res->json('subtexts.stale'));
+        $this->assertSame(1, $res->json('stale_contacts_count'));
     }
 
     public function test_tasks_second_stale_row_has_member_show_deep_link(): void
@@ -239,7 +325,7 @@ class DashboardApiTest extends TestCase
             'updated_at' => now(),
         ]);
         $this->assertLessThan($highId, $lowId);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $staleTasks = array_values(array_filter($res->json(), fn ($t) => ($t['kind'] ?? '') === 'stale_follow'));
         $this->assertGreaterThanOrEqual(2, count($staleTasks));
@@ -248,7 +334,7 @@ class DashboardApiTest extends TestCase
         $this->assertMatchesRegularExpression('#^/one-to-ones/create\?target_member_id=\d+$#', $first['action']['href']);
         $second = $staleTasks[1];
         $this->assertSame('メモ追加', $second['action']['label']);
-        $this->assertSame('/members/' . $highId . '/show', $second['action']['href']);
+        $this->assertSame('/members/'.$highId.'/show', $second['action']['href']);
         $this->assertFalse($second['action']['disabled']);
     }
 
@@ -261,7 +347,7 @@ class DashboardApiTest extends TestCase
             'held_on' => '2026-03-23',
             'name' => 'Next',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNull($meetingTask);
@@ -276,7 +362,7 @@ class DashboardApiTest extends TestCase
             'held_on' => '2026-03-01',
             'name' => 'Past',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
@@ -294,7 +380,7 @@ class DashboardApiTest extends TestCase
             'held_on' => now()->toDateString(),
             'name' => 'This week',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
@@ -324,7 +410,7 @@ class DashboardApiTest extends TestCase
             'memo_type' => 'meeting',
             'body' => '例会の記録あり',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $this->assertNull(collect($res->json())->firstWhere('kind', 'meeting_follow_up'));
     }
@@ -351,7 +437,7 @@ class DashboardApiTest extends TestCase
             'memo_type' => 'introduction',
             'body' => '紹介だけ',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
@@ -385,7 +471,7 @@ class DashboardApiTest extends TestCase
             'memo_type' => 'meeting',
             'body' => '古い方だけ記録',
         ]);
-        $res = $this->getJson('/api/dashboard/tasks?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/tasks?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $meetingTask = collect($res->json())->firstWhere('kind', 'meeting_follow_up');
         $this->assertNotNull($meetingTask);
@@ -421,7 +507,7 @@ class DashboardApiTest extends TestCase
             ],
         ];
         $this->putJson("/api/meetings/{$meetingId}/breakouts", $payload)->assertOk();
-        $res = $this->getJson('/api/dashboard/activity?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $items = $res->json();
         $bo = collect($items)->firstWhere('kind', 'bo_assigned');
@@ -457,7 +543,7 @@ class DashboardApiTest extends TestCase
             'body' => '紹介メモ本文',
             'workspace_id' => $workspaceId,
         ]);
-        $res = $this->getJson('/api/dashboard/activity?owner_member_id=' . $this->ownerId . '&limit=20');
+        $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId.'&limit=20');
         $res->assertOk();
         $kinds = array_column($res->json(), 'kind');
         $this->assertContains('flag_changed', $kinds);
@@ -466,20 +552,31 @@ class DashboardApiTest extends TestCase
 
     public function test_weekly_presentation_returns_200_with_null_when_not_registered(): void
     {
-        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $data = $res->json();
         $this->assertArrayHasKey('weekly_presentation_body', $data);
+        $this->assertArrayHasKey('start_dash_presentation_body', $data);
         $this->assertNull($data['weekly_presentation_body']);
+        $this->assertNull($data['start_dash_presentation_body']);
     }
 
     public function test_weekly_presentation_returns_body_when_set(): void
     {
         $text = "AI業務改善の次廣です。\n2行目";
         DB::table('members')->where('id', $this->ownerId)->update(['weekly_presentation_body' => $text]);
-        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=' . $this->ownerId);
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id='.$this->ownerId);
         $res->assertOk();
         $this->assertSame($text, $res->json('weekly_presentation_body'));
+    }
+
+    public function test_weekly_presentation_returns_start_dash_body_when_set(): void
+    {
+        $text = "スタートダッシュプレゼンです。\n60秒稿";
+        DB::table('members')->where('id', $this->ownerId)->update(['start_dash_presentation_body' => $text]);
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+        $this->assertSame($text, $res->json('start_dash_presentation_body'));
     }
 
     public function test_weekly_presentation_returns_422_without_owner(): void

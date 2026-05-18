@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
     List,
     Datagrid,
-    TextField,
     FunctionField,
     TextInput,
     SelectInput,
@@ -29,10 +28,19 @@ import {
     CardContent,
     Chip,
     CircularProgress,
+    Tooltip,
+    IconButton,
+    Divider,
 } from '@mui/material';
+import ReactMarkdown from 'react-markdown';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
-import { formatMemberPrimaryLine, formatMemberWithChapterPrimary } from '../utils/memberDisplay';
+import { formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
 
 const STATUS_CHOICES = [
@@ -87,6 +95,172 @@ function MeetingLabelChip({ record }) {
                 '& .MuiChip-label': { overflow: 'hidden', textOverflow: 'ellipsis' },
             }}
         />
+    );
+}
+
+function createOneToOneMarkdownComponents(dense) {
+    const variant = dense ? 'caption' : 'body2';
+    const codeFontSize = dense ? '0.68rem' : '0.78rem';
+
+    const heading = ({ children }) => (
+        <Typography
+            component="div"
+            sx={{
+                fontWeight: 700,
+                fontSize: dense ? '0.72rem' : '0.95rem',
+                mt: dense ? 0.65 : 1,
+                mb: dense ? 0.25 : 0.5,
+                lineHeight: 1.35,
+                '&:first-of-type': { mt: 0 },
+            }}
+        >
+            {children}
+        </Typography>
+    );
+
+    return {
+        p: ({ children }) => (
+            <Typography variant={variant} component="p" sx={{ mb: 0.65, mt: 0, '&:last-child': { mb: 0 } }}>
+                {children}
+            </Typography>
+        ),
+        h1: heading,
+        h2: heading,
+        h3: heading,
+        h4: heading,
+        h5: heading,
+        h6: heading,
+        ul: ({ children }) => (
+            <Box component="ul" sx={{ m: 0, mb: 0.65, pl: 2.25, listStyleType: 'disc', '&:last-child': { mb: 0 } }}>
+                {children}
+            </Box>
+        ),
+        ol: ({ children }) => (
+            <Box component="ol" sx={{ m: 0, mb: 0.65, pl: 2.25, listStyleType: 'decimal', '&:last-child': { mb: 0 } }}>
+                {children}
+            </Box>
+        ),
+        li: ({ children }) => (
+            <Typography component="li" variant={variant} sx={{ display: 'list-item', mb: 0.2 }}>
+                {children}
+            </Typography>
+        ),
+        a: ({ href, children }) => (
+            <Box
+                component="a"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ color: 'primary.main', textDecoration: 'underline', wordBreak: 'break-all' }}
+            >
+                {children}
+            </Box>
+        ),
+        blockquote: ({ children }) => (
+            <Box
+                component="blockquote"
+                sx={{
+                    borderLeft: '3px solid',
+                    borderColor: 'divider',
+                    pl: 1.25,
+                    my: 0.65,
+                    mx: 0,
+                    color: 'text.secondary',
+                }}
+            >
+                {children}
+            </Box>
+        ),
+        hr: () => <Divider sx={{ my: dense ? 0.75 : 1.25 }} />,
+        pre: ({ children }) => (
+            <Box
+                component="pre"
+                sx={{
+                    m: 0,
+                    my: 0.65,
+                    p: dense ? 0.65 : 1,
+                    bgcolor: 'grey.100',
+                    borderRadius: 1,
+                    overflow: 'auto',
+                    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                    fontSize: codeFontSize,
+                    maxWidth: '100%',
+                }}
+            >
+                {children}
+            </Box>
+        ),
+        code: ({ inline, children }) => {
+            if (inline) {
+                return (
+                    <Typography
+                        component="code"
+                        variant="inherit"
+                        sx={{
+                            bgcolor: 'action.hover',
+                            px: 0.35,
+                            py: 0.05,
+                            borderRadius: 0.5,
+                            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                            fontSize: '0.9em',
+                        }}
+                    >
+                        {children}
+                    </Typography>
+                );
+            }
+            return (
+                <Box
+                    component="code"
+                    sx={{
+                        fontFamily: 'inherit',
+                        fontSize: 'inherit',
+                        whiteSpace: 'pre-wrap',
+                        wordBreak: 'break-word',
+                        display: 'block',
+                    }}
+                >
+                    {children}
+                </Box>
+            );
+        },
+    };
+}
+
+function OneToOneMarkdownView({ markdown, dense }) {
+    const components = useMemo(() => createOneToOneMarkdownComponents(dense), [dense]);
+    return <ReactMarkdown components={components}>{markdown}</ReactMarkdown>;
+}
+
+function OneToOneNotesPreview({ record }) {
+    const raw = typeof record?.notes === 'string' ? record.notes.trim() : '';
+    if (!raw) {
+        return (
+            <Typography component="span" variant="body2" color="text.disabled">
+                —
+            </Typography>
+        );
+    }
+    return (
+        <Box
+            sx={{
+                minWidth: { xs: 240, sm: 320 },
+                maxWidth: { xs: 360, sm: 520 },
+                maxHeight: { xs: 200, sm: 260 },
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                pr: 0.5,
+                pb: 0.25,
+                borderRadius: 1,
+                border: '1px solid',
+                borderColor: 'divider',
+                bgcolor: 'background.default',
+                px: 1,
+                py: 0.75,
+            }}
+        >
+            <OneToOneMarkdownView markdown={raw} dense />
+        </Box>
     );
 }
 
@@ -181,7 +355,7 @@ function OneToOnesStatsCards() {
     const items = [
         {
             key: 'planned',
-            icon: '📅',
+            iconEl: <CalendarMonthOutlinedIcon sx={{ fontSize: 22, color: '#f57f17' }} />,
             label: '予定中',
             value: stats.planned_count,
             sub: '今後の予定',
@@ -190,7 +364,7 @@ function OneToOnesStatsCards() {
         },
         {
             key: 'completed',
-            icon: '✅',
+            iconEl: <TaskAltOutlinedIcon sx={{ fontSize: 22, color: 'success.dark' }} />,
             label: '完了（今月）',
             value: stats.completed_this_month_count,
             sub: '当月（実施日時ベース）',
@@ -199,7 +373,7 @@ function OneToOnesStatsCards() {
         },
         {
             key: 'canceled',
-            icon: '❌',
+            iconEl: <CancelOutlinedIcon sx={{ fontSize: 22, color: 'error.main' }} />,
             label: 'キャンセル',
             value: stats.canceled_this_month_count,
             sub: '今月',
@@ -208,7 +382,7 @@ function OneToOnesStatsCards() {
         },
         {
             key: 'want',
-            icon: '🔁',
+            iconEl: <FavoriteBorderOutlinedIcon sx={{ fontSize: 22, color: '#6a1b9a' }} />,
             label: 'want_1on1 ON',
             value: stats.want_1on1_on_count,
             sub: '対象メンバー数',
@@ -241,11 +415,10 @@ function OneToOnesStatsCards() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                fontSize: 17,
                                 flexShrink: 0,
                             }}
                         >
-                            {it.icon}
+                            {it.iconEl}
                         </Box>
                         <Box sx={{ minWidth: 0 }}>
                             <Typography variant="caption" color="text.secondary" fontWeight={600} sx={{ fontSize: 10, display: 'block' }}>
@@ -270,24 +443,45 @@ function OneToOneTargetDisplay({ record }) {
     const ch = record?.target_workspace_name;
     const cross = record?.is_cross_chapter;
     return (
-        <Stack direction="row" alignItems="center" spacing={0.5} flexWrap="wrap" useFlexGap>
-            <Typography component="span" variant="body2" sx={{ wordBreak: 'break-word' }}>
-                {ch ? `${name}（${ch}）` : name}
+        <Stack spacing={0.25} alignItems="flex-start" sx={{ minWidth: 0, maxWidth: 320 }}>
+            <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-word', lineHeight: 1.25 }}>
+                {name}
             </Typography>
+            {ch ? (
+                <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }}>
+                    {ch}
+                </Typography>
+            ) : null}
             {cross ? (
-                <Chip size="small" label="他チャプター" color="info" variant="outlined" sx={{ height: 22 }} />
+                <Chip size="small" label="他チャプター" color="info" variant="outlined" sx={{ height: 22, mt: 0.25 }} />
             ) : null}
         </Stack>
     );
 }
 
-function EffectiveDateField({ record, ...props }) {
+function EffectiveDateField({ record }) {
     const v = record?.started_at ?? record?.scheduled_at;
-    if (!v) return <span>—</span>;
+    if (!v) {
+        return (
+            <Typography variant="body2" color="text.secondary">
+                日時未定
+            </Typography>
+        );
+    }
     try {
-        return <span>{new Date(v).toLocaleString('ja-JP', { dateStyle: 'short', timeStyle: 'short' })}</span>;
+        const d = new Date(v);
+        const line = d.toLocaleString('ja-JP', { dateStyle: 'short', timeStyle: 'short' });
+        return (
+            <Typography variant="body2" component="span" sx={{ whiteSpace: 'nowrap' }}>
+                {line}
+            </Typography>
+        );
     } catch {
-        return <span>{String(v)}</span>;
+        return (
+            <Typography variant="body2" component="span">
+                {String(v)}
+            </Typography>
+        );
     }
 }
 
@@ -354,9 +548,21 @@ export function OneToOnesListFilters() {
     );
 }
 
+function OneToOnesToolbarRefresh() {
+    const refresh = useRefresh();
+    return (
+        <Tooltip title="一覧・統計を再読込">
+            <IconButton size="small" onClick={() => refresh()} aria-label="一覧・統計を再読込" sx={{ mr: 0.5 }}>
+                <RefreshIcon fontSize="small" />
+            </IconButton>
+        </Tooltip>
+    );
+}
+
 function OneToOnesListActions({ onQuickCreate }) {
     return (
         <TopToolbar>
+            <OneToOnesToolbarRefresh />
             <Button variant="contained" size="small" onClick={onQuickCreate}>
                 ＋ 1to1を追加
             </Button>
@@ -621,8 +827,11 @@ function OneToOnesListBody({ onMemoOpen }) {
 
     return (
         <>
-            <Typography variant="body2" color="text.secondary" sx={{ px: 2, pt: 1.5, pb: 0, maxWidth: 720 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ px: 2, pt: 1.5, pb: 0, maxWidth: 860 }}>
                 予定・実施・キャンセル履歴の管理。1 to 1 は関係性の履歴として保持し、レコード削除は行いません。予定を無効化する場合は状態を「キャンセル」に変更してください。
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ px: 2, pt: 0.5, pb: 0, display: 'block', maxWidth: 860 }}>
+                「相手」下の小さな文字は相手メンバーの所属チャプターです。メモ列は Markdown で表示され、枠内をスクロールして読めます。
             </Typography>
             <OneToOnesStatsCards />
             {!isLoading && (
@@ -630,11 +839,21 @@ function OneToOnesListBody({ onMemoOpen }) {
                     {total != null ? `${total} 件` : ''}
                 </Typography>
             )}
-            <Datagrid rowClick={false} bulkActionButtons={false}>
+            <Datagrid
+                rowClick={false}
+                bulkActionButtons={false}
+                rowSx={() => ({ '&:hover': { bgcolor: 'action.hover' } })}
+                sx={{
+                    '& .RaDatagrid-headerCell': {
+                        fontWeight: 700,
+                        whiteSpace: 'nowrap',
+                    },
+                }}
+            >
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
                 <FunctionField label="相手" render={(r) => <OneToOneTargetDisplay record={r} />} />
                 <FunctionField label="状態" render={(record) => <OneToOneStatusChip record={record} />} />
-                <TextField source="notes" label="メモ" ellipsis />
+                <FunctionField label="メモ" render={(r) => <OneToOneNotesPreview record={r} />} />
                 <FunctionField label="例会" render={(record) => <MeetingLabelChip record={record} />} />
                 <FunctionField
                     label="操作"
@@ -659,7 +878,7 @@ function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOp
         <>
             <OneToOnesListBody onMemoOpen={setMemoRecord} />
             <OneToOnesQuickCreateDialog open={createOpen} onClose={() => setCreateOpen(false)} />
-            <Dialog open={Boolean(memoRecord)} onClose={() => setMemoRecord(null)} maxWidth="sm" fullWidth>
+            <Dialog open={Boolean(memoRecord)} onClose={() => setMemoRecord(null)} maxWidth="md" fullWidth>
                 <DialogTitle>
                     📝 メモ（notes）
                     {memoRecord?.target_name && (
@@ -667,14 +886,29 @@ function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOp
                             — {memoRecord.target_name}
                         </Typography>
                     )}
+                    {memoRecord?.target_workspace_name ? (
+                        <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
+                            相手所属: {memoRecord.target_workspace_name}
+                        </Typography>
+                    ) : null}
                 </DialogTitle>
-                <DialogContent>
+                <DialogContent
+                    dividers
+                    sx={{
+                        maxHeight: { xs: '70vh', sm: '72vh' },
+                        overflowY: 'auto',
+                    }}
+                >
                     <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-                        この1to1レコードに紐づく要約メモです。長文・履歴は今後 contact_memos で扱う想定。
+                        この1to1レコードに紐づく要約メモです（Markdown 表示）。長文・履歴は今後 contact_memos で扱う想定。
                     </Typography>
-                    <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                        {memoRecord?.notes?.trim() ? memoRecord.notes : '（メモなし）'}
-                    </Typography>
+                    {memoRecord?.notes?.trim() ? (
+                        <OneToOneMarkdownView markdown={memoRecord.notes.trim()} dense={false} />
+                    ) : (
+                        <Typography variant="body2" color="text.secondary">
+                            （メモなし）
+                        </Typography>
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button component={Link} to={`/one-to-ones/${memoRecord?.id}`} onClick={() => setMemoRecord(null)}>

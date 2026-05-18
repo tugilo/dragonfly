@@ -17,6 +17,40 @@ class MeetingBreakoutService
     private const ROOM_LABELS = ['BO1', 'BO2'];
 
     /**
+     * Connections のグローバル Owner がどの BO にも含まれないとき、BO1 に追加する（同一保存ペイロード内で完結）。
+     * G11 で同一 member を BO1/BO2 両方に入れてよいため、「いずれかのルームにいれば」追加しない。
+     *
+     * @param  array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>  $rooms
+     * @return array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>
+     */
+    public function mergeEnsureMemberInBo1IfAbsent(array $rooms, ?int $memberId): array
+    {
+        if ($memberId === null || $memberId <= 0) {
+            return $rooms;
+        }
+        foreach ($rooms as $room) {
+            foreach ($room['member_ids'] ?? [] as $mid) {
+                if ((int) $mid === $memberId) {
+                    return $rooms;
+                }
+            }
+        }
+
+        $out = [];
+        foreach ($rooms as $room) {
+            $label = $room['room_label'] ?? '';
+            if ($label === 'BO1') {
+                $ids = array_values(array_unique(array_map('intval', $room['member_ids'] ?? [])));
+                $ids[] = $memberId;
+                $room['member_ids'] = array_values(array_unique($ids));
+            }
+            $out[] = $room;
+        }
+
+        return $out;
+    }
+
+    /**
      * GET 用: meeting と rooms（BO1/BO2）.
      */
     public function getBreakouts(Meeting $meeting): array

@@ -22,6 +22,7 @@ class Member extends Model
         'display_no',
         'ncast_profile_url',
         'weekly_presentation_body',
+        'start_dash_presentation_body',
         'introducer_member_id',
         'attendant_member_id',
     ];
