@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-18 14:52 JST | **`RELIGO_ACTING_USER_FALLBACK` をテストで無効化:** `www/phpunit.xml` に `RELIGO_ACTING_USER_FALLBACK=false`。Feature で「先頭ユーザー解決」に依存していたケースへ `actingAs` を明示。DragonFly breakout-assignments 未認証は監査 actor null を検証。`www/.env.example` に同一キーを追記（本番運用での false を推奨する旨）。`php artisan test` 387 passed（merge 実行時）。 |
 | 2026-05-18 12:13 JST | **Phase 127–130（implement / SPEC-010）:** `members.email`（workspace 単位 unique）・Laravel Sanctum（`POST /api/auth/login`・`POST /api/auth/logout`）・`RejectInvalidSanctumBearerToken`（失効 PAT で 401）・`RELIGO_ACTING_USER_FALLBACK`・`users.religo_role`（`member` / `chapter_admin`）と `GET /api/users/me`・`PATCH /api/admin/users/{user}`（ミドルウェア `religo.chapter_admin`）。各 Phase を feature ブランチから `develop` へ `--no-ff` merge・`git push origin develop` 済み。`php artisan test` 387 passed。 |
 | 2026-05-18 10:11 JST | **Git 運用 SSOT 追記:** 「**Phase ごとに develop へ merge したら同一作業のうちに `git push origin develop`**」を [GIT_WORKFLOW.md](GIT_WORKFLOW.md)・[git/PRLESS_MERGE_FLOW.md](git/PRLESS_MERGE_FLOW.md)・`.cursorrules`・`devos-v4.mdc`・[process/README.md](process/README.md)・INDEX に明示。 |
 | 2026-05-18 10:09 JST | **Phase 126（docs）/ SPEC-010 確定:** `AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS` を **active** 化。`SSOT_REGISTRY`・`DATA_MODEL`（owner 定義に SPEC-010 参照）・`REFERRAL_RECORDING` §7 補足・`PHASE_REGISTRY`・INDEX・Phase 126 PLAN/WORKLOG/REPORT。認証コードは未着手。 |
