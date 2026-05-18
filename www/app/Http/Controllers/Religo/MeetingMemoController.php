@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Religo\UpdateMeetingMemoRequest;
 use App\Models\ContactMemo;
 use App\Models\Meeting;
-use App\Models\Member;
+use App\Services\Religo\ReligoActorContext;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -65,7 +65,10 @@ class MeetingMemoController extends Controller
             return response()->json(['body' => null, 'has_memo' => false]);
         }
 
-        $defaultMemberId = Member::query()->orderBy('id')->value('id') ?? 1;
+        $ownerMemberId = $this->resolveActorOwnerMemberId();
+        if ($ownerMemberId === false) {
+            return response()->json(['message' => 'オーナーが未設定です。設定でログインユーザーにメンバーを紐付けてください。'], 422);
+        }
 
         $memo = ContactMemo::query()
             ->where('meeting_id', $meeting->id)
@@ -74,11 +77,15 @@ class MeetingMemoController extends Controller
             ->first();
 
         if ($memo) {
-            $memo->update(['body' => $body]);
+            $memo->update([
+                'body' => $body,
+                'owner_member_id' => $ownerMemberId,
+                'target_member_id' => $ownerMemberId,
+            ]);
         } else {
             ContactMemo::create([
-                'owner_member_id' => $defaultMemberId,
-                'target_member_id' => $defaultMemberId,
+                'owner_member_id' => $ownerMemberId,
+                'target_member_id' => $ownerMemberId,
                 'meeting_id' => $meeting->id,
                 'memo_type' => 'meeting',
                 'body' => $body,
@@ -86,5 +93,18 @@ class MeetingMemoController extends Controller
         }
 
         return response()->json(['body' => $body, 'has_memo' => true]);
+    }
+
+    /**
+     * Dashboard KPI・活動ログで owner 軸に載せるため、保存者の owner_member_id を必須とする。
+     */
+    private function resolveActorOwnerMemberId(): int|false
+    {
+        $user = ReligoActorContext::actingUser();
+        if ($user !== null && $user->owner_member_id !== null) {
+            return (int) $user->owner_member_id;
+        }
+
+        return false;
     }
 }

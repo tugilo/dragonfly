@@ -97,6 +97,47 @@ class MeetingBreakoutsTest extends TestCase
         $this->assertContains($this->member1, $bo2['member_ids']);
     }
 
+    /** Phase124: owner_member_id が送られたとき、どの BO にもいなければ BO1 にマージされる。 */
+    public function test_put_owner_member_id_merges_into_bo1_when_absent_from_all_rooms(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member3]],
+            ],
+            'owner_member_id' => $this->member1,
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $get->assertOk();
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        sort($bo1['member_ids']);
+        sort($bo2['member_ids']);
+        $this->assertSame([$this->member1, $this->member2], $bo1['member_ids']);
+        $this->assertSame([$this->member3], $bo2['member_ids']);
+    }
+
+    /** いずれかの BO に既にいるときはマージしない（BO2 のみにいても BO1 への強制追加なし）。 */
+    public function test_put_owner_member_id_does_not_duplicate_when_already_in_bo2(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member1, $this->member3]],
+            ],
+            'owner_member_id' => $this->member1,
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        sort($bo1['member_ids']);
+        sort($bo2['member_ids']);
+        $this->assertSame([$this->member2], $bo1['member_ids']);
+        $this->assertSame([$this->member1, $this->member3], $bo2['member_ids']);
+    }
+
     public function test_other_meeting_breakouts_unchanged(): void
     {
         $otherMeetingId = (int) DB::table('meetings')->insertGetId([

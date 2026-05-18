@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 
 /**
  * GET/PUT /api/meetings/{meetingId}/breakouts — Religo BO1/BO2 割当取得・保存. SSOT: DATA_MODEL §4.5, §4.6.
+ * PUT: `rooms` 必須。**任意** `owner_member_id` — どの BO にも含まれないとき BO1 にマージ（Phase124）。
  */
 class MeetingBreakoutController extends Controller
 {
@@ -33,7 +34,10 @@ class MeetingBreakoutController extends Controller
         if (! $meeting) {
             return response()->json(['message' => 'Meeting not found.'], 404);
         }
-        $roomsPayload = $request->validated()['rooms'];
+        $validated = $request->validated();
+        $roomsPayload = $validated['rooms'];
+        $ensureMemberId = isset($validated['owner_member_id']) ? (int) $validated['owner_member_id'] : null;
+        $roomsPayload = $this->breakoutService->mergeEnsureMemberInBo1IfAbsent($roomsPayload, $ensureMemberId);
         try {
             $this->breakoutService->updateBreakouts($meeting, $roomsPayload);
         } catch (\Illuminate\Validation\ValidationException $e) {

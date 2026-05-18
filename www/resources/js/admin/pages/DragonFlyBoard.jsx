@@ -724,6 +724,7 @@ export default function DragonFlyBoard() {
         try {
             const payload = {
                 rooms: payloadRooms,
+                ...(ownerMemberId != null ? { owner_member_id: Number(ownerMemberId) } : {}),
             };
             await putMeetingBreakouts(selectedMeetingId, payload);
             const data = await getMeetingBreakouts(selectedMeetingId);

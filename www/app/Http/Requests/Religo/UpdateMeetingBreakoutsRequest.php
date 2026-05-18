@@ -24,6 +24,8 @@ class UpdateMeetingBreakoutsRequest extends FormRequest
             'rooms.*.notes' => ['nullable', 'string'],
             'rooms.*.member_ids' => ['array'],
             'rooms.*.member_ids.*' => ['integer', 'exists:members,id'],
+            // Connections: どの BO にも含まれないとき BO1 に自動追加（省略可・後方互換）
+            'owner_member_id' => ['sometimes', 'nullable', 'integer', 'exists:members,id'],
         ];
     }
 
