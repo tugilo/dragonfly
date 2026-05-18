@@ -16,6 +16,7 @@ class Member extends Model
     protected $fillable = [
         'name',
         'name_kana',
+        'email',
         'category_id',
         'workspace_id',
         'type',

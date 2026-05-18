@@ -12,6 +12,7 @@ use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class DragonFlyMemberController extends Controller
 {
@@ -44,7 +45,7 @@ class DragonFlyMemberController extends Controller
 
         $query = Member::query()
             ->with(['category', 'memberRoles.role', 'workspace.region.country'])
-            ->select('id', 'display_no', 'name', 'name_kana', 'category_id', 'ncast_profile_url', 'workspace_id');
+            ->select('id', 'display_no', 'name', 'name_kana', 'email', 'category_id', 'ncast_profile_url', 'workspace_id');
 
         if ($meetingScopeId !== null) {
             $query->whereHas('participants', function ($q) use ($meetingScopeId) {
@@ -226,6 +227,14 @@ class DragonFlyMemberController extends Controller
             $member->ncast_profile_url = ($url !== null && $url !== '') ? $url : null;
         }
 
+        if (array_key_exists('email', $request->all())) {
+            $request->validate([
+                'email' => self::nullableMemberEmailRules($member),
+            ]);
+            $raw = $request->input('email');
+            $member->email = ($raw !== null && $raw !== '') ? (string) $raw : null;
+        }
+
         $member->fill($request->only(['name', 'name_kana', 'type', 'display_no', 'introducer_member_id', 'attendant_member_id']));
         $member->save();
 
@@ -256,5 +265,27 @@ class DragonFlyMemberController extends Controller
         $arr['role_id'] = $member->currentRole()?->id;
 
         return response()->json($arr);
+    }
+
+    /**
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|string>
+     */
+    private static function nullableMemberEmailRules(Member $member): array
+    {
+        return [
+            'nullable',
+            'string',
+            'max:255',
+            'email:rfc',
+            Rule::unique('members', 'email')
+                ->ignore($member->id)
+                ->where(function ($query) use ($member) {
+                    if ($member->workspace_id === null) {
+                        $query->whereNull('workspace_id');
+                    } else {
+                        $query->where('workspace_id', $member->workspace_id);
+                    }
+                }),
+        ];
     }
 }
