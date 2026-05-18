@@ -12,9 +12,10 @@ import {
 import { Box, Button, CircularProgress, Stack, TextField as MuiTextField, Typography } from '@mui/material';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload, inferDurationMinutes } from '../utils/oneToOnesTransform';
+import { religoFetch } from '../religoApiFetch';
 
 async function fetchJson(url) {
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
@@ -61,7 +62,7 @@ function OneToOneMemosPanel() {
             return;
         }
         setLoading(true);
-        fetch(`/api/one-to-ones/${id}/memos`, { headers: { Accept: 'application/json' } })
+        religoFetch(`/api/one-to-ones/${id}/memos`, { headers: { Accept: 'application/json' } })
             .then((r) => {
                 if (!r.ok) {
                     throw new Error(String(r.status));
@@ -86,7 +87,7 @@ function OneToOneMemosPanel() {
             return;
         }
         setSaving(true);
-        fetch(`/api/one-to-ones/${id}/memos`, {
+        religoFetch(`/api/one-to-ones/${id}/memos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify({ body: t }),

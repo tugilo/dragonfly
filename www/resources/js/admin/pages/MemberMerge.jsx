@@ -10,11 +10,12 @@ import {
     Stack,
     Snackbar,
 } from '@mui/material';
+import { religoFetch } from '../religoApiFetch';
 
 const LS_TOKEN_KEY = 'religo-member-merge-token';
 
 async function postMerge(path, body, token) {
-    const res = await fetch(`/api/admin/member-merge/${path}`, {
+    const res = await religoFetch(`/api/admin/member-merge/${path}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

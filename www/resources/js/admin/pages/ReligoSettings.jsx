@@ -13,11 +13,12 @@ import {
     Typography,
     CircularProgress,
 } from '@mui/material';
+import { religoFetch } from '../religoApiFetch';
 
 const RELIGO_WORKSPACE_CHANGED = 'religo-workspace-changed';
 
 async function fetchJson(url, options = {}) {
-    const res = await fetch(url, { headers: { Accept: 'application/json', ...options.headers }, ...options });
+    const res = await religoFetch(url, { headers: { Accept: 'application/json', ...options.headers }, ...options });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }
@@ -68,7 +69,7 @@ export default function ReligoSettings() {
         setSaving(true);
         setError('');
         try {
-            const res = await fetch('/api/users/me', {
+            const res = await religoFetch('/api/users/me', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({ default_workspace_id: id }),

@@ -1,10 +1,14 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { religoOwnerStore } from './religoOwnerStore';
+import { religoFetch } from './religoApiFetch';
 
 const ReligoOwnerContext = createContext(null);
 
 async function fetchJson(url, options = {}) {
-    const res = await fetch(url, { headers: { Accept: 'application/json', ...options.headers }, ...options });
+    const res = await religoFetch(url, {
+        ...options,
+        headers: { Accept: 'application/json', ...options.headers },
+    });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }
@@ -96,11 +100,19 @@ export function ReligoOwnerProvider({ children }) {
         setLoading(false);
     }, [loadMe, loadMembers]);
 
+    useEffect(() => {
+        const onAuth = () => {
+            refreshMe().catch(() => {});
+        };
+        window.addEventListener('religo-auth-changed', onAuth);
+        return () => window.removeEventListener('religo-auth-changed', onAuth);
+    }, [refreshMe]);
+
     const patchOwner = useCallback(async (memberId) => {
         setSavingOwner(true);
         setError(null);
         try {
-            const res = await fetch('/api/users/me', {
+            const res = await religoFetch('/api/users/me', {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({ owner_member_id: memberId }),

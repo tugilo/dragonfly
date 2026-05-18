@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Box, IconButton, InputBase, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, InputBase, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 import { SidebarToggleButton } from 'react-admin';
 import { useReligoOwner } from './ReligoOwnerContext';
 import { formatMemberPrimaryLine } from './utils/memberDisplay';
+import { hasReligoAccessToken, logoutReligo } from './religoApiFetch';
 
 const APPBAR_HEIGHT = 56;
 
@@ -18,6 +19,7 @@ const PATH_TO_LABEL = {
     '/categories': 'Categories',
     '/roles': 'Roles',
     '/settings': '設定',
+    '/login': 'ログイン',
 };
 
 const getLabel = (pathname) => {
@@ -33,8 +35,19 @@ const getLabel = (pathname) => {
  * Religo 管理画面用カスタム AppBar。モック v2 #appbar 準拠。
  * グローバル Owner Select — SSOT: ADMIN_GLOBAL_OWNER_SELECTION §4
  */
+function useReligoSanctumTokenPresent() {
+    const [has, setHas] = useState(() => hasReligoAccessToken());
+    useEffect(() => {
+        const fn = () => setHas(hasReligoAccessToken());
+        window.addEventListener('religo-auth-changed', fn);
+        return () => window.removeEventListener('religo-auth-changed', fn);
+    }, []);
+    return has;
+}
+
 export const CustomAppBar = () => {
     const { pathname } = useLocation();
+    const hasSanctumToken = useReligoSanctumTokenPresent();
     const currentLabel = getLabel(pathname);
     const {
         ownerMemberId,
@@ -156,6 +169,31 @@ export const CustomAppBar = () => {
                         ))}
                     </Select>
                 </FormControl>
+
+                {hasSanctumToken ? (
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontSize: 12, textTransform: 'none' }}
+                        onClick={() => {
+                            void logoutReligo().then(() => {
+                                window.location.assign('/');
+                            });
+                        }}
+                    >
+                        ログアウト
+                    </Button>
+                ) : (
+                    <Button
+                        component={Link}
+                        to="/login"
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontSize: 12, textTransform: 'none' }}
+                    >
+                        ログイン
+                    </Button>
+                )}
 
                 {chapterLabel && (
                     <Box

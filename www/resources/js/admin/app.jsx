@@ -10,6 +10,7 @@ import ReligoSettings from './pages/ReligoSettings';
 import MemberMerge from './pages/MemberMerge';
 import { ReligoLayout } from './ReligoLayout';
 import { ReligoOwnerProvider } from './ReligoOwnerContext';
+import { ReligoLogin } from './pages/ReligoLogin';
 import { MembersList } from './pages/MembersList';
 import { MemberShow } from './pages/MemberShow';
 import { MemberEdit } from './pages/MemberEdit';
@@ -36,6 +37,7 @@ if (root) {
             theme={religoTheme}
         >
             <CustomRoutes>
+                <Route path="/login" element={<ReligoLogin />} />
                 <Route path="/settings" element={<ReligoSettings />} />
                 <Route path="/member-merge" element={<MemberMerge />} />
             </CustomRoutes>

@@ -6,6 +6,7 @@ import DashboardWeeklyPresentationPanel from './dashboard/DashboardWeeklyPresent
 import DashboardActivityPanel from './dashboard/DashboardActivityPanel';
 import DashboardLeadsPanel from './dashboard/DashboardLeadsPanel';
 import { useReligoOwner } from '../ReligoOwnerContext';
+import { religoFetch } from '../religoApiFetch';
 
 const API_BASE = '';
 
@@ -14,13 +15,13 @@ async function dashboardRequest(path, params = {}) {
     if (params.owner_member_id != null) q.set('owner_member_id', String(params.owner_member_id));
     if (params.limit != null) q.set('limit', String(params.limit));
     const url = `${API_BASE}/api/dashboard/${path}${q.toString() ? `?${q.toString()}` : ''}`;
-    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`Dashboard API ${res.status}`);
     return res.json();
 }
 
 async function fetchJson(url, options = {}) {
-    const res = await fetch(`${API_BASE}${url}`, { headers: { Accept: 'application/json', ...options.headers }, ...options });
+    const res = await religoFetch(`${API_BASE}${url}`, { headers: { Accept: 'application/json', ...options.headers }, ...options });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
 }

@@ -44,6 +44,7 @@ import {
 import { useReligoOwner } from '../ReligoOwnerContext';
 import { formatMemberPrimaryLine } from '../utils/memberDisplay';
 import { CONTACT_HELP_STALE_LINE, CONTACT_HELP_ONE_TO_ONE_COMPLETED_LINE } from '../contactUiCopy';
+import { religoFetch } from '../religoApiFetch';
 
 const API = '';
 const CARD_LOGS_LIMIT = 3;
@@ -51,13 +52,13 @@ const CARD_LOGS_LIMIT = 3;
 const MembersOneToOneLeadContext = createContext({ leadByMemberId: {}, leadsLoading: true, reloadLeads: () => {} });
 
 async function fetchJson(url) {
-    const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
 
 async function postContactMemo(payload) {
-    const res = await fetch(`${API}/api/contact-memos`, {
+    const res = await religoFetch(`${API}/api/contact-memos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -70,7 +71,7 @@ async function postContactMemo(payload) {
 }
 
 async function postOneToOne(payload) {
-    const res = await fetch(`${API}/api/one-to-ones`, {
+    const res = await religoFetch(`${API}/api/one-to-ones`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
@@ -83,7 +84,7 @@ async function postOneToOne(payload) {
 }
 
 async function putFlags(ownerMemberId, targetMemberId, data) {
-    const res = await fetch(
+    const res = await religoFetch(
         `${API}/api/dragonfly/flags/${targetMemberId}?owner_member_id=${ownerMemberId}`,
         {
             method: 'PUT',
@@ -99,7 +100,7 @@ async function putFlags(ownerMemberId, targetMemberId, data) {
 }
 
 async function putDragonflyMember(memberId, data) {
-    const res = await fetch(`${API}/api/dragonfly/members/${memberId}`, {
+    const res = await religoFetch(`${API}/api/dragonfly/members/${memberId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(data),
@@ -471,7 +472,7 @@ function MemberCard({ record }) {
     useEffect(() => {
         if (!record?.id || ownerMemberId == null) return;
         setLoadingLogs(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${record.id}&limit=${CARD_LOGS_LIMIT}`)
+        religoFetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${record.id}&limit=${CARD_LOGS_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((data) => {
                 setRecentLogs(Array.isArray(data) ? data : []);
@@ -916,7 +917,7 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
 
     useEffect(() => {
         if (!open || !member?.id || ownerMemberId == null) return;
-        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}`)
+        religoFetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}`)
             .then((res) => res.ok ? res.json() : [])
             .then((arr) => {
                 const forTarget = Array.isArray(arr) ? arr.filter((o) => Number(o.target_member_id) === Number(member.id)) : [];
@@ -998,7 +999,7 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const refetchMemos = useCallback(() => {
         if (!member?.id || !open || ownerMemberId == null) return;
         setLoadingMemos(true);
-        fetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+        religoFetch(`${API}/api/contact-memos?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then(setMemos)
             .catch(() => setMemos([]))
@@ -1008,7 +1009,7 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const refetchO2o = useCallback(() => {
         if (!member?.id || !open || ownerMemberId == null) return;
         setLoadingO2o(true);
-        fetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
+        religoFetch(`${API}/api/one-to-ones?owner_member_id=${ownerMemberId}&target_member_id=${member.id}&limit=${MEMO_LIMIT}`)
             .then((res) => (res.ok ? res.json() : []))
             .then(setO2oList)
             .catch(() => setO2oList([]))
@@ -1203,7 +1204,7 @@ export function MembersList() {
             return;
         }
         setLeadsLoading(true);
-        fetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
+        religoFetch(`${API}/api/dragonfly/members/one-to-one-status?owner_member_id=${ownerMemberId}`)
             .then((res) => (res.ok ? res.json() : []))
             .then((rows) => {
                 const map = {};

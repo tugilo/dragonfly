@@ -1,4 +1,5 @@
 import { religoOwnerStore } from './religoOwnerStore';
+import { religoFetch } from './religoApiFetch';
 
 const API_BASE = '';
 
@@ -15,7 +16,7 @@ function assertOwnerResolved() {
 }
 
 async function request(url, options = {}) {
-    const res = await fetch(`${API_BASE}${url}`, {
+    const res = await religoFetch(`${API_BASE}${url}`, {
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', ...options.headers },
         ...options,
     });
@@ -203,7 +204,7 @@ export const dragonflyDataProvider = {
             return { data };
         }
         if (resource === 'meetings') {
-            const res = await fetch(`${API_BASE}/api/meetings/${params.id}`, {
+            const res = await religoFetch(`${API_BASE}/api/meetings/${params.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
@@ -252,7 +253,7 @@ export const dragonflyDataProvider = {
     getManyReference: () => Promise.resolve({ data: [], total: 0 }),
     create: async (resource, params) => {
         if (resource === 'one-to-ones') {
-            const res = await fetch(`${API_BASE}/api/one-to-ones`, {
+            const res = await religoFetch(`${API_BASE}/api/one-to-ones`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify(params.data),
@@ -265,7 +266,7 @@ export const dragonflyDataProvider = {
             return { data: { ...params.data, id: data.id } };
         }
         if (resource === 'meetings') {
-            const res = await fetch(`${API_BASE}/api/meetings`, {
+            const res = await religoFetch(`${API_BASE}/api/meetings`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
@@ -301,7 +302,7 @@ export const dragonflyDataProvider = {
     },
     delete: async (resource, params) => {
         if (resource === 'categories') {
-            const res = await fetch(`${API_BASE}/api/categories/${params.id}`, {
+            const res = await religoFetch(`${API_BASE}/api/categories/${params.id}`, {
                 method: 'DELETE',
                 headers: { Accept: 'application/json' },
             });
@@ -312,7 +313,7 @@ export const dragonflyDataProvider = {
             return { data: params.previousData };
         }
         if (resource === 'roles') {
-            const res = await fetch(`${API_BASE}/api/roles/${params.id}`, {
+            const res = await religoFetch(`${API_BASE}/api/roles/${params.id}`, {
                 method: 'DELETE',
                 headers: { Accept: 'application/json' },
             });

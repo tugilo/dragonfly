@@ -42,6 +42,7 @@ import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 import { formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
+import { religoFetch } from '../religoApiFetch';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -58,7 +59,7 @@ const STATUS_CHIP_MAP = {
 const API = '';
 
 async function fetchJson(url) {
-    const res = await fetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
+    const res = await religoFetch(`${API}${url}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
@@ -312,7 +313,7 @@ function OneToOnesStatsCards() {
         }
         const qs = buildOneToOneStatsQuery(fv);
         setLoading(true);
-        fetch(`/api/one-to-ones/stats?${qs}`, {
+        religoFetch(`/api/one-to-ones/stats?${qs}`, {
             headers: { Accept: 'application/json' },
         })
             .then((r) => {
@@ -501,7 +502,7 @@ function TargetMemberFilterSelect() {
             };
         }
         const id = String(ownerId);
-        fetch(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(id)}`, {
+        religoFetch(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(id)}`, {
             headers: { Accept: 'application/json' },
         })
             .then((r) => r.json())
@@ -725,7 +726,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         setError('');
         try {
             const body = buildOneToOnePayload(data, durationMinutes, { mode: 'create', workspaceId });
-            const res = await fetch(`${API}/api/one-to-ones`, {
+            const res = await religoFetch(`${API}/api/one-to-ones`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify(body),
