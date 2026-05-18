@@ -124,6 +124,10 @@
 | 124 | Connections BO 保存時・Owner 未所属なら BO1 自動追加（last_contact 整合） | implement | completed | feature/merge-wip-20260518（develop へ merge） | 2026-05-18 |
 | 125 | Owner 基準・接触チャネル別最終日時（summary_lite・Members 一覧） | implement | completed | （ローカル実装・merge 未指定） | 2026-05-18 |
 | 126 | SPEC-010 ログインと Owner 紐づけ要件（Registry・DATA_MODEL 同期・**active**） | docs | completed | develop（推奨） | 2026-05-18 |
+| 127 | members.email + API + MemberEdit（SPEC-010・workspace 単位 unique） | implement | completed | feature/phase127-members-email | 2026-05-18 |
+| 128 | Sanctum ログイン/ログアウト + PAT 無効時 401 + ReligoActorContext | implement | completed | feature/phase128-sanctum-auth | 2026-05-18 |
+| 129 | users.religo_role + GET /api/users/me 拡張 | implement | completed | feature/phase129-religo-role | 2026-05-18 |
+| 130 | PATCH /api/admin/users/{user}（chapter_admin・owner/role） | implement | completed | feature/phase130-admin-patch-users | 2026-05-18 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

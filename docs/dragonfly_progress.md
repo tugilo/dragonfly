@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-18 12:13 JST | **Phase 127–130（implement / SPEC-010）:** `members.email`（workspace 単位 unique）・Laravel Sanctum（`POST /api/auth/login`・`POST /api/auth/logout`）・`RejectInvalidSanctumBearerToken`（失効 PAT で 401）・`RELIGO_ACTING_USER_FALLBACK`・`users.religo_role`（`member` / `chapter_admin`）と `GET /api/users/me`・`PATCH /api/admin/users/{user}`（ミドルウェア `religo.chapter_admin`）。各 Phase を feature ブランチから `develop` へ `--no-ff` merge・`git push origin develop` 済み。`php artisan test` 387 passed。 |
 | 2026-05-18 10:11 JST | **Git 運用 SSOT 追記:** 「**Phase ごとに develop へ merge したら同一作業のうちに `git push origin develop`**」を [GIT_WORKFLOW.md](GIT_WORKFLOW.md)・[git/PRLESS_MERGE_FLOW.md](git/PRLESS_MERGE_FLOW.md)・`.cursorrules`・`devos-v4.mdc`・[process/README.md](process/README.md)・INDEX に明示。 |
 | 2026-05-18 10:09 JST | **Phase 126（docs）/ SPEC-010 確定:** `AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS` を **active** 化。`SSOT_REGISTRY`・`DATA_MODEL`（owner 定義に SPEC-010 参照）・`REFERRAL_RECORDING` §7 補足・`PHASE_REGISTRY`・INDEX・Phase 126 PLAN/WORKLOG/REPORT。認証コードは未着手。 |
 | 2026-05-18 09:46 JST | **SPEC-010（docs / draft）:** ユーザーログイン導入時に **ログインアカウントと Owner 紐づけ** を整理した SSOT [AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md](SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md) を追加。`SSOT_REGISTRY`・`INDEX`・`ADMIN_GLOBAL_OWNER_SELECTION`（§6・§7・関連・変更履歴）を同期。コード変更なし。 |
