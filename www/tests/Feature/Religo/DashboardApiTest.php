@@ -7,6 +7,7 @@ use App\Models\DragonflyContactFlag;
 use App\Models\Meeting;
 use App\Models\OneToOne;
 use App\Models\Participant;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -108,6 +109,7 @@ class DashboardApiTest extends TestCase
     public function test_stats_returns_200_without_query_when_user_owner_set(): void
     {
         $this->createMeUser($this->ownerId);
+        $this->actingAs(User::findOrFail(1));
         $res = $this->getJson('/api/dashboard/stats');
         $res->assertOk();
         $data = $res->json();
@@ -506,6 +508,7 @@ class DashboardApiTest extends TestCase
                 ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
             ],
         ];
+        $this->actingAs(User::findOrFail(1));
         $this->putJson("/api/meetings/{$meetingId}/breakouts", $payload)->assertOk();
         $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId);
         $res->assertOk();

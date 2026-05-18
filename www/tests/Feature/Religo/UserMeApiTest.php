@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 /**
  * GET /api/users/me, PATCH /api/users/me. E-4 / BO-AUDIT-P3〜P4.
- * 現在ユーザー: Sanctum Bearer または web（actingAs）優先。Bearer 無しは RELIGO_ACTING_USER_FALLBACK=true のとき先頭ユーザー。
+ * 現在ユーザー: Sanctum Bearer または web session（actingAs）。phpunit で RELIGO_ACTING_USER_FALLBACK=false のため未認証では解決しない。
  */
 class UserMeApiTest extends TestCase
 {
@@ -53,9 +53,15 @@ class UserMeApiTest extends TestCase
         ]);
     }
 
+    private function actingAsUserId(int $id): void
+    {
+        $this->actingAs(User::findOrFail($id));
+    }
+
     public function test_show_me_returns_owner_member_id(): void
     {
         $this->createMeUser($this->memberId);
+        $this->actingAsUserId(1);
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $data = $res->json();
@@ -74,6 +80,7 @@ class UserMeApiTest extends TestCase
         DB::table('users')->where('id', 1)->update([
             'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN,
         ]);
+        $this->actingAsUserId(1);
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $this->assertSame(User::RELIGO_ROLE_CHAPTER_ADMIN, $res->json('religo_role'));
@@ -82,6 +89,7 @@ class UserMeApiTest extends TestCase
     public function test_show_me_returns_null_when_not_set(): void
     {
         $this->createMeUser(null);
+        $this->actingAsUserId(1);
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $data = $res->json();
@@ -127,6 +135,7 @@ class UserMeApiTest extends TestCase
             'want_1on1' => false,
             'workspace_id' => $wsId,
         ]);
+        $this->actingAsUserId(1);
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $this->assertSame($wsId, $res->json('workspace_id'));
@@ -154,6 +163,7 @@ class UserMeApiTest extends TestCase
             'want_1on1' => false,
             'workspace_id' => $wsFromFlag,
         ]);
+        $this->actingAsUserId(1);
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $this->assertSame($wsDefault, $res->json('workspace_id'));
@@ -163,6 +173,7 @@ class UserMeApiTest extends TestCase
     public function test_update_me_saves_owner_member_id(): void
     {
         $this->createMeUser(null);
+        $this->actingAsUserId(1);
         $res = $this->patchJson('/api/users/me', ['owner_member_id' => $this->memberId]);
         $res->assertOk();
         $data = $res->json();
@@ -187,6 +198,7 @@ class UserMeApiTest extends TestCase
     public function test_update_me_returns_422_for_invalid_member(): void
     {
         $this->createMeUser(null);
+        $this->actingAsUserId(1);
         $res = $this->patchJson('/api/users/me', ['owner_member_id' => 99999]);
         $res->assertStatus(422);
     }
@@ -194,6 +206,7 @@ class UserMeApiTest extends TestCase
     public function test_update_me_returns_422_when_no_updatable_keys_in_body(): void
     {
         $this->createMeUser(null);
+        $this->actingAsUserId(1);
         $res = $this->patchJson('/api/users/me', []);
         $res->assertStatus(422);
     }
@@ -207,6 +220,7 @@ class UserMeApiTest extends TestCase
             'updated_at' => now(),
         ]);
         $this->createMeUser($this->memberId);
+        $this->actingAsUserId(1);
         $res = $this->patchJson('/api/users/me', ['default_workspace_id' => $wsId]);
         $res->assertOk();
         $this->assertSame($wsId, $res->json('default_workspace_id'));
@@ -223,6 +237,7 @@ class UserMeApiTest extends TestCase
             'updated_at' => now(),
         ]);
         $this->createMeUser($this->memberId, 1, $wsId);
+        $this->actingAsUserId(1);
         $res = $this->patchJson('/api/users/me', ['default_workspace_id' => null]);
         $res->assertOk();
         $this->assertNull($res->json('default_workspace_id'));

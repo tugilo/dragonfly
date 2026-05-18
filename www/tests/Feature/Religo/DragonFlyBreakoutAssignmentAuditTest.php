@@ -109,9 +109,11 @@ class DragonFlyBreakoutAssignmentAuditTest extends TestCase
         $this->assertSame($this->participantId, $log->payload['participant_id']);
     }
 
-    public function test_put_without_acting_as_uses_fallback_first_user(): void
+    /** RELIGO_ACTING_USER_FALLBACK=false のとき未認証は actor 無しでも保存は成功する（DragonFly はレガシーJWT無し運用がある） */
+    public function test_put_without_acting_as_has_null_audit_actor_when_fallback_disabled(): void
     {
-        $user = User::query()->where('email', 'audit-bo-p2@example.com')->first();
+        $wsId = (int) DB::table('workspaces')->orderBy('id')->value('id');
+
         $res = $this->putJson("/api/dragonfly/meetings/{$this->meetingNumber}/breakout-assignments", [
             'session' => 2,
             'participant_id' => $this->participantId,
@@ -121,7 +123,9 @@ class DragonFlyBreakoutAssignmentAuditTest extends TestCase
         $res->assertOk();
         $this->assertDatabaseHas('bo_assignment_audit_logs', [
             'meeting_id' => $this->meetingId,
-            'actor_user_id' => $user->id,
+            'actor_user_id' => null,
+            'actor_owner_member_id' => null,
+            'workspace_id' => $wsId,
             'source' => BoAssignmentAuditLog::SOURCE_DRAGONFLY_BREAKOUT_ASSIGNMENTS,
         ]);
     }
