@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'religo.member_merge' => \App\Http\Middleware\VerifyReligoMemberMergeToken::class,
         ]);
+        $middleware->api(prepend: [
+            \App\Http\Middleware\RejectInvalidSanctumBearerToken::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
  * `default_workspace_id` is the user's BNI chapter workspace (DB column name unchanged).
  * **戻り `workspace_id`:** resolved chapter id, same formula as BO audit (USER_ME + WORKSPACE_RESOLUTION_POLICY SSOT).
  *
- * **現在ユーザー:** `ReligoActorContext::actingUser()`（認証優先・無認証時は users id 昇順先頭）。
+ * **現在ユーザー:** `ReligoActorContext::actingUser()`（Sanctum / web セッション優先・Bearer 無しかつフォールバック有効時は users.id 昇順先頭）。
  */
 class UserController extends Controller
 {
