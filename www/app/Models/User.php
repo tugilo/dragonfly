@@ -11,6 +11,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public const RELIGO_ROLE_MEMBER = 'member';
+
+    public const RELIGO_ROLE_CHAPTER_ADMIN = 'chapter_admin';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -25,6 +29,7 @@ class User extends Authenticatable
         'password',
         'owner_member_id',
         'default_workspace_id',
+        'religo_role',
     ];
 
     public function defaultWorkspace(): BelongsTo
