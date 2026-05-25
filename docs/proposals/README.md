@@ -10,3 +10,7 @@
 | **提案のたたき台・正式提案・エクスポート PDF** | **`docs/proposals/`（本ディレクトリ）** |
 
 既存の PDF など、拡張子を問わず同じフォルダで管理してよい。
+
+| 資料 | メモ |
+|------|------|
+| [printing_business_improvement_estimate.md](printing_business_improvement_estimate.md) | 印刷業務改善の **概算見積（案・税別）**。overview / PDF スライドとセットで共有用。 |

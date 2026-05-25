@@ -128,6 +128,12 @@
 | 128 | Sanctum ログイン/ログアウト + PAT 無効時 401 + ReligoActorContext | implement | completed | feature/phase128-sanctum-auth | 2026-05-18 |
 | 129 | users.religo_role + GET /api/users/me 拡張 | implement | completed | feature/phase129-religo-role | 2026-05-18 |
 | 130 | PATCH /api/admin/users/{user}（chapter_admin・owner/role） | implement | completed | feature/phase130-admin-patch-users | 2026-05-18 |
+| 131 | 1to1議事録のDB登録フォローアップ | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
+| 132 | 他チャプター1to1相手の所属補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
+| 133 | 辻亮さん所属チャプター補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
+| 134 | 御手洗さん 1to1 事前準備（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
+| 135 | 御手洗さん 1to1 実施後議事録（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
+| 136 | 御手洗さん 1to1 DB登録 + 西岡さん紹介進行記録 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -5,8 +5,10 @@
 | 場所 | 用途 |
 |------|------|
 | **`docs/meetings/`**（直下） | **複数参加者**の打合せ、チャプター例会など**1to1以外**が主なメモ。歴史的に **提案書 Markdown** もここにあったが、**クライアント向け提案・ブリーフ・PDF** は [`docs/proposals/`](../proposals/README.md) を推奨 |
+| **`docs/meetings/chapter/`** | **DragonFly チャプター定例会**の議事録。**回ごとに日付入り Markdown**（`chapter_weekly_YYYYMMDD.md`）。参加者 CSV・PDF は `docs/pdf/` からリンク |
+| **`docs/meetings/team/`** | **BNI チーム MTG**（例：スリーバイス）の議事録。**回ごとに日付入り Markdown**（`team_<slug>_YYYYMMDD.md`）。PDF 等の添付も同ディレクトリ |
 | **`docs/meetings/1to1/`** | **1対1の関係**の履歴（同一相手の複数回セッションを1ファイルに蓄積する運用を推奨）。BNI以外・チャプターを跨ぐ1to1もここに置く |
 
 1to1 を直下に混在させると、提案書や複数者ミーティングと区別しづらくなるため、**1to1 は `1to1/` に集約**する。
 
-詳細な**ファイル命名・DB連携の想定**は [`1to1/README.md`](1to1/README.md) を参照。
+詳細な**ファイル命名・DB連携の想定**は、定例会 [`chapter/README.md`](chapter/README.md)、1to1 は [`1to1/README.md`](1to1/README.md) を参照。

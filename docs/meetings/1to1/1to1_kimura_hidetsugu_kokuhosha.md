@@ -3,7 +3,8 @@ doc_type: 1to1_series
 1to1_id: kimura_hidetsugu_kokuhosha
 counterparty_name_ja: "木村秀継"
 organization_ja: "株式会社国宝社"
-chapter_primary: null
+chapter_primary: bni_spread
+chapter_note_ja: "BNI SPREADチャプター。ユーザー確認により2026-05-21反映。次廣側の記録コンテキストは BNI DragonFly。"
 owner_side: tugilo
 first_session_date: "2026-05-08"
 first_session_time_jst: "14:00-TODO"
@@ -14,7 +15,7 @@ first_session_time_jst: "14:00-TODO"
 ---
 
 **文書の位置づけ:** 木村秀継さんとの 1to1 を **1ファイルで時系列管理**する。今回はユーザー提供の **Zoom 文字起こし要約**をもとに、第1回の議事録として整理する。  
-**整理:** tugilo（次廣 淳）の接点チャプター: **BNI DragonFly**。  
+**整理:** tugilo（次廣 淳）の接点チャプター: **BNI DragonFly**。木村秀継さんは **BNI SPREAD** 所属の他チャプターメンバー。  
 **日時:** 第1回は **2026-05-08 JST 14:00〜**。終了時刻は **TODO**（カレンダー／Zoom 録画メタ等で確認後に更新する）。
 
 ---
@@ -25,6 +26,7 @@ first_session_time_jst: "14:00-TODO"
 
 - **名前:** 木村秀継
 - **事業名:** 株式会社国宝社
+- **BNI:** SPREAD チャプター（他チャプター）
 - **事業領域:** 製本業、家系図・ルーツ調査サービス
 - **会社概要:** 創業160年の製本会社。ジャンプ・マガジン等の製本を手掛けている。
 - **組織規模:** 社員数68名。
