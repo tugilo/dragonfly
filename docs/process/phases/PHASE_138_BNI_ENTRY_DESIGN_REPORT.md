@@ -46,8 +46,8 @@ docs フェーズのためスキップ（`php artisan test` 不要）
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （未実施 — ユーザー指示待ち） |
-| **source branch** | feature/phase138-bni-entry-design |
+| **merge commit id** | `04006c3`（develop 直コミット） |
+| **source branch** | develop（docs フェーズ・例外直コミット） |
 | **target branch** | develop |
 | **phase id** | 138 |
 | **phase type** | docs |
@@ -60,4 +60,8 @@ docs フェーズのためスキップ（`php artisan test` 不要）
 
 ## 取り込み証跡（develop への merge 後）
 
-未実施。merge 後に追記する。
+| 項目 | 内容 |
+|------|------|
+| **commit id** | `04006c3` |
+| **branch** | develop（docs フェーズ・develop 直コミット） |
+| **push** | `git push origin develop` 2026-05-26 18:39 JST 完了 |
