@@ -45,8 +45,8 @@ docs フェーズのためスキップ
 
 | 項目 | 内容 |
 |------|------|
-| **merge commit id** | （未実施 — ユーザー指示待ち） |
-| **source branch** | feature/phase139-bni-weekly-experiment-cycle |
+| **merge commit id** | `d72ed27`（develop 直コミット） |
+| **source branch** | develop |
 | **target branch** | develop |
 | **phase id** | 139 |
 | **phase type** | docs |
@@ -56,4 +56,8 @@ docs フェーズのためスキップ
 
 ## 取り込み証跡（develop への merge 後）
 
-未実施。
+| 項目 | 内容 |
+|------|------|
+| **commit id** | `d72ed27` |
+| **branch** | develop（docs フェーズ・develop 直コミット） |
+| **push** | `git push origin develop` 2026-05-26 19:02 JST 完了 |
