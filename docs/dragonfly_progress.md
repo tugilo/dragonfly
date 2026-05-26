@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-26 19:02 JST | **Phase 139 / 今週の実験サイクル:** [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) **§10.7** を追記。症状1つ→25秒→BO/121→反応メモ→ライブドキュメント反映の週次運用。§10.5 PDCAラボを具体行動化。1本化モデルを §10.8 に繰り下げ。Phase 139 PLAN/WORKLOG/REPORT・INDEX・PHASE_REGISTRY 同期。**develop push 済み。** |
 | 2026-05-26 18:39 JST | **Phase 138 / Living Document §10.3 入口設計:** 2026-05-26 DragonFly定例会（小中さん SS）の学びを「AIを売るのではなく入口を設計する」として [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) §10.3 に追記。小中/tugilo 差別化・§10.4〜§10.7 繰り下げ・チェックリスト3項目追加。Phase 137-138・定例会209回議事録・1to1 DB id 追記を同梱。**develop push 済み**（`04006c3`）。 |
 | 2026-05-25 20:26 JST | **Phase 137 / 1to1議事録のDB登録バックフィル:** 実施済み121を `one_to_ones` に2件追加（野口裕子 id=33、佐藤拓斗 id=34）。米澤侑桂さんは既存 `id=12` のため議事録へ id 追記のみ。対象3議事録に `Religo 1to1 レコード` を反映。Phase 137 PLAN/WORKLOG/REPORT・`PHASE_REGISTRY` 同期。`php artisan test` 387 passed (1491 assertions)。 |
 | 2026-05-25 17:35 JST | **121 DB未登録ファイルの要件確認:** 全28件の `1to1_*.md` を `one_to_ones.notes` の source path で照合（max id=32）。**登録対象（確定）:** 野口裕子（実施済み・DB未登録）、佐藤拓斗（Phase 120 漏れ）。**議事録追記のみ:** 米澤侑桂（`one_to_ones.id=12` 済み・文書に id 未記載）。**要確認:** 木村健悟・岡元智美（日付あり・記録未完/TODO）。**スキップ:** 田渕・田辺（予定）、軍司（アジェンダのみ）。Phase 137 実装はユーザー確認待ち。コード変更なし。 |
