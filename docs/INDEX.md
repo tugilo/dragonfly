@@ -45,6 +45,13 @@
 | [pdf/260526/定例会参加者リスト2026_05_26.pdf](pdf/260526/定例会参加者リスト2026_05_26.pdf) | DragonFly 定例会参加者リスト（2026-05-26・第209回）。 |
 | [pdf/260526/dragonfly_209_20260526_corrected_full.csv](pdf/260526/dragonfly_209_20260526_corrected_full.csv) | 定例会参加者 CSV（第209回・`www/database/csv/` 同名参照可）。 |
 
+### 開発 DB 同期（Git）
+
+| ファイル | 説明 |
+|----------|------|
+| [../www/database/sync/README.md](../www/database/sync/README.md) | **ローカル MariaDB を Git 同期** — 固定ファイル `dragonfly.sql` を上書き export/import。`make db-export` / `make db-import`。 |
+| [../www/database/sync/dragonfly.sql](../www/database/sync/dragonfly.sql) | 開発 DB ダンプ（常に同名上書き・private リポジトリ前提）。 |
+
 ### 打合せ・会議メモ（docs/meetings/）
 
 | ファイル | 説明 |
