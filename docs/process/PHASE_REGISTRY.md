@@ -137,6 +137,12 @@
 | 137 | 1to1議事録のDB登録バックフィル | implement | completed | develop | 2026-05-25 |
 | 138 | Living Document §10.3 入口設計（小中さん SS 学び） | docs | completed | develop | 2026-05-26 |
 | 139 | Living Document §10.7 今週の実験サイクル | docs | completed | develop | 2026-05-26 |
+| 140 | BNI今後の活用方針ドキュメント | docs | completed | develop | 2026-05-26 |
+| 141 | DragonFlyパワーチーム構想の追記 | docs | completed | develop | 2026-05-26 |
+| 142 | BNI活用方針の最終仕上げ（パワーチーム候補管理） | docs | completed | develop | 2026-05-26 |
+| 143 | BNI週間運用ガイド化 | docs | completed | develop | 2026-05-26 |
+| 144 | BNI到達イメージと判断基準 | docs | completed | develop | 2026-05-26 |
+| 145 | BNI月次重点パワーチーム候補管理 | docs | completed | develop | 2026-05-26 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
