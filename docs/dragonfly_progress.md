@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-05-26 19:18 JST | **開発 DB Git 同期:** `www/database/sync/dragonfly.sql`（固定名・上書き）と `make db-export` / `make db-import` を追加。初回 export 済み。**develop push 済み**（commit id は push 後に追記）。 |
+| 2026-05-26 19:18 JST | **開発 DB Git 同期:** `www/database/sync/dragonfly.sql`（固定名・上書き）と `make db-export` / `make db-import` を追加。初回 export 済み（約 302KB）。**develop push 済み**（`33e2190`）。 |
 | 2026-05-26 19:02 JST | **Phase 139 / 今週の実験サイクル:** [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) **§10.7** を追記。症状1つ→25秒→BO/121→反応メモ→ライブドキュメント反映の週次運用。§10.5 PDCAラボを具体行動化。1本化モデルを §10.8 に繰り下げ。参加者CSV（`www/database/csv/`）同梱。**develop push 済み**（`d72ed27`）。 |
 | 2026-05-26 18:39 JST | **Phase 138 / Living Document §10.3 入口設計:** 2026-05-26 DragonFly定例会（小中さん SS）の学びを「AIを売るのではなく入口を設計する」として [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) §10.3 に追記。小中/tugilo 差別化・§10.4〜§10.7 繰り下げ・チェックリスト3項目追加。Phase 137-138・定例会209回議事録・1to1 DB id 追記を同梱。**develop push 済み**（`04006c3`）。 |
 | 2026-05-25 20:26 JST | **Phase 137 / 1to1議事録のDB登録バックフィル:** 実施済み121を `one_to_ones` に2件追加（野口裕子 id=33、佐藤拓斗 id=34）。米澤侑桂さんは既存 `id=12` のため議事録へ id 追記のみ。対象3議事録に `Religo 1to1 レコード` を反映。Phase 137 PLAN/WORKLOG/REPORT・`PHASE_REGISTRY` 同期。`php artisan test` 387 passed (1491 assertions)。 |
