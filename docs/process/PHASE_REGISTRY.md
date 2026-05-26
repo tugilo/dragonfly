@@ -134,6 +134,8 @@
 | 134 | 御手洗さん 1to1 事前準備（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
 | 135 | 御手洗さん 1to1 実施後議事録（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
 | 136 | 御手洗さん 1to1 DB登録 + 西岡さん紹介進行記録 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
+| 137 | 1to1議事録のDB登録バックフィル | implement | completed | develop | 2026-05-25 |
+| 138 | Living Document §10.3 入口設計（小中さん SS 学び） | docs | completed | feature/phase138-bni-entry-design | 2026-05-26 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

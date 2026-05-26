@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-26 18:39 JST | **Phase 138 / Living Document §10.3 入口設計:** 2026-05-26 DragonFly定例会（小中さん SS）の学びを「AIを売るのではなく入口を設計する」として [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) §10.3 に追記。小中/tugilo 差別化・§10.4〜§10.7 繰り下げ・チェックリスト3項目追加。Phase 138 PLAN/WORKLOG/REPORT・INDEX・PHASE_REGISTRY 同期。**develop push 済み。** |
+| 2026-05-25 20:26 JST | **Phase 137 / 1to1議事録のDB登録バックフィル:** 実施済み121を `one_to_ones` に2件追加（野口裕子 id=33、佐藤拓斗 id=34）。米澤侑桂さんは既存 `id=12` のため議事録へ id 追記のみ。対象3議事録に `Religo 1to1 レコード` を反映。Phase 137 PLAN/WORKLOG/REPORT・`PHASE_REGISTRY` 同期。`php artisan test` 387 passed (1491 assertions)。 |
 | 2026-05-25 17:35 JST | **121 DB未登録ファイルの要件確認:** 全28件の `1to1_*.md` を `one_to_ones.notes` の source path で照合（max id=32）。**登録対象（確定）:** 野口裕子（実施済み・DB未登録）、佐藤拓斗（Phase 120 漏れ）。**議事録追記のみ:** 米澤侑桂（`one_to_ones.id=12` 済み・文書に id 未記載）。**要確認:** 木村健悟・岡元智美（日付あり・記録未完/TODO）。**スキップ:** 田渕・田辺（予定）、軍司（アジェンダのみ）。Phase 137 実装はユーザー確認待ち。コード変更なし。 |
 | 2026-05-25 15:00 JST | **1to1 第1回議事録（野口裕子・HAIR SALON ViV／BNI DragonFly）:** [`meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md`](meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md) を新規作成。Zoom 文字起こし要約（2026-05-25 JST 15:00〜）を反映。個人経営・火曜営業と定例会の両立困難による **BNI退会決定**、ホットペッパー/紙予約の併用、軍司さん LINE 予約（3ヶ月契約）、次廣の夏頃予約管理システム提案、**パソコン相談無償サポート** 合意、ジンボウさん 1to1 リファラル合意。`Religo 1to1 レコード` は Phase 137 登録待ち（TODO）。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-05-22 16:46 JST | **Phase 136 / 御手洗さん 1to1 DB登録 + 西岡さん紹介進行記録:** 株式会社風土テック・御手洗さん（BNI VORTEX）を `members.id = 124`（`type=visitor`, `workspace_id=9`）として登録し、`workspaces.slug=bni_vortex`（id=9）を追加。第1回 1to1 を `one_to_ones.id = 32`（owner `members.id=37`, target `members.id=124`, `scheduled_at/started_at=2026-05-22 09:00:00`, `status=completed`, record workspace id=1）として登録。[`meetings/1to1/1to1_mitarai_fudotech.md`](meetings/1to1/1to1_mitarai_fudotech.md) にDB idと、西岡さん了承後に御手洗さんへ3名グループ作成可否を確認する紹介進行メモを追記。`docs/INDEX.md`、`PHASE_REGISTRY`、Phase 136 PLAN/WORKLOG/REPORT を同期。 |
@@ -297,6 +299,9 @@
 | 2026-03-06 | **Phase M-4 Members パッと見レイアウト**: モック準拠のブロック順（ヘッダー→統計カード→常時表示フィルタバー→一覧）を実装。統計4種（総メンバー数・1to1未実施30日・interested ON・want_1on1 ON）をクライアント集計で表示。フィルタバーを横並びで常時表示（検索・カテゴリ・役職・フラグ・並び順・件数）。一覧は Datagrid 維持。PHASE_M4_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
 | 2026-03-06 | **Phase M-5 Members フラグ編集**: Members 一覧から interested / want_1on1 を編集可能に。行アクション「🚩 フラグ」で Dialog（Switch×2＋保存）。既存 PUT /api/dragonfly/flags/{id} を流用（Connections と同じ）。更新後は useRefresh で一覧再取得。PHASE_M5_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
 | 2026-03-06 | **Phase M-6 Member Show / Drawer 履歴強化**: Drawer の Overview に直近メモを追加。Member Show を Overview / Memos / 1to1 タブで履歴表示に変更（contacts summary・contact-memos・one-to-ones を既存 API で取得）。「Coming soon」除去。Drawer と Show の情報構造を揃えた。PHASE_M6_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
+| 2026-05-26 17:53 | **docs**: DragonFly 定例会 第209回（2026-05-26）議事録を [chapter_weekly_20260526.md](meetings/chapter/chapter_weekly_20260526.md) に保存。Zoom 文字起こし要約より。RF110・新メンバー2名・教育「紹介の解像度を上げる」。INDEX 更新。 |
+| 2026-05-26 18:07 | **docs Phase 138**: Living Document **§10.3 入口設計**（小中さん SS 学び）を [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) に追記。旧§10.3〜§10.6を§10.4〜§10.7に繰り下げ。 |
+| 2026-05-26 18:03 | **docs**: Living Document §10.6 **1本化モデル**（簡単業務効率化診断→1本化PoC→伴走開発）を [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) に追記。 |
 
 ---
 
