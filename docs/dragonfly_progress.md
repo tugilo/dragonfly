@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-05-27 17:01 JST | **1to1 南方優馬／Religo DB 登録:** `workspaces.slug=bni_tifonet`（id=10）、`members.id=137`（南方　優馬・visitor）、`one_to_ones.id=35`（2026-05-27 10:00 JST・completed）。`make db-export` で `www/database/sync/dragonfly.sql` 更新。**develop push 予定**。 | 協業ではなく **受動的紹介のみ**（低コストEC需要が明示された場合）。**グレー商売（補助金系）には協力しない** と [`meetings/1to1/1to1_nampo_yuma_waibous.md`](meetings/1to1/1to1_nampo_yuma_waibous.md) に反映。コード変更なし。 |
+| 2026-05-27 17:01 JST | **1to1 南方優馬／Religo DB 登録:** `workspaces.slug=bni_tifonet`（id=10）、`members.id=137`（南方　優馬・visitor）、`one_to_ones.id=35`（2026-05-27 10:00 JST・completed）。`make db-export` で `www/database/sync/dragonfly.sql` 更新。**develop push 済み**（`c3c4824`）。 | 協業ではなく **受動的紹介のみ**（低コストEC需要が明示された場合）。**グレー商売（補助金系）には協力しない** と [`meetings/1to1/1to1_nampo_yuma_waibous.md`](meetings/1to1/1to1_nampo_yuma_waibous.md) に反映。コード変更なし。 |
 | 2026-05-27 10:52 JST | **1to1 南方優馬／温度感追記:** 補助金グレー指摘後の **不機嫌（次廣所感）** を [`meetings/1to1/1to1_nampo_yuma_waibous.md`](meetings/1to1/1to1_nampo_yuma_waibous.md) に反映。補助金協業・紹介は見送り、EC/業務改善のみ切り分け。コード変更なし。 |
 | 2026-05-27 10:50 JST | **1to1 南方優馬／第1回議事録:** Zoom 文字起こし要約を [`meetings/1to1/1to1_nampo_yuma_waibous.md`](meetings/1to1/1to1_nampo_yuma_waibous.md) に清書反映。**2026-05-27 実施済み**。相互紹介合意、Clavio約50万・補助金協業、杉山氏士業コミュニティ紹介待ち。`one_to_ones.id` TODO。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-05-27 09:55 JST | **1to1 南方優馬／121雑談パート追加:** [`meetings/1to1/1to1_nampo_yuma_waibous.md`](meetings/1to1/1to1_nampo_yuma_waibous.md) の121台本に **1.5 雑談**（趣味・読書・121 100本/月との両立）を追加。コード変更なし。 |
