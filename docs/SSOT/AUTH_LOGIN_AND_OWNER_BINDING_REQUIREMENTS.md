@@ -119,6 +119,7 @@
 次のいずれか（または併用）を Phase で選択する。**本 SSOT は案を列挙するのみ**。
 
 - **招待メール** — ログイン作成時にメンバー ID をバインド
+- **初回自己登録 + 確認コードメール** — members.email 照合・6 桁コード送信（**要件: [AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md](AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md) SPEC-011**／implement 前 docs: Phase 147）
 - **初回 SSO / Magic link** — メール一致で members を照合（誤結合リスクの評価が必要）
 - **管理者が User を作成**し `owner_member_id` を設定（少人数チャプター向け）
 
@@ -159,3 +160,4 @@ Phase ごとに切る場合の **全体完了の目安**。
 |------------|------|
 | 2026-05-18 09:45 | 初版（SPEC-010・要件ドラフト）。 |
 | 2026-05-18 10:09 JST | **Phase 126（docs）:** Registry / DATA_MODEL / INDEX と同期。**状態を active に昇格**。 |
+| 2026-05-28 21:53 JST | **SPEC-011 追加:** §8 provisioning に初回自己登録＋確認コードメールを追記（Phase 147 docs）。 |

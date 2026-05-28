@@ -123,7 +123,7 @@ function RegisterForm() {
         return (
             <>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Members に登録済みのメールアドレスで初回パスワードを設定します。
+                    Members に登録済みのメールアドレス宛に確認コードを送信し、初回パスワードを設定します。
                 </Typography>
                 {error && (
                     <Alert severity="error" sx={{ mb: 2 }}>
@@ -142,7 +142,7 @@ function RegisterForm() {
                         size="small"
                     />
                     <Button type="submit" variant="contained" disabled={loading}>
-                        {loading ? '送信中…' : '確認コードを取得'}
+                        {loading ? '送信中…' : '確認コードを送信'}
                     </Button>
                 </Box>
             </>
@@ -152,7 +152,7 @@ function RegisterForm() {
     return (
         <>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                {email} 宛に確認コードを送信しました。
+                {email} 宛に確認コードを送信しました。メールに記載の 6 桁コードを入力してください。
             </Typography>
             <Link component="button" type="button" variant="body2" onClick={() => setStep('email')} sx={{ mb: 2, display: 'inline-block' }}>
                 メールアドレスを変更

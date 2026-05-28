@@ -317,7 +317,8 @@
 | 2026-03-06 | **Phase M-6 Member Show / Drawer 履歴強化**: Drawer の Overview に直近メモを追加。Member Show を Overview / Memos / 1to1 タブで履歴表示に変更（contacts summary・contact-memos・one-to-ones を既存 API で取得）。「Coming soon」除去。Drawer と Show の情報構造を揃えた。PHASE_M6_* PLAN/WORKLOG/REPORT、FIT_AND_GAP Members 節更新。 |
 | 2026-05-26 17:53 | **docs**: DragonFly 定例会 第209回（2026-05-26）議事録を [chapter_weekly_20260526.md](meetings/chapter/chapter_weekly_20260526.md) に保存。Zoom 文字起こし要約より。RF110・新メンバー2名・教育「紹介の解像度を上げる」。INDEX 更新。 |
 | 2026-05-26 18:07 | **docs Phase 138**: Living Document **§10.3 入口設計**（小中さん SS 学び）を [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) に追記。旧§10.3〜§10.6を§10.4〜§10.7に繰り下げ。 |
-| 2026-05-26 18:03 | **docs**: Living Document §10.6 **1本化モデル**（簡単業務効率化診断→1本化PoC→伴走開発）を [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) に追記。 |
+| 2026-05-28 21:53 JST | **docs Phase 147:** **SPEC-011** 初回登録 — 確認コードメール送信要件 SSOT（[AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md](SSOT/AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md)）。本番 MAIL 設定済み前提で Mailable implement 前の要件整理。SPEC-010 §8 更新。 |
+| 2026-05-28 21:54 JST | **implement Phase 148:** SPEC-011 確認コード Mailable 送信・送信失敗 503 + Cache ロールバック・Mail::fake テスト・ログイン UI 文言。 |
 
 ---
 
