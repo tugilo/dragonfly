@@ -3,7 +3,7 @@ import { Box, Button, Paper, TextField, Typography, Alert } from '@mui/material'
 import { loginReligo } from '../religoApiFetch';
 
 /**
- * Sanctum ログイン（トークンを localStorage に保存し / へリダイレクト）
+ * Sanctum ログイン（トークンを localStorage に保存し /admin へリダイレクト）
  */
 export function ReligoLogin() {
     const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ export function ReligoLogin() {
         setLoading(true);
         try {
             await loginReligo(email, password);
-            window.location.assign('/');
+            window.location.assign('/admin');
         } catch (err) {
             setError(err instanceof Error ? err.message : 'ログインに失敗しました');
         } finally {
