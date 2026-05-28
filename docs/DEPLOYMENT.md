@@ -82,6 +82,14 @@ php artisan storage:link
 |----------|------------|------------|
 | `docker compose`（`www/` マウント） | 開発サーバー | 本番サーバー |
 | `project.env` Node 20 | デプロイ時 `nvm use 20` | 同左 |
+| PHP 8.4（Docker） | デプロイは `/usr/bin/php8.4` | 同左 |
+
+## PHP バージョン（必須）
+
+- ローカル Docker は **PHP 8.4**（`versions.env`）。
+- `composer.lock`（Symfony 8 等）は **PHP >= 8.4** が必要。
+- VPS のデフォルト `php` は **8.3** のため、`deploy.yml` では **`/usr/bin/php8.4`** で `composer` / `artisan` を実行する。
+- **Nginx の php-fpm** も Religo 用 vhost は **php8.4-fpm** を指定すること（CLI だけ 8.4 では不十分）。
 
 ## 注意
 
@@ -96,6 +104,7 @@ php artisan storage:link
 | 500 / 白画面 | 該当環境の `www/.env`、`storage` 権限 |
 | フロントが古い | `cd www && npm run build` の成否（Actions ログ） |
 | migrate 失敗 | 環境別 DB 設定・バックアップ |
+| composer「php >=8.4」 | サーバーで `php8.4` を使う（`deploy.yml` 修正済みか確認） |
 
 ---
 

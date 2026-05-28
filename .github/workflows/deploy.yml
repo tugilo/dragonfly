@@ -46,9 +46,17 @@ jobs:
             fi
 
             APP_DIR="${DEPLOY_PATH}/www"
+            PHP_BIN=/usr/bin/php8.4
+            COMPOSER_BIN=/usr/local/bin/composer
 
             echo "🚀 Deploying Religo to ${DEPLOY_PATH} (${ENVIRONMENT})"
             echo "Branch: ${BRANCH}"
+            echo "PHP: $($PHP_BIN -v | head -1)"
+
+            if ! $PHP_BIN -r 'exit(version_compare(PHP_VERSION, "8.4.0", ">=") ? 0 : 1);'; then
+              echo "Error: Religo requires PHP >= 8.4 (see versions.env). Found: $($PHP_BIN -v | head -1)"
+              exit 1
+            fi
 
             cd "${DEPLOY_PATH}"
             git fetch origin
@@ -58,7 +66,7 @@ jobs:
             cd "${APP_DIR}"
 
             if [ ! -d "vendor" ] || [ "composer.lock" -nt "vendor/autoload.php" ]; then
-              composer install --no-dev --optimize-autoloader --no-interaction
+              $PHP_BIN $COMPOSER_BIN install --no-dev --optimize-autoloader --no-interaction
               echo "✅ Composer dependencies updated"
             else
               echo "✅ Composer dependencies are up to date"
@@ -77,22 +85,22 @@ jobs:
 
             NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan route:clear
-            php artisan view:clear
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
+            $PHP_BIN artisan config:clear
+            $PHP_BIN artisan cache:clear
+            $PHP_BIN artisan route:clear
+            $PHP_BIN artisan view:clear
+            $PHP_BIN artisan config:cache
+            $PHP_BIN artisan route:cache
+            $PHP_BIN artisan view:cache
 
-            if php artisan migrate:status 2>/dev/null | grep -q "Pending"; then
-              php artisan migrate --force
+            if $PHP_BIN artisan migrate:status 2>/dev/null | grep -q "Pending"; then
+              $PHP_BIN artisan migrate --force
               echo "✅ Migrations completed"
             else
               echo "✅ Migrations are up to date"
             fi
 
-            php artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
+            $PHP_BIN artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
 
             if [ -w storage ] && [ -w bootstrap/cache ]; then
               chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
