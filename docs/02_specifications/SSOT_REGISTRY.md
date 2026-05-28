@@ -15,6 +15,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-008 | members 重複の発生条件・影響・マージ運用（Runbook・案 A/B/C） | ../SSOT/MEMBERS_DEDUPLICATION_RUNBOOK.md | active |
 | SPEC-009 | リファーラル記録（外部・内部／TYFCB 相当） | ../SSOT/REFERRAL_RECORDING_REQUIREMENTS.md | active／記録: Phase 122 |
 | SPEC-010 | ユーザーログインと Owner（オーナー）紐づけ | ../SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md | active／記録: Phase 126 |
+| SPEC-011 | 初回アカウント登録 — 確認コードメール送信 | ../SSOT/AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md | active／記録: Phase 147 |
 
 ## Statusの値
 - active     : 現在有効なSSOT

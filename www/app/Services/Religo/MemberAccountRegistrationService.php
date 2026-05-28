@@ -2,15 +2,20 @@
 
 namespace App\Services\Religo;
 
+use App\Mail\ReligoRegistrationVerificationMail;
 use App\Models\Member;
 use App\Models\User;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 /**
- * members.email と一致するメンバー向けの初回アカウント作成（SPEC-010 §7.2 / §8）。
+ * members.email と一致するメンバー向けの初回アカウント作成（SPEC-010 §7.2 / SPEC-011）。
  */
 class MemberAccountRegistrationService
 {
@@ -25,7 +30,7 @@ class MemberAccountRegistrationService
     public function requestVerificationCode(string $email): array
     {
         $normalized = Str::lower(trim($email));
-        $member = $this->resolveMemberForRegistration($normalized, leakExists: false);
+        $member = $this->resolveMemberForRegistration($normalized);
 
         if ($member === null) {
             return [
@@ -41,12 +46,39 @@ class MemberAccountRegistrationService
 
         $code = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $ttlMinutes = max(1, (int) config('religo.registration_code_ttl_minutes', 30));
+        $cacheKey = $this->cacheKey($normalized);
 
-        Cache::put($this->cacheKey($normalized), [
+        Cache::put($cacheKey, [
             'code' => $code,
             'member_id' => $member->id,
             'workspace_id' => $member->workspace_id,
         ], now()->addMinutes($ttlMinutes));
+
+        try {
+            Mail::to($member->email)->send(
+                new ReligoRegistrationVerificationMail(
+                    memberName: $member->name,
+                    code: $code,
+                    ttlMinutes: $ttlMinutes,
+                )
+            );
+        } catch (Throwable $e) {
+            Cache::forget($cacheKey);
+            Log::error('Religo registration verification mail failed', [
+                'email' => $normalized,
+                'member_id' => $member->id,
+                'error' => $e->getMessage(),
+            ]);
+            throw new HttpResponseException(response()->json([
+                'message' => '送信に失敗しました。しばらくしてから再度お試しください。',
+            ], 503));
+        }
+
+        Log::info('Religo registration verification mail sent', [
+            'email' => $normalized,
+            'member_id' => $member->id,
+            'workspace_id' => $member->workspace_id,
+        ]);
 
         $payload = [
             'message' => '登録されているメールアドレスの場合、確認コードを送信しました。',
@@ -106,7 +138,7 @@ class MemberAccountRegistrationService
         return $user;
     }
 
-    private function resolveMemberForRegistration(string $normalizedEmail, bool $leakExists): ?Member
+    private function resolveMemberForRegistration(string $normalizedEmail): ?Member
     {
         $members = Member::query()
             ->whereNotNull('email')

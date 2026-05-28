@@ -144,6 +144,8 @@
 | 144 | BNI到達イメージと判断基準 | docs | completed | develop | 2026-05-26 |
 | 145 | BNI月次重点パワーチーム候補管理 | docs | completed | develop | 2026-05-26 |
 | 146 | tugilo Cloud モジュールカタログ SSOT | docs | completed | develop | 2026-05-26 |
+| 147 | SPEC-011 初回登録 — 確認コードメール送信要件 | docs | completed | develop | 2026-05-28 |
+| 148 | SPEC-011 確認コードメール送信 implement | implement | completed | develop | 2026-05-28 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
