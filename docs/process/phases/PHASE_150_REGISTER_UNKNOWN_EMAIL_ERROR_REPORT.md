@@ -15,19 +15,31 @@
 
 ## Merge Evidence
 
-（merge 後に記載）
-
-merge commit id:
+merge commit id: 2a157d0ffaed237958091c51469882cf93e68bbb
 source branch: feature/phase150-register-unknown-email-error
 target branch: develop
 phase id: 150
 phase type: implement
 related ssot: SPEC-011
 
-test command: docker compose ... exec app php artisan test
-test result: （merge 後に記載）
+test command: docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test
+test result: 394 passed (1516 assertions)
 
-changed files: （merge 後に記載）
+changed files:
+```
+docs/INDEX.md
+docs/SSOT/AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md
+docs/dragonfly_progress.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_149_REGISTER_UNKNOWN_EMAIL_ERROR_PLAN.md
+docs/process/phases/PHASE_149_REGISTER_UNKNOWN_EMAIL_ERROR_REPORT.md
+docs/process/phases/PHASE_149_REGISTER_UNKNOWN_EMAIL_ERROR_WORKLOG.md
+docs/process/phases/PHASE_150_REGISTER_UNKNOWN_EMAIL_ERROR_PLAN.md
+docs/process/phases/PHASE_150_REGISTER_UNKNOWN_EMAIL_ERROR_REPORT.md
+docs/process/phases/PHASE_150_REGISTER_UNKNOWN_EMAIL_ERROR_WORKLOG.md
+www/app/Services/Religo/MemberAccountRegistrationService.php
+www/tests/Feature/Api/AuthRegisterTest.php
+```
 
 scope check: OK
 ssot check: OK
