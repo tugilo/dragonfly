@@ -20,6 +20,7 @@
 - **1push 原則:** 1 目的 = 1 コミットで push。Phase の PLAN / WORKLOG / REPORT を締めたうえで push する。
 - **Phase docs:** 各 Phase で `docs/process/phases/` に PLAN / WORKLOG / REPORT を必ず作成する。
 - **テスト:** 取り込み前後にテストを実行し、REPORT に結果を記録する。
+- **`origin/develop` への同期:** **Phase ごと**に、merge 完了後 **必ず** `git push origin develop` する。次 Phase の feature を切る前に、リモート統合ブランチが最新であることを正とする。
 
 ---
 
@@ -28,7 +29,7 @@
 1. feature ブランチで作業・コミット・push まで完了していること。
 2. ローカルで develop に切り替え、リモート最新を取り込む。
 3. feature を **merge（--no-ff）** し、merge commit を 1 つ作る。
-4. テストを実行し、問題なければ develop を push する。
+4. テストを実行し、問題なければ **同一セッションで** `git push origin develop` する（Phase 完了の定義に含める）。
 5. REPORT に「取り込み証跡」を追記する（merge commit id、変更ファイル一覧、テスト結果）。
 
 コマンド例（日本語コメント付き）:

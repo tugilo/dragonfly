@@ -43,6 +43,12 @@ class OneToOne extends Model
         return $this->belongsTo(Member::class, 'target_member_id');
     }
 
+    /** 記録コンテキスト（通常はオーナー側所属チャプター）。SPEC-006 解釈 A */
+    public function workspace(): BelongsTo
+    {
+        return $this->belongsTo(Workspace::class, 'workspace_id');
+    }
+
     public function meeting(): BelongsTo
     {
         return $this->belongsTo(Meeting::class);

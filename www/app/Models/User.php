@@ -4,13 +4,19 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public const RELIGO_ROLE_MEMBER = 'member';
+
+    public const RELIGO_ROLE_CHAPTER_ADMIN = 'chapter_admin';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +27,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'owner_member_id',
+        'default_workspace_id',
+        'religo_role',
     ];
+
+    public function defaultWorkspace(): BelongsTo
+    {
+        return $this->belongsTo(Workspace::class, 'default_workspace_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -22,4 +22,29 @@ class OneToOneService
         $o2o->save();
         return $o2o;
     }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function update(OneToOne $o2o, array $data): OneToOne
+    {
+        $keys = [
+            'owner_member_id',
+            'target_member_id',
+            'meeting_id',
+            'status',
+            'scheduled_at',
+            'started_at',
+            'ended_at',
+            'notes',
+        ];
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $data)) {
+                $o2o->{$key} = $data[$key];
+            }
+        }
+        $o2o->save();
+
+        return $o2o->fresh();
+    }
 }

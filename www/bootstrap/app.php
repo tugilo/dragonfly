@@ -1,5 +1,7 @@
 <?php
 
+use App\Console\Commands\DashboardVerifySummaryCommand;
+use App\Console\Commands\ImportParticipantsCsvCommand;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,8 +14,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'religo.member_merge' => \App\Http\Middleware\VerifyReligoMemberMergeToken::class,
+            'religo.chapter_admin' => \App\Http\Middleware\EnsureReligoChapterAdmin::class,
+        ]);
+        $middleware->api(prepend: [
+            \App\Http\Middleware\RejectInvalidSanctumBearerToken::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->withCommands([
+        DashboardVerifySummaryCommand::class,
+        ImportParticipantsCsvCommand::class,
+    ])
+    ->create();

@@ -132,4 +132,18 @@ class RelationshipLogCreateTest extends TestCase
         $res->assertJsonPath('status', 'planned');
         $res->assertJsonStructure(['id', 'created_at', 'updated_at']);
     }
+
+    /** 9) one-to-ones: ended_at が scheduled_at 以前 → 422（ONETOONES_CREATE_UX_P1） */
+    public function test_one_to_one_422_when_ended_at_not_after_scheduled_at(): void
+    {
+        $res = $this->postJson('/api/one-to-ones', [
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->targetId,
+            'status' => 'planned',
+            'scheduled_at' => '2026-03-10 10:00:00',
+            'ended_at' => '2026-03-10 09:00:00',
+        ]);
+        $res->assertStatus(422);
+    }
 }

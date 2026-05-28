@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Religo;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Religo\UpdateMeetingBreakoutRoundsRequest;
 use App\Models\Meeting;
+use App\Services\Religo\BoAssignmentAuditLogWriter;
 use App\Services\Religo\MeetingBreakoutRoundsService;
 use Illuminate\Http\JsonResponse;
 
@@ -32,11 +33,13 @@ class MeetingBreakoutRoundsController extends Controller
         if (! $meeting) {
             return response()->json(['message' => 'Meeting not found.'], 404);
         }
+        $roundsPayload = $request->validated()['rounds'];
         try {
-            $this->roundsService->updateBreakoutRounds($meeting, $request->validated()['rounds']);
+            $this->roundsService->updateBreakoutRounds($meeting, $roundsPayload);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], 422);
         }
+        BoAssignmentAuditLogWriter::logFromBreakoutRoundsPayload($meeting, $roundsPayload);
         return response()->json($this->roundsService->getBreakoutRounds($meeting));
     }
 }

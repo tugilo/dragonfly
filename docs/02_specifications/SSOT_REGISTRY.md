@@ -1,0 +1,35 @@
+# SSOT Registry
+
+このプロジェクトのSingle Source of Truth一覧。
+AIは仕様を参照する際、必ずこの一覧を起点とする。
+
+| Spec ID | Spec Name | File | Status |
+|---|---|---|---|
+| SPEC-001 | Religo システム全体仕様 | system_requirements.md | draft |
+| SPEC-002 | 接触ロジック整合（last_contact・999・1to1 completed） | ../SSOT/CONTACT_LOGIC_ALIGNMENT.md | active |
+| SPEC-003 | 管理画面グローバル Owner 選択 | ../SSOT/ADMIN_GLOBAL_OWNER_SELECTION.md | implemented（主要コード）／記録: Phase ADMIN_GLOBAL_OWNER_SPEC003_DOCS |
+| SPEC-004 | Dashboard ウィークリープレゼン原稿表示 | ../SSOT/DASHBOARD_WEEKLY_PRESENTATION_REQUIREMENTS.md | implemented（主要コード）／記録: Phase DASHBOARD-WEEKLY-P1 / Phase 119 |
+| SPEC-005 | Dashboard 次の1to1候補のカテゴリ表示 | ../SSOT/DASHBOARD_ONETOONE_LEADS_REQUIREMENTS.md | implemented（主要コード） |
+| SPEC-006 | 1 to 1 とチャプター外（他チャプター BNI メンバー）— 解釈A・階層・API/UI | ../SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md | implemented（主要コード）／記録: Phase ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1 |
+| SPEC-007 | ビジター・ゲスト入会、代理出席、Connections と participants の業務・データ方針 | ../SSOT/MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md | active |
+| SPEC-008 | members 重複の発生条件・影響・マージ運用（Runbook・案 A/B/C） | ../SSOT/MEMBERS_DEDUPLICATION_RUNBOOK.md | active |
+| SPEC-009 | リファーラル記録（外部・内部／TYFCB 相当） | ../SSOT/REFERRAL_RECORDING_REQUIREMENTS.md | active／記録: Phase 122 |
+| SPEC-010 | ユーザーログインと Owner（オーナー）紐づけ | ../SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md | active／記録: Phase 126 |
+
+## Statusの値
+- active     : 現在有効なSSOT
+- draft      : 作成中・未確定
+- deprecated : 廃止（参照禁止）
+
+## ルール
+- 新しい仕様ファイルを作成したら必ずこのRegistryに登録する
+- deprecatedになった仕様は削除せず状態を変更して残す
+- Spec IDは SPEC-### の形式で連番管理する
+
+## 既存 SSOT（docs/SSOT/）との対応
+
+本プロジェクトでは docs/SSOT/ 配下にも仕様が存在する。新規 Phase で参照する際は、必要に応じて本 Registry に Spec ID を追加し、該当ファイルを登録すること。
+
+## SSOT 品質改善（レビュー用プロンプト）
+
+実装可能な粒度まで SSOT を引き上げるための **コピペ用プロンプト**: [PROMPT_SSOT_IMPROVEMENT.md](../process/PROMPT_SSOT_IMPROVEMENT.md)

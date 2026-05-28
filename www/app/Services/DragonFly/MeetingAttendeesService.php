@@ -16,7 +16,8 @@ class MeetingAttendeesService
     {
         $meeting = Meeting::where('number', $number)
             ->with([
-                'participants.member',
+                'participants.member.category',
+                'participants.member.memberRoles.role',
                 'participants.introducer:id,name',
                 'participants.attendant:id,name',
                 'participants.breakoutRooms',
@@ -76,8 +77,8 @@ class MeetingAttendeesService
                 'display_no' => $member->display_no,
                 'name' => $member->name,
                 'name_kana' => $member->name_kana,
-                'category' => $member->category,
-                'role_notes' => $member->role_notes,
+                'category' => $member->category ? ($member->category->group_name . ($member->category->name !== $member->category->group_name ? ' / ' . $member->category->name : '')) : null,
+                'role_notes' => $member->currentRole()?->name,
             ],
             'introducer' => $participant->introducer ? [
                 'id' => $participant->introducer->id,

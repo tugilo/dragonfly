@@ -29,6 +29,8 @@
 
 - **進捗ファイルは docs 直下に `dragonfly_progress.md` として必ず作成・使用する。** 例: fluo なら docs/fluo_progress.md。進捗はこの 1 ファイルに記録する。
 - **docs/INDEX.md を別ファイルで必ず管理する。** ドキュメントを追加・変更・削除したら必ず INDEX を更新する。進捗ファイルを更新したら INDEX に載っていることを確認する。
+- **ドキュメントに「いつの出来事か」を書くときは、日付だけでなく必ず時刻まで取得してから反映する**（打合せ・1to1・ミーティング・締切の記録など）。取得元はカレンダー・Zoom・チャット等でよい。**不明な場合は TODO と明記し、後から確定させる。** タイムゾーンが曖昧なときは **JST** と明記する。
+- **進捗・変更履歴・Phase REPORT を新規に追記するとき**は、作業実行時点の日時を使う。取得例: `TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'`（日付のみのプレースホルダーにしない）。
 - 詳細は docs/process/README.md および docs/INDEX.md を参照。
 
 -------------------------------------------------
@@ -44,6 +46,17 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 # Composer
 docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app composer require ...
 
+# フロントビルド（Vite / React）
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build
+
+-------------------------------------------------
+■ ⚛️ React / フロント実装後の必須作業
+-------------------------------------------------
+
+- **React や www/resources/js の実装・変更をしたあとは、必ずビルドを実行する。**
+- コマンド: `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec node npm run build`
+- ビルド失敗時はエラーを解消してから完了とする。
+
 -------------------------------------------------
 ■ 🧪 動作確認
 -------------------------------------------------
@@ -51,6 +64,15 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 - http://localhost … Laravel
 - http://localhost:8081 … phpMyAdmin（root/root または dragonfly/dragonfly）
 - コンテナ: dragonfly-app, dragonfly-node, dragonfly-nginx, dragonfly-db, dragonfly-phpmyadmin
+
+-------------------------------------------------
+■ 🖼 管理画面 UI とモックの比較（必須）
+-------------------------------------------------
+
+- **モック（SSOT）:** http://localhost/mock/religo-admin-mock.html（実体: www/public/mock/religo-admin-mock.html）
+- **UI を触る Phase** は、PLAN に **「モック比較: docs/SSOT/MOCK_UI_VERIFICATION.md に従う」** を必ず書く。
+- **実装後**は、対象画面をモックと同一操作で比較し、差分は **docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md** に記録する。
+- **Members 以外**のモックコンテンツが単一ファイルに無い現状は、**FIT_AND_GAP の“モック”列を正**として扱う。
 
 -------------------------------------------------
 ■ 🚫 禁止事項
@@ -125,7 +147,7 @@ AIがコード・ドキュメントを生成する場合：
 
 - **develop への直接コミット禁止:** 機能・修正は必ず feature ブランチで行い、merge で取り込む。例外: docs の軽微な追記（進捗ファイル・INDEX の 1 行追加など）のみ、事前に「例外」と判断した場合に限り develop 直コミットを許容する。
 - **main への反映:** リリース時のみ。develop → main の merge を原則とし、main への直コミットは禁止。
-- **1push の意味:** Phase 単位でまとめて push。Phase の PLAN / WORKLOG / REPORT を締めたうえで 1 コミットで push。取り込みは「develop 側での merge」が最後の push となる。
+- **1push の意味:** Phase 単位でまとめて push。Phase の PLAN / WORKLOG / REPORT を締めたうえで feature を **1 コミット**で push できるようにし、**develop へ merge した直後に必ず `git push origin develop`** する。**フェーズごとにマージとリモートへの反映まで完了**させ、ローカルだけの `develop` 先行を複数 Phase 溜めない。
 - **REPORT に merge commit id を必ず記録:** feature を develop に取り込んだあと、該当 Phase の REPORT に「取り込み証跡」セクションを追加し、merge commit id・merge 元ブランチ・変更ファイル一覧・テスト結果を記録する（PR の代替）。詳細は docs/process/templates/PHASE_REPORT_TEMPLATE.md および docs/git/PRLESS_MERGE_FLOW.md を参照。
 
 **取り込み用の固定手順（コピペ用）:**

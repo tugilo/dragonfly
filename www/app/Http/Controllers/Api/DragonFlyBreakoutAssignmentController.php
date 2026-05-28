@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DragonFly\UpsertBreakoutAssignmentRequest;
 use App\Http\Requests\DragonFly\DeleteBreakoutAssignmentRequest;
-use App\Services\DragonFly\BreakoutAssignmentService;
 use App\Models\Meeting;
 use App\Models\Participant;
+use App\Services\DragonFly\BreakoutAssignmentService;
+use App\Services\Religo\BoAssignmentAuditLogWriter;
 use Illuminate\Http\JsonResponse;
 
 class DragonFlyBreakoutAssignmentController extends Controller
@@ -43,6 +44,14 @@ class DragonFlyBreakoutAssignmentController extends Controller
         $roommateIds = $validRoommateIds;
 
         $result = $this->assignmentService->saveAssignment(
+            $meeting,
+            $session,
+            $participantId,
+            $roomLabel,
+            $roommateIds
+        );
+
+        BoAssignmentAuditLogWriter::logFromDragonFlyBreakoutAssignment(
             $meeting,
             $session,
             $participantId,

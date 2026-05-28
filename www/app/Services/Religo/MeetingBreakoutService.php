@@ -3,28 +3,59 @@
 namespace App\Services\Religo;
 
 use App\Models\BreakoutRoom;
-use App\Models\BreakoutRound;
 use App\Models\Meeting;
 use App\Models\Participant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 /**
- * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換・round_no=1 のみ）. SSOT: DATA_MODEL §4.5, §4.6.
+ * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換）.
+ * breakout_rounds テーブルが無い環境でも動作するよう meeting_id + room_label で breakout_rooms を扱う. SSOT: DATA_MODEL §4.5, §4.6.
  */
 class MeetingBreakoutService
 {
     private const ROOM_LABELS = ['BO1', 'BO2'];
 
     /**
-     * GET 用: meeting と rooms（round_no=1 の round に属する BO1/BO2）.
+     * Connections のグローバル Owner がどの BO にも含まれないとき、BO1 に追加する（同一保存ペイロード内で完結）。
+     * G11 で同一 member を BO1/BO2 両方に入れてよいため、「いずれかのルームにいれば」追加しない。
+     *
+     * @param  array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>  $rooms
+     * @return array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>
+     */
+    public function mergeEnsureMemberInBo1IfAbsent(array $rooms, ?int $memberId): array
+    {
+        if ($memberId === null || $memberId <= 0) {
+            return $rooms;
+        }
+        foreach ($rooms as $room) {
+            foreach ($room['member_ids'] ?? [] as $mid) {
+                if ((int) $mid === $memberId) {
+                    return $rooms;
+                }
+            }
+        }
+
+        $out = [];
+        foreach ($rooms as $room) {
+            $label = $room['room_label'] ?? '';
+            if ($label === 'BO1') {
+                $ids = array_values(array_unique(array_map('intval', $room['member_ids'] ?? [])));
+                $ids[] = $memberId;
+                $room['member_ids'] = array_values(array_unique($ids));
+            }
+            $out[] = $room;
+        }
+
+        return $out;
+    }
+
+    /**
+     * GET 用: meeting と rooms（BO1/BO2）.
      */
     public function getBreakouts(Meeting $meeting): array
     {
-        $round = BreakoutRound::firstOrCreate(
-            ['meeting_id' => $meeting->id, 'round_no' => 1],
-            ['label' => 'Round 1']
-        );
-        $rooms = BreakoutRoom::where('breakout_round_id', $round->id)
+        $rooms = BreakoutRoom::where('meeting_id', $meeting->id)
             ->whereIn('room_label', self::ROOM_LABELS)
             ->orderBy('room_label')
             ->get();
@@ -65,63 +96,86 @@ class MeetingBreakoutService
     }
 
     /**
-     * PUT 用: round_no=1 の round の rooms のみ保存.
+     * PUT 用: BO1/BO2 の rooms を保存.
+     *
+     * 各 member_id には当該例会の participants 行が必須。無い場合は自動作成せず ValidationException。
+     * SPEC-007 / CONN-BO-PARTICIPANT-REQUIRED-P1.
+     *
+     * @throws ValidationException
      */
     public function updateBreakouts(Meeting $meeting, array $rooms): void
     {
-        $round = BreakoutRound::firstOrCreate(
-            ['meeting_id' => $meeting->id, 'round_no' => 1],
-            ['label' => 'Round 1']
-        );
-
-        $allMemberIds = [];
-        foreach ($rooms as $r) {
-            foreach ($r['member_ids'] ?? [] as $mid) {
-                $allMemberIds[] = (int) $mid;
-            }
-        }
-        if (count($allMemberIds) !== count(array_unique($allMemberIds))) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
-                'rooms' => ['同一のメンバーを BO1/BO2 の両方に割り当てることはできません。'],
-            ]);
-        }
-
-        DB::transaction(function () use ($meeting, $round, $rooms) {
+        // G11: 同一 member を BO1/BO2 の両方に入れてよい。同一 BO 内のみ重複を防ぐ。
+        DB::transaction(function () use ($meeting, $rooms) {
             $roomLabels = array_column($rooms, 'room_label');
             $roomMap = [];
             foreach (self::ROOM_LABELS as $label) {
                 $idx = array_search($label, $roomLabels, true);
                 $payload = $idx !== false ? $rooms[$idx] : ['room_label' => $label, 'notes' => null, 'member_ids' => []];
+                $memberIds = array_values(array_unique(array_map('intval', $payload['member_ids'] ?? [])));
                 $room = BreakoutRoom::firstOrCreate(
-                    ['breakout_round_id' => $round->id, 'room_label' => $label],
-                    ['meeting_id' => $meeting->id, 'sort_order' => 1]
+                    ['meeting_id' => $meeting->id, 'room_label' => $label],
+                    ['sort_order' => 1]
                 );
                 $room->update(['notes' => $payload['notes'] ?? null]);
-                $roomMap[$label] = ['room' => $room, 'member_ids' => array_map('intval', $payload['member_ids'] ?? [])];
+                $roomMap[$label] = ['room' => $room, 'member_ids' => $memberIds];
+            }
+
+            $allMemberIds = [];
+            foreach ($roomMap as $data) {
+                foreach ($data['member_ids'] as $memberId) {
+                    $allMemberIds[] = $memberId;
+                }
+            }
+            $uniqueMemberIds = array_values(array_unique($allMemberIds));
+
+            $participantsByMemberId = null;
+            if ($uniqueMemberIds !== []) {
+                $participantsByMemberId = Participant::query()
+                    ->where('meeting_id', $meeting->id)
+                    ->whereIn('member_id', $uniqueMemberIds)
+                    ->get()
+                    ->keyBy('member_id');
+
+                $missing = [];
+                $ineligible = [];
+                foreach ($uniqueMemberIds as $memberId) {
+                    $p = $participantsByMemberId->get($memberId);
+                    if ($p === null) {
+                        $missing[] = $memberId;
+                    } elseif (in_array($p->type, ['absent', 'proxy'], true)) {
+                        $ineligible[] = $memberId;
+                    }
+                }
+                if ($missing !== []) {
+                    sort($missing);
+                    throw ValidationException::withMessages([
+                        'rooms' => [
+                            sprintf(
+                                '当該例会の参加者に存在しない member_id です: %s。CSVまたは参加者登録で登録してからBOに割り当ててください。',
+                                implode(', ', $missing)
+                            ),
+                        ],
+                    ]);
+                }
+                if ($ineligible !== []) {
+                    sort($ineligible);
+                    throw ValidationException::withMessages([
+                        'rooms' => [
+                            sprintf(
+                                '欠席または代理出席のためBOに含められない member_id です: %s。',
+                                implode(', ', $ineligible)
+                            ),
+                        ],
+                    ]);
+                }
             }
 
             $participantIdsByRoom = [];
             foreach ($roomMap as $label => $data) {
                 $participantIds = [];
                 foreach ($data['member_ids'] as $memberId) {
-                    $participant = Participant::firstWhere([
-                        'meeting_id' => $meeting->id,
-                        'member_id' => $memberId,
-                    ]);
-                    if ($participant) {
-                        if (in_array($participant->type, ['absent', 'proxy'], true)) {
-                            throw \Illuminate\Validation\ValidationException::withMessages([
-                                'rooms' => ["member_id {$memberId} は欠席/代理のため割当に含められません。"],
-                            ]);
-                        }
-                    } else {
-                        $participant = Participant::create([
-                            'meeting_id' => $meeting->id,
-                            'member_id' => $memberId,
-                            'type' => 'regular',
-                        ]);
-                    }
-                    $participantIds[] = $participant->id;
+                    $participantIds[] = $participantsByMemberId->get($memberId)->id;
                 }
                 $participantIdsByRoom[$label] = $participantIds;
             }

@@ -7,6 +7,7 @@ use App\Models\BreakoutRound;
 use App\Models\Meeting;
 use App\Models\Participant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Phase10R: Meeting の複数 Round 割当取得・保存. SSOT: PHASE10R PLAN.
@@ -74,9 +75,13 @@ class MeetingBreakoutRoundsService
     }
 
     /**
-     * PUT 用: rounds[] を upsert. 同一 round 内重複 member・absent/proxy は 422.
+     * PUT 用: rounds[] を upsert. 同一 round 内重複 member・absent/proxy・participant 未登録は 422.
+     *
+     * participant 不在時の自動作成はしない（SPEC-007 / CONN-BO-PARTICIPANT-REQUIRED-P1）。
      *
      * @param  array<int, array{round_no: int, label: string|null, rooms: array}>  $rounds
+     *
+     * @throws ValidationException
      */
     public function updateBreakoutRounds(Meeting $meeting, array $rounds): void
     {
@@ -120,28 +125,63 @@ class MeetingBreakoutRoundsService
                     $roomMap[$labelKey] = ['room' => $room, 'member_ids' => array_map('intval', $payload['member_ids'] ?? [])];
                 }
 
+                $allMemberIds = [];
+                foreach ($roomMap as $data) {
+                    foreach ($data['member_ids'] as $memberId) {
+                        $allMemberIds[] = $memberId;
+                    }
+                }
+                $uniqueMemberIds = array_values(array_unique($allMemberIds));
+
+                $participantsByMemberId = null;
+                if ($uniqueMemberIds !== []) {
+                    $participantsByMemberId = Participant::query()
+                        ->where('meeting_id', $meeting->id)
+                        ->whereIn('member_id', $uniqueMemberIds)
+                        ->get()
+                        ->keyBy('member_id');
+
+                    $missing = [];
+                    $ineligible = [];
+                    foreach ($uniqueMemberIds as $memberId) {
+                        $p = $participantsByMemberId->get($memberId);
+                        if ($p === null) {
+                            $missing[] = $memberId;
+                        } elseif (in_array($p->type, ['absent', 'proxy'], true)) {
+                            $ineligible[] = $memberId;
+                        }
+                    }
+                    if ($missing !== []) {
+                        sort($missing);
+                        throw ValidationException::withMessages([
+                            'rounds' => [
+                                sprintf(
+                                    'Round %d: 当該例会の参加者に存在しない member_id です: %s。CSVまたは参加者登録で登録してからBOに割り当ててください。',
+                                    $roundNo,
+                                    implode(', ', $missing)
+                                ),
+                            ],
+                        ]);
+                    }
+                    if ($ineligible !== []) {
+                        sort($ineligible);
+                        throw ValidationException::withMessages([
+                            'rounds' => [
+                                sprintf(
+                                    'Round %d: 欠席または代理出席のためBOに含められない member_id です: %s。',
+                                    $roundNo,
+                                    implode(', ', $ineligible)
+                                ),
+                            ],
+                        ]);
+                    }
+                }
+
                 $participantIdsByRoom = [];
                 foreach ($roomMap as $labelKey => $data) {
                     $participantIds = [];
                     foreach ($data['member_ids'] as $memberId) {
-                        $participant = Participant::firstWhere([
-                            'meeting_id' => $meeting->id,
-                            'member_id' => $memberId,
-                        ]);
-                        if ($participant) {
-                            if (in_array($participant->type, ['absent', 'proxy'], true)) {
-                                throw \Illuminate\Validation\ValidationException::withMessages([
-                                    'rounds' => ["member_id {$memberId} は欠席/代理のため割当に含められません。（Round {$roundNo}）"],
-                                ]);
-                            }
-                        } else {
-                            $participant = Participant::create([
-                                'meeting_id' => $meeting->id,
-                                'member_id' => $memberId,
-                                'type' => 'regular',
-                            ]);
-                        }
-                        $participantIds[] = $participant->id;
+                        $participantIds[] = $participantsByMemberId->get($memberId)->id;
                     }
                     $participantIdsByRoom[$labelKey] = $participantIds;
                 }

@@ -39,6 +39,13 @@ class MeetingBreakoutRoundsTest extends TestCase
                 'updated_at' => now(),
             ]);
         }
+        foreach ([$this->member1, $this->member2, $this->member3, $this->member4] as $mid) {
+            Participant::create([
+                'meeting_id' => $this->meetingId,
+                'member_id' => $mid,
+                'type' => 'regular',
+            ]);
+        }
     }
 
     public function test_put_round1_and_round2_then_get_matches(): void
@@ -145,37 +152,35 @@ class MeetingBreakoutRoundsTest extends TestCase
         $this->assertSame([$this->member1], collect($r2['rooms'])->firstWhere('room_label', 'BO1')['member_ids']);
     }
 
-    public function test_member_without_participant_gets_created_and_assigned(): void
+    /** participant 未登録の member_id は breakout-rounds 保存で拒否 */
+    public function test_breakout_rounds_fails_when_member_has_no_participant_row(): void
     {
-        $this->assertSame(0, Participant::where('meeting_id', $this->meetingId)->count());
+        $orphan = (int) DB::table('members')->insertGetId([
+            'name' => 'OrphanR',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         $payload = [
             'rounds' => [
                 [
                     'round_no' => 1,
                     'label' => 'Round 1',
                     'rooms' => [
-                        ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                        ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$orphan]],
                         ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
                     ],
                 ],
             ],
         ];
-        $this->putJson("/api/meetings/{$this->meetingId}/breakout-rounds", $payload)->assertOk();
-        $p = Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->first();
-        $this->assertNotNull($p);
-        $this->assertSame('regular', $p->type);
-        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakout-rounds");
-        $bo1 = collect($get->json('rounds')[0]['rooms'])->firstWhere('room_label', 'BO1');
-        $this->assertSame([$this->member1], $bo1['member_ids']);
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakout-rounds", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rounds']);
     }
 
-    public function test_absent_proxy_participant_in_member_ids_returns_422(): void
+    public function test_absent_participant_in_member_ids_returns_422(): void
     {
-        Participant::create([
-            'meeting_id' => $this->meetingId,
-            'member_id' => $this->member1,
-            'type' => 'absent',
-        ]);
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->update(['type' => 'absent']);
         $payload = [
             'rounds' => [
                 [
@@ -190,5 +195,26 @@ class MeetingBreakoutRoundsTest extends TestCase
         ];
         $res = $this->putJson("/api/meetings/{$this->meetingId}/breakout-rounds", $payload);
         $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rounds']);
+    }
+
+    public function test_proxy_participant_in_member_ids_returns_422(): void
+    {
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member2)->update(['type' => 'proxy']);
+        $payload = [
+            'rounds' => [
+                [
+                    'round_no' => 1,
+                    'label' => 'Round 1',
+                    'rooms' => [
+                        ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member2]],
+                        ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+                    ],
+                ],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakout-rounds", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rounds']);
     }
 }

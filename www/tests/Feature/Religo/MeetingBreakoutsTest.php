@@ -2,11 +2,15 @@
 
 namespace Tests\Feature\Religo;
 
+use App\Models\BoAssignmentAuditLog;
 use App\Models\BreakoutRoom;
+use App\Models\DragonflyContactFlag;
 use App\Models\Meeting;
 use App\Models\Participant;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 /**
@@ -39,6 +43,13 @@ class MeetingBreakoutsTest extends TestCase
         $this->member3 = (int) DB::table('members')->insertGetId([
             'name' => 'M3', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
         ]);
+        foreach ([$this->member1, $this->member2, $this->member3] as $mid) {
+            Participant::create([
+                'meeting_id' => $this->meetingId,
+                'member_id' => $mid,
+                'type' => 'regular',
+            ]);
+        }
     }
 
     public function test_put_then_get_returns_same_member_ids_and_notes(): void
@@ -67,7 +78,8 @@ class MeetingBreakoutsTest extends TestCase
         $this->assertSame([$this->member3], $bo2['member_ids']);
     }
 
-    public function test_same_member_in_both_rooms_returns_422(): void
+    /** G11: 同一 member を BO1 と BO2 の両方に入れてよい。 */
+    public function test_same_member_in_both_rooms_allowed(): void
     {
         $payload = [
             'rooms' => [
@@ -76,7 +88,54 @@ class MeetingBreakoutsTest extends TestCase
             ],
         ];
         $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
-        $res->assertStatus(422);
+        $res->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $get->assertOk();
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        $this->assertContains($this->member1, $bo1['member_ids']);
+        $this->assertContains($this->member1, $bo2['member_ids']);
+    }
+
+    /** Phase124: owner_member_id が送られたとき、どの BO にもいなければ BO1 にマージされる。 */
+    public function test_put_owner_member_id_merges_into_bo1_when_absent_from_all_rooms(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member3]],
+            ],
+            'owner_member_id' => $this->member1,
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $get->assertOk();
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        sort($bo1['member_ids']);
+        sort($bo2['member_ids']);
+        $this->assertSame([$this->member1, $this->member2], $bo1['member_ids']);
+        $this->assertSame([$this->member3], $bo2['member_ids']);
+    }
+
+    /** いずれかの BO に既にいるときはマージしない（BO2 のみにいても BO1 への強制追加なし）。 */
+    public function test_put_owner_member_id_does_not_duplicate_when_already_in_bo2(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member1, $this->member3]],
+            ],
+            'owner_member_id' => $this->member1,
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
+        $bo2 = collect($get->json('rooms'))->firstWhere('room_label', 'BO2');
+        sort($bo1['member_ids']);
+        sort($bo2['member_ids']);
+        $this->assertSame([$this->member2], $bo1['member_ids']);
+        $this->assertSame([$this->member1, $this->member3], $bo2['member_ids']);
     }
 
     public function test_other_meeting_breakouts_unchanged(): void
@@ -118,9 +177,26 @@ class MeetingBreakoutsTest extends TestCase
         ]);
     }
 
-    public function test_member_without_participant_gets_participant_created_and_assigned(): void
+    /** SPEC-007: participant 未登録の member_id は BO 保存で拒否（自動作成しない） */
+    public function test_put_breakouts_fails_when_member_has_no_participant_row(): void
     {
-        $this->assertSame(0, Participant::where('meeting_id', $this->meetingId)->count());
+        $memberOrphan = (int) DB::table('members')->insertGetId([
+            'name' => 'Orphan', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$memberOrphan]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+        $this->assertStringContainsString((string) $memberOrphan, implode(' ', $res->json('errors.rooms')));
+    }
+
+    public function test_put_breakouts_succeeds_when_participant_is_regular(): void
+    {
         $payload = [
             'rooms' => [
                 ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
@@ -128,11 +204,155 @@ class MeetingBreakoutsTest extends TestCase
             ],
         ];
         $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
-        $p = Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->first();
-        $this->assertNotNull($p);
-        $this->assertSame('regular', $p->type);
         $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
         $bo1 = collect($get->json('rooms'))->firstWhere('room_label', 'BO1');
         $this->assertSame([$this->member1], $bo1['member_ids']);
+    }
+
+    public function test_put_breakouts_fails_when_participant_is_absent(): void
+    {
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->update(['type' => 'absent']);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+    }
+
+    public function test_put_breakouts_fails_when_participant_is_proxy(): void
+    {
+        Participant::where('meeting_id', $this->meetingId)->where('member_id', $this->member1)->update(['type' => 'proxy']);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+    }
+
+    /** BO-AUDIT-P2: breakouts 保存監査に既定 workspace_id が載る */
+    public function test_put_breakouts_audit_row_has_workspace_when_workspaces_exist(): void
+    {
+        $wsId = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'W',
+            'slug' => 'w',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $log = BoAssignmentAuditLog::query()->where('meeting_id', $this->meetingId)->first();
+        $this->assertNotNull($log);
+        $this->assertSame($wsId, (int) $log->workspace_id);
+    }
+
+    /** BO-AUDIT-P3: owner の contact flag に workspace があれば先頭 workspace より優先 */
+    public function test_put_breakouts_audit_workspace_from_owner_flag_when_acting_user_has_owner(): void
+    {
+        $wsFirst = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'First',
+            'slug' => 'first',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsPreferred = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'Preferred',
+            'slug' => 'preferred',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $uId = (int) DB::table('users')->insertGetId([
+            'name' => 'Op',
+            'email' => 'op-bo-p3@example.com',
+            'password' => Hash::make('x'),
+            'owner_member_id' => $this->member1,
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DragonflyContactFlag::create([
+            'owner_member_id' => $this->member1,
+            'target_member_id' => $this->member2,
+            'interested' => false,
+            'want_1on1' => false,
+            'workspace_id' => $wsPreferred,
+        ]);
+        $this->actingAs(User::find($uId));
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $log = BoAssignmentAuditLog::query()->where('meeting_id', $this->meetingId)->first();
+        $this->assertNotNull($log);
+        $this->assertSame($wsPreferred, (int) $log->workspace_id);
+        $this->assertNotSame($wsFirst, (int) $log->workspace_id);
+    }
+
+    /** BO-AUDIT-P4: users.default_workspace_id があれば owner の flag より優先 */
+    public function test_put_breakouts_audit_workspace_uses_user_default_workspace_over_owner_flag(): void
+    {
+        $wsFirst = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'First',
+            'slug' => 'first-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsFromFlag = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'FromFlag',
+            'slug' => 'from-flag-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $wsDefault = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'UserDefault',
+            'slug' => 'user-default-p4',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $uId = (int) DB::table('users')->insertGetId([
+            'name' => 'Op',
+            'email' => 'op-bo-p4@example.com',
+            'password' => Hash::make('x'),
+            'owner_member_id' => $this->member1,
+            'default_workspace_id' => $wsDefault,
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DragonflyContactFlag::create([
+            'owner_member_id' => $this->member1,
+            'target_member_id' => $this->member2,
+            'interested' => false,
+            'want_1on1' => false,
+            'workspace_id' => $wsFromFlag,
+        ]);
+        $this->actingAs(User::find($uId));
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $log = BoAssignmentAuditLog::query()->where('meeting_id', $this->meetingId)->first();
+        $this->assertNotNull($log);
+        $this->assertSame($wsDefault, (int) $log->workspace_id);
+        $this->assertNotSame($wsFromFlag, (int) $log->workspace_id);
+        $this->assertNotSame($wsFirst, (int) $log->workspace_id);
     }
 }

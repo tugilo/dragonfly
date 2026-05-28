@@ -24,6 +24,10 @@ class IndexOneToOnesRequest extends FormRequest
             'status' => ['nullable', 'string', Rule::in(['planned', 'completed', 'canceled'])],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'limit' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'q' => ['nullable', 'string', 'max:200'],
+            /** 一覧既定: `status` 未指定時に `canceled` を除く（ONETOONES-DELETE-POLICY-P1） */
+            'exclude_canceled' => ['nullable', 'boolean'],
         ];
     }
 }

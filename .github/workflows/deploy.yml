@@ -1,0 +1,151 @@
+# Religo（dragonfly）— tugilo_site と同一 VPS（さくら VPS）
+# Git でリポジトリ全体を管理し、サーバーには www/ のみ rsync
+# composer / npm build はサーバー上で実行（PHP 8.4 + nvm Node 20）
+# develop → /var/www/laravel/religo_dev
+# main    → /var/www/laravel/religo_app
+#
+# 必須 Secrets: SSH_HOST, SSH_USER, SSH_PRIVATE_KEY
+
+name: Deploy Religo to Sakura VPS
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set deploy target
+        id: target
+        run: |
+          if [ "${{ github.ref_name }}" = "develop" ]; then
+            echo "deploy_path=/var/www/laravel/religo_dev" >> "$GITHUB_OUTPUT"
+            echo "environment=development" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_name }}" = "main" ]; then
+            echo "deploy_path=/var/www/laravel/religo_app" >> "$GITHUB_OUTPUT"
+            echo "environment=production" >> "$GITHUB_OUTPUT"
+          else
+            echo "Branch not supported: ${{ github.ref_name }}"
+            exit 1
+          fi
+
+      - name: Configure SSH for rsync
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ensure deploy directory exists
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p "${{ steps.target.outputs.deploy_path }}"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/bootstrap/cache"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/app/public"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/framework/"{cache/data,sessions,views}
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/logs"
+
+      - name: Rsync www to server
+        env:
+          DEPLOY_PATH: ${{ steps.target.outputs.deploy_path }}
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            --exclude '.env' \
+            --exclude '.env.*' \
+            --exclude 'storage/' \
+            --exclude 'node_modules/' \
+            --exclude 'vendor/' \
+            --exclude 'public/build/' \
+            www/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${DEPLOY_PATH}/"
+
+      - name: Build and activate on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            DEPLOY_PATH="${{ steps.target.outputs.deploy_path }}"
+            ENVIRONMENT="${{ steps.target.outputs.environment }}"
+            PHP_BIN=/usr/bin/php8.4
+            COMPOSER_BIN=/usr/local/bin/composer
+
+            echo "🚀 Deploying Religo to ${DEPLOY_PATH} (${ENVIRONMENT})"
+            echo "PHP: $($PHP_BIN -v | head -1)"
+
+            if ! $PHP_BIN -r 'exit(version_compare(PHP_VERSION, "8.4.0", ">=") ? 0 : 1);'; then
+              echo "Error: Religo requires PHP >= 8.4"
+              exit 1
+            fi
+
+            cd "${DEPLOY_PATH}"
+
+            if [ ! -f ".env" ]; then
+              echo "❌ Missing ${DEPLOY_PATH}/.env"
+              echo "   cp .env.religo_dev.example .env  (develop) or .env.religo_app.example (main)"
+              echo "   See docs/DEPLOYMENT.md"
+              exit 1
+            fi
+
+            if [ ! -d "vendor" ] || [ "composer.lock" -nt "vendor/autoload.php" ]; then
+              $PHP_BIN $COMPOSER_BIN install --no-dev --optimize-autoloader --no-interaction
+              echo "✅ Composer dependencies updated"
+            else
+              echo "✅ Composer dependencies are up to date"
+            fi
+
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm use 20 2>/dev/null || true
+
+            if [ ! -d "node_modules" ] || [ "package-lock.json" -nt "node_modules/.package-lock.json" ]; then
+              npm ci --prefer-offline --no-audit --no-fund
+              echo "✅ NPM dependencies updated"
+            else
+              echo "✅ NPM dependencies are up to date"
+            fi
+
+            NODE_OPTIONS="--max-old-space-size=4096" npm run build
+            echo "✅ Frontend build completed"
+
+            $PHP_BIN artisan config:clear
+            $PHP_BIN artisan route:clear
+            $PHP_BIN artisan view:clear
+
+            if $PHP_BIN artisan migrate:status 2>/dev/null | grep -q "Pending"; then
+              $PHP_BIN artisan migrate --force
+              echo "✅ Migrations completed"
+            else
+              echo "✅ Migrations are up to date"
+            fi
+
+            $PHP_BIN artisan cache:clear
+            $PHP_BIN artisan config:cache
+            $PHP_BIN artisan route:cache
+            $PHP_BIN artisan view:cache
+
+            $PHP_BIN artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
+
+            if [ -w storage ] && [ -w bootstrap/cache ]; then
+              chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+              chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+              echo "✅ Permissions updated"
+            else
+              echo "⚠️  Skipped permission update (insufficient write access)"
+            fi
+
+            echo "✅ Deployment completed successfully (${ENVIRONMENT})"

@@ -36,4 +36,9 @@ class ContactMemo extends Model
     {
         return $this->belongsTo(Meeting::class);
     }
+
+    public function oneToOne(): BelongsTo
+    {
+        return $this->belongsTo(OneToOne::class, 'one_to_one_id');
+    }
 }
