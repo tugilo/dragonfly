@@ -136,7 +136,20 @@ jobs:
               echo "✅ Migrations are up to date"
             fi
 
-            $PHP_BIN artisan cache:clear
+            # php-fpm (www-data) may own files under storage/framework/cache/data;
+            # SSH deploy user cannot delete them directly. Recreate data/ if clear fails.
+            if ! $PHP_BIN artisan cache:clear; then
+              echo "⚠️  cache:clear failed (www-data-owned cache files). Recreating cache/data..."
+              if [ -d storage/framework/cache/data ]; then
+                mv storage/framework/cache/data "storage/framework/cache/data.bak.$(date +%s)" 2>/dev/null || true
+              fi
+              mkdir -p storage/framework/cache/data
+              chmod -R 775 storage/framework/cache
+              chgrp -R www-data storage/framework/cache 2>/dev/null || true
+              $PHP_BIN artisan cache:clear
+            fi
+            echo "✅ Application cache cleared"
+
             $PHP_BIN artisan config:cache
             $PHP_BIN artisan route:cache
             $PHP_BIN artisan view:cache

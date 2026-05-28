@@ -139,6 +139,7 @@ sudo systemctl reload apache2
 | migrate 失敗 | DB 名・`.env` の `DB_DATABASE` |
 | `database.sqlite` does not exist | `.env` 未作成または sqlite 設定のまま |
 | `require PHP ">= 8.4.0"`（白画面） | Apache が 8.3 のまま → **php8.4-fpm + SetHandler** |
+| `Failed to clear cache`（Actions） | php-fpm が `storage/framework/cache/data` を www-data 所有 → deploy.yml の data 再作成フォールバック |
 
 ---
 
