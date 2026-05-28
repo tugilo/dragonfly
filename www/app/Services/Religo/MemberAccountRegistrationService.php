@@ -33,9 +33,9 @@ class MemberAccountRegistrationService
         $member = $this->resolveMemberForRegistration($normalized);
 
         if ($member === null) {
-            return [
-                'message' => '登録されているメールアドレスの場合、確認コードを送信しました。',
-            ];
+            throw ValidationException::withMessages([
+                'email' => ['このメールアドレスはメンバー情報に登録されていません。Members で email を登録するか、チャプター管理者にお問い合わせください。'],
+            ]);
         }
 
         if (User::query()->whereRaw('LOWER(email) = ?', [$normalized])->exists()) {

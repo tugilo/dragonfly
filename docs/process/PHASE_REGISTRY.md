@@ -146,6 +146,8 @@
 | 146 | tugilo Cloud モジュールカタログ SSOT | docs | completed | develop | 2026-05-26 |
 | 147 | SPEC-011 初回登録 — 確認コードメール送信要件 | docs | completed | develop | 2026-05-28 |
 | 148 | SPEC-011 確認コードメール送信 implement | implement | completed | develop | 2026-05-28 |
+| 149 | SPEC-011 member 未一致 — 初回登録エラー表示要件 | docs | completed | develop | 2026-05-28 |
+| 150 | SPEC-011 member 未一致 — 初回登録 422 implement | implement | in_progress | feature/phase150-register-unknown-email-error | 2026-05-28 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

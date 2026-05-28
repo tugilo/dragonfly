@@ -57,7 +57,7 @@ class AuthRegisterTest extends TestCase
         });
     }
 
-    public function test_request_is_generic_for_unknown_email(): void
+    public function test_request_returns_422_for_unknown_email(): void
     {
         Mail::fake();
 
@@ -65,9 +65,11 @@ class AuthRegisterTest extends TestCase
             'email' => 'unknown@example.com',
         ]);
 
-        $res->assertOk();
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['email']);
         $res->assertJsonMissing(['debug_code']);
         Mail::assertNothingSent();
+        $this->assertNull(Cache::get('religo:register:unknown@example.com'));
     }
 
     public function test_request_returns_503_and_clears_cache_when_mail_fails(): void
