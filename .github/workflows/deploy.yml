@@ -71,6 +71,7 @@ jobs:
             --exclude 'node_modules/' \
             --exclude 'vendor/' \
             --exclude 'public/build/' \
+            --exclude 'bootstrap/cache/*.php' \
             www/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${DEPLOY_PATH}/"
 
       - name: Build and activate on server
@@ -121,8 +122,8 @@ jobs:
               echo "✅ NPM dependencies are up to date"
             fi
 
-            NODE_OPTIONS="--max-old-space-size=4096" npm run build
-            echo "✅ Frontend build completed"
+            NODE_OPTIONS="--max-old-space-size=4096" npm run build 2>&1
+            echo "✅ Frontend build completed (MUI \"use client\" lines above are warnings, not failures)"
 
             $PHP_BIN artisan config:clear
             $PHP_BIN artisan route:clear
@@ -139,6 +140,18 @@ jobs:
             $PHP_BIN artisan config:cache
             $PHP_BIN artisan route:cache
             $PHP_BIN artisan view:cache
+
+            if ! $PHP_BIN -r '
+              $c = require "bootstrap/cache/config.php";
+              exit(empty($c["app"]["key"]) ? 1 : 0);
+            '; then
+              echo "❌ config:cache did not embed APP_KEY — check .env permissions and APP_KEY"
+              exit 1
+            fi
+            echo "✅ Config cache verified (APP_KEY present)"
+
+            chmod 640 .env 2>/dev/null || true
+            chgrp www-data .env 2>/dev/null || true
 
             $PHP_BIN artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
 
