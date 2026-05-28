@@ -64,7 +64,9 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
             --exclude '.env' \
-            --exclude '.env.*' \
+            --exclude '.env.backup' \
+            --exclude '.env.production' \
+            --exclude '.env.local' \
             --exclude 'storage/' \
             --exclude 'node_modules/' \
             --exclude 'vendor/' \
