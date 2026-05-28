@@ -72,22 +72,57 @@ mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS religo_dev CHARACTER SET utf8
 
 **開発データ:** `www/database/sync/dragonfly.sql` を手動インポート（[www/database/sync/README.md](../www/database/sync/README.md)）。
 
-## Web サーバー（Nginx 例）
+## Web サーバー（Apache）
 
-```nginx
-# 開発
-root /var/www/laravel/religo_dev/public;
+VPS では **Apache + php-fpm**。Religo の SSL vhost は DocumentRoot は既に正しい:
 
-# 本番
-root /var/www/laravel/religo_app/public;
+| サイト | 設定ファイル | DocumentRoot |
+|--------|--------------|--------------|
+| 開発 | `religo-dev-le-ssl.conf` | `/var/www/laravel/religo_dev/public` |
+| 本番 | `religo-le-ssl.conf` | `/var/www/laravel/religo_app/public` |
+
+### PHP 8.4 を Web でも使う（必須）
+
+デプロイ（CLI）は `php8.4` だが、**Apache は未指定だと php8.3 / mod_php になる**ため、画面に次のエラーが出る:
+
+> Composer detected issues in your platform: require PHP ">= 8.4.0"
+
+**手順（サーバーで sudo 実行）:**
+
+```bash
+# 1. FPM 8.4 をインストール・起動（未導入時）
+sudo apt-get install -y php8.4-fpm
+sudo systemctl enable --now php8.4-fpm
+ls /run/php/php8.4-fpm.sock   # ソケット確認
+
+# 2. SSL vhost に SetHandler を追加（dev.tugilo.com と同じ）
+sudo nano /etc/apache2/sites-available/religo-dev-le-ssl.conf
+sudo nano /etc/apache2/sites-available/religo-le-ssl.conf
 ```
 
-**php-fpm:** Religo 用 vhost は **php8.4-fpm** を指定すること。
+各ファイルの `<IfModule mod_ssl.c>` 内、**`<VirtualHost>` の直前**に追加:
+
+```apache
+<FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php8.4-fpm.sock|fcgi://localhost/"
+</FilesMatch>
+```
+
+スニペット例: [docs/apache/religo-dev-le-ssl.conf.snippet](apache/religo-dev-le-ssl.conf.snippet)、[religo-le-ssl.conf.snippet](apache/religo-le-ssl.conf.snippet)
+
+```bash
+# 3. 構文チェック・リロード
+sudo apache2ctl configtest
+sudo systemctl reload apache2
+```
+
+確認: `https://religo.dev-tugilo.com` / `https://religo.tugilo.com` で Laravel 画面（Composer エラーが消えること）。
 
 ## PHP バージョン
 
 - `composer.lock` は **PHP >= 8.4**
-- サーバーは **`/usr/bin/php8.4`**（VPS のデフォルト `php` は 8.3 のため）
+- **CLI / デプロイ:** `/usr/bin/php8.4`
+- **Web（Apache）:** `php8.4-fpm` のソケットを `SetHandler` で指定（上記）
 
 ## 注意
 
@@ -103,6 +138,7 @@ root /var/www/laravel/religo_app/public;
 | フロントが古い | サーバー上 `npm run build` の成否（Actions SSH ログ） |
 | migrate 失敗 | DB 名・`.env` の `DB_DATABASE` |
 | `database.sqlite` does not exist | `.env` 未作成または sqlite 設定のまま |
+| `require PHP ">= 8.4.0"`（白画面） | Apache が 8.3 のまま → **php8.4-fpm + SetHandler** |
 
 ---
 

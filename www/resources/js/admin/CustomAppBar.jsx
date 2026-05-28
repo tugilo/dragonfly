@@ -177,7 +177,7 @@ export const CustomAppBar = () => {
                         sx={{ fontSize: 12, textTransform: 'none' }}
                         onClick={() => {
                             void logoutReligo().then(() => {
-                                window.location.assign('/');
+                                window.location.assign('/admin#/login');
                             });
                         }}
                     >

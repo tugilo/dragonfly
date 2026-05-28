@@ -1,0 +1,14 @@
+# religo.dev-tugilo.com — PHP 8.4 FPM（/etc/apache2/sites-available/religo-dev-le-ssl.conf）
+# dev.tugilo.com と同じ FilesMatch パターン。VirtualHost の直前に置く。
+
+<IfModule mod_ssl.c>
+<FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php8.4-fpm.sock|fcgi://localhost/"
+</FilesMatch>
+
+<VirtualHost *:443>
+    ServerName religo.dev-tugilo.com
+    DocumentRoot /var/www/laravel/religo_dev/public
+    ...
+</VirtualHost>
+</IfModule>

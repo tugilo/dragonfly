@@ -1,0 +1,13 @@
+# religo.tugilo.com — PHP 8.4 FPM（/etc/apache2/sites-available/religo-le-ssl.conf）
+
+<IfModule mod_ssl.c>
+<FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php8.4-fpm.sock|fcgi://localhost/"
+</FilesMatch>
+
+<VirtualHost *:443>
+    ServerName religo.tugilo.com
+    DocumentRoot /var/www/laravel/religo_app/public
+    ...
+</VirtualHost>
+</IfModule>
