@@ -3,7 +3,7 @@
 use App\Http\Controllers\DragonFlyMvpController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/admin#/login');
+Route::redirect('/', '/admin');
 
 Route::get('/dragonfly/{number}', [DragonFlyMvpController::class, 'show'])->whereNumber('number');
 

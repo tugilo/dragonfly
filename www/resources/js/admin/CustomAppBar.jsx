@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Box, IconButton, InputBase, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
-import { SidebarToggleButton } from 'react-admin';
+import { SidebarToggleButton, useLogout } from 'react-admin';
 import { useReligoOwner } from './ReligoOwnerContext';
 import { formatMemberPrimaryLine } from './utils/memberDisplay';
-import { hasReligoAccessToken, logoutReligo } from './religoApiFetch';
+import { hasReligoAccessToken } from './religoApiFetch';
 
 const APPBAR_HEIGHT = 56;
 
@@ -47,6 +47,7 @@ function useReligoSanctumTokenPresent() {
 
 export const CustomAppBar = () => {
     const { pathname } = useLocation();
+    const logout = useLogout();
     const hasSanctumToken = useReligoSanctumTokenPresent();
     const currentLabel = getLabel(pathname);
     const {
@@ -176,9 +177,7 @@ export const CustomAppBar = () => {
                         variant="outlined"
                         sx={{ fontSize: 12, textTransform: 'none' }}
                         onClick={() => {
-                            void logoutReligo().then(() => {
-                                window.location.assign('/admin#/login');
-                            });
+                            void logout();
                         }}
                     >
                         ログアウト

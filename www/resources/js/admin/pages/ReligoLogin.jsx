@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useLogin } from 'react-admin';
 import { Box, Button, Paper, TextField, Typography, Alert } from '@mui/material';
-import { loginReligo } from '../religoApiFetch';
 
 /**
- * Sanctum ログイン（トークンを localStorage に保存し /admin へリダイレクト）
+ * Sanctum ログイン（authProvider 経由でトークン保存・ダッシュボードへ遷移）
  */
 export function ReligoLogin() {
+    const login = useLogin();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -16,8 +17,7 @@ export function ReligoLogin() {
         setError(null);
         setLoading(true);
         try {
-            await loginReligo(email, password);
-            window.location.assign('/admin');
+            await login({ username: email, password });
         } catch (err) {
             setError(err instanceof Error ? err.message : 'ログインに失敗しました');
         } finally {
