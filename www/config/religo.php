@@ -36,4 +36,19 @@ return [
     */
     'member_merge_token' => env('RELIGO_MEMBER_MERGE_TOKEN'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | メンバー email による初回アカウント登録（SPEC-010 §7.2 / §8）
+    |--------------------------------------------------------------------------
+    |
+    | registration_expose_debug_code: true のとき API が debug_code を返す（ローカル確認用）。
+    | 本番では false とし、将来メール送信に差し替える。
+    |
+    */
+    'registration_code_ttl_minutes' => max(1, (int) env('RELIGO_REGISTRATION_CODE_TTL_MINUTES', 30)),
+    'registration_expose_debug_code' => filter_var(
+        env('RELIGO_REGISTRATION_EXPOSE_DEBUG_CODE', env('APP_DEBUG', false)),
+        FILTER_VALIDATE_BOOLEAN
+    ),
+
 ];

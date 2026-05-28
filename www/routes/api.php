@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AdminUserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthRegisterController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DragonFlyBreakoutAssignmentController;
 use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
@@ -33,6 +34,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/auth/register/request', [AuthRegisterController::class, 'request'])
+    ->middleware('throttle:10,1');
+Route::post('/auth/register/complete', [AuthRegisterController::class, 'complete'])
+    ->middleware('throttle:10,1');
 
 Route::middleware('religo.chapter_admin')->prefix('admin')->group(function () {
     Route::patch('/users/{user}', [AdminUserController::class, 'update']);

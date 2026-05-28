@@ -109,3 +109,46 @@ export async function logoutReligo() {
 export function hasReligoAccessToken() {
     return Boolean(getReligoAccessToken());
 }
+
+/**
+ * @returns {Promise<{ message: string, debug_code?: string }>}
+ */
+export async function requestReligoRegistration(email) {
+    const res = await fetch('/api/auth/register/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ email: String(email).trim() }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        const msg = data.errors?.email?.[0] ?? data.message;
+        throw new Error(typeof msg === 'string' && msg.trim() !== '' ? msg : '確認コードの送信に失敗しました');
+    }
+    return data;
+}
+
+/**
+ * @returns {Promise<{ message: string, user?: object }>}
+ */
+export async function completeReligoRegistration(email, code, password, passwordConfirmation) {
+    const res = await fetch('/api/auth/register/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+            email: String(email).trim(),
+            code: String(code).trim(),
+            password: String(password),
+            password_confirmation: String(passwordConfirmation),
+        }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        const msg =
+            data.errors?.code?.[0] ??
+            data.errors?.email?.[0] ??
+            data.errors?.password?.[0] ??
+            data.message;
+        throw new Error(typeof msg === 'string' && msg.trim() !== '' ? msg : 'アカウント作成に失敗しました');
+    }
+    return data;
+}
