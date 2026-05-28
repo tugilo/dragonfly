@@ -1,13 +1,10 @@
 # Religo（dragonfly）— tugilo_site と同一 VPS（さくら VPS）
+# Git でリポジトリ全体を管理し、サーバーには www/ のみ rsync
+# composer / npm build はサーバー上で実行（PHP 8.4 + nvm Node 20）
 # develop → /var/www/laravel/religo_dev
 # main    → /var/www/laravel/religo_app
 #
-# Laravel は www/ 配下。Web ルート: {DEPLOY_PATH}/www/public
-#
-# 必須 Secrets（tugilo_site と同じ VPS なら同値で可）:
-#   SSH_HOST, SSH_USER, SSH_PRIVATE_KEY
-#
-# 参考: tugilo_site/.github/workflows/deploy.yml
+# 必須 Secrets: SSH_HOST, SSH_USER, SSH_PRIVATE_KEY
 
 name: Deploy Religo to Sakura VPS
 
@@ -23,7 +20,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy via SSH
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set deploy target
+        id: target
+        run: |
+          if [ "${{ github.ref_name }}" = "develop" ]; then
+            echo "deploy_path=/var/www/laravel/religo_dev" >> "$GITHUB_OUTPUT"
+            echo "environment=development" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_name }}" = "main" ]; then
+            echo "deploy_path=/var/www/laravel/religo_app" >> "$GITHUB_OUTPUT"
+            echo "environment=production" >> "$GITHUB_OUTPUT"
+          else
+            echo "Branch not supported: ${{ github.ref_name }}"
+            exit 1
+          fi
+
+      - name: Configure SSH for rsync
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ensure deploy directory exists
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p "${{ steps.target.outputs.deploy_path }}"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/bootstrap/cache"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/app/public"
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/framework/"{cache/data,sessions,views}
+            mkdir -p "${{ steps.target.outputs.deploy_path }}/storage/logs"
+
+      - name: Rsync www to server
+        env:
+          DEPLOY_PATH: ${{ steps.target.outputs.deploy_path }}
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            --exclude '.env' \
+            --exclude '.env.*' \
+            --exclude 'storage/' \
+            --exclude 'node_modules/' \
+            --exclude 'vendor/' \
+            --exclude 'public/build/' \
+            www/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${DEPLOY_PATH}/"
+
+      - name: Build and activate on server
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -31,39 +79,27 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
-
-            if [ "${{ github.ref_name }}" == "develop" ]; then
-              DEPLOY_PATH=/var/www/laravel/religo_dev
-              BRANCH=develop
-              ENVIRONMENT=development
-            elif [ "${{ github.ref_name }}" == "main" ]; then
-              DEPLOY_PATH=/var/www/laravel/religo_app
-              BRANCH=main
-              ENVIRONMENT=production
-            else
-              echo "Branch not supported: ${{ github.ref_name }}"
-              exit 1
-            fi
-
-            APP_DIR="${DEPLOY_PATH}/www"
+            DEPLOY_PATH="${{ steps.target.outputs.deploy_path }}"
+            ENVIRONMENT="${{ steps.target.outputs.environment }}"
             PHP_BIN=/usr/bin/php8.4
             COMPOSER_BIN=/usr/local/bin/composer
 
             echo "🚀 Deploying Religo to ${DEPLOY_PATH} (${ENVIRONMENT})"
-            echo "Branch: ${BRANCH}"
             echo "PHP: $($PHP_BIN -v | head -1)"
 
             if ! $PHP_BIN -r 'exit(version_compare(PHP_VERSION, "8.4.0", ">=") ? 0 : 1);'; then
-              echo "Error: Religo requires PHP >= 8.4 (see versions.env). Found: $($PHP_BIN -v | head -1)"
+              echo "Error: Religo requires PHP >= 8.4"
               exit 1
             fi
 
             cd "${DEPLOY_PATH}"
-            git fetch origin
-            git reset --hard "origin/${BRANCH}"
-            git clean -fd
 
-            cd "${APP_DIR}"
+            if [ ! -f ".env" ]; then
+              echo "❌ Missing ${DEPLOY_PATH}/.env"
+              echo "   cp .env.religo_dev.example .env  (develop) or .env.religo_app.example (main)"
+              echo "   See docs/DEPLOYMENT.md"
+              exit 1
+            fi
 
             if [ ! -d "vendor" ] || [ "composer.lock" -nt "vendor/autoload.php" ]; then
               $PHP_BIN $COMPOSER_BIN install --no-dev --optimize-autoloader --no-interaction
@@ -84,14 +120,11 @@ jobs:
             fi
 
             NODE_OPTIONS="--max-old-space-size=4096" npm run build
+            echo "✅ Frontend build completed"
 
             $PHP_BIN artisan config:clear
-            $PHP_BIN artisan cache:clear
             $PHP_BIN artisan route:clear
             $PHP_BIN artisan view:clear
-            $PHP_BIN artisan config:cache
-            $PHP_BIN artisan route:cache
-            $PHP_BIN artisan view:cache
 
             if $PHP_BIN artisan migrate:status 2>/dev/null | grep -q "Pending"; then
               $PHP_BIN artisan migrate --force
@@ -99,6 +132,11 @@ jobs:
             else
               echo "✅ Migrations are up to date"
             fi
+
+            $PHP_BIN artisan cache:clear
+            $PHP_BIN artisan config:cache
+            $PHP_BIN artisan route:cache
+            $PHP_BIN artisan view:cache
 
             $PHP_BIN artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
 

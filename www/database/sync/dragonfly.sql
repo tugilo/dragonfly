@@ -1,5 +1,5 @@
 -- dragonfly dev DB sync dump
--- generated: 2026-05-27 17:01:09 JST
+-- generated: 2026-05-28 18:09:01 JST
 -- database: dragonfly
 -- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
 
@@ -1587,7 +1587,7 @@ CREATE TABLE `members` (
   CONSTRAINT `members_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
   CONSTRAINT `members_introducer_member_id_foreign` FOREIGN KEY (`introducer_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
   CONSTRAINT `members_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1733,7 +1733,8 @@ INSERT INTO `members` VALUES
 (134,'八田　奈緒美','はった　なおみ',NULL,244,NULL,'guest','G2',NULL,NULL,NULL,20,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (135,'森園　友喜',NULL,NULL,NULL,NULL,'member','17',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-05-26 09:02:55'),
 (136,'米澤　侑桂',NULL,NULL,NULL,NULL,'member','36',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-05-26 09:02:55'),
-(137,'南方　優馬','なんぽ　ゆうま',NULL,NULL,10,'visitor',NULL,NULL,NULL,NULL,31,NULL,'2026-05-27 17:00:47','2026-05-27 17:00:47');
+(137,'南方　優馬','なんぽ　ゆうま',NULL,NULL,10,'visitor',NULL,NULL,NULL,NULL,31,NULL,'2026-05-27 17:00:47','2026-05-27 17:00:47'),
+(138,'神保　玲太',NULL,'ryotadesu.jp@gmail.com',NULL,2,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-28 17:08:50','2026-05-28 17:08:50');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1843,7 +1844,7 @@ CREATE TABLE `one_to_ones` (
   CONSTRAINT `one_to_ones_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_target_member_id_foreign` FOREIGN KEY (`target_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1882,7 +1883,8 @@ INSERT INTO `one_to_ones` VALUES
 (32,1,37,124,NULL,'2026-05-22 09:00:00','2026-05-22 09:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_mitarai_fudotech.md】\n実施: 2026-05-22（金）JST 09:00〜終了時刻TODO／オーナー: 次廣 淳 → 対象: 御手洗氏（株式会社風土テック／BNI VORTEX）\n\n■ 主な成果\n・次廣の建設業・製造業向けAI業務改善システム構築と、御手洗氏の建設業採用支援は顧客層・課題解決アプローチの親和性が高いことを確認。\n・外国人労働者の日報管理システム、採用後の定着・教育・現場共有、採用支援先への業務改善提案で協業可能性を確認。\n・西岡優希氏（外国人就労支援）との三者連携候補が具体化。\n\n■ 御手洗氏 / 風土テック\n・建設業の採用支援。週1回の定例MTG、SNS撮影、Indeed / engage等の無料媒体改善、SNS・HP・求人媒体の一貫性づくり、MVV策定、採用後フォローまで伴走。\n・採用活動を一発勝負ではなく企業内に採用力を蓄積する「資産化」として捉える。\n\n■ 次廣側共有事例\n・外注ブロックFC本部の受注/顧客/売上管理統合。\n・名古屋の防水工事業向けLINE日報。外国人職人の紙日報課題をLINE提出・本部集計で改善。\n・解体業のLINE見積/請求、観光協会スタンプラリー、動物病院予約管理。\n\n■ 決定・アクション\n・2〜3ヶ月に1回の情報交換。\n・御手洗氏は風土テックのメンバー表を送付、次廣はDragonFly最新メンバー表を送付。\n・6月リージョンフォーラムで対面・名刺交換予定。\n・西岡優希氏との三者連携を検討。2026-05-22、次廣が西岡氏から接続了承を得て、御手洗氏へグループ作成可否を確認。\n\n■ 確認待ち\n・御手洗氏の下の名前、正式役職、プロフィールURL、終了時刻。\n・風土テック / フードテック表記、練馬会場・修声チャプター文脈は本人確認。','2026-05-22 16:46:29','2026-05-22 16:46:29'),
 (33,1,37,52,NULL,'2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-05-25 20:26:20'),
 (34,1,37,17,NULL,'2026-04-03 07:15:00','2026-04-03 07:15:00','2026-04-03 08:15:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_sato_takuto_brightlink.md】\n実施: 2026-04-03（金）JST 07:15–08:15／Zoom／オーナー: 次廣 淳 → 対象: 佐藤拓斗（株式会社BrightLink／BNI DragonFly）\n\n■ 主な成果\n・双方の事業共有。テレアポリスト自動作成（手作業1時間100件）の開発可能性を検討開始。\n・リクナビネクスト等から従業員数30名以下等で抽出する仕組みを検討（法的リスク要確認）。\n・5月16–17日頃の静岡帰省時に対面ミーティング予定。出世クラブ参加も検討。\n・静岡県藤枝市の地元共通点・教育観の共感。','2026-05-25 20:26:20','2026-05-25 20:26:20'),
-(35,1,37,137,NULL,'2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47');
+(35,1,37,137,NULL,'2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47'),
+(36,1,37,138,NULL,NULL,NULL,NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-05-28 17:08:50');
 /*!40000 ALTER TABLE `one_to_ones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3069,4 +3071,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-27  8:01:10
+-- Dump completed on 2026-05-28  9:09:01
