@@ -1,0 +1,105 @@
+# Religo（dragonfly）— tugilo_site と同一 VPS（さくら VPS）
+# develop → /var/www/laravel/religo_dev
+# main    → /var/www/laravel/religo_app
+#
+# Laravel は www/ 配下。Web ルート: {DEPLOY_PATH}/www/public
+#
+# 必須 Secrets（tugilo_site と同じ VPS なら同値で可）:
+#   SSH_HOST, SSH_USER, SSH_PRIVATE_KEY
+#
+# 参考: tugilo_site/.github/workflows/deploy.yml
+
+name: Deploy Religo to Sakura VPS
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+
+            if [ "${{ github.ref_name }}" == "develop" ]; then
+              DEPLOY_PATH=/var/www/laravel/religo_dev
+              BRANCH=develop
+              ENVIRONMENT=development
+            elif [ "${{ github.ref_name }}" == "main" ]; then
+              DEPLOY_PATH=/var/www/laravel/religo_app
+              BRANCH=main
+              ENVIRONMENT=production
+            else
+              echo "Branch not supported: ${{ github.ref_name }}"
+              exit 1
+            fi
+
+            APP_DIR="${DEPLOY_PATH}/www"
+
+            echo "🚀 Deploying Religo to ${DEPLOY_PATH} (${ENVIRONMENT})"
+            echo "Branch: ${BRANCH}"
+
+            cd "${DEPLOY_PATH}"
+            git fetch origin
+            git reset --hard "origin/${BRANCH}"
+            git clean -fd
+
+            cd "${APP_DIR}"
+
+            if [ ! -d "vendor" ] || [ "composer.lock" -nt "vendor/autoload.php" ]; then
+              composer install --no-dev --optimize-autoloader --no-interaction
+              echo "✅ Composer dependencies updated"
+            else
+              echo "✅ Composer dependencies are up to date"
+            fi
+
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm use 20 2>/dev/null || true
+
+            if [ ! -d "node_modules" ] || [ "package-lock.json" -nt "node_modules/.package-lock.json" ]; then
+              npm ci --prefer-offline --no-audit --no-fund
+              echo "✅ NPM dependencies updated"
+            else
+              echo "✅ NPM dependencies are up to date"
+            fi
+
+            NODE_OPTIONS="--max-old-space-size=4096" npm run build
+
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan route:clear
+            php artisan view:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            if php artisan migrate:status 2>/dev/null | grep -q "Pending"; then
+              php artisan migrate --force
+              echo "✅ Migrations completed"
+            else
+              echo "✅ Migrations are up to date"
+            fi
+
+            php artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
+
+            if [ -w storage ] && [ -w bootstrap/cache ]; then
+              chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+              chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+              echo "✅ Permissions updated"
+            else
+              echo "⚠️  Skipped permission update (insufficient write access)"
+            fi
+
+            echo "✅ Deployment completed successfully (${ENVIRONMENT})"

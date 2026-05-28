@@ -142,6 +142,7 @@ flowchart TB
 
 - **全体像・提示用** → 冒頭 **[tugilo BNI 活用 — 提示用サマリー](#tugilo-bni-活用--提示用サマリーまずここ)**（30秒説明・1枚図・場面別ナビ・今週5ステップ）
 - **今後のBNI運用方針だけ読む** → [BNI_Tugilo_Usage_Strategy.md](./BNI_Tugilo_Usage_Strategy.md)（Track P/C・小中さん棲み分け・週次運用）
+- **Track P 商品（モジュール・価格目安）** → [tugilo Cloud モジュールカタログ](../../../../tugilo_site/www/tugilo_site/docs/business/tugilo_cloud_module_catalog.md)（tugilo_site SSOT）
 - **普段はここだけ**を編集してよい。改善したら下の「変更ログ」に1行足すと履歴が残る。
 - 過去の経緯・別文脈の草稿は次を参照（ここから必要な段落を取り込んでよい）。
   - [BNI_DragonFly_Joining_Speeches_202603.md](./BNI_DragonFly_Joining_Speeches_202603.md) … 入会スピーチ集・制作メモ・思想的背景
@@ -1542,6 +1543,8 @@ flowchart LR
 2. **Track P 第1弾 = 予約** — 開発コミット済み。**「AI予約」ではなく「予約・受付の仕組み化」** として売る（§11.9）。BNI 主戦場にはしない。
 3. **Track P 第2弾 = LINE現場日報** — DragonFly の建設・製造メンバー向け。PoC 実績（防水）から抽出。
 4. **診断（90分）** — 両 Track 共通の **ルーター**。小中の「RM設計・カスタマージャーニー」の入口。
+
+**tugilo Cloud モジュール（商品SSOT）:** Track P のモジュール名・組合せ・価格目安・ロードマップは tugilo_site の [tugilo_cloud_module_catalog.md](../../../../tugilo_site/www/tugilo_site/docs/business/tugilo_cloud_module_catalog.md) を正とする。本 §11 には価格表を複製しない。BNI はカタログの **公式パターン A〜C** の入口チャネルの1つ。
 
 ---
 

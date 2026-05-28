@@ -29,6 +29,7 @@
 |----------|------|
 | [INDEX.md](INDEX.md) | 本ファイル。ドキュメントの索引と更新ルール。 |
 | [GIT_WORKFLOW.md](GIT_WORKFLOW.md) | Git ブランチ運用ルール（main / develop / feature / hotfix、1push 原則、**PRレス取り込み**）。SSOT。 |
+| [DEPLOYMENT.md](DEPLOYMENT.md) | **GitHub Actions デプロイ**（tugilo_site 同一 VPS。develop→`/var/www/laravel/religo_dev`、main→`religo_app`）。Secrets・`www/public` の指し方。 |
 | [PROJECT_NAMING.md](PROJECT_NAMING.md) | プロジェクト命名（Religo＝プロダクト名、DragonFly＝チャプター名、dragonfly＝リポジトリ名）。 |
 
 ### エクスポート・参考資料（docs/pdf/）
@@ -100,6 +101,7 @@
 | [meetings/1to1/1to1_hirayama_mayumi_lifesupport.md](meetings/1to1/1to1_hirayama_mayumi_lifesupport.md) | **平山 真由美（ライフサポート／シングルマザー専門事業コンシェルジュ）**。**第1回 2026-04-08 JST 11:00〜**（終了時刻 TODO）・Zoom。**議事録体裁**（概要・決定・アクション・協業案・次回 RF 11/9）。 |
 | [meetings/1to1/1to1_ito_takao_phoenix_jsp.md](meetings/1to1/1to1_ito_takao_phoenix_jsp.md) | **伊藤隆夫（フェニックス人事労務／株式会社フェニックスミッション・BNI 大人なじみ）**。飯塚さん経由の**クロスチャプター**。**第1回実施済み**（Zoom・文字起こし要約を 2026-05-13 反映。正式日時 YAML **TODO**）。協業・業務改善助成金・ローカルLLM提案書・多摩スキー紹介。
 | [meetings/1to1/1to1_iizuka_graphic_design.md](meetings/1to1/1to1_iizuka_graphic_design.md) | **飯塚氏（グラフィックデザイナー・BNI 大人なじみ）**。**第1回 2026-04-27 JST 10:58〜**（終了時刻 TODO）・Zoom。社労士/雨漏り調査/竹本氏紹介、田渕氏（庵治石）・行政書士メンバー紹介、システム×デザイン協業、月次1on1合意を整理。 |
+| [meetings/1to1/1to1_jimbo_ryota_snep.md](meetings/1to1/1to1_jimbo_ryota_snep.md) | **神保玲太（SNEP株式会社・10分ネイル／BNI Diana）**。鈴木健介さん紹介・**第1回 2026-05-28 実施済み**（開始終了時刻 TODO）・**Religo `one_to_ones.id=36`**。10分ネイル戦略、脱ホットペッパー支援、BNI向け予約管理システム（月額1万円以下・4,980円基本＋オプション）、MEO等集客支援パワーチーム、周期リマインド、野口さん接続、プロトタイプ優先共有を整理。 |
 | [meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md](meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md) | **鈴木健介（合同会社スタジオ鈴・BNI Diana）**。**第1回 2026-04-17 JST 09:55〜**（終了時刻 TODO）・Zoom。スタートアッププレゼン改善、VR×サウナコンテンツ、藤原氏（VR推進協会）紹介、北欧サウナ体験、飲食店向けAIコールセンターの芽を整理。 |
 | [meetings/1to1/1to1_isobe_masayuki_nestle_detective.md](meetings/1to1/1to1_isobe_masayuki_nestle_detective.md) | **礒部昌之（ネスレ探偵事務所・BNI レブリー）**。**第1回 2026-05-14 実施済み**（Zoom 要約反映、時刻 TODO）。探偵業プロフィール・G.A.I.N.S.・保険営業担当者紹介（紀川・竹内・海沼・山本）・メンバー表相互共有・BNI/倫理法人会ゲスト管理システム化の芽を整理。 |
 | [meetings/1to1/1to1_nakamura_keigo_shakumoto.md](meetings/1to1/1to1_nakamura_keigo_shakumoto.md) | **中村啓吾（株式会社笏本縫製／SHAKUNONE・つやまスーツ・BNI DragonFly）**。**第1回 2026-05-21 実施済み**（正式時刻 TODO）。次廣事業・予約管理システム・料金パッケージ化・宮城氏（トレスステラ）紹介合意・中村氏新カテゴリー（コンサルではなく日本製ものづくりチーム形成）を整理。 |

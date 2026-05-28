@@ -143,6 +143,7 @@
 | 143 | BNI週間運用ガイド化 | docs | completed | develop | 2026-05-26 |
 | 144 | BNI到達イメージと判断基準 | docs | completed | develop | 2026-05-26 |
 | 145 | BNI月次重点パワーチーム候補管理 | docs | completed | develop | 2026-05-26 |
+| 146 | tugilo Cloud モジュールカタログ SSOT | docs | completed | develop | 2026-05-26 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
