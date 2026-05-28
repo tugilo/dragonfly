@@ -23,7 +23,7 @@
 1. **本人確認:** メンバーが登録済み email を入力したとき、**その宛先にのみ** 6 桁確認コードを届ける。
 2. **本番運用:** `debug_code` に依存せず、DragonFly メンバーが **自己完結で初回パスワードを設定**できる。
 3. **SPEC-010 整合:** 登録完了時に **`users.owner_member_id`・`default_workspace_id`・`religo_role=member` を自動設定**する既存フローを維持する（変更しない）。
-4. **情報漏えい防止:** メールアドレスの存在有無を API 応答で判別できない。
+4. **入力ミスの早期フィードバック:** `members.email` に一致しないアドレスは **初回登録画面で明示エラー**とし、確認コード入力ステップへ進めない（**2026-05-28 方針変更** — §7.1 参照）。
 
 ---
 
@@ -58,6 +58,7 @@
 | API | `AuthRegisterController` → `MemberAccountRegistrationService` |
 | コード保存 | `Cache` キー `religo:register:{email_lower}`、TTL `RELIGO_REGISTRATION_CODE_TTL_MINUTES`（既定 30 分） |
 | UI | ログイン画面「初回登録」タブ。`debug_code` があるとき黄色 Alert で表示 |
+| **member 未一致時** | API **422** + 初回登録画面に **エラー表示**、verify ステップへ進まない（**Phase 150 implement 済**） |
 | レート制限 | `throttle:10,1`（register/request・complete 各ルート） |
 | 本番 `.env` 例 | `www/.env.religo_app.example` — `MAIL_MAILER=log`（**implement Phase で SMTP 例を追記**） |
 
@@ -73,11 +74,25 @@
 2. 同一 email の **`users` 行が存在しない**
 3. 6 桁コードを Cache に保存した **直後**
 
-次の場合は **メールを送らない**（応答は §5.3 に従い同一）。
+次の場合は **メールを送らない**。
 
-- member 未存在
+- member 未存在 → **§5.3（422 エラー表示）**
 - 同一 email の member が **複数 workspace**（既存 422）
 - `users` が既に存在（既存 422「ログインしてください」）
+
+### 5.3 API 応答
+
+| 状況 | HTTP | body（例） | `debug_code` |
+|------|------|------------|--------------|
+| member あり・未登録・送信成功 | 200 | 登録されているメールアドレスの場合、確認コードを送信しました。 | **なし**（本番） |
+| **member なし** | **422** | `errors.email`: **このメールアドレスはメンバー情報に登録されていません。Members で email を登録するか、チャプター管理者にお問い合わせください。** | なし |
+| users 既存 | 422 | このメールアドレスは既に登録されています。ログインしてください。 | — |
+| member 複数 | 422 | このメールアドレスは複数のチャプターに登録されています。管理者にお問い合わせください。 | — |
+| **送信失敗** | **500 または 503** | 送信に失敗しました。しばらくしてから再度お試しください。 | なし |
+
+**member 未一致を 422 にする理由（2026-05-28）:** 本番運用で `tugi@tugilo.com` のように **Members に email 未登録**のまま送信すると、ユーザーは確認コードステップに進むが **メールもコードも届かない**。閉じたチャプター（DragonFly）では **列挙リスクより UX を優先**し、未登録 email を明示する。
+
+**判断:** 送信失敗時は **200 で成功を装しない**。Cache に保存したコードは **ロールバック（Cache::forget）** する。
 
 ### 5.2 メール内容（必須要素）
 
@@ -89,18 +104,6 @@
 | 注意書き | 心当たりがない場合は無視、コードを他人に教えない |
 | From | `MAIL_FROM_ADDRESS` / `MAIL_FROM_NAME`（`.env`） |
 | 言語 | **日本語**（`APP_LOCALE=ja` 前提） |
-
-### 5.3 API 応答（変更なし — セキュリティ）
-
-| 状況 | HTTP |  body.message（例） | `debug_code` |
-|------|------|---------------------|--------------|
-| member あり・未登録・送信成功 | 200 | 登録されているメールアドレスの場合、確認コードを送信しました。 | **なし**（本番） |
-| member なし | 200 | 同上（**存在を漏らさない**） | なし |
-| users 既存 | 422 | このメールアドレスは既に登録されています。 | — |
-| member 複数 | 422 | 管理者にお問い合わせください | — |
-| **送信失敗** | **500 または 503** | 送信に失敗しました。しばらくしてから再度お試しください。 | なし |
-
-**判断:** 送信失敗時は **200 で成功を装しない**（ユーザーがコードを受け取れないため）。Cache に保存したコードは **ロールバック（Cache::forget）** する。
 
 ### 5.4 再送
 
@@ -154,12 +157,22 @@
 
 ## 7. セキュリティ要件
 
-1. **列挙攻撃対策:** member 不在時も成功と同じ 200 メッセージ（現行維持）。
-2. **コード秘匿:** 本番 API・ログ・メール以外にコードを露出しない。`debug_code` は **`registration_expose_debug_code` が true のときのみ**。
-3. **コード強度:** 6 桁数字、`random_int`（現行維持）。
-4. **TTL:** Cache 失効後は complete 不可（現行維持）。
-5. **既存 User:** 再登録不可（422）。
-6. **HTTPS:** 本番 API は既存 SSL vhost 経由のみ（DEPLOYMENT 準拠）。
+### 7.1 member 未一致の 422 化（2026-05-28 方針）
+
+| 観点 | 内容 |
+|------|------|
+| **旧方針** | member 不在時も 200 汎用メッセージ（メールアドレス列挙攻撃の抑止） |
+| **新方針** | **422 で未登録を明示**（DragonFly は閉じたチャプター・Members 事前整備が前提） |
+| **トレードオフ** | 外部者が「登録済み / 未登録」を試行できる。**許容**とし、運用で Members email を整備する |
+| **維持** | users 既存・member 複数も 422。コード・`debug_code` の秘匿は従来どおり |
+
+### 7.2 その他
+
+1. **コード秘匿:** 本番 API・ログ・メール以外にコードを露出しない。`debug_code` は **`registration_expose_debug_code` が true のときのみ**。
+2. **コード強度:** 6 桁数字、`random_int`（現行維持）。
+3. **TTL:** Cache 失効後は complete 不可（現行維持）。
+4. **既存 User:** 再登録不可（422）。
+5. **HTTPS:** 本番 API は既存 SSL vhost 経由のみ（DEPLOYMENT 準拠）。
 
 ---
 
@@ -168,26 +181,37 @@
 | 項目 | 要件 |
 |------|------|
 | 初回登録タブ | 現行維持 |
-| `debug_code` Alert | **`debug_code` が API に含まれるときのみ**表示（本番では非表示） |
-| 送信後メッセージ | 「メールに届いた 6 桁の確認コードを入力してください」に文言を **implement Phase で微調整可** |
-| 送信失敗 | API エラーメッセージを Alert 表示 |
+| **member 未一致（422）** | **email 入力ステップに留まる**。`errors.email` を **Alert（error）** で表示。**verify ステップへ進めない** |
+| **送信成功（200）** | verify ステップへ進み、「メールに届いた 6 桁の確認コードを入力してください」と表示 |
+| `debug_code` Alert | **`debug_code` が API に含まれるときのみ**（ローカル／debug 設定時） |
+| 送信失敗（5xx） | API エラーメッセージを Alert 表示。email ステップに留まる |
+| users 既存（422） | エラー表示。「ログイン」タブへ誘導する文言を **implement Phase で検討可** |
 
 ---
 
 ## 9. 実装設計（implement Phase への指針）
 
-### 9.1 追加・変更ファイル（予定）
+### 9.1 変更ファイル
 
-| 種別 | パス（予定） |
-|------|----------------|
+**Phase 148（完了）**
+
+| 種別 | パス |
+|------|------|
 | Mailable | `www/app/Mail/ReligoRegistrationVerificationMail.php` |
-| View | `www/resources/views/mail/religo-registration-verification.blade.php`（または text only） |
-| Service | `MemberAccountRegistrationService` — 送信処理を注入 |
-| Test | `AuthRegisterTest` — `Mail::fake()` で送信断言 |
+| View | `www/resources/views/mail/religo-registration-verification.blade.php` |
+| Service | `MemberAccountRegistrationService` — 送信処理 |
+| Test | `AuthRegisterTest` — `Mail::fake()` |
 | Config 例 | `www/.env.religo_app.example` — MAIL_* コメント |
-| Docs | 本 SSOT の implement 完了後に変更履歴更新 |
 
-### 9.2 処理フロー
+**Phase 149 implement（予定）**
+
+| 種別 | パス |
+|------|------|
+| Service | `MemberAccountRegistrationService.php` — member 未存在時 `ValidationException` 422 |
+| UI | `ReligoLogin.jsx` — 422 時 verify へ進めない |
+| Test | `AuthRegisterTest.php` |
+
+### 9.2 処理フロー（member 未一致 422 化後）
 
 ```mermaid
 sequenceDiagram
@@ -200,30 +224,30 @@ sequenceDiagram
     U->>API: email
     API->>S: requestVerificationCode
     alt member not found
-        S-->>API: 200 generic message
+        S-->>API: 422 errors.email
+        API-->>U: 初回登録画面にエラー表示（verify へ進まない）
     else member found, no user
         S->>S: generate 6-digit code
         S->>C: put code + member_id
         S->>M: send ReligoRegistrationVerificationMail
         alt mail OK
             M-->>S: sent
-            S-->>API: 200 generic message
+            S-->>API: 200
+            API-->>U: verify ステップへ
         else mail fail
             S->>C: forget
-            S-->>API: 5xx error
+            S-->>API: 503
         end
     end
 ```
 
-### 9.3 テスト要件
+### 9.3 テスト要件（Phase 149 implement 追加分）
 
 | テスト | 内容 |
 |--------|------|
-| member あり | `Mail::fake()` で 1 通送信・宛先・件名・本文にコード含む |
-| member なし | メール送信 **0** |
-| users 既存 | メール送信 **0**、422 |
-| 送信例外 | Cache 未残存、5xx |
-| `registration_expose_debug_code=false` | レスポンスに `debug_code` なし |
+| member なし | **422**、`errors.email` あり、**Mail 送信 0**、Cache **なし** |
+| member なし（UI） | 422 時 `setStep('verify')` しない（手動 or E2E は任意） |
+| member あり | 従来どおり 200 + Mail 送信 |
 
 ---
 
@@ -249,9 +273,21 @@ sequenceDiagram
 
 ---
 
-## 12. 変更履歴
+## 12. Definition of Done（Phase 150 — member 未一致エラー表示）
+
+- [x] `MemberAccountRegistrationService` — member 未存在時 **422**（汎用 200 を返さない）
+- [x] `ReligoLogin.jsx` — 422 時 **email ステップに留まり** Alert 表示（既存 catch、コード変更なし）
+- [x] `AuthRegisterTest::test_request_returns_422_for_unknown_email` — **422 断言**
+- [x] `php artisan test` green、`npm run build` green
+- [ ] 本番で未登録 email 試行時に verify ステップへ進まないこと
+
+---
+
+## 13. 変更履歴
 
 | 日時 (JST) | 内容 |
 |------------|------|
 | 2026-05-28 21:53 | 初版（SPEC-011）。本番メール送信 implement 前の要件整理。 |
 | 2026-05-28 21:54 | **Phase 148（implement）:** Mailable 送信・503 ロールバック・テスト。§11 DoD 達成。 |
+| 2026-05-28 22:05 | **Phase 149（docs）:** member 未一致時は **422 + 初回登録画面エラー**に方針変更（列挙リスクより UX 優先）。§7.1 / §8 / §12 追加。 |
+| 2026-05-28 22:07 | **Phase 150（implement）:** member 未一致 **422** 実装・テスト更新。§12 DoD 達成（本番確認除く）。 |
