@@ -136,19 +136,13 @@ jobs:
               echo "✅ Migrations are up to date"
             fi
 
-            # php-fpm (www-data) may own files under storage/framework/cache/data;
-            # SSH deploy user cannot delete them directly. Recreate data/ if clear fails.
-            if ! $PHP_BIN artisan cache:clear; then
-              echo "⚠️  cache:clear failed (www-data-owned cache files). Recreating cache/data..."
-              if [ -d storage/framework/cache/data ]; then
-                mv storage/framework/cache/data "storage/framework/cache/data.bak.$(date +%s)" 2>/dev/null || true
-              fi
-              mkdir -p storage/framework/cache/data
-              chmod -R 775 storage/framework/cache
-              chgrp -R www-data storage/framework/cache 2>/dev/null || true
-              $PHP_BIN artisan cache:clear
-            fi
-            echo "✅ Application cache cleared"
+            # CACHE_STORE=file: php-fpm (www-data) creates 0755 dirs under
+            # storage/framework/cache/data that the SSH deploy user cannot
+            # unlink. Runtime cache is consistent (www-data only), so a failed
+            # clear here is non-fatal — never abort the deploy on it.
+            $PHP_BIN artisan cache:clear 2>/dev/null \
+              && echo "✅ Application cache cleared" \
+              || echo "⚠️  cache:clear skipped (www-data-owned file cache); non-fatal"
 
             $PHP_BIN artisan config:cache
             $PHP_BIN artisan route:cache
@@ -169,9 +163,9 @@ jobs:
             $PHP_BIN artisan storage:link 2>/dev/null || echo "✅ Storage link already exists"
 
             if [ -w storage ] && [ -w bootstrap/cache ]; then
-              chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
               chmod -R 775 storage bootstrap/cache 2>/dev/null || true
-              echo "✅ Permissions updated"
+              chgrp -R www-data storage bootstrap/cache 2>/dev/null || true
+              echo "✅ Permissions updated (best-effort; www-data-owned files skipped)"
             else
               echo "⚠️  Skipped permission update (insufficient write access)"
             fi
