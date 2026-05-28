@@ -319,6 +319,8 @@
 | 2026-05-26 18:07 | **docs Phase 138**: Living Document **§10.3 入口設計**（小中さん SS 学び）を [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) に追記。旧§10.3〜§10.6を§10.4〜§10.7に繰り下げ。 |
 | 2026-05-28 21:53 JST | **docs Phase 147:** **SPEC-011** 初回登録 — 確認コードメール送信要件 SSOT（[AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md](SSOT/AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md)）。本番 MAIL 設定済み前提で Mailable implement 前の要件整理。SPEC-010 §8 更新。 |
 | 2026-05-28 21:54 JST | **implement Phase 148:** SPEC-011 確認コード Mailable 送信・送信失敗 503 + Cache ロールバック・Mail::fake テスト・ログイン UI 文言。 |
+| 2026-05-28 22:05 JST | **docs Phase 149:** SPEC-011 改定 — members.email **未一致時は 422 + 初回登録画面エラー**（verify へ進まない）。本番 `tugi@tugilo.com` 事象を契機に UX 優先。 |
+| 2026-05-28 22:07 JST | **implement Phase 150:** member 未一致 **422** + テスト更新。UI は既存 catch で email ステップ維持。 |
 
 ---
 
