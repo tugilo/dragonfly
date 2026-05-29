@@ -38,7 +38,7 @@ OK（implement スコープ内。composer/npm 新規依存なし）
 OK（DATA_MODEL §4.12/4.15/4.16 追記、SPEC-012 active 更新済み）
 
 ## Merge Evidence
-merge commit id: （develop 取り込み後に追記）
+merge commit id: 586fcd6a3b136a97bfbae10ce712aae6ad722408
 source branch: feature/spec012-zoom-onetoone-sync
 target branch: develop
 phase id: 152
