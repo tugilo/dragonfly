@@ -30,6 +30,9 @@ use App\Http\Controllers\Religo\DashboardController;
 use App\Http\Controllers\Religo\DashboardDebugController;
 use App\Http\Controllers\Religo\MemberMergeController;
 use App\Http\Controllers\Religo\UserController;
+use App\Http\Controllers\Zoom\ZoomImportController;
+use App\Http\Controllers\Zoom\ZoomOAuthController;
+use App\Http\Controllers\Zoom\ZoomWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -52,6 +55,29 @@ Route::middleware('religo.chapter_admin')->prefix('admin')->group(function () {
 Route::middleware(['religo.member_merge'])->prefix('admin/member-merge')->group(function () {
     Route::post('/preview', [MemberMergeController::class, 'preview']);
     Route::post('/execute', [MemberMergeController::class, 'execute']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Zoom 連携（SPEC-012 / 1 to 1 取り込み）
+|--------------------------------------------------------------------------
+| callback は Zoom からのブラウザリダイレクト（署名 state で user 解決・ゲートなし）。
+| それ以外は religo.chapter_admin ゲート。
+*/
+
+Route::get('/zoom/callback', [ZoomOAuthController::class, 'callback']);
+Route::post('/zoom/webhook', [ZoomWebhookController::class, 'handle'])->middleware('zoom.webhook');
+
+Route::middleware('religo.chapter_admin')->prefix('zoom')->group(function () {
+    Route::get('/connect', [ZoomOAuthController::class, 'connect']);
+    Route::delete('/connect', [ZoomOAuthController::class, 'disconnect']);
+    Route::get('/status', [ZoomOAuthController::class, 'status']);
+
+    Route::post('/sync', [ZoomImportController::class, 'sync']);
+    Route::get('/imports', [ZoomImportController::class, 'index']);
+    Route::put('/imports/{import}', [ZoomImportController::class, 'update']);
+    Route::post('/imports/apply', [ZoomImportController::class, 'apply']);
+    Route::post('/imports/{import}/summary', [ZoomImportController::class, 'summary']);
 });
 
 /*

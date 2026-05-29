@@ -96,6 +96,15 @@ export const ReligoMenu = () => {
                 <span style={{ marginRight: 8 }}>🔀</span>
                 Member merge
             </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/zoom-import"
+                selected={isActive('/zoom-import')}
+                sx={{ '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                <span style={{ marginRight: 8 }}>🎥</span>
+                Zoom 取り込み
+            </MenuItem>
             <ListSubheader
                 disableSticky
                 sx={{
