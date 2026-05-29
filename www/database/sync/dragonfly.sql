@@ -1,5 +1,5 @@
 -- dragonfly dev DB sync dump
--- generated: 2026-05-28 18:09:01 JST
+-- generated: 2026-05-30 05:13:53 JST
 -- database: dragonfly
 -- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
 
@@ -206,6 +206,9 @@ CREATE TABLE `cache` (
 
 LOCK TABLES `cache` WRITE;
 /*!40000 ALTER TABLE `cache` DISABLE KEYS */;
+INSERT INTO `cache` VALUES
+('laravel-cache-a27eafa592533606ee05f603e445d2a9de3da0cd','i:4;',1779972313),
+('laravel-cache-a27eafa592533606ee05f603e445d2a9de3da0cd:timer','i:1779972313;',1779972313);
 /*!40000 ALTER TABLE `cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1844,7 +1847,7 @@ CREATE TABLE `one_to_ones` (
   CONSTRAINT `one_to_ones_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_target_member_id_foreign` FOREIGN KEY (`target_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1884,7 +1887,9 @@ INSERT INTO `one_to_ones` VALUES
 (33,1,37,52,NULL,'2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-05-25 20:26:20'),
 (34,1,37,17,NULL,'2026-04-03 07:15:00','2026-04-03 07:15:00','2026-04-03 08:15:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_sato_takuto_brightlink.md】\n実施: 2026-04-03（金）JST 07:15–08:15／Zoom／オーナー: 次廣 淳 → 対象: 佐藤拓斗（株式会社BrightLink／BNI DragonFly）\n\n■ 主な成果\n・双方の事業共有。テレアポリスト自動作成（手作業1時間100件）の開発可能性を検討開始。\n・リクナビネクスト等から従業員数30名以下等で抽出する仕組みを検討（法的リスク要確認）。\n・5月16–17日頃の静岡帰省時に対面ミーティング予定。出世クラブ参加も検討。\n・静岡県藤枝市の地元共通点・教育観の共感。','2026-05-25 20:26:20','2026-05-25 20:26:20'),
 (35,1,37,137,NULL,'2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47'),
-(36,1,37,138,NULL,NULL,NULL,NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-05-28 17:08:50');
+(36,1,37,138,NULL,NULL,NULL,NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-05-28 17:08:50'),
+(37,1,37,46,NULL,'2026-05-29 15:00:00','2026-05-29 15:00:00','2026-05-29 16:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_fujii_eriko_hiraten.md】\n実施: 2026-05-29（金）JST 15:00–16:00／Zoom／オーナー: 次廣 淳 → 対象: 藤井恵理子（HiraTen／播州織の日傘製造／BNI DragonFly）\n\n■ 主な成果\n・次廣の業務改善・AI活用・主要事例（増本FC・防水LINE日報・動物病院予約）と開発中のBNI人脈管理（Religo）を共有。\n・藤井さんは議事録・人物情報の管理に課題感があり、Religo構想に強い関心。\n・キャッチ「あったらいいなを形にしてくれる」を次廣の6月メインプレゼンで採用予定。\n\n■ 藤井側（HiraTen）\n・播州織の日傘・ストール・アパレル。2024オーストラリアでストール好評。カンヌ/パリ出展検討。BNIフランスと接続。\n・メンズ日傘は6年前から製造、昨年から本格化。百貨店は2026年6月出店再開予定。\n・守成クラブ10年在籍→2026年5月末退会予定。\n\n■ 決定・アクション\n・次廣: DragonFlyインスタ情報を今週末まで入力。関西121・バーチャルバーブル参加を増やす。\n・藤井: シフト管理で困っている知人等を次廣へ紹介。\n・次回121: 日程未定。次廣から積極的に打診。次回対面イベント参加意向あり。\n\n■ 共通点\n・水球（高校/小中約10年）、音楽（ユニコーン等）、静岡・富士への親近感。\n\n■ 確認待ち\\n・（特になし）','2026-05-30 05:10:31','2026-05-30 05:12:44'),
+(38,1,37,99,NULL,'2026-05-29 14:00:00','2026-05-29 14:00:00','2026-05-29 15:00:00','completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-29 JST 14:00〜\n\nBPS木村／株式会社国宝社の製本システム業務改善ヒアリング。VB+Oracle基幹システムは温存し、月300〜400件規模のPDF注文書手入力を第一段階で自動化する方針。社内サーバー上のWebインターフェースからPDF解析・確認・Oracle登録を行う案で合意。Hyper-V上のLinux Webサーバー、社内ネットワーク／既存VPN利用、Google Workspace除外、提案書・簡易モック無償作成が次アクション。','2026-05-29 20:12:45','2026-05-29 20:13:43');
 /*!40000 ALTER TABLE `one_to_ones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2831,7 +2836,7 @@ CREATE TABLE `personal_access_tokens` (
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2840,6 +2845,8 @@ CREATE TABLE `personal_access_tokens` (
 
 LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
+INSERT INTO `personal_access_tokens` VALUES
+(1,'App\\Models\\User',2,'curl','6b776138e1e5ee1a328747ee0f26fbcd32022398d0dc4b46ed989af11a275d41','[\"*\"]',NULL,NULL,'2026-05-28 21:44:22','2026-05-28 21:44:22');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2975,7 +2982,11 @@ LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` VALUES
 ('0rwcgOyvPmZxDHLeZIGTS7sABfhPtaIuIjaydCe1',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiRVY3UjlrTXJYT2xhcWs2QXZHSzJKcU5QRHdSMWEyY29uVllRaWNKZyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756273),
+('asckEb4GZJqmjyxvTJfzJT1WzWV7tnDAkt7pPffs',NULL,'172.28.0.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoidFNjbXVHOUxmU29EZVBRQXRYS0lrbGpWZ1VtTlduWDBRd3B5U2RpWiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779971710),
 ('B30RzX1J45hjoVivXwxXM3oYIr9gIVrUWrQ3UHpG',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjNiWG1NdVlRcHRFZTNvWkppZmxzampGM2xzdmN6TkhyeDRoYnc0UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756264),
+('Bzqyk29tLtNeKFz1fIREnuHc2RyVYjwqUka0IKTd',NULL,'172.28.0.1','curl/8.7.1','YToyOntzOjY6Il90b2tlbiI7czo0MDoiTktzWEVwR0FmSXI4RlhSWTR3TnppQkJxaVhxMFFld0RwdHpMMzZYZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1779971710),
+('Varzfs1lI63sHW0Ac7OFBmDLkrsV4xzsl4ecuM1c',NULL,'172.28.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cursor/3.5.38 Chrome/142.0.7444.265 Electron/39.8.1 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiM1M5S2s0M05XZzNrdTRKWjl3RFo1RjB1OUlTdWh6NTduTkVVQmw5MCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779972265),
+('vQyn0yN7TGxfeennT1q5GRZjrIydA5dXtcZoMEKi',NULL,'172.28.0.1','curl/8.7.1','YToyOntzOjY6Il90b2tlbiI7czo0MDoibmZ6bXI1a3BSOUR1bGxRbjBPS0RLell6NFhsU0hBbWRTTzdiQW4zVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1779971254),
 ('Y1oy1eynIkgLaXS5m7Ezr52zaJF3s9E7CylrsDTg',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoieUVQMUVOcGlQMTB4c3hFS1padmgxNjZXa2NxNUpBbzNqaVRkUVZkYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779688657);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3003,7 +3014,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `users_default_workspace_id_foreign` (`default_workspace_id`),
   CONSTRAINT `users_default_workspace_id_foreign` FOREIGN KEY (`default_workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3013,7 +3024,8 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'Default','default@religo.local',NULL,'$2y$12$dUrt0H0qQktz46pbKZu7cexZzI5MU8PpmDa3wyR2y4aiZTnWpBJRC',NULL,37,NULL,NULL,'2026-03-05 13:03:53','2026-04-07 03:08:58');
+(1,'Default','default@religo.local',NULL,'$2y$12$dUrt0H0qQktz46pbKZu7cexZzI5MU8PpmDa3wyR2y4aiZTnWpBJRC',NULL,37,NULL,NULL,'2026-03-05 13:03:53','2026-04-07 03:08:58'),
+(2,'神保　玲太','ryotadesu.jp@gmail.com',NULL,'$2y$12$pjick1ZtEXFpAvYn7TMMwuvUHfvY/XqNmYOsAGTHZ.mIUK1PhR2/G',NULL,138,2,'member','2026-05-28 21:44:22','2026-05-28 21:44:22');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3071,4 +3083,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-28  9:09:01
+-- Dump completed on 2026-05-29 20:13:53
