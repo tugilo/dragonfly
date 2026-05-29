@@ -353,8 +353,10 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | **主キー** | id (bigIncrements) |
 | **外部キー** | workspace_id → workspaces.id (nullable。現行は未導入のため nullable 可), owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete) |
 | **ユニーク制約** | なし（同一ペアで複数回の 1 to 1 があり得る）。重複予定を避けるため (owner_member_id, target_member_id, scheduled_at) のユニークは将来検討とし、今回はインデックスのみ。 |
-| **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), notes (text, nullable), timestamps |
-| **インデックス** | (owner_member_id, target_member_id), scheduled_at |
+| **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), **zoom_meeting_id (string, nullable)**, **zoom_meeting_uuid (string, nullable)**, **external_source (string, 既定 `manual`)**, notes (text, nullable), timestamps |
+| **インデックス** | (owner_member_id, target_member_id), scheduled_at, zoom_meeting_id, zoom_meeting_uuid |
+
+**Zoom 連携カラム（SPEC-012 / Phase 152）:** `zoom_meeting_id` / `zoom_meeting_uuid` は Zoom 突合キー（再取り込みの二重登録防止）。`external_source` は取得元（`manual` / `zoom`）。手入力は `manual` 既定。詳細は [ZOOM_ONETOONE_SYNC_REQUIREMENTS.md](ZOOM_ONETOONE_SYNC_REQUIREMENTS.md)。
 
 **`workspace_id` の意味（SPEC-006 解釈 A）:** 作成 API では必須だが、意味は **記録コンテキスト（通常はオーナー側の所属チャプターに対応する workspaces.id）**。`target_member` が他チャプター所属でもよい（クロスチャプター 1 to 1）。§5.1 参照。
 
@@ -448,6 +450,33 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 **実装:** マイグレーション `2026_05_18_080100_create_internal_referrals_table`（Phase 123）。API: `GET|POST /api/internal-referrals`, `GET|PATCH /api/internal-referrals/{id}`（owner スコープ・SPEC-009）。
 
 **last_contact / Hint:** 本テーブルの日時は **`last_contact_at` の合成・Introduction Hint の入力に含めない**（SPEC-009）。
+
+---
+
+### 4.15 zoom_accounts（Zoom 連携・SPEC-012）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | ユーザー（Owner）単位の Zoom OAuth 接続。1 to 1 取り込みのトークン保管。 |
+| **主キー** | id (bigIncrements) |
+| **外部キー** | user_id → users.id (cascadeOnDelete) |
+| **ユニーク制約** | user_id（1 user = 1 Zoom 接続） |
+| **主要カラム** | id, user_id, zoom_user_id (nullable), zoom_account_id (nullable), zoom_email (nullable), **access_token (text, encrypted)**, **refresh_token (text, encrypted)**, token_expires_at (datetime, nullable), scopes (text, nullable), timestamps |
+| **セキュリティ** | access_token / refresh_token は Eloquent `encrypted` キャスト（APP_KEY 由来）。アプリ資格情報（Client ID/Secret 等）は `.env`（`config/services.zoom.*`）で別管理（SPEC-012 §6）。 |
+
+**実装:** マイグレーション `2026_05_30_060000_create_zoom_accounts_table`（Phase 152）。
+
+### 4.16 zoom_meeting_imports（Zoom 取り込みステージング・SPEC-012）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | Zoom から取得した予定・実施ミーティングの取り込み候補。人が複数選択・相手正規化して確定したものだけ one_to_ones に反映する。相手未確定の「保留」はこの表に留める。 |
+| **主キー** | id (bigIncrements) |
+| **外部キー** | user_id → users.id (cascadeOnDelete)；owner_member_id → members.id (nullable, nullOnDelete)；workspace_id → workspaces.id (nullable, nullOnDelete)；matched_member_id → members.id (nullable, nullOnDelete)；one_to_one_id → one_to_ones.id (nullable, nullOnDelete) |
+| **ユニーク制約** | (user_id, zoom_meeting_uuid)（過去インスタンス単位の二重取り込み防止） |
+| **主要カラム** | zoom_meeting_id, zoom_meeting_uuid (nullable), kind (scheduled/past), topic, start_time, end_time, duration_minutes, participants_count, is_one_to_one_candidate (bool), confidence (high/medium/low), matched_member_id, match_status (matched/new/unmatched/hold), counterpart_name, counterpart_email, selected (bool), status (pending/imported/skipped/held), one_to_one_id, raw (json), timestamps |
+
+**実装:** マイグレーション `2026_05_30_060100_create_zoom_meeting_imports_table`（Phase 152）。監査は `zoom_import_apply_logs`（同 Phase）。
 
 ---
 

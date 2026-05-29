@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'religo.member_merge' => \App\Http\Middleware\VerifyReligoMemberMergeToken::class,
             'religo.chapter_admin' => \App\Http\Middleware\EnsureReligoChapterAdmin::class,
+            'zoom.webhook' => \App\Http\Middleware\VerifyZoomWebhookSignature::class,
         ]);
         $middleware->api(prepend: [
             \App\Http\Middleware\RejectInvalidSanctumBearerToken::class,

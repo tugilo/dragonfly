@@ -8,6 +8,7 @@ import DragonFlyBoard from './pages/DragonFlyBoard';
 import Dashboard from './pages/Dashboard';
 import ReligoSettings from './pages/ReligoSettings';
 import MemberMerge from './pages/MemberMerge';
+import ZoomImport from './pages/ZoomImport';
 import { ReligoLayout } from './ReligoLayout';
 import { ReligoOwnerProvider } from './ReligoOwnerContext';
 import { ReligoLogin } from './pages/ReligoLogin';
@@ -42,6 +43,7 @@ if (root) {
             <CustomRoutes>
                 <Route path="/settings" element={<ReligoSettings />} />
                 <Route path="/member-merge" element={<MemberMerge />} />
+                <Route path="/zoom-import" element={<ZoomImport />} />
             </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} edit={MemberEdit} options={{ label: 'Members' }} />
