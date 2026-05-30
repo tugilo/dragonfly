@@ -5,15 +5,141 @@ import {
     CardContent,
     Container,
     FormControl,
+    FormControlLabel,
     InputLabel,
     MenuItem,
     Select,
+    Switch,
+    TextField,
     Snackbar,
     Alert,
     Typography,
     CircularProgress,
 } from '@mui/material';
 import { religoFetch } from '../religoApiFetch';
+
+const AI_PROVIDER_LABELS = { openai: 'OpenAI', anthropic: 'Claude (Anthropic)', google: 'Gemini (Google)' };
+
+/** AI 設定カード（SPEC-013・ユーザーごと BYO key）。 */
+function AiSettingsCard({ notify }) {
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [aiEnabled, setAiEnabled] = useState(false);
+    const [provider, setProvider] = useState('openai');
+    const [model, setModel] = useState('');
+    const [apiKey, setApiKey] = useState('');
+    const [hasKey, setHasKey] = useState(false);
+    const [providers, setProviders] = useState(['openai']);
+    const [implemented, setImplemented] = useState(['openai']);
+
+    const load = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await religoFetch('/api/ai/credentials', { headers: { Accept: 'application/json' } });
+            const data = await res.json();
+            setAiEnabled(Boolean(data.ai_enabled));
+            setProvider(data.provider || 'openai');
+            setModel(data.model || '');
+            setHasKey(Boolean(data.has_api_key));
+            setProviders(Array.isArray(data.available_providers) ? data.available_providers : ['openai']);
+            setImplemented(Array.isArray(data.implemented_providers) ? data.implemented_providers : ['openai']);
+        } catch {
+            /* 未ログイン等 */
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    const save = async () => {
+        setSaving(true);
+        try {
+            const body = { ai_enabled: aiEnabled, provider, model: model || null };
+            if (apiKey.trim() !== '') body.api_key = apiKey.trim();
+            const res = await religoFetch('/api/ai/credentials', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                notify(data.message || '保存に失敗しました', 'error');
+                return;
+            }
+            setApiKey('');
+            setHasKey(Boolean(data.has_api_key));
+            notify('AI 設定を保存しました');
+        } catch {
+            notify('保存に失敗しました', 'error');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
+            <CardContent>
+                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>AI 設定（1to1 原稿生成）</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    AI 利用は任意です。利用する場合はプロバイダを選び、ご自身の API キーを登録してください（キーは暗号化保存・各自の契約で課金）。
+                </Typography>
+                <FormControlLabel
+                    control={<Switch checked={aiEnabled} onChange={(e) => setAiEnabled(e.target.checked)} />}
+                    label="AI を利用する"
+                    sx={{ mb: 1 }}
+                />
+                {aiEnabled && (
+                    <>
+                        <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+                            <InputLabel id="ai-provider-label">プロバイダ</InputLabel>
+                            <Select
+                                labelId="ai-provider-label"
+                                label="プロバイダ"
+                                value={provider}
+                                onChange={(e) => setProvider(String(e.target.value))}
+                            >
+                                {providers.map((p) => (
+                                    <MenuItem key={p} value={p} disabled={!implemented.includes(p)}>
+                                        {AI_PROVIDER_LABELS[p] || p}
+                                        {!implemented.includes(p) ? '（近日対応）' : ''}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <TextField
+                            label="モデル（任意・空なら既定）"
+                            size="small"
+                            fullWidth
+                            value={model}
+                            onChange={(e) => setModel(e.target.value)}
+                            placeholder="例: gpt-4o-mini"
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            label={hasKey ? 'API キー（登録済み・変更時のみ入力）' : 'API キー'}
+                            size="small"
+                            fullWidth
+                            type="password"
+                            value={apiKey}
+                            onChange={(e) => setApiKey(e.target.value)}
+                            autoComplete="off"
+                            placeholder={hasKey ? '••••••••（変更しない場合は空のまま）' : 'sk-...'}
+                            sx={{ mb: 2 }}
+                        />
+                    </>
+                )}
+                <Button variant="contained" onClick={save} disabled={saving}>
+                    {saving ? '保存中…' : 'AI 設定を保存'}
+                </Button>
+            </CardContent>
+        </Card>
+    );
+}
 
 const RELIGO_WORKSPACE_CHANGED = 'religo-workspace-changed';
 
@@ -154,6 +280,7 @@ export default function ReligoSettings() {
                     )}
                 </CardContent>
             </Card>
+            <AiSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
             <Snackbar
                 open={snack.open}
                 autoHideDuration={4000}

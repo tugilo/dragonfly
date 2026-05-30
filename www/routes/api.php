@@ -33,6 +33,8 @@ use App\Http\Controllers\Religo\UserController;
 use App\Http\Controllers\Zoom\ZoomImportController;
 use App\Http\Controllers\Zoom\ZoomOAuthController;
 use App\Http\Controllers\Zoom\ZoomWebhookController;
+use App\Http\Controllers\Ai\UserAiCredentialController;
+use App\Http\Controllers\Religo\OneToOnePrepController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -80,6 +82,23 @@ Route::middleware('auth:sanctum')->prefix('zoom')->group(function () {
     Route::put('/imports/{import}', [ZoomImportController::class, 'update']);
     Route::post('/imports/apply', [ZoomImportController::class, 'apply']);
     Route::post('/imports/{import}/summary', [ZoomImportController::class, 'summary']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| AI 設定（SPEC-013・ユーザーごと BYO key）／1to1 事前準備（添付・原稿生成）
+|--------------------------------------------------------------------------
+| 認証済みユーザー本人のみ。1to1 操作は owner 一致が必要。
+*/
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/ai/credentials', [UserAiCredentialController::class, 'show']);
+    Route::put('/ai/credentials', [UserAiCredentialController::class, 'update']);
+
+    Route::get('/one-to-ones/{oneToOne}/attachments', [OneToOnePrepController::class, 'indexAttachments']);
+    Route::post('/one-to-ones/{oneToOne}/attachments', [OneToOnePrepController::class, 'storePdf']);
+    Route::post('/one-to-ones/{oneToOne}/attachments/url', [OneToOnePrepController::class, 'storeUrl']);
+    Route::delete('/one-to-ones/{oneToOne}/attachments/{attachment}', [OneToOnePrepController::class, 'destroyAttachment']);
+    Route::post('/one-to-ones/{oneToOne}/prep/generate', [OneToOnePrepController::class, 'generate']);
 });
 
 /*
