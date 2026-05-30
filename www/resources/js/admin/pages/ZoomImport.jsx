@@ -283,14 +283,14 @@ export default function ZoomImport() {
                     <Button size="small" onClick={clearAll}>全解除</Button>
                     <Box sx={{ flexGrow: 1 }} />
                     <Typography variant="body2" color="text.secondary">
-                        選択 {selectedRows.length} 件
+                        全 {rows.length} 件・選択 {selectedRows.length} 件
                     </Typography>
                     <Button variant="contained" onClick={applySelected} disabled={loading || selectedRows.length === 0}>
                         選択を Religo に登録
                     </Button>
                 </Stack>
 
-                <TableContainer sx={{ maxHeight: 560 }}>
+                <TableContainer sx={{ maxHeight: 'calc(100vh - 300px)', minHeight: 240 }}>
                     <Table stickyHeader size="small">
                         <TableHead>
                             <TableRow>
