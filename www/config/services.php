@@ -55,4 +55,21 @@ return [
         'oauth_base_url' => env('ZOOM_OAUTH_BASE_URL', 'https://zoom.us'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | AI（SPEC-013 / 1to1 事前準備の原稿生成）
+    |--------------------------------------------------------------------------
+    |
+    | API キーは .env ではなく user_ai_credentials（ユーザーごと・暗号化）で管理する。
+    | ここはエンドポイント/既定モデル/タイムアウト等の非秘匿設定のみ。
+    |
+    */
+    'ai' => [
+        'request_timeout' => (int) env('AI_REQUEST_TIMEOUT', 60),
+        'openai' => [
+            'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
+            'default_model' => env('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini'),
+        ],
+    ],
+
 ];

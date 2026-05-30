@@ -1,7 +1,7 @@
 # 1 to 1 事前準備 — 相手プロフィール取込（NCAS URL / PDF）と原稿生成（AI）— 要件整理（ドラフト）
 
 **Spec ID:** SPEC-013（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）
-**ステータス:** draft（要件整理のみ・実装未着手）
+**ステータス:** active（P1+P2 主要コード実装・**OpenAI** から対応／記録: Phase 155）
 **作成:** 2026-05-30 10:18 JST
 **関連 SSOT:** [DATA_MODEL.md](DATA_MODEL.md) §4.12 one_to_ones、[ZOOM_ONETOONE_SYNC_REQUIREMENTS.md](ZOOM_ONETOONE_SYNC_REQUIREMENTS.md)（SPEC-012・1to1 取込）、[ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md)（SPEC-006・他チャプター相手）
 **関連運用:** `docs/meetings/1to1/*.md`（現在ローカルで作成している 1to1 原稿）、`docs/meetings/1to1/_TEMPLATE.md`
@@ -250,6 +250,22 @@ flowchart TB
 
 ---
 
+## 12.5 実装（Phase 155・P1+P2・OpenAI）
+
+| 区分 | 主なファイル |
+|------|--------------|
+| DB | `user_ai_credentials`（ai_enabled/provider/api_key 暗号化/model）・`one_to_one_attachments`（pdf/url/text・extracted_text・parsed_profile） |
+| Model | `App\Models\UserAiCredential`（encrypted・hidden）・`OneToOneAttachment` |
+| AI | `App\Services\Ai\AiTextGenerator`（IF）・`OpenAiTextGenerator`・`AiClientFactory`（provider 切替・現状 OpenAI）・`OneToOnePrepService`（_TEMPLATE 構成で原稿生成）・`HtmlTextExtractor`・`AiGenerationException` |
+| 抽出 | PDF=`PdfParticipantParseService::extractText` 流用、URL=`Http::get`＋`HtmlTextExtractor` |
+| API | `Ai\UserAiCredentialController`（GET/PUT `/api/ai/credentials`）・`Religo\OneToOnePrepController`（添付 index/pdf/url/delete・`prep/generate`）。すべて `auth:sanctum`＋owner 一致 |
+| 設定 | `config/services.php` の `ai`（base_url・default_model・timeout。**キーは持たない**） |
+| UI | `ReligoSettings.jsx`（AI 設定カード：ON/OFF・provider・model・APIキー）・`OneToOnesEdit.jsx`（事前準備パネル：PDF D&D・URL 取込・原稿生成→notes/メモ保存） |
+| テスト | `UserAiCredentialTest`・`OneToOnePrepTest`（OpenAI は `Http::fake`）計 8 / green。全体 418 green |
+
+**未対応（将来）:** Anthropic(Claude)・Google(Gemini) アダプタ（`AiClientFactory` に追加）、parsed_profile の構造化、OCR/画像。
+**運用前提:** ユーザーが設定画面で AI を ON にし、自分の OpenAI API キーを登録（`user_ai_credentials` に暗号化保存）。
+
 ## 13. 変更履歴
 
 | 日付 | 内容 |
@@ -258,3 +274,4 @@ flowchart TB
 | 2026-05-30 10:20 JST | 北極星（Cursor の 1to1 事前準備ドキュメント作成を Religo サーバ上で再現）を明記。出力構成を `_TEMPLATE.md` セクションに対応づけ、§6.4 Cursor ワークフロー・パリティ表を追加。 |
 | 2026-05-30 10:22 JST | R9 追加。**AI はユーザーごとの契約キー（BYO key・`user_ai_credentials` 暗号化保存・provider/model をユーザー選択）**で利用。共有 `.env` キーは任意フォールバックのみ。§5.1.1・§6.2・§8 を更新。 |
 | 2026-05-30 10:24 JST | R9 拡張。**AI 利用はユーザー任意（ON/OFF）**・プロバイダを **OpenAI / Claude / Gemini 等から選択**。`user_ai_credentials.ai_enabled` 追加・provider に google(Gemini)・設定画面 AI 設定・AI OFF 時は手動運用、を明記。 |
+| 2026-05-30 10:42 JST | **実装（Phase 155・P1+P2・OpenAI）:** 添付（PDF D&D / URL）＋テキスト抽出、ユーザー AI 設定（BYO key・暗号化）、OpenAI で原稿生成→notes/メモ保存を実装。§12.5 追記・ステータス active。テスト 8 green / 全体 418 green。Claude・Gemini はアダプタ追加で将来対応。 |

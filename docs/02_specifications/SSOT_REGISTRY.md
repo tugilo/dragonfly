@@ -16,7 +16,8 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-009 | リファーラル記録（外部・内部／TYFCB 相当） | ../SSOT/REFERRAL_RECORDING_REQUIREMENTS.md | active／記録: Phase 122 |
 | SPEC-010 | ユーザーログインと Owner（オーナー）紐づけ | ../SSOT/AUTH_LOGIN_AND_OWNER_BINDING_REQUIREMENTS.md | active／記録: Phase 126 |
 | SPEC-011 | 初回アカウント登録 — 確認コードメール送信 | ../SSOT/AUTH_REGISTRATION_EMAIL_REQUIREMENTS.md | active／記録: Phase 147 |
-| SPEC-012 | Zoom 連携による 1 to 1 予定・実施・要約取り込み | ../SSOT/ZOOM_ONETOONE_SYNC_REQUIREMENTS.md | active（主要コード・Phase A〜D 実装）／記録: Phase 151（要件）・Phase 152（実装） |
+| SPEC-012 | Zoom 連携による 1 to 1 予定・実施・要約取り込み | ../SSOT/ZOOM_ONETOONE_SYNC_REQUIREMENTS.md | active（主要コード・Phase A〜D 実装）／記録: Phase 151（要件）・Phase 152（実装）・154（ユーザー単位） |
+| SPEC-013 | 1 to 1 事前準備（NCAS/PDF 添付・テキスト化・AI 原稿生成・BYO key） | ../SSOT/ONETOONE_PREP_PROFILE_REQUIREMENTS.md | active（P1+P2 主要コード・OpenAI 実装）／記録: Phase 155 |
 
 ## Statusの値
 - active     : 現在有効なSSOT

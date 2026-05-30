@@ -23,7 +23,7 @@ OK（zoom グループの middleware とテスト・docs のみ）
 OK（SPEC-012 を本変更に合わせ更新）
 
 ## Merge Evidence
-merge commit id: （develop→main 取り込み後に追記）
+merge commit id: b025d3efc8317fed6b80d60504a249a745d258c7
 source branch: develop
 target branch: main
 phase id: 154

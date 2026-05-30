@@ -480,6 +480,32 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 
 ---
 
+### 4.17 user_ai_credentials（AI 設定・SPEC-013）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | ユーザーごとの AI 利用設定（BYO key）。1to1 原稿生成に使用。 |
+| **主キー** | id |
+| **外部キー** | user_id → users.id (cascadeOnDelete) |
+| **ユニーク制約** | user_id |
+| **主要カラム** | ai_enabled (bool・既定 false), provider (openai/anthropic/google…), **api_key (text, encrypted)**, model (nullable), is_active (bool), timestamps |
+| **セキュリティ** | api_key は `encrypted` キャスト。API は平文を返さない（has_api_key のみ）。現状 OpenAI 実装。 |
+
+**実装:** `2026_05_30_103000_create_user_ai_credentials_table`（Phase 155）。
+
+### 4.18 one_to_one_attachments（1to1 事前準備・SPEC-013）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | 1to1 の相手プロフィール添付（PDF / NCAS URL / テキスト）と抽出テキスト。AI 原稿生成の素材。 |
+| **主キー** | id |
+| **外部キー** | one_to_one_id → one_to_ones.id (cascadeOnDelete)；target_member_id → members.id (nullable, nullOnDelete)；uploaded_by_user_id → users.id (nullable, nullOnDelete) |
+| **主要カラム** | source_type (pdf/url/text), file_path (private disk), source_url, original_name, extracted_text (longtext), parsed_profile (json, nullable), timestamps |
+
+**実装:** `2026_05_30_103100_create_one_to_one_attachments_table`（Phase 155）。ファイルは `Storage::disk('local')`（private）。
+
+---
+
 ## 5. Derived Metrics
 
 Religo では以下を**関係指標**として算出する。
