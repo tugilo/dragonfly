@@ -52,6 +52,19 @@ flowchart TB
 
 ---
 
+### 1.1 誰が連携（認可）できるか — 配布範囲
+
+OAuth アプリは1つで、**各ユーザーは自分の Zoom アカウントで認可**する（ユーザーごとにアプリを作る必要はない）。ただし認可できる範囲はアプリの状態で変わる。
+
+| アプリ状態 | 認可できるユーザー |
+|------------|--------------------|
+| **Development** | アプリ作成者本人／**同一 Zoom アカウント（組織）内のユーザー**／**Add Test Users で追加した人** |
+| **Published（公開）** | 任意の Zoom ユーザー（独立アカウントでも可） |
+
+- **当面（作成者1人で利用）:** Development のままで連携可。
+- **別々の独立 Zoom アカウントを持つ複数メンバーに開放する場合:** アプリを **Publish** するか、各人を **Test User に追加**する。相手の Zoom が管理者承認制なら、その組織の管理者によるアプリ許可も必要。
+- Religo 側のアクセスは `auth:sanctum`（認証済みユーザー単位）なので、**Religo にログインできる各ユーザーが自分の Zoom を連携・自分のミーティングのみ取り込み**できる。
+
 ## 2. ローカル用 HTTPS トンネル
 
 Zoom の OAuth Redirect / Webhook は **HTTPS 必須**。ローカル（`http://localhost`）には ngrok 等でトンネルを張る。
@@ -115,7 +128,7 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 
 ## 5. 管理画面で Zoom と連携
 
-1. 管理画面 `http://localhost/admin`（または APP_URL のトンネル）にログイン。**`chapter_admin` ロールのユーザー**であること（連携 API は admin ゲート）。
+1. 管理画面 `http://localhost/admin`（または APP_URL のトンネル）に**ログイン**。連携 API は **認証済みユーザーなら誰でも可**（各ユーザーが自分の Zoom を連携・取り込み。`chapter_admin` 限定ではない）。
 2. 左メニュー **「🎥 Zoom 取り込み」**（`/zoom-import`）を開く。
 3. **「Zoom と連携」**をクリック → Zoom の認可画面 → 許可 → `/zoom-import?zoom_connected=1` に戻る。
 4. 「連携中: <自分の Zoom メール>」が表示されれば成功。
@@ -176,7 +189,7 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 | **レート制限** | 大量取得時は 429。クライアントが Retry-After/バックオフで再試行。期間を分けると安全。 |
 | **タイムゾーン** | Zoom は UTC。保存時に JST へ変換済み。 |
 | **トークン** | `zoom_accounts` に暗号化保存・自動更新。連携解除は UI の「連携解除」。 |
-| **権限** | 連携・取り込み API は `chapter_admin` のみ。 |
+| **権限** | 連携・取り込み API は **認証済みユーザー単位**（`auth:sanctum`）。各ユーザーが自分の Zoom 連携・自分のミーティングのみ取り込み。他ユーザーの候補は参照・編集不可。 |
 
 ---
 
@@ -258,3 +271,4 @@ php artisan queue:work --daemon   # supervisor 等で常駐管理を推奨
 |------|------|
 | 2026-05-30 09:19 JST | 初版（Phase 153 / docs）。Zoom 連携の Marketplace 設定・トンネル・`.env`・連携/取り込み/要約/Webhook 操作・運用注意・トラブルシュートを整理。 |
 | 2026-05-30 09:48 JST | §11 環境とデプロイ（本番 `religo_app` / テスト `religo_dev` / ローカル docker）と SSH デプロイ手順・環境別 Redirect/Allow List 方針を追記。 |
+| 2026-05-30 10:10 JST | アクセスを **認証済みユーザー単位**（`auth:sanctum`）に変更（Phase 154）。連携・取り込みは各ユーザーが自分用に実行（chapter_admin 限定を解除）。 |
