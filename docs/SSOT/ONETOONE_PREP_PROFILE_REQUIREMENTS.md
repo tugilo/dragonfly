@@ -258,13 +258,25 @@ flowchart TB
 | Model | `App\Models\UserAiCredential`（encrypted・hidden）・`OneToOneAttachment` |
 | AI | `App\Services\Ai\AiTextGenerator`（IF）・`OpenAiTextGenerator`・`AiClientFactory`（provider 切替・現状 OpenAI）・`OneToOnePrepService`（_TEMPLATE 構成で原稿生成）・`HtmlTextExtractor`・`AiGenerationException` |
 | 抽出 | PDF=`PdfParticipantParseService::extractText` 流用、URL=`Http::get`＋`HtmlTextExtractor` |
-| API | `Ai\UserAiCredentialController`（GET/PUT `/api/ai/credentials`）・`Religo\OneToOnePrepController`（添付 index/pdf/url/delete・`prep/generate`）。すべて `auth:sanctum`＋owner 一致 |
+| API | `Ai\UserAiCredentialController`（GET/PUT `/api/ai/credentials`・**POST `/api/ai/credentials/test` 接続テスト**）・`Religo\OneToOnePrepController`（添付 index/pdf/url/delete・`prep/generate`）。すべて `auth:sanctum`＋owner 一致 |
 | 設定 | `config/services.php` の `ai`（base_url・default_model・timeout。**キーは持たない**） |
 | UI | `ReligoSettings.jsx`（AI 設定カード：ON/OFF・provider・model・APIキー）・`OneToOnesEdit.jsx`（事前準備パネル：PDF D&D・URL 取込・原稿生成→notes/メモ保存） |
 | テスト | `UserAiCredentialTest`・`OneToOnePrepTest`（OpenAI は `Http::fake`）計 8 / green。全体 418 green |
 
 **未対応（将来）:** Anthropic(Claude)・Google(Gemini) アダプタ（`AiClientFactory` に追加）、parsed_profile の構造化、OCR/画像。
 **運用前提:** ユーザーが設定画面で AI を ON にし、自分の OpenAI API キーを登録（`user_ai_credentials` に暗号化保存）。
+
+## 12.6 SPEC-012 との合流 — 実施後の議事録生成（次フェーズ候補）
+
+SPEC-012（Zoom 連携）と本 SPEC-013（AI 生成）が揃ったことで、**Cursor 上でやっている「Zoom 文字起こし要約 → 1to1 ドキュメント化」をサーバ上で**再現できる。
+
+- **事前（実装済み・本 SPEC）:** 相手プロフィール（PDF/NCAS）→ AI で **事前準備原稿**。
+- **実施後（次フェーズ候補・Phase 156 想定）:** **Zoom 文字起こし**（SPEC-012 §6.1.2 / `ZoomSummaryService` の TRANSCRIPT 取得）→ **ユーザーの AI**（`OneToOnePrepService` の仕組み流用）で **議事録/要約**（話した内容・決定・次アクション・累積インサイト・戦略更新）を生成 → `notes` / `contact_memos` に保存。
+
+**現状の差分（要グルー）:**
+- 既存 `ZoomSummaryService` は **Zoom 側の要約 / 文字起こしをそのまま** notes に追記する（ユーザー AI では整形しない）。
+- 本 SPEC の AI 生成は **添付（事前プロフィール）** を素材にしている。
+- **合流に必要なのは:** 「Zoom 文字起こしテキストを素材に、ユーザーの AI で **議事録プロンプト**で生成する」モードの追加（例: 文字起こしを `one_to_one_attachments`(source_type=text) として取り込み prep 生成を流用、または `prep/generate` に `mode=post_meeting` を追加）。新規依存なし・小規模。
 
 ## 13. 変更履歴
 
@@ -274,4 +286,5 @@ flowchart TB
 | 2026-05-30 10:20 JST | 北極星（Cursor の 1to1 事前準備ドキュメント作成を Religo サーバ上で再現）を明記。出力構成を `_TEMPLATE.md` セクションに対応づけ、§6.4 Cursor ワークフロー・パリティ表を追加。 |
 | 2026-05-30 10:22 JST | R9 追加。**AI はユーザーごとの契約キー（BYO key・`user_ai_credentials` 暗号化保存・provider/model をユーザー選択）**で利用。共有 `.env` キーは任意フォールバックのみ。§5.1.1・§6.2・§8 を更新。 |
 | 2026-05-30 10:24 JST | R9 拡張。**AI 利用はユーザー任意（ON/OFF）**・プロバイダを **OpenAI / Claude / Gemini 等から選択**。`user_ai_credentials.ai_enabled` 追加・provider に google(Gemini)・設定画面 AI 設定・AI OFF 時は手動運用、を明記。 |
+| 2026-05-30 17:49 JST | **AI 接続テスト追加（Phase 156）:** 設定画面に「接続テスト」ボタン、`POST /api/ai/credentials/test`（保存済みキーで最小呼び出し→成功/失敗表示）。テスト 10 件 green / 全体 420 green。 |
 | 2026-05-30 10:42 JST | **実装（Phase 155・P1+P2・OpenAI）:** 添付（PDF D&D / URL）＋テキスト抽出、ユーザー AI 設定（BYO key・暗号化）、OpenAI で原稿生成→notes/メモ保存を実装。§12.5 追記・ステータス active。テスト 8 green / 全体 418 green。Claude・Gemini はアダプタ追加で将来対応。 |

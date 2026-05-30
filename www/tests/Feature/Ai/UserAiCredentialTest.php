@@ -5,6 +5,7 @@ namespace Tests\Feature\Ai;
 use App\Models\User;
 use App\Models\UserAiCredential;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -53,6 +54,30 @@ class UserAiCredentialTest extends TestCase
         $row = UserAiCredential::first();
         $this->assertNotSame('sk-secret-123', $row->getRawOriginal('api_key'));
         $this->assertSame('sk-secret-123', $row->api_key); // 復号で一致
+    }
+
+    public function test_test_endpoint_requires_setup(): void
+    {
+        Sanctum::actingAs($this->user());
+        $this->postJson('/api/ai/credentials/test')->assertStatus(422);
+    }
+
+    public function test_test_endpoint_ok_with_openai_fake(): void
+    {
+        $u = $this->user();
+        Sanctum::actingAs($u);
+        UserAiCredential::create([
+            'user_id' => $u->id, 'ai_enabled' => true, 'provider' => 'openai',
+            'api_key' => 'sk-test', 'model' => 'gpt-4o-mini', 'is_active' => true,
+        ]);
+        Http::fake(['api.openai.com/*' => Http::response([
+            'choices' => [['message' => ['content' => 'OK']]],
+        ], 200)]);
+
+        $this->postJson('/api/ai/credentials/test')
+            ->assertOk()
+            ->assertJsonPath('ok', true)
+            ->assertJsonPath('provider', 'openai');
     }
 
     public function test_empty_api_key_does_not_overwrite(): void

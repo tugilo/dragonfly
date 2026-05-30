@@ -31,6 +31,7 @@ function AiSettingsCard({ notify }) {
     const [hasKey, setHasKey] = useState(false);
     const [providers, setProviders] = useState(['openai']);
     const [implemented, setImplemented] = useState(['openai']);
+    const [testing, setTesting] = useState(false);
 
     const load = useCallback(async () => {
         setLoading(true);
@@ -76,6 +77,26 @@ function AiSettingsCard({ notify }) {
             notify('保存に失敗しました', 'error');
         } finally {
             setSaving(false);
+        }
+    };
+
+    const test = async () => {
+        setTesting(true);
+        try {
+            const res = await religoFetch('/api/ai/credentials/test', {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.ok) {
+                notify(data.message || '接続テストに失敗しました', 'error');
+                return;
+            }
+            notify(`接続OK（${data.provider} / ${data.model}）${data.sample ? '：' + data.sample : ''}`);
+        } catch {
+            notify('接続テストに失敗しました', 'error');
+        } finally {
+            setTesting(false);
         }
     };
 
@@ -136,6 +157,16 @@ function AiSettingsCard({ notify }) {
                 <Button variant="contained" onClick={save} disabled={saving}>
                     {saving ? '保存中…' : 'AI 設定を保存'}
                 </Button>
+                {aiEnabled && (
+                    <Button variant="outlined" onClick={test} disabled={testing || saving} sx={{ ml: 1 }}>
+                        {testing ? 'テスト中…' : '接続テスト'}
+                    </Button>
+                )}
+                {aiEnabled && (
+                    <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+                        ※ 接続テストは「保存済み」のキー・モデルで実行します。変更したら先に保存してください。
+                    </Typography>
+                )}
             </CardContent>
         </Card>
     );
