@@ -31,7 +31,7 @@ OK（SPEC-013 範囲・新規依存なし）
 OK（SPEC-013 active 化・DATA_MODEL §4.17/4.18 追記）
 
 ## Merge Evidence
-merge commit id: （develop→main 取り込み後に追記）
+merge commit id: b17eade613a28fac18da14309a242b7620683b14
 source branch: develop
 target branch: main
 phase id: 155
