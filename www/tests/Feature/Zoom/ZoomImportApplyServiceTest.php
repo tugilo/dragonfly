@@ -75,6 +75,35 @@ class ZoomImportApplyServiceTest extends TestCase
         ], $overrides));
     }
 
+    public function test_create_member_links_and_blocks_duplicate(): void
+    {
+        \Laravel\Sanctum\Sanctum::actingAs($this->user);
+        $import = $this->makeImport([
+            'matched_member_id' => null,
+            'match_status' => 'new',
+            'counterpart_name' => '新規 太郎',
+        ]);
+
+        // 初回: 同名なし → 作成・紐付け
+        $this->postJson("/api/zoom/imports/{$import->id}/create-member", [
+            'name' => '新規 太郎', 'type' => 'guest',
+        ])->assertCreated()->assertJsonPath('created', true);
+
+        $import->refresh();
+        $this->assertNotNull($import->matched_member_id);
+        $this->assertSame('matched', $import->match_status);
+
+        // 別 import で同名 → force なしは重複提示（作成しない）
+        $import2 = $this->makeImport([
+            'zoom_meeting_uuid' => 'uuid-dup==', 'zoom_meeting_id' => '222',
+            'matched_member_id' => null, 'match_status' => 'new', 'counterpart_name' => '新規 太郎',
+        ]);
+        $res = $this->postJson("/api/zoom/imports/{$import2->id}/create-member", [
+            'name' => '新規 太郎', 'type' => 'guest',
+        ])->assertOk()->assertJsonPath('created', false);
+        $this->assertNotEmpty($res->json('duplicates'));
+    }
+
     public function test_apply_past_creates_completed_one_to_one(): void
     {
         $import = $this->makeImport();

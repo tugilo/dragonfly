@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Zoom;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Zoom\ApplyZoomImportRequest;
+use App\Http\Requests\Zoom\CreateZoomImportMemberRequest;
 use App\Http\Requests\Zoom\UpdateZoomImportRequest;
 use App\Http\Requests\Zoom\ZoomSyncRequest;
+use App\Models\Member;
 use App\Models\OneToOne;
 use App\Models\ZoomAccount;
 use App\Models\ZoomMeetingImport;
@@ -104,6 +106,69 @@ class ZoomImportController extends Controller
         $import->load('matchedMember:id,name');
 
         return response()->json($this->formatRow($import));
+    }
+
+    /**
+     * POST /api/zoom/imports/{import}/create-member — 未登録相手をその場で members 新規作成し紐付ける。
+     * 同名が存在する場合は force=false なら作成せず候補を返す（重複防止・SPEC-008）。
+     */
+    public function createMember(CreateZoomImportMemberRequest $request, ZoomMeetingImport $import): JsonResponse
+    {
+        $user = ReligoActorContext::actingUser();
+        if ($user === null || $import->user_id !== $user->id) {
+            return response()->json(['message' => 'Forbidden.'], 403);
+        }
+        if ($import->status === ZoomMeetingImport::STATUS_IMPORTED) {
+            return response()->json(['message' => '取り込み済みのため変更できません。'], 422);
+        }
+
+        $v = $request->validated();
+        $name = trim($v['name']);
+        $force = (bool) ($v['force'] ?? false);
+
+        if (! $force) {
+            $dups = Member::query()
+                ->where('name', $name)
+                ->orderBy('id')
+                ->limit(10)
+                ->get(['id', 'name', 'name_kana', 'type', 'workspace_id']);
+            if ($dups->isNotEmpty()) {
+                return response()->json([
+                    'created' => false,
+                    'duplicates' => $dups->map(fn (Member $m) => [
+                        'id' => $m->id,
+                        'name' => $m->name,
+                        'name_kana' => $m->name_kana,
+                        'type' => $m->type,
+                        'workspace_id' => $m->workspace_id,
+                    ])->all(),
+                    'message' => '同名のメンバーが存在します。既存を使うか、新規作成を確定してください。',
+                ], 200);
+            }
+        }
+
+        $member = Member::create([
+            'name' => $name,
+            'name_kana' => $v['name_kana'] ?? null,
+            'type' => $v['type'] ?? 'guest',
+            'workspace_id' => $v['workspace_id'] ?? null,
+            'category_id' => null,
+            'display_no' => null,
+            'introducer_member_id' => null,
+            'attendant_member_id' => null,
+        ]);
+
+        $import->matched_member_id = $member->id;
+        $import->match_status = 'matched';
+        $import->selected = true;
+        $import->save();
+        $import->load('matchedMember:id,name');
+
+        return response()->json([
+            'created' => true,
+            'member' => ['id' => $member->id, 'name' => $member->name],
+            'import' => $this->formatRow($import),
+        ], 201);
     }
 
     /**

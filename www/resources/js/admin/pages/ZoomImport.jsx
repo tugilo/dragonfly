@@ -17,11 +17,198 @@ import {
     Checkbox,
     Chip,
     TextField,
-    Autocomplete,
     CircularProgress,
     Divider,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    List,
+    ListItemButton,
+    ListItemText,
+    Link,
 } from '@mui/material';
 import { religoFetch } from '../religoApiFetch';
+
+const MEMBER_TYPE_CHOICES = [
+    { id: 'guest', name: 'ゲスト（他チャプター/来訪・既定）' },
+    { id: 'visitor', name: 'ビジター' },
+    { id: 'member', name: 'メンバー' },
+    { id: 'active', name: '在籍（active）' },
+];
+
+/**
+ * 相手選択ダイアログ。開くと推定名で候補を即フィルタ表示し、タップで選択。
+ * 未登録なら「新規登録」フォームに切替（同名は重複ガード）。
+ */
+function CounterpartPickerDialog({ open, row, members, workspaces, onClose, onPick, onCreate }) {
+    const [query, setQuery] = useState('');
+    const [mode, setMode] = useState('search');
+    const [name, setName] = useState('');
+    const [kana, setKana] = useState('');
+    const [type, setType] = useState('guest');
+    const [workspaceId, setWorkspaceId] = useState('');
+    const [duplicates, setDuplicates] = useState([]);
+    const [busy, setBusy] = useState(false);
+
+    useEffect(() => {
+        if (open && row) {
+            const guessed = row.counterpart_name || '';
+            setQuery(guessed);
+            setName(guessed);
+            setKana('');
+            setType('guest');
+            setWorkspaceId('');
+            setDuplicates([]);
+            setMode('search');
+        }
+    }, [open, row]);
+
+    const filtered = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        const list = Array.isArray(members) ? members : [];
+        if (q === '') return list.slice(0, 50);
+        return list
+            .filter((m) => `${m.name || ''} ${m.name_kana || ''}`.toLowerCase().includes(q))
+            .slice(0, 50);
+    }, [members, query]);
+
+    const submitCreate = async (force) => {
+        const nm = name.trim();
+        if (nm === '') return;
+        setBusy(true);
+        try {
+            const result = await onCreate(row, {
+                name: nm,
+                name_kana: kana.trim() || null,
+                type,
+                workspace_id: workspaceId === '' ? null : Number(workspaceId),
+                force: Boolean(force),
+            });
+            if (result && result.created === false && Array.isArray(result.duplicates) && result.duplicates.length > 0) {
+                setDuplicates(result.duplicates);
+                return;
+            }
+            onClose();
+        } finally {
+            setBusy(false);
+        }
+    };
+
+    if (!row) return null;
+
+    return (
+        <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+            <DialogTitle>
+                相手を選択 / 登録
+                <Typography variant="caption" color="text.secondary" display="block">
+                    {row.topic}
+                </Typography>
+            </DialogTitle>
+            <DialogContent dividers>
+                {mode === 'search' ? (
+                    <>
+                        <TextField
+                            autoFocus
+                            fullWidth
+                            size="small"
+                            label="名前で検索"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            sx={{ mb: 1 }}
+                        />
+                        <List dense sx={{ maxHeight: 280, overflow: 'auto', border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
+                            {filtered.length === 0 ? (
+                                <ListItemText sx={{ p: 2 }} primary="一致するメンバーがいません" secondary="下のボタンで新規登録できます" />
+                            ) : (
+                                filtered.map((m) => (
+                                    <ListItemButton
+                                        key={m.id}
+                                        onClick={() => {
+                                            onPick(row, m);
+                                            onClose();
+                                        }}
+                                    >
+                                        <ListItemText
+                                            primary={m.name}
+                                            secondary={[m.name_kana, m.workspace_name, m.category_label].filter(Boolean).join(' / ') || null}
+                                        />
+                                    </ListItemButton>
+                                ))
+                            )}
+                        </List>
+                        <Box sx={{ mt: 2, textAlign: 'center' }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setName(query.trim() || row.counterpart_name || '');
+                                    setMode('create');
+                                }}
+                            >
+                                ＋ 新規登録{query.trim() ? `「${query.trim()}」` : ''}
+                            </Button>
+                        </Box>
+                    </>
+                ) : (
+                    <Stack spacing={2} sx={{ mt: 0.5 }}>
+                        {duplicates.length > 0 && (
+                            <Alert severity="warning">
+                                同名のメンバーがいます。既存を使う場合は選択してください。
+                                <List dense>
+                                    {duplicates.map((d) => (
+                                        <ListItemButton
+                                            key={d.id}
+                                            onClick={() => {
+                                                onPick(row, { id: d.id, name: d.name });
+                                                onClose();
+                                            }}
+                                        >
+                                            <ListItemText primary={d.name} secondary={[d.name_kana, d.type].filter(Boolean).join(' / ') || null} />
+                                        </ListItemButton>
+                                    ))}
+                                </List>
+                            </Alert>
+                        )}
+                        <TextField label="氏名" size="small" fullWidth value={name} onChange={(e) => setName(e.target.value)} />
+                        <TextField label="ふりがな（任意）" size="small" fullWidth value={kana} onChange={(e) => setKana(e.target.value)} />
+                        <FormControl size="small" fullWidth>
+                            <InputLabel id="cp-type">種別</InputLabel>
+                            <Select labelId="cp-type" label="種別" value={type} onChange={(e) => setType(e.target.value)}>
+                                {MEMBER_TYPE_CHOICES.map((c) => (
+                                    <MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl size="small" fullWidth>
+                            <InputLabel id="cp-ws">所属チャプター（任意）</InputLabel>
+                            <Select labelId="cp-ws" label="所属チャプター（任意）" value={workspaceId} onChange={(e) => setWorkspaceId(e.target.value)} displayEmpty>
+                                <MenuItem value=""><em>未設定</em></MenuItem>
+                                {(workspaces || []).map((w) => (
+                                    <MenuItem key={w.id} value={String(w.id)}>{w.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <Link component="button" type="button" variant="caption" onClick={() => { setMode('search'); setDuplicates([]); }}>
+                            ← 検索に戻る
+                        </Link>
+                    </Stack>
+                )}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} disabled={busy}>閉じる</Button>
+                {mode === 'create' && (
+                    <Button variant="contained" onClick={() => submitCreate(duplicates.length > 0)} disabled={busy || !name.trim()}>
+                        {busy ? '登録中…' : duplicates.length > 0 ? 'それでも新規作成' : '新規作成して紐付け'}
+                    </Button>
+                )}
+            </DialogActions>
+        </Dialog>
+    );
+}
 
 async function fetchJson(url, init) {
     const res = await religoFetch(url, init);
@@ -57,6 +244,8 @@ export default function ZoomImport() {
     const [status, setStatus] = useState(null);
     const [rows, setRows] = useState([]);
     const [members, setMembers] = useState([]);
+    const [workspaces, setWorkspaces] = useState([]);
+    const [pickerRow, setPickerRow] = useState(null);
     const [loading, setLoading] = useState(false);
     const [syncing, setSyncing] = useState(false);
     const [pastDays, setPastDays] = useState(30);
@@ -90,8 +279,12 @@ export default function ZoomImport() {
 
     const loadMembers = useCallback(async () => {
         try {
-            const data = await fetchJson('/api/dragonfly/members');
-            setMembers(Array.isArray(data) ? data : []);
+            const [m, ws] = await Promise.all([
+                fetchJson('/api/dragonfly/members'),
+                fetchJson('/api/workspaces').catch(() => []),
+            ]);
+            setMembers(Array.isArray(m) ? m : []);
+            setWorkspaces(Array.isArray(ws) ? ws : []);
         } catch {
             /* メンバー候補は任意 */
         }
@@ -219,9 +412,39 @@ export default function ZoomImport() {
         }
     };
 
-    const memberOption = (row) =>
+    const createMember = async (row, payload) => {
+        try {
+            const res = await religoFetch(`/api/zoom/imports/${row.id}/create-member`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                notify(data.message || '新規登録に失敗しました', 'error');
+                return { created: false };
+            }
+            if (data.created === false) {
+                return data; // 重複候補をダイアログ側で表示
+            }
+            // 作成成功 → members 候補に追加して行に反映
+            if (data.member) {
+                setMembers((prev) => (prev.some((m) => m.id === data.member.id) ? prev : [...prev, data.member]));
+            }
+            if (data.import) {
+                setRows((prev) => prev.map((r) => (r.id === data.import.id ? { ...r, ...data.import } : r)));
+            }
+            notify(`「${data.member?.name}」を登録して紐付けました`);
+            return data;
+        } catch (e) {
+            notify(e.message || '新規登録に失敗しました', 'error');
+            return { created: false };
+        }
+    };
+
+    const memberDisplayName = (row) =>
         row.matched_member_id
-            ? members.find((m) => m.id === row.matched_member_id) || { id: row.matched_member_id, name: row.matched_member_name }
+            ? row.matched_member_name || members.find((m) => m.id === row.matched_member_id)?.name || `#${row.matched_member_id}`
             : null;
 
     return (
@@ -358,26 +581,27 @@ export default function ZoomImport() {
                                             )}
                                         </TableCell>
                                         <TableCell sx={{ minWidth: 220 }}>
-                                            <Autocomplete
-                                                size="small"
-                                                options={members}
-                                                getOptionLabel={(o) => o?.name || ''}
-                                                isOptionEqualToValue={(o, v) => o.id === v.id}
-                                                value={memberOption(row)}
-                                                disabled={row.already_imported}
-                                                onChange={(_e, v) => setMatch(row, v)}
-                                                renderInput={(params) => (
-                                                    <TextField
-                                                        {...params}
-                                                        placeholder={row.counterpart_name || '相手を選択'}
-                                                        variant="standard"
-                                                    />
-                                                )}
-                                            />
-                                            {row.match_status === 'new' && !row.matched_member_id && (
-                                                <Typography variant="caption" color="warning.main">
-                                                    未登録（{row.counterpart_name}）— 選択するか保留
-                                                </Typography>
+                                            {memberDisplayName(row) ? (
+                                                <Button
+                                                    size="small"
+                                                    variant="text"
+                                                    disabled={row.already_imported}
+                                                    onClick={() => setPickerRow(row)}
+                                                    sx={{ textTransform: 'none', justifyContent: 'flex-start' }}
+                                                >
+                                                    {memberDisplayName(row)}（変更）
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    size="small"
+                                                    variant="outlined"
+                                                    color="warning"
+                                                    disabled={row.already_imported}
+                                                    onClick={() => setPickerRow(row)}
+                                                    sx={{ textTransform: 'none' }}
+                                                >
+                                                    {row.counterpart_name ? `${row.counterpart_name}（未登録・選択/登録）` : '相手を選択 / 登録'}
+                                                </Button>
                                             )}
                                         </TableCell>
                                         <TableCell>
@@ -405,6 +629,16 @@ export default function ZoomImport() {
                     </Table>
                 </TableContainer>
             </Paper>
+
+            <CounterpartPickerDialog
+                open={pickerRow !== null}
+                row={pickerRow}
+                members={members}
+                workspaces={workspaces}
+                onClose={() => setPickerRow(null)}
+                onPick={(row, member) => setMatch(row, member)}
+                onCreate={createMember}
+            />
 
             <Snackbar
                 open={snack.open}

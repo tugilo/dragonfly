@@ -154,6 +154,7 @@
 | 154 | SPEC-012 Zoom 連携アクセスをユーザー単位へ（auth:sanctum） | implement | completed | develop | 2026-05-30 |
 | 155 | SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI・BYO key） | implement | completed | develop | 2026-05-30 |
 | 156 | SPEC-013 AI 設定の接続テスト（/api/ai/credentials/test） | implement | completed | develop | 2026-05-30 |
+| 157 | Zoom 取り込み 未登録相手の新規メンバー作成（相手選択ダイアログ・案A） | implement | completed | develop | 2026-05-30 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
