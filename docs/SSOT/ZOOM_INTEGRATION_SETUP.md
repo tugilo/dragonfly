@@ -202,8 +202,59 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 
 ---
 
-## 11. 変更履歴
+## 11. 環境とデプロイ（本番 / テスト / ローカル）
+
+| 環境 | 配置 | ホスト/URL | OAuth Redirect（`ZOOM_REDIRECT_URI`） |
+|------|------|-----------|----------------------------------------|
+| **本番** | `ssh tugilo.com` → `/var/www/laravel/religo_app` | `https://religo.tugilo.com` | `https://religo.tugilo.com/api/zoom/callback` |
+| **テスト** | 同サーバ（tugilo.com）→ `/var/www/laravel/religo_dev` | テスト用ドメイン（要確認） | `https://<test-domain>/api/zoom/callback` |
+| **ローカル** | この docker 環境 | `http://localhost`（OAuth は ngrok の HTTPS） | `https://<ngrok>/api/zoom/callback` |
+
+**Zoom アプリ側の注意:**
+- OAuth Redirect URL は 1 つだが、**OAuth Allow Lists に各環境のコールバック URL を追加**できる（本番・テスト・ngrok を併記）。各環境の `.env` の `ZOOM_REDIRECT_URI` は **自分のドメインのもの**にする（送信する `redirect_uri` が Allow List に含まれれば可）。
+- 本番とテスト/ローカルを**別 Zoom アプリ**に分けてもよい（資格情報・スコープを分離できる）。
+
+**デプロイ手順（本番例・テストも path を変えて同様）:**
+
+```bash
+ssh tugilo.com
+cd /var/www/laravel/religo_app
+
+# 1. develop を取得（SPEC-012 実装は develop にマージ済み）
+git fetch origin && git checkout develop && git pull origin develop
+
+# 2. 依存（新規 composer/npm 依存は無し。念のため）
+composer install --no-dev --optimize-autoloader
+npm ci && npm run build
+
+# 3. .env に Zoom 変数を設定（手動編集せず php -r。<...> を実値に）
+php -r '
+$f=".env"; $env=file_get_contents($f);
+$kv=[
+ "ZOOM_CLIENT_ID"=>"<client-id>",
+ "ZOOM_CLIENT_SECRET"=>"<client-secret>",
+ "ZOOM_REDIRECT_URI"=>"https://religo.tugilo.com/api/zoom/callback",
+ "ZOOM_WEBHOOK_SECRET_TOKEN"=>"<webhook-secret>",
+ "APP_URL"=>"https://religo.tugilo.com",
+];
+foreach($kv as $k=>$v){ $env=preg_match("/^".$k."=.*/m",$env)?preg_replace("/^".$k."=.*/m",$k."=".$v,$env):$env."\n".$k."=".$v; }
+file_put_contents($f,$env); echo "updated\n";
+'
+
+# 4. マイグレーション＆設定反映
+php artisan migrate --force
+php artisan config:clear && php artisan config:cache
+
+# 5. （Webhook 使う場合）キューワーカー
+php artisan queue:work --daemon   # supervisor 等で常駐管理を推奨
+```
+
+> docker 運用のサーバなら各コマンドを `docker compose ... exec app <cmd>` 形に読み替える。
+> テスト環境は `cd /var/www/laravel/religo_dev` と `ZOOM_REDIRECT_URI`/`APP_URL` をテストドメインに変えて同手順。
+
+## 12. 変更履歴
 
 | 日付 | 内容 |
 |------|------|
 | 2026-05-30 09:19 JST | 初版（Phase 153 / docs）。Zoom 連携の Marketplace 設定・トンネル・`.env`・連携/取り込み/要約/Webhook 操作・運用注意・トラブルシュートを整理。 |
+| 2026-05-30 09:48 JST | §11 環境とデプロイ（本番 `religo_app` / テスト `religo_dev` / ローカル docker）と SSH デプロイ手順・環境別 Redirect/Allow List 方針を追記。 |
