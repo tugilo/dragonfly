@@ -68,7 +68,9 @@ Route::middleware(['religo.member_merge'])->prefix('admin/member-merge')->group(
 Route::get('/zoom/callback', [ZoomOAuthController::class, 'callback']);
 Route::post('/zoom/webhook', [ZoomWebhookController::class, 'handle'])->middleware('zoom.webhook');
 
-Route::middleware('religo.chapter_admin')->prefix('zoom')->group(function () {
+// Zoom 連携・取り込みは「ログイン済みユーザー単位」。各ユーザーが自分の Zoom を連携し、
+// 自分のミーティングのみ取り込む（データは actingUser=認証ユーザーにスコープ）。chapter_admin 限定ではない。
+Route::middleware('auth:sanctum')->prefix('zoom')->group(function () {
     Route::get('/connect', [ZoomOAuthController::class, 'connect']);
     Route::delete('/connect', [ZoomOAuthController::class, 'disconnect']);
     Route::get('/status', [ZoomOAuthController::class, 'status']);
