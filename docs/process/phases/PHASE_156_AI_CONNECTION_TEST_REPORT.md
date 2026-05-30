@@ -23,7 +23,7 @@ OK（SPEC-013 補強・新規依存なし）
 OK（SPEC-013 §12.5 更新）
 
 ## Merge Evidence
-merge commit id: （develop→main 取り込み後に追記）
+merge commit id: 35a912a4f1e3c627e8a5d203db1554e846be2e87
 source branch: develop
 target branch: main
 phase id: 156
