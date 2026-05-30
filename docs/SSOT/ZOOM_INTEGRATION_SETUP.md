@@ -35,7 +35,10 @@ flowchart TB
    - **Webhook Only App** は使わない（通知受信のみで API 読み取り不可）。
    - 作成後、認証情報の **User-managed**（ユーザーごとに連携）を選び、必要なら開発中は自分のアカウントのみで動作確認する。
 3. **OAuth 情報（Client ID / Client Secret）** を控える（General App の "App Credentials" / "Basic Information"）。
-4. **Redirect URL for OAuth** と **OAuth allow list** に、手順 2 で決めるトンネル URL + `/api/zoom/callback` を登録（例: `https://<your-subdomain>.ngrok-free.app/api/zoom/callback`）。**Zoom 側とアプリの値は完全一致が必須**。
+4. **OAuth Redirect URL** と **OAuth Allow Lists** に、コールバック URL を登録する。**パスは必ず `/api/zoom/callback`**（`zpi` 等のタイプミス禁止。実装ルートは `api/zoom/callback`）。
+   - 本番（固定 HTTPS ドメイン）例: `https://religo.tugilo.com/api/zoom/callback`
+   - ローカル検証（トンネル）例: `https://<your-subdomain>.ngrok-free.app/api/zoom/callback`
+   - **Zoom の Redirect URL / Allow Lists / `.env` の `ZOOM_REDIRECT_URI` の 3 つを完全一致**させる（1 文字でも違うと失敗）。公開 HTTPS ドメインで配信している場合は ngrok 不要。
 5. **Scopes**（取得系のみ・最小権限）。Zoom は粒度別スコープに移行しているため、最新名は Marketplace の表示に合わせる。目安:
    - 予定/実施一覧・詳細: `meeting:read:list_meetings`, `meeting:read:meeting`, `meeting:read:list_past_instances`, `meeting:read:past_meeting`
    - 過去参加者: `meeting:read:list_past_participants`
