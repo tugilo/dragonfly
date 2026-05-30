@@ -93,6 +93,7 @@ Route::middleware('auth:sanctum')->prefix('zoom')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/ai/credentials', [UserAiCredentialController::class, 'show']);
     Route::put('/ai/credentials', [UserAiCredentialController::class, 'update']);
+    Route::post('/ai/credentials/test', [UserAiCredentialController::class, 'test']);
 
     Route::get('/one-to-ones/{oneToOne}/attachments', [OneToOnePrepController::class, 'indexAttachments']);
     Route::post('/one-to-ones/{oneToOne}/attachments', [OneToOnePrepController::class, 'storePdf']);
