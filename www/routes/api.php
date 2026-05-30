@@ -80,6 +80,7 @@ Route::middleware('auth:sanctum')->prefix('zoom')->group(function () {
     Route::post('/sync', [ZoomImportController::class, 'sync']);
     Route::get('/imports', [ZoomImportController::class, 'index']);
     Route::put('/imports/{import}', [ZoomImportController::class, 'update']);
+    Route::post('/imports/{import}/create-member', [ZoomImportController::class, 'createMember']);
     Route::post('/imports/apply', [ZoomImportController::class, 'apply']);
     Route::post('/imports/{import}/summary', [ZoomImportController::class, 'summary']);
 });

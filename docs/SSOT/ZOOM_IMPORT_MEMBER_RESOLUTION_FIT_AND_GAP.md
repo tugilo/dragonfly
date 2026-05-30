@@ -128,8 +128,24 @@
 
 ---
 
-## 9. 変更履歴
+## 9. 実装（Phase 157・案A 採用）
+
+UX 改善要望（タップで候補即表示・未登録はその場で新規登録）を含めて案A を実装した。
+
+| 区分 | 内容 |
+|------|------|
+| API | `POST /api/zoom/imports/{import}/create-member`（`auth:sanctum`＋owner 一致）。同名は force=false で重複候補を返し作成しない（R4）。作成後 staging を `matched`・`selected` に。 |
+| Request | `CreateZoomImportMemberRequest`（name 必須・type〔member/active/inactive/visitor/guest〕・workspace_id・force） |
+| 既定 | 種別 = **guest**（他チャプター/来訪想定・編集可）、所属チャプター = 未設定可（任意選択） |
+| UI | 相手セルをボタン化 → **`CounterpartPickerDialog`**：開くと推定名で候補を即フィルタ表示・タップで選択／「＋ 新規登録」で氏名・種別・チャプター入力・同名警告で既存選択も可。 |
+| 一覧 | 高さをウィンドウ追従（`calc(100vh-300px)`）・「全 N 件」表示で保留の過去行に気づける（G2 緩和）。 |
+| テスト | `ZoomImportApplyServiceTest::test_create_member_links_and_blocks_duplicate`。全体 421 green。 |
+
+**未実装（任意・将来）:** G5 相手名推定の姓名/会社名対応、R6 保留専用フィルタ。
+
+## 10. 変更履歴
 
 | 日付 | 内容 |
 |------|------|
 | 2026-05-30 18:14 JST | 初版。実機調査（過去は取得済み・未登録相手で held）と、新規メンバー作成フロー・過去取り込みの Fit & Gap・対応案 A/B/C・Open Questions を整理。 |
+| 2026-05-30 18:40 JST | 案A 実装（Phase 157）。create-member API＋相手選択ダイアログ（候補即表示・新規登録・重複ガード）。Open Questions: 種別既定=guest・所属チャプター任意で確定。 |
