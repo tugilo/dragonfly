@@ -148,6 +148,9 @@
 | 148 | SPEC-011 確認コードメール送信 implement | implement | completed | develop | 2026-05-28 |
 | 149 | SPEC-011 member 未一致 — 初回登録エラー表示要件 | docs | completed | develop | 2026-05-28 |
 | 150 | SPEC-011 member 未一致 — 初回登録 422 implement | implement | completed | develop | 2026-05-28 |
+| 151 | SPEC-012 Zoom 連携 1to1 予定・実施・要約取り込み 要件整理 | docs | completed | feature/phase151-zoom-onetoone-sync-requirements | 2026-05-30 |
+| 152 | SPEC-012 Zoom 連携 implement（A:OAuth / B:取り込み＋複数選択UI / C:要約 / D:Webhook） | implement | completed | feature/spec012-zoom-onetoone-sync | 2026-05-30 |
+| 153 | SPEC-012 Zoom 連携 セットアップ・運用手順（Runbook） | docs | completed | develop | 2026-05-30 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
