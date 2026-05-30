@@ -345,7 +345,7 @@ flowchart TB
 | UI | `resources/js/admin/pages/ZoomImport.jsx`（CustomRoute `/zoom-import`・複数選択・要約取得） |
 | テスト | `ZoomOneToOneDetectorTest`・`ZoomImportApplyServiceTest`・`ZoomWebhookTest`（計 12 / green） |
 
-**運用前提（コード外・要対応）:**
+**運用前提（コード外・要対応）:** 具体的な設定・操作手順は [ZOOM_INTEGRATION_SETUP.md](ZOOM_INTEGRATION_SETUP.md)（Runbook・Phase 153）参照。
 
 - Zoom Marketplace で OAuth アプリを作成し、`.env` に `ZOOM_CLIENT_ID` / `ZOOM_CLIENT_SECRET` / `ZOOM_REDIRECT_URI` / `ZOOM_WEBHOOK_SECRET_TOKEN` を設定（`.env` は手動編集せず PHP スクリプト等で）。
 - OAuth コールバック・Webhook は **HTTPS 必須**。ローカルは ngrok 等のトンネルで `ZOOM_REDIRECT_URI` と Webhook URL を公開する。
