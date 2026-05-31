@@ -13,3 +13,6 @@ project.env
 
 # docker volume
 db_data
+
+# DB sync backups（db-push が本番/テストを上書きする前に取得するバックアップ）
+backups/
