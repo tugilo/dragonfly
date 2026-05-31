@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-05-31 10:21 JST | **Zoom 取り込み×既存DB 重複解消 要件（docs）:** [`SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md`](SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md) 新規。実機調査で **(A)セッション重複8組（manual×zoom 同日）** と **(B)メンバー重複（御手洗 id124『御手洗氏（名 TODO）』vs id141『御手洗宏樹』等）** を確認。原因は apply の重複判定が `zoom_*` 一致のみ・相手の同名判定が完全一致のみ。再発防止（owner+target+同日 検知→既存に紐付け＋zoom_* バックフィル・あいまい候補提示）とクリーンアップ（`MemberMergeService` で統合・重複1to1は手動側 notes を残し Zoom 側を canceled/削除）を要件化。INDEX 同期。コード変更なし。 |
 | 2026-05-30 18:40 JST | **Phase 157 / Zoom 取り込み 相手選択 UX 改善＋新規メンバー作成:** 相手セルをボタン化し `CounterpartPickerDialog`（タップで推定名フィルタ候補を即表示・タップ選択／「＋新規登録」で氏名・種別〔既定 guest〕・チャプター入力・同名重複ガード）を追加。`POST /api/zoom/imports/{import}/create-member`（auth:sanctum＋owner一致・force で重複確定）。一覧高さをウィンドウ追従・全件数表示。テスト追加（create-member 紐付け/重複）・全体 **421 passed**・build 成功。Fit&Gap §9 実装追記・PHASE_REGISTRY(157) 同期。develop→main（Actions 自動デプロイ）。 |
 | 2026-05-30 18:14 JST | **Zoom 取り込み 未登録相手/過去履歴 Fit&Gap（docs）:** [`SSOT/ZOOM_IMPORT_MEMBER_RESOLUTION_FIT_AND_GAP.md`](SSOT/ZOOM_IMPORT_MEMBER_RESOLUTION_FIT_AND_GAP.md) 新規。実機調査で **過去は取得・保存済み（past 31 件）だが未登録相手のため全部 `held`** と判明（「未来しか出ない」は日時降順＋保留が真因、fetch 問題ではない）。未登録相手のインライン新規メンバー作成（案A 推奨）・同名重複ガード・相手名推定改善（姓名スペース・会社名除去）・保留視認性・Open Questions を整理。INDEX 同期。コード変更なし。 |
 | 2026-05-30 17:49 JST | **Phase 156 / SPEC-013 AI 接続テスト:** 設定画面に「接続テスト」ボタンを追加。`POST /api/ai/credentials/test` が保存済みキー・モデルで最小の AI 呼び出しを行い、成功（provider/model/サンプル）または失敗理由を返す。`UserAiCredentialTest` に2件追加（未設定422・OpenAI Http::fake 成功）。テスト 10 件 green / 全体 **420 passed**・build 成功。SPEC-013 §12.5・PHASE_REGISTRY(156) 同期。develop→main・本番反映。 |
@@ -345,6 +346,7 @@
 | 2026-05-28 21:54 JST | **implement Phase 148:** SPEC-011 確認コード Mailable 送信・送信失敗 503 + Cache ロールバック・Mail::fake テスト・ログイン UI 文言。 |
 | 2026-05-28 22:05 JST | **docs Phase 149:** SPEC-011 改定 — members.email **未一致時は 422 + 初回登録画面エラー**（verify へ進まない）。本番 `tugi@tugilo.com` 事象を契機に UX 優先。 |
 | 2026-05-28 22:07 JST | **implement Phase 150:** member 未一致 **422** + テスト更新。UI は既存 catch で email ステップ維持。 |
+| 2026-05-31 10:11 JST | **docs Phase 158:** 木村秀継さん第2回121（2026-05-29 14:00-15:00 / `one_to_ones.id=38`）から、国宝社／BPS木村の製本販売管理システム改善要望を [1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md](meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) に別紙化。PDF注文書手入力削減、既存VB+Oracle温存、Oracle登録、社内完結Web、初期スコープ・非スコープ・確認待ち事項を整理。 |
 
 ---
 
