@@ -4,7 +4,7 @@
 # - make new-project <NAME> … テンプレートから新規プロジェクトを作成しセットアップ（テンプレート内で実行）
 # - make setup [PROJECT]      … このプロジェクトの infra で Docker + Laravel をセットアップ（プロジェクト内で実行）
 
-.PHONY: setup new-project project doctor db-export db-import
+.PHONY: setup new-project project doctor db-export db-import db-pull db-push
 
 # 基盤自己診断: Docker・ポート・project.env・healthcheck・Laravel応答
 doctor:
@@ -17,6 +17,14 @@ db-export:
 # www/database/sync/dragonfly.sql → ローカル DB（全置換）
 db-import:
 	@bash "$(CURDIR)/bin/db-import.sh"
+
+# 本番/テスト DB → ローカル（SSH 経由・全置換）。例: make db-pull TARGET=prod
+db-pull:
+	@bash "$(CURDIR)/bin/db-pull.sh" "$(or $(TARGET),prod)"
+
+# ローカル DB → 本番/テスト（SSH 経由・全置換・要確認/自動バックアップ）。例: make db-push TARGET=dev
+db-push:
+	@bash "$(CURDIR)/bin/db-push.sh" "$(TARGET)"
 
 # 新規プロジェクト作成: 隣に <NAME> ディレクトリを作り、infra/bin 等をコピーしてから make setup
 # 例: make new-project fluo → ../fluo に fluo プロジェクトができる
