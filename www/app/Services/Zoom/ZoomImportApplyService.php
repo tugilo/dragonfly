@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\DB;
  * - past（実績あり）→ status=completed（started_at/ended_at）
  * - scheduled → status=planned（scheduled_at）
  * - 相手未確定（matched でない）→ 登録せず held として残す（target_member_id は NOT NULL のため）
- * - zoom_meeting_uuid / zoom_meeting_id で既登録は skip（二重登録防止）
+ * - 重複防止（ZOOM_IMPORT_DEDUP_REQUIREMENTS R1/R2）:
+ *     1) zoom_meeting_uuid / zoom_meeting_id 一致 → 既存に紐付け skip
+ *     2) 同一 owner+target+同日の既存（手動含む）→ Zoom 実時刻・uuid を既存へバックフィルし skip
  */
 class ZoomImportApplyService
 {
@@ -94,6 +96,18 @@ class ZoomImportApplyService
             return 'held';
         }
 
+        // R1/R2: 同一 owner+target+同日の既存（手動登録含む）があれば新規作成せず、
+        // Zoom の実時刻・突合キーを既存へバックフィルして紐付ける（二重登録防止）。
+        $sameDay = $this->findExistingByOwnerTargetDate($user, $row);
+        if ($sameDay !== null) {
+            $this->backfillFromZoom($sameDay, $row);
+            $row->status = ZoomMeetingImport::STATUS_IMPORTED;
+            $row->one_to_one_id = $sameDay->id;
+            $row->save();
+
+            return 'skipped';
+        }
+
         $isCompleted = $row->kind === ZoomMeetingImport::KIND_PAST && $row->start_time !== null;
 
         $o2o = $this->oneToOneService->store([
@@ -133,5 +147,54 @@ class ZoomImportApplyService
         }
 
         return null;
+    }
+
+    /**
+     * 同一 owner+target で、Zoom 開始日と同日の既存 1to1 を探す（external_source 問わず）。
+     */
+    private function findExistingByOwnerTargetDate(User $user, ZoomMeetingImport $row): ?OneToOne
+    {
+        if ($row->start_time === null || $row->matched_member_id === null) {
+            return null;
+        }
+        $date = Carbon::parse($row->start_time)->toDateString();
+
+        return OneToOne::where('owner_member_id', $user->owner_member_id)
+            ->where('target_member_id', $row->matched_member_id)
+            ->where(function ($q) use ($date) {
+                $q->whereDate('started_at', $date)
+                    ->orWhere(function ($q2) use ($date) {
+                        $q2->whereNull('started_at')->whereDate('scheduled_at', $date);
+                    });
+            })
+            ->orderBy('id')
+            ->first();
+    }
+
+    /**
+     * 既存 1to1 に Zoom の実時刻・突合キーを補完（空のときだけ・既存 notes は保持）。
+     */
+    private function backfillFromZoom(OneToOne $existing, ZoomMeetingImport $row): void
+    {
+        $changed = false;
+        if (empty($existing->started_at) && ! empty($row->start_time)) {
+            $existing->started_at = $row->start_time;
+            $changed = true;
+        }
+        if (empty($existing->ended_at) && ! empty($row->end_time)) {
+            $existing->ended_at = $row->end_time;
+            $changed = true;
+        }
+        if (empty($existing->zoom_meeting_id) && ! empty($row->zoom_meeting_id)) {
+            $existing->zoom_meeting_id = $row->zoom_meeting_id;
+            $changed = true;
+        }
+        if (empty($existing->zoom_meeting_uuid) && ! empty($row->zoom_meeting_uuid)) {
+            $existing->zoom_meeting_uuid = $row->zoom_meeting_uuid;
+            $changed = true;
+        }
+        if ($changed) {
+            $existing->save();
+        }
     }
 }

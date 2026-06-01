@@ -123,6 +123,39 @@ class ZoomImportApplyServiceTest extends TestCase
         $this->assertNotNull($import->one_to_one_id);
     }
 
+    public function test_same_owner_target_same_day_links_existing_and_backfills(): void
+    {
+        // 既存（手動・notes あり・時刻なし）
+        $existing = OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->targetId,
+            'status' => 'completed',
+            'external_source' => 'manual',
+            'scheduled_at' => '2026-05-20 00:00:00',
+            'notes' => '手動の議事録',
+        ]);
+        // 同日の Zoom 取り込み（実時刻あり・別 uuid）
+        $import = $this->makeImport([
+            'zoom_meeting_uuid' => 'uuid-newday==',
+            'start_time' => '2026-05-20 10:00:00',
+            'end_time' => '2026-05-20 11:00:00',
+        ]);
+
+        $service = app(ZoomImportApplyService::class);
+        $result = $service->apply($this->user, [$import->id]);
+
+        // 新規作成されず、既存に紐付き skip
+        $this->assertSame(1, OneToOne::count());
+        $this->assertSame(1, $result['skipped']);
+        $existing->refresh();
+        // Zoom 実時刻と uuid が既存へバックフィル、notes は保持
+        $this->assertNotNull($existing->started_at);
+        $this->assertNotNull($existing->ended_at);
+        $this->assertSame('uuid-newday==', $existing->zoom_meeting_uuid);
+        $this->assertSame('手動の議事録', $existing->notes);
+    }
+
     public function test_apply_scheduled_creates_planned(): void
     {
         $import = $this->makeImport([
