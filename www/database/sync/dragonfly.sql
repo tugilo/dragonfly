@@ -1,14 +1,9 @@
--- dragonfly dev DB sync dump
--- generated: 2026-05-30 05:13:53 JST
--- database: dragonfly
--- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
-
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.2.6-MariaDB, for debian-linux-gnu (aarch64)
+-- MariaDB dump 10.19  Distrib 10.11.13-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: dragonfly
+-- Host: localhost    Database: religo_app
 -- ------------------------------------------------------
--- Server version	11.2.6-MariaDB-ubu2204
+-- Server version	10.11.13-MariaDB-0ubuntu0.24.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +22,7 @@
 
 DROP TABLE IF EXISTS `bo_assignment_audit_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bo_assignment_audit_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -95,7 +90,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `breakout_memos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `breakout_memos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -135,7 +130,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `breakout_rooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `breakout_rooms` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -190,7 +185,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache` (
   `key` varchar(255) NOT NULL,
   `value` mediumtext NOT NULL,
@@ -206,9 +201,6 @@ CREATE TABLE `cache` (
 
 LOCK TABLES `cache` WRITE;
 /*!40000 ALTER TABLE `cache` DISABLE KEYS */;
-INSERT INTO `cache` VALUES
-('laravel-cache-a27eafa592533606ee05f603e445d2a9de3da0cd','i:4;',1779972313),
-('laravel-cache-a27eafa592533606ee05f603e445d2a9de3da0cd:timer','i:1779972313;',1779972313);
 /*!40000 ALTER TABLE `cache` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +210,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cache_locks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cache_locks` (
   `key` varchar(255) NOT NULL,
   `owner` varchar(255) NOT NULL,
@@ -243,7 +235,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `group_name` varchar(255) NOT NULL COMMENT '大カテゴリー',
@@ -514,7 +506,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `contact_memos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contact_memos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -562,7 +554,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `countries` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -588,7 +580,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dragonfly_contact_events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dragonfly_contact_events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner_member_id` bigint(20) unsigned NOT NULL,
@@ -634,7 +626,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dragonfly_contact_flags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dragonfly_contact_flags` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -676,7 +668,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) NOT NULL,
@@ -705,7 +697,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `internal_referrals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `internal_referrals` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -745,7 +737,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `introductions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `introductions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -788,7 +780,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_batches` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -819,7 +811,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `queue` varchar(255) NOT NULL,
@@ -848,7 +840,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_apply_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meeting_csv_apply_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -889,7 +881,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_import_resolutions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meeting_csv_import_resolutions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_csv_import_id` bigint(20) unsigned NOT NULL,
@@ -921,7 +913,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_imports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meeting_csv_imports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -961,7 +953,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_participant_imports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meeting_participant_imports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -1003,7 +995,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meetings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meetings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `number` int(10) unsigned NOT NULL,
@@ -1045,7 +1037,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `member_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `member_roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `member_id` bigint(20) unsigned NOT NULL,
@@ -1562,7 +1554,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1590,7 +1582,7 @@ CREATE TABLE `members` (
   CONSTRAINT `members_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
   CONSTRAINT `members_introducer_member_id_foreign` FOREIGN KEY (`introducer_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
   CONSTRAINT `members_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1636,7 +1628,7 @@ INSERT INTO `members` VALUES
 (34,'小中　貴晃',NULL,NULL,NULL,1,'member','32',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (35,'山本　洸太',NULL,NULL,NULL,1,'member','33',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (36,'軍司　敦哉',NULL,NULL,NULL,1,'member','34',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
-(37,'次廣　淳',NULL,NULL,NULL,1,'member','35',NULL,'AI業務改善システム構築の次廣です。\n時間を生み出すSEです。\n\n建設業や製造業で、Excel・手作業の見積、現場、請求を、\n1回の入力で回る仕組みにします。\n\n担当者しか分からない状態を、誰でも追える形に変えます。\n\nそんな会社様や、顧問先に持つ士業・コンサルの方とお繋ぎください。\n\nAI業務改善システム構築の次廣でした。','AI業務改善システム構築の次廣です。\n時間を生み出すSEです。\n\n私は、建設業や製造業、現場仕事の多い会社で、\nExcelや手作業で行っている見積、現場管理、請求業務を、\n1回の入力で回る仕組みに変えるお手伝いをしています。\n\n担当者しか分からない状態を、\n誰でも追えて、ミスなく回る形に整えます。\n\n実際に、DragonFlyメンバーの増本さんの害虫ブロック事業でも、\n業務の流れに合わせたシステムを構築し、\nかなり成果が出始めています。\n\n私が作っているのは、単なるシステムではなく、\n社長や現場の方が、本来やるべき仕事に集中するための時間です。\n\nご紹介いただきたいのは、\n建設業・製造業・現場仕事の多い会社で、\nExcel管理や手入力が多く、そろそろ仕組み化したい会社様です。\n\nまた、そういった会社を顧問先に持つ、\n士業・コンサルの方ともぜひお繋ぎください。\n\nAI業務改善システム構築の次廣でした。',NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
+(37,'次廣　淳',NULL,'tugi@tugilo.com',NULL,1,'member','35',NULL,'AI業務改善システム構築の次廣です。\n時間を生み出すSEです。\n\n建設業や製造業で、Excel・手作業の見積、現場、請求を、\n1回の入力で回る仕組みにします。\n\n担当者しか分からない状態を、誰でも追える形に変えます。\n\nそんな会社様や、顧問先に持つ士業・コンサルの方とお繋ぎください。\n\nAI業務改善システム構築の次廣でした。','AI業務改善システム構築の次廣です。\n時間を生み出すSEです。\n\n私は、建設業や製造業、現場仕事の多い会社で、\nExcelや手作業で行っている見積、現場管理、請求業務を、\n1回の入力で回る仕組みに変えるお手伝いをしています。\n\n担当者しか分からない状態を、\n誰でも追えて、ミスなく回る形に整えます。\n\n実際に、DragonFlyメンバーの増本さんの害虫ブロック事業でも、\n業務の流れに合わせたシステムを構築し、\nかなり成果が出始めています。\n\n私が作っているのは、単なるシステムではなく、\n社長や現場の方が、本来やるべき仕事に集中するための時間です。\n\nご紹介いただきたいのは、\n建設業・製造業・現場仕事の多い会社で、\nExcel管理や手入力が多く、そろそろ仕組み化したい会社様です。\n\nまた、そういった会社を顧問先に持つ、\n士業・コンサルの方ともぜひお繋ぎください。\n\nAI業務改善システム構築の次廣でした。',NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (38,'吉田　俊之','よしだとしゆき',NULL,111,1,'member','35',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-18 22:56:51'),
 (39,'里見　允二',NULL,NULL,NULL,1,'member','37',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (40,'畠山　憲之',NULL,NULL,NULL,1,'member','38',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
@@ -1652,20 +1644,18 @@ INSERT INTO `members` VALUES
 (50,'飯田　千帆',NULL,NULL,NULL,1,'member','48',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (51,'飯田　香',NULL,NULL,NULL,1,'member','49',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (52,'野口　裕子',NULL,NULL,NULL,1,'member','50',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
-(53,'久米　加代子',NULL,NULL,NULL,1,'member','51',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
+(53,'久米　加代子',NULL,NULL,NULL,1,'member','51',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-06-01 04:52:35'),
 (54,'藤田　磨紀',NULL,NULL,NULL,1,'member','52',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (55,'上田　友顕','うえだ　ともあき',NULL,187,1,'visitor','V1',NULL,NULL,NULL,11,11,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (56,'渡井　みづき','わたい　みづき',NULL,188,1,'visitor','V2',NULL,NULL,NULL,41,12,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (57,'河北　竜也','かわきた　たつや',NULL,189,1,'visitor','V3',NULL,NULL,NULL,11,39,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (58,'天野　未央','あまの　みお',NULL,190,1,'visitor','V4',NULL,NULL,NULL,20,20,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
-(59,'渡邉　飛鳥','わたなべ　あすか',NULL,180,1,'visitor','V5',NULL,NULL,NULL,35,46,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
+(59,'渡邉　飛鳥','わたなべ　あすか',NULL,180,1,'visitor','V5',NULL,NULL,NULL,35,46,'2026-03-03 00:34:23','2026-06-01 04:52:35'),
 (60,'林　敏史','はやし　としふみ',NULL,201,1,'guest','G1',NULL,NULL,NULL,20,41,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (61,'伊藤　剛','いとう　ごう',NULL,202,1,'guest','G2',NULL,NULL,NULL,29,34,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (62,'京極　祥平','きょうごく　しょうへい',NULL,184,1,'guest','G3',NULL,NULL,NULL,13,NULL,'2026-03-03 00:34:23','2026-04-07 00:04:59'),
-(63,'久米　加代子','くめ　かよこ',NULL,163,1,'guest','G4',NULL,NULL,NULL,40,NULL,'2026-03-03 00:34:23','2026-04-07 00:04:59'),
 (64,'小林　美香','こばやし　みか',NULL,200,1,'guest','P1',NULL,NULL,NULL,51,4,'2026-03-10 00:40:14','2026-04-13 12:58:33'),
 (65,'山崎　勇一',NULL,NULL,NULL,1,'member','53',NULL,NULL,NULL,NULL,NULL,'2026-03-16 23:42:37','2026-05-26 09:02:55'),
-(66,'森園　友喜','もりぞの　ゆうき',NULL,14,1,'visitor','V6',NULL,NULL,NULL,1,5,'2026-03-16 23:42:37','2026-04-13 12:58:33'),
 (67,'副島　陽祐','そえじま　ゆうすけ',NULL,191,1,'visitor','V7',NULL,NULL,NULL,6,28,'2026-03-16 23:42:37','2026-04-13 12:58:33'),
 (68,'中村　雄季','なかむら　ゆうき',NULL,192,1,'visitor','V8',NULL,NULL,NULL,13,26,'2026-03-16 23:42:37','2026-04-13 12:58:33'),
 (69,'渡邉　湖野美','わたなべ　このみ',NULL,193,1,'visitor','V9',NULL,NULL,NULL,36,30,'2026-03-16 23:42:37','2026-04-13 12:58:33'),
@@ -1678,9 +1668,7 @@ INSERT INTO `members` VALUES
 (76,'二瓶　紗樹','にへい　さき',NULL,162,1,'guest','P2',NULL,NULL,NULL,27,NULL,'2026-03-16 23:42:37','2026-03-31 00:09:20'),
 (77,'岡村　健美','おかむら　たけみ',NULL,146,1,'guest','P3',NULL,NULL,NULL,6,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (78,'木下　馨',NULL,NULL,NULL,1,'member','54',NULL,NULL,NULL,NULL,NULL,'2026-03-31 00:09:20','2026-05-26 09:02:55'),
-(79,'渡邉　飛鳥','わたなべ　あすか',NULL,180,NULL,'visitor','V16',NULL,NULL,NULL,35,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (80,'山下　一樹','やました　かずき',NULL,181,NULL,'visitor','V17',NULL,NULL,NULL,13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
-(81,'米澤　侑桂','よねざわ　ゆうけい',NULL,NULL,NULL,'visitor','V-Yonezawa',NULL,NULL,NULL,NULL,NULL,'2026-04-13 14:11:46','2026-04-13 14:11:46'),
 (82,'花崎　勇佑','はなざき　ゆうすけ',NULL,203,NULL,'visitor','V1',NULL,NULL,NULL,30,17,'2026-04-20 21:05:14','2026-05-12 08:00:44'),
 (83,'小森　保人','こもり　やすひと',NULL,204,NULL,'visitor','V3',NULL,NULL,NULL,19,2,'2026-04-20 21:05:14','2026-04-20 21:05:14'),
 (84,'宮島　大輔','みやじま　だいすけ',NULL,205,NULL,'visitor','V4',NULL,NULL,NULL,13,24,'2026-04-20 21:05:14','2026-04-20 21:05:14'),
@@ -1722,8 +1710,8 @@ INSERT INTO `members` VALUES
 (120,'辻　亮',NULL,NULL,NULL,8,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 17:09:19'),
 (121,'下辻氏（名 TODO）',NULL,NULL,NULL,4,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:13:21'),
 (122,'藤本　勇輝',NULL,NULL,NULL,8,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:18:58'),
-(123,'権堂　千栄実',NULL,NULL,NULL,6,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(124,'御手洗氏（名 TODO）',NULL,NULL,NULL,9,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-22 16:46:29','2026-05-22 16:46:29'),
+(123,'権堂　千栄実',NULL,NULL,NULL,6,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(124,'御手洗宏樹',NULL,NULL,NULL,9,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-22 16:46:29','2026-06-01 04:42:45'),
 (125,'山田　智子','やまだ　ともこ',NULL,235,NULL,'visitor','V1',NULL,NULL,NULL,19,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (126,'青木　裕美','あおき　ひろみ',NULL,236,NULL,'visitor','V2',NULL,NULL,NULL,19,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (127,'増田　佳久','ますだ　よしひさ',NULL,237,NULL,'visitor','V3',NULL,NULL,NULL,1,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
@@ -1734,10 +1722,18 @@ INSERT INTO `members` VALUES
 (132,'熊谷　龍笙','くまがい　りゅうしょう',NULL,242,NULL,'visitor','V8',NULL,NULL,NULL,34,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (133,'佐藤　久','さとう　ひさし',NULL,243,NULL,'guest','G1',NULL,NULL,NULL,31,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (134,'八田　奈緒美','はった　なおみ',NULL,244,NULL,'guest','G2',NULL,NULL,NULL,20,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
-(135,'森園　友喜',NULL,NULL,NULL,NULL,'member','17',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-05-26 09:02:55'),
-(136,'米澤　侑桂',NULL,NULL,NULL,NULL,'member','36',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-05-26 09:02:55'),
+(135,'森園　友喜',NULL,NULL,NULL,NULL,'member','17',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 04:52:35'),
+(136,'米澤　侑桂',NULL,NULL,NULL,NULL,'member','36',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 04:52:35'),
 (137,'南方　優馬','なんぽ　ゆうま',NULL,NULL,10,'visitor',NULL,NULL,NULL,NULL,31,NULL,'2026-05-27 17:00:47','2026-05-27 17:00:47'),
-(138,'神保　玲太',NULL,'ryotadesu.jp@gmail.com',NULL,2,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-28 17:08:50','2026-05-28 17:08:50');
+(138,'神保　玲太',NULL,'ryotadesu.jp@gmail.com',NULL,2,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-28 17:08:50','2026-05-28 17:08:50'),
+(139,'福田航平','ふくだこうへい',NULL,NULL,NULL,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:23:27','2026-05-30 13:23:27'),
+(140,'寺田直史','てらだ',NULL,NULL,10,'member',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:24:25','2026-05-30 13:24:25'),
+(143,'藤本勇輝',NULL,NULL,NULL,8,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:27:05','2026-05-30 13:27:05'),
+(144,'山梨麗',NULL,NULL,NULL,NULL,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:27:29','2026-05-30 13:27:29'),
+(145,'田辺光',NULL,NULL,NULL,NULL,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:28:06','2026-05-30 13:28:06'),
+(146,'深澤 歩',NULL,NULL,NULL,2,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:33:45','2026-05-30 13:33:45'),
+(147,'岩原 聡',NULL,NULL,NULL,8,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:34:19','2026-05-30 13:34:19'),
+(148,'加門 紀乃',NULL,NULL,NULL,9,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:35:12','2026-05-30 13:35:12');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1747,13 +1743,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1813,8 +1809,53 @@ INSERT INTO `migrations` VALUES
 (49,'2026_05_18_080100_create_internal_referrals_table',25),
 (50,'2026_05_18_120459_add_email_to_members_table',26),
 (51,'2026_05_18_120700_create_personal_access_tokens_table',27),
-(52,'2026_05_18_121111_add_religo_role_to_users_table',28);
+(52,'2026_05_18_121111_add_religo_role_to_users_table',28),
+(53,'2026_05_30_060000_create_zoom_accounts_table',29),
+(54,'2026_05_30_060100_create_zoom_meeting_imports_table',29),
+(55,'2026_05_30_060200_add_zoom_columns_to_one_to_ones_table',29),
+(56,'2026_05_30_060300_create_zoom_import_apply_logs_table',29),
+(57,'2026_05_30_103000_create_user_ai_credentials_table',30),
+(58,'2026_05_30_103100_create_one_to_one_attachments_table',30);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `one_to_one_attachments`
+--
+
+DROP TABLE IF EXISTS `one_to_one_attachments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `one_to_one_attachments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `one_to_one_id` bigint(20) unsigned NOT NULL,
+  `target_member_id` bigint(20) unsigned DEFAULT NULL,
+  `uploaded_by_user_id` bigint(20) unsigned DEFAULT NULL,
+  `source_type` varchar(20) NOT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `source_url` varchar(1024) DEFAULT NULL,
+  `original_name` varchar(255) DEFAULT NULL,
+  `extracted_text` longtext DEFAULT NULL,
+  `parsed_profile` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`parsed_profile`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `one_to_one_attachments_uploaded_by_user_id_foreign` (`uploaded_by_user_id`),
+  KEY `one_to_one_attachments_one_to_one_id_index` (`one_to_one_id`),
+  KEY `one_to_one_attachments_target_member_id_index` (`target_member_id`),
+  CONSTRAINT `one_to_one_attachments_one_to_one_id_foreign` FOREIGN KEY (`one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `one_to_one_attachments_target_member_id_foreign` FOREIGN KEY (`target_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_attachments_uploaded_by_user_id_foreign` FOREIGN KEY (`uploaded_by_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `one_to_one_attachments`
+--
+
+LOCK TABLES `one_to_one_attachments` WRITE;
+/*!40000 ALTER TABLE `one_to_one_attachments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `one_to_one_attachments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1823,13 +1864,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `one_to_ones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `one_to_ones` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
   `owner_member_id` bigint(20) unsigned NOT NULL,
   `target_member_id` bigint(20) unsigned NOT NULL,
   `meeting_id` bigint(20) unsigned DEFAULT NULL,
+  `zoom_meeting_id` varchar(255) DEFAULT NULL,
+  `zoom_meeting_uuid` varchar(255) DEFAULT NULL,
+  `external_source` varchar(20) NOT NULL DEFAULT 'manual',
   `scheduled_at` datetime DEFAULT NULL,
   `started_at` datetime DEFAULT NULL,
   `ended_at` datetime DEFAULT NULL,
@@ -1843,11 +1887,13 @@ CREATE TABLE `one_to_ones` (
   KEY `one_to_ones_owner_member_id_target_member_id_index` (`owner_member_id`,`target_member_id`),
   KEY `one_to_ones_scheduled_at_index` (`scheduled_at`),
   KEY `one_to_ones_meeting_id_index` (`meeting_id`),
+  KEY `one_to_ones_zoom_meeting_id_index` (`zoom_meeting_id`),
+  KEY `one_to_ones_zoom_meeting_uuid_index` (`zoom_meeting_uuid`),
   CONSTRAINT `one_to_ones_meeting_id_foreign` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`) ON DELETE SET NULL,
   CONSTRAINT `one_to_ones_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_target_member_id_foreign` FOREIGN KEY (`target_member_id`) REFERENCES `members` (`id`),
   CONSTRAINT `one_to_ones_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1857,39 +1903,55 @@ CREATE TABLE `one_to_ones` (
 LOCK TABLES `one_to_ones` WRITE;
 /*!40000 ALTER TABLE `one_to_ones` DISABLE KEYS */;
 INSERT INTO `one_to_ones` VALUES
-(6,1,37,31,NULL,'2026-03-06 05:00:00',NULL,'2026-03-06 06:00:00','completed','お互いのビジネスの紹介\nシステムと助成金で協業できそう。見積もりが作成できればOK','2026-03-23 12:47:04','2026-03-23 12:47:04'),
-(7,1,37,42,NULL,'2026-03-11 04:00:00',NULL,'2026-03-11 05:00:00','completed','お互いのビジネス紹介','2026-03-23 12:48:50','2026-03-23 12:48:50'),
-(8,1,37,44,NULL,'2026-03-12 05:00:00',NULL,'2026-03-12 06:00:00','completed','アナログな生産管理をシステム化に前向き\n提案書を提出済み','2026-03-23 12:49:51','2026-03-23 12:49:51'),
-(9,1,1,11,NULL,'2026-03-16 02:00:00',NULL,'2026-03-16 03:00:00','completed','お互いのビジネスの紹介','2026-03-23 12:51:50','2026-03-23 12:51:50'),
-(10,1,37,10,NULL,'2026-04-02 06:00:00',NULL,'2026-04-02 07:00:00','completed','エアコン本舗案件メモ（保存用）\n\n■ 概要\n	•	倉持氏との打ち合わせにて以下2点が前進\n	•	ウェブマスター役割の打診 → 前向きに検討\n	•	エアコン本舗案件 → 開発チーム参画の可能性あり\n	•	次回アクション：4月13日 1to1（11:00〜12:00）\n\n⸻\n\n■ 決定事項\n\n① ウェブマスター\n	•	次廣が担当する方向で調整\n	•	BNI内の運営・情報管理ポジション\n\n② 1to1ミーティング\n	•	日時：4月13日 11:00〜12:00\n	•	倉持氏よりZoom URL共有予定\n\n③ エアコン本舗案件\n	•	チーム参画の方向で検討開始\n	•	本格開発は秋頃予定\n\n⸻\n\n■ ウェブマスター業務（理解整理）\n\n● 主業務\n	•	BNIサイト管理（メンバー情報・公開設定）\n	•	定例会サポート（Zoom・スライド・録画）\n	•	動画編集・アップロード（週次）\n	•	SNS運用（Facebook / LINEの使い分け）\n	•	ビジター情報管理（Nキャス）\n\n● 使用ツール\n	•	BNIコネクト\n	•	Nキャス\n	•	Zoom\n	•	Facebook / LINE\n\n⸻\n\n■ エアコン本舗案件（重要）\n\n● 課題\n	•	業務フローが非効率（受注〜施工）\n	•	売上・利益の可視化が遅い（約1ヶ月遅延）\n\n● 提案内容（予定）\n	•	受注管理システム\n	•	在庫・発注の自動化\n	•	アサイン最適化\n	•	AI電話による日程調整\n\n● 開発タイミング\n	•	夏：計測・準備フェーズ\n	•	秋：本格開発\n\n● 体制\n	•	PM：倉持氏\n	•	PMコーチ：佐野氏（元アクセンチュア）\n	•	技術：伊藤氏（GPS最適化）\n	•	開発候補：次廣（tugilo）\n\n⸻\n\n■ 自分の強み（再認識）\n	•	工程管理・アサイン系システムの構築経験あり\n	•	LINE連携システム実績あり\n	•	フルスタック対応（BE/FE/インフラ）\n	•	業務理解＋エンジニア橋渡しができる\n\n⸻\n\n■ 4/13 1to1の目的\n\n● ゴール\n	•	エアコン本舗案件の関わり方を具体化\n	•	自分の役割ポジションを明確にする\n\n⸻\n\n■ 1to1で確認すること\n\n● ウェブマスター\n	•	期待されている役割範囲\n	•	工数・優先度\n\n⸻\n\n● エアコン本舗（最重要）\n\n現状把握\n	•	一番のボトルネックはどこか\n	•	現場 or 管理どちらが詰まっているか\n	•	現在の業務フロー\n\n深掘り質問（tugilo視点）\n	•	人依存になっている部分は？\n	•	同じ入力を何回しているか？\n	•	数字はいつ確定しているか？\n\n⸻\n\n■ 提案方針（tugilo式）\n\n❌ いきなり開発しない\n\n⭕ 小さく始める\n\n⸻\n\n● フェーズ設計\n\nPhase1：見える化\n	•	データ収集・現状把握\n\nPhase2：整理\n	•	フロー整理・無駄削減\n\nPhase3：システム化\n	•	必要部分のみ実装\n\n⸻\n\n■ キーメッセージ\n\n👉\n「現場は変えない。でも、気づいたら楽になっている状態を作る」\n\n⸻\n\n■ 次アクション\n\n事前\n	•	1to1質問整理\n	•	エアコン業界の流れ軽く把握\n\n事後\n	•	業務フローの構造図作成\n	•	フェーズ提案資料作成\n\n⸻\n\n■ メモ（気づき）\n	•	ウェブマスターは信頼獲得ポジション\n	•	エアコン本舗はtugiloの勝ちパターン案件\n	•	「いきなり作らない」が今回のキー','2026-04-02 21:05:22','2026-04-02 21:05:22'),
-(11,1,37,17,NULL,'2026-04-02 22:15:00',NULL,'2026-04-02 23:15:00','completed','#### 基本情報\n\n- **日時:** **2026-04-03（金）JST 07:15–08:15**（60分）。**取得元:** ユーザー確認（当日の1to1実績）。※過去の Zoom要約段階では日時未記載だったため、本項で確定。\n- **実施方法:** Zoom\n\n#### 話した内容（重要）\n\n※**削減せず**蓄積。以下は Zoom要約・当時の整理メモからの**記録**。\n\n- **主な流れ:** 次廣淳（AI・業務改善システム構築）と佐藤拓斗（高校生新卒採用コンサル）が BNI ドラゴンフライチャプターで **初回 1on1**。両者の事業内容を共有し、**テレアポリスト自動作成システム**の開発可能性について具体的検討を開始。静岡県藤枝市という地元の共通点から、今後の協力関係構築の基盤を確立した、との整理。\n- **決定・合意:**\n  - **リスト作成システムの検討開始:** 佐藤氏のテレアポリスト作成業務（現在手作業で **1時間100件**）を自動化するシステムについて、次廣氏が **技術的実現可能性を調査**。\n  - **求人媒体からのデータ取得:** リクナビネクスト等の求人サイトから、**従業員数30名以下** などの条件で自動抽出する仕組みを検討。**スクレイピング技術の活用**、ただし **法的リスクの確認が必要**。\n  - **5月中旬の再会:** 佐藤氏の静岡帰省時（**5月16–17日頃**）に **対面ミーティング** を設定する方向。\n- **次廣側で共有された事業内容:**\n  - **業務改善システム構築:** エクセル・スプレッドシートで分散管理されているデータを一元化し、リアルタイムでの進捗確認を実現。\n  - **LINE活用システム:** 問い合わせから見積もり、請求までを LINE 公式アカウントで完結させる仕組み（建設業向け）。\n  - **スタンプラリー・ビンゴシステム:** 静岡観光協会向けに **5年間運用中**。\n  - **施工管理・日報システム:** 名古屋のシーリング会社向けに、外国人労働者でも入力しやすい LINE ベースの業務日報システムを構築。\n  - **事業の特徴:** ゼロから1を作れる／既製ツールの押し付けではなく現場フローに合わせたカスタマイズ。**小さく始めて改善**（大規模を一気に入れず、入力から段階拡張）。**現場負担の最小化**（経営と現場のギャップを埋め、現場にベネフィットを与える設計）。\n  - **経歴・背景:** システム開発歴 **25–26年**（大学中退後一貫、現在 **52–53歳**）。BNI は増本氏・今西氏との静岡出世クラブでの **約10年の付き合い** から **2024年** にドラゴンフライ参加を決意。動機は技術一辺倒からの転換・仕事の幅拡大。**MSP（メンバーサクセスプログラム）** で学んだビジネススキルに感銘、トレーニング注力中。\n- **佐藤側で共有された事業内容（1to1上の詳細・プロフィールと照合可）:**\n  - **高校生新卒採用の仕組み構築:** ホームページ制作、パンフレット・動画制作、学校訪問代行、求人資料郵送代行まで一括。\n  - **4月依頼でも7月解禁に間に合う** 短期対応が可能。**全国対応**（BNI参加により全国展開が加速）。\n  - **ターゲット:** 従業員 **30名以下** が中心（プロフィールは **20〜30名以下** — 会話では30名以下条件でリスト抽出の話あり）。タイプ **3つ**: ①高校生採用のやり方が分からない ②やりたいが時間・人員不足 ③応募が来ない（我流で抜けがある）。業種: 建設業、製造業、自動車整備、ビルメンテナンス、清掃、介護福祉など。\n  - **実績:** **2024年度** 29社サポート、14社で採用成功（成功率 **約48%**）。**過去5年** 毎年40社以上サポート（2023年32社、2024年は50社近く）。\n  - **経歴・背景:** 事業歴 **5年**。新卒で高校生新卒採用コンサル会社に入社、**2024年3月に独立**（当時 会社設立から **1年** と共有）。学歴: 清水東高校→静岡大学→早稲田大学編入→早稲田大学大学院（**教員免許保有**）。**将来ビジョン:** 高校生以下を対象としたキャリア教育事業。**五教科と社会を結びつける授業** で子どもの将来の選択肢を広げたい。\n- **確認待ち（会話上の論点）:**\n  - リクナビネクストからのデータ取得: **技術的実現可能性** と **法的リスク（利用規約上の二次利用制限）** を次廣氏が調査中。\n  - Google マイビジネス API: 個人事業主リスト作成について、**二次利用禁止ルール** があり、公開情報からの取得方法を検討。\n- **共通点・シナジー:**\n  - **地元:** 両者とも静岡県藤枝市出身・在住。佐藤氏は藤枝市古利（西焼津小学校区）、次廣氏は青葉町（青島中学校区）。\n  - **教育への関心:** 次廣氏は娘の受験を控え、佐藤氏のキャリア教育理念（五教科と社会の結びつけ）に強く共感。\n  - **システム×採用:** 次廣氏は静岡県の大卒求人サイト **「三並び」** のアプリ開発を受注中。**大学生がメールを見ない** ため通知機能が必要、という課題を共有。\n- **アクションアイテム（当時の整理）:**\n  - 次廣氏: 求人媒体からのリスト自動作成システムの **技術調査・提案準備**。\n  - 佐藤氏: **5月中旬の静岡帰省日程確定後**、次廣氏に連絡。\n  - 両者: **名古屋出世クラブ（5月末）** への参加可能性を検討（今西氏が佐藤氏を誘致中）。\n- **次回ミーティング:** **5月16–17日頃**、佐藤氏静岡帰省時に **対面** で実施予定。\n- **プライベート文脈（会話に出た事実の記録・紹介判断とは分離）:** 婚活、飯田氏からの占い（**32歳で結婚** 等）、保険担当の高校同級生からの紹介の動きなどが要約に含まれる。**取り扱い注意。本人確認のうえ参照。**\n\n#### 抽出された課題（事実：会話で言及）\n\n- テレアポ用リスト作成の **手作業負荷**（約1時間100件ペース）。\n- 求人媒体からの自動取得は **技術** に加え **利用規約・法的リスク（二次利用）** の確認が必要、との合意。\n- Google マイビジネス／公開情報は **二次利用禁止** の話題があり、個人事業主リストは **取得経路の設計** が課題。\n\n#### 仮説（tugilo視点）\n\n- **課題①:** リスト作成が **コンサル本業とリソース競合** している。**根拠:** 手作業1時間100件の共有。**構造（仮説）:** リード前処理が属人・手作業 → 営業・提案に振る時間が圧迫 → スケールしにくい。\n- **課題②:** データ取得は **「作れるか」より「取ってよいか」** が先に決まる。**根拠:** スクレイピング・API の **法的リスク確認** が合意事項。**構造（仮説）:** 技術要件とコンプライアンスが分離できないと、開発が進んでも運用不能になりうる。\n- **シナジー:** 「採用」周辺に **通知・進捗・フォロー** のデジタル化が横展開しうる。**根拠:** 三並び案件で **メールを見ない大学生** と通知ニーズの共有。**仮説**としての展開可能性。\n\n#### 次アクション\n\n- 次廣: 技術調査・法務・規約リスク整理・提案準備。\n- 佐藤: 帰省日程確定後に連絡 → 5/16–17頃 対面設定。\n- 双方: 名古屋出世クラブ（5月末）参加の検討。','2026-04-07 03:35:52','2026-04-13 14:11:46'),
-(12,1,37,81,NULL,'2026-04-08 09:00:00','2026-04-08 09:00:00','2026-04-08 10:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_yonezawa_yuka_comechan_design.md】\n実施: 2026-04-08（水）JST 09:00–10:00（1時間）／オーナー: 次廣 淳 → 対象: 米澤 侑桂（Comechan Design）\n\n■ サマリ\n・米澤: デザイン〜コーディング・実装まで一貫対応可能（Webデザイナー兼エンジニア）を確認。\n・学生向け求人サイトアプリ化（来週契約予定）: フロントのデザイン・コーディングを米澤へ依頼する方向で合意。\n・古紙回収 LINE: リッチメニュー2件（法人用・個人用）を米澤へ依頼決定。\n・価格: リッチメニュー 4,000〜5,000円/枚、LPは規模に応じ工数ベース見積もり（合意）。\n\n■ 確定協業（体制）\n次廣のシステム開発案件に、米澤がデザイン・コーディング・実装（フロント中心）で協業開始に合意。\n求人サイト: 次廣はアプリ基盤・契約・バックエンド/通知、米澤はフロントのデザイン・コーディング。\nリッチメニュー: 米澤が制作、次廣が要件（腰回収LINEの運用コンテキスト）。\n\n■ 求人サイトアプリ化（概要）\n既存PHP WebをWebViewでアプリ化、メール開封率の課題にプッシュ通知。技術: WebView、Flutter検討中（RNとの選定は保留）。オープン予定は要確認（ドキュメントは2026年4月目安）。下部リッチメニュー風ナビ＋Web表示など。詳細仕様は契約・打ち合わせ後。\n\n■ スキル確認（抜粋）\nTailwind、JSフレームワーク（RN含む）、レスポンシブ、アプリデザイン経験。AI: Claude Code / ChatGPT / Gemini。業務委託2社・クラウドワークス経由2年以上。講師卒業後は余裕、個人案件で共創を増やしたい意向。\n\n■ 次アクション（次廣）\n契約後に求人サイトの具体仕様を再打ち合わせ。至急: リッチメニュー2件の要件共有。次回MTG: 契約完了後の詳細打ち合わせ。\n\n■ 次アクション（米澤）\nリッチメニュー制作・納品。詳細打ち合わせ後に求人フロントの見積・スケジュール提示。\n\n■ BNI\nビジター。オリエン2026-04-07（太田氏）。チャプター参加は例会201（2026-03-17）・204（2026-04-07）で2回。','2026-04-08 01:09:53','2026-04-13 14:11:46'),
-(13,1,37,19,NULL,'2026-04-08 11:00:00',NULL,'2026-04-08 12:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_hirayama_mayumi_lifesupport.md】\n実施: 2026-04-08（水）JST 11:00〜（終了時刻は未確定のため DB 上は暫定で +1h）／オーナー: 次廣 淳 → 対象: 平山 真由美（ライフサポート）\n\nサマリ: パスポートほぼ完了（メンバーシップ残）。倉本氏ウェブマスターを次廣がシステム面支援で合意。40人リストテンプレ・神山氏（中小企業診断士）紹介・静岡車屋2名／カーマッチ検討。リージョンフォーラム 2026-11-09 対面予定。','2026-04-13 14:14:45','2026-04-13 23:17:33'),
-(14,1,37,10,NULL,'2026-04-13 11:00:00',NULL,'2026-04-13 12:00:00','completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kuramoto_kenichi_webmaster.md】\n実施: 2026-04-13（月）JST 11:00–12:00／オーナー: 次廣 淳 → 対象: 倉持 賢一（WEBマスター）\n\n合意: ITウェブパワーチーム招待、坂木氏（ジオロケ）紹介、双葉企画連携検討、佐藤正夫氏ロジカルシンキング講座の案内。\n保留: エアコン案件（来週提案・5月頃要件定義の可能性）、Excel顧客管理DB化、LP等コーディング、都内対面。\n次廣: N-CAS資料・法人化・ポジショニング。','2026-04-13 23:18:48','2026-04-13 23:18:48'),
-(15,1,37,49,NULL,'2026-04-13 14:30:00',NULL,'2026-04-13 15:30:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_funatsu_mariko_aicare_lab.md】\n実施: 2026-04-13（月）JST 14:30–15:30／オーナー: 次廣 淳 → 対象: 船津 麻理子（アイケアラボ・眼の整体）\n\n合意: 藤本税理士・秋田財務コンサル紹介（船津）、眼科医紹介検討（次廣・関東）、FC本部へのシステム提案（次廣）。\n協業: FCシステム化・軽量顧客管理・医療連携。\n次: 翌日 DragonFly イベント再会。','2026-04-13 23:22:13','2026-04-13 23:22:13'),
-(16,1,37,40,NULL,'2026-04-13 18:00:00',NULL,'2026-04-13 19:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md】\n実施: 2026-04-13（月）JST 18:00–19:00／オーナー: 次廣 淳 → 対象: 畠山 憲之（和スイーツOEM）\n\n成果: メンバーシップ完了共有、業務課題（Excel・属人化・OEM増）とシステム化方向性の確認。\n合意: 採用後に優先順位整理・段階検討、詳細ヒアリングのため再1on1。\n次廣: 再1on1設定・改善提案準備。畠山: 採用優先・業務整理。','2026-04-13 23:27:04','2026-04-13 23:27:04'),
-(17,1,37,96,NULL,'2026-04-17 09:55:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md】\n実施: 2026-04-17 JST 09:55〜\n\nスタートアッププレゼン改善、オンライン発表時のPDF化、藤原氏（VR推進協会）紹介、VR×サウナコンテンツ、北欧サウナ体験、飲食店向けAIコールセンターの芽を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(18,1,37,26,NULL,'2026-04-20 15:53:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_takeuchi_shunta_athlete_insurance.md】\n実施: 2026-04-20 JST 15:53〜\n\nアスリート専門保険・キッズマネー教育と、次廣のAI業務改善システム構築の相互紹介可能性を確認。静岡PTA・サッカー人脈、法人営業先のDXニーズ紹介をTodo化。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(19,1,37,4,NULL,'2026-04-24 11:30:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_matsukura_kenji_glassfilm_coating.md】\n実施: 2026-04-24 JST 11:30〜\n\nガラスフィルム・コーティング事業、エアロゲル透明断熱フィルム、高級リゾートホテル営業、静岡インテリア資材卸売会社への紹介検討、リファーラルプレゼン改善を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(20,1,37,97,NULL,'2026-04-27 10:58:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_iizuka_graphic_design.md】\n実施: 2026-04-27 JST 10:58〜\n\nグラフィックデザイン事業と次廣のB2B業務改善・システム構築を相互共有。社労士・雨漏り調査・竹本氏紹介、田渕氏・行政書士メンバー紹介、システム×デザイン協業、月次1on1合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(21,1,37,98,NULL,'2026-05-07 15:57:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tamura_kodai_money_cooking.md】\n実施: 2026-05-07 JST 15:57〜\n\n金融・保険・投資助言モデルと次廣のAI業務改善システム開発を共有。建設業向け損保削減＋DX協業、SE・SEO・FC専門家紹介、次廣の保険・投資相談をTodo化。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(22,1,37,99,NULL,'2026-05-08 14:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-08 JST 14:00〜\n\n創業160年の製本会社・家系図/ルーツ調査事業と、次廣のAI業務改善システム開発を共有。既存VB+Oracleシステム改善・クラウド移行について別途ヒアリングと提案を行う合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(23,1,37,100,NULL,NULL,'2026-05-13 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_ito_takao_phoenix_jsp.md】\n実施: 正式日時 TODO（2026-05-13 反映のZoom要約）\n\n飯塚さん経由のクロスチャプター1to1。補助金・助成金申請に絡むシステム導入支援、業務改善助成金、自社業務効率化、ローカルLLM提案書、ひとり親支援接点を整理。','2026-05-17 22:26:13','2026-05-21 17:10:50'),
-(24,1,37,101,NULL,'2026-05-14 10:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_isobe_masayuki_nestle_detective.md】\n実施: 2026-05-14 実施済み（時刻 TODO）\n\n探偵業プロフィール・G.A.I.N.S.と次廣のシステム開発事業を共有。保険営業担当者紹介、メンバー表相互共有、BNI/倫理法人会ゲスト管理システム化の芽、屋号表記ゆれ確認を整理。','2026-05-17 22:26:13','2026-05-21 17:11:21'),
-(25,1,37,119,NULL,'2026-05-18 17:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_maeda_referral_imaishi.md】\n実施: 正式時刻 TODO JST\n\n今西様紹介・非BNI。マーケティング／AI活用の情報交換、思考R診断システム、見積レンジ、静岡対面・今西様同席の可能性を整理。','2026-05-21 16:13:21','2026-05-21 17:11:50'),
-(26,1,37,120,NULL,'2026-05-18 16:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tsuji_ryo_mainc_meo.md】\n実施: 2026-05-18 16:00 JST\n\n株式会社MainC。MEO／SEO／HP／SNS運用、Muスコープ、ローコミ、協業可能性、6/5リージョンフォーラムでの接点を整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(27,1,37,121,NULL,'2026-05-19 14:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_shimotsuji_hs_neo_project.md】\n実施: 2026-05-19 14:00 JST\n\n株式会社hsネオプロジェクト。田村広大さん紹介、同業SE・業務改善、受託開発、AI活用、協力体制、友達申請を整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(28,1,37,9,NULL,'2026-05-21 09:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nakamura_keigo_shakumoto.md】\n実施: 正式時刻 TODO JST\n\n株式会社笏本縫製／SHAKUNONE。次廣事業、新カテゴリー、日本製ものづくりチーム形成、予約管理、料金パッケージ化、宮城氏紹介合意を整理。','2026-05-21 16:13:21','2026-05-21 17:12:49'),
-(29,1,37,122,NULL,'2026-05-21 11:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_fujimoto_yuki_tax_advisor.md】\n実施: 2026-05-21 11:00 JST\n\n船津麻理子さん紹介。医療クリニック特化税理士、税務セカンドオピニオン、未来会計、法人化・顧問税理士活用、AI/IT課題を整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(30,1,37,123,NULL,'2026-05-21 13:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_gondo_chiemi_campanula.md】\n実施: 正式時刻 TODO JST\n\n株式会社Campanula。企業研修・人材育成・業務改善、建設業／製造業の現場密着支援、教育設計とシステム化の協業可能性を整理。','2026-05-21 16:13:21','2026-05-21 17:12:22'),
-(31,1,37,14,NULL,'2026-05-21 14:50:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nishioka_foreign_trainee.md】\n実施: 2026-05-21 14:50 JST\n\n外国人技能実習生受入れ支援。24時間対応、病院付き添い、月1回寮訪問、建設業の人材不足、次廣の建設業向け業務改善モック作成アクションを整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(32,1,37,124,NULL,'2026-05-22 09:00:00','2026-05-22 09:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_mitarai_fudotech.md】\n実施: 2026-05-22（金）JST 09:00〜終了時刻TODO／オーナー: 次廣 淳 → 対象: 御手洗氏（株式会社風土テック／BNI VORTEX）\n\n■ 主な成果\n・次廣の建設業・製造業向けAI業務改善システム構築と、御手洗氏の建設業採用支援は顧客層・課題解決アプローチの親和性が高いことを確認。\n・外国人労働者の日報管理システム、採用後の定着・教育・現場共有、採用支援先への業務改善提案で協業可能性を確認。\n・西岡優希氏（外国人就労支援）との三者連携候補が具体化。\n\n■ 御手洗氏 / 風土テック\n・建設業の採用支援。週1回の定例MTG、SNS撮影、Indeed / engage等の無料媒体改善、SNS・HP・求人媒体の一貫性づくり、MVV策定、採用後フォローまで伴走。\n・採用活動を一発勝負ではなく企業内に採用力を蓄積する「資産化」として捉える。\n\n■ 次廣側共有事例\n・外注ブロックFC本部の受注/顧客/売上管理統合。\n・名古屋の防水工事業向けLINE日報。外国人職人の紙日報課題をLINE提出・本部集計で改善。\n・解体業のLINE見積/請求、観光協会スタンプラリー、動物病院予約管理。\n\n■ 決定・アクション\n・2〜3ヶ月に1回の情報交換。\n・御手洗氏は風土テックのメンバー表を送付、次廣はDragonFly最新メンバー表を送付。\n・6月リージョンフォーラムで対面・名刺交換予定。\n・西岡優希氏との三者連携を検討。2026-05-22、次廣が西岡氏から接続了承を得て、御手洗氏へグループ作成可否を確認。\n\n■ 確認待ち\n・御手洗氏の下の名前、正式役職、プロフィールURL、終了時刻。\n・風土テック / フードテック表記、練馬会場・修声チャプター文脈は本人確認。','2026-05-22 16:46:29','2026-05-22 16:46:29'),
-(33,1,37,52,NULL,'2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-05-25 20:26:20'),
-(34,1,37,17,NULL,'2026-04-03 07:15:00','2026-04-03 07:15:00','2026-04-03 08:15:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_sato_takuto_brightlink.md】\n実施: 2026-04-03（金）JST 07:15–08:15／Zoom／オーナー: 次廣 淳 → 対象: 佐藤拓斗（株式会社BrightLink／BNI DragonFly）\n\n■ 主な成果\n・双方の事業共有。テレアポリスト自動作成（手作業1時間100件）の開発可能性を検討開始。\n・リクナビネクスト等から従業員数30名以下等で抽出する仕組みを検討（法的リスク要確認）。\n・5月16–17日頃の静岡帰省時に対面ミーティング予定。出世クラブ参加も検討。\n・静岡県藤枝市の地元共通点・教育観の共感。','2026-05-25 20:26:20','2026-05-25 20:26:20'),
-(35,1,37,137,NULL,'2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47'),
-(36,1,37,138,NULL,NULL,NULL,NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-05-28 17:08:50'),
-(37,1,37,46,NULL,'2026-05-29 15:00:00','2026-05-29 15:00:00','2026-05-29 16:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_fujii_eriko_hiraten.md】\n実施: 2026-05-29（金）JST 15:00–16:00／Zoom／オーナー: 次廣 淳 → 対象: 藤井恵理子（HiraTen／播州織の日傘製造／BNI DragonFly）\n\n■ 主な成果\n・次廣の業務改善・AI活用・主要事例（増本FC・防水LINE日報・動物病院予約）と開発中のBNI人脈管理（Religo）を共有。\n・藤井さんは議事録・人物情報の管理に課題感があり、Religo構想に強い関心。\n・キャッチ「あったらいいなを形にしてくれる」を次廣の6月メインプレゼンで採用予定。\n\n■ 藤井側（HiraTen）\n・播州織の日傘・ストール・アパレル。2024オーストラリアでストール好評。カンヌ/パリ出展検討。BNIフランスと接続。\n・メンズ日傘は6年前から製造、昨年から本格化。百貨店は2026年6月出店再開予定。\n・守成クラブ10年在籍→2026年5月末退会予定。\n\n■ 決定・アクション\n・次廣: DragonFlyインスタ情報を今週末まで入力。関西121・バーチャルバーブル参加を増やす。\n・藤井: シフト管理で困っている知人等を次廣へ紹介。\n・次回121: 日程未定。次廣から積極的に打診。次回対面イベント参加意向あり。\n\n■ 共通点\n・水球（高校/小中約10年）、音楽（ユニコーン等）、静岡・富士への親近感。\n\n■ 確認待ち\\n・（特になし）','2026-05-30 05:10:31','2026-05-30 05:12:44'),
-(38,1,37,99,NULL,'2026-05-29 14:00:00','2026-05-29 14:00:00','2026-05-29 15:00:00','completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-29 JST 14:00〜\n\nBPS木村／株式会社国宝社の製本システム業務改善ヒアリング。VB+Oracle基幹システムは温存し、月300〜400件規模のPDF注文書手入力を第一段階で自動化する方針。社内サーバー上のWebインターフェースからPDF解析・確認・Oracle登録を行う案で合意。Hyper-V上のLinux Webサーバー、社内ネットワーク／既存VPN利用、Google Workspace除外、提案書・簡易モック無償作成が次アクション。','2026-05-29 20:12:45','2026-05-29 20:13:43');
+(6,1,37,31,NULL,NULL,NULL,'manual','2026-03-06 05:00:00',NULL,'2026-03-06 06:00:00','completed','お互いのビジネスの紹介\nシステムと助成金で協業できそう。見積もりが作成できればOK','2026-03-23 12:47:04','2026-03-23 12:47:04'),
+(7,1,37,42,NULL,NULL,NULL,'manual','2026-03-11 04:00:00',NULL,'2026-03-11 05:00:00','completed','お互いのビジネス紹介','2026-03-23 12:48:50','2026-03-23 12:48:50'),
+(8,1,37,44,NULL,NULL,NULL,'manual','2026-03-12 05:00:00',NULL,'2026-03-12 06:00:00','completed','アナログな生産管理をシステム化に前向き\n提案書を提出済み','2026-03-23 12:49:51','2026-03-23 12:49:51'),
+(9,1,1,11,NULL,NULL,NULL,'manual','2026-03-16 02:00:00',NULL,'2026-03-16 03:00:00','completed','お互いのビジネスの紹介','2026-03-23 12:51:50','2026-03-23 12:51:50'),
+(10,1,37,10,NULL,NULL,NULL,'manual','2026-04-02 06:00:00',NULL,'2026-04-02 07:00:00','completed','エアコン本舗案件メモ（保存用）\n\n■ 概要\n	•	倉持氏との打ち合わせにて以下2点が前進\n	•	ウェブマスター役割の打診 → 前向きに検討\n	•	エアコン本舗案件 → 開発チーム参画の可能性あり\n	•	次回アクション：4月13日 1to1（11:00〜12:00）\n\n⸻\n\n■ 決定事項\n\n① ウェブマスター\n	•	次廣が担当する方向で調整\n	•	BNI内の運営・情報管理ポジション\n\n② 1to1ミーティング\n	•	日時：4月13日 11:00〜12:00\n	•	倉持氏よりZoom URL共有予定\n\n③ エアコン本舗案件\n	•	チーム参画の方向で検討開始\n	•	本格開発は秋頃予定\n\n⸻\n\n■ ウェブマスター業務（理解整理）\n\n● 主業務\n	•	BNIサイト管理（メンバー情報・公開設定）\n	•	定例会サポート（Zoom・スライド・録画）\n	•	動画編集・アップロード（週次）\n	•	SNS運用（Facebook / LINEの使い分け）\n	•	ビジター情報管理（Nキャス）\n\n● 使用ツール\n	•	BNIコネクト\n	•	Nキャス\n	•	Zoom\n	•	Facebook / LINE\n\n⸻\n\n■ エアコン本舗案件（重要）\n\n● 課題\n	•	業務フローが非効率（受注〜施工）\n	•	売上・利益の可視化が遅い（約1ヶ月遅延）\n\n● 提案内容（予定）\n	•	受注管理システム\n	•	在庫・発注の自動化\n	•	アサイン最適化\n	•	AI電話による日程調整\n\n● 開発タイミング\n	•	夏：計測・準備フェーズ\n	•	秋：本格開発\n\n● 体制\n	•	PM：倉持氏\n	•	PMコーチ：佐野氏（元アクセンチュア）\n	•	技術：伊藤氏（GPS最適化）\n	•	開発候補：次廣（tugilo）\n\n⸻\n\n■ 自分の強み（再認識）\n	•	工程管理・アサイン系システムの構築経験あり\n	•	LINE連携システム実績あり\n	•	フルスタック対応（BE/FE/インフラ）\n	•	業務理解＋エンジニア橋渡しができる\n\n⸻\n\n■ 4/13 1to1の目的\n\n● ゴール\n	•	エアコン本舗案件の関わり方を具体化\n	•	自分の役割ポジションを明確にする\n\n⸻\n\n■ 1to1で確認すること\n\n● ウェブマスター\n	•	期待されている役割範囲\n	•	工数・優先度\n\n⸻\n\n● エアコン本舗（最重要）\n\n現状把握\n	•	一番のボトルネックはどこか\n	•	現場 or 管理どちらが詰まっているか\n	•	現在の業務フロー\n\n深掘り質問（tugilo視点）\n	•	人依存になっている部分は？\n	•	同じ入力を何回しているか？\n	•	数字はいつ確定しているか？\n\n⸻\n\n■ 提案方針（tugilo式）\n\n❌ いきなり開発しない\n\n⭕ 小さく始める\n\n⸻\n\n● フェーズ設計\n\nPhase1：見える化\n	•	データ収集・現状把握\n\nPhase2：整理\n	•	フロー整理・無駄削減\n\nPhase3：システム化\n	•	必要部分のみ実装\n\n⸻\n\n■ キーメッセージ\n\n👉\n「現場は変えない。でも、気づいたら楽になっている状態を作る」\n\n⸻\n\n■ 次アクション\n\n事前\n	•	1to1質問整理\n	•	エアコン業界の流れ軽く把握\n\n事後\n	•	業務フローの構造図作成\n	•	フェーズ提案資料作成\n\n⸻\n\n■ メモ（気づき）\n	•	ウェブマスターは信頼獲得ポジション\n	•	エアコン本舗はtugiloの勝ちパターン案件\n	•	「いきなり作らない」が今回のキー','2026-04-02 21:05:22','2026-04-02 21:05:22'),
+(11,1,37,17,NULL,NULL,NULL,'manual','2026-04-02 22:15:00',NULL,'2026-04-02 23:15:00','completed','#### 基本情報\n\n- **日時:** **2026-04-03（金）JST 07:15–08:15**（60分）。**取得元:** ユーザー確認（当日の1to1実績）。※過去の Zoom要約段階では日時未記載だったため、本項で確定。\n- **実施方法:** Zoom\n\n#### 話した内容（重要）\n\n※**削減せず**蓄積。以下は Zoom要約・当時の整理メモからの**記録**。\n\n- **主な流れ:** 次廣淳（AI・業務改善システム構築）と佐藤拓斗（高校生新卒採用コンサル）が BNI ドラゴンフライチャプターで **初回 1on1**。両者の事業内容を共有し、**テレアポリスト自動作成システム**の開発可能性について具体的検討を開始。静岡県藤枝市という地元の共通点から、今後の協力関係構築の基盤を確立した、との整理。\n- **決定・合意:**\n  - **リスト作成システムの検討開始:** 佐藤氏のテレアポリスト作成業務（現在手作業で **1時間100件**）を自動化するシステムについて、次廣氏が **技術的実現可能性を調査**。\n  - **求人媒体からのデータ取得:** リクナビネクスト等の求人サイトから、**従業員数30名以下** などの条件で自動抽出する仕組みを検討。**スクレイピング技術の活用**、ただし **法的リスクの確認が必要**。\n  - **5月中旬の再会:** 佐藤氏の静岡帰省時（**5月16–17日頃**）に **対面ミーティング** を設定する方向。\n- **次廣側で共有された事業内容:**\n  - **業務改善システム構築:** エクセル・スプレッドシートで分散管理されているデータを一元化し、リアルタイムでの進捗確認を実現。\n  - **LINE活用システム:** 問い合わせから見積もり、請求までを LINE 公式アカウントで完結させる仕組み（建設業向け）。\n  - **スタンプラリー・ビンゴシステム:** 静岡観光協会向けに **5年間運用中**。\n  - **施工管理・日報システム:** 名古屋のシーリング会社向けに、外国人労働者でも入力しやすい LINE ベースの業務日報システムを構築。\n  - **事業の特徴:** ゼロから1を作れる／既製ツールの押し付けではなく現場フローに合わせたカスタマイズ。**小さく始めて改善**（大規模を一気に入れず、入力から段階拡張）。**現場負担の最小化**（経営と現場のギャップを埋め、現場にベネフィットを与える設計）。\n  - **経歴・背景:** システム開発歴 **25–26年**（大学中退後一貫、現在 **52–53歳**）。BNI は増本氏・今西氏との静岡出世クラブでの **約10年の付き合い** から **2024年** にドラゴンフライ参加を決意。動機は技術一辺倒からの転換・仕事の幅拡大。**MSP（メンバーサクセスプログラム）** で学んだビジネススキルに感銘、トレーニング注力中。\n- **佐藤側で共有された事業内容（1to1上の詳細・プロフィールと照合可）:**\n  - **高校生新卒採用の仕組み構築:** ホームページ制作、パンフレット・動画制作、学校訪問代行、求人資料郵送代行まで一括。\n  - **4月依頼でも7月解禁に間に合う** 短期対応が可能。**全国対応**（BNI参加により全国展開が加速）。\n  - **ターゲット:** 従業員 **30名以下** が中心（プロフィールは **20〜30名以下** — 会話では30名以下条件でリスト抽出の話あり）。タイプ **3つ**: ①高校生採用のやり方が分からない ②やりたいが時間・人員不足 ③応募が来ない（我流で抜けがある）。業種: 建設業、製造業、自動車整備、ビルメンテナンス、清掃、介護福祉など。\n  - **実績:** **2024年度** 29社サポート、14社で採用成功（成功率 **約48%**）。**過去5年** 毎年40社以上サポート（2023年32社、2024年は50社近く）。\n  - **経歴・背景:** 事業歴 **5年**。新卒で高校生新卒採用コンサル会社に入社、**2024年3月に独立**（当時 会社設立から **1年** と共有）。学歴: 清水東高校→静岡大学→早稲田大学編入→早稲田大学大学院（**教員免許保有**）。**将来ビジョン:** 高校生以下を対象としたキャリア教育事業。**五教科と社会を結びつける授業** で子どもの将来の選択肢を広げたい。\n- **確認待ち（会話上の論点）:**\n  - リクナビネクストからのデータ取得: **技術的実現可能性** と **法的リスク（利用規約上の二次利用制限）** を次廣氏が調査中。\n  - Google マイビジネス API: 個人事業主リスト作成について、**二次利用禁止ルール** があり、公開情報からの取得方法を検討。\n- **共通点・シナジー:**\n  - **地元:** 両者とも静岡県藤枝市出身・在住。佐藤氏は藤枝市古利（西焼津小学校区）、次廣氏は青葉町（青島中学校区）。\n  - **教育への関心:** 次廣氏は娘の受験を控え、佐藤氏のキャリア教育理念（五教科と社会の結びつけ）に強く共感。\n  - **システム×採用:** 次廣氏は静岡県の大卒求人サイト **「三並び」** のアプリ開発を受注中。**大学生がメールを見ない** ため通知機能が必要、という課題を共有。\n- **アクションアイテム（当時の整理）:**\n  - 次廣氏: 求人媒体からのリスト自動作成システムの **技術調査・提案準備**。\n  - 佐藤氏: **5月中旬の静岡帰省日程確定後**、次廣氏に連絡。\n  - 両者: **名古屋出世クラブ（5月末）** への参加可能性を検討（今西氏が佐藤氏を誘致中）。\n- **次回ミーティング:** **5月16–17日頃**、佐藤氏静岡帰省時に **対面** で実施予定。\n- **プライベート文脈（会話に出た事実の記録・紹介判断とは分離）:** 婚活、飯田氏からの占い（**32歳で結婚** 等）、保険担当の高校同級生からの紹介の動きなどが要約に含まれる。**取り扱い注意。本人確認のうえ参照。**\n\n#### 抽出された課題（事実：会話で言及）\n\n- テレアポ用リスト作成の **手作業負荷**（約1時間100件ペース）。\n- 求人媒体からの自動取得は **技術** に加え **利用規約・法的リスク（二次利用）** の確認が必要、との合意。\n- Google マイビジネス／公開情報は **二次利用禁止** の話題があり、個人事業主リストは **取得経路の設計** が課題。\n\n#### 仮説（tugilo視点）\n\n- **課題①:** リスト作成が **コンサル本業とリソース競合** している。**根拠:** 手作業1時間100件の共有。**構造（仮説）:** リード前処理が属人・手作業 → 営業・提案に振る時間が圧迫 → スケールしにくい。\n- **課題②:** データ取得は **「作れるか」より「取ってよいか」** が先に決まる。**根拠:** スクレイピング・API の **法的リスク確認** が合意事項。**構造（仮説）:** 技術要件とコンプライアンスが分離できないと、開発が進んでも運用不能になりうる。\n- **シナジー:** 「採用」周辺に **通知・進捗・フォロー** のデジタル化が横展開しうる。**根拠:** 三並び案件で **メールを見ない大学生** と通知ニーズの共有。**仮説**としての展開可能性。\n\n#### 次アクション\n\n- 次廣: 技術調査・法務・規約リスク整理・提案準備。\n- 佐藤: 帰省日程確定後に連絡 → 5/16–17頃 対面設定。\n- 双方: 名古屋出世クラブ（5月末）参加の検討。','2026-04-07 03:35:52','2026-04-13 14:11:46'),
+(12,1,37,136,NULL,NULL,NULL,'manual','2026-04-08 09:00:00','2026-04-08 09:00:00','2026-04-08 10:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_yonezawa_yuka_comechan_design.md】\n実施: 2026-04-08（水）JST 09:00–10:00（1時間）／オーナー: 次廣 淳 → 対象: 米澤 侑桂（Comechan Design）\n\n■ サマリ\n・米澤: デザイン〜コーディング・実装まで一貫対応可能（Webデザイナー兼エンジニア）を確認。\n・学生向け求人サイトアプリ化（来週契約予定）: フロントのデザイン・コーディングを米澤へ依頼する方向で合意。\n・古紙回収 LINE: リッチメニュー2件（法人用・個人用）を米澤へ依頼決定。\n・価格: リッチメニュー 4,000〜5,000円/枚、LPは規模に応じ工数ベース見積もり（合意）。\n\n■ 確定協業（体制）\n次廣のシステム開発案件に、米澤がデザイン・コーディング・実装（フロント中心）で協業開始に合意。\n求人サイト: 次廣はアプリ基盤・契約・バックエンド/通知、米澤はフロントのデザイン・コーディング。\nリッチメニュー: 米澤が制作、次廣が要件（腰回収LINEの運用コンテキスト）。\n\n■ 求人サイトアプリ化（概要）\n既存PHP WebをWebViewでアプリ化、メール開封率の課題にプッシュ通知。技術: WebView、Flutter検討中（RNとの選定は保留）。オープン予定は要確認（ドキュメントは2026年4月目安）。下部リッチメニュー風ナビ＋Web表示など。詳細仕様は契約・打ち合わせ後。\n\n■ スキル確認（抜粋）\nTailwind、JSフレームワーク（RN含む）、レスポンシブ、アプリデザイン経験。AI: Claude Code / ChatGPT / Gemini。業務委託2社・クラウドワークス経由2年以上。講師卒業後は余裕、個人案件で共創を増やしたい意向。\n\n■ 次アクション（次廣）\n契約後に求人サイトの具体仕様を再打ち合わせ。至急: リッチメニュー2件の要件共有。次回MTG: 契約完了後の詳細打ち合わせ。\n\n■ 次アクション（米澤）\nリッチメニュー制作・納品。詳細打ち合わせ後に求人フロントの見積・スケジュール提示。\n\n■ BNI\nビジター。オリエン2026-04-07（太田氏）。チャプター参加は例会201（2026-03-17）・204（2026-04-07）で2回。','2026-04-08 01:09:53','2026-06-01 04:52:35'),
+(13,1,37,19,NULL,NULL,NULL,'manual','2026-04-08 11:00:00',NULL,'2026-04-08 12:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_hirayama_mayumi_lifesupport.md】\n実施: 2026-04-08（水）JST 11:00〜（終了時刻は未確定のため DB 上は暫定で +1h）／オーナー: 次廣 淳 → 対象: 平山 真由美（ライフサポート）\n\nサマリ: パスポートほぼ完了（メンバーシップ残）。倉本氏ウェブマスターを次廣がシステム面支援で合意。40人リストテンプレ・神山氏（中小企業診断士）紹介・静岡車屋2名／カーマッチ検討。リージョンフォーラム 2026-11-09 対面予定。','2026-04-13 14:14:45','2026-04-13 23:17:33'),
+(14,1,37,10,NULL,NULL,NULL,'manual','2026-04-13 11:00:00',NULL,'2026-04-13 12:00:00','completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kuramoto_kenichi_webmaster.md】\n実施: 2026-04-13（月）JST 11:00–12:00／オーナー: 次廣 淳 → 対象: 倉持 賢一（WEBマスター）\n\n合意: ITウェブパワーチーム招待、坂木氏（ジオロケ）紹介、双葉企画連携検討、佐藤正夫氏ロジカルシンキング講座の案内。\n保留: エアコン案件（来週提案・5月頃要件定義の可能性）、Excel顧客管理DB化、LP等コーディング、都内対面。\n次廣: N-CAS資料・法人化・ポジショニング。','2026-04-13 23:18:48','2026-04-13 23:18:48'),
+(15,1,37,49,NULL,NULL,NULL,'manual','2026-04-13 14:30:00',NULL,'2026-04-13 15:30:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_funatsu_mariko_aicare_lab.md】\n実施: 2026-04-13（月）JST 14:30–15:30／オーナー: 次廣 淳 → 対象: 船津 麻理子（アイケアラボ・眼の整体）\n\n合意: 藤本税理士・秋田財務コンサル紹介（船津）、眼科医紹介検討（次廣・関東）、FC本部へのシステム提案（次廣）。\n協業: FCシステム化・軽量顧客管理・医療連携。\n次: 翌日 DragonFly イベント再会。','2026-04-13 23:22:13','2026-04-13 23:22:13'),
+(16,1,37,40,NULL,NULL,NULL,'manual','2026-04-13 18:00:00',NULL,'2026-04-13 19:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_hatakeyama_noriyuki_wagashi_oem.md】\n実施: 2026-04-13（月）JST 18:00–19:00／オーナー: 次廣 淳 → 対象: 畠山 憲之（和スイーツOEM）\n\n成果: メンバーシップ完了共有、業務課題（Excel・属人化・OEM増）とシステム化方向性の確認。\n合意: 採用後に優先順位整理・段階検討、詳細ヒアリングのため再1on1。\n次廣: 再1on1設定・改善提案準備。畠山: 採用優先・業務整理。','2026-04-13 23:27:04','2026-04-13 23:27:04'),
+(17,1,37,96,NULL,NULL,NULL,'manual','2026-04-17 09:55:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md】\n実施: 2026-04-17 JST 09:55〜\n\nスタートアッププレゼン改善、オンライン発表時のPDF化、藤原氏（VR推進協会）紹介、VR×サウナコンテンツ、北欧サウナ体験、飲食店向けAIコールセンターの芽を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
+(18,1,37,26,NULL,NULL,NULL,'manual','2026-04-20 15:53:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_takeuchi_shunta_athlete_insurance.md】\n実施: 2026-04-20 JST 15:53〜\n\nアスリート専門保険・キッズマネー教育と、次廣のAI業務改善システム構築の相互紹介可能性を確認。静岡PTA・サッカー人脈、法人営業先のDXニーズ紹介をTodo化。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
+(19,1,37,4,NULL,NULL,NULL,'manual','2026-04-24 11:30:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_matsukura_kenji_glassfilm_coating.md】\n実施: 2026-04-24 JST 11:30〜\n\nガラスフィルム・コーティング事業、エアロゲル透明断熱フィルム、高級リゾートホテル営業、静岡インテリア資材卸売会社への紹介検討、リファーラルプレゼン改善を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
+(20,1,37,97,NULL,NULL,NULL,'manual','2026-04-27 10:58:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_iizuka_graphic_design.md】\n実施: 2026-04-27 JST 10:58〜\n\nグラフィックデザイン事業と次廣のB2B業務改善・システム構築を相互共有。社労士・雨漏り調査・竹本氏紹介、田渕氏・行政書士メンバー紹介、システム×デザイン協業、月次1on1合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
+(21,1,37,98,NULL,'89157467602','IwdcYnOrRzeXiyNsb0v2pA==','manual','2026-05-07 15:57:00','2026-05-07 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tamura_kodai_money_cooking.md】\n実施: 2026-05-07 JST 15:57〜\n\n金融・保険・投資助言モデルと次廣のAI業務改善システム開発を共有。建設業向け損保削減＋DX協業、SE・SEO・FC専門家紹介、次廣の保険・投資相談をTodo化。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
+(22,1,37,99,NULL,NULL,NULL,'manual','2026-05-08 14:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-08 JST 14:00〜\n\n創業160年の製本会社・家系図/ルーツ調査事業と、次廣のAI業務改善システム開発を共有。既存VB+Oracleシステム改善・クラウド移行について別途ヒアリングと提案を行う合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
+(23,1,37,100,NULL,'85344850132','jYUX4zxRQLS/2d24XbPJHg==','manual',NULL,'2026-05-13 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_ito_takao_phoenix_jsp.md】\n実施: 正式日時 TODO（2026-05-13 反映のZoom要約）\n\n飯塚さん経由のクロスチャプター1to1。補助金・助成金申請に絡むシステム導入支援、業務改善助成金、自社業務効率化、ローカルLLM提案書、ひとり親支援接点を整理。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
+(24,1,37,101,NULL,'82280318209','qCJSEwAqQLCYSQDmSPCceQ==','manual','2026-05-14 10:00:00','2026-05-14 10:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_isobe_masayuki_nestle_detective.md】\n実施: 2026-05-14 実施済み（時刻 TODO）\n\n探偵業プロフィール・G.A.I.N.S.と次廣のシステム開発事業を共有。保険営業担当者紹介、メンバー表相互共有、BNI/倫理法人会ゲスト管理システム化の芽、屋号表記ゆれ確認を整理。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
+(25,1,37,119,NULL,'89314073650','Xswm1pOmRfezElNCaBsjPg==','manual','2026-05-18 17:00:00','2026-05-18 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_maeda_referral_imaishi.md】\n実施: 正式時刻 TODO JST\n\n今西様紹介・非BNI。マーケティング／AI活用の情報交換、思考R診断システム、見積レンジ、静岡対面・今西様同席の可能性を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(26,1,37,120,NULL,'82792118979','xG0mAVPKS1Gn4YNQBvNlxA==','manual','2026-05-18 16:00:00','2026-05-18 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tsuji_ryo_mainc_meo.md】\n実施: 2026-05-18 16:00 JST\n\n株式会社MainC。MEO／SEO／HP／SNS運用、Muスコープ、ローコミ、協業可能性、6/5リージョンフォーラムでの接点を整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(27,1,37,121,NULL,'89357445297','/kmKTakIRh+J3YUhtah6dQ==','manual','2026-05-19 14:00:00','2026-05-19 14:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_shimotsuji_hs_neo_project.md】\n実施: 2026-05-19 14:00 JST\n\n株式会社hsネオプロジェクト。田村広大さん紹介、同業SE・業務改善、受託開発、AI活用、協力体制、友達申請を整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(28,1,37,9,NULL,'83444991178','05lRf6XqSNu4hCFaDrAgGQ==','manual','2026-05-21 09:00:00','2026-05-21 09:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nakamura_keigo_shakumoto.md】\n実施: 正式時刻 TODO JST\n\n株式会社笏本縫製／SHAKUNONE。次廣事業、新カテゴリー、日本製ものづくりチーム形成、予約管理、料金パッケージ化、宮城氏紹介合意を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(29,1,37,122,NULL,NULL,NULL,'manual','2026-05-21 11:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_fujimoto_yuki_tax_advisor.md】\n実施: 2026-05-21 11:00 JST\n\n船津麻理子さん紹介。医療クリニック特化税理士、税務セカンドオピニオン、未来会計、法人化・顧問税理士活用、AI/IT課題を整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
+(30,1,37,123,NULL,'85349117783','4X2npZV5QGasXKVx+eKqEA==','manual','2026-05-21 13:00:00','2026-05-21 13:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_gondo_chiemi_campanula.md】\n実施: 正式時刻 TODO JST\n\n株式会社Campanula。企業研修・人材育成・業務改善、建設業／製造業の現場密着支援、教育設計とシステム化の協業可能性を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(31,1,37,14,NULL,'84060508444','5WhkV5vUSc2lhAf6Lbg/SQ==','manual','2026-05-21 14:50:00','2026-05-21 14:45:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nishioka_foreign_trainee.md】\n実施: 2026-05-21 14:50 JST\n\n外国人技能実習生受入れ支援。24時間対応、病院付き添い、月1回寮訪問、建設業の人材不足、次廣の建設業向け業務改善モック作成アクションを整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(32,1,37,124,NULL,'85129485087','DGnP1OtXRv+Ud8UIRCc6TA==','manual','2026-05-22 09:00:00','2026-05-22 09:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_mitarai_fudotech.md】\n実施: 2026-05-22（金）JST 09:00〜終了時刻TODO／オーナー: 次廣 淳 → 対象: 御手洗氏（株式会社風土テック／BNI VORTEX）\n\n■ 主な成果\n・次廣の建設業・製造業向けAI業務改善システム構築と、御手洗氏の建設業採用支援は顧客層・課題解決アプローチの親和性が高いことを確認。\n・外国人労働者の日報管理システム、採用後の定着・教育・現場共有、採用支援先への業務改善提案で協業可能性を確認。\n・西岡優希氏（外国人就労支援）との三者連携候補が具体化。\n\n■ 御手洗氏 / 風土テック\n・建設業の採用支援。週1回の定例MTG、SNS撮影、Indeed / engage等の無料媒体改善、SNS・HP・求人媒体の一貫性づくり、MVV策定、採用後フォローまで伴走。\n・採用活動を一発勝負ではなく企業内に採用力を蓄積する「資産化」として捉える。\n\n■ 次廣側共有事例\n・外注ブロックFC本部の受注/顧客/売上管理統合。\n・名古屋の防水工事業向けLINE日報。外国人職人の紙日報課題をLINE提出・本部集計で改善。\n・解体業のLINE見積/請求、観光協会スタンプラリー、動物病院予約管理。\n\n■ 決定・アクション\n・2〜3ヶ月に1回の情報交換。\n・御手洗氏は風土テックのメンバー表を送付、次廣はDragonFly最新メンバー表を送付。\n・6月リージョンフォーラムで対面・名刺交換予定。\n・西岡優希氏との三者連携を検討。2026-05-22、次廣が西岡氏から接続了承を得て、御手洗氏へグループ作成可否を確認。\n\n■ 確認待ち\n・御手洗氏の下の名前、正式役職、プロフィールURL、終了時刻。\n・風土テック / フードテック表記、練馬会場・修声チャプター文脈は本人確認。','2026-05-22 16:46:29','2026-06-01 04:42:45'),
+(33,1,37,52,NULL,'81436970113','+Q0WkZktQwWta233LUH1jw==','manual','2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-06-01 04:42:45'),
+(34,1,37,17,NULL,NULL,NULL,'manual','2026-04-03 07:15:00','2026-04-03 07:15:00','2026-04-03 08:15:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_sato_takuto_brightlink.md】\n実施: 2026-04-03（金）JST 07:15–08:15／Zoom／オーナー: 次廣 淳 → 対象: 佐藤拓斗（株式会社BrightLink／BNI DragonFly）\n\n■ 主な成果\n・双方の事業共有。テレアポリスト自動作成（手作業1時間100件）の開発可能性を検討開始。\n・リクナビネクスト等から従業員数30名以下等で抽出する仕組みを検討（法的リスク要確認）。\n・5月16–17日頃の静岡帰省時に対面ミーティング予定。出世クラブ参加も検討。\n・静岡県藤枝市の地元共通点・教育観の共感。','2026-05-25 20:26:20','2026-05-25 20:26:20'),
+(35,1,37,137,NULL,NULL,NULL,'manual','2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47'),
+(36,1,37,138,NULL,NULL,NULL,'manual',NULL,NULL,NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-05-28 17:08:50'),
+(37,1,37,18,NULL,'84716679422',NULL,'zoom','2026-06-01 14:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(38,1,37,34,NULL,'86416812471',NULL,'zoom','2026-06-01 15:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(39,1,37,51,NULL,'89001802997',NULL,'zoom','2026-06-01 16:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(40,1,37,140,NULL,'83714290448',NULL,'zoom','2026-06-01 17:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(41,1,37,27,NULL,'89109217407',NULL,'zoom','2026-06-03 15:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(42,1,37,139,NULL,'85054251043',NULL,'zoom','2026-06-04 09:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(43,1,37,99,NULL,'87970810668','EpAXFCa/QpOjsVdWaEVClw==','zoom','2026-05-29 14:00:00','2026-05-29 14:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(44,1,37,113,NULL,'88597252767','MF27uxnKT2aqvRtXjdXckQ==','zoom','2026-05-29 09:00:00','2026-05-29 09:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(45,1,37,138,NULL,'83459427012','i3heZ15HSG6RW1qeTCoPBg==','zoom','2026-05-28 15:00:00','2026-05-28 15:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(50,1,37,143,NULL,'89131000556','PXefpCDtQfa6IVkp6a9ohA==','zoom','2026-05-21 11:00:00','2026-05-21 11:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(52,1,37,144,NULL,'87313500925','TXIaXTwPQaiXBiKVTc9pfA==','zoom','2026-05-19 17:00:00','2026-05-19 17:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(53,1,37,145,NULL,'86985144664','j3BnDbqfRRu5kHrKvgax6g==','zoom','2026-05-19 16:00:00','2026-05-19 16:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(59,1,37,53,NULL,'82431536307','4ycbbif/RP29DE6HgPlDoQ==','zoom','2026-05-08 18:00:00','2026-05-08 18:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(60,1,37,13,NULL,'82219483510','kuFarPqvSbyZcnkZhlebpA==','zoom','2026-05-08 17:00:00','2026-05-08 17:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(62,1,37,146,NULL,'82336493242','OKWxBvjsTPyTZfh1Fk7/NA==','zoom','2026-05-07 09:00:00','2026-05-07 09:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(63,1,37,147,NULL,'82098291556','w04V3WLZTqOdBPBRLddqYA==','zoom','2026-05-01 17:00:00','2026-05-01 17:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(64,1,37,17,NULL,'82144696668','hSM5Q+RMS5C8RhTSLcRR8Q==','zoom','2026-05-01 14:00:00','2026-05-01 14:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(65,1,37,148,NULL,'86886689396','HIJgRFSzQeKajNVl/0ci9Q==','zoom','2026-05-01 09:00:00','2026-05-01 09:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23');
 /*!40000 ALTER TABLE `one_to_ones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1899,7 +1961,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `participant_breakout`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `participant_breakout` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `participant_id` bigint(20) unsigned NOT NULL,
@@ -2027,7 +2089,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `participants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `participants` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -2120,7 +2182,6 @@ INSERT INTO `participants` VALUES
 (60,1,60,'guest',25,51,'2026-03-03 00:34:23','2026-03-03 00:34:23'),
 (61,1,61,'guest',18,50,'2026-03-03 00:34:23','2026-03-03 00:34:23'),
 (62,1,62,'guest',17,30,'2026-03-03 00:34:23','2026-03-03 00:34:23'),
-(63,1,63,'guest',46,35,'2026-03-03 00:34:23','2026-03-03 00:34:23'),
 (64,2,1,'regular',NULL,NULL,'2026-03-10 00:40:14','2026-03-10 00:40:14'),
 (65,2,2,'regular',NULL,NULL,'2026-03-10 00:40:14','2026-03-10 00:40:14'),
 (66,2,3,'regular',NULL,NULL,'2026-03-10 00:40:14','2026-03-10 00:40:14'),
@@ -2240,7 +2301,7 @@ INSERT INTO `participants` VALUES
 (180,3,57,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (181,3,58,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (182,3,59,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
-(183,3,66,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
+(183,3,135,'visitor',21,NULL,'2026-03-16 23:42:37','2026-06-01 04:52:35'),
 (184,3,67,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (185,3,68,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (186,3,69,'visitor',51,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
@@ -2376,7 +2437,7 @@ INSERT INTO `participants` VALUES
 (316,6,57,'visitor',1,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (317,6,58,'visitor',46,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (318,6,59,'visitor',5,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
-(319,6,66,'visitor',5,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
+(319,6,135,'visitor',5,NULL,'2026-03-31 00:09:20','2026-06-01 04:52:35'),
 (320,6,64,'proxy',17,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (321,6,76,'proxy',27,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (322,6,60,'guest',2,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
@@ -2441,7 +2502,7 @@ INSERT INTO `participants` VALUES
 (381,7,57,'visitor',12,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (382,7,58,'visitor',48,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (383,7,59,'visitor',12,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
-(384,7,66,'visitor',14,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
+(384,7,135,'visitor',14,NULL,'2026-04-07 00:04:59','2026-06-01 04:52:35'),
 (385,7,67,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (386,7,68,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (387,7,69,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
@@ -2451,12 +2512,10 @@ INSERT INTO `participants` VALUES
 (391,7,73,'visitor',35,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (392,7,74,'visitor',35,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (393,7,75,'visitor',35,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
-(394,7,79,'visitor',35,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (395,7,80,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (396,7,60,'guest',46,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (397,7,61,'guest',20,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (398,7,62,'guest',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
-(399,7,63,'guest',40,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (400,8,1,'regular',NULL,NULL,'2026-04-13 12:13:25','2026-04-13 12:13:25'),
 (401,8,2,'regular',NULL,NULL,'2026-04-13 12:13:25','2026-04-13 12:13:25'),
 (402,8,3,'regular',NULL,NULL,'2026-04-13 12:13:25','2026-04-13 12:13:25'),
@@ -2518,7 +2577,7 @@ INSERT INTO `participants` VALUES
 (458,8,57,'visitor',11,39,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (459,8,58,'visitor',20,20,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (460,8,59,'visitor',35,46,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
-(461,8,66,'visitor',1,5,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
+(461,8,135,'visitor',1,5,'2026-04-13 12:13:25','2026-06-01 04:52:35'),
 (462,8,67,'visitor',6,28,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (463,8,68,'visitor',13,26,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (464,8,69,'visitor',36,30,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
@@ -2796,7 +2855,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -2820,7 +2879,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) NOT NULL,
@@ -2836,7 +2895,7 @@ CREATE TABLE `personal_access_tokens` (
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2846,7 +2905,8 @@ CREATE TABLE `personal_access_tokens` (
 LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 INSERT INTO `personal_access_tokens` VALUES
-(1,'App\\Models\\User',2,'curl','6b776138e1e5ee1a328747ee0f26fbcd32022398d0dc4b46ed989af11a275d41','[\"*\"]',NULL,NULL,'2026-05-28 21:44:22','2026-05-28 21:44:22');
+(1,'App\\Models\\User',2,'religo-admin','fc4ea95195a45cca5d253758c75a777ab10a1eaea63435f2fb5a577fddc2e1a0','[\"*\"]','2026-05-28 22:27:00',NULL,'2026-05-28 22:27:00','2026-05-28 22:27:00'),
+(2,'App\\Models\\User',2,'religo-admin','461a044d5c3c6fe7af4276d62bc24a78e2b3229a30d0a977b6d4dc06777225e9','[\"*\"]','2026-05-31 01:32:48',NULL,'2026-05-29 05:37:44','2026-05-31 01:32:48');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2856,7 +2916,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `regions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `regions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `country_id` bigint(20) unsigned NOT NULL,
@@ -2884,7 +2944,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -2960,7 +3020,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sessions` (
   `id` varchar(255) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -2982,13 +3042,43 @@ LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` VALUES
 ('0rwcgOyvPmZxDHLeZIGTS7sABfhPtaIuIjaydCe1',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiRVY3UjlrTXJYT2xhcWs2QXZHSzJKcU5QRHdSMWEyY29uVllRaWNKZyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756273),
-('asckEb4GZJqmjyxvTJfzJT1WzWV7tnDAkt7pPffs',NULL,'172.28.0.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoidFNjbXVHOUxmU29EZVBRQXRYS0lrbGpWZ1VtTlduWDBRd3B5U2RpWiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779971710),
 ('B30RzX1J45hjoVivXwxXM3oYIr9gIVrUWrQ3UHpG',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjNiWG1NdVlRcHRFZTNvWkppZmxzampGM2xzdmN6TkhyeDRoYnc0UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756264),
-('Bzqyk29tLtNeKFz1fIREnuHc2RyVYjwqUka0IKTd',NULL,'172.28.0.1','curl/8.7.1','YToyOntzOjY6Il90b2tlbiI7czo0MDoiTktzWEVwR0FmSXI4RlhSWTR3TnppQkJxaVhxMFFld0RwdHpMMzZYZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1779971710),
-('Varzfs1lI63sHW0Ac7OFBmDLkrsV4xzsl4ecuM1c',NULL,'172.28.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cursor/3.5.38 Chrome/142.0.7444.265 Electron/39.8.1 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiM1M5S2s0M05XZzNrdTRKWjl3RFo1RjB1OUlTdWh6NTduTkVVQmw5MCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779972265),
-('vQyn0yN7TGxfeennT1q5GRZjrIydA5dXtcZoMEKi',NULL,'172.28.0.1','curl/8.7.1','YToyOntzOjY6Il90b2tlbiI7czo0MDoibmZ6bXI1a3BSOUR1bGxRbjBPS0RLell6NFhsU0hBbWRTTzdiQW4zVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1779971254),
 ('Y1oy1eynIkgLaXS5m7Ezr52zaJF3s9E7CylrsDTg',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoieUVQMUVOcGlQMTB4c3hFS1padmgxNjZXa2NxNUpBbzNqaVRkUVZkYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779688657);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_ai_credentials`
+--
+
+DROP TABLE IF EXISTS `user_ai_credentials`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_ai_credentials` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `ai_enabled` tinyint(1) NOT NULL DEFAULT 0,
+  `provider` varchar(30) DEFAULT NULL,
+  `api_key` text DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_ai_credentials_user_id_unique` (`user_id`),
+  CONSTRAINT `user_ai_credentials_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_ai_credentials`
+--
+
+LOCK TABLES `user_ai_credentials` WRITE;
+/*!40000 ALTER TABLE `user_ai_credentials` DISABLE KEYS */;
+INSERT INTO `user_ai_credentials` VALUES
+(1,2,1,'openai','eyJpdiI6IjhJQ1owVTR0SXNCMlBLWGJpTjczN2c9PSIsInZhbHVlIjoiZFFmdzJvTS9uRFhhK1Z1UEtIWlJhN3U3ZmxZMEJTd1pVWXBkSVAweldxTlBOMlUzOHhVbEYxalNRaWtkdFhJaUdoSjV0dUQyMHcyR1JDTjhSalZZbFZpSDF1dS8yTmdvUk5pVHRiekduUUtBN1M1dEhjam9icm1uRjZtemZ1RkdXTFZFclVubzA5MWNpeEUvOHdlUXdtM1NNYnZ6emlXYU1WNDN1RDZIRVJ6S1NyN3NNQndVWlZacUNXWmpPSm5vRkFuWWZFZEJkUlZGT2lvdEVTU3NCSUxoODIxUGo3S2VqbWpyQThBRzBQZz0iLCJtYWMiOiJmNjMwMWFiZWRlMDhhNTQ5ZmNlZTkxYTA3MjE1MDNjNGEyNWI5NDVmMDU5ZDUxNTYyODQzZjBlMDRkZTI1YTg4IiwidGFnIjoiIn0=',NULL,1,'2026-05-30 08:46:35','2026-05-30 08:46:35');
+/*!40000 ALTER TABLE `user_ai_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2997,7 +3087,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -3025,7 +3115,7 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
 (1,'Default','default@religo.local',NULL,'$2y$12$dUrt0H0qQktz46pbKZu7cexZzI5MU8PpmDa3wyR2y4aiZTnWpBJRC',NULL,37,NULL,NULL,'2026-03-05 13:03:53','2026-04-07 03:08:58'),
-(2,'神保　玲太','ryotadesu.jp@gmail.com',NULL,'$2y$12$pjick1ZtEXFpAvYn7TMMwuvUHfvY/XqNmYOsAGTHZ.mIUK1PhR2/G',NULL,138,2,'member','2026-05-28 21:44:22','2026-05-28 21:44:22');
+(2,'次廣　淳','tugi@tugilo.com',NULL,'$2y$12$cPZeWQOsMuNaMwfHepwmzObgsMQ.UE9cVgzQIz5qjhMtDIetj9ypK',NULL,37,1,'chapter_admin','2026-05-28 22:27:00','2026-05-30 01:57:34');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3035,7 +3125,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `workspaces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `workspaces` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -3071,7 +3161,176 @@ INSERT INTO `workspaces` VALUES
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'dragonfly'
+-- Table structure for table `zoom_accounts`
+--
+
+DROP TABLE IF EXISTS `zoom_accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `zoom_accounts` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `zoom_user_id` varchar(255) DEFAULT NULL,
+  `zoom_account_id` varchar(255) DEFAULT NULL,
+  `zoom_email` varchar(255) DEFAULT NULL,
+  `access_token` text DEFAULT NULL,
+  `refresh_token` text DEFAULT NULL,
+  `token_expires_at` datetime DEFAULT NULL,
+  `scopes` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `zoom_accounts_user_id_unique` (`user_id`),
+  CONSTRAINT `zoom_accounts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zoom_accounts`
+--
+
+LOCK TABLES `zoom_accounts` WRITE;
+/*!40000 ALTER TABLE `zoom_accounts` DISABLE KEYS */;
+INSERT INTO `zoom_accounts` VALUES
+(1,2,'NHCBopvRQtCYXFKPsKfc-g','4AVorcStRP2KzYIRra6cpA','tugi@tugilo.com','eyJpdiI6IlVveGQ0KzlRanJMUHVlUDlrRGhuVWc9PSIsInZhbHVlIjoiK3ZJNXYvQXI5UE94Tno4MlFtRzJISURZZVhWT3JXOVpjam5kOVlrOVNvNlNSNTMrSmZpVXRMSnVHNGNSUys1dU95RWJ4T24wY3lETGRmMDk3K0w3cnZWNEVZZmxaa1lwTlpTb1JOa2NUVmh2b1RkblE0UW5ndkFsUkpDNE9rVEg2RVNOT2JXOWh5NGJsWGE0TDJGRXhtd3N6VHJ2b3ZpN3pqd3J1eGNEMDF2KytTK2hPYkFHNkJuemlWWFYrM1pDOVdZUlYwRGdtdDA0KytMTmtzemZyRjdqcEp1UHdzNmU0ZHFOcHZnWkNPQ0Vqc2o4ZG5tVkRMVG1uYUowZk5MRVlmNlpNMWlIK3B2U0ZvM2FLSWlPZHJWZzU5dTZPd2Jha3QyazBMVFA1TE5JVVVpeWdQc3I5a2RibkZNVnQ1NjgzWHpwV0w3YVNSYUM4SEtWeWVML3NpWGY5QXNmazQzRDl1Y0IyM2dyTG9WZGpJOTB4UHY2MU5BWXlHTEFzUnd3MGt3cGdHd1FoQTRvRklSMkNQWW1CRDdtNWwzaWhPVGhzSEpTeUhhUmh6ZlZMMkl4aGxnM213L01WQkZFcXduK2xVTHBvdG1UY2hzSGNkdGplbEJnazlJWkZlM0o5TDF4YnVRd1h4ZElkNThOWHpxTUM2c00zSzJjaE4zeFpZT0JnZlg5Nnk3YXZsL2FxOVJQeWwwQTBmL0pWYThES2s5RzA1ZDB2MmFNb3ZqRTFvZkhvU2lJUXNPdkM4c05LNXU2WUhHRk9qNFZZZmxBY3hjMUQxRUZLODI2WTlzVUJDZlpsSEpzNTh4dUNvM0RFbkJzU21xekExVEVOdlV0c2trRzcwdVkzRWZHL04rTmEyaFcwb3kyRlArUTVpb1hJNE81YjRacmJSaTliVW1XN1ZGR1hmdEczSlFNN0dVbDhUU3k4dWlyY0lENStiNnlCYjcvSmswVVJYY1BuN0F4WWV4MFRTd3ZJazAxenFxQmNHODJhcDhhRTZUclRTdmNzQmwrUmN3cTlXcFJBd2tBV2VNQzRXam9YWThhNUJpc28rMFQzNDlyRkcvcVpidEF2RkdjVzJNdWlqaVlwTzNML2FBdmt5ZjZLOStJRTU5QnpaZ1d3MjRMUlE9PSIsIm1hYyI6ImZmNzFlOThiYmZjODc3M2U2MDcxMTBiOWMyOWU0MWFjY2JmNjUxY2FjNjA4NDUyOTc5M2EwY2FiNThmNDAzZTQiLCJ0YWciOiIifQ==','eyJpdiI6IkVOS0RIa3QzNmZBYTUzTkV6ZklrV0E9PSIsInZhbHVlIjoibjdYRjU3WEs1dTdIazJzWlNpTUNudk4zc0txZ1pMOGxxM2s3eUJQc2doZi94QjdDMXRtS0VSZi9oUU1nTXB0YlRRLzRSQ0k1QjVMd1ZQQzhaejdQaTBDaDFnTGRQYThqN2hQamd6TWNxeS9jK2lzWVVlWVdzRko2V3VnSlZOWWtYUnFFVm1nd2dxUHVqOVpNRDk2VmNSUndNZmFURk5MVWc2MDhuLy9VSnI0Rkkva2pkVGFPQkRMYmNwdkVET1RXR2FPZlhXQVhkSzZpRHk4UTU3L25nRWhBOGdWMEtzZDAzV2R6MUZmeDFpeWY0RnNTV3hoSnVoNlpmLzdJUmZMRFhZZHVzRlBqUWtFTS9IYVgvYkhUZUF4NWcwdjJ5OXM0SDN6YjYvWkJJcVE1M1k0R1NpZVhBNnd3dnVURTNpaUNXSWxlbzJ2Tm1uU2N2NG9DME9pNkE5TXE4Z2N6UENPQUVoQmxYVlBiM0UxLzFTK3NaTWJMS2xxQ2ZxMjAreHFnWWU5S0VwdDNDM3BEYXRwWW4zMVlqYTNtQ21pVWxyZXArT0ZvcDJ6ZzlYdjFZZXBlcUMvWDUwRnNoVFVZejl3aUp5V3RyWUI4UU9EeDNYRE1aYWd0UWUyM05EZjZMNG1KYTY0YStrY3Y5ZFptODFINXFMRWlrS21TTnBQOHFDVFI1S0xQQUZFNVJqeWVvQWYxUlJHNHJSdzdCM25QYzQycDBNTUk0S1RRZkFwbnVGS2RBNG4rMFN5K0F0U0EwVmlrSk15QytodWhNbytCY3pNTDhXU1FDZ2dIZDQwNTB5MWtyWjJRdk9BV0Z3MjgzRzQvYmRxV0oyM0VTYUZ3Vmo5UkZwdU80Y3U3d0NQK25mRkR3alJjMFAwSXQ2YVlNeC9rZ29nM0FOT1AxdVg3bExLNTFqRDhoUXpiRG9VTW9OQVZJS0VEaVhUbERaK1lRQkhWeFJSY0JFWUdIVTU3azQ1ckEvaUVUMTV3aDZ5Nno5eE5BeVk1VzBiZHdPb2dvUmloUnp4ZjVHVG5oajJ0ZmhXSFVlRTNxVUtMeXM2TFUyeHRBenJ6OEc1U0loMWtZL09sOWpUWVBtWmVNWTZPMDVjSVUwaFFyMExSOU1WN2g5TDRiTmFCbEE9PSIsIm1hYyI6IjJiYTlmMjA0OWE1ZjVmOGNkOGI1Yjc3ZmI4ZjBhMzczMTE2MmFmMTkxYWY3NDg3OGE0NjIxNjAyZDkzNzVmZjYiLCJ0YWciOiIifQ==','2026-05-30 19:07:29','user:read:user meeting:read:list_meetings meeting:read:summary meeting:read:past_meeting meeting:read:list_past_instances meeting:read:list_past_participants cloud_recording:read:list_recording_files','2026-05-30 01:06:32','2026-05-30 09:07:30');
+/*!40000 ALTER TABLE `zoom_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `zoom_import_apply_logs`
+--
+
+DROP TABLE IF EXISTS `zoom_import_apply_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `zoom_import_apply_logs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `executed_at` datetime NOT NULL,
+  `action` varchar(30) NOT NULL,
+  `imported_count` int(11) NOT NULL DEFAULT 0,
+  `held_count` int(11) NOT NULL DEFAULT 0,
+  `skipped_count` int(11) NOT NULL DEFAULT 0,
+  `meta` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`meta`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `zoom_import_apply_logs_user_id_executed_at_index` (`user_id`,`executed_at`),
+  CONSTRAINT `zoom_import_apply_logs_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zoom_import_apply_logs`
+--
+
+LOCK TABLES `zoom_import_apply_logs` WRITE;
+/*!40000 ALTER TABLE `zoom_import_apply_logs` DISABLE KEYS */;
+INSERT INTO `zoom_import_apply_logs` VALUES
+(1,2,'2026-05-30 17:59:33','apply',0,37,0,'{\"import_ids\":[6,5,4,3,2,1,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,29,31,32,33,34,35,36,37,38],\"details\":[{\"import_id\":1,\"result\":\"held\"},{\"import_id\":2,\"result\":\"held\"},{\"import_id\":3,\"result\":\"held\"},{\"import_id\":4,\"result\":\"held\"},{\"import_id\":5,\"result\":\"held\"},{\"import_id\":6,\"result\":\"held\"},{\"import_id\":8,\"result\":\"held\"},{\"import_id\":9,\"result\":\"held\"},{\"import_id\":10,\"result\":\"held\"},{\"import_id\":11,\"result\":\"held\"},{\"import_id\":12,\"result\":\"held\"},{\"import_id\":13,\"result\":\"held\"},{\"import_id\":14,\"result\":\"held\"},{\"import_id\":15,\"result\":\"held\"},{\"import_id\":16,\"result\":\"held\"},{\"import_id\":17,\"result\":\"held\"},{\"import_id\":18,\"result\":\"held\"},{\"import_id\":19,\"result\":\"held\"},{\"import_id\":20,\"result\":\"held\"},{\"import_id\":21,\"result\":\"held\"},{\"import_id\":22,\"result\":\"held\"},{\"import_id\":23,\"result\":\"held\"},{\"import_id\":24,\"result\":\"held\"},{\"import_id\":25,\"result\":\"held\"},{\"import_id\":26,\"result\":\"held\"},{\"import_id\":27,\"result\":\"held\"},{\"import_id\":28,\"result\":\"held\"},{\"import_id\":29,\"result\":\"held\"},{\"import_id\":30,\"result\":\"held\"},{\"import_id\":31,\"result\":\"held\"},{\"import_id\":32,\"result\":\"held\"},{\"import_id\":33,\"result\":\"held\"},{\"import_id\":34,\"result\":\"held\"},{\"import_id\":35,\"result\":\"held\"},{\"import_id\":36,\"result\":\"held\"},{\"import_id\":37,\"result\":\"held\"},{\"import_id\":38,\"result\":\"held\"}]}','2026-05-30 08:59:33','2026-05-30 08:59:33'),
+(2,2,'2026-05-30 22:35:23','apply',29,0,0,'{\"import_ids\":[6,5,4,3,2,1,8,10,11,12,13,14,15,16,17,18,19,20,21,22,25,26,28,29,33,34,35,36,37],\"details\":[{\"import_id\":1,\"result\":\"imported\"},{\"import_id\":2,\"result\":\"imported\"},{\"import_id\":3,\"result\":\"imported\"},{\"import_id\":4,\"result\":\"imported\"},{\"import_id\":5,\"result\":\"imported\"},{\"import_id\":6,\"result\":\"imported\"},{\"import_id\":8,\"result\":\"imported\"},{\"import_id\":10,\"result\":\"imported\"},{\"import_id\":11,\"result\":\"imported\"},{\"import_id\":12,\"result\":\"imported\"},{\"import_id\":13,\"result\":\"imported\"},{\"import_id\":14,\"result\":\"imported\"},{\"import_id\":15,\"result\":\"imported\"},{\"import_id\":16,\"result\":\"imported\"},{\"import_id\":17,\"result\":\"imported\"},{\"import_id\":18,\"result\":\"imported\"},{\"import_id\":19,\"result\":\"imported\"},{\"import_id\":20,\"result\":\"imported\"},{\"import_id\":21,\"result\":\"imported\"},{\"import_id\":22,\"result\":\"imported\"},{\"import_id\":25,\"result\":\"imported\"},{\"import_id\":26,\"result\":\"imported\"},{\"import_id\":28,\"result\":\"imported\"},{\"import_id\":29,\"result\":\"imported\"},{\"import_id\":33,\"result\":\"imported\"},{\"import_id\":34,\"result\":\"imported\"},{\"import_id\":35,\"result\":\"imported\"},{\"import_id\":36,\"result\":\"imported\"},{\"import_id\":37,\"result\":\"imported\"}]}','2026-05-30 13:35:23','2026-05-30 13:35:23');
+/*!40000 ALTER TABLE `zoom_import_apply_logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `zoom_meeting_imports`
+--
+
+DROP TABLE IF EXISTS `zoom_meeting_imports`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `zoom_meeting_imports` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `owner_member_id` bigint(20) unsigned DEFAULT NULL,
+  `workspace_id` bigint(20) unsigned DEFAULT NULL,
+  `zoom_meeting_id` varchar(255) DEFAULT NULL,
+  `zoom_meeting_uuid` varchar(255) DEFAULT NULL,
+  `kind` varchar(20) NOT NULL,
+  `topic` varchar(255) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `duration_minutes` int(11) DEFAULT NULL,
+  `participants_count` int(11) DEFAULT NULL,
+  `is_one_to_one_candidate` tinyint(1) NOT NULL DEFAULT 0,
+  `confidence` varchar(10) DEFAULT NULL,
+  `matched_member_id` bigint(20) unsigned DEFAULT NULL,
+  `match_status` varchar(20) NOT NULL DEFAULT 'unmatched',
+  `counterpart_name` varchar(255) DEFAULT NULL,
+  `counterpart_email` varchar(255) DEFAULT NULL,
+  `selected` tinyint(1) NOT NULL DEFAULT 0,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `one_to_one_id` bigint(20) unsigned DEFAULT NULL,
+  `raw` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`raw`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `zoom_imports_user_uuid_unique` (`user_id`,`zoom_meeting_uuid`),
+  KEY `zoom_meeting_imports_owner_member_id_foreign` (`owner_member_id`),
+  KEY `zoom_meeting_imports_workspace_id_foreign` (`workspace_id`),
+  KEY `zoom_meeting_imports_matched_member_id_foreign` (`matched_member_id`),
+  KEY `zoom_meeting_imports_one_to_one_id_foreign` (`one_to_one_id`),
+  KEY `zoom_meeting_imports_user_id_kind_index` (`user_id`,`kind`),
+  KEY `zoom_meeting_imports_zoom_meeting_id_index` (`zoom_meeting_id`),
+  KEY `zoom_meeting_imports_status_index` (`status`),
+  CONSTRAINT `zoom_meeting_imports_matched_member_id_foreign` FOREIGN KEY (`matched_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `zoom_meeting_imports_one_to_one_id_foreign` FOREIGN KEY (`one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `zoom_meeting_imports_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `zoom_meeting_imports_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `zoom_meeting_imports_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zoom_meeting_imports`
+--
+
+LOCK TABLES `zoom_meeting_imports` WRITE;
+/*!40000 ALTER TABLE `zoom_meeting_imports` DISABLE KEYS */;
+INSERT INTO `zoom_meeting_imports` VALUES
+(1,2,37,1,'84716679422',NULL,'scheduled','RUILED VISION JAPAN株式会社 原田里織さん: 1to1調整用','2026-06-01 14:00:00',NULL,60,NULL,1,'medium',18,'matched','原田里織',NULL,1,'imported',37,'{\"uuid\":\"9Xm2RkugT1C6v+MhZTKn2A==\",\"id\":84716679422,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"RUILED VISION JAPAN\\u682a\\u5f0f\\u4f1a\\u793e \\u539f\\u7530\\u91cc\\u7e54\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-01T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-26T08:09:09Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/84716679422?pwd=QHTRp3oMGIJGI7J5abG5aTPxj6kaZe.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(2,2,37,1,'86416812471',NULL,'scheduled','株式会社pipon 小中貴晃さん: 1to1調整用','2026-06-01 15:00:00',NULL,60,NULL,1,'medium',34,'matched','小中貴晃',NULL,1,'imported',38,'{\"uuid\":\"BP33805NT+mZirELc55HCg==\",\"id\":86416812471,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793epipon \\u5c0f\\u4e2d\\u8cb4\\u6643\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-01T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-26T04:36:44Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/86416812471?pwd=mkiUsHGZLwkqcIjab9KYAAUUNNZmpO.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(3,2,37,1,'89001802997',NULL,'scheduled','飯田香さん: 1to1調整用','2026-06-01 16:00:00',NULL,60,NULL,1,'medium',51,'matched','飯田香',NULL,1,'imported',39,'{\"uuid\":\"1A8CMyGwQXGdfYWnWvbiqw==\",\"id\":89001802997,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u98ef\\u7530\\u9999\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-01T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-26T12:48:33Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89001802997?pwd=0NvbP5g8h9ipTIZOu5Va0g9q0etPwc.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(4,2,37,1,'83714290448',NULL,'scheduled','株式会社ハーベスト 寺田直史さん: 1to1調整用','2026-06-01 17:00:00',NULL,60,NULL,1,'medium',140,'matched','寺田直史',NULL,1,'imported',40,'{\"uuid\":\"pievFBHKSFWvn+ShypMlhw==\",\"id\":83714290448,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793e\\u30cf\\u30fc\\u30d9\\u30b9\\u30c8 \\u5bfa\\u7530\\u76f4\\u53f2\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-01T08:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-28T07:49:41Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/83714290448?pwd=D6hxZbvXx8cb4wOi4az1dqdMRWx02d.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(5,2,37,1,'89109217407',NULL,'scheduled','山本葉子さん: 1to1調整用','2026-06-03 15:00:00',NULL,60,NULL,1,'medium',27,'matched','山本葉子',NULL,1,'imported',41,'{\"uuid\":\"TtrpVfe9RQiM7YHY7WMPFg==\",\"id\":89109217407,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u5c71\\u672c\\u8449\\u5b50\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-03T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-29T11:59:21Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89109217407?pwd=bDE5WtzsZjjMfJc2Nvoobf5qMRV2sx.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(6,2,37,1,'85054251043',NULL,'scheduled','アンフィニ 福田航平さん: 1to1調整用','2026-06-04 09:00:00',NULL,60,NULL,1,'medium',139,'matched','福田航平',NULL,1,'imported',42,'{\"uuid\":\"RdBgZ2BpQF6nq437OGYGDA==\",\"id\":85054251043,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u30a2\\u30f3\\u30d5\\u30a3\\u30cb \\u798f\\u7530\\u822a\\u5e73\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-04T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-21T22:45:22Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85054251043?pwd=ba1o9a2mhaw3a9H6ROtS1C4BeaHt3z.1\"}','2026-05-30 01:06:38','2026-05-30 13:35:23'),
+(7,2,37,1,'88571905941',NULL,'scheduled','吉田　匠真さん: 1to1調整用','2026-06-11 10:00:00',NULL,60,NULL,1,'medium',NULL,'new','匠真',NULL,0,'pending',NULL,'{\"uuid\":\"IRH48RKLSjOaHXea28qIWA==\",\"id\":88571905941,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u5409\\u7530\\u3000\\u5320\\u771f\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-11T01:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-30T00:25:51Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/88571905941?pwd=hKb7w2zzlj5hQRRX556X0HtpWYYbMz.1\"}','2026-05-30 01:06:38','2026-05-30 01:53:19'),
+(8,2,37,1,'87970810668','EpAXFCa/QpOjsVdWaEVClw==','past','木村様121 木村様121さん: 1to1調整用','2026-05-29 14:00:00',NULL,60,NULL,1,'medium',99,'matched','木村',NULL,1,'imported',43,'{\"uuid\":\"EpAXFCa\\/QpOjsVdWaEVClw==\",\"id\":87970810668,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u6728\\u6751\\u69d8121 \\u6728\\u6751\\u69d8121\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":8,\"start_time\":\"2026-05-29T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-08T07:48:33Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/87970810668?pwd=boa8aGxq66FoWZwkyxtk4bxWlGLf7l.1\"}','2026-05-30 01:06:39','2026-05-30 13:35:23'),
+(9,2,37,1,'88616244598','dM/iLCDUTRCmtX0irBqfNQ==','past','するが観光局田形様打ち合わせ','2026-05-29 11:00:00',NULL,60,NULL,1,'medium',NULL,'new','するが観光局田形',NULL,0,'held',NULL,'{\"uuid\":\"dM\\/iLCDUTRCmtX0irBqfNQ==\",\"id\":88616244598,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u3059\\u308b\\u304c\\u89b3\\u5149\\u5c40\\u7530\\u5f62\\u69d8\\u6253\\u3061\\u5408\\u308f\\u305b\",\"type\":2,\"start_time\":\"2026-05-29T02:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-28T08:22:54Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/88616244598?pwd=okUNQR8mUElbbtm4GBpBHm3FP1SukM.1\"}','2026-05-30 01:06:39','2026-05-30 09:27:43'),
+(10,2,37,1,'88597252767','MF27uxnKT2aqvRtXjdXckQ==','past','合同会社TF 古屋周治さん: 1to1調整用','2026-05-29 09:00:00',NULL,60,NULL,1,'medium',113,'matched','古屋周治',NULL,1,'imported',44,'{\"uuid\":\"MF27uxnKT2aqvRtXjdXckQ==\",\"id\":88597252767,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u5408\\u540c\\u4f1a\\u793eTF \\u53e4\\u5c4b\\u5468\\u6cbb\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-29T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-19T03:35:29Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/88597252767?pwd=FUTaPMSYLArWq4Y7PUiVhkFINY8xt9.1\"}','2026-05-30 01:06:40','2026-05-30 13:35:23'),
+(11,2,37,1,'83459427012','i3heZ15HSG6RW1qeTCoPBg==','past','SNEP株式会社 神保玲太さん: 1to1調整用','2026-05-28 15:00:00',NULL,60,NULL,1,'medium',138,'matched','神保玲太',NULL,1,'imported',45,'{\"uuid\":\"i3heZ15HSG6RW1qeTCoPBg==\",\"id\":83459427012,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"SNEP\\u682a\\u5f0f\\u4f1a\\u793e \\u795e\\u4fdd\\u73b2\\u592a\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-28T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-25T21:19:48Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/83459427012?pwd=MBVOLSKRfdBbLiA7yfkirQd7bjErbM.1\"}','2026-05-30 01:06:41','2026-05-30 13:35:23'),
+(12,2,37,1,'81436970113','+Q0WkZktQwWta233LUH1jw==','past','野口さん121','2026-05-25 15:00:00',NULL,60,NULL,1,'medium',52,'matched','野口',NULL,1,'imported',NULL,'{\"uuid\":\"+Q0WkZktQwWta233LUH1jw==\",\"id\":81436970113,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u91ce\\u53e3\\u3055\\u3093121\",\"type\":2,\"start_time\":\"2026-05-25T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-22T11:12:59Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/81436970113?pwd=iouf9jFiTfH7NDHADNKR6BbbHMyfj4.1\"}','2026-05-30 01:06:41','2026-05-30 13:35:23'),
+(13,2,37,1,'85129485087','DGnP1OtXRv+Ud8UIRCc6TA==','past','株式会社風土テック 御手洗宏樹さん: 1to1調整用','2026-05-22 09:00:00',NULL,60,NULL,1,'medium',NULL,'matched','御手洗宏樹',NULL,1,'imported',NULL,'{\"uuid\":\"DGnP1OtXRv+Ud8UIRCc6TA==\",\"id\":85129485087,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793e\\u98a8\\u571f\\u30c6\\u30c3\\u30af \\u5fa1\\u624b\\u6d17\\u5b8f\\u6a39\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-22T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-20T09:04:26Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85129485087?pwd=3qMSTRZM5zVkC8bK6MxN149KdRrFEi.1\"}','2026-05-30 01:06:42','2026-05-30 13:35:23'),
+(14,2,37,1,'84060508444','5WhkV5vUSc2lhAf6Lbg/SQ==','past','西岡さん121','2026-05-21 14:45:00',NULL,60,NULL,1,'medium',14,'matched','西岡',NULL,1,'imported',NULL,'{\"uuid\":\"5WhkV5vUSc2lhAf6Lbg\\/SQ==\",\"id\":84060508444,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u897f\\u5ca1\\u3055\\u3093121\",\"type\":2,\"start_time\":\"2026-05-21T05:45:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-20T04:11:11Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/84060508444?pwd=2rNgCcQ2J4kah7z339fApuIsqDmN7t.1\"}','2026-05-30 01:06:42','2026-05-30 13:35:23'),
+(15,2,37,1,'85349117783','4X2npZV5QGasXKVx+eKqEA==','past','株式会社Campanula 権堂千栄実さん: 1to1調整用','2026-05-21 13:00:00',NULL,60,NULL,1,'medium',NULL,'matched','権堂千栄実',NULL,1,'imported',NULL,'{\"uuid\":\"4X2npZV5QGasXKVx+eKqEA==\",\"id\":85349117783,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eCampanula \\u6a29\\u5802\\u5343\\u6804\\u5b9f\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-21T04:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-12T09:41:23Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85349117783?pwd=od20EeGDFu3ebuqp17DaPaFrafurPm.1\"}','2026-05-30 01:06:43','2026-05-30 13:35:23'),
+(16,2,37,1,'89131000556','PXefpCDtQfa6IVkp6a9ohA==','past','藤本勇輝さん: 1to1調整用','2026-05-21 11:00:00',NULL,60,NULL,1,'medium',143,'matched','藤本勇輝',NULL,1,'imported',50,'{\"uuid\":\"PXefpCDtQfa6IVkp6a9ohA==\",\"id\":89131000556,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u85e4\\u672c\\u52c7\\u8f1d\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-21T02:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-11T10:56:22Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89131000556?pwd=bnel7VbuTckH8DFKEJTqiD0dsvXel9.1\"}','2026-05-30 01:06:44','2026-05-30 13:35:23'),
+(17,2,37,1,'83444991178','05lRf6XqSNu4hCFaDrAgGQ==','past','株式会社笏本縫製 中村啓吾さん: 1to1調整用','2026-05-21 09:00:00',NULL,60,NULL,1,'medium',9,'matched','中村啓吾',NULL,1,'imported',NULL,'{\"uuid\":\"05lRf6XqSNu4hCFaDrAgGQ==\",\"id\":83444991178,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793e\\u7b0f\\u672c\\u7e2b\\u88fd \\u4e2d\\u6751\\u5553\\u543e\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-21T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-08T03:41:16Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/83444991178?pwd=52CN5ad6sivv4bNR12hh2j0GiuLsBj.1\"}','2026-05-30 01:06:44','2026-05-30 13:35:23'),
+(18,2,37,1,'87313500925','TXIaXTwPQaiXBiKVTc9pfA==','past','イノセント株式会社 山梨麗さん: 1to1調整用','2026-05-19 17:00:00',NULL,60,NULL,1,'medium',144,'matched','山梨麗',NULL,1,'imported',52,'{\"uuid\":\"TXIaXTwPQaiXBiKVTc9pfA==\",\"id\":87313500925,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u30a4\\u30ce\\u30bb\\u30f3\\u30c8\\u682a\\u5f0f\\u4f1a\\u793e \\u5c71\\u68a8\\u9e97\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-19T08:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-12T10:53:48Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/87313500925?pwd=C1Ay1AlxL9NLFOsJHlbgTrlS5Q84xa.1\"}','2026-05-30 01:06:45','2026-05-30 13:35:23'),
+(19,2,37,1,'86985144664','j3BnDbqfRRu5kHrKvgax6g==','past','株式会社リーセンス たなべひかるさん: 1to1調整用','2026-05-19 16:00:00',NULL,60,NULL,1,'medium',145,'matched','たなべひかる',NULL,1,'imported',53,'{\"uuid\":\"j3BnDbqfRRu5kHrKvgax6g==\",\"id\":86985144664,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793e\\u30ea\\u30fc\\u30bb\\u30f3\\u30b9 \\u305f\\u306a\\u3079\\u3072\\u304b\\u308b\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-19T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-16T09:27:33Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/86985144664?pwd=sBA4sPpyS6Q2GKGYyKfcksj6OE3svL.1\"}','2026-05-30 01:06:46','2026-05-30 13:35:23'),
+(20,2,37,1,'89357445297','/kmKTakIRh+J3YUhtah6dQ==','past','株式会社HS-neo-project 下辻　宏明さん: 1to1調整用','2026-05-19 14:00:00',NULL,60,NULL,1,'medium',121,'matched','宏明',NULL,1,'imported',NULL,'{\"uuid\":\"\\/kmKTakIRh+J3YUhtah6dQ==\",\"id\":89357445297,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eHS-neo-project \\u4e0b\\u8fbb\\u3000\\u5b8f\\u660e\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-19T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-07T09:52:59Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89357445297?pwd=1asxuiguMHu36fkKgtgivee0yYadpb.1\"}','2026-05-30 01:06:47','2026-05-30 13:35:23'),
+(21,2,37,1,'82792118979','xG0mAVPKS1Gn4YNQBvNlxA==','past','株式会社MainC 辻亮さん: 1to1調整用','2026-05-18 16:00:00',NULL,60,NULL,1,'medium',120,'matched','辻亮',NULL,1,'imported',NULL,'{\"uuid\":\"xG0mAVPKS1Gn4YNQBvNlxA==\",\"id\":82792118979,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eMainC \\u8fbb\\u4eae\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-18T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-15T01:27:19Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82792118979?pwd=2eznMzeoCxbSO0dWVgEpUYU0XWBXJa.1\"}','2026-05-30 01:06:47','2026-05-30 13:35:23'),
+(22,2,37,1,'89314073650','Xswm1pOmRfezElNCaBsjPg==','past','合同会社アブレイズ 前田和良さん: 1to1調整用','2026-05-18 15:00:00',NULL,60,NULL,1,'medium',119,'matched','前田和良',NULL,1,'imported',NULL,'{\"uuid\":\"Xswm1pOmRfezElNCaBsjPg==\",\"id\":89314073650,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u5408\\u540c\\u4f1a\\u793e\\u30a2\\u30d6\\u30ec\\u30a4\\u30ba \\u524d\\u7530\\u548c\\u826f\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-18T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-14T04:24:27Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89314073650?pwd=JbYbPyBi7NaFyr5TEOSGpujUdf3hA6.1\"}','2026-05-30 01:06:49','2026-05-30 13:35:23'),
+(23,2,37,1,'87841774146','39CvTMH/TlWiOBJAgfl84Q==','past','tugilo 予定ありさん: 1to1調整用','2026-05-18 14:00:00',NULL,60,NULL,1,'medium',NULL,'new','予定あり',NULL,0,'held',NULL,'{\"uuid\":\"39CvTMH\\/TlWiOBJAgfl84Q==\",\"id\":87841774146,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"tugilo \\u4e88\\u5b9a\\u3042\\u308a\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-18T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-15T00:34:33Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/87841774146?pwd=1QQl30ASZmuxUjaasBaRKhb0RHqV73.1\"}','2026-05-30 01:06:49','2026-05-30 13:29:04'),
+(24,2,37,1,'87093216381','c0pWkNeUTyGybjA8YSJaBA==','past','tugilo 予定ありさん: 1to1調整用','2026-05-18 13:00:00',NULL,60,NULL,1,'medium',NULL,'new','予定あり',NULL,0,'held',NULL,'{\"uuid\":\"c0pWkNeUTyGybjA8YSJaBA==\",\"id\":87093216381,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"tugilo \\u4e88\\u5b9a\\u3042\\u308a\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-18T04:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-15T00:34:23Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/87093216381?pwd=eyimsXldNTMRmO4gt0LNxf4obYwc3s.1\"}','2026-05-30 01:06:50','2026-05-30 13:29:05'),
+(25,2,37,1,'82280318209','qCJSEwAqQLCYSQDmSPCceQ==','past','ネスレ探偵事務所 礒部 昌之さん: 1to1調整用','2026-05-14 10:00:00',NULL,60,NULL,1,'medium',101,'matched','昌之',NULL,1,'imported',NULL,'{\"uuid\":\"qCJSEwAqQLCYSQDmSPCceQ==\",\"id\":82280318209,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u30cd\\u30b9\\u30ec\\u63a2\\u5075\\u4e8b\\u52d9\\u6240 \\u7912\\u90e8 \\u660c\\u4e4b\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-14T01:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-08T07:51:29Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82280318209?pwd=hgiMsBVOKtWFFbQs6QWjLrncPqGnzy.1\"}','2026-05-30 01:06:51','2026-05-30 13:35:23'),
+(26,2,37,1,'85344850132','jYUX4zxRQLS/2d24XbPJHg==','past','フェニックス人事労務サポートオフィス イトウタカオさん: 1to1調整用','2026-05-13 15:00:00',NULL,60,NULL,1,'medium',100,'matched','イトウタカオ',NULL,1,'imported',NULL,'{\"uuid\":\"jYUX4zxRQLS\\/2d24XbPJHg==\",\"id\":85344850132,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u30d5\\u30a7\\u30cb\\u30c3\\u30af\\u30b9\\u4eba\\u4e8b\\u52b4\\u52d9\\u30b5\\u30dd\\u30fc\\u30c8\\u30aa\\u30d5\\u30a3\\u30b9 \\u30a4\\u30c8\\u30a6\\u30bf\\u30ab\\u30aa\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-13T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-27T23:55:40Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85344850132?pwd=ancAYxsasb1bZHrC7KqBCUVjmboVsR.1\"}','2026-05-30 01:06:51','2026-05-30 13:35:23'),
+(27,2,37,1,'84841334208','skSq8W+UQZ2UWOaTdECfgw==','past','田形様打合せ','2026-05-13 09:00:00',NULL,60,NULL,1,'medium',NULL,'new','田形',NULL,0,'held',NULL,'{\"uuid\":\"skSq8W+UQZ2UWOaTdECfgw==\",\"id\":84841334208,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u7530\\u5f62\\u69d8\\u6253\\u5408\\u305b\",\"type\":2,\"start_time\":\"2026-05-13T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-10T22:29:48Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/84841334208?pwd=wd0giCYip8aaaZIiwBM8bNiqgafXau.1\"}','2026-05-30 01:06:52','2026-05-30 13:31:34'),
+(28,2,37,1,'82431536307','4ycbbif/RP29DE6HgPlDoQ==','past','久米加代子さん: 1to1調整用','2026-05-08 18:00:00',NULL,60,NULL,1,'medium',53,'matched','久米加代子',NULL,1,'imported',59,'{\"uuid\":\"4ycbbif\\/RP29DE6HgPlDoQ==\",\"id\":82431536307,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u4e45\\u7c73\\u52a0\\u4ee3\\u5b50\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-05-08T09:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:38:00Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82431536307?pwd=WE2uZusbXQiymUXMFuoJApIhmCEHYv.1\"}','2026-05-30 01:06:52','2026-05-30 13:35:23'),
+(29,2,37,1,'82219483510','kuFarPqvSbyZcnkZhlebpA==','past','芳賀さん121','2026-05-08 17:00:00',NULL,60,NULL,1,'medium',13,'matched','芳賀',NULL,1,'imported',60,'{\"uuid\":\"kuFarPqvSbyZcnkZhlebpA==\",\"id\":82219483510,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u82b3\\u8cc0\\u3055\\u3093121\",\"type\":2,\"start_time\":\"2026-05-08T08:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-08T07:47:19Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82219483510?pwd=mxH2h73ekAbJOdRJlj5DdfbrWHDNbW.1\"}','2026-05-30 01:06:53','2026-05-30 13:35:23'),
+(30,2,37,1,'88102181033','SoN2Cg+PReGFNbRYwLyfbA==','past','次廣淳さん: 1to1調整用','2026-05-08 17:00:00',NULL,60,NULL,1,'medium',NULL,'new','次廣淳',NULL,0,'held',NULL,'{\"uuid\":\"SoN2Cg+PReGFNbRYwLyfbA==\",\"id\":88102181033,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u6b21\\u5ee3\\u6df3\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":8,\"start_time\":\"2026-05-08T08:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-07T09:28:03Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/88102181033?pwd=HNU0G65ildzb6ECV3TauUg5n0JDZiA.1\"}','2026-05-30 01:06:54','2026-05-30 13:31:46'),
+(31,2,37,1,'87948505956','Kbs0oTtZSyixKVngYT5vuw==','past','次廣淳さん: 1to1調整用','2026-05-08 16:00:00',NULL,60,NULL,1,'medium',NULL,'new','次廣淳',NULL,0,'held',NULL,'{\"uuid\":\"Kbs0oTtZSyixKVngYT5vuw==\",\"id\":87948505956,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u6b21\\u5ee3\\u6df3\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":8,\"start_time\":\"2026-05-08T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-07T09:28:33Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/87948505956?pwd=hgqobFia0dNBCgNiCVueyaDRxdDS1m.1\"}','2026-05-30 01:06:55','2026-05-30 13:31:51'),
+(32,2,37,1,'81378792914','xTiXcsJuSsm9fu83MZAwKQ==','past','坪井様打合せ','2026-05-08 15:30:00',NULL,60,NULL,1,'medium',NULL,'new','坪井',NULL,0,'held',NULL,'{\"uuid\":\"xTiXcsJuSsm9fu83MZAwKQ==\",\"id\":81378792914,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u576a\\u4e95\\u69d8\\u6253\\u5408\\u305b\",\"type\":2,\"start_time\":\"2026-05-08T06:30:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-08T04:25:23Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/81378792914?pwd=5srTah4SsbLe56bT2xlKIqQ4Ta3T4a.1\"}','2026-05-30 01:06:56','2026-05-30 13:31:53'),
+(33,2,37,1,'89157467602','IwdcYnOrRzeXiyNsb0v2pA==','past','田村様1to1','2026-05-07 16:00:00',NULL,60,NULL,1,'medium',98,'matched','田村',NULL,1,'imported',NULL,'{\"uuid\":\"IwdcYnOrRzeXiyNsb0v2pA==\",\"id\":89157467602,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u7530\\u6751\\u69d81to1\",\"type\":2,\"start_time\":\"2026-05-07T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:24:07Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/89157467602?pwd=hk5sB5FWzQ5DIlaCgn68aZyayaSqzY.1\"}','2026-05-30 01:06:57','2026-05-30 13:35:23'),
+(34,2,37,1,'82336493242','OKWxBvjsTPyTZfh1Fk7/NA==','past','深澤様1to1','2026-05-07 09:00:00',NULL,60,NULL,1,'medium',146,'matched','深澤',NULL,1,'imported',62,'{\"uuid\":\"OKWxBvjsTPyTZfh1Fk7\\/NA==\",\"id\":82336493242,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u6df1\\u6fa4\\u69d81to1\",\"type\":2,\"start_time\":\"2026-05-07T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:21:27Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82336493242?pwd=IbakLHZti4WTot0N1bBiCVP0bavNLx.1\"}','2026-05-30 01:06:57','2026-05-30 13:35:23'),
+(35,2,37,1,'82098291556','w04V3WLZTqOdBPBRLddqYA==','past','岩原様1to1','2026-05-01 17:00:00',NULL,60,NULL,1,'medium',147,'matched','岩原',NULL,1,'imported',63,'{\"uuid\":\"w04V3WLZTqOdBPBRLddqYA==\",\"id\":82098291556,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u5ca9\\u539f\\u69d81to1\",\"type\":2,\"start_time\":\"2026-05-01T08:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:20:20Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82098291556?pwd=LDUyUcG7eraF3SM3Fh5O4Lvdb7RdgF.1\"}','2026-05-30 01:06:58','2026-05-30 13:35:23'),
+(36,2,37,1,'82144696668','hSM5Q+RMS5C8RhTSLcRR8Q==','past','佐藤様1to1','2026-05-01 14:00:00',NULL,60,NULL,1,'medium',17,'matched','佐藤',NULL,1,'imported',64,'{\"uuid\":\"hSM5Q+RMS5C8RhTSLcRR8Q==\",\"id\":82144696668,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u4f50\\u85e4\\u69d81to1\",\"type\":2,\"start_time\":\"2026-05-01T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:18:20Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82144696668?pwd=TutKNp3HgcRMHwy4datMXDs5aOzna1.1\"}','2026-05-30 01:06:59','2026-05-30 13:35:23'),
+(37,2,37,1,'86886689396','HIJgRFSzQeKajNVl/0ci9Q==','past','加門様1to1','2026-05-01 09:00:00',NULL,60,NULL,1,'medium',148,'matched','加門',NULL,1,'imported',65,'{\"uuid\":\"HIJgRFSzQeKajNVl\\/0ci9Q==\",\"id\":86886689396,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u52a0\\u9580\\u69d81to1\",\"type\":2,\"start_time\":\"2026-05-01T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-23T12:16:35Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/86886689396?pwd=DcndGD3q2rW9CTpYWLPSELtSRBgxML.1\"}','2026-05-30 01:06:59','2026-05-30 13:35:23'),
+(38,2,37,1,'81132808708','7G6BOlPZSDCbtXjv27EsYQ==','past','次廣淳さん: 1to1調整用','2026-04-30 16:00:00',NULL,60,NULL,1,'medium',NULL,'new','次廣淳',NULL,0,'held',NULL,'{\"uuid\":\"7G6BOlPZSDCbtXjv27EsYQ==\",\"id\":81132808708,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u6b21\\u5ee3\\u6df3\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":8,\"start_time\":\"2026-04-30T07:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-04-27T12:55:22Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/81132808708?pwd=ia8fwqAyD6WXYjLkgt9lqpgAiwL3Zs.1\"}','2026-05-30 01:07:00','2026-05-30 13:35:14');
+/*!40000 ALTER TABLE `zoom_meeting_imports` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'religo_app'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -3083,4 +3342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-29 20:13:53
+-- Dump completed on 2026-06-01 13:52:46
