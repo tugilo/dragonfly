@@ -158,6 +158,9 @@
 | 159 | Zoom 取り込み重複の再発防止（apply 同日重複検知＋バックフィル）＋既存重複クリーンアップ | implement | completed | develop | 2026-06-01 |
 | 158 | 木村秀継 第2回121 要望整理（国宝社／BPS木村 製本販売管理システム改善） | docs | completed | develop | 2026-05-31 |
 | 159 | 原田里織 初回121事前準備（RUILED VISION JAPAN／LEDデジタルサイネージ） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 160 | 小中貴晃 121事前準備（BeCheerz／AIツール情報発信・業務効率化支援） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 161 | 原田里織 第1回121文字起こし反映（RUILED VISION JAPAN／販売代理店戦略） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 162 | 原田里織・小中貴晃 第1回121履歴DB反映 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-01 16:33 JST | **Phase 162 / 原田里織・小中貴晃 第1回121履歴DB反映:** Zoom 取り込み済みの既存 `one_to_ones` レコードを実施済み履歴へ更新。原田里織さん `one_to_ones.id=37`（2026-06-01 14:00–15:00）、小中貴晃さん `one_to_ones.id=38`（2026-06-01 15:00–16:00）を `completed`・notes 付きにし、対象議事録へDB idを追記。`make db-export`、`php artisan test`（422 passed）、本番 `make db-push TARGET=prod` を実行し、本番DBでも対象2件の反映を確認。バックアップ: `backups/prod_20260601_163647.sql`。 |
+| 2026-06-01 15:55 JST | **Phase 161 / 原田里織 第1回1to1文字起こし反映:** [`meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md`](meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md) を実施済み議事録へ更新。主な成果・決定事項、RUILED VISION JAPAN のLEDデジタルサイネージ事業、中国深圳工場直結、1台から納品、販売代理店（加盟金55万円・ノルマ/在庫なし）、看板屋・電気工事士との協業、導入実績、次廣の電気工事士紹介確認、ホットペッパー代替予約システム構想、おかわり121合意を追記。`docs/INDEX.md`・`PHASE_REGISTRY`・Phase 161 PLAN/WORKLOG/REPORT を同期。コード・DB変更なし。 |
 | 2026-06-01 13:43 JST | **Phase 159 / 原田里織 初回1to1事前準備:** [`meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md`](meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md) を新規作成。**第1回 2026-06-01 JST 14:00–15:00 予定**。RUILED VISION JAPAN株式会社、店舗・施設集客を高めるLEDデジタルサイネージ、中国深センLED工場との直接契約、補助金・助成金、販売代理店展開、Contact Circle Top3（看板業者・電気工事士・広告代理店）、G.A.I.N.S.、初回121台本、tugiloとの接点（代理店管理・サイネージ導入後運用・店舗導線）を整理。`docs/INDEX.md`・`PHASE_REGISTRY`・Phase 159 PLAN/WORKLOG/REPORT を同期。コード・DB変更なし。 |
 | 2026-06-01 13:45 JST | **Phase 159 / Zoom 取り込み重複の解消＋再発防止:** 本番 backup の上で既存重複をクリーンアップ（御手洗 141→124・権堂 142→123 統合、セッション重複11組は manual 残し・zoom 実時刻/uuid バックフィル・zoom 削除）。本番 one_to_ones **60→49** / members **148→146**・重複0。再発防止として `ZoomImportApplyService` に **owner+target+同日の既存検知→既存へバックフィル紐付け**（手動含む・既存 notes 保持）を実装。テスト追加・全体 **422 passed**。`ZOOM_IMPORT_DEDUP_REQUIREMENTS` §10 実装状況・PHASE_REGISTRY(159) 同期。残: 同名4組（別件）。 |
 | 2026-05-31 10:34 JST | **本番↔ローカル DB 相互同期ツール（infra）:** SSH 経由で稼働 DB を相互コピーする `bin/db-pull.sh`（prod/dev→ローカル全置換・`dragonfly.sql` も更新）／`bin/db-push.sh`（ローカル→prod/dev・**実行前にリモート自動バックアップ**・prod は確認フレーズ `OVERWRITE religo_app` 必須）／`bin/lib/remote.sh`（リモート資格情報は各サーバ `.env` から都度取得）を追加。`make db-pull TARGET=prod` / `make db-push TARGET=dev`。`backups/` を gitignore。`www/database/sync/README.md` に手順追記。本番 dump 取得を非破壊で検証（361KB・38テーブル）。 |
@@ -350,6 +352,10 @@
 | 2026-05-28 22:05 JST | **docs Phase 149:** SPEC-011 改定 — members.email **未一致時は 422 + 初回登録画面エラー**（verify へ進まない）。本番 `tugi@tugilo.com` 事象を契機に UX 優先。 |
 | 2026-05-28 22:07 JST | **implement Phase 150:** member 未一致 **422** + テスト更新。UI は既存 catch で email ステップ維持。 |
 | 2026-05-31 10:11 JST | **docs Phase 158:** 木村秀継さん第2回121（2026-05-29 14:00-15:00 / `one_to_ones.id=38`）から、国宝社／BPS木村の製本販売管理システム改善要望を [1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md](meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) に別紙化。PDF注文書手入力削減、既存VB+Oracle温存、Oracle登録、社内完結Web、初期スコープ・非スコープ・確認待ち事項を整理。 |
+| 2026-06-01 13:58 JST | **docs Phase 160:** 小中貴晃さん 121（2026-06-01 15:00-16:00）に向け、プロフィールシート／ONE to ONE シート／G.A.I.N.S.／推薦・ありがとう情報を [1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) に整理。AIツール情報発信、AI研修、業務効率化支援、システム開発、医療向けAIカルテ生成支援、tugiloとの協業境界・共同提案仮説、初回121台本とリファーラル戦略を作成。 |
+| 2026-06-01 15:01 JST | **docs Phase 160 追記:** 小中貴晃さん 121 資料に、提出済みアルシルブ資料への所感ヒアリングを追加。伝わり方・事業性・AI/業務改善接続・共同提案余地を確認する質問、35〜45分の会話枠、会後追記欄を追記。 |
+| 2026-06-01 15:18 JST | **docs Phase 160 追記:** 小中貴晃さん 121 資料に、AI業務改善補助金・IT導入補助金・自治体助成金などとの組み合わせ観点を追加。アルシルブ資料ヒアリング、協業仮説、補助金連携用の紹介トークに反映。 |
+| 2026-06-01 15:50 JST | **docs Phase 160 追記:** 小中貴晃さん 121 のZoom要約を [1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) に実施後議事録として反映。アルシルブ事業化（補助金・自治体展開・AI研修連携）、予約管理システム、BNI用1to1管理システム商業化、医療カルテ生成支援紹介、開発案件相談体制（営業フィー20〜30%）、アクションアイテムを整理。 |
 
 ---
 

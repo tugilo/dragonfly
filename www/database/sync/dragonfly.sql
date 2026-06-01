@@ -1,9 +1,14 @@
+-- dragonfly dev DB sync dump
+-- generated: 2026-06-01 16:36:26 JST
+-- database: dragonfly
+-- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
+
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19  Distrib 10.11.13-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19-11.2.6-MariaDB, for debian-linux-gnu (aarch64)
 --
--- Host: localhost    Database: religo_app
+-- Host: localhost    Database: dragonfly
 -- ------------------------------------------------------
--- Server version	10.11.13-MariaDB-0ubuntu0.24.04.1
+-- Server version	11.2.6-MariaDB-ubu2204
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -22,7 +27,7 @@
 
 DROP TABLE IF EXISTS `bo_assignment_audit_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bo_assignment_audit_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -90,7 +95,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `breakout_memos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `breakout_memos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -130,7 +135,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `breakout_rooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `breakout_rooms` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -185,7 +190,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cache` (
   `key` varchar(255) NOT NULL,
   `value` mediumtext NOT NULL,
@@ -210,7 +215,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `cache_locks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cache_locks` (
   `key` varchar(255) NOT NULL,
   `owner` varchar(255) NOT NULL,
@@ -235,7 +240,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `group_name` varchar(255) NOT NULL COMMENT '大カテゴリー',
@@ -506,7 +511,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `contact_memos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contact_memos` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -554,7 +559,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `countries` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -580,7 +585,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dragonfly_contact_events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dragonfly_contact_events` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner_member_id` bigint(20) unsigned NOT NULL,
@@ -626,7 +631,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `dragonfly_contact_flags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dragonfly_contact_flags` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -668,7 +673,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) NOT NULL,
@@ -697,7 +702,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `internal_referrals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `internal_referrals` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -737,7 +742,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `introductions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `introductions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -780,7 +785,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `job_batches`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `job_batches` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -811,7 +816,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `queue` varchar(255) NOT NULL,
@@ -840,7 +845,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_apply_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `meeting_csv_apply_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -881,7 +886,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_import_resolutions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `meeting_csv_import_resolutions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_csv_import_id` bigint(20) unsigned NOT NULL,
@@ -913,7 +918,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_csv_imports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `meeting_csv_imports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -953,7 +958,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meeting_participant_imports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `meeting_participant_imports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -995,7 +1000,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meetings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `meetings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `number` int(10) unsigned NOT NULL,
@@ -1037,7 +1042,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `member_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `member_roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `member_id` bigint(20) unsigned NOT NULL,
@@ -1554,7 +1559,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `members`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `members` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -1644,13 +1649,13 @@ INSERT INTO `members` VALUES
 (50,'飯田　千帆',NULL,NULL,NULL,1,'member','48',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (51,'飯田　香',NULL,NULL,NULL,1,'member','49',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (52,'野口　裕子',NULL,NULL,NULL,1,'member','50',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
-(53,'久米　加代子',NULL,NULL,NULL,1,'member','51',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-06-01 04:52:35'),
+(53,'久米　加代子',NULL,NULL,NULL,1,'member','51',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-06-01 13:52:09'),
 (54,'藤田　磨紀',NULL,NULL,NULL,1,'member','52',NULL,NULL,NULL,NULL,NULL,'2026-03-03 00:34:23','2026-05-26 09:02:55'),
 (55,'上田　友顕','うえだ　ともあき',NULL,187,1,'visitor','V1',NULL,NULL,NULL,11,11,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (56,'渡井　みづき','わたい　みづき',NULL,188,1,'visitor','V2',NULL,NULL,NULL,41,12,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (57,'河北　竜也','かわきた　たつや',NULL,189,1,'visitor','V3',NULL,NULL,NULL,11,39,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (58,'天野　未央','あまの　みお',NULL,190,1,'visitor','V4',NULL,NULL,NULL,20,20,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
-(59,'渡邉　飛鳥','わたなべ　あすか',NULL,180,1,'visitor','V5',NULL,NULL,NULL,35,46,'2026-03-03 00:34:23','2026-06-01 04:52:35'),
+(59,'渡邉　飛鳥','わたなべ　あすか',NULL,180,1,'visitor','V5',NULL,NULL,NULL,35,46,'2026-03-03 00:34:23','2026-06-01 13:52:09'),
 (60,'林　敏史','はやし　としふみ',NULL,201,1,'guest','G1',NULL,NULL,NULL,20,41,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (61,'伊藤　剛','いとう　ごう',NULL,202,1,'guest','G2',NULL,NULL,NULL,29,34,'2026-03-03 00:34:23','2026-04-13 12:58:33'),
 (62,'京極　祥平','きょうごく　しょうへい',NULL,184,1,'guest','G3',NULL,NULL,NULL,13,NULL,'2026-03-03 00:34:23','2026-04-07 00:04:59'),
@@ -1710,8 +1715,8 @@ INSERT INTO `members` VALUES
 (120,'辻　亮',NULL,NULL,NULL,8,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 17:09:19'),
 (121,'下辻氏（名 TODO）',NULL,NULL,NULL,4,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:13:21'),
 (122,'藤本　勇輝',NULL,NULL,NULL,8,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:18:58'),
-(123,'権堂　千栄実',NULL,NULL,NULL,6,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(124,'御手洗宏樹',NULL,NULL,NULL,9,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-22 16:46:29','2026-06-01 04:42:45'),
+(123,'権堂　千栄実',NULL,NULL,NULL,6,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-31 10:44:05'),
+(124,'御手洗宏樹',NULL,NULL,NULL,9,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-22 16:46:29','2026-05-31 10:44:05'),
 (125,'山田　智子','やまだ　ともこ',NULL,235,NULL,'visitor','V1',NULL,NULL,NULL,19,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (126,'青木　裕美','あおき　ひろみ',NULL,236,NULL,'visitor','V2',NULL,NULL,NULL,19,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (127,'増田　佳久','ますだ　よしひさ',NULL,237,NULL,'visitor','V3',NULL,NULL,NULL,1,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
@@ -1722,8 +1727,8 @@ INSERT INTO `members` VALUES
 (132,'熊谷　龍笙','くまがい　りゅうしょう',NULL,242,NULL,'visitor','V8',NULL,NULL,NULL,34,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (133,'佐藤　久','さとう　ひさし',NULL,243,NULL,'guest','G1',NULL,NULL,NULL,31,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
 (134,'八田　奈緒美','はった　なおみ',NULL,244,NULL,'guest','G2',NULL,NULL,NULL,20,NULL,'2026-05-25 17:33:03','2026-05-26 09:03:23'),
-(135,'森園　友喜',NULL,NULL,NULL,NULL,'member','17',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 04:52:35'),
-(136,'米澤　侑桂',NULL,NULL,NULL,NULL,'member','36',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 04:52:35'),
+(135,'森園　友喜',NULL,NULL,NULL,NULL,'member','17',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 13:52:09'),
+(136,'米澤　侑桂',NULL,NULL,NULL,NULL,'member','36',NULL,NULL,NULL,NULL,NULL,'2026-05-26 09:02:55','2026-06-01 13:52:09'),
 (137,'南方　優馬','なんぽ　ゆうま',NULL,NULL,10,'visitor',NULL,NULL,NULL,NULL,31,NULL,'2026-05-27 17:00:47','2026-05-27 17:00:47'),
 (138,'神保　玲太',NULL,'ryotadesu.jp@gmail.com',NULL,2,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-28 17:08:50','2026-05-28 17:08:50'),
 (139,'福田航平','ふくだこうへい',NULL,NULL,NULL,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:23:27','2026-05-30 13:23:27'),
@@ -1743,7 +1748,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) NOT NULL,
@@ -1825,7 +1830,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `one_to_one_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `one_to_one_attachments` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `one_to_one_id` bigint(20) unsigned NOT NULL,
@@ -1864,7 +1869,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `one_to_ones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `one_to_ones` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `workspace_id` bigint(20) unsigned DEFAULT NULL,
@@ -1909,7 +1914,7 @@ INSERT INTO `one_to_ones` VALUES
 (9,1,1,11,NULL,NULL,NULL,'manual','2026-03-16 02:00:00',NULL,'2026-03-16 03:00:00','completed','お互いのビジネスの紹介','2026-03-23 12:51:50','2026-03-23 12:51:50'),
 (10,1,37,10,NULL,NULL,NULL,'manual','2026-04-02 06:00:00',NULL,'2026-04-02 07:00:00','completed','エアコン本舗案件メモ（保存用）\n\n■ 概要\n	•	倉持氏との打ち合わせにて以下2点が前進\n	•	ウェブマスター役割の打診 → 前向きに検討\n	•	エアコン本舗案件 → 開発チーム参画の可能性あり\n	•	次回アクション：4月13日 1to1（11:00〜12:00）\n\n⸻\n\n■ 決定事項\n\n① ウェブマスター\n	•	次廣が担当する方向で調整\n	•	BNI内の運営・情報管理ポジション\n\n② 1to1ミーティング\n	•	日時：4月13日 11:00〜12:00\n	•	倉持氏よりZoom URL共有予定\n\n③ エアコン本舗案件\n	•	チーム参画の方向で検討開始\n	•	本格開発は秋頃予定\n\n⸻\n\n■ ウェブマスター業務（理解整理）\n\n● 主業務\n	•	BNIサイト管理（メンバー情報・公開設定）\n	•	定例会サポート（Zoom・スライド・録画）\n	•	動画編集・アップロード（週次）\n	•	SNS運用（Facebook / LINEの使い分け）\n	•	ビジター情報管理（Nキャス）\n\n● 使用ツール\n	•	BNIコネクト\n	•	Nキャス\n	•	Zoom\n	•	Facebook / LINE\n\n⸻\n\n■ エアコン本舗案件（重要）\n\n● 課題\n	•	業務フローが非効率（受注〜施工）\n	•	売上・利益の可視化が遅い（約1ヶ月遅延）\n\n● 提案内容（予定）\n	•	受注管理システム\n	•	在庫・発注の自動化\n	•	アサイン最適化\n	•	AI電話による日程調整\n\n● 開発タイミング\n	•	夏：計測・準備フェーズ\n	•	秋：本格開発\n\n● 体制\n	•	PM：倉持氏\n	•	PMコーチ：佐野氏（元アクセンチュア）\n	•	技術：伊藤氏（GPS最適化）\n	•	開発候補：次廣（tugilo）\n\n⸻\n\n■ 自分の強み（再認識）\n	•	工程管理・アサイン系システムの構築経験あり\n	•	LINE連携システム実績あり\n	•	フルスタック対応（BE/FE/インフラ）\n	•	業務理解＋エンジニア橋渡しができる\n\n⸻\n\n■ 4/13 1to1の目的\n\n● ゴール\n	•	エアコン本舗案件の関わり方を具体化\n	•	自分の役割ポジションを明確にする\n\n⸻\n\n■ 1to1で確認すること\n\n● ウェブマスター\n	•	期待されている役割範囲\n	•	工数・優先度\n\n⸻\n\n● エアコン本舗（最重要）\n\n現状把握\n	•	一番のボトルネックはどこか\n	•	現場 or 管理どちらが詰まっているか\n	•	現在の業務フロー\n\n深掘り質問（tugilo視点）\n	•	人依存になっている部分は？\n	•	同じ入力を何回しているか？\n	•	数字はいつ確定しているか？\n\n⸻\n\n■ 提案方針（tugilo式）\n\n❌ いきなり開発しない\n\n⭕ 小さく始める\n\n⸻\n\n● フェーズ設計\n\nPhase1：見える化\n	•	データ収集・現状把握\n\nPhase2：整理\n	•	フロー整理・無駄削減\n\nPhase3：システム化\n	•	必要部分のみ実装\n\n⸻\n\n■ キーメッセージ\n\n👉\n「現場は変えない。でも、気づいたら楽になっている状態を作る」\n\n⸻\n\n■ 次アクション\n\n事前\n	•	1to1質問整理\n	•	エアコン業界の流れ軽く把握\n\n事後\n	•	業務フローの構造図作成\n	•	フェーズ提案資料作成\n\n⸻\n\n■ メモ（気づき）\n	•	ウェブマスターは信頼獲得ポジション\n	•	エアコン本舗はtugiloの勝ちパターン案件\n	•	「いきなり作らない」が今回のキー','2026-04-02 21:05:22','2026-04-02 21:05:22'),
 (11,1,37,17,NULL,NULL,NULL,'manual','2026-04-02 22:15:00',NULL,'2026-04-02 23:15:00','completed','#### 基本情報\n\n- **日時:** **2026-04-03（金）JST 07:15–08:15**（60分）。**取得元:** ユーザー確認（当日の1to1実績）。※過去の Zoom要約段階では日時未記載だったため、本項で確定。\n- **実施方法:** Zoom\n\n#### 話した内容（重要）\n\n※**削減せず**蓄積。以下は Zoom要約・当時の整理メモからの**記録**。\n\n- **主な流れ:** 次廣淳（AI・業務改善システム構築）と佐藤拓斗（高校生新卒採用コンサル）が BNI ドラゴンフライチャプターで **初回 1on1**。両者の事業内容を共有し、**テレアポリスト自動作成システム**の開発可能性について具体的検討を開始。静岡県藤枝市という地元の共通点から、今後の協力関係構築の基盤を確立した、との整理。\n- **決定・合意:**\n  - **リスト作成システムの検討開始:** 佐藤氏のテレアポリスト作成業務（現在手作業で **1時間100件**）を自動化するシステムについて、次廣氏が **技術的実現可能性を調査**。\n  - **求人媒体からのデータ取得:** リクナビネクスト等の求人サイトから、**従業員数30名以下** などの条件で自動抽出する仕組みを検討。**スクレイピング技術の活用**、ただし **法的リスクの確認が必要**。\n  - **5月中旬の再会:** 佐藤氏の静岡帰省時（**5月16–17日頃**）に **対面ミーティング** を設定する方向。\n- **次廣側で共有された事業内容:**\n  - **業務改善システム構築:** エクセル・スプレッドシートで分散管理されているデータを一元化し、リアルタイムでの進捗確認を実現。\n  - **LINE活用システム:** 問い合わせから見積もり、請求までを LINE 公式アカウントで完結させる仕組み（建設業向け）。\n  - **スタンプラリー・ビンゴシステム:** 静岡観光協会向けに **5年間運用中**。\n  - **施工管理・日報システム:** 名古屋のシーリング会社向けに、外国人労働者でも入力しやすい LINE ベースの業務日報システムを構築。\n  - **事業の特徴:** ゼロから1を作れる／既製ツールの押し付けではなく現場フローに合わせたカスタマイズ。**小さく始めて改善**（大規模を一気に入れず、入力から段階拡張）。**現場負担の最小化**（経営と現場のギャップを埋め、現場にベネフィットを与える設計）。\n  - **経歴・背景:** システム開発歴 **25–26年**（大学中退後一貫、現在 **52–53歳**）。BNI は増本氏・今西氏との静岡出世クラブでの **約10年の付き合い** から **2024年** にドラゴンフライ参加を決意。動機は技術一辺倒からの転換・仕事の幅拡大。**MSP（メンバーサクセスプログラム）** で学んだビジネススキルに感銘、トレーニング注力中。\n- **佐藤側で共有された事業内容（1to1上の詳細・プロフィールと照合可）:**\n  - **高校生新卒採用の仕組み構築:** ホームページ制作、パンフレット・動画制作、学校訪問代行、求人資料郵送代行まで一括。\n  - **4月依頼でも7月解禁に間に合う** 短期対応が可能。**全国対応**（BNI参加により全国展開が加速）。\n  - **ターゲット:** 従業員 **30名以下** が中心（プロフィールは **20〜30名以下** — 会話では30名以下条件でリスト抽出の話あり）。タイプ **3つ**: ①高校生採用のやり方が分からない ②やりたいが時間・人員不足 ③応募が来ない（我流で抜けがある）。業種: 建設業、製造業、自動車整備、ビルメンテナンス、清掃、介護福祉など。\n  - **実績:** **2024年度** 29社サポート、14社で採用成功（成功率 **約48%**）。**過去5年** 毎年40社以上サポート（2023年32社、2024年は50社近く）。\n  - **経歴・背景:** 事業歴 **5年**。新卒で高校生新卒採用コンサル会社に入社、**2024年3月に独立**（当時 会社設立から **1年** と共有）。学歴: 清水東高校→静岡大学→早稲田大学編入→早稲田大学大学院（**教員免許保有**）。**将来ビジョン:** 高校生以下を対象としたキャリア教育事業。**五教科と社会を結びつける授業** で子どもの将来の選択肢を広げたい。\n- **確認待ち（会話上の論点）:**\n  - リクナビネクストからのデータ取得: **技術的実現可能性** と **法的リスク（利用規約上の二次利用制限）** を次廣氏が調査中。\n  - Google マイビジネス API: 個人事業主リスト作成について、**二次利用禁止ルール** があり、公開情報からの取得方法を検討。\n- **共通点・シナジー:**\n  - **地元:** 両者とも静岡県藤枝市出身・在住。佐藤氏は藤枝市古利（西焼津小学校区）、次廣氏は青葉町（青島中学校区）。\n  - **教育への関心:** 次廣氏は娘の受験を控え、佐藤氏のキャリア教育理念（五教科と社会の結びつけ）に強く共感。\n  - **システム×採用:** 次廣氏は静岡県の大卒求人サイト **「三並び」** のアプリ開発を受注中。**大学生がメールを見ない** ため通知機能が必要、という課題を共有。\n- **アクションアイテム（当時の整理）:**\n  - 次廣氏: 求人媒体からのリスト自動作成システムの **技術調査・提案準備**。\n  - 佐藤氏: **5月中旬の静岡帰省日程確定後**、次廣氏に連絡。\n  - 両者: **名古屋出世クラブ（5月末）** への参加可能性を検討（今西氏が佐藤氏を誘致中）。\n- **次回ミーティング:** **5月16–17日頃**、佐藤氏静岡帰省時に **対面** で実施予定。\n- **プライベート文脈（会話に出た事実の記録・紹介判断とは分離）:** 婚活、飯田氏からの占い（**32歳で結婚** 等）、保険担当の高校同級生からの紹介の動きなどが要約に含まれる。**取り扱い注意。本人確認のうえ参照。**\n\n#### 抽出された課題（事実：会話で言及）\n\n- テレアポ用リスト作成の **手作業負荷**（約1時間100件ペース）。\n- 求人媒体からの自動取得は **技術** に加え **利用規約・法的リスク（二次利用）** の確認が必要、との合意。\n- Google マイビジネス／公開情報は **二次利用禁止** の話題があり、個人事業主リストは **取得経路の設計** が課題。\n\n#### 仮説（tugilo視点）\n\n- **課題①:** リスト作成が **コンサル本業とリソース競合** している。**根拠:** 手作業1時間100件の共有。**構造（仮説）:** リード前処理が属人・手作業 → 営業・提案に振る時間が圧迫 → スケールしにくい。\n- **課題②:** データ取得は **「作れるか」より「取ってよいか」** が先に決まる。**根拠:** スクレイピング・API の **法的リスク確認** が合意事項。**構造（仮説）:** 技術要件とコンプライアンスが分離できないと、開発が進んでも運用不能になりうる。\n- **シナジー:** 「採用」周辺に **通知・進捗・フォロー** のデジタル化が横展開しうる。**根拠:** 三並び案件で **メールを見ない大学生** と通知ニーズの共有。**仮説**としての展開可能性。\n\n#### 次アクション\n\n- 次廣: 技術調査・法務・規約リスク整理・提案準備。\n- 佐藤: 帰省日程確定後に連絡 → 5/16–17頃 対面設定。\n- 双方: 名古屋出世クラブ（5月末）参加の検討。','2026-04-07 03:35:52','2026-04-13 14:11:46'),
-(12,1,37,136,NULL,NULL,NULL,'manual','2026-04-08 09:00:00','2026-04-08 09:00:00','2026-04-08 10:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_yonezawa_yuka_comechan_design.md】\n実施: 2026-04-08（水）JST 09:00–10:00（1時間）／オーナー: 次廣 淳 → 対象: 米澤 侑桂（Comechan Design）\n\n■ サマリ\n・米澤: デザイン〜コーディング・実装まで一貫対応可能（Webデザイナー兼エンジニア）を確認。\n・学生向け求人サイトアプリ化（来週契約予定）: フロントのデザイン・コーディングを米澤へ依頼する方向で合意。\n・古紙回収 LINE: リッチメニュー2件（法人用・個人用）を米澤へ依頼決定。\n・価格: リッチメニュー 4,000〜5,000円/枚、LPは規模に応じ工数ベース見積もり（合意）。\n\n■ 確定協業（体制）\n次廣のシステム開発案件に、米澤がデザイン・コーディング・実装（フロント中心）で協業開始に合意。\n求人サイト: 次廣はアプリ基盤・契約・バックエンド/通知、米澤はフロントのデザイン・コーディング。\nリッチメニュー: 米澤が制作、次廣が要件（腰回収LINEの運用コンテキスト）。\n\n■ 求人サイトアプリ化（概要）\n既存PHP WebをWebViewでアプリ化、メール開封率の課題にプッシュ通知。技術: WebView、Flutter検討中（RNとの選定は保留）。オープン予定は要確認（ドキュメントは2026年4月目安）。下部リッチメニュー風ナビ＋Web表示など。詳細仕様は契約・打ち合わせ後。\n\n■ スキル確認（抜粋）\nTailwind、JSフレームワーク（RN含む）、レスポンシブ、アプリデザイン経験。AI: Claude Code / ChatGPT / Gemini。業務委託2社・クラウドワークス経由2年以上。講師卒業後は余裕、個人案件で共創を増やしたい意向。\n\n■ 次アクション（次廣）\n契約後に求人サイトの具体仕様を再打ち合わせ。至急: リッチメニュー2件の要件共有。次回MTG: 契約完了後の詳細打ち合わせ。\n\n■ 次アクション（米澤）\nリッチメニュー制作・納品。詳細打ち合わせ後に求人フロントの見積・スケジュール提示。\n\n■ BNI\nビジター。オリエン2026-04-07（太田氏）。チャプター参加は例会201（2026-03-17）・204（2026-04-07）で2回。','2026-04-08 01:09:53','2026-06-01 04:52:35'),
+(12,1,37,136,NULL,NULL,NULL,'manual','2026-04-08 09:00:00','2026-04-08 09:00:00','2026-04-08 10:00:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_yonezawa_yuka_comechan_design.md】\n実施: 2026-04-08（水）JST 09:00–10:00（1時間）／オーナー: 次廣 淳 → 対象: 米澤 侑桂（Comechan Design）\n\n■ サマリ\n・米澤: デザイン〜コーディング・実装まで一貫対応可能（Webデザイナー兼エンジニア）を確認。\n・学生向け求人サイトアプリ化（来週契約予定）: フロントのデザイン・コーディングを米澤へ依頼する方向で合意。\n・古紙回収 LINE: リッチメニュー2件（法人用・個人用）を米澤へ依頼決定。\n・価格: リッチメニュー 4,000〜5,000円/枚、LPは規模に応じ工数ベース見積もり（合意）。\n\n■ 確定協業（体制）\n次廣のシステム開発案件に、米澤がデザイン・コーディング・実装（フロント中心）で協業開始に合意。\n求人サイト: 次廣はアプリ基盤・契約・バックエンド/通知、米澤はフロントのデザイン・コーディング。\nリッチメニュー: 米澤が制作、次廣が要件（腰回収LINEの運用コンテキスト）。\n\n■ 求人サイトアプリ化（概要）\n既存PHP WebをWebViewでアプリ化、メール開封率の課題にプッシュ通知。技術: WebView、Flutter検討中（RNとの選定は保留）。オープン予定は要確認（ドキュメントは2026年4月目安）。下部リッチメニュー風ナビ＋Web表示など。詳細仕様は契約・打ち合わせ後。\n\n■ スキル確認（抜粋）\nTailwind、JSフレームワーク（RN含む）、レスポンシブ、アプリデザイン経験。AI: Claude Code / ChatGPT / Gemini。業務委託2社・クラウドワークス経由2年以上。講師卒業後は余裕、個人案件で共創を増やしたい意向。\n\n■ 次アクション（次廣）\n契約後に求人サイトの具体仕様を再打ち合わせ。至急: リッチメニュー2件の要件共有。次回MTG: 契約完了後の詳細打ち合わせ。\n\n■ 次アクション（米澤）\nリッチメニュー制作・納品。詳細打ち合わせ後に求人フロントの見積・スケジュール提示。\n\n■ BNI\nビジター。オリエン2026-04-07（太田氏）。チャプター参加は例会201（2026-03-17）・204（2026-04-07）で2回。','2026-04-08 01:09:53','2026-06-01 13:52:09'),
 (13,1,37,19,NULL,NULL,NULL,'manual','2026-04-08 11:00:00',NULL,'2026-04-08 12:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_hirayama_mayumi_lifesupport.md】\n実施: 2026-04-08（水）JST 11:00〜（終了時刻は未確定のため DB 上は暫定で +1h）／オーナー: 次廣 淳 → 対象: 平山 真由美（ライフサポート）\n\nサマリ: パスポートほぼ完了（メンバーシップ残）。倉本氏ウェブマスターを次廣がシステム面支援で合意。40人リストテンプレ・神山氏（中小企業診断士）紹介・静岡車屋2名／カーマッチ検討。リージョンフォーラム 2026-11-09 対面予定。','2026-04-13 14:14:45','2026-04-13 23:17:33'),
 (14,1,37,10,NULL,NULL,NULL,'manual','2026-04-13 11:00:00',NULL,'2026-04-13 12:00:00','completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kuramoto_kenichi_webmaster.md】\n実施: 2026-04-13（月）JST 11:00–12:00／オーナー: 次廣 淳 → 対象: 倉持 賢一（WEBマスター）\n\n合意: ITウェブパワーチーム招待、坂木氏（ジオロケ）紹介、双葉企画連携検討、佐藤正夫氏ロジカルシンキング講座の案内。\n保留: エアコン案件（来週提案・5月頃要件定義の可能性）、Excel顧客管理DB化、LP等コーディング、都内対面。\n次廣: N-CAS資料・法人化・ポジショニング。','2026-04-13 23:18:48','2026-04-13 23:18:48'),
 (15,1,37,49,NULL,NULL,NULL,'manual','2026-04-13 14:30:00',NULL,'2026-04-13 15:30:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_funatsu_mariko_aicare_lab.md】\n実施: 2026-04-13（月）JST 14:30–15:30／オーナー: 次廣 淳 → 対象: 船津 麻理子（アイケアラボ・眼の整体）\n\n合意: 藤本税理士・秋田財務コンサル紹介（船津）、眼科医紹介検討（次廣・関東）、FC本部へのシステム提案（次廣）。\n協業: FCシステム化・軽量顧客管理・医療連携。\n次: 翌日 DragonFly イベント再会。','2026-04-13 23:22:13','2026-04-13 23:22:13'),
@@ -1918,30 +1923,30 @@ INSERT INTO `one_to_ones` VALUES
 (18,1,37,26,NULL,NULL,NULL,'manual','2026-04-20 15:53:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_takeuchi_shunta_athlete_insurance.md】\n実施: 2026-04-20 JST 15:53〜\n\nアスリート専門保険・キッズマネー教育と、次廣のAI業務改善システム構築の相互紹介可能性を確認。静岡PTA・サッカー人脈、法人営業先のDXニーズ紹介をTodo化。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
 (19,1,37,4,NULL,NULL,NULL,'manual','2026-04-24 11:30:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_matsukura_kenji_glassfilm_coating.md】\n実施: 2026-04-24 JST 11:30〜\n\nガラスフィルム・コーティング事業、エアロゲル透明断熱フィルム、高級リゾートホテル営業、静岡インテリア資材卸売会社への紹介検討、リファーラルプレゼン改善を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
 (20,1,37,97,NULL,NULL,NULL,'manual','2026-04-27 10:58:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_iizuka_graphic_design.md】\n実施: 2026-04-27 JST 10:58〜\n\nグラフィックデザイン事業と次廣のB2B業務改善・システム構築を相互共有。社労士・雨漏り調査・竹本氏紹介、田渕氏・行政書士メンバー紹介、システム×デザイン協業、月次1on1合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(21,1,37,98,NULL,'89157467602','IwdcYnOrRzeXiyNsb0v2pA==','manual','2026-05-07 15:57:00','2026-05-07 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tamura_kodai_money_cooking.md】\n実施: 2026-05-07 JST 15:57〜\n\n金融・保険・投資助言モデルと次廣のAI業務改善システム開発を共有。建設業向け損保削減＋DX協業、SE・SEO・FC専門家紹介、次廣の保険・投資相談をTodo化。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
+(21,1,37,98,NULL,'89157467602','IwdcYnOrRzeXiyNsb0v2pA==','manual','2026-05-07 15:57:00','2026-05-07 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tamura_kodai_money_cooking.md】\n実施: 2026-05-07 JST 15:57〜\n\n金融・保険・投資助言モデルと次廣のAI業務改善システム開発を共有。建設業向け損保削減＋DX協業、SE・SEO・FC専門家紹介、次廣の保険・投資相談をTodo化。','2026-05-17 22:26:13','2026-05-31 10:44:22'),
 (22,1,37,99,NULL,NULL,NULL,'manual','2026-05-08 14:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-08 JST 14:00〜\n\n創業160年の製本会社・家系図/ルーツ調査事業と、次廣のAI業務改善システム開発を共有。既存VB+Oracleシステム改善・クラウド移行について別途ヒアリングと提案を行う合意を整理。','2026-05-17 22:26:13','2026-05-17 22:26:13'),
-(23,1,37,100,NULL,'85344850132','jYUX4zxRQLS/2d24XbPJHg==','manual',NULL,'2026-05-13 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_ito_takao_phoenix_jsp.md】\n実施: 正式日時 TODO（2026-05-13 反映のZoom要約）\n\n飯塚さん経由のクロスチャプター1to1。補助金・助成金申請に絡むシステム導入支援、業務改善助成金、自社業務効率化、ローカルLLM提案書、ひとり親支援接点を整理。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
-(24,1,37,101,NULL,'82280318209','qCJSEwAqQLCYSQDmSPCceQ==','manual','2026-05-14 10:00:00','2026-05-14 10:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_isobe_masayuki_nestle_detective.md】\n実施: 2026-05-14 実施済み（時刻 TODO）\n\n探偵業プロフィール・G.A.I.N.S.と次廣のシステム開発事業を共有。保険営業担当者紹介、メンバー表相互共有、BNI/倫理法人会ゲスト管理システム化の芽、屋号表記ゆれ確認を整理。','2026-05-17 22:26:13','2026-06-01 04:42:45'),
-(25,1,37,119,NULL,'89314073650','Xswm1pOmRfezElNCaBsjPg==','manual','2026-05-18 17:00:00','2026-05-18 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_maeda_referral_imaishi.md】\n実施: 正式時刻 TODO JST\n\n今西様紹介・非BNI。マーケティング／AI活用の情報交換、思考R診断システム、見積レンジ、静岡対面・今西様同席の可能性を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(26,1,37,120,NULL,'82792118979','xG0mAVPKS1Gn4YNQBvNlxA==','manual','2026-05-18 16:00:00','2026-05-18 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tsuji_ryo_mainc_meo.md】\n実施: 2026-05-18 16:00 JST\n\n株式会社MainC。MEO／SEO／HP／SNS運用、Muスコープ、ローコミ、協業可能性、6/5リージョンフォーラムでの接点を整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(27,1,37,121,NULL,'89357445297','/kmKTakIRh+J3YUhtah6dQ==','manual','2026-05-19 14:00:00','2026-05-19 14:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_shimotsuji_hs_neo_project.md】\n実施: 2026-05-19 14:00 JST\n\n株式会社hsネオプロジェクト。田村広大さん紹介、同業SE・業務改善、受託開発、AI活用、協力体制、友達申請を整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(28,1,37,9,NULL,'83444991178','05lRf6XqSNu4hCFaDrAgGQ==','manual','2026-05-21 09:00:00','2026-05-21 09:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nakamura_keigo_shakumoto.md】\n実施: 正式時刻 TODO JST\n\n株式会社笏本縫製／SHAKUNONE。次廣事業、新カテゴリー、日本製ものづくりチーム形成、予約管理、料金パッケージ化、宮城氏紹介合意を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
+(23,1,37,100,NULL,'85344850132','jYUX4zxRQLS/2d24XbPJHg==','manual',NULL,'2026-05-13 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_ito_takao_phoenix_jsp.md】\n実施: 正式日時 TODO（2026-05-13 反映のZoom要約）\n\n飯塚さん経由のクロスチャプター1to1。補助金・助成金申請に絡むシステム導入支援、業務改善助成金、自社業務効率化、ローカルLLM提案書、ひとり親支援接点を整理。','2026-05-17 22:26:13','2026-05-31 10:44:22'),
+(24,1,37,101,NULL,'82280318209','qCJSEwAqQLCYSQDmSPCceQ==','manual','2026-05-14 10:00:00','2026-05-14 10:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_isobe_masayuki_nestle_detective.md】\n実施: 2026-05-14 実施済み（時刻 TODO）\n\n探偵業プロフィール・G.A.I.N.S.と次廣のシステム開発事業を共有。保険営業担当者紹介、メンバー表相互共有、BNI/倫理法人会ゲスト管理システム化の芽、屋号表記ゆれ確認を整理。','2026-05-17 22:26:13','2026-05-31 10:44:22'),
+(25,1,37,119,NULL,'89314073650','Xswm1pOmRfezElNCaBsjPg==','manual','2026-05-18 17:00:00','2026-05-18 15:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_maeda_referral_imaishi.md】\n実施: 正式時刻 TODO JST\n\n今西様紹介・非BNI。マーケティング／AI活用の情報交換、思考R診断システム、見積レンジ、静岡対面・今西様同席の可能性を整理。','2026-05-21 16:13:21','2026-05-31 10:44:22'),
+(26,1,37,120,NULL,'82792118979','xG0mAVPKS1Gn4YNQBvNlxA==','manual','2026-05-18 16:00:00','2026-05-18 16:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_tsuji_ryo_mainc_meo.md】\n実施: 2026-05-18 16:00 JST\n\n株式会社MainC。MEO／SEO／HP／SNS運用、Muスコープ、ローコミ、協業可能性、6/5リージョンフォーラムでの接点を整理。\n','2026-05-21 16:13:21','2026-05-31 10:44:22'),
+(27,1,37,121,NULL,'89357445297','/kmKTakIRh+J3YUhtah6dQ==','manual','2026-05-19 14:00:00','2026-05-19 14:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_shimotsuji_hs_neo_project.md】\n実施: 2026-05-19 14:00 JST\n\n株式会社hsネオプロジェクト。田村広大さん紹介、同業SE・業務改善、受託開発、AI活用、協力体制、友達申請を整理。\n','2026-05-21 16:13:21','2026-05-31 10:44:22'),
+(28,1,37,9,NULL,'83444991178','05lRf6XqSNu4hCFaDrAgGQ==','manual','2026-05-21 09:00:00','2026-05-21 09:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nakamura_keigo_shakumoto.md】\n実施: 正式時刻 TODO JST\n\n株式会社笏本縫製／SHAKUNONE。次廣事業、新カテゴリー、日本製ものづくりチーム形成、予約管理、料金パッケージ化、宮城氏紹介合意を整理。','2026-05-21 16:13:21','2026-05-31 10:44:22'),
 (29,1,37,122,NULL,NULL,NULL,'manual','2026-05-21 11:00:00',NULL,NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_fujimoto_yuki_tax_advisor.md】\n実施: 2026-05-21 11:00 JST\n\n船津麻理子さん紹介。医療クリニック特化税理士、税務セカンドオピニオン、未来会計、法人化・顧問税理士活用、AI/IT課題を整理。\n','2026-05-21 16:13:21','2026-05-21 16:13:21'),
-(30,1,37,123,NULL,'85349117783','4X2npZV5QGasXKVx+eKqEA==','manual','2026-05-21 13:00:00','2026-05-21 13:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_gondo_chiemi_campanula.md】\n実施: 正式時刻 TODO JST\n\n株式会社Campanula。企業研修・人材育成・業務改善、建設業／製造業の現場密着支援、教育設計とシステム化の協業可能性を整理。','2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(31,1,37,14,NULL,'84060508444','5WhkV5vUSc2lhAf6Lbg/SQ==','manual','2026-05-21 14:50:00','2026-05-21 14:45:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nishioka_foreign_trainee.md】\n実施: 2026-05-21 14:50 JST\n\n外国人技能実習生受入れ支援。24時間対応、病院付き添い、月1回寮訪問、建設業の人材不足、次廣の建設業向け業務改善モック作成アクションを整理。\n','2026-05-21 16:13:21','2026-06-01 04:42:45'),
-(32,1,37,124,NULL,'85129485087','DGnP1OtXRv+Ud8UIRCc6TA==','manual','2026-05-22 09:00:00','2026-05-22 09:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_mitarai_fudotech.md】\n実施: 2026-05-22（金）JST 09:00〜終了時刻TODO／オーナー: 次廣 淳 → 対象: 御手洗氏（株式会社風土テック／BNI VORTEX）\n\n■ 主な成果\n・次廣の建設業・製造業向けAI業務改善システム構築と、御手洗氏の建設業採用支援は顧客層・課題解決アプローチの親和性が高いことを確認。\n・外国人労働者の日報管理システム、採用後の定着・教育・現場共有、採用支援先への業務改善提案で協業可能性を確認。\n・西岡優希氏（外国人就労支援）との三者連携候補が具体化。\n\n■ 御手洗氏 / 風土テック\n・建設業の採用支援。週1回の定例MTG、SNS撮影、Indeed / engage等の無料媒体改善、SNS・HP・求人媒体の一貫性づくり、MVV策定、採用後フォローまで伴走。\n・採用活動を一発勝負ではなく企業内に採用力を蓄積する「資産化」として捉える。\n\n■ 次廣側共有事例\n・外注ブロックFC本部の受注/顧客/売上管理統合。\n・名古屋の防水工事業向けLINE日報。外国人職人の紙日報課題をLINE提出・本部集計で改善。\n・解体業のLINE見積/請求、観光協会スタンプラリー、動物病院予約管理。\n\n■ 決定・アクション\n・2〜3ヶ月に1回の情報交換。\n・御手洗氏は風土テックのメンバー表を送付、次廣はDragonFly最新メンバー表を送付。\n・6月リージョンフォーラムで対面・名刺交換予定。\n・西岡優希氏との三者連携を検討。2026-05-22、次廣が西岡氏から接続了承を得て、御手洗氏へグループ作成可否を確認。\n\n■ 確認待ち\n・御手洗氏の下の名前、正式役職、プロフィールURL、終了時刻。\n・風土テック / フードテック表記、練馬会場・修声チャプター文脈は本人確認。','2026-05-22 16:46:29','2026-06-01 04:42:45'),
-(33,1,37,52,NULL,'81436970113','+Q0WkZktQwWta233LUH1jw==','manual','2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-06-01 04:42:45'),
+(30,1,37,123,NULL,'85349117783','4X2npZV5QGasXKVx+eKqEA==','manual','2026-05-21 13:00:00','2026-05-21 13:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_gondo_chiemi_campanula.md】\n実施: 正式時刻 TODO JST\n\n株式会社Campanula。企業研修・人材育成・業務改善、建設業／製造業の現場密着支援、教育設計とシステム化の協業可能性を整理。','2026-05-21 16:13:21','2026-05-31 10:44:22'),
+(31,1,37,14,NULL,'84060508444','5WhkV5vUSc2lhAf6Lbg/SQ==','manual','2026-05-21 14:50:00','2026-05-21 14:45:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_nishioka_foreign_trainee.md】\n実施: 2026-05-21 14:50 JST\n\n外国人技能実習生受入れ支援。24時間対応、病院付き添い、月1回寮訪問、建設業の人材不足、次廣の建設業向け業務改善モック作成アクションを整理。\n','2026-05-21 16:13:21','2026-05-31 10:44:22'),
+(32,1,37,124,NULL,'85129485087','DGnP1OtXRv+Ud8UIRCc6TA==','manual','2026-05-22 09:00:00','2026-05-22 09:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_mitarai_fudotech.md】\n実施: 2026-05-22（金）JST 09:00〜終了時刻TODO／オーナー: 次廣 淳 → 対象: 御手洗氏（株式会社風土テック／BNI VORTEX）\n\n■ 主な成果\n・次廣の建設業・製造業向けAI業務改善システム構築と、御手洗氏の建設業採用支援は顧客層・課題解決アプローチの親和性が高いことを確認。\n・外国人労働者の日報管理システム、採用後の定着・教育・現場共有、採用支援先への業務改善提案で協業可能性を確認。\n・西岡優希氏（外国人就労支援）との三者連携候補が具体化。\n\n■ 御手洗氏 / 風土テック\n・建設業の採用支援。週1回の定例MTG、SNS撮影、Indeed / engage等の無料媒体改善、SNS・HP・求人媒体の一貫性づくり、MVV策定、採用後フォローまで伴走。\n・採用活動を一発勝負ではなく企業内に採用力を蓄積する「資産化」として捉える。\n\n■ 次廣側共有事例\n・外注ブロックFC本部の受注/顧客/売上管理統合。\n・名古屋の防水工事業向けLINE日報。外国人職人の紙日報課題をLINE提出・本部集計で改善。\n・解体業のLINE見積/請求、観光協会スタンプラリー、動物病院予約管理。\n\n■ 決定・アクション\n・2〜3ヶ月に1回の情報交換。\n・御手洗氏は風土テックのメンバー表を送付、次廣はDragonFly最新メンバー表を送付。\n・6月リージョンフォーラムで対面・名刺交換予定。\n・西岡優希氏との三者連携を検討。2026-05-22、次廣が西岡氏から接続了承を得て、御手洗氏へグループ作成可否を確認。\n\n■ 確認待ち\n・御手洗氏の下の名前、正式役職、プロフィールURL、終了時刻。\n・風土テック / フードテック表記、練馬会場・修声チャプター文脈は本人確認。','2026-05-22 16:46:29','2026-05-31 10:44:22'),
+(33,1,37,52,NULL,'81436970113','+Q0WkZktQwWta233LUH1jw==','manual','2026-05-25 15:00:00','2026-05-25 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_noguchi_yuko_hair_salon_viv.md】\n実施: 2026-05-25（月）JST 15:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 野口裕子（HAIR SALON ViV／BNI DragonFly）\n\n■ 主な成果\n・個人経営・火曜営業と火曜午前定例会の両立困難により BNI 退会決定。次廣とのつながりは継続合意。\n・ホットペッパー有料解約・紙予約併用によるダブルブッキング課題を共有。\n・次廣のパソコン相談無償サポート合意。夏頃リリース予定の予約管理システムを提案予定。\n・軍司さんによる LINE 予約システム構築（3ヶ月契約）が進行中。\n・ジンボウさんとの 1to1 を次廣経由リファラルとして実施する合意。\n\n■ 確認待ち\n・終了時刻（Zoom メタ）','2026-05-25 20:26:20','2026-05-31 10:44:22'),
 (34,1,37,17,NULL,NULL,NULL,'manual','2026-04-03 07:15:00','2026-04-03 07:15:00','2026-04-03 08:15:00','completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_sato_takuto_brightlink.md】\n実施: 2026-04-03（金）JST 07:15–08:15／Zoom／オーナー: 次廣 淳 → 対象: 佐藤拓斗（株式会社BrightLink／BNI DragonFly）\n\n■ 主な成果\n・双方の事業共有。テレアポリスト自動作成（手作業1時間100件）の開発可能性を検討開始。\n・リクナビネクスト等から従業員数30名以下等で抽出する仕組みを検討（法的リスク要確認）。\n・5月16–17日頃の静岡帰省時に対面ミーティング予定。出世クラブ参加も検討。\n・静岡県藤枝市の地元共通点・教育観の共感。','2026-05-25 20:26:20','2026-05-25 20:26:20'),
 (35,1,37,137,NULL,NULL,NULL,'manual','2026-05-27 10:00:00','2026-05-27 10:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_nampo_yuma_waibous.md】\n実施: 2026-05-27（水）JST 10:00〜終了時刻TODO／Zoom／オーナー: 次廣 淳 → 対象: 南方優馬（株式会社ワイボウズ／BNI Tifonet）／紹介: 望月雅幸\n\n■ 主な成果\n・ワイボウズの事業（月9,800円×24 EC、Clavio、IT導入補助金ツール卸・営業代理）を把握。\n・121表向きは相互紹介の方向性確認。\n\n■ 次廣の関与スタンス（121後）\n・協業パートナーではない。受動的紹介のみ（低コストEC需要が明示された場合）。\n・補助金系には協力しない。\n\n■ 南方側\n・月9,800円×24 EC（Shopify）、Clavio約50万、補助金営業代理30万/社。\n・杉山氏士業コミュニティ・ジム代行紹介は確認中（次廣は期待しない）。\n\n■ 確認待ち\n・終了時刻','2026-05-27 17:00:47','2026-05-27 17:00:47'),
-(36,1,37,138,NULL,'83459427012','i3heZ15HSG6RW1qeTCoPBg==','manual','2026-05-28 15:00:00','2026-05-28 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-06-01 04:57:09'),
-(37,1,37,18,NULL,'84716679422',NULL,'zoom','2026-06-01 14:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
-(38,1,37,34,NULL,'86416812471',NULL,'zoom','2026-06-01 15:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
+(36,1,37,138,NULL,'83459427012','i3heZ15HSG6RW1qeTCoPBg==','manual','2026-05-28 15:00:00','2026-05-28 15:00:00',NULL,'completed','【第1回 1to1 実施メモ — ソース: docs/meetings/1to1/1to1_jimbo_ryota_snep.md】\n実施: 2026-05-28（木）JST 開始・終了時刻TODO／実施方法TODO／オーナー: 次廣 淳 → 対象: 神保玲太（SNEP株式会社／BNI Diana）／紹介: 鈴木健介\n\n■ 主な成果\n・BNI向け予約管理システムについて、美容業界の現場感に基づく具体的フィードバックを得た。\n・脱ホットペッパー支援は予約システム単体ではなく、MEO・ポスティング等の集客支援とセットで提案する必要がある。\n・月額1万円以下、基本4,980円＋オプション制、周期リマインド・自動フォローが重要。\n\n■ 10分ネイル\n・ネイルを「おしゃれ」から「身だしなみ」へ。コンビニコーヒー型の生活導線浸透戦略。\n・ロイヤリティなし商材販売モデル。美容室1000店・福祉500施設が目標。\n\n■ 決定・次アクション\n・プロトタイプ完成後、神保さんへ最優先共有。\n・次廣: 野口さん接続、Instagram送付、コネクト申請。\n・神保: 美容室オーナー（5名以上）、理容室、整体等の紹介検討。\n\n■ 人物所感\n・地頭が良くテンポが速い。次廣の立場に立って具体的に考えてくれる。\n\n■ 確認待ち\n・開始・終了時刻、実施方法','2026-05-28 17:08:50','2026-06-01 13:56:51'),
+(37,1,37,18,NULL,'84716679422',NULL,'zoom','2026-06-01 14:00:00','2026-06-01 14:00:00','2026-06-01 15:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md】\n実施: 2026-06-01 JST 14:00-15:00\n\nRUILED VISION JAPAN株式会社。LEDデジタルサイネージ事業、中国深圳工場との直接連携、1台からの納品、販売代理店モデル、看板屋・電気工事士との協業、導入実績を確認。次廣の業務改善・予約管理システム構想も共有し、電気工事士紹介確認とおかわり1to1実施で合意。','2026-05-30 13:35:23','2026-06-01 16:34:58'),
+(38,1,37,34,NULL,'86416812471',NULL,'zoom','2026-06-01 15:00:00','2026-06-01 15:00:00','2026-06-01 16:00:00','completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_konaka_takaaki_becheerz.md】\n実施: 2026-06-01 JST 15:00-16:00\n\n株式会社BeCheerz。AIツール情報発信、AI研修、業務効率化支援、システム開発、医療向けAIカルテ生成支援について相互理解。アルシルブ事業化、予約管理システム、BNI用1to1管理システム商業化、クリニックへのカルテ生成支援紹介、開発案件相談体制（営業フィー20〜30%）を確認。','2026-05-30 13:35:23','2026-06-01 16:34:58'),
 (39,1,37,51,NULL,'89001802997',NULL,'zoom','2026-06-01 16:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (40,1,37,140,NULL,'83714290448',NULL,'zoom','2026-06-01 17:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (41,1,37,27,NULL,'89109217407',NULL,'zoom','2026-06-03 15:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (42,1,37,139,NULL,'85054251043',NULL,'zoom','2026-06-04 09:00:00',NULL,NULL,'planned',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
-(43,1,37,99,NULL,'87970810668','EpAXFCa/QpOjsVdWaEVClw==','zoom','2026-05-29 14:00:00','2026-05-29 14:00:00',NULL,'completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-29（金）JST 14:00–15:00・Zoom\nBPS木村／株式会社国宝社の製本システム業務改善ヒアリング。\n\n決定・合意:\n- 既存 VB+Oracle 基幹は温存。新規 Web 入力画面で PDF 注文書を解析→確認→Oracle 登録。\n- 社内サーバー Hyper-V 上に Linux Web サーバー、社内Wi-Fi/VPN 経由・外部非公開。Google Workspace は主軸にしない。\n- 段階実装: 第一段階=月300〜400件のPDF手入力自動化、第二段階=日報等Excelの Web化。\n\n課題: ヘッダ/フッタ 1:N、出版社ごとに注文書フォーマット差・手書きあり、ODBC 書込権限。\n\n次アクション:\n- 次廣: 数日以内に提案書＋簡易モックを無償作成。\n- 木村: DB定義書・サンプルPDF を共有。','2026-05-30 13:35:23','2026-06-01 04:57:09'),
-(44,1,37,113,NULL,'88597252767','MF27uxnKT2aqvRtXjdXckQ==','zoom','2026-05-29 09:00:00','2026-05-29 09:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_furuya_shuji_telecom_cost.md】\n実施: 2026-05-29・Zoom（文字起こし要約反映）\n古屋周治（合同会社TF／通信・害虫ブロック・不動産仲介の三本柱）。\n\n決定・合意:\n- 鐘庵本部直営店（静岡・愛知10店舗以上）の通信回線見直し＝月7,000円規模のコスト削減余地。次廣が契約書共有→古屋が固定費削減提案。\n- 事業者提案型の予約システムを夏までにリリース予定。サロン向け月額5,000円以内パッケージ化を検討。\n\n次アクション:\n- 次廣: 通信回線契約書を古屋へ送付（即時）／予約パッケージ化を相談。\n- 古屋: 回線契約を確認し固定費削減提案／MEO・マイビジネス学習。\n\n備考: 音声認識の揺れ「外注ブロック＝害虫ブロック」「古谷＝古屋」。FC名は鐘庵（かねあん）。','2026-05-30 13:35:23','2026-06-01 05:05:05'),
+(43,1,37,99,NULL,'87970810668','EpAXFCa/QpOjsVdWaEVClw==','zoom','2026-05-29 14:00:00','2026-05-29 14:00:00',NULL,'completed','【第2回 1to1 — ソース: docs/meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md】\n実施: 2026-05-29（金）JST 14:00–15:00・Zoom\nBPS木村／株式会社国宝社の製本システム業務改善ヒアリング。\n\n決定・合意:\n- 既存 VB+Oracle 基幹は温存。新規 Web 入力画面で PDF 注文書を解析→確認→Oracle 登録。\n- 社内サーバー Hyper-V 上に Linux Web サーバー、社内Wi-Fi/VPN 経由・外部非公開。Google Workspace は主軸にしない。\n- 段階実装: 第一段階=月300〜400件のPDF手入力自動化、第二段階=日報等Excelの Web化。\n\n課題: ヘッダ/フッタ 1:N、出版社ごとに注文書フォーマット差・手書きあり、ODBC 書込権限。\n\n次アクション:\n- 次廣: 数日以内に提案書＋簡易モックを無償作成。\n- 木村: DB定義書・サンプルPDF を共有。','2026-05-30 13:35:23','2026-06-01 13:56:51'),
+(44,1,37,113,NULL,'88597252767','MF27uxnKT2aqvRtXjdXckQ==','zoom','2026-05-29 09:00:00','2026-05-29 09:00:00',NULL,'completed','【第1回 1to1 — ソース: docs/meetings/1to1/1to1_furuya_shuji_telecom_cost.md】\n実施: 2026-05-29・Zoom（文字起こし要約反映）\n古屋周治（合同会社TF／通信・害虫ブロック・不動産仲介の三本柱）。\n\n決定・合意:\n- 鐘庵本部直営店（静岡・愛知10店舗以上）の通信回線見直し＝月7,000円規模のコスト削減余地。次廣が契約書共有→古屋が固定費削減提案。\n- 事業者提案型の予約システムを夏までにリリース予定。サロン向け月額5,000円以内パッケージ化を検討。\n\n次アクション:\n- 次廣: 通信回線契約書を古屋へ送付（即時）／予約パッケージ化を相談。\n- 古屋: 回線契約を確認し固定費削減提案／MEO・マイビジネス学習。\n\n備考: 音声認識の揺れ「外注ブロック＝害虫ブロック」「古谷＝古屋」。FC名は鐘庵（かねあん）。','2026-05-30 13:35:23','2026-06-01 14:05:04'),
 (50,1,37,143,NULL,'89131000556','PXefpCDtQfa6IVkp6a9ohA==','zoom','2026-05-21 11:00:00','2026-05-21 11:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (52,1,37,144,NULL,'87313500925','TXIaXTwPQaiXBiKVTc9pfA==','zoom','2026-05-19 17:00:00','2026-05-19 17:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (53,1,37,145,NULL,'86985144664','j3BnDbqfRRu5kHrKvgax6g==','zoom','2026-05-19 16:00:00','2026-05-19 16:00:00',NULL,'completed',NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
@@ -1960,7 +1965,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `participant_breakout`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `participant_breakout` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `participant_id` bigint(20) unsigned NOT NULL,
@@ -2088,7 +2093,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `participants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `participants` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) unsigned NOT NULL,
@@ -2300,7 +2305,7 @@ INSERT INTO `participants` VALUES
 (180,3,57,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (181,3,58,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (182,3,59,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
-(183,3,135,'visitor',21,NULL,'2026-03-16 23:42:37','2026-06-01 04:52:35'),
+(183,3,135,'visitor',21,NULL,'2026-03-16 23:42:37','2026-06-01 13:52:09'),
 (184,3,67,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (185,3,68,'visitor',21,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
 (186,3,69,'visitor',51,NULL,'2026-03-16 23:42:37','2026-03-16 23:42:37'),
@@ -2436,7 +2441,7 @@ INSERT INTO `participants` VALUES
 (316,6,57,'visitor',1,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (317,6,58,'visitor',46,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (318,6,59,'visitor',5,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
-(319,6,135,'visitor',5,NULL,'2026-03-31 00:09:20','2026-06-01 04:52:35'),
+(319,6,135,'visitor',5,NULL,'2026-03-31 00:09:20','2026-06-01 13:52:09'),
 (320,6,64,'proxy',17,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (321,6,76,'proxy',27,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
 (322,6,60,'guest',2,NULL,'2026-03-31 00:09:20','2026-03-31 00:09:20'),
@@ -2501,7 +2506,7 @@ INSERT INTO `participants` VALUES
 (381,7,57,'visitor',12,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (382,7,58,'visitor',48,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (383,7,59,'visitor',12,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
-(384,7,135,'visitor',14,NULL,'2026-04-07 00:04:59','2026-06-01 04:52:35'),
+(384,7,135,'visitor',14,NULL,'2026-04-07 00:04:59','2026-06-01 13:52:09'),
 (385,7,67,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (386,7,68,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
 (387,7,69,'visitor',13,NULL,'2026-04-07 00:04:59','2026-04-07 00:04:59'),
@@ -2576,7 +2581,7 @@ INSERT INTO `participants` VALUES
 (458,8,57,'visitor',11,39,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (459,8,58,'visitor',20,20,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (460,8,59,'visitor',35,46,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
-(461,8,135,'visitor',1,5,'2026-04-13 12:13:25','2026-06-01 04:52:35'),
+(461,8,135,'visitor',1,5,'2026-04-13 12:13:25','2026-06-01 13:52:09'),
 (462,8,67,'visitor',6,28,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (463,8,68,'visitor',13,26,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
 (464,8,69,'visitor',36,30,'2026-04-13 12:13:25','2026-04-13 12:58:33'),
@@ -2854,7 +2859,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -2878,7 +2883,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) NOT NULL,
@@ -2894,7 +2899,7 @@ CREATE TABLE `personal_access_tokens` (
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2905,7 +2910,8 @@ LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 INSERT INTO `personal_access_tokens` VALUES
 (1,'App\\Models\\User',2,'religo-admin','fc4ea95195a45cca5d253758c75a777ab10a1eaea63435f2fb5a577fddc2e1a0','[\"*\"]','2026-05-28 22:27:00',NULL,'2026-05-28 22:27:00','2026-05-28 22:27:00'),
-(2,'App\\Models\\User',2,'religo-admin','461a044d5c3c6fe7af4276d62bc24a78e2b3229a30d0a977b6d4dc06777225e9','[\"*\"]','2026-05-31 01:32:48',NULL,'2026-05-29 05:37:44','2026-05-31 01:32:48');
+(2,'App\\Models\\User',2,'religo-admin','461a044d5c3c6fe7af4276d62bc24a78e2b3229a30d0a977b6d4dc06777225e9','[\"*\"]','2026-05-31 01:32:48',NULL,'2026-05-29 05:37:44','2026-05-31 01:32:48'),
+(3,'App\\Models\\User',2,'religo-admin','5a013168a09435757d78cd53bebe302298b93c5dbecdee1a67b4956a9ed44b81','[\"*\"]','2026-06-01 15:33:57',NULL,'2026-05-31 10:39:42','2026-06-01 15:33:57');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2915,7 +2921,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `regions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `regions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `country_id` bigint(20) unsigned NOT NULL,
@@ -2943,7 +2949,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -3019,7 +3025,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sessions` (
   `id` varchar(255) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
@@ -3041,7 +3047,9 @@ LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
 INSERT INTO `sessions` VALUES
 ('0rwcgOyvPmZxDHLeZIGTS7sABfhPtaIuIjaydCe1',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiRVY3UjlrTXJYT2xhcWs2QXZHSzJKcU5QRHdSMWEyY29uVllRaWNKZyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756273),
+('2kJDuICn1B9jcPZ8JrruKfNICjhBn3ATwRXoftXw',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiUUUxVHp0VE4yMnFKY0FrMjNXSmRCMXVwZGZIQ2x1Y3lQdUxZR3ZZSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780191569),
 ('B30RzX1J45hjoVivXwxXM3oYIr9gIVrUWrQ3UHpG',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjNiWG1NdVlRcHRFZTNvWkppZmxzampGM2xzdmN6TkhyeDRoYnc0UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756264),
+('Meqyew7J78nPd6pajenpDoa65UnkvVh5LZ6abs8o',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiMUg0dDFPTnlDbkh4elJmYVc0eWd4a01BT2VoZDRweDJuMDVMamNTSSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780294130),
 ('Y1oy1eynIkgLaXS5m7Ezr52zaJF3s9E7CylrsDTg',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoieUVQMUVOcGlQMTB4c3hFS1padmgxNjZXa2NxNUpBbzNqaVRkUVZkYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779688657);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3052,7 +3060,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user_ai_credentials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_ai_credentials` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -3086,7 +3094,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -3124,7 +3132,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `workspaces`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `workspaces` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -3165,7 +3173,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `zoom_accounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `zoom_accounts` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -3201,7 +3209,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `zoom_import_apply_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `zoom_import_apply_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -3237,7 +3245,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `zoom_meeting_imports`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `zoom_meeting_imports` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
@@ -3329,7 +3337,7 @@ INSERT INTO `zoom_meeting_imports` VALUES
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'religo_app'
+-- Dumping routines for database 'dragonfly'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -3341,4 +3349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-01 14:05:16
+-- Dump completed on 2026-06-01  7:36:26
