@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-02 16:13 JST | **Phase 181 / Markdown ビューア P1:** `remark-gfm` 導入・`MarkdownView` 見出し h1〜h6 段階化・GFM 表レンダリング。`FIT_AND_GAP_MARKDOWN_VIEWER.md` MV-T01/MV-T02 を Fit に更新。`php artisan test` 429 passed、`npm run build` OK。 |
 | 2026-06-02 16:07 JST | **Markdown ビューア Fit/Gap:** [`SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md`](SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md) 新規。議事録・1to1 notes の `MarkdownView` 利用状況、GFM 表未対応（remark-gfm 未導入）、メモタブ pre-wrap 残存を整理。改善 Phase 案 P1〜P3。コード変更なし。 |
 | 2026-06-02 15:40 JST | **Phase 180 / 定例会議事録 DB 化（SPEC-014）:** `meeting_minutes` テーブル・`dragonfly:import-chapter-minutes`・Meetings 一覧/Drawer 議事録表示（`has_minutes`・MarkdownView）。第207–210回 Markdown を DB 取り込み、`make db-export`。SSOT: `CHAPTER_MINUTES_REQUIREMENTS.md`・`MEETING_DOMAIN_IA.md`・`DATA_MODEL` §4.6a。`php artisan test` 429 passed、`npm run build` OK。 |
 | 2026-06-02 15:01 JST | **Phase 179 / DragonFly 定例会 第207回 2026-05-12 議事録:** [`meetings/chapter/chapter_weekly_20260512.md`](meetings/chapter/chapter_weekly_20260512.md) 新規。Zoom文字起こし要約を校正し、開催年を2026年に補正、サンキュー金額表記を正規化。藤井恵理子更新承認、吉田俊之一時退会、清原佳彩美カテゴリー変更、教育「エレベーターピッチ」、MP大竹絵理香（家族も使える福利厚生）/清原佳彩美（サロン向け育毛機器・商材販売）、ビジター6名・ゲスト2名、次廣視点メモを整理。今週リファーラル内訳や代理出席人数など文字起こしとPDF/CSVで不整合が残る点は要確認として記録。`docs/INDEX.md`・`PHASE_REGISTRY`・Phase 179 PLAN/WORKLOG/REPORT を同期。コード変更なし。 |
