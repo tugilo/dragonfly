@@ -42,6 +42,7 @@ class MeetingControllerTest extends TestCase
         $this->assertArrayHasKey('breakout_count', $meeting);
         $this->assertArrayHasKey('has_memo', $meeting);
         $this->assertArrayHasKey('has_participant_pdf', $meeting);
+        $this->assertArrayHasKey('has_minutes', $meeting);
         $this->assertArrayHasKey('name', $meeting);
         $this->assertSame(200, $meeting['number']);
         $this->assertSame('2026-03-01', $meeting['held_on']);
@@ -145,6 +146,10 @@ class MeetingControllerTest extends TestCase
         $this->assertArrayHasKey('csv_apply_logs_recent', $data);
         $this->assertIsArray($data['csv_apply_logs_recent']);
         $this->assertArrayHasKey('rooms', $data);
+        $this->assertArrayHasKey('minutes', $data);
+        $this->assertArrayHasKey('participants_summary', $data);
+        $this->assertArrayHasKey('breakout_summary', $data);
+        $this->assertNull($data['minutes']);
         $this->assertSame(203, $data['meeting']['number']);
         $this->assertSame('Detail memo body', $data['memo_body']);
         $this->assertSame([
@@ -701,5 +706,53 @@ class MeetingControllerTest extends TestCase
             'number' => 1,
             'held_on' => '2026-01-01',
         ])->assertNotFound();
+    }
+
+    public function test_index_has_minutes_true_when_meeting_minute_exists(): void
+    {
+        $meeting = Meeting::create(['number' => 207, 'held_on' => '2026-05-12', 'name' => '第207回定例会']);
+        DB::table('meeting_minutes')->insert([
+            'meeting_id' => $meeting->id,
+            'body_markdown' => '# Minutes',
+            'source_path' => 'docs/meetings/chapter/chapter_weekly_20260512.md',
+            'imported_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $res = $this->getJson('/api/meetings');
+        $res->assertOk();
+        $row = collect($res->json())->firstWhere('id', $meeting->id);
+        $this->assertNotNull($row);
+        $this->assertTrue($row['has_minutes']);
+    }
+
+    public function test_minutes_endpoint_returns_body(): void
+    {
+        $meeting = Meeting::create(['number' => 208, 'held_on' => '2026-05-19', 'name' => '第208回定例会']);
+        DB::table('meeting_minutes')->insert([
+            'meeting_id' => $meeting->id,
+            'body_markdown' => '# Chapter minutes',
+            'source_path' => 'docs/meetings/chapter/chapter_weekly_20260519.md',
+            'doc_type' => 'chapter_weekly',
+            'session_date' => '2026-05-19',
+            'imported_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $res = $this->getJson("/api/meetings/{$meeting->id}/minutes");
+        $res->assertOk();
+        $res->assertJsonPath('minutes.body_markdown', '# Chapter minutes');
+        $res->assertJsonPath('minutes.source_path', 'docs/meetings/chapter/chapter_weekly_20260519.md');
+    }
+
+    public function test_minutes_endpoint_returns_null_when_missing(): void
+    {
+        $meeting = Meeting::create(['number' => 209, 'held_on' => '2026-05-26', 'name' => '第209回定例会']);
+
+        $res = $this->getJson("/api/meetings/{$meeting->id}/minutes");
+        $res->assertOk();
+        $res->assertJsonPath('minutes', null);
     }
 }

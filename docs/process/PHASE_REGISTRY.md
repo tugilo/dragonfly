@@ -161,6 +161,24 @@
 | 160 | 小中貴晃 121事前準備（BeCheerz／AIツール情報発信・業務効率化支援） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
 | 161 | 原田里織 第1回121文字起こし反映（RUILED VISION JAPAN／販売代理店戦略） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
 | 162 | 原田里織・小中貴晃 第1回121履歴DB反映 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 163 | 寺田直史 初回121事前準備（BNI Tifonet／エンジニア事業協業可能性） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 164 | メンバー相談メモ置き場と運用README | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 165 | 今西さん AiLC 月次集計表作成簡略化相談 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 166 | 今西さん AiLC 月次集計表自動化プラン・概算整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 167 | 今西さん AiLC 月次集計表 Webアプリ費用感整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 168 | 今西さん AiLC Webアプリ費用感の妥当性確認 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 169 | 今西さん AiLC Webアプリ提案 ROI 整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 170 | 今西さん AiLC Webアプリ提案 AI駆動開発整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 171 | 今西さん AiLC Webアプリ提案 MVP 費用感調整 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 172 | 今西さん AiLC 自動化削減見込みの根拠整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 173 | 今西さん AiLC 月次集計表作成 自動化提案資料 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 174 | 今西さん AiLC 提案資料 Genspark スライド化プロンプト | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
+| 175 | AiLC 表記修正（旧 ILC 表示名の訂正） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 176 | AiLC AI駆動Web MVP 費用レンジ絞り込み | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 177 | DragonFly 定例会 2026-06-02 議事録保存 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 178 | DragonFly 定例会 2026-06-02 学習コーナー詳細化 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 179 | DragonFly 定例会 2026-05-12 議事録保存 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 180 | 定例会議事録 DB 化（meeting_minutes・import・Meetings 閲覧） | implement | completed | feature/phase180-chapter-minutes-db（merge未実施） | 2026-06-02 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

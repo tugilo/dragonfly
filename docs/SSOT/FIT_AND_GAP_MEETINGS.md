@@ -120,4 +120,19 @@ Meetings 画面は M1〜M6 により、**一覧のみの仮画面から、統計
 
 ---
 
-**関連:** [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §5 Meetings、[MOCK_UI_VERIFICATION.md](MOCK_UI_VERIFICATION.md)
+## 4. Meeting ハブ IA（Phase 180・SPEC-014）
+
+| 役割 | 画面 | 内容 |
+|------|------|------|
+| **管理ハブ** | Meetings | 概要 / BO（読取）/ 議事録 / メモ。完了回は議事録を前面 |
+| **BO 編集面** | Connections | BO 割当の編集・保存（データ所有者は Meeting） |
+
+- 議事録: `meeting_minutes`（file→DB）。一覧 `has_minutes`、Drawer「議事録」タブ。
+- 例会メモ: 既存 `contact_memos`（`has_memo`）— 議事録とは別。
+
+SSOT: [MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)  
+Markdown 表示品質: [FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIEWER.md)
+
+---
+
+**関連:** [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §5 Meetings、[MOCK_UI_VERIFICATION.md](MOCK_UI_VERIFICATION.md)、[FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIEWER.md)
