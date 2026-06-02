@@ -194,6 +194,7 @@ Route::post('/meetings', [MeetingController::class, 'store']);
 Route::get('/meetings/stats', [MeetingController::class, 'stats']);
 Route::get('/meetings/{meetingId}', [MeetingController::class, 'show'])->whereNumber('meetingId');
 Route::patch('/meetings/{meetingId}', [MeetingController::class, 'update'])->whereNumber('meetingId');
+Route::get('/meetings/{meetingId}/minutes', [MeetingController::class, 'minutes'])->whereNumber('meetingId');
 Route::get('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'show'])->whereNumber('meetingId');
 Route::put('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'update'])->whereNumber('meetingId');
 Route::post('/meetings/{meetingId}/csv-import', [MeetingCsvImportController::class, 'store'])->whereNumber('meetingId');

@@ -32,6 +32,26 @@ chapter_weekly_YYYYMMDD.md
 
 参加者 CSV・PDF は [`docs/pdf/`](../pdf/) 配下の日付フォルダに置き、議事録本文からリンクする。
 
-## Religo / DB 連携（将来）
+## Religo / DB 連携
 
-`meetings.number`（第 N 回）と `held_on` に対応させる想定。議事録に `meeting_number` を書いておくと取り込み時に照合しやすい。
+**source of truth = 本ディレクトリの Markdown。** DB は取り込みコピー（一方向）。
+
+### 取り込み
+
+```bash
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app \
+  php artisan dragonfly:import-chapter-minutes docs/meetings/chapter/chapter_weekly_20260512.md
+
+# 一括
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app \
+  php artisan dragonfly:import-chapter-minutes docs/meetings/chapter/
+```
+
+### front matter（取り込み照合用）
+
+| キー | 用途 |
+|------|------|
+| `meeting_number` | `meetings.number` |
+| `session_date` | `meetings.held_on` |
+
+詳細: [CHAPTER_MINUTES_REQUIREMENTS.md](../../SSOT/CHAPTER_MINUTES_REQUIREMENTS.md) / [MEETING_DOMAIN_IA.md](../../SSOT/MEETING_DOMAIN_IA.md)

@@ -10,6 +10,8 @@ use App\Models\ContactMemo;
 use App\Models\Member;
 use App\Models\Meeting;
 use App\Models\MeetingCsvApplyLog;
+use App\Models\MeetingMinute;
+use App\Models\Participant;
 use App\Services\Religo\CandidateMemberMatchService;
 use App\Services\Religo\MeetingBreakoutService;
 use Illuminate\Http\JsonResponse;
@@ -41,6 +43,7 @@ class MeetingController extends Controller
             ->addSelect([
                 DB::raw("exists(select 1 from contact_memos where contact_memos.meeting_id = meetings.id and contact_memos.memo_type = 'meeting') as has_memo"),
                 DB::raw("exists(select 1 from meeting_participant_imports where meeting_participant_imports.meeting_id = meetings.id) as has_participant_pdf"),
+                DB::raw('exists(select 1 from meeting_minutes where meeting_minutes.meeting_id = meetings.id) as has_minutes'),
             ]);
 
         $q = $request->input('q');
@@ -71,6 +74,17 @@ class MeetingController extends Controller
         } elseif ($hasParticipantPdf === '0' || $hasParticipantPdf === false) {
             $query->whereRaw(
                 "NOT EXISTS (SELECT 1 FROM meeting_participant_imports WHERE meeting_participant_imports.meeting_id = meetings.id)"
+            );
+        }
+
+        $hasMinutes = $request->input('has_minutes');
+        if ($hasMinutes === '1' || $hasMinutes === true) {
+            $query->whereRaw(
+                'EXISTS (SELECT 1 FROM meeting_minutes WHERE meeting_minutes.meeting_id = meetings.id)'
+            );
+        } elseif ($hasMinutes === '0' || $hasMinutes === false) {
+            $query->whereRaw(
+                'NOT EXISTS (SELECT 1 FROM meeting_minutes WHERE meeting_minutes.meeting_id = meetings.id)'
             );
         }
 
@@ -142,7 +156,7 @@ class MeetingController extends Controller
     /**
      * GET index / POST store / PATCH update で返す一覧1行の形（name を含む）.
      *
-     * @return array{id: int, number: int, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool}
+     * @return array{id: int, number: int, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool, has_minutes: bool}
      */
     private function meetingToListRowPayload(Meeting $m): array
     {
@@ -154,6 +168,7 @@ class MeetingController extends Controller
             'breakout_count' => (int) $m->breakout_rooms_count,
             'has_memo' => (bool) $m->has_memo,
             'has_participant_pdf' => (bool) $m->has_participant_pdf,
+            'has_minutes' => (bool) ($m->has_minutes ?? false),
         ];
     }
 
@@ -164,6 +179,7 @@ class MeetingController extends Controller
             ->addSelect([
                 DB::raw("exists(select 1 from contact_memos where contact_memos.meeting_id = meetings.id and contact_memos.memo_type = 'meeting') as has_memo"),
                 DB::raw("exists(select 1 from meeting_participant_imports where meeting_participant_imports.meeting_id = meetings.id) as has_participant_pdf"),
+                DB::raw('exists(select 1 from meeting_minutes where meeting_minutes.meeting_id = meetings.id) as has_minutes'),
             ])
             ->where('meetings.id', $id)
             ->first();
@@ -203,10 +219,13 @@ class MeetingController extends Controller
     {
         $meeting = Meeting::query()
             ->with('participantImport')
+            ->with('meetingMinute')
             ->with(['csvImports' => fn ($q) => $q->orderByDesc('uploaded_at')->limit(1)])
             ->withCount('breakoutRooms')
+            ->withCount('participants')
             ->addSelect([
                 DB::raw("exists(select 1 from contact_memos where contact_memos.meeting_id = meetings.id and contact_memos.memo_type = 'meeting') as has_memo"),
+                DB::raw('exists(select 1 from meeting_minutes where meeting_minutes.meeting_id = meetings.id) as has_minutes'),
             ])
             ->find($meetingId);
 
@@ -291,6 +310,23 @@ class MeetingController extends Controller
             ];
         }, $breakouts['rooms']);
 
+        $participantTypeCounts = Participant::query()
+            ->where('meeting_id', $meeting->id)
+            ->selectRaw('type, count(*) as cnt')
+            ->groupBy('type')
+            ->pluck('cnt', 'type')
+            ->all();
+
+        $participantsSummary = [
+            'total' => (int) $meeting->participants_count,
+            'by_type' => $participantTypeCounts,
+        ];
+
+        $breakoutSummary = [
+            'room_count' => (int) $meeting->breakout_rooms_count,
+            'assigned_member_count' => count($allMemberIds),
+        ];
+
         return response()->json([
             'meeting' => [
                 'id' => $meeting->id,
@@ -299,12 +335,53 @@ class MeetingController extends Controller
                 'name' => $meeting->name,
                 'breakout_count' => (int) $meeting->breakout_rooms_count,
                 'has_memo' => (bool) $meeting->has_memo,
+                'has_minutes' => (bool) ($meeting->has_minutes ?? false),
             ],
             'memo_body' => $memoBody,
+            'minutes' => $this->minuteToPayload($meeting->meetingMinute),
+            'participants_summary' => $participantsSummary,
+            'breakout_summary' => $breakoutSummary,
             'participant_import' => $participant_import,
             'csv_import' => $csv_import,
             'csv_apply_logs_recent' => $csvApplyLogsRecent,
             'rooms' => $roomsWithNames,
         ]);
+    }
+
+    /**
+     * GET /api/meetings/{meetingId}/minutes — 議事録（読み取り専用）. SPEC-014.
+     */
+    public function minutes(int $meetingId): JsonResponse
+    {
+        $meeting = Meeting::query()->with('meetingMinute')->find($meetingId);
+        if (! $meeting) {
+            return response()->json(['message' => 'Meeting not found.'], 404);
+        }
+
+        return response()->json([
+            'minutes' => $this->minuteToPayload($meeting->meetingMinute),
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function minuteToPayload(?MeetingMinute $minute): ?array
+    {
+        if ($minute === null) {
+            return null;
+        }
+
+        return [
+            'body_markdown' => $minute->body_markdown,
+            'source_path' => $minute->source_path,
+            'doc_type' => $minute->doc_type,
+            'session_date' => $minute->session_date?->format('Y-m-d'),
+            'session_time_jst' => $minute->session_time_jst,
+            'session_time_note' => $minute->session_time_note,
+            'format' => $minute->format,
+            'source' => $minute->source,
+            'imported_at' => $minute->imported_at?->toIso8601String(),
+        ];
     }
 }
