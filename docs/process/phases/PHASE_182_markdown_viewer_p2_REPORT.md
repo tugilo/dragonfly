@@ -15,7 +15,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後に記録） |
+| merge commit id | 52f2e8ba25a8c485ade6c37287db168661586ad9 |
 | merge 元ブランチ名 | feature/phase182-markdown-viewer-p2 |
 | target branch | develop |
 | phase id | 182 |
@@ -26,3 +26,17 @@
 | scope check | OK |
 | ssot check | OK |
 | dod check | OK |
+
+### changed files
+
+```
+docs/INDEX.md
+docs/SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md
+docs/dragonfly_progress.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_182_markdown_viewer_p2_PLAN.md
+docs/process/phases/PHASE_182_markdown_viewer_p2_REPORT.md
+docs/process/phases/PHASE_182_markdown_viewer_p2_WORKLOG.md
+www/resources/js/admin/pages/MeetingsList.jsx
+www/resources/js/admin/pages/OneToOnesEdit.jsx
+```
