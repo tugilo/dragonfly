@@ -15,7 +15,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後に記録） |
+| merge commit id | ce3c5fc4512c04c7bc7971c23ebea8c5282e0252 |
 | merge 元ブランチ名 | feature/phase183-meetings-drawer-ux |
 | target branch | develop |
 | phase id | 183 |
