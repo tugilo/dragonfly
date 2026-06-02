@@ -181,6 +181,7 @@
 | 180 | 定例会議事録 DB 化（meeting_minutes・import・Meetings 閲覧） | implement | completed | feature/phase180-chapter-minutes-db | 2026-06-02 |
 | 181 | Markdown ビューア P1（remark-gfm・見出し階層） | implement | completed | feature/phase181-markdown-viewer-gfm | 2026-06-02 |
 | 182 | Markdown ビューア P2（例会メモ・1to1 履歴メモ） | implement | completed | feature/phase182-markdown-viewer-p2 | 2026-06-02 |
+| 183 | Meetings Drawer UX（議事録モーダル・参加者PDF導線） | implement | completed | feature/phase183-meetings-drawer-ux | 2026-06-02 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
