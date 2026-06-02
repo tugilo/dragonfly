@@ -16,7 +16,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後に記録） |
+| merge commit id | 90dd1515d93aaf46007183e62f0d43392e12cff7 |
 | merge 元ブランチ名 | feature/phase181-markdown-viewer-gfm |
 | target branch | develop |
 | phase id | 181 |
@@ -27,3 +27,18 @@
 | scope check | OK |
 | ssot check | OK |
 | dod check | OK |
+
+### changed files
+
+```
+docs/INDEX.md
+docs/SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md
+docs/dragonfly_progress.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_181_markdown_viewer_gfm_PLAN.md
+docs/process/phases/PHASE_181_markdown_viewer_gfm_REPORT.md
+docs/process/phases/PHASE_181_markdown_viewer_gfm_WORKLOG.md
+www/package-lock.json
+www/package.json
+www/resources/js/admin/components/MarkdownView.jsx
+```
