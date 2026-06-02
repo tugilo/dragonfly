@@ -1,0 +1,315 @@
+
+
+店名	日付	category	action	label	件数	時	分	秒
+宝来屋	2026-03-27	501_Splash	AppStart	location=0,0,0	1	14	18	03
+宝来屋	2026-03-28	501_Splash	AppStart	location=0,0,0	1	18	24	29
+宝来屋	2026-03-30	501_Splash	AppStart	location=0,0,0	1	17	54	42
+宝来屋	2026-03-31	501_Splash	AppStart	location=0,0,0	1	17	58	50
+宝来屋	2026-04-03	501_Splash	AppStart	location=0,0,0	1	14	14	15
+宝来屋	2026-04-04	501_Splash	AppStart	location=0,0,0	1	17	09	23
+宝来屋	2026-04-06	501_Splash	AppStart	location=0,0,0	1	18	49	33
+宝来屋	2026-04-07	501_Splash	AppStart	location=0,0,0	1	18	52	20
+宝来屋	2026-04-09	501_Splash	AppStart	location=0,0,0	1	12	45	42
+宝来屋	2026-04-11	501_Splash	AppStart	location=0,0,0	1	17	45	32
+宝来屋	2026-04-14	501_Splash	AppStart	location=0,0,0	2	18	35	38
+宝来屋	2026-04-15	501_Splash	AppStart	location=0,0,0	1	18	03	48
+宝来屋	2026-04-16	501_Splash	AppStart	location=0,0,0	1	12	57	26
+宝来屋	2026-04-17	501_Splash	AppStart	location=0,0,0	1	18	00	18
+宝来屋	2026-04-18	501_Splash	AppStart	location=0,0,0	1	18	22	37
+宝来屋	2026-04-20	501_Splash	AppStart	location=0,0,0	1	17	31	18
+宝来屋	2026-04-21	501_Splash	AppStart	location=0,0,0	1	18	39	08
+宝来屋	2026-04-22	501_Splash	AppStart	location=0,0,0	1	17	53	14
+宝来屋	2026-04-23	501_Splash	AppStart	location=0,0,0	1	17	18	53
+宝来屋	2026-04-25	501_Splash	AppStart	location=35.02407,138.4879,10.0558	1	11	24	40
+宝来屋	2026-04-23	501_Splash	AppStart	location=35.10061,138.8573,17.65808	1	14	28	28
+宝来屋	2026-04-07	501_Splash	AppStart	location=35.22775,138.6021,168	1	17	55	00
+宝来屋	2026-04-09	501_Splash	AppStart	location=35.22776,138.6021,168	1	20	57	32
+宝来屋	2026-03-28	501_Splash	AppStart	location=35.22894,138.6007,171.4	1	16	25	51
+宝来屋	2026-04-03	501_Splash	AppStart	location=35.22958,138.6004,172.8	1	12	31	23
+宝来屋	2026-04-01	501_Splash	AppStart	location=35.2296,138.6004,172.8	1	08	33	17
+宝来屋	2026-04-14	501_Splash	AppStart	location=35.22962,138.6004,172.7	1	16	55	09
+宝来屋	2026-04-17	501_Splash	AppStart	location=35.22964,138.6005,172.7	1	12	59	12
+宝来屋	2026-03-27	501_Splash	AppStart	location=35.22974,138.6004,172.8	1	12	19	46
+宝来屋	2026-03-29	501_Splash	AppStart	location=AppDeny,AppDeny,AppDeny	1	17	57	12
+宝来屋	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=041ABF62-9336-469A-9642-8F647872136D_202407221052273437	1	14	28	27
+宝来屋	2026-04-25	501_Splash	CreateUdidTextOnStorage	udid=566DD462-4ACD-4EEC-BA80-F532BA98448A_202406091756061532	1	11	24	39
+宝来屋	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	14	18	02
+宝来屋	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	24	28
+宝来屋	2026-03-30	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	54	41
+宝来屋	2026-03-31	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	58	49
+宝来屋	2026-04-02	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	12	52	18
+宝来屋	2026-04-04	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	09	22
+宝来屋	2026-04-06	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	49	32
+宝来屋	2026-04-07	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	52	19
+宝来屋	2026-04-09	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	12	45	41
+宝来屋	2026-04-11	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	45	31
+宝来屋	2026-04-13	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	19	56	58
+宝来屋	2026-04-14	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	35	46
+宝来屋	2026-04-15	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	03	47
+宝来屋	2026-04-16	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	12	57	25
+宝来屋	2026-04-17	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	00	17
+宝来屋	2026-04-18	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	22	36
+宝来屋	2026-04-20	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	31	17
+宝来屋	2026-04-21	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	18	39	07
+宝来屋	2026-04-22	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	53	13
+宝来屋	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926	1	17	18	52
+宝来屋	2026-03-27	502_Title	CloseScene		2	12	19	52
+宝来屋	2026-03-28	502_Title	CloseScene		2	16	25	56
+宝来屋	2026-03-30	502_Title	CloseScene		1	17	54	45
+宝来屋	2026-03-31	502_Title	CloseScene		1	17	58	54
+宝来屋	2026-04-01	502_Title	CloseScene		1	08	33	20
+宝来屋	2026-04-03	502_Title	CloseScene		2	12	31	34
+宝来屋	2026-04-04	502_Title	CloseScene		1	17	09	26
+宝来屋	2026-04-06	502_Title	CloseScene		1	18	49	36
+宝来屋	2026-04-07	502_Title	CloseScene		1	18	52	23
+宝来屋	2026-04-09	502_Title	CloseScene		1	12	45	46
+宝来屋	2026-04-11	502_Title	CloseScene		1	17	45	35
+宝来屋	2026-04-14	502_Title	CloseScene		3	16	55	13
+宝来屋	2026-04-15	502_Title	CloseScene		1	18	03	52
+宝来屋	2026-04-16	502_Title	CloseScene		1	12	57	32
+宝来屋	2026-04-17	502_Title	CloseScene		2	12	59	17
+宝来屋	2026-04-18	502_Title	CloseScene		1	18	22	42
+宝来屋	2026-04-20	502_Title	CloseScene		1	17	31	21
+宝来屋	2026-04-21	502_Title	CloseScene		1	18	39	11
+宝来屋	2026-04-22	502_Title	CloseScene		1	17	53	18
+宝来屋	2026-04-23	502_Title	CloseScene		1	17	18	56
+宝来屋	2026-03-27	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	2	12	19	52
+宝来屋	2026-03-28	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	2	16	25	56
+宝来屋	2026-03-30	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	54	45
+宝来屋	2026-03-31	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	58	54
+宝来屋	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	08	33	20
+宝来屋	2026-04-03	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	2	12	31	34
+宝来屋	2026-04-04	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	09	25
+宝来屋	2026-04-06	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	18	49	36
+宝来屋	2026-04-07	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	18	52	23
+宝来屋	2026-04-09	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	12	45	45
+宝来屋	2026-04-11	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	45	34
+宝来屋	2026-04-14	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	3	16	55	13
+宝来屋	2026-04-15	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	18	03	51
+宝来屋	2026-04-16	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	12	57	31
+宝来屋	2026-04-17	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	2	12	59	17
+宝来屋	2026-04-18	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	18	22	41
+宝来屋	2026-04-20	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	31	21
+宝来屋	2026-04-21	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	18	39	11
+宝来屋	2026-04-22	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	53	18
+宝来屋	2026-04-23	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=610,passphrase=for-passphrase-610	1	17	18	56
+宝来屋	2026-04-23	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=041ABF62-9336-469A-9642-8F647872136D_202407221052273437&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639125513149038000&amp;location=35.10077,138.8572,28.01725&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	14	28	35
+宝来屋	2026-04-25	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://x.com/SZ_FAVORONE?AndroidAlwaysOpenExternalBrowser=true&amp;is_use_inner_browser=1&amp;now=639127130931527720	1	11	24	53
+宝来屋	2026-04-15	502_Title	TapedMapPin	origin_user_id=417	1	19	46	29
+宝来屋	2026-04-18	502_Title	TapedMapPin	origin_user_id=417	1	16	24	03
+宝来屋	2026-03-27	503_Subtitle	CloseScene		2	12	20	04
+宝来屋	2026-03-28	503_Subtitle	CloseScene		5	16	26	44
+宝来屋	2026-03-30	503_Subtitle	CloseScene		2	17	54	40
+宝来屋	2026-03-31	503_Subtitle	CloseScene		2	17	58	47
+宝来屋	2026-04-01	503_Subtitle	CloseScene		2	08	33	26
+宝来屋	2026-04-02	503_Subtitle	CloseScene		1	12	52	15
+宝来屋	2026-04-03	503_Subtitle	CloseScene		3	12	31	42
+宝来屋	2026-04-04	503_Subtitle	CloseScene		2	17	09	36
+宝来屋	2026-04-06	503_Subtitle	CloseScene		2	18	49	32
+宝来屋	2026-04-07	503_Subtitle	CloseScene		2	18	52	27
+宝来屋	2026-04-09	503_Subtitle	CloseScene		1	12	45	49
+宝来屋	2026-04-11	503_Subtitle	CloseScene		1	17	45	38
+宝来屋	2026-04-14	503_Subtitle	CloseScene		4	16	55	23
+宝来屋	2026-04-15	503_Subtitle	CloseScene		1	18	03	55
+宝来屋	2026-04-16	503_Subtitle	CloseScene		3	12	57	24
+宝来屋	2026-04-17	503_Subtitle	CloseScene		2	12	59	24
+宝来屋	2026-04-18	503_Subtitle	CloseScene		2	18	22	33
+宝来屋	2026-04-20	503_Subtitle	CloseScene		1	17	31	24
+宝来屋	2026-04-21	503_Subtitle	CloseScene		2	18	39	03
+宝来屋	2026-04-22	503_Subtitle	CloseScene		3	17	53	12
+宝来屋	2026-04-23	503_Subtitle	CloseScene		1	17	18	59
+宝来屋	2026-03-28	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	16	27	30
+宝来屋	2026-04-01	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	08	33	32
+宝来屋	2026-04-03	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	12	32	10
+宝来屋	2026-04-14	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	16	55	36
+宝来屋	2026-03-27	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	12	20	03
+宝来屋	2026-03-28	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	4	16	26	43
+宝来屋	2026-03-30	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	17	54	48
+宝来屋	2026-03-31	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	17	58	46
+宝来屋	2026-04-01	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	08	33	25
+宝来屋	2026-04-02	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	12	52	15
+宝来屋	2026-04-03	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	12	31	41
+宝来屋	2026-04-04	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	17	09	36
+宝来屋	2026-04-06	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	18	49	39
+宝来屋	2026-04-07	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	18	52	26
+宝来屋	2026-04-09	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	12	45	48
+宝来屋	2026-04-11	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	17	45	37
+宝来屋	2026-04-14	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	3	16	55	22
+宝来屋	2026-04-15	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	18	03	55
+宝来屋	2026-04-16	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	3	12	57	24
+宝来屋	2026-04-17	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	12	59	23
+宝来屋	2026-04-18	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	18	22	33
+宝来屋	2026-04-20	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	17	31	24
+宝来屋	2026-04-21	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	2	18	39	02
+宝来屋	2026-04-22	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	3	17	53	11
+宝来屋	2026-04-23	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=610,passphrase=	1	17	18	59
+宝来屋	2026-04-04	503_Subtitle	OpenUrl(ARSceneGuiButton:netshop)	url=https://y-houraiya.com/products/list?now=639109193668836040	1	17	09	26
+宝来屋	2026-03-27	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639102107929911400	1	12	19	54
+宝来屋	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639103119567140130	1	16	25	58
+宝来屋	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639103120289967680	1	16	27	10
+宝来屋	2026-04-01	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639106292025514880	1	08	33	23
+宝来屋	2026-04-03	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639108162960134830	1	12	31	36
+宝来屋	2026-04-14	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639117825189891020	1	16	55	19
+宝来屋	2026-04-17	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639120275589128690	1	12	59	20
+宝来屋	2026-03-27	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102178880374370	1	14	18	08
+宝来屋	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103190645048870	1	18	24	24
+宝来屋	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103190744134020	1	18	24	34
+宝来屋	2026-03-30	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639104900803174080	1	17	54	40
+宝来屋	2026-03-30	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639104900862545260	1	17	54	46
+宝来屋	2026-03-31	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639105767242884380	1	17	58	44
+宝来屋	2026-03-31	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639105767365668690	1	17	58	56
+宝来屋	2026-04-02	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639107311327461380	1	12	52	13
+宝来屋	2026-04-03	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639108224593054880	1	14	14	19
+宝来屋	2026-04-04	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639109193735260670	1	17	09	33
+宝来屋	2026-04-04	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639109193903438450	1	17	09	50
+宝来屋	2026-04-06	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639110981774109640	1	18	49	37
+宝来屋	2026-04-07	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639111847448095510	1	18	52	24
+宝来屋	2026-04-07	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639111847543167110	1	18	52	34
+宝来屋	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639113355470551740	1	12	45	47
+宝来屋	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115263358928310	1	17	45	36
+宝来屋	2026-04-14	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639117885426754360	1	18	35	42
+宝来屋	2026-04-14	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639117885503808090	1	18	35	50
+宝来屋	2026-04-15	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639118730332071730	1	18	03	53
+宝来屋	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639119410426536770	1	12	57	22
+宝来屋	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639119410532249120	1	12	57	33
+宝来屋	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639119410703268540	1	12	57	50
+宝来屋	2026-04-17	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639120456231209940	1	18	00	23
+宝来屋	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121333511247500	1	18	22	31
+宝来屋	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121333629012870	1	18	22	43
+宝来屋	2026-04-20	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639123030825898710	1	17	31	22
+宝来屋	2026-04-21	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639123935409500780	1	18	39	01
+宝来屋	2026-04-21	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639123935521922070	1	18	39	12
+宝来屋	2026-04-22	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639124771890945800	1	17	53	09
+宝来屋	2026-04-22	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639124772000322520	1	17	53	20
+宝来屋	2026-04-22	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639124772175794590	1	17	53	37
+宝来屋	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639125615372567820	1	17	18	57
+宝来屋	2026-03-28	523_QrCodeReader	CloseScene		4	16	27	08
+宝来屋	2026-03-30	523_QrCodeReader	CloseScene		1	17	54	39
+宝来屋	2026-03-31	523_QrCodeReader	CloseScene		1	17	58	43
+宝来屋	2026-04-01	523_QrCodeReader	CloseScene		1	08	33	29
+宝来屋	2026-04-02	523_QrCodeReader	CloseScene		2	12	52	12
+宝来屋	2026-04-03	523_QrCodeReader	CloseScene		1	12	32	06
+宝来屋	2026-04-04	523_QrCodeReader	CloseScene		1	17	09	49
+宝来屋	2026-04-06	523_QrCodeReader	CloseScene		1	18	49	31
+宝来屋	2026-04-07	523_QrCodeReader	CloseScene		1	18	52	33
+宝来屋	2026-04-09	523_QrCodeReader	CloseScene		1	12	45	41
+宝来屋	2026-04-13	523_QrCodeReader	CloseScene		1	19	56	58
+宝来屋	2026-04-14	523_QrCodeReader	CloseScene		2	16	55	34
+宝来屋	2026-04-15	523_QrCodeReader	CloseScene		1	18	03	47
+宝来屋	2026-04-16	523_QrCodeReader	CloseScene		3	12	57	22
+宝来屋	2026-04-17	523_QrCodeReader	CloseScene		2	12	59	32
+宝来屋	2026-04-18	523_QrCodeReader	CloseScene		1	18	22	30
+宝来屋	2026-04-21	523_QrCodeReader	CloseScene		2	18	39	00
+宝来屋	2026-04-22	523_QrCodeReader	CloseScene		2	17	53	13
+宝来屋	2026-03-28	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	2	16	27	08
+宝来屋	2026-04-01	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	08	33	29
+宝来屋	2026-04-03	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	12	32	06
+宝来屋	2026-04-14	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	16	55	34
+宝来屋	2026-04-17	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	12	59	31
+宝来屋	2026-03-28	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	18	24	23
+宝来屋	2026-03-30	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	17	54	39
+宝来屋	2026-03-31	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	17	58	43
+宝来屋	2026-04-02	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	12	52	12
+宝来屋	2026-04-04	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	2	17	09	21
+宝来屋	2026-04-06	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	18	49	31
+宝来屋	2026-04-07	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	18	52	32
+宝来屋	2026-04-13	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	19	56	58
+宝来屋	2026-04-16	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	2	12	57	21
+宝来屋	2026-04-18	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	18	22	30
+宝来屋	2026-04-21	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	2	18	39	00
+宝来屋	2026-04-22	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	17	53	36
+宝来屋	2026-03-27	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639102108052303490	1	12	20	06
+宝来屋	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639103120373627820	1	16	27	19
+宝来屋	2026-04-01	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639106292065559200	1	08	33	27
+宝来屋	2026-04-03	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639108163024983090	1	12	31	43
+宝来屋	2026-04-14	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639117825286693940	1	16	55	29
+宝来屋	2026-04-17	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639120275652403730	1	12	59	26
+宝来屋	2026-03-27	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639102178926687090	1	14	18	13
+宝来屋	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639103190808853320	1	18	24	41
+宝来屋	2026-03-30	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639104900913242190	1	17	54	51
+宝来屋	2026-03-31	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639105767283976930	1	17	58	48
+宝来屋	2026-04-02	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639107311375858910	1	12	52	18
+宝来屋	2026-04-03	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639108224623748960	1	14	14	22
+宝来屋	2026-04-04	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639109193933465160	1	17	09	53
+宝来屋	2026-04-06	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639110981806151700	1	18	49	41
+宝来屋	2026-04-07	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639111847489110970	1	18	52	29
+宝来屋	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639113355504230420	1	12	45	50
+宝来屋	2026-04-11	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115263384593170	1	17	45	38
+宝来屋	2026-04-14	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639117885540821780	1	18	35	54
+宝来屋	2026-04-15	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639118730398452850	1	18	03	59
+宝来屋	2026-04-16	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639119410584911780	1	12	57	38
+宝来屋	2026-04-17	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639120456288582130	1	18	00	29
+宝来屋	2026-04-18	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639121333678032570	1	18	22	48
+宝来屋	2026-04-20	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639123030874230960	1	17	31	27
+宝来屋	2026-04-21	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639123935465210330	1	18	39	07
+宝来屋	2026-04-21	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639123935554923690	1	18	39	15
+宝来屋	2026-04-22	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639124772041342240	1	17	53	24
+宝来屋	2026-04-23	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639125615416590500	1	17	19	02
+宝来屋	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639103120044160650	1	16	26	46
+宝来屋	2026-03-31	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639105767508106980	1	17	59	11
+宝来屋	2026-04-04	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639109193785632760	1	17	09	38
+宝来屋	2026-04-07	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639111847627228780	1	18	52	43
+宝来屋	2026-04-16	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639119410788946360	1	12	57	59
+宝来屋	2026-04-22	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;now=639124772242827460	1	17	53	44
+宝来屋	2026-04-03	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.2296,138.6004,172.8	1	12	31	42
+宝来屋	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.22961,138.6004,172.8	1	16	27	18
+宝来屋	2026-03-27	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.22962,138.6004,172.8	1	12	20	06
+宝来屋	2026-04-17	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.22964,138.6006,172.8	1	12	59	26
+宝来屋	2026-04-01	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.22965,138.6004,172.8	1	08	33	26
+宝来屋	2026-04-14	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=35.22966,138.6004,172.7	1	16	55	29
+宝来屋	2026-03-27	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	14	18	12
+宝来屋	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	24	40
+宝来屋	2026-03-30	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	54	51
+宝来屋	2026-03-31	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	58	48
+宝来屋	2026-04-02	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	52	17
+宝来屋	2026-04-03	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	14	14	22
+宝来屋	2026-04-04	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	09	53
+宝来屋	2026-04-06	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	49	40
+宝来屋	2026-04-07	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	52	28
+宝来屋	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	45	50
+宝来屋	2026-04-11	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	45	38
+宝来屋	2026-04-14	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	35	53
+宝来屋	2026-04-15	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	03	59
+宝来屋	2026-04-16	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	57	38
+宝来屋	2026-04-17	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	18	00	28
+宝来屋	2026-04-18	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	2	18	22	35
+宝来屋	2026-04-20	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	31	27
+宝来屋	2026-04-21	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	2	18	39	06
+宝来屋	2026-04-22	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	53	24
+宝来屋	2026-04-23	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	17	19	01
+宝来屋	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=11d6f7c0b1e5bba3a62ec3e557b23a6c_202407011209582676&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=35.22964,138.6005,172.8	1	16	26	45
+宝来屋	2026-03-31	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=0,0,0	1	17	59	10
+宝来屋	2026-04-04	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=0,0,0	1	17	09	38
+宝来屋	2026-04-07	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=0,0,0	1	18	52	42
+宝来屋	2026-04-16	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=0,0,0	1	12	57	58
+宝来屋	2026-04-22	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=F8987DF3-6B9C-41BA-8955-13BCAB806ACE_202406121954456926&amp;application_id=15&amp;LogChannelId=610&amp;BrowserType=fullWebView,location=0,0,0	1	17	53	44
+宝来屋	2026-04-21	WebEvent	WebAppUserStamps/result	CANNOT_GET_STAMP	1	18	39	15
+宝来屋	2026-03-27	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	20	06
+宝来屋	2026-03-28	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	16	27	19
+宝来屋	2026-03-30	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	54	51
+宝来屋	2026-03-31	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	58	48
+宝来屋	2026-04-01	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	08	33	27
+宝来屋	2026-04-02	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	12	52	18
+宝来屋	2026-04-03	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	31	43
+宝来屋	2026-04-04	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	09	53
+宝来屋	2026-04-06	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	18	49	41
+宝来屋	2026-04-07	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	18	52	29
+宝来屋	2026-04-09	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	12	45	50
+宝来屋	2026-04-11	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	45	39
+宝来屋	2026-04-14	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	16	55	29
+宝来屋	2026-04-15	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	18	04	00
+宝来屋	2026-04-16	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	12	57	38
+宝来屋	2026-04-17	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	59	26
+宝来屋	2026-04-18	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	18	22	48
+宝来屋	2026-04-20	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	31	27
+宝来屋	2026-04-21	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	18	39	07
+宝来屋	2026-04-22	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	53	24
+宝来屋	2026-04-23	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	17	19	02
+宝来屋	2026-03-28	WebEvent	WebAppUserStamps/view		1	16	26	39
+宝来屋	2026-04-16	WebEvent	WebAppUserStamps/view		1	12	57	54
+宝来屋	2026-03-28	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	16	26	46
+宝来屋	2026-03-31	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	17	59	11
+宝来屋	2026-04-07	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	18	52	43
+宝来屋	2026-04-16	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	12	57	59
+宝来屋	2026-04-22	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	17	53	44
+宝来屋	2026-04-04	WebEvent	WebOriginUserCoupons/result	NO_AVAILABLE_COUPON	1	17	09	38

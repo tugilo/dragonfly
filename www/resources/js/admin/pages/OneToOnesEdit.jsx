@@ -10,6 +10,7 @@ import {
     useRecordContext,
 } from 'react-admin';
 import { Box, Button, CircularProgress, Stack, TextField as MuiTextField, Typography } from '@mui/material';
+import { MarkdownView } from '../components/MarkdownView';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload, inferDurationMinutes } from '../utils/oneToOnesTransform';
 import { religoFetch } from '../religoApiFetch';
@@ -138,9 +139,9 @@ function OneToOneMemosPanel() {
                                           })
                                         : ''}
                                 </Typography>
-                                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                                    {m.body}
-                                </Typography>
+                                <Box sx={{ mt: 0.5 }}>
+                                    <MarkdownView markdown={m.body ?? ''} dense />
+                                </Box>
                             </Box>
                         ))
                     )}

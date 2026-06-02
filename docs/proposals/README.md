@@ -14,3 +14,5 @@
 | 資料 | メモ |
 |------|------|
 | [printing_business_improvement_estimate.md](printing_business_improvement_estimate.md) | 印刷業務改善の **概算見積（案・税別）**。overview / PDF スライドとセットで共有用。 |
+| [ilc_monthly_report_automation_proposal_imanishi.md](ilc_monthly_report_automation_proposal_imanishi.md) | **AiLC 月次集計表作成 自動化提案メモ**。今西さん向け。検証結果、削減効果、AI駆動Web MVP、概算費用、ROI、返信案を整理。 |
+| [ilc_monthly_report_automation_genspark_slide_prompt.md](ilc_monthly_report_automation_genspark_slide_prompt.md) | **Genspark用スライド生成プロンプト**。AiLC 月次集計表作成 自動化提案メモを、経営者向けスライドに変換するための構成・デザイン・強調点・元資料。 |

@@ -1,0 +1,514 @@
+
+
+店名	日付	category	action	label	件数	時	分	秒
+サパーン	2026-03-26	501_Splash	AppStart	location=0,0,0	1	18	22	47
+サパーン	2026-03-28	501_Splash	AppStart	location=0,0,0	3	10	45	35
+サパーン	2026-04-05	501_Splash	AppStart	location=0,0,0	1	11	40	48
+サパーン	2026-04-07	501_Splash	AppStart	location=0,0,0	1	13	09	11
+サパーン	2026-04-11	501_Splash	AppStart	location=0,0,0	1	12	01	11
+サパーン	2026-04-15	501_Splash	AppStart	location=0,0,0	1	09	26	42
+サパーン	2026-04-19	501_Splash	AppStart	location=0,0,0	3	10	55	59
+サパーン	2026-04-24	501_Splash	AppStart	location=0,0,0	2	11	31	06
+サパーン	2026-04-25	501_Splash	AppStart	location=0,0,0	1	19	46	19
+サパーン	2026-04-23	501_Splash	AppStart	location=34.73605,137.7685,10.06415	1	12	21	25
+サパーン	2026-03-27	501_Splash	AppStart	location=34.76567,137.9742,18.32144	1	17	33	49
+サパーン	2026-04-01	501_Splash	AppStart	location=34.82544,138.2471,26.16609	1	10	26	11
+サパーン	2026-04-06	501_Splash	AppStart	location=34.84259,138.312,46.5	1	17	53	16
+サパーン	2026-03-28	501_Splash	AppStart	location=34.84457,138.2599,25.5209	1	12	39	59
+サパーン	2026-04-21	501_Splash	AppStart	location=34.84644,138.2418,32.46882	1	06	04	03
+サパーン	2026-03-31	501_Splash	AppStart	location=34.8465,138.2418,30.42978	1	17	40	48
+サパーン	2026-03-31	501_Splash	AppStart	location=34.84751,138.268,14.5734	1	19	38	45
+サパーン	2026-04-14	501_Splash	AppStart	location=34.84905,138.2491,32.75797	1	22	40	44
+サパーン	2026-04-14	501_Splash	AppStart	location=34.84921,138.2491,55.05666	1	22	40	21
+サパーン	2026-04-20	501_Splash	AppStart	location=34.84955,138.2698,21.04045	1	07	10	49
+サパーン	2026-04-10	501_Splash	AppStart	location=34.84967,138.2513,30.569	1	18	02	01
+サパーン	2026-04-19	501_Splash	AppStart	location=34.85124,138.2497,39.78079	1	17	16	35
+サパーン	2026-04-19	501_Splash	AppStart	location=34.85134,138.2498,30.73483	1	19	17	33
+サパーン	2026-04-16	501_Splash	AppStart	location=34.85135,138.2498,25.73314	1	12	07	43
+サパーン	2026-04-17	501_Splash	AppStart	location=34.85135,138.2498,25.77041	1	19	46	13
+サパーン	2026-04-19	501_Splash	AppStart	location=34.85138,138.2499,19.98	1	17	16	22
+サパーン	2026-03-28	501_Splash	AppStart	location=34.85255,138.2445,28.76632	1	11	44	26
+サパーン	2026-04-21	501_Splash	AppStart	location=34.85412,138.2548,26.83088	1	13	10	41
+サパーン	2026-04-04	501_Splash	AppStart	location=34.85413,138.2548,26.19071	1	12	54	08
+サパーン	2026-04-05	501_Splash	AppStart	location=34.85416,138.2549,64.9	1	17	27	35
+サパーン	2026-03-28	501_Splash	AppStart	location=34.85584,138.2488,18.82927	1	13	20	59
+サパーン	2026-04-23	501_Splash	AppStart	location=34.85597,138.2486,19.90395	1	18	56	22
+サパーン	2026-04-19	501_Splash	AppStart	location=34.85599,138.2485,72.09875	1	12	30	38
+サパーン	2026-03-28	501_Splash	AppStart	location=34.85599,138.2487,27.76344	1	13	29	16
+サパーン	2026-04-19	501_Splash	AppStart	location=34.856,138.2485,64.9	3	11	43	21
+サパーン	2026-04-10	501_Splash	AppStart	location=34.85601,138.2483,27.58856	1	18	06	11
+サパーン	2026-03-27	501_Splash	AppStart	location=34.85602,138.2486,27.87639	1	20	35	58
+サパーン	2026-04-23	501_Splash	AppStart	location=34.85603,138.2484,18.75195	1	18	08	40
+サパーン	2026-04-18	501_Splash	AppStart	location=34.85604,138.2484,24.61235	1	21	23	56
+サパーン	2026-04-10	501_Splash	AppStart	location=34.85604,138.2486,23.28224	1	18	51	55
+サパーン	2026-04-12	501_Splash	AppStart	location=34.85606,138.2484,25.71099	1	12	59	21
+サパーン	2026-03-26	501_Splash	AppStart	location=34.85606,138.2484,27.3156	1	13	28	10
+サパーン	2026-04-12	501_Splash	AppStart	location=34.85606,138.2484,27.88986	1	13	00	19
+サパーン	2026-04-23	501_Splash	AppStart	location=34.85606,138.2484,36.71069	1	18	56	33
+サパーン	2026-03-29	501_Splash	AppStart	location=34.85606,138.2486,27.95892	1	13	30	58
+サパーン	2026-03-26	501_Splash	AppStart	location=34.85608,138.2485,27.42102	1	13	28	06
+サパーン	2026-04-12	501_Splash	AppStart	location=34.85608,138.2485,39.43996	1	13	00	16
+サパーン	2026-04-09	501_Splash	AppStart	location=34.85609,138.2485,29.52946	1	19	43	19
+サパーン	2026-04-16	501_Splash	AppStart	location=34.85611,138.2484,28.13864	1	12	39	32
+サパーン	2026-04-09	501_Splash	AppStart	location=34.85611,138.2486,24.18694	1	18	10	47
+サパーン	2026-04-16	501_Splash	AppStart	location=34.85614,138.2484,29.95746	1	13	21	53
+サパーン	2026-04-24	501_Splash	AppStart	location=34.85615,138.2485,23.67869	1	12	08	33
+サパーン	2026-03-26	501_Splash	AppStart	location=34.85622,138.2487,29.63387	1	12	38	47
+サパーン	2026-04-05	501_Splash	AppStart	location=34.85716,138.2491,65.5	1	21	06	36
+サパーン	2026-04-08	501_Splash	AppStart	location=34.86096,138.2301,69.42709	1	13	24	18
+サパーン	2026-04-11	501_Splash	AppStart	location=34.86232,138.2459,26.27238	1	20	24	18
+サパーン	2026-04-01	501_Splash	AppStart	location=34.86447,138.2639,14.59944	1	14	35	08
+サパーン	2026-03-27	501_Splash	AppStart	location=34.86743,138.2545,24.53194	1	11	20	04
+サパーン	2026-04-09	501_Splash	AppStart	location=34.86848,138.2759,16.80093	1	15	33	58
+サパーン	2026-04-19	501_Splash	AppStart	location=34.87209,138.2579,31.1192	1	18	55	44
+サパーン	2026-04-15	501_Splash	AppStart	location=34.87212,138.258,38.8057	1	12	30	14
+サパーン	2026-04-19	501_Splash	AppStart	location=34.87221,138.258,29.34024	1	18	33	10
+サパーン	2026-04-06	501_Splash	AppStart	location=34.87409,138.2584,25.024	1	11	26	38
+サパーン	2026-04-13	501_Splash	AppStart	location=34.88259,138.2567,15.98847	1	16	57	05
+サパーン	2026-04-12	501_Splash	AppStart	location=34.88259,138.2567,16.04435	1	12	23	05
+サパーン	2026-04-12	501_Splash	AppStart	location=34.8916,138.2808,4.386139	1	11	15	29
+サパーン	2026-04-01	501_Splash	AppStart	location=34.89434,138.2184,59.33378	1	16	31	27
+サパーン	2026-03-26	501_Splash	AppStart	location=34.94707,138.408,7.36075	1	21	44	45
+サパーン	2026-04-03	501_Splash	AppStart	location=34.98002,138.3936,60.6	1	12	30	32
+サパーン	2026-04-15	501_Splash	AppStart	location=35.16928,136.7261,1.910241	1	08	15	40
+サパーン	2026-04-03	501_Splash	AppStart	location=35.17656,136.7278,6.009762	1	16	09	43
+サパーン	2026-04-21	501_Splash	AppStart	location=35.66406,139.7587,4.655164	1	11	06	55
+サパーン	2026-03-29	501_Splash	AppStart	location=AppDeny,AppDeny,AppDeny	2	09	51	16
+サパーン	2026-04-19	501_Splash	AppStart	location=AppDeny,AppDeny,AppDeny	1	19	04	47
+サパーン	2026-04-09	501_Splash	CreateUdidTextOnStorage	udid=00BAAC58-01F7-4A46-99DB-2317FB3DC1C5_202306100705045294	1	15	33	56
+サパーン	2026-04-01	501_Splash	CreateUdidTextOnStorage	udid=0140A0C5-F1E6-4B18-98C6-90BE704B0776_202412091329123651	1	16	31	27
+サパーン	2026-03-31	501_Splash	CreateUdidTextOnStorage	udid=091885BC-0547-4D05-998A-DAFA49323EB5_202305081305378488	1	19	38	44
+サパーン	2026-04-18	501_Splash	CreateUdidTextOnStorage	udid=097618CA-D421-4A1B-8429-548BE05E10DF_201905120105070892	1	21	23	55
+サパーン	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962	2	12	38	46
+サパーン	2026-04-10	501_Splash	CreateUdidTextOnStorage	udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962	2	18	02	00
+サパーン	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962	1	12	59	21
+サパーン	2026-04-21	501_Splash	CreateUdidTextOnStorage	udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962	1	06	04	02
+サパーン	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962	2	18	08	39
+サパーン	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=1C67413E-9851-4CBB-B14B-550D7F619B46_201904151659293438	1	12	21	23
+サパーン	2026-04-06	501_Splash	CreateUdidTextOnStorage	udid=1D01426C-1695-4A7C-96A3-644AEA751CD7_202508061126231221	1	11	26	37
+サパーン	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=228F218E-9032-4C3B-BC7D-09475A3BC24A_202204091853173257	1	18	55	43
+サパーン	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908	2	17	33	48
+サパーン	2026-04-09	501_Splash	CreateUdidTextOnStorage	udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908	2	18	10	46
+サパーン	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=24EB1698-A536-4817-BD95-E54FEE91CA0C_202508231904330952	1	18	33	09
+サパーン	2026-04-15	501_Splash	CreateUdidTextOnStorage	udid=2F355171-30C0-447C-A192-9C8578268C01_202506082320417318	1	09	26	40
+サパーン	2026-04-25	501_Splash	CreateUdidTextOnStorage	udid=2F355171-30C0-447C-A192-9C8578268C01_202506082320417318	1	19	46	18
+サパーン	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368	1	13	20	56
+サパーン	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	3	10	45	34
+サパーン	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	3	10	55	58
+サパーン	2026-04-11	501_Splash	CreateUdidTextOnStorage	udid=3BE5633F-4245-4FB1-8D10-EB0DDE788E25_202506191236431093	1	20	24	16
+サパーン	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708	1	13	28	04
+サパーン	2026-03-31	501_Splash	CreateUdidTextOnStorage	udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708	1	17	40	46
+サパーン	2026-04-10	501_Splash	CreateUdidTextOnStorage	udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708	1	18	06	09
+サパーン	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708	1	13	00	18
+サパーン	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708	1	18	56	32
+サパーン	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=467744B2-8085-45B9-95AE-768DB6F93AE9_201904151427099065	1	21	44	42
+サパーン	2026-04-03	501_Splash	CreateUdidTextOnStorage	udid=54BF9141-B927-4E5C-AADB-ED142386B993_202302181632588150	1	16	09	42
+サパーン	2026-04-15	501_Splash	CreateUdidTextOnStorage	udid=54BF9141-B927-4E5C-AADB-ED142386B993_202302181632588150	1	08	15	39
+サパーン	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=54BF9141-B927-4E5C-AADB-ED142386B993_202302181632588150	3	17	16	21
+サパーン	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=5888F40D-06A4-4970-B05D-7639B15274DD_202003031536348700	1	12	23	04
+サパーン	2026-04-13	501_Splash	CreateUdidTextOnStorage	udid=5888F40D-06A4-4970-B05D-7639B15274DD_202003031536348700	1	16	57	04
+サパーン	2026-04-15	501_Splash	CreateUdidTextOnStorage	udid=627FE56E-7CE6-4211-B09F-BF534A8D4640_201907301211452541	1	12	30	13
+サパーン	2026-04-04	501_Splash	CreateUdidTextOnStorage	udid=6C25F09E-17DE-47F0-A9FB-08D7ED76CB11_202509232012306410	1	12	54	02
+サパーン	2026-04-01	501_Splash	CreateUdidTextOnStorage	udid=739E992F-1384-44F0-BC29-E57F06FDD4A6_202601220949131495	1	14	35	05
+サパーン	2026-04-21	501_Splash	CreateUdidTextOnStorage	udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208	1	13	10	40
+サパーン	2026-04-24	501_Splash	CreateUdidTextOnStorage	udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128	2	11	31	06
+サパーン	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363	3	11	44	23
+サパーン	2026-04-05	501_Splash	CreateUdidTextOnStorage	udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513	1	11	40	47
+サパーン	2026-04-07	501_Splash	CreateUdidTextOnStorage	udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513	1	13	09	10
+サパーン	2026-04-11	501_Splash	CreateUdidTextOnStorage	udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513	1	12	01	09
+サパーン	2026-04-01	501_Splash	CreateUdidTextOnStorage	udid=939BD87A-A857-4A78-9451-CE3D81CA3C12_202504161249023913	1	10	26	10
+サパーン	2026-03-29	501_Splash	CreateUdidTextOnStorage	udid=9531FDF2-6F4D-4E49-BFC1-C4E79C7C70D5_201907141318099970	1	13	30	57
+サパーン	2026-04-20	501_Splash	CreateUdidTextOnStorage	udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546	1	07	10	47
+サパーン	2026-04-24	501_Splash	CreateUdidTextOnStorage	udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546	1	12	08	31
+サパーン	2026-04-21	501_Splash	CreateUdidTextOnStorage	udid=9E16B093-C7D4-4C7F-9290-D1469F81A211_202603261350528444	1	11	06	54
+サパーン	2026-04-14	501_Splash	CreateUdidTextOnStorage	udid=A14CB584-EF4B-4089-94F6-98E3CE580E3A_202407211012368181	2	22	40	20
+サパーン	2026-04-16	501_Splash	CreateUdidTextOnStorage	udid=AE6013F1-8F0C-45D7-B4E8-09F3660C3B3E_202604101043171899	1	12	07	42
+サパーン	2026-04-17	501_Splash	CreateUdidTextOnStorage	udid=AE6013F1-8F0C-45D7-B4E8-09F3660C3B3E_202604101043171899	1	19	46	12
+サパーン	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=B403CA45-9590-4CC0-91B6-83A20B14F34F_202411091328529885	1	13	00	15
+サパーン	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=C23A3309-BC3D-4D9E-A785-176DF7BD27E1_202603251335551997	1	11	20	03
+サパーン	2026-04-08	501_Splash	CreateUdidTextOnStorage	udid=C23A3309-BC3D-4D9E-A785-176DF7BD27E1_202603251335551997	1	13	24	17
+サパーン	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=DE81CCDF-4EF0-443F-B2FE-2FFBE49276D6_201906300938551267	1	11	15	28
+サパーン	2026-04-16	501_Splash	CreateUdidTextOnStorage	udid=F5D874E3-3C01-4616-A8D9-7E3D74CA6E06_202510191234158882	2	12	39	31
+サパーン	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=FD2EA3DB-5B2F-4506-8DDE-D012FF6C2B39_202002282014342085	1	18	22	46
+サパーン	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=FF2503BD-310A-42AA-93BC-1861B787DF06_202412071341232445	1	12	39	58
+サパーン	2026-04-05	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=518,passphrase=for-passphrase-518	1	17	27	35
+サパーン	2026-04-09	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=518,passphrase=for-passphrase-518	1	15	33	58
+サパーン	2026-03-28	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	12	07	13
+サパーン	2026-04-12	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	17	24	11
+サパーン	2026-04-18	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	21	20	17
+サパーン	2026-03-26	502_Title	CloseScene		5	12	38	51
+サパーン	2026-03-27	502_Title	CloseScene		2	17	33	54
+サパーン	2026-03-28	502_Title	CloseScene		11	10	46	12
+サパーン	2026-03-29	502_Title	CloseScene		2	09	51	45
+サパーン	2026-03-31	502_Title	CloseScene		3	17	40	51
+サパーン	2026-04-01	502_Title	CloseScene		4	10	26	40
+サパーン	2026-04-02	502_Title	CloseScene		1	23	40	45
+サパーン	2026-04-03	502_Title	CloseScene		2	12	31	00
+サパーン	2026-04-04	502_Title	CloseScene		2	12	54	15
+サパーン	2026-04-05	502_Title	CloseScene		2	11	40	53
+サパーン	2026-04-06	502_Title	CloseScene		3	11	26	43
+サパーン	2026-04-07	502_Title	CloseScene		1	13	09	21
+サパーン	2026-04-09	502_Title	CloseScene		4	15	33	56
+サパーン	2026-04-10	502_Title	CloseScene		4	18	02	06
+サパーン	2026-04-11	502_Title	CloseScene		2	12	01	35
+サパーン	2026-04-12	502_Title	CloseScene		6	11	15	36
+サパーン	2026-04-13	502_Title	CloseScene		1	16	57	09
+サパーン	2026-04-14	502_Title	CloseScene		1	22	40	48
+サパーン	2026-04-15	502_Title	CloseScene		2	09	26	46
+サパーン	2026-04-16	502_Title	CloseScene		4	12	07	50
+サパーン	2026-04-17	502_Title	CloseScene		1	19	46	30
+サパーン	2026-04-18	502_Title	CloseScene		1	21	24	01
+サパーン	2026-04-19	502_Title	CloseScene		9	10	56	04
+サパーン	2026-04-20	502_Title	CloseScene		2	07	11	02
+サパーン	2026-04-21	502_Title	CloseScene		2	06	04	07
+サパーン	2026-04-23	502_Title	CloseScene		3	18	08	43
+サパーン	2026-04-24	502_Title	CloseScene		5	10	31	29
+サパーン	2026-04-25	502_Title	CloseScene		1	19	46	25
+サパーン	2026-03-31	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-208	1	19	38	53
+サパーン	2026-04-13	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-208	1	16	57	08
+サパーン	2026-04-15	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-208	1	12	30	22
+サパーン	2026-04-19	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-208	2	18	33	17
+サパーン	2026-04-20	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-210	1	07	11	02
+サパーン	2026-04-25	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-210	1	19	46	24
+サパーン	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-215	1	15	23	20
+サパーン	2026-04-06	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-215	1	17	53	32
+サパーン	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-252	1	10	26	39
+サパーン	2026-04-02	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-252	1	23	40	45
+サパーン	2026-03-31	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-353	1	19	40	05
+サパーン	2026-04-09	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-355	1	20	03	43
+サパーン	2026-04-12	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-355	3	11	15	36
+サパーン	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=195,passphrase=for-passphrase-195	1	13	36	54
+サパーン	2026-03-26	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=204,passphrase=for-passphrase-204	1	21	45	44
+サパーン	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=204,passphrase=for-passphrase-204	1	14	35	13
+サパーン	2026-03-28	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=463,passphrase=for-passphrase-463	1	12	40	05
+サパーン	2026-04-04	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=509,passphrase=for-passphrase-509	1	12	54	15
+サパーン	2026-04-21	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=509,passphrase=for-passphrase-509	1	13	10	48
+サパーン	2026-04-24	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=509,passphrase=for-passphrase-509	1	10	31	29
+サパーン	2026-04-06	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=518,passphrase=for-passphrase-518	1	11	26	43
+サパーン	2026-04-04	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=630,passphrase=for-passphrase-630	1	13	46	49
+サパーン	2026-03-26	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	4	12	38	51
+サパーン	2026-03-27	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	2	17	33	53
+サパーン	2026-03-28	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	10	10	46	12
+サパーン	2026-03-29	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	13	31	06
+サパーン	2026-03-31	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	17	40	51
+サパーン	2026-04-03	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	12	31	00
+サパーン	2026-04-05	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	11	40	53
+サパーン	2026-04-07	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	13	09	21
+サパーン	2026-04-09	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	2	18	11	00
+サパーン	2026-04-10	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	4	18	02	05
+サパーン	2026-04-11	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	2	12	01	35
+サパーン	2026-04-12	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	3	12	59	29
+サパーン	2026-04-15	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	09	26	45
+サパーン	2026-04-16	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	3	12	07	50
+サパーン	2026-04-18	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	21	24	01
+サパーン	2026-04-19	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	6	10	56	04
+サパーン	2026-04-21	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	1	06	04	06
+サパーン	2026-04-23	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	3	18	08	43
+サパーン	2026-04-24	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=636,passphrase=for-passphrase-636	4	11	31	13
+サパーン	2026-04-20	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=672,passphrase=for-passphrase-672	1	09	00	56
+サパーン	2026-03-29	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=676,passphrase=for-passphrase-676	1	09	51	45
+サパーン	2026-04-03	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=676,passphrase=for-passphrase-676	1	15	54	59
+サパーン	2026-04-14	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=682,passphrase=for-passphrase-682	1	22	40	48
+サパーン	2026-04-16	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=682,passphrase=for-passphrase-682	1	13	38	10
+サパーン	2026-04-17	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=682,passphrase=for-passphrase-682	1	19	46	29
+サパーン	2026-04-19	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=682,passphrase=for-passphrase-682	1	19	17	36
+サパーン	2026-03-29	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=599_Reset,channel=-1,passphrase=	1	09	51	38
+サパーン	2026-04-14	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=599_Reset,channel=-1,passphrase=	1	22	40	43
+サパーン	2026-04-19	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=599_Reset,channel=-1,passphrase=	1	17	16	34
+サパーン	2026-04-14	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/10356/images_bdc5be2b3637bf0d600a4292f2ce7f46_original.jpg&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639118032368714490&amp;udid=A14CB584-EF4B-4089-94F6-98E3CE580E3A_202407211012368181	1	22	40	36
+サパーン	2026-03-27	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9535/images_9c3d288540728f15be10e1bccf68f254_original.jpg&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102072828374690&amp;udid=C23A3309-BC3D-4D9E-A785-176DF7BD27E1_202603251335551997	1	11	21	22
+サパーン	2026-04-23	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=1C67413E-9851-4CBB-B14B-550D7F619B46_201904151659293438&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639125437116780920	1	12	21	51
+サパーン	2026-03-28	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639102916684530560	1	10	47	48
+サパーン	2026-04-18	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=4656a2a0f71a74d6b48df93eabd266f8_202509092211556605&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639121449957068820	1	21	36	35
+サパーン	2026-04-19	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=4656a2a0f71a74d6b48df93eabd266f8_202509092211556605&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639122237873533300	1	19	29	47
+サパーン	2026-04-09	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=00BAAC58-01F7-4A46-99DB-2317FB3DC1C5_202306100705045294&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639113455887237280&amp;location=34.86848,138.2759,16.80093&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	15	33	09
+サパーン	2026-04-19	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=4656a2a0f71a74d6b48df93eabd266f8_202509092211556605&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639122237899084070&amp;location=Deny,Deny,Deny&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	19	29	50
+サパーン	2026-04-19	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=4656a2a0f71a74d6b48df93eabd266f8_202509092211556605&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639122238163349650&amp;location=Deny,Deny,Deny&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	19	30	16
+サパーン	2026-04-05	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=af78877bf4f7d57e03e28aacd954f6e3_202406161730021676&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639110068281461540&amp;location=34.85416,138.2549,64.9&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	17	27	06
+サパーン	2026-04-05	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=ed2f81d162b213751eda47dcd391e998_202603281932080091&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639110200076754070&amp;location=34.85716,138.2491,65.5&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	21	06	48
+サパーン	2026-04-19	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=54BF9141-B927-4E5C-AADB-ED142386B993_202302181632588150&amp;viewname=add_favo&amp;passcode=hs&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639122157880315020	1	17	16	28
+サパーン	2026-04-14	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=A14CB584-EF4B-4089-94F6-98E3CE580E3A_202407211012368181&amp;viewname=add_favo&amp;passcode=hs&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639118032273217750	1	22	40	27
+サパーン	2026-04-14	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=A14CB584-EF4B-4089-94F6-98E3CE580E3A_202407211012368181&amp;viewname=add_favo&amp;passcode=hs&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639118032411309330	1	22	40	41
+サパーン	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=a60821c5e93e7a33d0652ce0d83b801d_202405021808538599&amp;viewname=add_favo&amp;passcode=monpa&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639103746950060170	1	09	51	36
+サパーン	2026-04-23	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_details/listandmap_favorone?udid=1C67413E-9851-4CBB-B14B-550D7F619B46_201904151659293438&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639125437183677530&amp;location=34.73605,137.7685,10.0611&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	21	58
+サパーン	2026-04-12	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_details/listandmap_favorone?udid=5888F40D-06A4-4970-B05D-7639B15274DD_202003031536348700&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639115933907948340&amp;location=34.88259,138.2567,16.04435&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	23	10
+サパーン	2026-03-28	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://x.com/SZ_FAVORONE?AndroidAlwaysOpenExternalBrowser=true&amp;is_use_inner_browser=1&amp;now=639102915400743660	1	10	45	40
+サパーン	2026-04-08	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://x.com/SZ_FAVORONE?AndroidAlwaysOpenExternalBrowser=true&amp;is_use_inner_browser=1&amp;now=639112514635143060	1	13	24	23
+サパーン	2026-04-11	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://x.com/SZ_FAVORONE?AndroidAlwaysOpenExternalBrowser=true&amp;is_use_inner_browser=1&amp;now=639115359068125710	1	20	25	06
+サパーン	2026-04-09	502_Title	TapedMapPin	origin_user_id=440	1	19	43	30
+サパーン	2026-04-10	502_Title	TapedMapPin	origin_user_id=440	1	10	46	54
+サパーン	2026-04-15	502_Title	TapedMapPin	origin_user_id=440	1	19	47	43
+サパーン	2026-03-26	503_Subtitle	CloseScene		2	13	28	22
+サパーン	2026-03-27	503_Subtitle	CloseScene		1	20	36	18
+サパーン	2026-03-28	503_Subtitle	CloseScene		13	10	46	39
+サパーン	2026-03-29	503_Subtitle	CloseScene		1	13	35	24
+サパーン	2026-03-31	503_Subtitle	CloseScene		1	19	40	00
+サパーン	2026-04-01	503_Subtitle	CloseScene		2	13	34	26
+サパーン	2026-04-02	503_Subtitle	CloseScene		1	23	40	23
+サパーン	2026-04-03	503_Subtitle	CloseScene		2	12	32	36
+サパーン	2026-04-04	503_Subtitle	CloseScene		1	13	46	45
+サパーン	2026-04-05	503_Subtitle	CloseScene		2	11	41	24
+サパーン	2026-04-06	503_Subtitle	CloseScene		1	21	21	50
+サパーン	2026-04-07	503_Subtitle	CloseScene		1	13	09	27
+サパーン	2026-04-09	503_Subtitle	CloseScene		7	15	33	05
+サパーン	2026-04-10	503_Subtitle	CloseScene		4	18	51	54
+サパーン	2026-04-11	503_Subtitle	CloseScene		2	12	01	39
+サパーン	2026-04-12	503_Subtitle	CloseScene		7	11	18	45
+サパーン	2026-04-15	503_Subtitle	CloseScene		1	19	48	14
+サパーン	2026-04-16	503_Subtitle	CloseScene		2	12	08	06
+サパーン	2026-04-18	503_Subtitle	CloseScene		2	21	25	30
+サパーン	2026-04-19	503_Subtitle	CloseScene		4	11	44	26
+サパーン	2026-04-20	503_Subtitle	CloseScene		1	09	00	48
+サパーン	2026-04-22	503_Subtitle	CloseScene		1	13	28	21
+サパーン	2026-04-23	503_Subtitle	CloseScene		2	18	56	29
+サパーン	2026-04-24	503_Subtitle	CloseScene		6	10	31	23
+サパーン	2026-03-28	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	3	10	46	38
+サパーン	2026-03-31	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	19	40	00
+サパーン	2026-04-01	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	13	34	26
+サパーン	2026-04-02	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	23	40	23
+サパーン	2026-04-03	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	12	32	36
+サパーン	2026-04-04	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	13	46	44
+サパーン	2026-04-05	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	17	26	25
+サパーン	2026-04-06	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	21	21	50
+サパーン	2026-04-09	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	15	33	05
+サパーン	2026-04-10	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	18	52	37
+サパーン	2026-04-11	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	20	24	57
+サパーン	2026-04-12	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	11	18	45
+サパーン	2026-04-16	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	13	38	08
+サパーン	2026-04-18	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	21	35	05
+サパーン	2026-04-20	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	09	00	48
+サパーン	2026-04-24	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	10	31	23
+サパーン	2026-03-26	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	2	13	28	21
+サパーン	2026-03-27	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	20	36	18
+サパーン	2026-03-28	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	8	11	52	54
+サパーン	2026-03-29	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	13	35	24
+サパーン	2026-04-05	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	11	41	24
+サパーン	2026-04-07	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	13	09	26
+サパーン	2026-04-09	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	5	18	12	39
+サパーン	2026-04-10	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	3	18	51	54
+サパーン	2026-04-11	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	12	01	39
+サパーン	2026-04-12	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	4	13	00	30
+サパーン	2026-04-18	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	21	25	30
+サパーン	2026-04-19	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	3	11	44	26
+サパーン	2026-04-22	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	1	13	28	21
+サパーン	2026-04-23	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	2	18	56	29
+サパーン	2026-04-24	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=636,passphrase=	4	12	10	24
+サパーン	2026-04-12	503_Subtitle	OpenScene(SimpleGuiButton:BackToMenuButton)	scene=502_Title,channel=-1,passphrase=	1	13	00	53
+サパーン	2026-03-31	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_03th_260303.jpg&amp;now=639105756530742730	1	17	40	53
+サパーン	2026-04-01	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639106278544801960	1	08	10	54
+サパーン	2026-04-02	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639107699958981630	1	23	39	56
+サパーン	2026-04-03	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639108162634612620	1	12	31	04
+サパーン	2026-04-06	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639111072923022290	1	21	21	32
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639113617984587880	1	20	03	19
+サパーン	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639115358814980320	1	20	24	41
+サパーン	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639119434848503480	1	13	38	05
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:calendar-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/sapaan_04th_260401.png&amp;now=639121958530977840	1	11	44	13
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:instagram)	url=https://www.instagram.com/sake_thaifood_saphan/?now=639101301024523170	1	13	55	03
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:instagram)	url=https://www.instagram.com/sake_thaifood_saphan/?now=639102941527667400	1	11	29	12
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639101300510558810	1	13	54	11
+サパーン	2026-03-31	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639105827599050910	1	19	39	20
+サパーン	2026-04-02	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639107699557657730	1	23	39	15
+サパーン	2026-04-03	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639108163103241020	1	12	31	50
+サパーン	2026-04-06	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639111072335958990	1	21	20	33
+サパーン	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639115358699407850	1	20	24	30
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639115894803865880	1	11	18	00
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639115953429839440	1	12	55	43
+サパーン	2026-04-15	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639118420150724670	1	09	26	55
+サパーン	2026-04-15	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639118792894017250	1	19	48	09
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639121958134893480	1	11	43	33
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:menu-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphanMENU_251215.jpg&amp;now=639126241099545280	1	10	41	50
+サパーン	2026-03-27	503_Subtitle	OpenUrl(ARSceneGuiButton:tel-440)	url=tel:0546397263	1	17	33	57
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=04038D7D-D4BD-4378-9FF6-B6E42D200793_202305271156396338&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102964609979300	1	12	07	41
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639101255382471030	1	12	38	59
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639101284978944070	1	13	28	18
+サパーン	2026-04-10	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639114409279570180	1	18	02	08
+サパーン	2026-04-10	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639114439204124670	1	18	52	00
+サパーン	2026-04-10	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639114439606479650	1	18	52	40
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115955754364600	1	12	59	35
+サパーン	2026-04-21	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639123482485774890	1	06	04	08
+サパーン	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639125645249137950	1	18	08	45
+サパーン	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639125673868005810	1	18	56	26
+サパーン	2026-03-27	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102405750789050	1	20	36	15
+サパーン	2026-03-27	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102406043994130	1	20	36	44
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639113551519833750	1	18	12	32
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639113606630716180	1	19	44	23
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102963607469620	1	12	06	01
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102964372721310	1	12	07	17
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103008636074380	1	13	21	03
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102949511372500	1	11	42	31
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102980512827230	1	12	34	11
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121929675623080	1	10	56	07
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121986574407030	1	12	30	57
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121986798561700	1	12	31	19
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3a69dd7166fc87537845270db775687c_202604121723301537&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639121958599119310	1	11	44	20
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3a69dd7166fc87537845270db775687c_202604121723301537&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639121985638899110	1	12	29	23
+サパーン	2026-04-19	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3a69dd7166fc87537845270db775687c_202604121723301537&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639121986442477510	1	12	30	43
+サパーン	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3BE5633F-4245-4FB1-8D10-EB0DDE788E25_202506191236431093&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115358731473540	1	20	24	33
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3c6f19c7ab78e636aada2b940ec64692_202302262109445503&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639113613668035850	1	19	56	08
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3c6f19c7ab78e636aada2b940ec64692_202302262109445503&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639113617453623170	1	20	02	26
+サパーン	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=3c6f19c7ab78e636aada2b940ec64692_202302262109445503&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639113642945396520	1	20	44	55
+サパーン	2026-03-29	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103881211888490	1	13	35	21
+サパーン	2026-04-22	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639124612147895120	1	13	26	54
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126270773114160	1	11	31	17
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126295247984980	1	12	12	04
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126295853331050	1	12	13	05
+サパーン	2026-04-05	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639109860801189850	1	11	41	20
+サパーン	2026-04-07	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639111641642303660	1	13	09	24
+サパーン	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115056969351280	1	12	01	37
+サパーン	2026-04-05	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=af78877bf4f7d57e03e28aacd954f6e3_202406161730021676&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639110067766105240	1	17	26	14
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=B403CA45-9590-4CC0-91B6-83A20B14F34F_202411091328529885&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115956290088740	1	13	00	29
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=C2A5420E-C0B0-4355-A3F3-54A34C3BBFFA_202604182119387556&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121440445026020	1	21	20	44
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=ed2f81d162b213751eda47dcd391e998_202603281932080091&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639103231647720470	1	19	32	46
+サパーン	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=F5D874E3-3C01-4616-A8D9-7E3D74CA6E06_202510191234158882&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639119399916753960	1	12	39	51
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=097618CA-D421-4A1B-8429-548BE05E10DF_201905120105070892&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121442435160400	1	21	24	03
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=097618CA-D421-4A1B-8429-548BE05E10DF_201905120105070892&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639121443442570840	1	21	25	44
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639101284998273840	1	13	28	19
+サパーン	2026-03-31	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639105756960393660	1	17	41	36
+サパーン	2026-04-10	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639114411764174270	1	18	06	16
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115956246390830	1	13	00	24
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115956384841550	1	13	00	38
+サパーン	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639125673970838390	1	18	56	37
+サパーン	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639125674127934070	1	18	56	53
+サパーン	2026-04-01	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=467744B2-8085-45B9-95AE-768DB6F93AE9_201904151427099065&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639106472630446390	1	13	34	23
+サパーン	2026-04-05	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=5888F40D-06A4-4970-B05D-7639B15274DD_202003031536348700&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639109895515344160	1	12	39	11
+サパーン	2026-04-05	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=5888F40D-06A4-4970-B05D-7639B15274DD_202003031536348700&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639109895603645920	1	12	39	20
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102950888914750	1	11	44	49
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102951072277270	1	11	45	08
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639102955777550020	1	11	52	58
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103013620555980	1	13	29	22
+サパーン	2026-03-28	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103013957669620	1	13	29	55
+サパーン	2026-03-29	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=9531FDF2-6F4D-4E49-BFC1-C4E79C7C70D5_201907141318099970&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639103878713936640	1	13	31	11
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126240855607190	1	10	41	25
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126293195491930	1	12	08	39
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126294338077890	1	12	10	33
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=DE81CCDF-4EF0-443F-B2FE-2FFBE49276D6_201906300938551267&amp;application_id=15&amp;LogChannelId=636&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115894699199610	1	11	17	50
+サパーン	2026-03-26	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-440)	url=https://www.google.com/maps/place/%E9%85%92%E3%81%A8%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86%E3%82%B5%E3%83%91%E3%83%BC%E3%83%B3/@34.8560237,138.2484709,15z/data=!4m6!3m5!1s0x601a4f4621306d1b:0x77b34a8adf3cbbe0!8m2!3d34.8560237!4d138.2484709!16s%2Fg%2F11v6d_40fg?entry=ttu&amp;g_ep=EgoyMDI0MTIwMi4wIKXMDSoASAFQAw%3D%3D&amp;now=639101255331464300	1	12	38	53
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-440)	url=https://www.google.com/maps/place/%E9%85%92%E3%81%A8%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86%E3%82%B5%E3%83%91%E3%83%BC%E3%83%B3/@34.8560237,138.2484709,15z/data=!4m6!3m5!1s0x601a4f4621306d1b:0x77b34a8adf3cbbe0!8m2!3d34.8560237!4d138.2484709!16s%2Fg%2F11v6d_40fg?entry=ttu&amp;g_ep=EgoyMDI0MTIwMi4wIKXMDSoASAFQAw%3D%3D&amp;now=639121443408238550	1	21	25	40
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-440)	url=https://www.google.com/maps/place/%E9%85%92%E3%81%A8%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86%E3%82%B5%E3%83%91%E3%83%BC%E3%83%B3/@34.8560237,138.2484709,15z/data=!4m6!3m5!1s0x601a4f4621306d1b:0x77b34a8adf3cbbe0!8m2!3d34.8560237!4d138.2484709!16s%2Fg%2F11v6d_40fg?entry=ttu&amp;g_ep=EgoyMDI0MTIwMi4wIKXMDSoASAFQAw%3D%3D&amp;now=639121448921059400	1	21	34	52
+サパーン	2026-04-23	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-440)	url=https://www.google.com/maps/place/%E9%85%92%E3%81%A8%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86%E3%82%B5%E3%83%91%E3%83%BC%E3%83%B3/@34.8560237,138.2484709,15z/data=!4m6!3m5!1s0x601a4f4621306d1b:0x77b34a8adf3cbbe0!8m2!3d34.8560237!4d138.2484709!16s%2Fg%2F11v6d_40fg?entry=ttu&amp;g_ep=EgoyMDI0MTIwMi4wIKXMDSoASAFQAw%3D%3D&amp;now=639125674071347040	1	18	56	47
+サパーン	2026-04-24	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-440)	url=https://www.google.com/maps/place/%E9%85%92%E3%81%A8%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86%E3%82%B5%E3%83%91%E3%83%BC%E3%83%B3/@34.8560237,138.2484709,15z/data=!4m6!3m5!1s0x601a4f4621306d1b:0x77b34a8adf3cbbe0!8m2!3d34.8560237!4d138.2484709!16s%2Fg%2F11v6d_40fg?entry=ttu&amp;g_ep=EgoyMDI0MTIwMi4wIKXMDSoASAFQAw%3D%3D&amp;now=639126233871865880	1	10	29	47
+サパーン	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:メイン画像-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphan_eigyojikan_241204.jpg&amp;now=639115895123553710	1	11	18	32
+サパーン	2026-04-15	503_Subtitle	OpenUrl(ARSceneGuiButton:メイン画像-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphan_eigyojikan_241204.jpg&amp;now=639118420094492180	1	09	26	49
+サパーン	2026-04-18	503_Subtitle	OpenUrl(ARSceneGuiButton:メイン画像-440)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/sap/saphan_eigyojikan_241204.jpg&amp;now=639121448842974450	1	21	34	44
+サパーン	2026-03-26	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639101299721356690&amp;udid=9E16B093-C7D4-4C7F-9290-D1469F81A211_202603261350528444	1	13	52	52
+サパーン	2026-03-28	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102915842884410&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	1	10	46	24
+サパーン	2026-03-28	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102916335259910&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	1	10	47	13
+サパーン	2026-03-28	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102916549758390&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	1	10	47	35
+サパーン	2026-03-28	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102941406253370&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	1	11	29	00
+サパーン	2026-03-28	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639102980472124160&amp;udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538	1	12	34	07
+サパーン	2026-04-01	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639106537813681760&amp;udid=49065D26-7685-4198-837C-2515F921D287_202003142314049469	1	15	23	01
+サパーン	2026-04-12	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639116114661288480&amp;udid=3a69dd7166fc87537845270db775687c_202604121723301537	1	17	24	27
+サパーン	2026-04-16	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639119399866297480&amp;udid=F5D874E3-3C01-4616-A8D9-7E3D74CA6E06_202510191234158882	1	12	39	46
+サパーン	2026-04-18	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639121440293570920&amp;udid=C2A5420E-C0B0-4355-A3F3-54A34C3BBFFA_202604182119387556	1	21	20	29
+サパーン	2026-04-19	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9432/images_1cf66b133d0b8580270429ad59fa28f3_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639121979357525950&amp;udid=3a69dd7166fc87537845270db775687c_202604121723301537	1	12	18	59
+サパーン	2026-03-26	523_QrCodeReader	CloseScene		1	13	28	36
+サパーン	2026-03-27	523_QrCodeReader	CloseScene		1	20	36	42
+サパーン	2026-03-28	523_QrCodeReader	CloseScene		6	11	52	56
+サパーン	2026-04-09	523_QrCodeReader	CloseScene		1	20	03	13
+サパーン	2026-04-10	523_QrCodeReader	CloseScene		2	18	52	36
+サパーン	2026-04-12	523_QrCodeReader	CloseScene		3	13	00	37
+サパーン	2026-04-18	523_QrCodeReader	CloseScene		1	21	25	39
+サパーン	2026-04-19	523_QrCodeReader	CloseScene		1	12	31	18
+サパーン	2026-04-23	523_QrCodeReader	CloseScene		1	18	56	46
+サパーン	2026-04-24	523_QrCodeReader	CloseScene		2	12	10	29
+サパーン	2026-03-26	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-145)	scene=503_Subtitle,channel=-1,passphrase=	1	13	28	36
+サパーン	2026-04-10	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-145)	scene=503_Subtitle,channel=-1,passphrase=	1	18	52	37
+サパーン	2026-04-12	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-145)	scene=503_Subtitle,channel=-1,passphrase=	2	13	00	36
+サパーン	2026-04-23	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-145)	scene=503_Subtitle,channel=-1,passphrase=	1	18	56	45
+サパーン	2026-04-24	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-145)	scene=503_Subtitle,channel=-1,passphrase=	1	12	10	29
+サパーン	2026-04-18	523_QrCodeReader	OpenScene(ARSceneGuiButton:AR画面の戻るボタン-152)	scene=503_Subtitle,channel=-1,passphrase=	1	21	25	38
+サパーン	2026-03-28	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-143)	scene=503_Subtitle,channel=-1,passphrase=	1	12	07	14
+サパーン	2026-04-09	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-150)	scene=503_Subtitle,channel=-1,passphrase=	1	20	03	13
+サパーン	2026-03-27	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	20	36	42
+サパーン	2026-03-28	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	3	12	08	04
+サパーン	2026-04-10	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	18	52	36
+サパーン	2026-04-19	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	12	31	18
+サパーン	2026-04-24	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-220-221)	scene=503_Subtitle,channel=-1,passphrase=	1	12	13	03
+サパーン	2026-03-28	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	2	11	52	55
+サパーン	2026-04-12	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	1	13	00	53
+サパーン	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://favorone.net/shizuoka/?now=639102963673806460	1	12	06	07
+サパーン	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://favorone.net/shizuoka/?now=639113613831996320	1	19	56	24
+サパーン	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://favorone.net/shizuoka/?now=639113617534906750	1	20	02	34
+サパーン	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://favorone.net/shizuoka/?now=639115956444172720	1	13	00	44
+サパーン	2026-04-19	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://favorone.net/shizuoka/?now=639121958832607470	1	11	44	43
+サパーン	2026-03-26	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639101285040946880	1	13	28	24
+サパーン	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115956399916110	1	13	00	40
+サパーン	2026-04-10	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639114439633825590	1	18	52	43
+サパーン	2026-04-23	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639125673908342060	1	18	56	31
+サパーン	2026-03-27	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639102405811804280	1	20	36	21
+サパーン	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639113606705080760	1	19	44	30
+サパーン	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639103008698418940	1	13	21	09
+サパーン	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639102984248339450	1	12	40	25
+サパーン	2026-04-19	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639121986652446200	1	12	31	05
+サパーン	2026-04-19	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3a69dd7166fc87537845270db775687c_202604121723301537&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639121985714197540	1	12	29	31
+サパーン	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3c6f19c7ab78e636aada2b940ec64692_202302262109445503&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639113642979574870	1	20	44	59
+サパーン	2026-03-29	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639103881282227850	1	13	35	28
+サパーン	2026-04-22	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639124613031716640	1	13	28	23
+サパーン	2026-04-24	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639126295881997310	1	12	13	08
+サパーン	2026-04-05	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639109860851097280	1	11	41	25
+サパーン	2026-04-07	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639111641692884330	1	13	09	29
+サパーン	2026-04-11	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115057013269230	1	12	01	41
+サパーン	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=ed2f81d162b213751eda47dcd391e998_202603281932080091&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639103231763502440	1	19	32	58
+サパーン	2026-04-10	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;now=639114439337456290	1	18	52	13
+サパーン	2026-04-09	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;now=639113551615550740	1	18	12	42
+サパーン	2026-04-18	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=097618CA-D421-4A1B-8429-548BE05E10DF_201905120105070892&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639121443320555410	1	21	25	32
+サパーン	2026-03-26	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639101285069158680	1	13	28	27
+サパーン	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115956423112840	1	13	00	42
+サパーン	2026-04-10	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639114439473248650	1	18	52	27
+サパーン	2026-04-23	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2&amp;now=639125674008442070	1	18	56	41
+サパーン	2026-03-28	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639103013842176060	1	13	29	44
+サパーン	2026-04-24	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639126294364075340	1	12	10	36
+サパーン	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_coupons/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;now=639115956321933990	1	13	00	32
+サパーン	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://favorone.net/shizuoka/,location=34.85596,138.2485,26.15765	1	12	06	07
+サパーン	2026-04-19	523_QrCodeReader	ReadQrCode	qrcode=https://favorone.net/shizuoka/,location=34.856,138.2485,64.9	1	11	44	42
+サパーン	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://favorone.net/shizuoka/,location=34.85601,138.2485,65.3	1	19	56	23
+サパーン	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://favorone.net/shizuoka/,location=34.85603,138.2485,56.82536	1	20	02	34
+サパーン	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://favorone.net/shizuoka/,location=34.85609,138.2486,27.46536	1	13	00	44
+サパーン	2026-03-26	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85604,138.2485,27.3118	1	13	28	24
+サパーン	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85606,138.2484,25.71099	1	13	00	39
+サパーン	2026-04-10	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85592,138.2487,27.06447	1	18	52	43
+サパーン	2026-04-23	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85597,138.2486,19.90395	1	18	56	30
+サパーン	2026-03-27	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85596,138.2487,23.24185	1	20	36	21
+サパーン	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85604,138.2485,26.19694	1	19	44	30
+サパーン	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=33456503-9262-4833-A281-8BF95ABB1491_202305271155557368&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85592,138.2487,21.77651	1	13	21	09
+サパーン	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	40	24
+サパーン	2026-04-19	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3619CF68-5897-4346-9564-E8F49082862B_202603201153195538&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	31	05
+サパーン	2026-04-19	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3a69dd7166fc87537845270db775687c_202604121723301537&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.856,138.2485,64.9	1	12	29	30
+サパーン	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=3c6f19c7ab78e636aada2b940ec64692_202302262109445503&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85602,138.2485,65.3	1	20	44	58
+サパーン	2026-04-22	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85603,138.2485,21.74588	1	13	28	23
+サパーン	2026-03-29	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=783259FF-8271-42F4-B31A-AE74A41E8BF9_202411291315456208&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85616,138.2486,27.43754	1	13	35	28
+サパーン	2026-04-24	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=7855CF4B-DEC2-4C2C-8754-E66C94E71F34_202507161351433128&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	13	08
+サパーン	2026-04-05	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	11	41	25
+サパーン	2026-04-07	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	13	09	29
+サパーン	2026-04-11	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=88A9A804-CFE6-4DD0-9239-5E08F8BA761B_202009151141139513&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	01	41
+サパーン	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=ed2f81d162b213751eda47dcd391e998_202603281932080091&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85601,138.2485,64.5	1	19	32	58
+サパーン	2026-04-10	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=13B8D613-9E3E-4F68-BD62-418CE312F2B3_202509281229100962&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView,location=34.85595,138.2486,21.71753	1	18	52	13
+サパーン	2026-04-09	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_coupons/result?udid=239901DF-5D5F-4914-A0F0-C31FA6572844_202601071850178908&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView,location=34.85611,138.2486,24.18694	1	18	12	41
+サパーン	2026-04-18	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=097618CA-D421-4A1B-8429-548BE05E10DF_201905120105070892&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85599,138.2486,27.56238	1	21	25	32
+サパーン	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85601,138.2486,27.6282	1	13	00	42
+サパーン	2026-03-26	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85606,138.2485,24.36252	1	13	28	26
+サパーン	2026-04-23	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85598,138.2486,29.90909	1	18	56	40
+サパーン	2026-04-10	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=2,location=34.85599,138.2487,29.95987	1	18	52	26
+サパーン	2026-03-28	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=85713C42-853D-4DA2-ACB5-5E56D455DD57_201904161637476363&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85602,138.2486,29.23227	1	13	29	44
+サパーン	2026-04-24	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=99B81527-3B31-44B9-B3C6-6744603950DF_201906091222549546&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.85599,138.2486,24.09689	1	12	10	36
+サパーン	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_coupons/result?udid=45ED0FF0-3A87-4B2C-A4DA-D1BAC1F529A8_201908311848302708&amp;application_id=15&amp;LogChannelId=636&amp;BrowserType=fullWebView,location=34.8561,138.2486,29.21707	1	13	00	32
+サパーン	2026-04-06	WebEvent	WebApiApplications/deletePassphrase	for-passphrase-636	1	15	33	02
+サパーン	2026-03-26	WebEvent	WebAppUserStamps/result	FULL_STAMP_STORAGE	1	13	28	24
+サパーン	2026-03-27	WebEvent	WebAppUserStamps/result	FULL_STAMP_STORAGE	1	20	36	21
+サパーン	2026-03-26	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	13	28	27
+サパーン	2026-03-28	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	4	12	40	25
+サパーン	2026-03-29	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	13	35	28
+サパーン	2026-04-05	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	11	41	25
+サパーン	2026-04-07	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	13	09	29
+サパーン	2026-04-09	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	19	44	30
+サパーン	2026-04-10	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	18	52	27
+サパーン	2026-04-11	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	12	01	41
+サパーン	2026-04-12	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	13	00	40
+サパーン	2026-04-18	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	21	25	32
+サパーン	2026-04-19	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	29	31
+サパーン	2026-04-22	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	13	28	23
+サパーン	2026-04-23	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	18	56	31
+サパーン	2026-04-24	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	10	36
+サパーン	2026-04-09	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	18	12	41
+サパーン	2026-04-10	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	18	52	14
+サパーン	2026-04-12	WebEvent	WebOriginUserCoupons/result	COMPLETE_TO_USE_COUPON	1	13	00	32

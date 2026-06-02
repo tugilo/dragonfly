@@ -1,0 +1,78 @@
+
+
+店名	日付	category	action	label	件数	時	分	秒
+ミドリノタネ	2026-03-27	501_Splash	AppStart	location=0,0,0	2	01	06	54
+ミドリノタネ	2026-04-04	501_Splash	AppStart	location=0,0,0	1	09	27	34
+ミドリノタネ	2026-04-11	501_Splash	AppStart	location=0,0,0	1	14	03	11
+ミドリノタネ	2026-03-29	501_Splash	AppStart	location=34.85936,138.2942,14.0674	1	18	31	10
+ミドリノタネ	2026-04-02	501_Splash	AppStart	location=34.87236,138.318,7.500853	1	17	14	44
+ミドリノタネ	2026-04-03	501_Splash	AppStart	location=34.88333,138.2785,15.22386	1	22	54	48
+ミドリノタネ	2026-04-09	501_Splash	AppStart	location=34.94569,138.3592,21.22215	1	11	54	58
+ミドリノタネ	2026-04-03	501_Splash	AppStart	location=34.94825,138.3909,11.86131	1	21	57	52
+ミドリノタネ	2026-03-30	501_Splash	AppStart	location=34.94826,138.3908,11.86449	1	23	31	43
+ミドリノタネ	2026-04-01	501_Splash	AppStart	location=34.95212,138.3918,8.85057	1	08	48	29
+ミドリノタネ	2026-04-10	501_Splash	AppStart	location=34.97819,138.3798,36.67786	1	13	08	46
+ミドリノタネ	2026-04-22	501_Splash	AppStart	location=34.97887,138.3716,30.16267	1	12	17	42
+ミドリノタネ	2026-04-22	501_Splash	AppStart	location=34.98215,138.396,16.50657	1	14	35	29
+ミドリノタネ	2026-03-27	501_Splash	AppStart	location=34.98499,138.41,19.36265	1	16	25	16
+ミドリノタネ	2026-04-07	501_Splash	AppStart	location=35.04809,138.5047,12.9043	1	04	41	50
+ミドリノタネ	2026-04-13	501_Splash	AppStart	location=35.28931,136.8243,48.5	1	16	26	48
+ミドリノタネ	2026-04-13	501_Splash	AppStart	location=35.28932,136.8243,48.5	1	16	26	41
+ミドリノタネ	2026-04-19	501_Splash	AppStart	location=35.77795,139.7294,13.77489	1	20	49	28
+ミドリノタネ	2026-03-30	501_Splash	AppStart	location=AppDeny,AppDeny,AppDeny	1	22	06	32
+ミドリノタネ	2026-04-10	501_Splash	AppStart	location=AppDeny,AppDeny,AppDeny	1	19	27	37
+ミドリノタネ	2026-04-04	501_Splash	CreateUdidTextOnStorage	udid=1CF13EA7-9D1A-46B5-9AA7-B4816CE58BD1_202309161824281830	1	09	27	33
+ミドリノタネ	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=4B403B65-5471-4F4A-946F-71B528B76A0A_202501301310531950	2	01	06	53
+ミドリノタネ	2026-04-09	501_Splash	CreateUdidTextOnStorage	udid=4B9CC5D4-C8AC-4329-8509-60A5A0CE7BBB_202403231425489863	1	11	54	57
+ミドリノタネ	2026-04-11	501_Splash	CreateUdidTextOnStorage	udid=4E6556D8-881D-41D0-9BED-0B24CA28D98C_202402171441150206	1	14	03	10
+ミドリノタネ	2026-04-03	501_Splash	CreateUdidTextOnStorage	udid=7184F5BA-358F-4391-9C06-D13BBD452621_202403181634188481	1	22	54	47
+ミドリノタネ	2026-03-30	501_Splash	CreateUdidTextOnStorage	udid=7624928C-EBC9-4BC5-8D8A-D29BD2D073DC_202411301212231390	1	23	31	42
+ミドリノタネ	2026-04-01	501_Splash	CreateUdidTextOnStorage	udid=7624928C-EBC9-4BC5-8D8A-D29BD2D073DC_202411301212231390	1	08	48	28
+ミドリノタネ	2026-04-03	501_Splash	CreateUdidTextOnStorage	udid=7624928C-EBC9-4BC5-8D8A-D29BD2D073DC_202411301212231390	1	21	57	51
+ミドリノタネ	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=7C7C1414-5611-4240-BD05-D651AF11FFE2_202111021234029236	1	20	49	27
+ミドリノタネ	2026-04-10	501_Splash	CreateUdidTextOnStorage	udid=8A8BD0D8-35D2-4265-A677-42428EDAD702_202402061452149410	1	13	08	42
+ミドリノタネ	2026-04-02	501_Splash	CreateUdidTextOnStorage	udid=A2E804BC-859C-412D-8FEE-B45CD1278D38_202004261104424093	1	17	14	43
+ミドリノタネ	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=B6E007C6-5C0D-4854-9325-604CAA2A27F0_202403171031568147	1	16	25	15
+ミドリノタネ	2026-04-22	501_Splash	CreateUdidTextOnStorage	udid=B6E007C6-5C0D-4854-9325-604CAA2A27F0_202403171031568147	1	14	35	28
+ミドリノタネ	2026-03-29	501_Splash	CreateUdidTextOnStorage	udid=EC78D095-3924-4DF1-9651-7889DD65ED8F_202402281321272441	1	18	31	09
+ミドリノタネ	2026-04-07	501_Splash	CreateUdidTextOnStorage	udid=F2712573-F3C9-4DFD-8178-B0E0C974E9C8_202309031013231562	1	04	41	49
+ミドリノタネ	2026-04-22	501_Splash	CreateUdidTextOnStorage	udid=FAC33A2C-B886-4103-84A2-2164340588AF_202307201342272739	1	12	17	40
+ミドリノタネ	2026-03-27	502_Title	CloseScene		1	01	07	15
+ミドリノタネ	2026-04-03	502_Title	CloseScene		1	22	54	52
+ミドリノタネ	2026-04-10	502_Title	CloseScene		1	19	27	47
+ミドリノタネ	2026-04-11	502_Title	CloseScene		1	14	03	16
+ミドリノタネ	2026-04-13	502_Title	CloseScene		1	16	26	55
+ミドリノタネ	2026-04-18	502_Title	CloseScene		1	09	38	39
+ミドリノタネ	2026-04-19	502_Title	CloseScene		1	20	49	33
+ミドリノタネ	2026-04-22	502_Title	CloseScene		2	12	18	01
+ミドリノタネ	2026-04-25	502_Title	CloseScene		1	12	39	34
+ミドリノタネ	2026-03-27	502_Title	Notification	RemoteNotificationReceivedAtLaunch	1	01	06	57
+ミドリノタネ	2026-03-27	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-221	1	01	07	15
+ミドリノタネ	2026-04-22	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-221	1	12	18	01
+ミドリノタネ	2026-04-19	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=489,passphrase=for-passphrase-489	1	20	49	33
+ミドリノタネ	2026-04-25	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=489,passphrase=for-passphrase-489	1	12	39	34
+ミドリノタネ	2026-04-10	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=502,passphrase=for-passphrase-502	1	19	27	47
+ミドリノタネ	2026-04-11	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=502,passphrase=for-passphrase-502	1	14	03	15
+ミドリノタネ	2026-04-13	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=502,passphrase=for-passphrase-502	1	16	26	55
+ミドリノタネ	2026-04-22	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=502,passphrase=for-passphrase-502	1	14	35	34
+ミドリノタネ	2026-04-07	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=F2712573-F3C9-4DFD-8178-B0E0C974E9C8_202309031013231562&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639111337173920940&amp;location=35.04804,138.5046,14.08189&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	04	41	57
+ミドリノタネ	2026-04-07	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=F2712573-F3C9-4DFD-8178-B0E0C974E9C8_202309031013231562&amp;viewname=add_favo&amp;passcode=ichibachi&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639111337392479200	1	04	42	19
+ミドリノタネ	2026-04-24	502_Title	TapedMapPin	origin_user_id=324	1	20	35	17
+ミドリノタネ	2026-04-11	503_Subtitle	CloseScene		1	14	04	35
+ミドリノタネ	2026-04-18	503_Subtitle	CloseScene		1	09	38	34
+ミドリノタネ	2026-04-22	503_Subtitle	CloseScene		1	14	35	45
+ミドリノタネ	2026-04-25	503_Subtitle	CloseScene		1	12	39	31
+ミドリノタネ	2026-04-18	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	09	38	34
+ミドリノタネ	2026-04-22	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	14	35	45
+ミドリノタネ	2026-04-25	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	12	39	30
+ミドリノタネ	2026-04-10	503_Subtitle	OpenUrl(ARSceneGuiButton:homepage)	url=https://midorinotane-greencoffee.com/?now=639114460736608050	1	19	27	55
+ミドリノタネ	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:homepage)	url=https://midorinotane-greencoffee.com/?now=639115130445007210	1	14	04	04
+ミドリノタネ	2026-04-13	503_Subtitle	OpenUrl(ARSceneGuiButton:instagram-324)	url=https://www.instagram.com/midorinotane.greencoffee/?now=639116944285625260	1	16	27	08
+ミドリノタネ	2026-04-13	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-317-324)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=53aaa239a03d596e5b46e0674e5ceaf1_202405221452129861&amp;application_id=15&amp;LogChannelId=502&amp;viewname=index_favo&amp;version=2.0.6	1	16	27	03
+ミドリノタネ	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-324)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=2CE905F9-D2D2-4423-AEF1-27B076B7D653_202209032041524634&amp;application_id=15&amp;LogChannelId=502&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639127175671806460	1	12	39	27
+ミドリノタネ	2026-04-13	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-324)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=53aaa239a03d596e5b46e0674e5ceaf1_202405221452129861&amp;application_id=15&amp;LogChannelId=502&amp;viewName=index_favo&amp;version=2.0.6&amp;now=639116944194758870	1	16	26	59
+ミドリノタネ	2026-04-22	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-324)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=B6E007C6-5C0D-4854-9325-604CAA2A27F0_202403171031568147&amp;application_id=15&amp;LogChannelId=502&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639124653379545810	1	14	35	38
+ミドリノタネ	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-207-220-221-229-233-2)	url=https://www.google.com/maps/place/ruru+plus+%E3%83%AB%E3%83%AB%E3%83%97%E3%83%A9%E3%82%B9/@34.9510617,138.3952714,20z/data=!4m6!3m5!1s0x601a49d763d3b74d:0x497b29f00f2aa796!8m2!3d34.9511528!4d138.3953247!16s%2Fg%2F11cm021ykw?entry=ttu&amp;g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D&amp;now=639115130182987100	1	14	03	38
+ミドリノタネ	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-207-220-221-229-233-2)	url=https://www.google.com/maps/place/ruru+plus+%E3%83%AB%E3%83%AB%E3%83%97%E3%83%A9%E3%82%B9/@34.9510617,138.3952714,20z/data=!4m6!3m5!1s0x601a49d763d3b74d:0x497b29f00f2aa796!8m2!3d34.9511528!4d138.3953247!16s%2Fg%2F11cm021ykw?entry=ttu&amp;g_ep=EgoyMDI1MDQwNy4wIKXMDSoASAFQAw%3D%3D&amp;now=639127175296406530	1	12	38	49
+ミドリノタネ	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:友達紹介-288-290-297-299-309-)	url=https://manage.app-svr.com/apps/favorone/share2/index.php?v=1&amp;add_comment=%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%80%8E%E3%83%9F%E3%83%89%E3%83%AA%E3%83%8E%E3%82%BF%E3%83%8D%E3%80%8F%E3%81%AE%E3%81%94%E7%B4%B9%E4%BB%8B%E3%81%A7%E3%81%99%E2%9C%A8%0D%0A%E3%81%BE%E3%81%9A%E3%81%AF%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0D%0A%E5%BA%97%E8%88%97%E3%81%AE%E7%99%BB%E9%8C%B2%E6%96%B9%E6%B3%95%E3%81%AF3%E9%80%9A%E3%82%8A%0D%0A%E2%91%A0%E3%80%8E%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%82%92%E6%8E%A2%E3%81%99%E3%80%8F%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%0D%0A%E2%91%A1%E5%B7%A6%E4%B8%8A%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E3%80%8E%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E5%85%A5%E5%8A%9B%E3%80%8F%E3%81%8B%E3%82%89%E5%BA%97%E8%88%97%E5%B0%82%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90gc%E3%80%91%E3%82%92%E5%85%A5%E5%8A%9B%0D%0A%E2%91%A2%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B/%E5%BA%97%E8%88%97%E7%B4%B9%E4%BB%8B%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%E3%80%82%0D%0A%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E7%9F%A5%E4%BA%BA%E3%83%BB%E5%8F%8B%E9%81%94%E3%81%AB%E3%81%A9%E3%82%93%E3%81%A9%E3%82%93%E6%8B%A1%E6%95%A3%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%81%AD%F0%9F%96%90%EF%B8%8F%0D%0A%E5%BA%97%E8%88%97%E7%99%BB%E9%8C%B2%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90gc%E3%80%91&amp;now=639115130099020400	1	14	03	30
+ミドリノタネ	2026-04-06	WebEvent	WebApiApplications/deletePassphrase	for-passphrase-502	1	15	33	02

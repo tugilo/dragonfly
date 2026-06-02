@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
     Box,
     Stack,
@@ -196,6 +196,7 @@ async function putMeetingBreakouts(meetingId, payload) {
 
 export default function DragonFlyBoard() {
     const { ownerMemberId } = useReligoOwner();
+    const [searchParams] = useSearchParams();
     const [members, setMembers] = useState([]);
     const [targetMember, setTargetMember] = useState(null);
     const [summary, setSummary] = useState(null);
@@ -313,6 +314,14 @@ export default function DragonFlyBoard() {
     useEffect(() => {
         getMeetings().then(setMeetings).catch(() => setMeetings([]));
     }, []);
+
+    useEffect(() => {
+        const fromUrl = searchParams.get('meetingId');
+        if (fromUrl && String(fromUrl) !== String(selectedMeetingId)) {
+            setSelectedMeetingId(String(fromUrl));
+            setSelectedRoundIndex(0);
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (!selectedMeetingId) {
@@ -799,8 +808,30 @@ export default function DragonFlyBoard() {
                         {roundsSaving ? '保存中...' : '💾 BO割当を保存'}
                     </Button>
                     <Button component={Link} to="/meetings" variant="outlined" size="small" color="inherit">
-                        📋 Meetingsへ
+                        Meetingsへ
                     </Button>
+                    {selectedMeetingId && (
+                        <>
+                            <Button
+                                component={Link}
+                                to={`/meetings?meetingId=${selectedMeetingId}`}
+                                variant="outlined"
+                                size="small"
+                                color="inherit"
+                            >
+                                例会詳細
+                            </Button>
+                            <Button
+                                component={Link}
+                                to={`/meetings?meetingId=${selectedMeetingId}&tab=minutes`}
+                                variant="outlined"
+                                size="small"
+                                color="inherit"
+                            >
+                                議事録
+                            </Button>
+                        </>
+                    )}
                 </Stack>
             </Box>
 
@@ -1038,6 +1069,28 @@ export default function DragonFlyBoard() {
                                 ))}
                             </Select>
                         </FormControl>
+                        {selectedMeetingId && (
+                            <Stack direction="row" spacing={0.5} sx={{ mt: 1 }} flexWrap="wrap" useFlexGap>
+                                <Button
+                                    component={Link}
+                                    to={`/meetings?meetingId=${selectedMeetingId}`}
+                                    size="small"
+                                    variant="text"
+                                    sx={{ fontSize: 11, minWidth: 0, px: 0.5 }}
+                                >
+                                    例会詳細を開く
+                                </Button>
+                                <Button
+                                    component={Link}
+                                    to={`/meetings?meetingId=${selectedMeetingId}&tab=minutes`}
+                                    size="small"
+                                    variant="text"
+                                    sx={{ fontSize: 11, minWidth: 0, px: 0.5 }}
+                                >
+                                    議事録
+                                </Button>
+                            </Stack>
+                        )}
                         <Typography sx={{ fontSize: 11, color: 'text.secondary', mt: 1 }}>
                             各同室枠（BO）にメンバーを割り当て、「BO割当を保存」で反映します。左のメンバーをタップ → 表示されるメニューで BO を選ぶと割り当てできます。
                         </Typography>
