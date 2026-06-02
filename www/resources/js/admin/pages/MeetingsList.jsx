@@ -1169,7 +1169,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                             <Box sx={{ mb: 2 }}>
                                 {memoBody != null && memoBody !== '' ? (
                                     <Box sx={{ p: 1.5, bgcolor: 'action.hover', borderRadius: 1, borderLeft: 3, borderColor: 'warning.main' }}>
-                                        <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>{memoBody}</Typography>
+                                        <MarkdownView markdown={memoBody} dense={false} />
                                     </Box>
                                 ) : (
                                     <Typography variant="body2" color="text.secondary">例会メモはまだありません。</Typography>
