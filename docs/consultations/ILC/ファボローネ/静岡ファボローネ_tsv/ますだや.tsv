@@ -1,0 +1,94 @@
+
+
+店名	日付	category	action	label	件数	時	分	秒
+ますだや	2026-03-26	501_Splash	AppStart	location=0,0,0	1	12	32	18
+ますだや	2026-04-09	501_Splash	AppStart	location=0,0,0	1	11	02	57
+ますだや	2026-04-04	501_Splash	AppStart	location=34.79111,138.2791,7.465561	1	02	03	21
+ますだや	2026-04-21	501_Splash	AppStart	location=34.85895,138.2291,86.11879	1	07	32	37
+ますだや	2026-04-25	501_Splash	AppStart	location=34.87368,138.2599,64.7	1	12	39	42
+ますだや	2026-04-12	501_Splash	AppStart	location=34.87373,138.2598,64.8	1	12	26	26
+ますだや	2026-04-12	501_Splash	AppStart	location=34.87384,138.2599,25.92596	1	13	33	16
+ますだや	2026-04-12	501_Splash	AppStart	location=34.87404,138.2595,26.2454	1	13	32	49
+ますだや	2026-04-20	501_Splash	AppStart	location=34.90113,138.2403,73.61926	1	05	20	30
+ますだや	2026-04-25	501_Splash	AppStart	location=34.94392,138.3956,47.7	1	10	47	33
+ますだや	2026-04-08	501_Splash	AppStart	location=35.18079,137.0491,61.23635	1	19	30	49
+ますだや	2026-04-04	501_Splash	CreateUdidTextOnStorage	udid=13D0C77E-FB41-4E3D-AFEF-AABC2AE0F366_202102201628456287	1	02	03	19
+ますだや	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=20D3924E-D1D9-4636-ABD4-75B6F93E2674_202205231204364772	1	13	33	15
+ますだや	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602	1	12	32	16
+ますだや	2026-04-09	501_Splash	CreateUdidTextOnStorage	udid=8CD29FE4-ED96-4F94-9E21-B344E6EB2D38_201904160453598596	1	11	02	55
+ますだや	2026-04-08	501_Splash	CreateUdidTextOnStorage	udid=99385B9E-022D-42CA-9D84-E0EC581BA883_201910131203082489	1	19	30	48
+ますだや	2026-04-21	501_Splash	CreateUdidTextOnStorage	udid=DC73D576-A89F-460E-9EA0-AF8DB8A40BE4_202604210726566908	1	07	32	36
+ますだや	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=DF252D65-9835-402D-85A2-D3249287DD5F_202205231207002076	1	13	32	48
+ますだや	2026-04-21	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=503,passphrase=for-passphrase-503	1	07	32	38
+ますだや	2026-03-26	502_Title	CloseScene		1	12	33	01
+ますだや	2026-04-03	502_Title	CloseScene		1	17	13	06
+ますだや	2026-04-09	502_Title	CloseScene		1	11	03	07
+ますだや	2026-04-11	502_Title	CloseScene		2	11	45	31
+ますだや	2026-04-12	502_Title	CloseScene		2	13	33	24
+ますだや	2026-04-21	502_Title	CloseScene		1	07	32	36
+ますだや	2026-04-25	502_Title	CloseScene		2	10	47	39
+ますだや	2026-04-11	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-208	1	11	46	06
+ますだや	2026-04-03	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=-1,passphrase=for-passphrase-252	1	17	13	06
+ますだや	2026-04-09	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=204,passphrase=for-passphrase-204	1	11	03	07
+ますだや	2026-04-12	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=465,passphrase=for-passphrase-465	2	13	33	23
+ますだや	2026-04-25	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=465,passphrase=for-passphrase-465	2	10	47	39
+ますだや	2026-04-11	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=509,passphrase=for-passphrase-509	1	11	45	30
+ますだや	2026-03-26	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=518,passphrase=for-passphrase-518	1	12	33	00
+ますだや	2026-04-09	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=599_Reset,channel=-1,passphrase=	1	11	02	55
+ますだや	2026-04-09	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://docs.google.com/forms/d/e/1FAIpQLSfPISDBn-TmLj_Sfj_TV15DmT_i-iLSL617-cy-L7fnXcuHjA/viewform?usp=sf_link?isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639113293558225370&amp;udid=8CD29FE4-ED96-4F94-9E21-B344E6EB2D38_201904160453598596	1	11	02	35
+ますだや	2026-03-26	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/10216/images_b371ea15ce7d15eb534190b7a947c221_original.jpg&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639101251649231630&amp;udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602	1	12	32	45
+ますだや	2026-04-09	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=8CD29FE4-ED96-4F94-9E21-B344E6EB2D38_201904160453598596&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639113293427521870	1	11	02	22
+ますだや	2026-04-04	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=0EC6D072-BEFC-4B48-9108-659F720B9DF6_202204191635532685&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639108944867439950&amp;location=34.97974,138.3546,30.69941&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	10	14	46
+ますだや	2026-04-04	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=13D0C77E-FB41-4E3D-AFEF-AABC2AE0F366_202102201628456287&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639108650151672230&amp;location=34.79111,138.2791,7.465561&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	02	03	35
+ますだや	2026-04-21	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=DC73D576-A89F-460E-9EA0-AF8DB8A40BE4_202604210726566908&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639123535282999840&amp;location=34.85895,138.2291,86.11879&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	07	32	08
+ますだや	2026-04-10	502_Title	TapedMapPin	origin_user_id=293	1	10	47	17
+ますだや	2026-04-15	502_Title	TapedMapPin	origin_user_id=293	1	19	45	47
+ますだや	2026-04-22	502_Title	TapedMapPin	origin_user_id=293	2	10	01	36
+ますだや	2026-04-03	503_Subtitle	CloseScene		1	17	13	01
+ますだや	2026-04-04	503_Subtitle	CloseScene		1	10	14	43
+ますだや	2026-04-09	503_Subtitle	CloseScene		1	11	02	12
+ますだや	2026-04-11	503_Subtitle	CloseScene		4	11	43	51
+ますだや	2026-04-12	503_Subtitle	CloseScene		2	13	33	53
+ますだや	2026-04-21	503_Subtitle	CloseScene		1	07	32	03
+ますだや	2026-04-25	503_Subtitle	CloseScene		2	12	39	38
+ますだや	2026-04-03	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	17	13	01
+ますだや	2026-04-04	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	10	14	42
+ますだや	2026-04-09	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	11	02	12
+ますだや	2026-04-11	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	2	11	45	26
+ますだや	2026-04-21	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	07	32	03
+ますだや	2026-04-11	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=465,passphrase=	2	11	43	50
+ますだや	2026-04-12	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=465,passphrase=	2	13	33	52
+ますだや	2026-04-25	503_Subtitle	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=523_QrCodeReader,channel=465,passphrase=	2	12	39	37
+ますだや	2026-04-03	503_Subtitle	OpenUrl(ARSceneGuiButton:menu)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/masudaya/masudaya_menu_250417s.jpg&amp;now=639108331522371110	1	17	12	32
+ますだや	2026-04-21	503_Subtitle	OpenUrl(ARSceneGuiButton:menu)	url=https://manage.app-svr.com/apps/favorone/imageviewer/shop.php?image_path=img/masudaya/masudaya_menu_250417s.jpg&amp;now=639123535018958200	1	07	31	41
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=121b3b6fbbfb00b0e9db6a3d4494d1c1_202505190433580601&amp;application_id=15&amp;LogChannelId=465&amp;viewname=index_favo&amp;version=2.0.9	1	12	17	16
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_distribution_coupons/index?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;viewname=index_favo&amp;version=2.0.9	1	12	18	39
+ますだや	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_distribution_coupons/index?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;viewname=index_favo&amp;version=2.0.4	1	11	43	55
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=121b3b6fbbfb00b0e9db6a3d4494d1c1_202505190433580601&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.9&amp;now=639127162559098680	1	12	17	35
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=121b3b6fbbfb00b0e9db6a3d4494d1c1_202505190433580601&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.9&amp;now=639127175941969940	1	12	39	53
+ますだや	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=20D3924E-D1D9-4636-ABD4-75B6F93E2674_202205231204364772&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115976144530980	1	13	33	34
+ますだや	2026-04-12	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=DF252D65-9835-402D-85A2-D3249287DD5F_202205231207002076&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115976162297720	1	13	33	36
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.9&amp;now=639127163289975610	1	12	18	50
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.9&amp;now=639127175916968450	1	12	39	52
+ますだや	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.9&amp;now=639127176135363700	1	12	40	14
+ますだや	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115046276815830	1	11	43	47
+ますだや	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115065055409430	1	12	15	05
+ますだや	2026-04-11	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639115065688760460	1	12	16	09
+ますだや	2026-04-09	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/index?udid=8CD29FE4-ED96-4F94-9E21-B344E6EB2D38_201904160453598596&amp;application_id=15&amp;LogChannelId=465&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639113293283515150	1	11	02	08
+ますだや	2026-04-11	523_QrCodeReader	CloseScene		2	11	43	53
+ますだや	2026-04-25	523_QrCodeReader	CloseScene		2	12	39	51
+ますだや	2026-04-25	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・AR画面の戻るボタン-143)	scene=503_Subtitle,channel=-1,passphrase=	2	12	39	50
+ますだや	2026-04-11	523_QrCodeReader	OpenScene(ARSceneGuiButton:スタンプ画面・クーポンの戻るボタン-139)	scene=503_Subtitle,channel=-1,passphrase=	2	11	43	52
+ますだや	2026-04-25	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=121b3b6fbbfb00b0e9db6a3d4494d1c1_202505190433580601&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639127175797904250	1	12	39	39
+ますだや	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=20D3924E-D1D9-4636-ABD4-75B6F93E2674_202205231204364772&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115976382157970	1	13	33	58
+ますだや	2026-04-12	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=DF252D65-9835-402D-85A2-D3249287DD5F_202205231207002076&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115976350949470	1	13	33	55
+ますだや	2026-04-25	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639127175961755580	1	12	39	57
+ますだや	2026-04-11	523_QrCodeReader	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1&amp;now=639115065633302870	1	12	16	03
+ますだや	2026-04-25	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=121b3b6fbbfb00b0e9db6a3d4494d1c1_202505190433580601&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.87368,138.2599,64.7	1	12	39	39
+ますだや	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=20D3924E-D1D9-4636-ABD4-75B6F93E2674_202205231204364772&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.87378,138.2601,25.79147	1	13	33	58
+ますだや	2026-04-12	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/result?udid=DF252D65-9835-402D-85A2-D3249287DD5F_202205231207002076&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.87392,138.2596,26.11127	1	13	33	55
+ますだや	2026-04-25	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=62fdf832fce3027d1901f9ca239d8850_201911202249447366&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1,location=34.87368,138.2599,64.7	1	12	39	56
+ますだや	2026-04-11	523_QrCodeReader	ReadQrCode	qrcode=https://manage.app-svr.com/CARMforS_CMSTemplate/web_app_user_stamps/result?udid=64E6FBAB-28B6-4798-8243-864877E8DC0D_201905181303082602&amp;application_id=15&amp;LogChannelId=465&amp;BrowserType=fullWebView&amp;getpoint=1,location=0,0,0	1	12	16	03
+ますだや	2026-04-11	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	1	12	16	03
+ますだや	2026-04-12	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	13	33	55
+ますだや	2026-04-25	WebEvent	WebAppUserStamps/result	GOT_NEW_COUPON	2	12	39	39

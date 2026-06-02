@@ -131,9 +131,9 @@
 | 131 | 1to1議事録のDB登録フォローアップ | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
 | 132 | 他チャプター1to1相手の所属補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
 | 133 | 辻亮さん所属チャプター補正 | implement | completed | develop（既存未コミット変更あり） | 2026-05-21 |
-| 134 | 御手洗さん 1to1 事前準備（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
-| 135 | 御手洗さん 1to1 実施後議事録（株式会社風土テック／BNI VORTEX） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
-| 136 | 御手洗さん 1to1 DB登録 + 西岡さん紹介進行記録 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-05-22 |
+| 134 | 御手洗さん 1to1 事前準備（株式会社風土テック／BNI VORTEX） | docs | completed | develop | 2026-05-22 |
+| 135 | 御手洗さん 1to1 実施後議事録（株式会社風土テック／BNI VORTEX） | docs | completed | develop | 2026-05-22 |
+| 136 | 御手洗さん 1to1 DB登録 + 西岡さん紹介進行記録 | implement | completed | develop | 2026-05-22 |
 | 137 | 1to1議事録のDB登録バックフィル | implement | completed | develop | 2026-05-25 |
 | 138 | Living Document §10.3 入口設計（小中さん SS 学び） | docs | completed | develop | 2026-05-26 |
 | 139 | Living Document §10.7 今週の実験サイクル | docs | completed | develop | 2026-05-26 |
@@ -157,27 +157,27 @@
 | 157 | Zoom 取り込み 未登録相手の新規メンバー作成（相手選択ダイアログ・案A） | implement | completed | develop | 2026-05-30 |
 | 159 | Zoom 取り込み重複の再発防止（apply 同日重複検知＋バックフィル）＋既存重複クリーンアップ | implement | completed | develop | 2026-06-01 |
 | 158 | 木村秀継 第2回121 要望整理（国宝社／BPS木村 製本販売管理システム改善） | docs | completed | develop | 2026-05-31 |
-| 159 | 原田里織 初回121事前準備（RUILED VISION JAPAN／LEDデジタルサイネージ） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 160 | 小中貴晃 121事前準備（BeCheerz／AIツール情報発信・業務効率化支援） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 161 | 原田里織 第1回121文字起こし反映（RUILED VISION JAPAN／販売代理店戦略） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 162 | 原田里織・小中貴晃 第1回121履歴DB反映 | implement | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 163 | 寺田直史 初回121事前準備（BNI Tifonet／エンジニア事業協業可能性） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 164 | メンバー相談メモ置き場と運用README | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 165 | 今西さん AiLC 月次集計表作成簡略化相談 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 166 | 今西さん AiLC 月次集計表自動化プラン・概算整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 167 | 今西さん AiLC 月次集計表 Webアプリ費用感整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 168 | 今西さん AiLC Webアプリ費用感の妥当性確認 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 169 | 今西さん AiLC Webアプリ提案 ROI 整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 170 | 今西さん AiLC Webアプリ提案 AI駆動開発整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 171 | 今西さん AiLC Webアプリ提案 MVP 費用感調整 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 172 | 今西さん AiLC 自動化削減見込みの根拠整理 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 173 | 今西さん AiLC 月次集計表作成 自動化提案資料 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 174 | 今西さん AiLC 提案資料 Genspark スライド化プロンプト | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-01 |
-| 175 | AiLC 表記修正（旧 ILC 表示名の訂正） | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
-| 176 | AiLC AI駆動Web MVP 費用レンジ絞り込み | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
-| 177 | DragonFly 定例会 2026-06-02 議事録保存 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
-| 178 | DragonFly 定例会 2026-06-02 学習コーナー詳細化 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
-| 179 | DragonFly 定例会 2026-05-12 議事録保存 | docs | completed | develop（既存未コミット変更あり・merge未実施） | 2026-06-02 |
+| 159 | 原田里織 初回121事前準備（RUILED VISION JAPAN／LEDデジタルサイネージ） | docs | completed | develop | 2026-06-01 |
+| 160 | 小中貴晃 121事前準備（BeCheerz／AIツール情報発信・業務効率化支援） | docs | completed | develop | 2026-06-01 |
+| 161 | 原田里織 第1回121文字起こし反映（RUILED VISION JAPAN／販売代理店戦略） | docs | completed | develop | 2026-06-01 |
+| 162 | 原田里織・小中貴晃 第1回121履歴DB反映 | implement | completed | develop | 2026-06-01 |
+| 163 | 寺田直史 初回121事前準備（BNI Tifonet／エンジニア事業協業可能性） | docs | completed | develop | 2026-06-01 |
+| 164 | メンバー相談メモ置き場と運用README | docs | completed | develop | 2026-06-01 |
+| 165 | 今西さん AiLC 月次集計表作成簡略化相談 | docs | completed | develop | 2026-06-01 |
+| 166 | 今西さん AiLC 月次集計表自動化プラン・概算整理 | docs | completed | develop | 2026-06-01 |
+| 167 | 今西さん AiLC 月次集計表 Webアプリ費用感整理 | docs | completed | develop | 2026-06-01 |
+| 168 | 今西さん AiLC Webアプリ費用感の妥当性確認 | docs | completed | develop | 2026-06-01 |
+| 169 | 今西さん AiLC Webアプリ提案 ROI 整理 | docs | completed | develop | 2026-06-01 |
+| 170 | 今西さん AiLC Webアプリ提案 AI駆動開発整理 | docs | completed | develop | 2026-06-01 |
+| 171 | 今西さん AiLC Webアプリ提案 MVP 費用感調整 | docs | completed | develop | 2026-06-01 |
+| 172 | 今西さん AiLC 自動化削減見込みの根拠整理 | docs | completed | develop | 2026-06-01 |
+| 173 | 今西さん AiLC 月次集計表作成 自動化提案資料 | docs | completed | develop | 2026-06-01 |
+| 174 | 今西さん AiLC 提案資料 Genspark スライド化プロンプト | docs | completed | develop | 2026-06-01 |
+| 175 | AiLC 表記修正（旧 ILC 表示名の訂正） | docs | completed | develop | 2026-06-02 |
+| 176 | AiLC AI駆動Web MVP 費用レンジ絞り込み | docs | completed | develop | 2026-06-02 |
+| 177 | DragonFly 定例会 2026-06-02 議事録保存 | docs | completed | develop | 2026-06-02 |
+| 178 | DragonFly 定例会 2026-06-02 学習コーナー詳細化 | docs | completed | develop | 2026-06-02 |
+| 179 | DragonFly 定例会 2026-05-12 議事録保存 | docs | completed | develop | 2026-06-02 |
 | 180 | 定例会議事録 DB 化（meeting_minutes・import・Meetings 閲覧） | implement | completed | feature/phase180-chapter-minutes-db | 2026-06-02 |
 | 181 | Markdown ビューア P1（remark-gfm・見出し階層） | implement | completed | feature/phase181-markdown-viewer-gfm | 2026-06-02 |
 

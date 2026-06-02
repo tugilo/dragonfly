@@ -1,0 +1,99 @@
+
+
+店名	日付	category	action	label	件数	時	分	秒
+カレー処ヤサカ	2026-04-12	501_Splash	AppStart	location=0,0,0	1	12	52	05
+カレー処ヤサカ	2026-04-19	501_Splash	AppStart	location=0,0,0	1	21	49	37
+カレー処ヤサカ	2026-04-18	501_Splash	AppStart	location=34.69122,137.744,8.369875	1	00	08	48
+カレー処ヤサカ	2026-04-11	501_Splash	AppStart	location=34.69436,137.7609,50.13529	1	20	11	57
+カレー処ヤサカ	2026-03-26	501_Splash	AppStart	location=34.69569,137.7516,8.604945	1	21	38	37
+カレー処ヤサカ	2026-04-16	501_Splash	AppStart	location=34.69929,137.7524,30.99169	1	18	56	31
+カレー処ヤサカ	2026-04-25	501_Splash	AppStart	location=34.70316,137.75,45.9	1	11	24	12
+カレー処ヤサカ	2026-04-23	501_Splash	AppStart	location=34.72295,137.6976,6.689161	1	18	49	17
+カレー処ヤサカ	2026-03-28	501_Splash	AppStart	location=34.74351,137.7481,6.513853	1	18	39	04
+カレー処ヤサカ	2026-03-27	501_Splash	AppStart	location=34.76273,137.7201,53.8332	1	07	32	07
+カレー処ヤサカ	2026-04-25	501_Splash	AppStart	location=34.77686,137.7581,16.537	1	05	42	44
+カレー処ヤサカ	2026-04-02	501_Splash	AppStart	location=34.85953,138.2726,21.33498	1	07	47	36
+カレー処ヤサカ	2026-04-01	501_Splash	AppStart	location=34.86436,138.2639,19.48154	1	17	19	28
+カレー処ヤサカ	2026-04-02	501_Splash	AppStart	location=34.86445,138.2639,14.50716	1	07	50	09
+カレー処ヤサカ	2026-04-17	501_Splash	AppStart	location=34.89022,138.2619,21.52777	1	08	01	01
+カレー処ヤサカ	2026-04-19	501_Splash	AppStart	location=35.54805,139.7679,18.00121	1	10	54	48
+カレー処ヤサカ	2026-04-23	501_Splash	CreateUdidTextOnStorage	udid=10C9207C-78D5-445C-9F38-6F696946FE16_202508161231474653	1	18	49	16
+カレー処ヤサカ	2026-04-16	501_Splash	CreateUdidTextOnStorage	udid=442DE703-D436-45CF-91C7-2751C03B6CD9_202505251935096410	1	18	56	30
+カレー処ヤサカ	2026-04-01	501_Splash	CreateUdidTextOnStorage	udid=467744B2-8085-45B9-95AE-768DB6F93AE9_201904151427099065	1	17	19	24
+カレー処ヤサカ	2026-04-02	501_Splash	CreateUdidTextOnStorage	udid=467744B2-8085-45B9-95AE-768DB6F93AE9_201904151427099065	1	07	47	33
+カレー処ヤサカ	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=5CA8FDBB-5EE7-4CAA-BAF0-FF96541D8A2C_202505011202478587	1	20	45	27
+カレー処ヤサカ	2026-03-27	501_Splash	CreateUdidTextOnStorage	udid=5D1022EB-3018-43ED-8119-BBBE269EEB9D_201909121419021037	1	07	32	06
+カレー処ヤサカ	2026-03-28	501_Splash	CreateUdidTextOnStorage	udid=724CF544-0239-4BEF-9CDB-E489B1DD5E59_202508161247258251	1	18	39	00
+カレー処ヤサカ	2026-04-02	501_Splash	CreateUdidTextOnStorage	udid=739E992F-1384-44F0-BC29-E57F06FDD4A6_202601220949131495	1	07	50	06
+カレー処ヤサカ	2026-03-26	501_Splash	CreateUdidTextOnStorage	udid=99F02912-53AC-44E7-B806-150864F82F86_202503231828291881	1	21	38	36
+カレー処ヤサカ	2026-04-18	501_Splash	CreateUdidTextOnStorage	udid=9F618E56-D8F3-465B-B977-1C6E6B7FC95B_202505251134449575	1	00	08	47
+カレー処ヤサカ	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=B8F0BC90-0D80-468D-ABD1-A104A6FB43B1_202509071157214328	1	10	54	47
+カレー処ヤサカ	2026-04-12	501_Splash	CreateUdidTextOnStorage	udid=BA20160B-1777-4E4B-AB69-765BC5843B86_202502021254438009	1	12	52	04
+カレー処ヤサカ	2026-04-19	501_Splash	CreateUdidTextOnStorage	udid=BA20160B-1777-4E4B-AB69-765BC5843B86_202502021254438009	1	21	49	36
+カレー処ヤサカ	2026-04-25	501_Splash	CreateUdidTextOnStorage	udid=BAC88DDA-90EC-4B9E-ADE0-41B88A7D00E5_202505011206410910	1	05	42	43
+カレー処ヤサカ	2026-04-17	501_Splash	CreateUdidTextOnStorage	udid=C4F634B8-F0F7-41F0-9A94-2D78886E414D_202207031753590758	1	08	00	59
+カレー処ヤサカ	2026-03-29	501_Splash	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	12	29	25
+カレー処ヤサカ	2026-03-26	502_Title	CloseScene		1	21	38	44
+カレー処ヤサカ	2026-03-29	502_Title	CloseScene		2	12	31	40
+カレー処ヤサカ	2026-03-31	502_Title	CloseScene		1	04	18	05
+カレー処ヤサカ	2026-04-01	502_Title	CloseScene		1	17	19	34
+カレー処ヤサカ	2026-04-02	502_Title	CloseScene		2	07	47	42
+カレー処ヤサカ	2026-04-16	502_Title	CloseScene		1	18	56	55
+カレー処ヤサカ	2026-04-17	502_Title	CloseScene		1	08	01	06
+カレー処ヤサカ	2026-04-18	502_Title	CloseScene		1	00	08	54
+カレー処ヤサカ	2026-04-23	502_Title	CloseScene		1	18	49	21
+カレー処ヤサカ	2026-04-25	502_Title	CloseScene		2	05	42	49
+カレー処ヤサカ	2026-04-02	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=204,passphrase=for-passphrase-204	2	07	47	41
+カレー処ヤサカ	2026-03-31	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=463,passphrase=for-passphrase-463	1	04	18	04
+カレー処ヤサカ	2026-03-26	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	21	38	43
+カレー処ヤサカ	2026-03-29	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	2	12	31	40
+カレー処ヤサカ	2026-04-01	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	17	19	33
+カレー処ヤサカ	2026-04-16	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	18	56	55
+カレー処ヤサカ	2026-04-18	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	00	08	54
+カレー処ヤサカ	2026-04-23	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	1	18	49	21
+カレー処ヤサカ	2026-04-25	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=629,passphrase=for-passphrase-629	2	05	42	49
+カレー処ヤサカ	2026-04-17	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=503_Subtitle,channel=657,passphrase=for-passphrase-657	1	08	01	06
+カレー処ヤサカ	2026-04-17	502_Title	OpenScene(SimpleGuiButton:_ChannelOpener)	scene=599_Reset,channel=-1,passphrase=	1	08	00	58
+カレー処ヤサカ	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639103842866352240	1	12	31	26
+カレー処ヤサカ	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639103843235292750	1	12	32	03
+カレー処ヤサカ	2026-04-20	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/sidemenu.html?v=20190410&amp;application_id=15&amp;udid=7dd1a33b427b783964c494006687934f_202504110008044434&amp;BrowserType=fullwebview&amp;is_use_inner_browser=0&amp;now=639122861383588390	1	12	49	00
+カレー処ヤサカ	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639103842963169450&amp;location=34.69943,137.7524,6.261706&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	31	36
+カレー処ヤサカ	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639103843199444080&amp;location=34.69943,137.7524,6.261706&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	32	00
+カレー処ヤサカ	2026-03-29	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639103851759235750&amp;location=34.69937,137.7524,7.523109&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	46	16
+カレー処ヤサカ	2026-04-02	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=739E992F-1384-44F0-BC29-E57F06FDD4A6_202601220949131495&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639107130150176190&amp;location=34.86445,138.2639,14.50716&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	07	50	15
+カレー処ヤサカ	2026-04-20	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_details/listandmap_favorone?udid=7dd1a33b427b783964c494006687934f_202504110008044434&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639122860797656870&amp;location=34.84964,138.3158,45.2&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	12	48	01
+カレー処ヤサカ	2026-04-17	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_channel_lists/add?application_id=15&amp;udid=C4F634B8-F0F7-41F0-9A94-2D78886E414D_202207031753590758&amp;viewname=add_favo&amp;passcode=iwk&amp;BrowserType=fullWebView&amp;isUseInnerBrowser=true&amp;addDeviceUniqueIdentifier=true&amp;closeWebView=false&amp;now=639120096534148670	1	08	00	53
+カレー処ヤサカ	2026-03-27	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/CARMforS_CMSTemplate/web_origin_user_details/listandmap_favorone?udid=5D1022EB-3018-43ED-8119-BBBE269EEB9D_201909121419021037&amp;application_id=15&amp;viewName=listandmap_favorone_staging&amp;now=639101935522173840&amp;location=34.76265,137.72,53.12396&amp;BrowserType=fullwebview&amp;is_use_inner_browser=1	1	07	32	32
+カレー処ヤサカ	2026-04-11	502_Title	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://x.com/SZ_FAVORONE?AndroidAlwaysOpenExternalBrowser=true&amp;is_use_inner_browser=1&amp;now=639115351308198500	1	20	12	10
+カレー処ヤサカ	2026-04-15	502_Title	TapedMapPin	origin_user_id=434	1	19	46	04
+カレー処ヤサカ	2026-04-23	502_Title	TapedMapPin	origin_user_id=434	1	17	35	44
+カレー処ヤサカ	2026-03-26	503_Subtitle	CloseScene		1	21	38	47
+カレー処ヤサカ	2026-03-29	503_Subtitle	CloseScene		3	12	31	24
+カレー処ヤサカ	2026-03-31	503_Subtitle	CloseScene		1	04	18	00
+カレー処ヤサカ	2026-04-01	503_Subtitle	CloseScene		1	17	18	56
+カレー処ヤサカ	2026-04-17	503_Subtitle	CloseScene		1	07	59	59
+カレー処ヤサカ	2026-04-20	503_Subtitle	CloseScene		1	12	47	56
+カレー処ヤサカ	2026-04-25	503_Subtitle	CloseScene		1	05	44	48
+カレー処ヤサカ	2026-03-26	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	21	38	46
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	3	12	31	23
+カレー処ヤサカ	2026-03-31	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	04	18	00
+カレー処ヤサカ	2026-04-17	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	07	59	59
+カレー処ヤサカ	2026-04-20	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	12	47	56
+カレー処ヤサカ	2026-04-25	503_Subtitle	OpenScene(ARSceneGuiButton:店舗情報画面の戻るボタン-220-221-229-)	scene=502_Title,channel=-1,passphrase=	1	05	44	48
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenUrl(ARSceneGuiButton:instagram-419-420-432-434)	url=https://www.instagram.com/yasaka_curry/?now=639103842472471100	1	12	30	47
+カレー処ヤサカ	2026-04-17	503_Subtitle	OpenUrl(ARSceneGuiButton:menu)	url=https://www.yasaca.jp/menu/?now=639120095577684490	1	07	59	17
+カレー処ヤサカ	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:menu)	url=https://www.yasaca.jp/menu/?now=639126926796124770	1	05	44	39
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331&amp;application_id=15&amp;LogChannelId=629&amp;viewname=index_favo&amp;version=2.0.4	1	12	31	05
+カレー処ヤサカ	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=442DE703-D436-45CF-91C7-2751C03B6CD9_202505251935096410&amp;application_id=15&amp;LogChannelId=629&amp;viewname=index_favo&amp;version=2.0.4	1	18	56	57
+カレー処ヤサカ	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=BAC88DDA-90EC-4B9E-ADE0-41B88A7D00E5_202505011206410910&amp;application_id=15&amp;LogChannelId=629&amp;viewname=index_favo&amp;version=2.0.4	1	05	44	24
+カレー処ヤサカ	2026-04-17	503_Subtitle	OpenUrl(ARSceneGuiButton:クーポン-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_origin_user_distribution_coupons/index?udid=C4F634B8-F0F7-41F0-9A94-2D78886E414D_202207031753590758&amp;application_id=15&amp;LogChannelId=629&amp;viewname=index_favo&amp;version=2.0.4	1	07	59	23
+カレー処ヤサカ	2026-04-16	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=442DE703-D436-45CF-91C7-2751C03B6CD9_202505251935096410&amp;application_id=15&amp;LogChannelId=629&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639119626207772200	1	18	57	00
+カレー処ヤサカ	2026-04-25	503_Subtitle	OpenUrl(ARSceneGuiButton:スタンプ-207-220-221-229-233-)	url=https://manage.app-svr.com/CARMforS_CMSTemplate//web_app_user_stamps/index?udid=BAC88DDA-90EC-4B9E-ADE0-41B88A7D00E5_202505011206410910&amp;application_id=15&amp;LogChannelId=629&amp;viewName=index_favo&amp;version=2.0.4&amp;now=639126926556427820	1	05	44	15
+カレー処ヤサカ	2026-04-15	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-434)	url=https://www.google.com/maps/place/%E3%82%AB%E3%83%AC%E3%83%BC%E5%87%A6%E3%83%A4%E3%82%B5%E3%82%AB/@34.6994272,137.7523001,15z/data=!4m6!3m5!1s0x601adde565eb3077:0xd1cad9ac13a6827f!8m2!3d34.6994272!4d137.7523001!16s%2Fg%2F1v3_2rld?entry=ttu&amp;g_ep=EgoyMDI0MTAxNC4wIKXMDSoASAFQAw%3D%3D&amp;now=639118821089551430	1	20	35	09
+カレー処ヤサカ	2026-04-17	503_Subtitle	OpenUrl(ARSceneGuiButton:マップ-434)	url=https://www.google.com/maps/place/%E3%82%AB%E3%83%AC%E3%83%BC%E5%87%A6%E3%83%A4%E3%82%B5%E3%82%AB/@34.6994272,137.7523001,15z/data=!4m6!3m5!1s0x601adde565eb3077:0xd1cad9ac13a6827f!8m2!3d34.6994272!4d137.7523001!16s%2Fg%2F1v3_2rld?entry=ttu&amp;g_ep=EgoyMDI0MTAxNC4wIKXMDSoASAFQAw%3D%3D&amp;now=639120095696480690	1	07	59	29
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenUrl(ARSceneGuiButton:友達紹介-432-434)	url=https://manage.app-svr.com/apps/favorone/share2/index.php?v=1&amp;add_comment=%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%80%8E%E3%82%AB%E3%83%AC%E3%83%BC%E5%87%A6%E3%83%A4%E3%82%B5%E3%82%AB%E3%80%8F%E3%81%AE%E3%81%94%E7%B4%B9%E4%BB%8B%E3%81%A7%E3%81%99%E2%9C%A8%0D%0A%E3%81%BE%E3%81%9A%E3%81%AF%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0D%0A%E5%BA%97%E8%88%97%E3%81%AE%E7%99%BB%E9%8C%B2%E6%96%B9%E6%B3%95%E3%81%AF3%E9%80%9A%E3%82%8A%0D%0A%E2%91%A0%E3%80%8E%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%82%92%E6%8E%A2%E3%81%99%E3%80%8F%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%0D%0A%E2%91%A1%E5%B7%A6%E4%B8%8A%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E3%80%8E%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E5%85%A5%E5%8A%9B%E3%80%8F%E3%81%8B%E3%82%89%E5%BA%97%E8%88%97%E5%B0%82%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90yasaka%E3%80%91%E3%82%92%E5%85%A5%E5%8A%9B%0D%0A%E2%91%A2%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B/%E5%BA%97%E8%88%97%E7%B4%B9%E4%BB%8B%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%E3%80%82%0D%0A%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E7%9F%A5%E4%BA%BA%E3%83%BB%E5%8F%8B%E9%81%94%E3%81%AB%E3%81%A9%E3%82%93%E3%81%A9%E3%82%93%E6%8B%A1%E6%95%A3%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%81%AD%F0%9F%96%90%EF%B8%8F%0D%0A%E5%BA%97%E8%88%97%E7%99%BB%E9%8C%B2%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90yasaka%E3%80%91&amp;now=639103841725948260	1	12	29	32
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9407/images_a5a9ce8f4492b3b20cf26e4778a12aa8_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639103852007777370&amp;udid=0FCCBA02-A3B0-4258-AFB6-032F43BBAC61_202603291228432331	1	12	46	40
+カレー処ヤサカ	2026-04-25	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://hippy-ishigaki-print.ssl-lolipop.jp/apps/favorone/imageviewer/imageviewer.php?image_path=https://ailc-fors-cdn-manage.app-svr.com/origin_user_info_files/9407/images_a5a9ce8f4492b3b20cf26e4778a12aa8_original.png&amp;isUseInnerBrowser=true&amp;showControls=true&amp;addUniqueLink=true&amp;addDeviceUniqueIdentifier=true&amp;now=639126926699441520&amp;udid=BAC88DDA-90EC-4B9E-ADE0-41B88A7D00E5_202505011206410910	1	05	44	30
+カレー処ヤサカ	2026-03-29	503_Subtitle	OpenUrl(SimpleGuiButton:_ChannelOpener)	url=https://manage.app-svr.com/apps/favorone/share2/line_redirect.php?body=%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%80%8E%E3%82%AB%E3%83%AC%E3%83%BC%E5%87%A6%E3%83%A4%E3%82%B5%E3%82%AB%E3%80%8F%E3%81%AE%E3%81%94%E7%B4%B9%E4%BB%8B%E3%81%A7%E3%81%99%E2%9C%A8%0D%0A%E3%81%BE%E3%81%9A%E3%81%AF%E9%9D%99%E5%B2%A1%E3%83%95%E3%82%A1%E3%83%9C%E3%83%AD%E3%83%BC%E3%83%8D%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0D%0A%E5%BA%97%E8%88%97%E3%81%AE%E7%99%BB%E9%8C%B2%E6%96%B9%E6%B3%95%E3%81%AF3%E9%80%9A%E3%82%8A%0D%0A%E2%91%A0%E3%80%8E%E5%8A%A0%E7%9B%9F%E5%BA%97%E3%82%92%E6%8E%A2%E3%81%99%E3%80%8F%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%0D%0A%E2%91%A1%E5%B7%A6%E4%B8%8A%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E3%80%8E%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E5%85%A5%E5%8A%9B%E3%80%8F%E3%81%8B%E3%82%89%E5%BA%97%E8%88%97%E5%B0%82%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90yasaka%E3%80%91%E3%82%92%E5%85%A5%E5%8A%9B%0D%0A%E2%91%A2%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%2F%E5%BA%97%E8%88%97%E7%B4%B9%E4%BB%8B%E3%81%8B%E3%82%89%E7%99%BB%E9%8C%B2%E3%80%82%0D%0A%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E7%9F%A5%E4%BA%BA%E3%83%BB%E5%8F%8B%E9%81%94%E3%81%AB%E3%81%A9%E3%82%93%E3%81%A9%E3%82%93%E6%8B%A1%E6%95%A3%E3%81%97%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%81%AD%F0%9F%96%90%EF%B8%8F%0D%0A%E5%BA%97%E8%88%97%E7%99%BB%E9%8C%B2%E7%94%A8%E3%83%91%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%80%90yasaka%E3%80%91%0A%E2%96%A0%E3%82%A2%E3%83%97%E3%83%AA%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E5%85%88%0Ahttps%3A%2F%2Ffavorone.net%2Fshizuoka%2F&amp;isUseInnerBrowser=false&amp;closeWebView=false&amp;now=639103841821075570	1	12	29	42
+カレー処ヤサカ	2026-04-06	WebEvent	WebApiApplications/deletePassphrase	for-passphrase-629	1	15	33	02
+カレー処ヤサカ	2026-04-01	PUSH	4月の月替わりメニューのご紹介です！	&amp;nbsp;4月の月替わりメニュー&amp;nbsp;『ミートトマトカレー』&amp;nbsp;?牛豚粗挽き肉のジューシーな旨みと、トマトの程よい酸味が重なる一皿??スパイス感は控えめに、お子さまでも食べやすい味わいに仕上げました。『チキンティッカマサラ』&amp;nbsp;?炒め玉ねぎの香ばしさとコクにヨーグルトの酸味とクミンの風味を効かせた一皿??スパイス感しっかりのクセになる味わいです。	1	16	40	07

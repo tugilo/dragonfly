@@ -1,0 +1,3248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
+	<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+		<Author/>
+		<Title/>
+		<Description/>
+		<Subject/>
+	</DocumentProperties>
+	<Styles>
+		<Style ss:ID="HyperlinkId" ss:Name="Hyperlink">
+			<Font ss:Color="#0000ff"/>
+		</Style>
+		<Style ss:ID="1">
+			<NumberFormat ss:Format="yyyy-M-d HH:mm:ss AM/PM"/>
+		</Style>
+		<Style ss:ID="32">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#ffffff"/>
+			<Interior ss:Color="#cf2030" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="33">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#ffffff"/>
+			<Interior ss:Color="#cf2030" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="23">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="29">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="31">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="[$-411]yyyy年MM月dd日"/>
+		</Style>
+		<Style ss:ID="48">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="49">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="50">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+		<Style ss:ID="20">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="12.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="51">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="52">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="53">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f6bf58" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+		<Style ss:ID="22">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="12.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="34">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#ffffff"/>
+			<Interior ss:Color="#cf2030" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="35">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#ffffff"/>
+			<Interior ss:Color="#cf2030" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="36">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="25">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="26">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="[$-411]yyyy年MM月dd日 h:mm:ss AM/PM"/>
+		</Style>
+		<Style ss:ID="37">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="38">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+		<Style ss:ID="42">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="43">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="44">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+		<Style ss:ID="21">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="24">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="30">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="[$-411]yyyy年MM月dd日"/>
+		</Style>
+		<Style ss:ID="39">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="27">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="28">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Bold="1" ss:Color="#000000"/>
+			<Interior ss:Color="#e6e8ed" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="[$-411]yyyy年MM月dd日 h:mm:ss AM/PM"/>
+		</Style>
+		<Style ss:ID="40">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="41">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#ffffff" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+		<Style ss:ID="45">
+			<Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="46">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+		</Style>
+		<Style ss:ID="47">
+			<Alignment ss:Horizontal="Right" ss:Vertical="Top" ss:WrapText="1"/>
+			<Borders>
+				<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+				<Border ss:Position="Left"/>
+				<Border ss:Position="Right"/>
+				<Border ss:Position="DiagonalLeft"/>
+			</Borders>
+			<Font ss:FontName="sans-serif" ss:Size="10.0" ss:Color="#000000"/>
+			<Interior ss:Color="#f5f7f7" ss:Pattern="Solid"/>
+			<NumberFormat ss:Format="###0.00"/>
+		</Style>
+	</Styles>
+	<Names>
+		<NamedRange ss:Name="auto_generated_bookmark_2" ss:RefersTo="Report!R2C1:R3C22"/>
+		<NamedRange ss:Name="total_row" ss:RefersTo="Report!R61C1"/>
+		<NamedRange ss:Name="rm1headerrow1" ss:RefersTo="Report!R8C1"/>
+		<NamedRange ss:Name="auto_generated_bookmark_0" ss:RefersTo="Report!R1C1"/>
+		<NamedRange ss:Name="auto_generated_bookmark_1" ss:RefersTo="Report!R3C3"/>
+		<NamedRange ss:Name="auto_generated_bookmark_3" ss:RefersTo="Report!R1C1:R3C22"/>
+		<NamedRange ss:Name="report_main1" ss:RefersTo="Report!R8C1:R61C21"/>
+		<NamedRange ss:Name="parameter_table" ss:RefersTo="Report!R4C1:R7C22"/>
+	</Names>
+
+<Worksheet ss:Name="Report">
+	<ss:Table>
+		<ss:Column ss:Width="86.656" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="74.496" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="7.808" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="46.208" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="41.088" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="41.728" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="24.32" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="16.0" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="43.264" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="21.376" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="21.888" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="46.208" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="12.416" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="35.328" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="44.8" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="46.976" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="34.048" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="10.752" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="55.296" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="41.728" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="49.28" ss:AutoFitWidth="0"/>
+		<ss:Column ss:Width="4.224" ss:AutoFitWidth="0"/>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="22" ss:MergeAcross="16">
+				<Data ss:Type="String">チャプター► サマリーPALMSレポート</Data>
+			</Cell>
+			<Cell ss:Index="18" ss:StyleID="23" ss:MergeAcross="4"/>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="24" ss:MergeAcross="1">
+				<Data ss:Type="String">オペレーター</Data>
+			</Cell>
+			<Cell ss:Index="3" ss:StyleID="24" ss:MergeAcross="4">
+				<Data ss:Type="String">レポート日</Data>
+			</Cell>
+			<Cell ss:Index="8" ss:StyleID="24" ss:MergeAcross="5">
+				<Data ss:Type="String">カントリー</Data>
+			</Cell>
+			<Cell ss:Index="14" ss:StyleID="24" ss:MergeAcross="3">
+				<Data ss:Type="String">リージョン</Data>
+			</Cell>
+			<Cell ss:Index="18" ss:StyleID="24" ss:MergeAcross="4">
+				<Data ss:Type="String">チャプター</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="27" ss:MergeAcross="1">
+				<Data ss:Type="String">次廣 淳</Data>
+			</Cell>
+			<Cell ss:Index="3" ss:StyleID="28" ss:MergeAcross="4">
+				<Data ss:Type="DateTime">2026-06-02T09:16:25.000</Data>
+			</Cell>
+			<Cell ss:Index="8" ss:StyleID="27" ss:MergeAcross="5">
+				<Data ss:Type="String">Japan</Data>
+			</Cell>
+			<Cell ss:Index="14" ss:StyleID="27" ss:MergeAcross="3">
+				<Data ss:Type="String">BNI Tokyo NE 東京N.E.</Data>
+			</Cell>
+			<Cell ss:Index="18" ss:StyleID="27" ss:MergeAcross="4">
+				<Data ss:Type="String">BNI DragonFly</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="29" ss:MergeAcross="21">
+				<Data ss:Type="String">パラメーター</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="29" ss:MergeAcross="9">
+				<Data ss:Type="String">チャプター:</Data>
+			</Cell>
+			<Cell ss:Index="11" ss:StyleID="29" ss:MergeAcross="11">
+				<Data ss:Type="String">BNI DragonFly</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="29" ss:MergeAcross="9">
+				<Data ss:Type="String">From:</Data>
+			</Cell>
+			<Cell ss:Index="11" ss:StyleID="31" ss:MergeAcross="11">
+				<Data ss:Type="DateTime">2026-05-01T00:00:00.000</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="29" ss:MergeAcross="9">
+				<Data ss:Type="String">To:</Data>
+			</Cell>
+			<Cell ss:Index="11" ss:StyleID="31" ss:MergeAcross="11">
+				<Data ss:Type="DateTime">2026-05-31T00:00:00.000</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="34">
+				<Data ss:Type="String">姓</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="34" ss:MergeAcross="1">
+				<Data ss:Type="String">名</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="35">
+				<Data ss:Type="String">出</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="35">
+				<Data ss:Type="String">欠</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="35">
+				<Data ss:Type="String">遅</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="35" ss:MergeAcross="1">
+				<Data ss:Type="String">医</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="35">
+				<Data ss:Type="String">代</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="35" ss:MergeAcross="1">
+				<Data ss:Type="String">内与</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="35">
+				<Data ss:Type="String">外与</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="35" ss:MergeAcross="1">
+				<Data ss:Type="String">内受</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="35">
+				<Data ss:Type="String">外受</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="35">
+				<Data ss:Type="String">ビ</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="35" ss:MergeAcross="1">
+				<Data ss:Type="String">1to1</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="35">
+				<Data ss:Type="String">千円（千円未満切り捨て）</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="35">
+				<Data ss:Type="String">CEU</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="35">
+				<Data ss:Type="String">推薦のことば</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">太田</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">一誠</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">15</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">25.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">1105.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">31</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">清原</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">佳彩美</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">6.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">12.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">米澤</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">侑桂</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">今西</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">俊明</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">13</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">10</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">8.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">682.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">木村</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">健悟</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">46.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">松倉</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">健治</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">19</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">23.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">12</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">西岡</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">優希</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">16</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">19.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">19.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">21</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">里見</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">允二</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">212.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">福士</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">利明</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">8.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">6.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">海沼</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">功</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">5.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">487.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">久米</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">加代子</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">25.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">6003.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">13</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">飯田</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">千帆</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">10</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">8.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">100.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">今村</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">千絵</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">10</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">13.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">11.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">森園</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">友喜</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">3.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">紀川</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">和弘</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">4.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">55.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">斎藤</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">和貴</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">7.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">33.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">中村</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">啓吾</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">16</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">6.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">平岡</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">国彦</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">44</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">13</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">22.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">1848.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">福上</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">大輝</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">14.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">横山</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">尚武</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">12.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">164.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">芳賀</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">崇利</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">12</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">14.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">41.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">佐久間</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">康丞</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">7.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">335.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">田渕</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">恭平</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">20</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">19.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">3.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">藤井</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">恵理子</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">32.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">160.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">畠山</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">憲之</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">8.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">佐藤</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">拓斗</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">13</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">15</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">17.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">474.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">軍司</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">敦哉</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">20.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">88.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">岡元</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">智美</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">14</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">13.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">梅澤</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">朗広</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">8.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">山本</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">洸太</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">19</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">10.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">49.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">越賀</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">淑恵</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">8</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">18.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">220.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">次廣</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">淳</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">27.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">18</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">舩杉</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">牧子</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">22</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">20.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">5.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">渡邊</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">真大</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">15</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">17.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">252.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">平山</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">真由美</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">15</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">16</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">27.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">36.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">17</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">大竹</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">絵理香</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">12.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">12.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">山本</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">葉子</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">21.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">2.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">山口</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">薫</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">2.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">廣田</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">誠悟</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">26.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">11.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">長谷川</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">貴志</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">7</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">4.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">2745.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">小中</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">貴晃</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">14</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">9.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">倉持</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">賢一</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">12.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">48.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">原田</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">里織</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">18</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">14.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">42.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">16</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">増本</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">重孝</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">16</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">17</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">67.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">526.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">10</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">加藤</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">隆太</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">16.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">17.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">西浦</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">雅</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">12</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">11</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">13.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">5420.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">20</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">望月</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">雅幸</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">9</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">17.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">飯田</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">香</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">10.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">3.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">竹内</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1">
+				<Data ss:Type="String">駿太</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">6</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">15</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">11.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">船津</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1">
+				<Data ss:Type="String">麻理子</Data>
+			</Cell>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">14</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">14</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">30.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">5</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="39">
+				<Data ss:Type="String">ビジター</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="39" ss:MergeAcross="1"/>
+			<Cell ss:Index="4" ss:StyleID="40">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="40" ss:MergeAcross="1">
+				<Data ss:Type="Number">0.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="41">
+				<Data ss:Type="Number">0.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="40">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="45">
+				<Data ss:Type="String">BNI</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="45" ss:MergeAcross="1"/>
+			<Cell ss:Index="4" ss:StyleID="46">
+				<Data ss:Type="Number">3</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">2</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="46" ss:MergeAcross="1">
+				<Data ss:Type="Number">1.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="47">
+				<Data ss:Type="Number">381.00</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="46">
+				<Data ss:Type="Number">0</Data>
+			</Cell>
+		</Row>
+		<Row ss:AutoFitHeight="1">
+			<Cell ss:Index="1" ss:StyleID="51">
+				<Data ss:Type="String">合計</Data>
+			</Cell>
+			<Cell ss:Index="2" ss:StyleID="51" ss:MergeAcross="1"/>
+			<Cell ss:Index="4" ss:StyleID="52">
+				<Data ss:Type="Number">143.0</Data>
+			</Cell>
+			<Cell ss:Index="5" ss:StyleID="52">
+				<Data ss:Type="Number">1.0</Data>
+			</Cell>
+			<Cell ss:Index="6" ss:StyleID="52">
+				<Data ss:Type="Number">0.0</Data>
+			</Cell>
+			<Cell ss:Index="7" ss:StyleID="52" ss:MergeAcross="1">
+				<Data ss:Type="Number">6.0</Data>
+			</Cell>
+			<Cell ss:Index="9" ss:StyleID="52">
+				<Data ss:Type="Number">4.0</Data>
+			</Cell>
+			<Cell ss:Index="10" ss:StyleID="52" ss:MergeAcross="1">
+				<Data ss:Type="Number">66.0</Data>
+			</Cell>
+			<Cell ss:Index="12" ss:StyleID="52">
+				<Data ss:Type="Number">398.0</Data>
+			</Cell>
+			<Cell ss:Index="13" ss:StyleID="52" ss:MergeAcross="1">
+				<Data ss:Type="Number">74.0</Data>
+			</Cell>
+			<Cell ss:Index="15" ss:StyleID="52">
+				<Data ss:Type="Number">408.0</Data>
+			</Cell>
+			<Cell ss:Index="16" ss:StyleID="52">
+				<Data ss:Type="Number">23.0</Data>
+			</Cell>
+			<Cell ss:Index="17" ss:StyleID="52" ss:MergeAcross="1">
+				<Data ss:Type="Number">741.0</Data>
+			</Cell>
+			<Cell ss:Index="19" ss:StyleID="53">
+				<Data ss:Type="Number">21813.0</Data>
+			</Cell>
+			<Cell ss:Index="20" ss:StyleID="52">
+				<Data ss:Type="Number">316.0</Data>
+			</Cell>
+			<Cell ss:Index="21" ss:StyleID="52">
+				<Data ss:Type="Number">4</Data>
+			</Cell>
+		</Row>
+	</ss:Table>
+	<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+		<PageSetup>
+			<PageMargins x:Bottom="0.25" x:Left="0.25" x:Right="0.25" x:Top="0.25"/>
+			<Layout x:Orientation="Landscape"/>
+			<Header/>
+			<Footer/>
+		</PageSetup>
+		<Print>
+			<PaperSizeIndex>9</PaperSizeIndex>
+		</Print>
+	</WorksheetOptions>
+</Worksheet>
+</Workbook>
