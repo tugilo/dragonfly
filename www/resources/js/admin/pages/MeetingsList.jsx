@@ -52,7 +52,7 @@ import { MarkdownView } from '../components/MarkdownView';
 
 const API_BASE = '';
 
-const DRAWER_TABS = ['overview', 'participants', 'bo', 'minutes', 'memo'];
+const DRAWER_TABS = ['overview', 'participants', 'bo', 'memo'];
 
 function isPastMeeting(heldOn) {
     if (!heldOn) return false;
@@ -63,10 +63,18 @@ function isPastMeeting(heldOn) {
     return d < todayStr;
 }
 
-function resolveDefaultDrawerTab(meeting, hasMinutes) {
-    if (isPastMeeting(meeting?.held_on) && hasMinutes) return 'minutes';
+function resolveDefaultDrawerTab(meeting) {
     if (!isPastMeeting(meeting?.held_on)) return 'bo';
     return 'overview';
+}
+
+function shouldOpenMinutesFromTab(tab) {
+    return tab === 'minutes';
+}
+
+function normalizeDrawerTab(tab) {
+    if (!tab || tab === 'minutes') return null;
+    return DRAWER_TABS.includes(tab) ? tab : null;
 }
 
 function drawerTabLabel(tab) {
@@ -74,7 +82,6 @@ function drawerTabLabel(tab) {
         overview: '概要',
         participants: '参加者',
         bo: 'BO',
-        minutes: '議事録',
         memo: 'メモ',
     };
     return labels[tab] || tab;
@@ -724,15 +731,29 @@ function HasParticipantPdfField({ record }) {
         : <Chip size="small" label="なし" sx={{ height: 18, fontSize: '0.7rem' }} color="default" variant="outlined" />;
 }
 
-function HasMinutesField({ record }) {
+function HasMinutesField({ record, onMinutesClick }) {
     const has = record?.has_minutes;
     if (has == null) return <span>—</span>;
-    return has
-        ? <Chip size="small" icon={<ArticleIcon sx={{ fontSize: 16 }} />} label="あり" sx={{ height: 18, fontSize: '0.7rem' }} color="success" variant="outlined" />
-        : <Chip size="small" label="なし" sx={{ height: 18, fontSize: '0.7rem' }} color="default" variant="outlined" />;
+    if (!has) {
+        return <Chip size="small" label="なし" sx={{ height: 18, fontSize: '0.7rem' }} color="default" variant="outlined" />;
+    }
+    return (
+        <Chip
+            size="small"
+            icon={<ArticleIcon sx={{ fontSize: 16 }} />}
+            label="あり"
+            sx={{ height: 18, fontSize: '0.7rem', cursor: 'pointer' }}
+            color="success"
+            variant="outlined"
+            onClick={(e) => {
+                e.stopPropagation();
+                onMinutesClick?.(record);
+            }}
+        />
+    );
 }
 
-function MeetingActionsField({ record, onMemoClick, onEditClick }) {
+function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick }) {
     if (!record) return null;
     return (
         <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap onClick={(e) => e.stopPropagation()}>
@@ -751,6 +772,14 @@ function MeetingActionsField({ record, onMemoClick, onEditClick }) {
                 sx={{ minWidth: 'auto', px: 1 }}
             >
                 📝 メモ
+            </Button>
+            <Button
+                size="small"
+                variant="outlined"
+                onClick={() => onPdfClick?.(record)}
+                sx={{ minWidth: 'auto', px: 1 }}
+            >
+                📄 PDF
             </Button>
             <Button
                 component={Link}
@@ -800,9 +829,10 @@ const TYPE_HINT_OPTIONS = [
     { value: '', label: '不明' },
 ];
 
-function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, onMemoClick, onPdfRegisterClick, onDetailRefresh, initialTab }) {
+function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, onMemoClick, onPdfRegisterClick, onDetailRefresh, initialTab, initialOpenMinutes, onMinutesModalClosed }) {
     const notify = useNotify();
     const [drawerTab, setDrawerTab] = useState('overview');
+    const [minutesModalOpen, setMinutesModalOpen] = useState(false);
     const [parseLoading, setParseLoading] = useState(false);
     const [csvUploadLoading, setCsvUploadLoading] = useState(false);
     const [candidateEditMode, setCandidateEditMode] = useState(false);
@@ -866,6 +896,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
     const participantsSummary = data?.participants_summary;
     const breakoutSummary = data?.breakout_summary;
     const participantImport = data?.participant_import;
+    const pdfTargetRecord = meetingFromList?.id ? meetingFromList : meeting;
     const rooms = data?.rooms ?? [];
     const parseSuccess = participantImport?.has_pdf && participantImport?.parse_status === 'success';
     const parseFailed = participantImport?.has_pdf && participantImport?.parse_status === 'failed';
@@ -897,6 +928,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
     useEffect(() => {
         if (!open) {
             setDrawerTab('overview');
+            setMinutesModalOpen(false);
             setCandidateEditMode(false);
             setEditingCandidates([]);
             setApplyConfirmOpen(false);
@@ -929,11 +961,25 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
 
     useEffect(() => {
         if (!open || !meeting) return;
-        const preferred = initialTab && DRAWER_TABS.includes(initialTab)
-            ? initialTab
-            : resolveDefaultDrawerTab(meeting, Boolean(minutes?.body_markdown || meeting.has_minutes));
+        const preferred = normalizeDrawerTab(initialTab) ?? resolveDefaultDrawerTab(meeting);
         setDrawerTab(preferred);
-    }, [open, meeting?.id, meeting?.held_on, meeting?.has_minutes, minutes?.body_markdown, initialTab]);
+    }, [open, meeting?.id, meeting?.held_on, initialTab]);
+
+    useEffect(() => {
+        if (open && initialOpenMinutes && !loading && meeting) {
+            setMinutesModalOpen(true);
+        }
+    }, [open, initialOpenMinutes, loading, meeting?.id]);
+
+    const closeMinutesModal = useCallback(() => {
+        setMinutesModalOpen(false);
+        onMinutesModalClosed?.();
+    }, [onMinutesModalClosed]);
+
+    const openMinutesModal = useCallback(() => {
+        if (!meeting?.has_minutes) return;
+        setMinutesModalOpen(true);
+    }, [meeting?.has_minutes]);
 
     useEffect(() => {
         if (!csvResPick) {
@@ -1089,11 +1135,12 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
     };
 
     return (
+        <>
         <Drawer
             anchor="right"
             open={open}
             onClose={onClose}
-            PaperProps={{ sx: { width: { xs: '100%', sm: drawerTab === 'minutes' ? 520 : 420 } } }}
+            PaperProps={{ sx: { width: { xs: '100%', sm: 420 } } }}
         >
             <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
@@ -1126,6 +1173,17 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                 label={meeting.has_minutes ? '議事録あり' : '議事録なし'}
                                 color={meeting.has_minutes ? 'success' : 'default'}
                                 variant="outlined"
+                                onClick={meeting.has_minutes ? openMinutesModal : undefined}
+                                sx={meeting.has_minutes ? { cursor: 'pointer' } : undefined}
+                            />
+                            <Chip
+                                size="small"
+                                icon={participantImport?.has_pdf ? <PictureAsPdfIcon sx={{ fontSize: 16 }} /> : undefined}
+                                label={participantImport?.has_pdf ? '参加者PDFあり' : '参加者PDFなし'}
+                                color={participantImport?.has_pdf ? 'success' : 'default'}
+                                variant="outlined"
+                                onClick={() => setDrawerTab('participants')}
+                                sx={{ cursor: 'pointer' }}
                             />
                         </Stack>
                         <Tabs
@@ -1161,8 +1219,36 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                     <Alert severity="info" sx={{ py: 0.5 }}>今後の例会です。BO 割当は Connections で編集してください。</Alert>
                                 )}
                                 {isPastMeeting(meeting.held_on) && meeting.has_minutes && (
-                                    <Button size="small" variant="contained" onClick={() => setDrawerTab('minutes')}>議事録を表示</Button>
+                                    <Button size="small" variant="contained" startIcon={<ArticleIcon />} onClick={openMinutesModal}>
+                                        議事録を表示
+                                    </Button>
                                 )}
+                                <Box>
+                                    <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>参加者PDF</Typography>
+                                    {participantImport?.has_pdf ? (
+                                        <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
+                                            <PictureAsPdfIcon color="error" fontSize="small" />
+                                            <Typography variant="body2" noWrap sx={{ flex: 1, minWidth: 0 }}>
+                                                {participantImport.original_filename || '参加者一覧.pdf'}
+                                            </Typography>
+                                            <Button size="small" variant="outlined" onClick={() => setDrawerTab('participants')}>
+                                                詳細
+                                            </Button>
+                                        </Stack>
+                                    ) : (
+                                        <Stack direction="row" spacing={1} flexWrap="wrap" alignItems="center">
+                                            <Typography variant="body2" color="text.secondary">未登録</Typography>
+                                            <Button
+                                                size="small"
+                                                variant="outlined"
+                                                startIcon={<CloudUploadIcon />}
+                                                onClick={() => pdfTargetRecord?.id && onPdfRegisterClick?.(pdfTargetRecord)}
+                                            >
+                                                参加者PDF登録
+                                            </Button>
+                                        </Stack>
+                                    )}
+                                </Box>
                             </Stack>
                         )}
                         {drawerTab === 'memo' && (
@@ -1177,26 +1263,6 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                 <Button size="small" variant="outlined" sx={{ mt: 1.5 }} onClick={() => meetingFromList && onMemoClick(meetingFromList)}>
                                     メモを編集
                                 </Button>
-                            </Box>
-                        )}
-                        {drawerTab === 'minutes' && (
-                            <Box sx={{ mb: 2 }}>
-                                {minutes?.body_markdown ? (
-                                    <>
-                                        {minutes.source_path && (
-                                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-                                                ソース: {minutes.source_path}
-                                            </Typography>
-                                        )}
-                                        <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 1, p: 1.5, bgcolor: 'background.default' }}>
-                                            <MarkdownView markdown={minutes.body_markdown} dense={false} />
-                                        </Box>
-                                    </>
-                                ) : (
-                                    <Typography variant="body2" color="text.secondary">
-                                        議事録は未取り込みです。`dragonfly:import-chapter-minutes` で Markdown から取り込んでください。
-                                    </Typography>
-                                )}
                             </Box>
                         )}
                         {drawerTab === 'bo' && (
@@ -1494,7 +1560,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                                 size="small"
                                                 variant="outlined"
                                                 startIcon={<CloudUploadIcon />}
-                                                onClick={() => meetingFromList && onPdfRegisterClick?.(meetingFromList)}
+                                                onClick={() => pdfTargetRecord?.id && onPdfRegisterClick?.(pdfTargetRecord)}
                                             >
                                                 参加者PDF登録
                                             </Button>
@@ -1503,6 +1569,8 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                 </Box>
                             </Box>
                         )}
+                        {drawerTab === 'participants' && (
+                        <>
                         <Box sx={{ mb: 2 }}>
                             <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
                                 参加者CSV
@@ -3097,7 +3165,8 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                 </Button>
                             </DialogActions>
                         </Dialog>
-                        </Box>
+                        </>
+                        )}
                         {(drawerTab === 'overview' || drawerTab === 'participants') && (
                         <Stack direction="row" spacing={1} sx={{ mt: 'auto', pt: 2, flexShrink: 0 }}>
                             {drawerTab === 'overview' && (
@@ -3105,8 +3174,8 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                     メモ編集
                                 </Button>
                             )}
-                            {drawerTab === 'participants' && !participantImport?.has_pdf && meetingFromList && (
-                                <Button size="small" variant="outlined" startIcon={<CloudUploadIcon />} onClick={() => onPdfRegisterClick?.(meetingFromList)} sx={{ flex: 1 }}>
+                            {(drawerTab === 'overview' || drawerTab === 'participants') && !participantImport?.has_pdf && pdfTargetRecord?.id && (
+                                <Button size="small" variant="outlined" startIcon={<CloudUploadIcon />} onClick={() => onPdfRegisterClick?.(pdfTargetRecord)} sx={{ flex: 1 }}>
                                     参加者PDF登録
                                 </Button>
                             )}
@@ -3117,12 +3186,43 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                             )}
                         </Stack>
                         )}
+                        </Box>
                     </>
                 ) : (
                     <Typography color="text.secondary">データを取得できませんでした。</Typography>
                 )}
             </Box>
         </Drawer>
+        <Dialog open={minutesModalOpen} onClose={closeMinutesModal} maxWidth="md" fullWidth scroll="paper">
+            <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: 1 }}>
+                <Typography component="span" variant="h6">
+                    議事録{meeting ? ` — #${meeting.number}` : ''}
+                </Typography>
+                <IconButton size="small" onClick={closeMinutesModal} aria-label="閉じる">
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent dividers sx={{ px: 2, py: 1.5 }}>
+                {minutes?.body_markdown ? (
+                    <>
+                        {minutes.source_path && (
+                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                                ソース: {minutes.source_path}
+                            </Typography>
+                        )}
+                        <MarkdownView markdown={minutes.body_markdown} dense={false} />
+                    </>
+                ) : (
+                    <Typography variant="body2" color="text.secondary">
+                        議事録は未取り込みです。`dragonfly:import-chapter-minutes` で Markdown から取り込んでください。
+                    </Typography>
+                )}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={closeMinutesModal}>閉じる</Button>
+            </DialogActions>
+        </Dialog>
+        </>
     );
 }
 
@@ -3134,6 +3234,7 @@ export function MeetingsList() {
     const [detailLoading, setDetailLoading] = useState(false);
     const [detailData, setDetailData] = useState(null);
     const [drawerInitialTab, setDrawerInitialTab] = useState(null);
+    const [openMinutesOnLoad, setOpenMinutesOnLoad] = useState(false);
     const [memoDialogOpen, setMemoDialogOpen] = useState(false);
     const [memoTargetMeeting, setMemoTargetMeeting] = useState(null);
     const [memoValue, setMemoValue] = useState('');
@@ -3169,7 +3270,8 @@ export function MeetingsList() {
     const openDetail = useCallback((record, tab = null) => {
         if (!record?.id) return;
         setSelectedMeeting(record);
-        setDrawerInitialTab(tab);
+        setOpenMinutesOnLoad(shouldOpenMinutesFromTab(tab));
+        setDrawerInitialTab(normalizeDrawerTab(tab));
         setDetailOpen(true);
         setDetailData(null);
         setDetailLoading(true);
@@ -3184,6 +3286,7 @@ export function MeetingsList() {
         setSelectedMeeting(null);
         setDetailData(null);
         setDrawerInitialTab(null);
+        setOpenMinutesOnLoad(false);
         if (searchParams.get('meetingId') || searchParams.get('tab')) {
             const next = new URLSearchParams(searchParams);
             next.delete('meetingId');
@@ -3204,7 +3307,8 @@ export function MeetingsList() {
                 if (!data?.meeting?.id) return;
                 setSelectedMeeting({ id: data.meeting.id, number: data.meeting.number, held_on: data.meeting.held_on, ...data.meeting });
                 setDetailData(data);
-                setDrawerInitialTab(tab && DRAWER_TABS.includes(tab) ? tab : null);
+                setOpenMinutesOnLoad(shouldOpenMinutesFromTab(tab));
+                setDrawerInitialTab(normalizeDrawerTab(tab));
                 setDetailOpen(true);
             })
             .catch(() => {})
@@ -3236,6 +3340,19 @@ export function MeetingsList() {
         setPdfFile(null);
         setPdfModalOpen(true);
     }, []);
+
+    const handlePdfActionClick = useCallback((record) => {
+        if (!record?.id) return;
+        openDetail(record, 'participants');
+        setPdfTargetMeeting(record);
+        setPdfFile(null);
+        setPdfModalOpen(true);
+    }, [openDetail]);
+
+    const handleMinutesClick = useCallback((record) => {
+        if (!record?.id) return;
+        openDetail(record, 'minutes');
+    }, [openDetail]);
 
     const closePdfModal = useCallback(() => {
         setPdfModalOpen(false);
@@ -3362,9 +3479,9 @@ export function MeetingsList() {
                     <FunctionField label="開催日" render={(r) => <HeldOnField record={r} />} />
                     <FunctionField label="BO数" render={(r) => <BreakoutCountField record={r} />} />
                     <FunctionField label="メモ" render={(r) => <HasMemoField record={r} />} />
-                    <FunctionField label="議事録" render={(r) => <HasMinutesField record={r} />} />
+                    <FunctionField label="議事録" render={(r) => <HasMinutesField record={r} onMinutesClick={handleMinutesClick} />} />
                     <FunctionField label="参加者PDF" render={(r) => <HasParticipantPdfField record={r} />} />
-                    <FunctionField label="Actions" render={(r) => <MeetingActionsField record={r} onMemoClick={handleMeetingMemoClick} onEditClick={handleMeetingEditClick} />} />
+                    <FunctionField label="Actions" render={(r) => <MeetingActionsField record={r} onMemoClick={handleMeetingMemoClick} onEditClick={handleMeetingEditClick} onPdfClick={handlePdfActionClick} />} />
                 </Datagrid>
             </List>
             <MeetingDetailDrawer
@@ -3377,6 +3494,8 @@ export function MeetingsList() {
                 onPdfRegisterClick={handlePdfRegisterClick}
                 onDetailRefresh={selectedMeeting?.id ? () => fetchMeetingDetail(selectedMeeting.id).then(setDetailData) : undefined}
                 initialTab={drawerInitialTab}
+                initialOpenMinutes={openMinutesOnLoad}
+                onMinutesModalClosed={() => setOpenMinutesOnLoad(false)}
             />
             <Dialog open={editDialogOpen} onClose={closeEditDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>例会を編集{editTargetMeeting ? ` — id ${editTargetMeeting.id}` : ''}</DialogTitle>

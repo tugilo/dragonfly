@@ -77,9 +77,10 @@ php artisan dragonfly:import-chapter-minutes path/to/file.md --meeting_number=20
 
 ## 6. UI
 
-- Meetings 一覧: `has_minutes` で Chip / フィルタ
-- Meetings Drawer: 「議事録」タブで Markdown 表示（共有 `MarkdownView` コンポーネント）。Fit/Gap: [FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIEWER.md)
-- Connections: 選択中 meeting の Meetings Drawer へ導線
+- Meetings 一覧: `has_minutes` で Chip / フィルタ（「あり」Chip クリックで Drawer + 議事録モーダル）
+- Meetings Drawer: 議事録は **Dialog モーダル**（共有 `MarkdownView`）。Drawer タブは 概要 / 参加者 / BO / メモ。Fit/Gap: [FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIEWER.md)
+- 参加者PDF: 概要・参加者タブ・一覧 Actions から登録（Phase 183）
+- Connections: 選択中 meeting の Meetings へ導線（`?tab=minutes` → 議事録モーダル）
 
 ---
 
@@ -87,6 +88,6 @@ php artisan dragonfly:import-chapter-minutes path/to/file.md --meeting_number=20
 
 - [x] migration + Model + Meeting リレーション
 - [x] import コマンド + Feature テスト
-- [x] API + Meetings UI タブ化
+- [x] API + Meetings UI（議事録モーダル・Phase 183）
 - [x] 既存 4 件の chapter_weekly を取り込み可能
 - [x] SSOT / Registry / INDEX / progress 更新

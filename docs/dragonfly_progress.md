@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-02 17:05 JST | **Phase 183 / Meetings Drawer UX:** 議事録を Drawer タブから **モーダル**（`MarkdownView`）へ変更。参加者PDF登録を概要・一覧 Actions・参加者タブで多経路化。SSOT: `MEETING_DOMAIN_IA`・`FIT_AND_GAP_MEETINGS` §4・`CHAPTER_MINUTES_REQUIREMENTS` §6。`npm run build` OK。 |
 | 2026-06-02 16:36 JST | **Phase 182 / Markdown ビューア P2:** Meetings Drawer メモタブ・1to1 Edit 履歴メモを `MarkdownView` 化。`FIT_AND_GAP_MARKDOWN_VIEWER.md` MV04/MV05 を Fit に更新。`npm run build` OK。 |
 | 2026-06-02 16:13 JST | **Phase 181 / Markdown ビューア P1:** `remark-gfm` 導入・`MarkdownView` 見出し h1〜h6 段階化・GFM 表レンダリング。`FIT_AND_GAP_MARKDOWN_VIEWER.md` MV-T01/MV-T02 を Fit に更新。`php artisan test` 429 passed、`npm run build` OK。 |
 | 2026-06-02 16:07 JST | **Markdown ビューア Fit/Gap:** [`SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md`](SSOT/FIT_AND_GAP_MARKDOWN_VIEWER.md) 新規。議事録・1to1 notes の `MarkdownView` 利用状況、GFM 表未対応（remark-gfm 未導入）、メモタブ pre-wrap 残存を整理。改善 Phase 案 P1〜P3。コード変更なし。 |

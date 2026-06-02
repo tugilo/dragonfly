@@ -49,7 +49,7 @@
   - **統計カード:** 総例会数・総BO数・メモ有り例会・次回例会（M6。GET /api/meetings/stats）
   - **ツールバー:** 検索（番号/日付）・メモフィルタ・件数（M5）
   - **一覧:** 番号・開催日・BO数・メモ・参加者PDF・Actions。行クリックで Drawer（M3）。行アクション「📝 メモ」「🗺 BO編集」（M2）。参加者PDF列は M7-P1-LIST で追加（後述）
-  - **Drawer:** 例会詳細・メモ本文・BO割当・メモ編集/Connections へ（M3）
+  - **Drawer:** 例会詳細・メモ本文・BO割当・メモ編集/Connections へ（M3）。**議事録はモーダル**（Phase 183）。参加者 PDF/CSV は「参加者」タブ + 概要導線（Phase 183）
   - **モーダル:** 例会メモ編集（M4）
 
 ### 2.2 API
@@ -66,7 +66,7 @@
 
 - **一覧表示:** 列「参加者PDF」をメモの次・Actions の前に配置。`has_participant_pdf`（boolean）に基づき Chip で「あり」（success）/「なし」（default）を表示。既存のメモ列と同じスタイル（height 18px, fontSize 0.7rem）。
 - **一覧 API:** `GET /api/meetings` の各要素に `has_participant_pdf: boolean` を含む。`meeting_participant_imports` の存在有無で判定。一覧用途のため original_filename は返さない。
-- **詳細（Drawer）:** `GET /api/meetings/{meetingId}` の `participant_import: { has_pdf, original_filename }` で PDF 有無・ファイル名を表示。登録ボタン／ダウンロードリンクは Drawer 内に配置（M7-P1）。
+- **詳細（Drawer）:** `GET /api/meetings/{meetingId}` の `participant_import: { has_pdf, original_filename }` で PDF 有無・ファイル名を表示。登録ボタン／ダウンロードリンクは **参加者タブ** および **概要・一覧 Actions** に配置（M7-P1、Phase 183 で導線強化）。
 
 ---
 
@@ -124,10 +124,11 @@ Meetings 画面は M1〜M6 により、**一覧のみの仮画面から、統計
 
 | 役割 | 画面 | 内容 |
 |------|------|------|
-| **管理ハブ** | Meetings | 概要 / BO（読取）/ 議事録 / メモ。完了回は議事録を前面 |
+| **管理ハブ** | Meetings | 概要 / 参加者（PDF・CSV）/ BO（読取）/ メモ。議事録は **モーダル**（Phase 183） |
 | **BO 編集面** | Connections | BO 割当の編集・保存（データ所有者は Meeting） |
 
-- 議事録: `meeting_minutes`（file→DB）。一覧 `has_minutes`、Drawer「議事録」タブ。
+- 議事録: `meeting_minutes`（file→DB）。一覧 `has_minutes`、**モーダル**で `MarkdownView` 閲覧（Drawer タブ廃止・Phase 183）。
+- 参加者PDF: 概要・一覧 📄 PDF・参加者タブから登録（Phase 183）。
 - 例会メモ: 既存 `contact_memos`（`has_memo`）— 議事録とは別。
 
 SSOT: [MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)  

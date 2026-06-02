@@ -3,7 +3,7 @@
 **Spec ID:** SPEC-014（議事録 DB 化と連携）／Meeting ドメイン全体の IA  
 **Status:** active  
 **作成日:** 2026-06-02 JST  
-**記録:** Phase 180
+**記録:** Phase 180（初版）、Phase 183（議事録モーダル・参加者PDF導線）
 
 ---
 
@@ -47,17 +47,18 @@ Drawer タブ構成:
 
 | タブ | 内容 |
 |------|------|
-| **概要** | 番号・日付・BO数・メモ有無・参加者 PDF 有無・議事録有無 |
-| **参加者** | participants 要約（将来拡張） |
+| **概要** | 番号・日付・BO数・メモ有無・参加者 PDF 状態・議事録有無。議事録あり時は **「議事録を表示」→ モーダル** |
+| **参加者** | 参加者 PDF / CSV 取込・解析・反映。PDF 未登録時は登録ボタン |
 | **BO** | 割当の読み取り ＋ **「Connections で編集」** 導線 |
-| **議事録** | `meeting_minutes.body_markdown` を Markdown 表示（file 由来） |
-| **メモ** | 既存の `contact_memos` 例会メモ編集 |
+| **メモ** | 既存の `contact_memos` 例会メモ（`MarkdownView` 閲覧・Dialog 編集） |
+
+**議事録（モーダル）:** Drawer タブには含めない。`meeting_minutes.body_markdown` を共有 `MarkdownView` で **Dialog モーダル**表示。起動: ヘッダー「議事録あり」Chip、概要ボタン、一覧「あり」Chip、`/meetings?meetingId=&tab=minutes`（Connections 導線）。
 
 ### 完了回 vs 今後の回
 
 | 条件 | 前面に出す要素 |
 |------|----------------|
-| **完了済み**（`held_on` < 今日） | 議事録タブ（あれば）／概要に議事録リンク |
+| **完了済み**（`held_on` < 今日） | 概要の議事録ボタン／ヘッダー Chip → **モーダル** |
 | **今後・当日** | BO 編集導線（Connections へ） |
 
 ---
