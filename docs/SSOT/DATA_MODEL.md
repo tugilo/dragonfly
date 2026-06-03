@@ -372,7 +372,7 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | **主キー** | id (bigIncrements) |
 | **外部キー** | workspace_id → workspaces.id (nullable。現行は未導入のため nullable 可), owner_member_id → members.id (restrictOnDelete), target_member_id → members.id (restrictOnDelete), meeting_id → meetings.id (nullable, nullOnDelete) |
 | **ユニーク制約** | なし（同一ペアで複数回の 1 to 1 があり得る）。重複予定を避けるため (owner_member_id, target_member_id, scheduled_at) のユニークは将来検討とし、今回はインデックスのみ。 |
-| **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), **zoom_meeting_id (string, nullable)**, **zoom_meeting_uuid (string, nullable)**, **external_source (string, 既定 `manual`)**, notes (text, nullable), timestamps |
+| **主要カラム** | id, workspace_id (nullable), owner_member_id, target_member_id, scheduled_at (datetime, nullable), started_at (datetime, nullable), ended_at (datetime, nullable), status (string: planned / completed / canceled), meeting_id (nullable), **zoom_meeting_id (string, nullable)**, **zoom_meeting_uuid (string, nullable)**, **external_source (string, 既定 `manual`)**, **cancel_reason (string, nullable)** — Phase 185 以降, **cancel_remark (text, nullable)**, **canceled_at (datetime, nullable)**, notes (text, nullable), timestamps |
 | **インデックス** | (owner_member_id, target_member_id), scheduled_at, zoom_meeting_id, zoom_meeting_uuid |
 
 **Zoom 連携カラム（SPEC-012 / Phase 152）:** `zoom_meeting_id` / `zoom_meeting_uuid` は Zoom 突合キー（再取り込みの二重登録防止）。`external_source` は取得元（`manual` / `zoom`）。手入力は `manual` 既定。詳細は [ZOOM_ONETOONE_SYNC_REQUIREMENTS.md](ZOOM_ONETOONE_SYNC_REQUIREMENTS.md)。
@@ -385,6 +385,17 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 
 - `GET /api/one-to-ones/{id}/memos` — 当該 1 to 1 の `contact_memos` を新しい順。
 - `POST /api/one-to-ones/{id}/memos` — `body` のみ必須。サーバ側で `owner_member_id` / `target_member_id` / `workspace_id` を 1 to 1 から複製し `memo_type = one_to_one` で作成。
+- **`POST /api/one-to-ones/{id}/cancel`** — **予定キャンセル専用**（Phase 185 以降・[ONETOONES_CANCEL_FIT_AND_GAP.md](ONETOONES_CANCEL_FIT_AND_GAP.md) §10.1）。body: `{ cancel_reason, cancel_remark? }`。サーバ側で `status=canceled`・`canceled_at=now()` を設定。**`status=planned` のみ**受理。`PATCH` 経由で `status=canceled` にすることは **採用しない**（理由必須を担保）。
+
+**キャンセル理由（Phase 184 SSOT 確定・Phase 185 以降 implement）:**
+
+| 列 | 型 | 意味 |
+|----|-----|------|
+| `cancel_reason` | string, nullable | `owner_convenience`（こちら都合）・`target_convenience`（相手都合）・`other`（その他）。`status=canceled` のとき必須。それ以外は NULL。 |
+| `cancel_remark` | text, nullable | 備考。`cancel_reason=other` のとき **必須**（非空）。他 2 値は **任意**。 |
+| `canceled_at` | datetime, nullable | キャンセル確定日時（`POST cancel` 実行時にサーバ設定）。 |
+
+**`cancel_reason` と `notes` の住み分け:** `notes` は **その回の議題・実施内容**（DATA_MODEL 上の位置づけは変更しない）。キャンセル理由・備考は **`cancel_reason` / `cancel_remark`** に保存する（`notes` への `[cancel:…]` 埋め込みは **採用しない**）。
 
 **scheduled_at の変更:** 予定日時の変更は**上書き**で行う。変更履歴（監査ログ）が必要な場合は Future extensions で別テーブル等を検討する。
 
@@ -399,7 +410,9 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 **削除ポリシー（ONETOONES-DELETE-POLICY-P1・SSOT）:**
 
 - **`one_to_ones` を物理削除する API / UI は採用しない**（製品方針）。レコードは **関係性の履歴**として保持する。
-- 予定を取り消す・誤登録を手当てする場合は **`status = canceled`** に変更する（または `planned` のまま編集で修正する）。重複登録は **当面 `canceled` で片方を無効化** して運用し、将来の重複警告は別 Phase で検討する。
+- 予定を取り消す場合は **`POST /api/one-to-ones/{id}/cancel`** で **`status = canceled`** + **`cancel_reason` / `cancel_remark` / `canceled_at`** を記録する（UI 表記は **「キャンセル」**。**「削除」ボタンは置かない**）。詳細は [ONETOONES_CANCEL_FIT_AND_GAP.md](ONETOONES_CANCEL_FIT_AND_GAP.md) §10.1。
+- **`completed` 行はキャンセル操作の対象外**（初回 implement）。誤 status は Edit の上級者向け変更または運用で対応。
+- 重複登録は **`cancel` で片方を無効化** して運用し、将来の重複警告は別 Phase で検討する。
 - テスト・開発用のデータ掃除は **UI からの削除ではなく DB 運用**（Artisan / SQL 等）で行う。
 - 物理削除を入れると `contact_memos.one_to_one_id` の `nullOnDelete`・Dashboard / Members 集計・Activity の意味が変わるため、現時点では見送る。詳細は [ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md) を参照。
 

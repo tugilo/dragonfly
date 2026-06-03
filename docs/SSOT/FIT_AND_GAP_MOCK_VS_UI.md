@@ -232,7 +232,14 @@
 - **UI:** 削除ボタンなし。無効化は **`status = canceled`**（DATA_MODEL §4.12・[ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md)）。
 - **一覧:** 既定で **キャンセル行を一覧から除く**（`exclude_canceled`）。必要時はフィルタで「状態」や「キャンセルを一覧から除く」を変更。
 
-### 6.9 Create UX 改善（要件 SSOT・未実装）
+### 6.9 予定キャンセル（理由付き・要件 SSOT・未実装）
+
+- **ユーザー要望:** 予定中 121 を **こちら都合 / 相手都合 / その他（備考）** で無効化したい（UI 上は **「キャンセル」** と表記し、物理削除は行わない）。
+- **現状:** 一覧にキャンセル導線なし。Edit の `status` Select で `canceled` に変更可能だが **理由列・Dialog なし**。DB に `cancel_reason` 等なし。
+- **モック:** canceled ステータス・stats はあるが **専用キャンセル UI・理由 3 分類なし**（サンプルは notes 自由文のみ）。
+- 詳細・**§10 全9件合意済み（implement 着手可）:** [ONETOONES_CANCEL_FIT_AND_GAP.md](ONETOONES_CANCEL_FIT_AND_GAP.md)。
+
+### 6.10 Create UX 改善（要件 SSOT・未実装）
 
 - **相手:** 選択後にメンバー情報サマリを表示したい（現状は `#番号 名前` の Select のみ）。
 - **日時:** `scheduled_at` + 所要時間（30/60/90 分等）で終了予定（`ended_at`）を自動入力する導線（現状は 3 つの `DateTimeInput`）。
