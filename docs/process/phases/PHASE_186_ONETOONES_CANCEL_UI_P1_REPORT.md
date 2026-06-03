@@ -18,7 +18,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後） |
+| merge commit id | `50bf3311932307c6b778e40c388ec760d0aa5703` |
 | source branch | `feature/phase186-onetoones-cancel-ui-p1` |
 | test | `npm run build` OK |
 
