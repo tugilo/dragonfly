@@ -639,11 +639,28 @@ input:checked+.sw-sl::before{transform:translateX(18px)}
         <div class="fgrp"><label class="flbl">時刻</label><input type="time" class="finput" value="12:00"/></div>
       </div>
       <div class="fgrp"><label class="flbl">相手メンバー</label><select class="fsel2"><option>田中 誠一</option><option>鈴木 花子</option><option>佐藤 美咲</option><option>渡辺 彩香</option><option>小林 陽子</option><option>森 友美</option><option>加藤 浩二</option></select></div>
-      <div class="fgrp"><label class="flbl">ステータス</label><select class="fsel2"><option>planned（予定）</option><option>completed（完了）</option><option>canceled（キャンセル）</option></select></div>
+      <div class="fgrp"><label class="flbl">ステータス</label><select class="fsel2"><option>planned（予定）</option><option>completed（完了）</option></select></div>
       <div class="fgrp"><label class="flbl">関連例会（任意）</label><select class="fsel2"><option>—</option><option>#247 — 2025-07-08</option><option>#246 — 2025-06-24</option></select></div>
       <div class="fgrp"><label class="flbl">メモ / アジェンダ</label><textarea class="fta" placeholder="打ち合わせ内容、目的など…" rows="3"></textarea></div>
     </div>
     <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-1on1create')">キャンセル</button><button class="btn btn-p btn-sm" onclick="fakeLoad(this,'保存中…','1to1予定を保存しました ✓','mol-1on1create')">保存する</button></div>
+  </div>
+</div>
+
+<!-- 1to1 Cancel Modal (Phase 187) -->
+<div class="mol" id="mol-1on1cancel">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="mhdr"><div class="mtitle">1 to 1 予定をキャンセル <span id="otocancel-target-name" style="font-weight:400;color:var(--sub);font-size:13px"></span></div><button class="mclose" onclick="closeModal('mol-1on1cancel')">✕</button></div>
+    <div class="mbody">
+      <div class="info-box" style="margin-bottom:12px">履歴として残ります。物理削除は行いません。</div>
+      <div class="fgrp"><label class="flbl">キャンセル理由</label>
+        <label style="display:block;margin:4px 0"><input type="radio" name="oto-cancel-reason" value="owner_convenience" checked> こちら都合</label>
+        <label style="display:block;margin:4px 0"><input type="radio" name="oto-cancel-reason" value="target_convenience"> 相手都合</label>
+        <label style="display:block;margin:4px 0"><input type="radio" name="oto-cancel-reason" value="other"> その他</label>
+      </div>
+      <div class="fgrp"><label class="flbl">備考（その他は必須）</label><textarea class="fta" placeholder="任意（その他の場合は必須）" rows="2"></textarea></div>
+    </div>
+    <div class="mfooter"><button class="btn btn-g btn-sm" onclick="closeModal('mol-1on1cancel')">戻る</button><button class="btn btn-warn btn-sm" onclick="fakeLoad(this,'処理中…','1 to 1 予定をキャンセルしました ✓','mol-1on1cancel')">キャンセルする</button></div>
   </div>
 </div>
 
@@ -795,7 +812,7 @@ const OTO=[
   {id:6,date:"2025-07-02",partner:"池田 隆",status:"completed",meeting:"#246",notes:"空室対策のヒアリング。有益な情報交換。"},
   {id:7,date:"2025-06-29",partner:"森 友美",status:"completed",meeting:null,notes:"スポーツ施術の方向性について議論。"},
   {id:8,date:"2025-06-22",partner:"加藤 浩二",status:"completed",meeting:"#245",notes:"人事制度の課題整理。2件紹介案件が生まれた。"},
-  {id:9,date:"2025-06-15",partner:"山田 大輔",status:"canceled",meeting:null,notes:"現場の都合でキャンセル。来月再調整。"},
+  {id:9,date:"2025-06-15",partner:"山田 大輔",status:"canceled",cancel_reason:"target_convenience",meeting:null,notes:"現場の都合でキャンセル。来月再調整。"},
   {id:10,date:"2025-06-12",partner:"田中 誠一",status:"completed",meeting:"#245",notes:"新商品紹介。継続接触中。"},
   {id:11,date:"2025-06-08",partner:"伊藤 勇樹",status:"completed",meeting:null,notes:"保険見直しの提案。要継続フォロー。"},
   {id:12,date:"2025-04-10",partner:"松本 剛",status:"completed",meeting:null,notes:"事業拡大の相談。採用支援を紹介できた。"},
@@ -860,6 +877,7 @@ const LOG_CLS={"1on1":"lt-1","meeting":"lt-m","other":"lt-o"};
 const LOG_LBL={"1on1":"1to1","meeting":"例会","other":"その他"};
 const STATUS_CHIP={planned:"chip-planned",completed:"chip-done",canceled:"chip-canceled"};
 const STATUS_LBL={planned:"予定",completed:"完了",canceled:"キャンセル"};
+const CANCEL_REASON_LBL={owner_convenience:"こちら都合",target_convenience:"相手都合",other:"その他"};
 
 // ══════════════════════════════════
 // ROUTING
@@ -1167,18 +1185,22 @@ function openMeetingMemo(id){
 // 1 to 1 PAGE
 // ══════════════════════════════════
 function renderOto(){
-  document.getElementById("oto-tbody").innerHTML=OTO.map(o=>`
+  document.getElementById("oto-tbody").innerHTML=OTO.map(o=>{
+    const reasonChip=o.status==="canceled"&&o.cancel_reason?`<span class="chip chip-gray" style="height:18px;font-size:10px;margin-left:4px">${CANCEL_REASON_LBL[o.cancel_reason]||o.cancel_reason}</span>`:"";
+    const cancelBtn=o.status==="planned"?`<button class="btn btn-warn btn-xs" onclick="openOtoCancelModal('${o.partner}','${o.date}')">キャンセル</button>`:"";
+    return `
     <tr>
       <td>${o.date}</td>
       <td><span style="font-weight:600">${o.partner}</span></td>
-      <td><span class="chip ${STATUS_CHIP[o.status]||""}">${STATUS_LBL[o.status]}</span></td>
+      <td><span class="chip ${STATUS_CHIP[o.status]||""}">${STATUS_LBL[o.status]}</span>${reasonChip}</td>
       <td>${o.meeting?`<span class="chip chip-gray" style="height:18px;font-size:10px">${o.meeting}</span>`:`<span style="color:var(--dis)">—</span>`}</td>
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--sub)">${o.notes}</td>
       <td style="white-space:nowrap">
         <button class="btn btn-g btn-xs" onclick="openOtoMemoModal('${o.partner}')">📝 メモ</button>
         <button class="btn btn-t btn-xs" onclick="openModal('mol-1on1create')">✏️ 編集</button>
+        ${cancelBtn}
       </td>
-    </tr>`).join("");
+    </tr>`}).join("");
 }
 
 // ══════════════════════════════════
@@ -1230,6 +1252,7 @@ document.querySelectorAll(".mol").forEach(el=>el.addEventListener("click",functi
 
 function openMemoModal(name){document.getElementById("memo-target-name").textContent="— "+name;openModal("mol-memo")}
 function openOtoModal(name){document.getElementById("oto-target-name").textContent="— "+name;openModal("mol-1on1create")}
+function openOtoCancelModal(name,date){document.getElementById("otocancel-target-name").textContent="— "+name+" / "+date;openModal("mol-1on1cancel")}
 function openOtoMemoModal(name){document.getElementById("otomemo-target-name").textContent="— "+name;openModal("mol-1on1memo")}
 function openFlagModal(id){const m=MEMBERS.find(x=>x.id===id);document.getElementById("flag-target-name").textContent=m?"— "+m.name:"";openModal("mol-flag")}
 
