@@ -31,6 +31,13 @@ import {
     Tooltip,
     IconButton,
     Divider,
+    FormControl,
+    FormLabel,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+    TextField,
+    Alert,
 } from '@mui/material';
 import { MarkdownView, createMarkdownComponents } from '../components/MarkdownView';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -43,6 +50,7 @@ import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
 import { formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
 import { religoFetch } from '../religoApiFetch';
+import { cancelReasonLabel, ONE_TO_ONE_CANCEL_REASONS } from '../utils/oneToOneCancel';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -67,13 +75,19 @@ async function fetchJson(url) {
 function OneToOneStatusChip({ record }) {
     const s = record?.status;
     const m = STATUS_CHIP_MAP[s] ?? { label: s ? String(s) : '—', color: 'default' };
+    const reasonLabel = s === 'canceled' ? cancelReasonLabel(record?.cancel_reason) : null;
     return (
-        <Chip
-            size="small"
-            label={m.label}
-            color={m.color === 'default' ? 'default' : m.color}
-            variant="outlined"
-        />
+        <Stack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap" useFlexGap>
+            <Chip
+                size="small"
+                label={m.label}
+                color={m.color === 'default' ? 'default' : m.color}
+                variant="outlined"
+            />
+            {reasonLabel ? (
+                <Chip size="small" label={reasonLabel} variant="outlined" color="default" />
+            ) : null}
+        </Stack>
     );
 }
 
@@ -470,6 +484,111 @@ function formatLaravel422Message(payload) {
     return null;
 }
 
+function OneToOneCancelDialog({ record, open, onClose }) {
+    const refresh = useRefresh();
+    const notify = useNotify();
+    const [cancelReason, setCancelReason] = useState('owner_convenience');
+    const [cancelRemark, setCancelRemark] = useState('');
+    const [saving, setSaving] = useState(false);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (!open) {
+            return;
+        }
+        setCancelReason('owner_convenience');
+        setCancelRemark('');
+        setError('');
+    }, [open, record?.id]);
+
+    const scheduledLabel = record?.scheduled_at
+        ? new Date(record.scheduled_at).toLocaleString('ja-JP', { dateStyle: 'short', timeStyle: 'short' })
+        : '—';
+
+    const handleConfirm = async () => {
+        if (record?.id == null) {
+            return;
+        }
+        if (cancelReason === 'other' && !cancelRemark.trim()) {
+            setError('その他を選んだ場合は備考が必須です。');
+            return;
+        }
+        setSaving(true);
+        setError('');
+        try {
+            const body = { cancel_reason: cancelReason };
+            const remark = cancelRemark.trim();
+            if (remark) {
+                body.cancel_remark = remark;
+            }
+            const res = await religoFetch(`${API}/api/one-to-ones/${record.id}/cancel`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(body),
+            });
+            const j = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw new Error(formatLaravel422Message(j) || j.message || `キャンセルに失敗しました (${res.status})`);
+            }
+            notify('1 to 1 予定をキャンセルしました');
+            refresh();
+            onClose();
+        } catch (e) {
+            setError(e.message || 'キャンセルに失敗しました');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    return (
+        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+            <DialogTitle>1 to 1 予定をキャンセル</DialogTitle>
+            <DialogContent dividers>
+                <Typography variant="body2" sx={{ mb: 2 }}>
+                    相手: <strong>{record?.target_name ?? '—'}</strong>
+                    <br />
+                    予定: {scheduledLabel}
+                </Typography>
+                <Alert severity="info" sx={{ mb: 2 }}>
+                    履歴として残ります。物理削除は行いません。
+                </Alert>
+                <FormControl component="fieldset" fullWidth sx={{ mb: 2 }}>
+                    <FormLabel component="legend">キャンセル理由</FormLabel>
+                    <RadioGroup value={cancelReason} onChange={(e) => setCancelReason(e.target.value)}>
+                        {ONE_TO_ONE_CANCEL_REASONS.map((c) => (
+                            <FormControlLabel key={c.id} value={c.id} control={<Radio size="small" />} label={c.name} />
+                        ))}
+                    </RadioGroup>
+                </FormControl>
+                <TextField
+                    label="備考"
+                    helperText={cancelReason === 'other' ? '必須' : '任意'}
+                    multiline
+                    minRows={2}
+                    fullWidth
+                    size="small"
+                    value={cancelRemark}
+                    onChange={(e) => setCancelRemark(e.target.value)}
+                    required={cancelReason === 'other'}
+                />
+                {error ? (
+                    <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                        {error}
+                    </Typography>
+                ) : null}
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose} disabled={saving}>
+                    戻る
+                </Button>
+                <Button variant="contained" color="warning" onClick={handleConfirm} disabled={saving}>
+                    {saving ? '処理中…' : 'キャンセルする'}
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
 function OneToOnesQuickCreateDialog({ open, onClose }) {
     const { ownerMemberId: globalOwnerMemberId } = useReligoOwner();
     const refresh = useRefresh();
@@ -697,7 +816,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
     );
 }
 
-function OneToOnesListBody({ onMemoOpen }) {
+function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
     const { total, isLoading } = useListContext();
 
     return (
@@ -740,6 +859,16 @@ function OneToOnesListBody({ onMemoOpen }) {
                             <Button size="small" variant="text" component={Link} to={`/one-to-ones/${record.id}`}>
                                 ✏️ 編集
                             </Button>
+                            {record?.status === 'planned' ? (
+                                <Button
+                                    size="small"
+                                    variant="text"
+                                    color="warning"
+                                    onClick={() => onCancelOpen(record)}
+                                >
+                                    キャンセル
+                                </Button>
+                            ) : null}
                         </Stack>
                     )}
                 />
@@ -748,11 +877,16 @@ function OneToOnesListBody({ onMemoOpen }) {
     );
 }
 
-function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOpen }) {
+function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOpen, cancelRecord, setCancelRecord }) {
     return (
         <>
-            <OneToOnesListBody onMemoOpen={setMemoRecord} />
+            <OneToOnesListBody onMemoOpen={setMemoRecord} onCancelOpen={setCancelRecord} />
             <OneToOnesQuickCreateDialog open={createOpen} onClose={() => setCreateOpen(false)} />
+            <OneToOneCancelDialog
+                record={cancelRecord}
+                open={Boolean(cancelRecord)}
+                onClose={() => setCancelRecord(null)}
+            />
             <Dialog open={Boolean(memoRecord)} onClose={() => setMemoRecord(null)} maxWidth="md" fullWidth>
                 <DialogTitle>
                     📝 メモ（notes）
@@ -804,6 +938,7 @@ export function OneToOnesList() {
     const { loading: ownerLoading } = useReligoOwner();
     const [memoRecord, setMemoRecord] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
+    const [cancelRecord, setCancelRecord] = useState(null);
     const [listReady, setListReady] = useState(false);
 
     useEffect(() => {
@@ -835,6 +970,8 @@ export function OneToOnesList() {
                 setMemoRecord={setMemoRecord}
                 createOpen={createOpen}
                 setCreateOpen={setCreateOpen}
+                cancelRecord={cancelRecord}
+                setCancelRecord={setCancelRecord}
             />
         </List>
     );
