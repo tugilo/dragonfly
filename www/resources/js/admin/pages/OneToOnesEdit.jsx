@@ -29,7 +29,7 @@ const EditToolbar = () => (
 );
 
 const STATUS_HELPER_EDIT =
-    'キャンセルは「予定が無効になった事実」を残す業務状態です。レコードの削除は行いません（製品方針）。';
+    '予定のキャンセルは一覧の「キャンセル」から行います（理由必須・履歴として残ります）。実施済みへの変更はここから可能です。';
 
 /** レコード読込後に所要時間チップを scheduled/ended から推定（ONETOONES_EDIT_UX_P2） */
 function EditDurationInitializer({ setDurationMinutes }) {

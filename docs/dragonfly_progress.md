@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-03 22:30 JST | **Phase 186 / 1to1 キャンセル UI:** 一覧 Dialog・planned 行キャンセル・理由 Chip・Edit から canceled 除外。`npm run build` OK。 |
 | 2026-06-03 22:25 JST | **Phase 185 / 1to1 POST cancel API:** migration（cancel_reason/remark/at）・`POST /api/one-to-ones/{id}/cancel`・PATCH canceled 拒否・`OneToOneCancelTest` 5件。`php artisan test` 434 passed。 |
 | 2026-06-03 22:20 JST | **Phase 184 / 1to1 予定キャンセル SSOT:** `DATA_MODEL` §4.12・`ONETOONES_DELETE_REQUIREMENTS` に POST cancel・理由列・§10 合意を反映。`ONETOONES_CANCEL_FIT_AND_GAP.md` 新規。docs のみ。 |
 | 2026-06-03 22:17 JST | **1 to 1 予定キャンセル 技術合意（5件）:** DB**専用列**・列挙値 **owner/target/other**・**POST cancel** のみ・Edit から canceled **不可**・**モック v2 同時更新**。`ONETOONES_CANCEL_FIT_AND_GAP.md` §10 全確定。コード変更なし。 |
