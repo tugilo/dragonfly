@@ -185,7 +185,8 @@
 | 184 | 1 to 1 予定キャンセル SSOT 確定（DATA_MODEL・DELETE ポリシー・Fit/Gap 合意） | docs | completed | feature/phase184-onetoones-cancel-ssot-p1 | 2026-06-03 |
 | 185 | 1 to 1 予定キャンセル API（POST cancel・migration・PATCH canceled 拒否） | implement | completed | feature/phase185-onetoones-cancel-api-p1 | 2026-06-03 |
 | 186 | 1 to 1 予定キャンセル UI（一覧 Dialog・理由 Chip・Edit 調整） | implement | completed | feature/phase186-onetoones-cancel-ui-p1 | 2026-06-03 |
-| 187 | 1 to 1 予定キャンセル mock v2 更新 | implement | in_progress | feature/phase187-onetoones-cancel-mock-p1 | 2026-06-03 |
+| 187 | 1 to 1 予定キャンセル mock v2 更新 | implement | completed | feature/phase187-onetoones-cancel-mock-p1 | 2026-06-03 |
+| 188 | 1 to 1 予定キャンセル Fit/Gap 解消記録 | docs | in_progress | feature/phase188-onetoones-cancel-fit-gap-p1 | 2026-06-03 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

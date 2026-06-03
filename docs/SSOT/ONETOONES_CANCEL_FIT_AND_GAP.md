@@ -2,7 +2,7 @@
 
 **調査日:** 2026-06-03 21:32 JST  
 **合意確定:** 2026-06-03 21:34 JST（UX 4 件）・**2026-06-03 22:17 JST（技術 5 件・§10 全確定）**  
-**ステータス:** **要件・設計合意済み** — implement Phase 着手可（**実装未着手**）  
+**ステータス:** **実装済み**（Phase 184–187 / 2026-06-03）— 本書 §8 は調査時点の記録、§10 が SSOT  
 **起点:** ユーザー要望 — 「121（1 to 1）の予定を削除できるようにしたい。こちら都合 / 相手都合 / その他（備考付き）で削除したい」
 
 **関連:** [ONETOONES_DELETE_REQUIREMENTS.md](ONETOONES_DELETE_REQUIREMENTS.md)、[DATA_MODEL.md](DATA_MODEL.md) §4.12、[FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §6.8、[MEETINGS_DELETE_FIT_AND_GAP.md](MEETINGS_DELETE_FIT_AND_GAP.md)（Meetings 削除調査の体裁参考）
@@ -188,6 +188,22 @@
 ---
 
 ## 8. Fit / Gap 要約
+
+**Phase 184–187 完了後（2026-06-03）:**
+
+| 観点 | 調査時 Gap | 実装後 |
+|------|------------|--------|
+| **製品方針** | キャンセル UX なし | **Fit** — POST cancel・履歴残存・UI「キャンセル」 |
+| **モック** | Dialog・理由 Chip なし | **Fit** — Phase 187 |
+| **DB** | 理由列なし | **Fit** — `cancel_reason` / `cancel_remark` / `canceled_at` |
+| **API** | PATCH canceled | **Fit** — POST cancel のみ・PATCH 拒否 |
+| **一覧 UI** | キャンセル操作なし | **Fit** — Dialog + 理由 Chip |
+| **編集 UI** | 理由入力なし | **Fit** — canceled 除外・read-only 表示 |
+| **集計** | 理由別なし | **Gap 残** — Dashboard 理由別 stats は将来 |
+
+---
+
+## 8.1 調査時点の Fit / Gap（アーカイブ）
 
 | 観点 | Fit | Gap |
 |------|-----|-----|
