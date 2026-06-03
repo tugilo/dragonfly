@@ -175,6 +175,7 @@ Route::get('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosIn
 Route::post('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosStore']);
 Route::get('/one-to-ones/{oneToOne}', [OneToOneController::class, 'show']);
 Route::patch('/one-to-ones/{oneToOne}', [OneToOneController::class, 'update']);
+Route::post('/one-to-ones/{oneToOne}/cancel', [OneToOneController::class, 'cancel']);
 
 Route::get('/introductions', [IntroductionController::class, 'index']);
 Route::post('/introductions', [IntroductionController::class, 'store']);
