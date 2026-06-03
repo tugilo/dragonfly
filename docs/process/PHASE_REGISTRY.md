@@ -182,6 +182,7 @@
 | 181 | Markdown ビューア P1（remark-gfm・見出し階層） | implement | completed | feature/phase181-markdown-viewer-gfm | 2026-06-02 |
 | 182 | Markdown ビューア P2（例会メモ・1to1 履歴メモ） | implement | completed | feature/phase182-markdown-viewer-p2 | 2026-06-02 |
 | 183 | Meetings Drawer UX（議事録モーダル・参加者PDF導線） | implement | completed | feature/phase183-meetings-drawer-ux | 2026-06-02 |
+| 184 | 1 to 1 予定キャンセル SSOT 確定（DATA_MODEL・DELETE ポリシー・Fit/Gap 合意） | docs | in_progress | feature/phase184-onetoones-cancel-ssot-p1 | 2026-06-03 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
