@@ -32,7 +32,7 @@
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （merge 後に記入） |
+| merge commit id | `4ab4ef3f38f84ae30da4c12bc5e5e004a9b7c7f7` |
 | source branch | `feature/phase185-onetoones-cancel-api-p1` |
 | target branch | `develop` |
 | phase id | 185 |
