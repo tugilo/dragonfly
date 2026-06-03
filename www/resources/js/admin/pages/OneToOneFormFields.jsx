@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectInput, TextInput, DateTimeInput, required } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { Box, Typography } from '@mui/material';
+import { Box, Chip, Typography } from '@mui/material';
 import {
     MemberSearchAutocompleteInput,
     OwnerScopedTargetSelect,
@@ -9,6 +9,7 @@ import {
     OneToOneCreateScheduleFields,
     OneToOneMeetingReferenceInput,
 } from './OneToOnesFormParts';
+import { cancelReasonLabel, ONE_TO_ONE_STATUS_CHOICES_EDIT } from '../utils/oneToOneCancel';
 
 export const ONE_TO_ONE_STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -44,6 +45,9 @@ export function OneToOneFormFields({
 }) {
     const { control } = useFormContext();
     const status = useWatch({ control, name: 'status' });
+    const cancelReason = useWatch({ control, name: 'cancel_reason' });
+    const cancelRemark = useWatch({ control, name: 'cancel_remark' });
+    const reasonLabel = cancelReasonLabel(cancelReason);
 
     return (
         <>
@@ -61,12 +65,31 @@ export function OneToOneFormFields({
             />
             <OwnerScopedTargetSelect />
             <TargetMemberSummaryCard />
-            <SelectInput
-                source="status"
-                choices={ONE_TO_ONE_STATUS_CHOICES}
-                label="状態"
-                helperText={statusHelperText}
-            />
+            {mode === 'edit' && status === 'canceled' ? (
+                <Box sx={{ mb: 2 }}>
+                    <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 700 }}>
+                        状態
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                        キャンセル（一覧のキャンセル操作で記録済み。ここから状態は変更できません）
+                    </Typography>
+                    {reasonLabel ? (
+                        <Chip size="small" label={reasonLabel} variant="outlined" sx={{ mr: 1 }} />
+                    ) : null}
+                    {cancelRemark ? (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            備考: {cancelRemark}
+                        </Typography>
+                    ) : null}
+                </Box>
+            ) : (
+                <SelectInput
+                    source="status"
+                    choices={mode === 'edit' ? ONE_TO_ONE_STATUS_CHOICES_EDIT : ONE_TO_ONE_STATUS_CHOICES}
+                    label="状態"
+                    helperText={statusHelperText}
+                />
+            )}
             <OneToOneCreateScheduleFields duration={durationMinutes} onDurationChange={onDurationChange} />
             {mode === 'edit' && status === 'completed' && (
                 <Box sx={{ mt: 2 }}>

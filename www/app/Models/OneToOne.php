@@ -21,6 +21,9 @@ class OneToOne extends Model
         'zoom_meeting_uuid',
         'external_source',
         'status',
+        'cancel_reason',
+        'cancel_remark',
+        'canceled_at',
         'scheduled_at',
         'started_at',
         'ended_at',
@@ -33,6 +36,7 @@ class OneToOne extends Model
             'scheduled_at' => 'datetime',
             'started_at' => 'datetime',
             'ended_at' => 'datetime',
+            'canceled_at' => 'datetime',
         ];
     }
 
