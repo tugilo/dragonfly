@@ -50,4 +50,18 @@ class OneToOneService
 
         return $o2o->fresh();
     }
+
+    /**
+     * @param  array{cancel_reason: string, cancel_remark?: string|null}  $data
+     */
+    public function cancel(OneToOne $o2o, array $data): OneToOne
+    {
+        $o2o->status = 'canceled';
+        $o2o->cancel_reason = $data['cancel_reason'];
+        $o2o->cancel_remark = $data['cancel_remark'] ?? null;
+        $o2o->canceled_at = now();
+        $o2o->save();
+
+        return $o2o->fresh();
+    }
 }

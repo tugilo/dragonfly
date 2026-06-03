@@ -54,10 +54,10 @@
 
 | 対象 | 状態 |
 |------|------|
-| API | `GET` / `POST` / `GET/PATCH {id}` / `memos`。**DELETE なし**。**`POST {id}/cancel` は Phase 185 で追加予定**。 |
-| ReactAdmin | `delete` 未実装・Resource に `delete` なし。**キャンセル Dialog は Phase 186**。 |
+| API | `GET` / `POST` / `GET/PATCH {id}` / `memos` / **`POST {id}/cancel`**。**DELETE なし**（Phase 185）。 |
+| ReactAdmin | `delete` 未実装。**キャンセル Dialog は Phase 186**。 |
 | 一覧 | **既定で「キャンセルを一覧から除く」**（`exclude_canceled=true` 相当）を ON。フィルタで canceled 表示時 **理由 Chip**（Phase 186）。 |
-| Edit | 現状 `status` Select で `canceled` 選択可 → **Phase 186 で canceled を除外**（POST cancel のみ）。 |
+| Edit | **`status` Select から `canceled` 除外**（Phase 186）。PATCH で `status=canceled` は **422**（Phase 185）。 |
 
 ---
 

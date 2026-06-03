@@ -21,7 +21,7 @@ class UpdateOneToOneRequest extends FormRequest
             'owner_member_id' => ['sometimes', 'integer', 'exists:members,id'],
             'target_member_id' => ['sometimes', 'integer', 'exists:members,id'],
             'meeting_id' => ['nullable', 'integer', 'exists:meetings,id'],
-            'status' => ['sometimes', 'string', Rule::in(['planned', 'completed', 'canceled'])],
+            'status' => ['sometimes', 'string', Rule::in(['planned', 'completed'])],
             'scheduled_at' => ['nullable', 'date'],
             'started_at' => ['nullable', 'date'],
             'ended_at' => ['nullable', 'date'],

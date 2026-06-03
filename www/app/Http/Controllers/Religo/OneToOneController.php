@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Religo\CancelOneToOneRequest;
 use App\Http\Requests\Religo\IndexOneToOnesRequest;
 use App\Http\Requests\Religo\OneToOneStatsRequest;
 use App\Http\Requests\Religo\StoreOneToOneMemoRequest;
@@ -70,6 +71,31 @@ class OneToOneController extends Controller
     {
         $data = $request->validated();
         $o2o = $this->oneToOneService->update($oneToOne, $data);
+
+        return response()->json($this->indexService->formatRecord($o2o));
+    }
+
+    /**
+     * POST /api/one-to-ones/{id}/cancel — 予定キャンセル（planned のみ）。Phase 185.
+     */
+    public function cancel(CancelOneToOneRequest $request, OneToOne $oneToOne): JsonResponse
+    {
+        if ($oneToOne->status !== 'planned') {
+            return response()->json([
+                'message' => 'キャンセルできるのは予定中（planned）の 1 to 1 のみです。',
+            ], 422);
+        }
+
+        $data = $request->validated();
+        $remark = isset($data['cancel_remark']) ? trim((string) $data['cancel_remark']) : null;
+        if ($remark === '') {
+            $remark = null;
+        }
+
+        $o2o = $this->oneToOneService->cancel($oneToOne, [
+            'cancel_reason' => $data['cancel_reason'],
+            'cancel_remark' => $remark,
+        ]);
 
         return response()->json($this->indexService->formatRecord($o2o));
     }
