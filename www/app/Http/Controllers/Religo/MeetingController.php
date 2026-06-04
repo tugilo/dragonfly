@@ -14,6 +14,8 @@ use App\Models\MeetingMinute;
 use App\Models\Participant;
 use App\Services\Religo\CandidateMemberMatchService;
 use App\Services\Religo\MeetingBreakoutService;
+use App\Services\Religo\ReferralSuggestionStaleIndexEnricher;
+use App\Services\Religo\ReligoActorContext;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +32,8 @@ class MeetingController extends Controller
 {
     public function __construct(
         private MeetingBreakoutService $breakoutService,
-        private CandidateMemberMatchService $candidateMemberMatch
+        private CandidateMemberMatchService $candidateMemberMatch,
+        private ReferralSuggestionStaleIndexEnricher $staleEnricher,
     ) {}
 
     /**
@@ -92,8 +95,15 @@ class MeetingController extends Controller
             ->orderByDesc('held_on')
             ->orderByDesc('id')
             ->get()
-            ->map(fn (Meeting $m) => $this->meetingToListRowPayload($m));
-        return response()->json($meetings->values()->all());
+            ->map(fn (Meeting $m) => $this->meetingToListRowPayload($m))
+            ->values()
+            ->all();
+
+        $user = ReligoActorContext::actingUser();
+        $ownerId = $user?->owner_member_id !== null ? (int) $user->owner_member_id : 0;
+        $meetings = $this->staleEnricher->enrichMeetings($meetings, $ownerId);
+
+        return response()->json(array_values($meetings));
     }
 
     /**

@@ -218,4 +218,50 @@ class OneToOneReferralSuggestionTest extends TestCase
             ->assertOk()
             ->assertJsonPath('referral_suggestion_stale', true);
     }
+
+    public function test_register_introduction_creates_introduction_and_links(): void
+    {
+        Sanctum::actingAs($this->user);
+        $thirdId = (int) DB::table('members')->insertGetId([
+            'name' => 'Third', 'type' => 'active', 'workspace_id' => $this->workspaceId,
+            'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $run = OneToOneReferralSuggestionRun::create([
+            'one_to_one_id' => $this->completed->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'notes_digest' => 'abc',
+            'notes_char_count' => 1,
+            'generator' => 'manual',
+            'created_at' => now(),
+        ]);
+        $suggestion = OneToOneReferralSuggestion::create([
+            'run_id' => $run->id,
+            'one_to_one_id' => $this->completed->id,
+            'direction' => 'owner_to_target',
+            'summary' => '建設向け紹介',
+            'rationale' => '議事録より',
+            'suggested_from_member_id' => $this->ownerId,
+            'suggested_to_member_id' => $thirdId,
+            'confidence' => 'medium',
+            'status' => 'pending',
+        ]);
+
+        $res = $this->postJson("/api/one-to-one-referral-suggestions/{$suggestion->id}/register-introduction", [
+            'to_member_id' => $thirdId,
+            'from_member_id' => $this->ownerId,
+        ])->assertCreated();
+
+        $introId = $res->json('introduction.id');
+        $this->assertNotNull($introId);
+        $this->assertDatabaseHas('introductions', [
+            'id' => $introId,
+            'from_member_id' => $this->ownerId,
+            'to_member_id' => $thirdId,
+            'owner_member_id' => $this->ownerId,
+            'referral_kind' => 'external',
+        ]);
+        $this->assertSame($introId, $suggestion->fresh()->introduction_id);
+        $this->assertSame('accepted', $suggestion->fresh()->status);
+    }
 }

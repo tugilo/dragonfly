@@ -55,6 +55,16 @@ export function MeetingReferralSuggestionDialog({ open, onClose, meeting, minute
         ? `リファーラル提案 — 第${meeting.number}回`
         : 'リファーラル提案（定例会）';
 
+    let defaultIntroducedAt = '';
+    if (meeting?.held_on) {
+        try {
+            const ho = meeting.held_on;
+            defaultIntroducedAt = typeof ho === 'string' && ho.length >= 10 ? ho.slice(0, 10) : new Date(ho).toISOString().slice(0, 10);
+        } catch {
+            /* ignore */
+        }
+    }
+
     const subtitleParts = [];
     if (meeting?.name) subtitleParts.push(meeting.name);
     if (meeting?.held_on) {
@@ -77,6 +87,7 @@ export function MeetingReferralSuggestionDialog({ open, onClose, meeting, minute
             fetchSuggestions={fetchSuggestions}
             generateSuggestions={generateSuggestions}
             notify={notify}
+            defaultIntroducedAt={defaultIntroducedAt}
         />
     );
 }

@@ -172,4 +172,68 @@ class MeetingReferralSuggestionTest extends TestCase
             'status' => 'deferred',
         ])->assertOk()->assertJsonPath('status', 'deferred');
     }
+
+    public function test_register_introduction_sets_meeting_id(): void
+    {
+        Sanctum::actingAs($this->user);
+        $toId = (int) DB::table('members')->insertGetId([
+            'name' => 'ToMember', 'type' => 'active', 'workspace_id' => $this->workspaceId,
+            'created_at' => now(), 'updated_at' => now(),
+        ]);
+        $minute = $this->meeting->meetingMinute;
+        $run = MeetingReferralSuggestionRun::create([
+            'meeting_id' => $this->meeting->id,
+            'meeting_minute_id' => $minute->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'body_digest' => 'abc',
+            'body_char_count' => 1,
+            'generator' => 'manual',
+            'created_at' => now(),
+        ]);
+        $suggestion = MeetingReferralSuggestion::create([
+            'run_id' => $run->id,
+            'meeting_id' => $this->meeting->id,
+            'source_section' => 'main_presentation',
+            'direction' => 'subject_seeks_intros',
+            'summary' => '高級宿向け',
+            'suggested_from_member_id' => $this->ownerId,
+            'suggested_to_member_id' => $toId,
+            'confidence' => 'high',
+            'status' => 'pending',
+        ]);
+
+        $res = $this->postJson("/api/meeting-referral-suggestions/{$suggestion->id}/register-introduction", [
+            'from_member_id' => $this->ownerId,
+            'to_member_id' => $toId,
+        ])->assertCreated();
+
+        $this->assertSame($this->meeting->id, $res->json('introduction.meeting_id'));
+        $this->assertDatabaseHas('introductions', [
+            'id' => $res->json('introduction.id'),
+            'meeting_id' => $this->meeting->id,
+        ]);
+    }
+
+    public function test_meetings_index_includes_stale_flag(): void
+    {
+        Sanctum::actingAs($this->user);
+        $minute = $this->meeting->meetingMinute;
+        $body = (string) $minute->body_markdown;
+        MeetingReferralSuggestionRun::create([
+            'meeting_id' => $this->meeting->id,
+            'meeting_minute_id' => $minute->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'body_digest' => ReferralSuggestionDigest::digest($body),
+            'body_char_count' => 10,
+            'generator' => 'manual',
+            'created_at' => now(),
+        ]);
+        $minute->update(['body_markdown' => $body . "\n\n追記"]);
+
+        $row = collect($this->getJson('/api/meetings')->json())->firstWhere('id', $this->meeting->id);
+        $this->assertNotNull($row);
+        $this->assertTrue($row['referral_suggestion_stale']);
+    }
 }

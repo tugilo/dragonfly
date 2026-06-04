@@ -27,6 +27,16 @@ export function OneToOneReferralSuggestionDialog({ open, onClose, record }) {
         ? `リファーラル提案 — ${record.target_name}`
         : 'リファーラル提案（1 to 1）';
 
+    let defaultIntroducedAt = '';
+    const d = record?.started_at || record?.completed_at;
+    if (d) {
+        try {
+            defaultIntroducedAt = new Date(d).toISOString().slice(0, 10);
+        } catch {
+            /* ignore */
+        }
+    }
+
     const subtitleParts = [];
     if (record?.target_workspace_name) subtitleParts.push(`相手所属: ${record.target_workspace_name}`);
     if (record?.started_at || record?.completed_at) {
@@ -50,6 +60,7 @@ export function OneToOneReferralSuggestionDialog({ open, onClose, record }) {
             fetchSuggestions={fetchSuggestions}
             generateSuggestions={generateSuggestions}
             notify={notify}
+            defaultIntroducedAt={defaultIntroducedAt}
         />
     );
 }

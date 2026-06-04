@@ -3,6 +3,8 @@
 namespace Tests\Feature\Religo;
 
 use App\Models\OneToOne;
+use App\Models\OneToOneReferralSuggestionRun;
+use App\Services\Religo\ReferralSuggestionDigest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -291,5 +293,32 @@ class OneToOneIndexTest extends TestCase
         $onlyCanceled->assertOk();
         $this->assertCount(1, $onlyCanceled->json());
         $this->assertSame('canceled', $onlyCanceled->json()[0]['status']);
+    }
+
+    public function test_index_includes_referral_suggestion_stale(): void
+    {
+        $o2o = OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'completed',
+            'notes' => 'initial notes',
+        ]);
+        OneToOneReferralSuggestionRun::create([
+            'one_to_one_id' => $o2o->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'notes_digest' => ReferralSuggestionDigest::digest('initial notes'),
+            'notes_char_count' => 10,
+            'generator' => 'manual',
+            'created_at' => now(),
+        ]);
+        $o2o->update(['notes' => 'initial notes updated']);
+
+        $res = $this->getJson('/api/one-to-ones?owner_member_id=' . $this->ownerId);
+        $res->assertOk();
+        $row = collect($res->json())->firstWhere('id', $o2o->id);
+        $this->assertNotNull($row);
+        $this->assertTrue($row['referral_suggestion_stale']);
     }
 }

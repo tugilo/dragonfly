@@ -188,7 +188,7 @@
 | O11 | Meeting 列 | `#247 — 日付` 形式の chip | **`meeting_label`（Chip）**＋ API で `meeting_number` / `meeting_held_on` 付与 | **Fit（ONETOONES-P2）** |
 | O12 | メモ列 | ellipsis | `notes` + `ellipsis` | **Fit** |
 | O13 | 行アクション | 📝 メモ、✏️ 編集、**planned 行にキャンセル**（Phase 187） | **操作**列: メモ Dialog・編集・**planned のみ「キャンセル」→ Dialog**（Phase 186）。物理 DELETE なし | **Fit（Phase 186–187）** |
-| O16 | 行アクション：リファーラル | （モック v2 未収録 — FIT_AND_GAP 正） | **「リファーラル」** → `OneToOneReferralSuggestionDialog`（**completed + notes 必須**、それ以外 disabled + Tooltip）。生成・run 切替・却下/あとで PATCH。**採用→introductions は Phase 192** | **Fit（Phase 191 / SPEC-015）** |
+| O16 | 行アクション：リファーラル | （モック v2 未収録 — FIT_AND_GAP 正） | **「リファーラル」** → Dialog。却下/あとで/採用（register-introduction）。一覧 **要再生成** Chip（`referral_suggestion_stale`） | **Fit（Phase 191–192 / SPEC-015）** |
 | O14 | 新規登録 UI | **モーダル** | **クイック作成 Dialog**（一覧）＋ **`/one-to-ones/create` フルページ** | **Partial Fit（ONETOONES-P3）:** 主導線を Dialog に寄せた |
 | O15 | 新規フォーム項目 | 日付・時刻・相手・ステータス・関連例会・メモ | クイック: 相手・状態・**datetime-local**・`meeting_id`・**notes**。フル: Owner（**me 既定・変更可**）・他 | **Partial Fit:** Owner は一覧と Create で自動初期化。**Gap:** モックの日付+時刻分割 |
 
