@@ -36,7 +36,7 @@ class ReferralRelationshipContextBuilder
         $sections[] = '# 依頼者（記録者・リファーラル受け手の典型）';
         $sections[] = "member_id: {$requesterMemberId}";
         $sections[] = '';
-        $sections[] = '# 主役（subject）— このメンバーが会うべき章内メンバーを最優先で提案すること';
+        $sections[] = '# 主役（subject）— 121 相手。社外紹介・他者ネットワークの contact 発見の文脈（章内メンバー同士の紹介は対象外）';
         $sections[] = "member_id: {$subjectId}（{$oneToOne->targetMember?->name}）";
         $sections[] = '';
         $sections[] = '# 当該 1 to 1 議事録';

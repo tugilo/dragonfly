@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 
 /**
  * AI 出力 JSON のパースとサーバ側検証。
+ *
+ * 同章メンバー同士の「紹介」（subject_should_meet 等）は採用しない — 定例会で既に接続済みのため。
+ * 社外紹介（suggested_to_label）と via_connector（つなぎ手→依頼者）のみ。
  */
 final class ReferralSuggestionPayloadNormalizer
 {
@@ -89,27 +92,15 @@ final class ReferralSuggestionPayloadNormalizer
                 if ($fromId === null || $contactLabel === null) {
                     continue;
                 }
-            } elseif ($direction === 'subject_should_meet') {
-                $matchId = $this->filterId(
-                    $item['match_member_id'] ?? $item['suggested_to_member_id'] ?? null,
-                    $validMemberIds,
-                );
-                if ($matchId === null || $matchId === $targetMemberId) {
-                    continue;
-                }
-                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
-                    ?? $ownerMemberId;
-                $toId = $matchId;
-                $contactLabel = null;
-                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
-                if ($relationshipMode && $sourceO2oId > 0) {
-                    $corpusSource = 'member_network';
-                }
             } else {
                 $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $targetMemberId]);
                 $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
                 $contactLabel = null;
                 $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+            }
+
+            if ($this->rejectSameChapterMemberReferral($direction, $toId, $fromId, $validMemberIds, $ownerMemberId, $targetMemberId, null)) {
+                continue;
             }
 
             $out[] = [
@@ -185,27 +176,22 @@ final class ReferralSuggestionPayloadNormalizer
                 if ($fromId === null || $contactLabel === null) {
                     continue;
                 }
-            } elseif ($direction === 'subject_should_meet') {
-                $matchId = $this->filterId(
-                    $item['match_member_id'] ?? $item['suggested_to_member_id'] ?? null,
-                    $validMemberIds,
-                );
-                if ($matchId === null || ($subjectId !== null && $matchId === $subjectId)) {
-                    continue;
-                }
-                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
-                    ?? $ownerMemberId;
-                $toId = $matchId;
-                $contactLabel = null;
-                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
-                if ($relationshipMode && $sourceO2oId > 0) {
-                    $corpusSource = 'member_network';
-                }
             } else {
                 $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $subjectId]);
                 $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
                 $contactLabel = null;
                 $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+            }
+
+            if ($this->rejectSameChapterMemberReferral($direction, $toId, $fromId, $validMemberIds, $ownerMemberId, null, $subjectId)) {
+                continue;
+            }
+
+            $toLabel = $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null;
+            if ($toId !== null && $toLabel === null && $direction !== 'via_connector') {
+                if ($subjectId === null || $toId !== $subjectId) {
+                    continue;
+                }
             }
 
             $out[] = [
@@ -252,6 +238,41 @@ final class ReferralSuggestionPayloadNormalizer
         }
 
         return array_values($suggestions);
+    }
+
+    /**
+     * 章内メンバー同士の紹介候補を弾く（社外・つなぎ手経由は残す）。
+     */
+    private function rejectSameChapterMemberReferral(
+        string $direction,
+        ?int $toId,
+        ?int $fromId,
+        Collection $validMemberIds,
+        int $requesterMemberId,
+        ?int $o2oTargetMemberId,
+        ?int $meetingSubjectMemberId,
+    ): bool {
+        if ($direction === 'subject_should_meet') {
+            return true;
+        }
+
+        if ($toId === null || ! $validMemberIds->contains($toId)) {
+            return false;
+        }
+
+        if ($direction === 'via_connector' && $toId === $requesterMemberId) {
+            return false;
+        }
+
+        if ($o2oTargetMemberId !== null && $toId === $o2oTargetMemberId) {
+            return false;
+        }
+
+        if ($meetingSubjectMemberId !== null && $toId === $meetingSubjectMemberId) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
