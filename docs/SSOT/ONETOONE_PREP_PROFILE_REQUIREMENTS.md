@@ -277,6 +277,7 @@ SPEC-012（Zoom 連携）と本 SPEC-013（AI 生成）が揃ったことで、*
 - 既存 `ZoomSummaryService` は **Zoom 側の要約 / 文字起こしをそのまま** notes に追記する（ユーザー AI では整形しない）。
 - 本 SPEC の AI 生成は **添付（事前プロフィール）** を素材にしている。
 - **合流に必要なのは:** 「Zoom 文字起こしテキストを素材に、ユーザーの AI で **議事録プロンプト**で生成する」モードの追加（例: 文字起こしを `one_to_one_attachments`(source_type=text) として取り込み prep 生成を流用、または `prep/generate` に `mode=post_meeting` を追加）。新規依存なし・小規模。
+- **リファーラル提案（SPEC-015 / SPEC-016）:** 実施後の `notes` または定例会 `meeting_minutes` を素材に **紹介候補を抽出**する別フロー。AI・BYO key は本 SPEC と共通。121: [ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md](ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md)。定例会 MP 等: [CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md](CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md)。共通: [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)。
 
 ## 13. 変更履歴
 

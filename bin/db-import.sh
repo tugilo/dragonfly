@@ -6,6 +6,8 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck source=bin/lib/compose.sh
 source "$REPO_ROOT/bin/lib/compose.sh"
+# shellcheck source=bin/lib/religo-db-patch.sh
+source "$REPO_ROOT/bin/lib/religo-db-patch.sh"
 
 compose_require_project_env "$REPO_ROOT"
 
@@ -35,4 +37,6 @@ compose_exec_db mariadb -u root -proot -e \
 
 compose_exec_db mariadb -u root -proot "$PROJECT" < "$DUMP_FILE"
 
-echo "Imported www/database/sync/dragonfly.sql into ${PROJECT}."
+religo_patch_dragonfly_workspace_name "$REPO_ROOT"
+
+echo "Imported www/database/sync/dragonfly.sql into ${PROJECT} (workspace name patched to DragonFly if needed)."

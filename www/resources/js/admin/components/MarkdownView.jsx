@@ -186,3 +186,33 @@ export function MarkdownView({ markdown, dense = false }) {
         </ReactMarkdown>
     );
 }
+
+/** docs/meetings/... 形式のソース行を notes 等から抽出（1to1 議事録取り込み用）。 */
+export function extractMarkdownSourcePath(markdown) {
+    if (!markdown || typeof markdown !== 'string') {
+        return null;
+    }
+    const m = markdown.match(/ソース:\s*(docs\/meetings\/1to1\/[a-zA-Z0-9_.-]+\.md)/);
+    return m ? m[1].trim() : null;
+}
+
+/** 議事録・1to1 メモの読み取り用パネル（Meetings 議事録モーダルと同系の余白）。 */
+export const markdownReadablePanelSx = {
+    p: 1.5,
+    bgcolor: 'action.hover',
+    borderRadius: 1,
+    borderLeft: 3,
+    borderColor: 'primary.main',
+};
+
+export function MarkdownReadablePanel({ markdown, dense = false, sx }) {
+    const text = typeof markdown === 'string' ? markdown : '';
+    if (!text.trim()) {
+        return null;
+    }
+    return (
+        <Box sx={{ ...markdownReadablePanelSx, ...sx }}>
+            <MarkdownView markdown={text} dense={dense} />
+        </Box>
+    );
+}

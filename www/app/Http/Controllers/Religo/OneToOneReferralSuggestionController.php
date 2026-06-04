@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Http\Controllers\Religo;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Religo\PatchReferralSuggestionRequest;
+use App\Models\OneToOne;
+use App\Models\OneToOneReferralSuggestion;
+use App\Models\User;
+use App\Models\UserAiCredential;
+use App\Services\Religo\OneToOneReferralSuggestionService;
+use App\Services\Religo\ReligoActorContext;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use InvalidArgumentException;
+
+/**
+ * SPEC-015: 121 リファーラル提案 API。
+ */
+class OneToOneReferralSuggestionController extends Controller
+{
+    public function __construct(private OneToOneReferralSuggestionService $service) {}
+
+    public function generate(OneToOne $oneToOne): JsonResponse
+    {
+        if ($resp = $this->guard($oneToOne)) {
+            return $resp;
+        }
+
+        $user = ReligoActorContext::actingUser();
+        $cred = UserAiCredential::where('user_id', $user->id)->first();
+        if ($cred === null || ! $cred->hasUsableKey()) {
+            return response()->json(['message' => 'AI が未設定です。設定画面で AI を有効化し API キーを登録してください。'], 422);
+        }
+
+        try {
+            $payload = $this->service->generate($oneToOne, $user, $cred);
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+
+        return response()->json($payload, 201);
+    }
+
+    public function index(Request $request, OneToOne $oneToOne): JsonResponse
+    {
+        if ($resp = $this->guard($oneToOne)) {
+            return $resp;
+        }
+
+        $user = ReligoActorContext::actingUser();
+        $runId = $request->query('run_id');
+        $runId = $runId !== null && $runId !== '' ? (int) $runId : null;
+
+        return response()->json(
+            $this->service->list($oneToOne, (int) $user->owner_member_id, $runId)
+        );
+    }
+
+    public function update(PatchReferralSuggestionRequest $request, OneToOneReferralSuggestion $oneToOneReferralSuggestion): JsonResponse
+    {
+        $user = ReligoActorContext::actingUser();
+        if ($user === null || $user->owner_member_id === null) {
+            return response()->json(['message' => 'No acting user.'], 403);
+        }
+
+        try {
+            $payload = $this->service->updateSuggestion(
+                $oneToOneReferralSuggestion,
+                (int) $user->owner_member_id,
+                $request->validated(),
+            );
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        return response()->json($payload);
+    }
+
+    private function guard(OneToOne $oneToOne): ?JsonResponse
+    {
+        $user = ReligoActorContext::actingUser();
+        if (! $user instanceof User) {
+            return response()->json(['message' => 'No acting user.'], 403);
+        }
+        if ($user->owner_member_id === null || (int) $user->owner_member_id !== (int) $oneToOne->owner_member_id) {
+            return response()->json(['message' => 'この 1 to 1 を操作する権限がありません。'], 403);
+        }
+
+        return null;
+    }
+}

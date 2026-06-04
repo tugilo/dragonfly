@@ -4,6 +4,7 @@ namespace App\Services\Religo;
 
 use App\Models\Meeting;
 use App\Models\OneToOne;
+use App\Support\CategoryLabel;
 use App\Support\MemberWorkspaceAttributes;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -87,6 +88,7 @@ class OneToOneIndexService
             ->with([
                 'workspace.region.country',
                 'ownerMember:id,name',
+                'targetMember.category:id,group_name,name',
                 'targetMember.workspace.region.country',
                 'meeting:id,number,held_on',
             ]);
@@ -115,6 +117,7 @@ class OneToOneIndexService
         $o->loadMissing([
             'workspace.region.country',
             'ownerMember:id,name',
+            'targetMember.category:id,group_name,name',
             'targetMember.workspace.region.country',
             'meeting:id,number,held_on',
         ]);
@@ -147,6 +150,7 @@ class OneToOneIndexService
             'updated_at' => $o->updated_at?->toIso8601String(),
             'owner_name' => $o->ownerMember?->name,
             'target_name' => $o->targetMember?->name,
+            'target_category_label' => CategoryLabel::format($o->targetMember?->category),
             'target_workspace_id' => $targetFlat['workspace_id'],
             'target_workspace_name' => $targetFlat['workspace_name'],
             'target_region_id' => $targetFlat['region_id'],

@@ -35,6 +35,7 @@ import {
     Alert,
     Tabs,
     Tab,
+    Tooltip,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
@@ -49,6 +50,11 @@ import AddIcon from '@mui/icons-material/Add';
 import ArticleIcon from '@mui/icons-material/Article';
 import { religoFetch } from '../religoApiFetch';
 import { MarkdownView } from '../components/MarkdownView';
+import { MeetingReferralSuggestionDialog } from './MeetingReferralSuggestionDialog';
+import {
+    canOpenMeetingReferral,
+    meetingReferralDisabledReason,
+} from '../referralSuggestionApi';
 
 const API_BASE = '';
 
@@ -753,8 +759,21 @@ function HasMinutesField({ record, onMinutesClick }) {
     );
 }
 
-function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick }) {
+function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick, onReferralClick }) {
     if (!record) return null;
+    const referralEnabled = canOpenMeetingReferral(record);
+    const referralReason = meetingReferralDisabledReason(record);
+    const referralBtn = (
+        <Button
+            size="small"
+            variant="outlined"
+            disabled={!referralEnabled}
+            onClick={() => referralEnabled && onReferralClick?.(record)}
+            sx={{ minWidth: 'auto', px: 1 }}
+        >
+            リファーラル
+        </Button>
+    );
     return (
         <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap onClick={(e) => e.stopPropagation()}>
             <Button
@@ -790,6 +809,11 @@ function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick }) {
             >
                 🗺 BO編集
             </Button>
+            {referralReason && !referralEnabled ? (
+                <Tooltip title={referralReason}>
+                    <span>{referralBtn}</span>
+                </Tooltip>
+            ) : referralBtn}
         </Stack>
     );
 }
@@ -829,7 +853,7 @@ const TYPE_HINT_OPTIONS = [
     { value: '', label: '不明' },
 ];
 
-function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, onMemoClick, onPdfRegisterClick, onDetailRefresh, initialTab, initialOpenMinutes, onMinutesModalClosed }) {
+function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, onMemoClick, onPdfRegisterClick, onDetailRefresh, initialTab, initialOpenMinutes, onMinutesModalClosed, onReferralClick }) {
     const notify = useNotify();
     const [drawerTab, setDrawerTab] = useState('overview');
     const [minutesModalOpen, setMinutesModalOpen] = useState(false);
@@ -3219,6 +3243,17 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                 )}
             </DialogContent>
             <DialogActions>
+                {meeting?.has_minutes ? (
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            closeMinutesModal();
+                            onReferralClick?.(meeting, minutes?.body_markdown);
+                        }}
+                    >
+                        リファーラル
+                    </Button>
+                ) : null}
                 <Button onClick={closeMinutesModal}>閉じる</Button>
             </DialogActions>
         </Dialog>
@@ -3253,6 +3288,8 @@ export function MeetingsList() {
     const [editHeldOnInput, setEditHeldOnInput] = useState('');
     const [editNameInput, setEditNameInput] = useState('');
     const [editSaving, setEditSaving] = useState(false);
+    const [referralMeeting, setReferralMeeting] = useState(null);
+    const [referralMinutesMarkdown, setReferralMinutesMarkdown] = useState('');
 
     const refetchStats = useCallback(() => {
         setStatsLoading(true);
@@ -3463,6 +3500,17 @@ export function MeetingsList() {
         }
     }, [editTargetMeeting, editNumberInput, editHeldOnInput, editNameInput, notify, refresh, refetchStats, selectedMeeting?.id]);
 
+    const handleReferralClick = useCallback((record, minutesMarkdown) => {
+        if (!record?.id || !canOpenMeetingReferral(record)) return;
+        setReferralMeeting(record);
+        setReferralMinutesMarkdown(minutesMarkdown ?? '');
+    }, []);
+
+    const closeReferralDialog = useCallback(() => {
+        setReferralMeeting(null);
+        setReferralMinutesMarkdown('');
+    }, []);
+
     return (
         <>
             <List
@@ -3481,7 +3529,7 @@ export function MeetingsList() {
                     <FunctionField label="メモ" render={(r) => <HasMemoField record={r} />} />
                     <FunctionField label="議事録" render={(r) => <HasMinutesField record={r} onMinutesClick={handleMinutesClick} />} />
                     <FunctionField label="参加者PDF" render={(r) => <HasParticipantPdfField record={r} />} />
-                    <FunctionField label="Actions" render={(r) => <MeetingActionsField record={r} onMemoClick={handleMeetingMemoClick} onEditClick={handleMeetingEditClick} onPdfClick={handlePdfActionClick} />} />
+                    <FunctionField label="Actions" render={(r) => <MeetingActionsField record={r} onMemoClick={handleMeetingMemoClick} onEditClick={handleMeetingEditClick} onPdfClick={handlePdfActionClick} onReferralClick={handleReferralClick} />} />
                 </Datagrid>
             </List>
             <MeetingDetailDrawer
@@ -3496,6 +3544,13 @@ export function MeetingsList() {
                 initialTab={drawerInitialTab}
                 initialOpenMinutes={openMinutesOnLoad}
                 onMinutesModalClosed={() => setOpenMinutesOnLoad(false)}
+                onReferralClick={handleReferralClick}
+            />
+            <MeetingReferralSuggestionDialog
+                open={Boolean(referralMeeting)}
+                onClose={closeReferralDialog}
+                meeting={referralMeeting}
+                minutesMarkdown={referralMinutesMarkdown}
             />
             <Dialog open={editDialogOpen} onClose={closeEditDialog} maxWidth="sm" fullWidth>
                 <DialogTitle>例会を編集{editTargetMeeting ? ` — id ${editTargetMeeting.id}` : ''}</DialogTitle>

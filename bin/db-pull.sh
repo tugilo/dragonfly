@@ -9,6 +9,8 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$REPO_ROOT/bin/lib/compose.sh"
 # shellcheck source=bin/lib/remote.sh
 source "$REPO_ROOT/bin/lib/remote.sh"
+# shellcheck source=bin/lib/religo-db-patch.sh
+source "$REPO_ROOT/bin/lib/religo-db-patch.sh"
 
 compose_require_project_env "$REPO_ROOT"
 
@@ -46,7 +48,9 @@ compose_exec_db mariadb -u root -proot -e \
   "DROP DATABASE IF EXISTS \`${PROJECT}\`; CREATE DATABASE \`${PROJECT}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 compose_exec_db mariadb -u root -proot "$PROJECT" < "$TMP_FILE"
 
-# Keep the Git-synced fixed dump in step with what we just pulled.
-cp "$TMP_FILE" "$REPO_ROOT/www/database/sync/dragonfly.sql"
+religo_patch_dragonfly_workspace_name "$REPO_ROOT"
 
-echo "Done: pulled ${TARGET} -> local '${PROJECT}'. (www/database/sync/dragonfly.sql also updated)"
+# Re-export from patched local DB (do not copy raw remote dump — it still has Default Workspace).
+bash "$REPO_ROOT/bin/db-export.sh"
+
+echo "Done: pulled ${TARGET} -> local '${PROJECT}'. www/database/sync/dragonfly.sql re-exported with DragonFly workspace name."
