@@ -16,3 +16,17 @@ religo_patch_dragonfly_workspace_name() {
     --path=database/migrations/2026_06_04_100000_rename_default_workspace_to_dragonfly.php \
     --force
 }
+
+# Dump の migrations 行はエクスポート時点まで。取り込み後に未適用 migration を当てる（例: referral_suggestion_*）。
+religo_apply_pending_migrations() {
+  local root="$1"
+  compose_require_project_env "$root"
+
+  if ! docker compose "${COMPOSE_ARGS[@]}" ps --status running --services 2>/dev/null | grep -qx app; then
+    echo "Skip pending migrations: app container is not running." >&2
+    return 0
+  fi
+
+  echo "Applying pending migrations on local DB ..."
+  docker compose "${COMPOSE_ARGS[@]}" exec -T app php artisan migrate --force
+}

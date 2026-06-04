@@ -38,5 +38,6 @@ compose_exec_db mariadb -u root -proot -e \
 compose_exec_db mariadb -u root -proot "$PROJECT" < "$DUMP_FILE"
 
 religo_patch_dragonfly_workspace_name "$REPO_ROOT"
+religo_apply_pending_migrations "$REPO_ROOT"
 
 echo "Imported www/database/sync/dragonfly.sql into ${PROJECT} (workspace name patched to DragonFly if needed)."
