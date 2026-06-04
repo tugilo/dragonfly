@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\ZoomAccount;
 use App\Services\Religo\ReligoActorContext;
+use App\Services\Zoom\ZoomCredentialResolver;
 use App\Services\Zoom\ZoomTokenService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -17,15 +18,18 @@ use Illuminate\Support\Facades\Log;
 /**
  * Zoom OAuth 連携（SPEC-012 Phase A）。
  *
- * - connect/status/disconnect は admin ゲート（religo.chapter_admin）配下。
+ * - connect/status/disconnect は認証済みユーザー単位。
  * - callback は Zoom からのブラウザリダイレクト（Bearer 無し）。署名付き state で user を解決する。
  */
 class ZoomOAuthController extends Controller
 {
-    public function __construct(private ZoomTokenService $tokenService) {}
+    public function __construct(
+        private ZoomTokenService $tokenService,
+        private ZoomCredentialResolver $credentials,
+    ) {}
 
     /**
-     * GET /api/zoom/connect — SPA が開く Zoom 認可 URL を返す（admin ゲート）。
+     * GET /api/zoom/connect — SPA が開く Zoom 認可 URL を返す。
      */
     public function connect(): JsonResponse
     {
@@ -33,8 +37,10 @@ class ZoomOAuthController extends Controller
         if ($user === null) {
             return response()->json(['message' => 'No acting user.'], 403);
         }
-        if (! $this->isConfigured()) {
-            return response()->json(['message' => 'Zoom 連携が未設定です（.env の ZOOM_CLIENT_ID 等）。'], 422);
+        if (! $this->credentials->isConfiguredForUser($user)) {
+            return response()->json([
+                'message' => 'Zoom 連携が未設定です。設定画面で Client ID / Client Secret を登録するか、管理者に ZOOM_REDIRECT_URI の設定を確認してください。',
+            ], 422);
         }
 
         $state = Crypt::encryptString(json_encode([
@@ -43,7 +49,7 @@ class ZoomOAuthController extends Controller
         ]));
 
         return response()->json([
-            'authorize_url' => $this->tokenService->authorizeUrl($state),
+            'authorize_url' => $this->tokenService->authorizeUrl($user, $state),
         ]);
     }
 
@@ -76,15 +82,18 @@ class ZoomOAuthController extends Controller
     }
 
     /**
-     * GET /api/zoom/status — 連携状態（admin ゲート）。
+     * GET /api/zoom/status — 連携状態。
      */
     public function status(): JsonResponse
     {
         $user = ReligoActorContext::actingUser();
         $account = $user ? ZoomAccount::where('user_id', $user->id)->first() : null;
+        $resolved = $this->credentials->resolveForUser($user);
 
         return response()->json([
-            'configured' => $this->isConfigured(),
+            'configured' => $resolved !== null,
+            'credential_source' => $resolved['source'] ?? null,
+            'redirect_uri' => $resolved['redirect'] ?? trim((string) config('services.zoom.redirect')) ?: null,
             'connected' => $account !== null,
             'zoom_email' => $account?->zoom_email,
             'scopes' => $account?->scopes,
@@ -93,7 +102,7 @@ class ZoomOAuthController extends Controller
     }
 
     /**
-     * DELETE /api/zoom/connect — 連携解除（admin ゲート）。
+     * DELETE /api/zoom/connect — 連携解除。
      */
     public function disconnect(): JsonResponse
     {
@@ -120,13 +129,6 @@ class ZoomOAuthController extends Controller
         }
 
         return User::find((int) $payload['user_id']);
-    }
-
-    private function isConfigured(): bool
-    {
-        return ! empty(config('services.zoom.client_id'))
-            && ! empty(config('services.zoom.client_secret'))
-            && ! empty(config('services.zoom.redirect'));
     }
 
     private function spaReturnUrl(string $status, ?string $reason = null): string

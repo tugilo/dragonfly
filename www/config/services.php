@@ -40,10 +40,11 @@ return [
     | Zoom 連携（SPEC-012 / 1 to 1 取り込み）
     |--------------------------------------------------------------------------
     |
-    | アプリ資格情報は .env で管理しハードコードしない（SPEC-012 §6）。
-    | ユーザー OAuth: client_id / client_secret / redirect。
-    | Webhook 署名検証: webhook_secret_token。
-    | アクセス/リフレッシュトークンは .env ではなく zoom_accounts に暗号化保存する。
+    | アプリ資格情報（Client ID / Secret / Webhook Secret）はユーザーごとに
+    | user_zoom_credentials に暗号化保存（SPEC-012 拡張・Phase 189）。
+    | .env の ZOOM_CLIENT_ID 等は移行期間のフォールバック。
+    | ZOOM_REDIRECT_URI はシステム共通（全ユーザー同一 callback）。
+    | アクセス/リフレッシュトークンは zoom_accounts に暗号化保存する。
     |
     */
     'zoom' => [

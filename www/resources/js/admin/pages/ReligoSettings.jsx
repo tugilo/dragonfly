@@ -7,6 +7,7 @@ import {
     FormControl,
     FormControlLabel,
     InputLabel,
+    Link,
     MenuItem,
     Select,
     Switch,
@@ -172,6 +173,165 @@ function AiSettingsCard({ notify }) {
     );
 }
 
+/** Zoom OAuth アプリ資格情報（SPEC-012 拡張・ユーザーごと BYO app credentials）。 */
+function ZoomSettingsCard({ notify }) {
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [testing, setTesting] = useState(false);
+    const [clientId, setClientId] = useState('');
+    const [clientSecret, setClientSecret] = useState('');
+    const [webhookSecret, setWebhookSecret] = useState('');
+    const [hasClientSecret, setHasClientSecret] = useState(false);
+    const [hasWebhookSecret, setHasWebhookSecret] = useState(false);
+    const [redirectUri, setRedirectUri] = useState('');
+    const [configured, setConfigured] = useState(false);
+    const [credentialSource, setCredentialSource] = useState(null);
+
+    const load = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await religoFetch('/api/zoom/credentials', { headers: { Accept: 'application/json' } });
+            const data = await res.json();
+            setClientId(data.client_id || '');
+            setHasClientSecret(Boolean(data.has_client_secret));
+            setHasWebhookSecret(Boolean(data.has_webhook_secret));
+            setRedirectUri(data.redirect_uri || '');
+            setConfigured(Boolean(data.configured));
+            setCredentialSource(data.credential_source || null);
+        } catch {
+            /* 未ログイン等 */
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    const save = async () => {
+        setSaving(true);
+        try {
+            const body = { client_id: clientId.trim() || null };
+            if (clientSecret.trim() !== '') body.client_secret = clientSecret.trim();
+            if (webhookSecret.trim() !== '') body.webhook_secret_token = webhookSecret.trim();
+            const res = await religoFetch('/api/zoom/credentials', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                notify(data.message || '保存に失敗しました', 'error');
+                return;
+            }
+            setClientSecret('');
+            setWebhookSecret('');
+            setHasClientSecret(Boolean(data.has_client_secret));
+            setHasWebhookSecret(Boolean(data.has_webhook_secret));
+            setConfigured(Boolean(data.configured));
+            setCredentialSource(data.credential_source || null);
+            notify('Zoom 資格情報を保存しました');
+        } catch {
+            notify('保存に失敗しました', 'error');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const test = async () => {
+        setTesting(true);
+        try {
+            const res = await religoFetch('/api/zoom/credentials/test', {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.ok) {
+                notify(data.message || '接続テストに失敗しました', 'error');
+                return;
+            }
+            notify(data.message || 'Zoom 資格情報の疎通に成功しました');
+        } catch {
+            notify('接続テストに失敗しました', 'error');
+        } finally {
+            setTesting(false);
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
+            <CardContent>
+                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Zoom 連携（1to1 取り込み）</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    Zoom Marketplace で作成した OAuth アプリの Client ID / Secret を登録してください（Secret は暗号化保存）。
+                    登録後、<Link href="#/zoom-import">Zoom 取り込み画面</Link>から OAuth 連携を行います。
+                </Typography>
+                {redirectUri && (
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        Zoom アプリに登録する Redirect URI: <Typography component="code" variant="body2">{redirectUri}</Typography>
+                    </Typography>
+                )}
+                {!redirectUri && (
+                    <Alert severity="warning" sx={{ mb: 2 }}>
+                        ZOOM_REDIRECT_URI が未設定です。管理者にサーバー設定を依頼してください。
+                    </Alert>
+                )}
+                {credentialSource === 'env' && !hasClientSecret && (
+                    <Alert severity="info" sx={{ mb: 2 }}>
+                        現在はサーバー共通の Zoom 資格情報（.env）が使われています。ここで登録すると自分専用のアプリに切り替わります。
+                    </Alert>
+                )}
+                <TextField
+                    label="Client ID"
+                    size="small"
+                    fullWidth
+                    value={clientId}
+                    onChange={(e) => setClientId(e.target.value)}
+                    autoComplete="off"
+                    sx={{ mb: 2 }}
+                />
+                <TextField
+                    label={hasClientSecret ? 'Client Secret（登録済み・変更時のみ入力）' : 'Client Secret'}
+                    size="small"
+                    fullWidth
+                    type="password"
+                    value={clientSecret}
+                    onChange={(e) => setClientSecret(e.target.value)}
+                    autoComplete="off"
+                    placeholder={hasClientSecret ? '••••••••' : ''}
+                    sx={{ mb: 2 }}
+                />
+                <TextField
+                    label={hasWebhookSecret ? 'Webhook Secret Token（登録済み・変更時のみ入力）' : 'Webhook Secret Token（任意）'}
+                    size="small"
+                    fullWidth
+                    type="password"
+                    value={webhookSecret}
+                    onChange={(e) => setWebhookSecret(e.target.value)}
+                    autoComplete="off"
+                    placeholder={hasWebhookSecret ? '••••••••' : ''}
+                    helperText="Webhook を使う場合のみ。Zoom アプリの Event Subscriptions で設定した Secret Token。"
+                    sx={{ mb: 2 }}
+                />
+                <Button variant="contained" onClick={save} disabled={saving}>
+                    {saving ? '保存中…' : 'Zoom 資格情報を保存'}
+                </Button>
+                <Button variant="outlined" onClick={test} disabled={testing || saving || !hasClientSecret} sx={{ ml: 1 }}>
+                    {testing ? 'テスト中…' : '接続テスト'}
+                </Button>
+                {configured && (
+                    <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+                        状態: {credentialSource === 'user' ? '自分の資格情報で利用可能' : credentialSource === 'env' ? 'サーバー共通設定で利用可能' : '未設定'}
+                    </Typography>
+                )}
+            </CardContent>
+        </Card>
+    );
+}
+
 const RELIGO_WORKSPACE_CHANGED = 'religo-workspace-changed';
 
 async function fetchJson(url, options = {}) {
@@ -312,6 +472,7 @@ export default function ReligoSettings() {
                 </CardContent>
             </Card>
             <AiSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
+            <ZoomSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
             <Snackbar
                 open={snack.open}
                 autoHideDuration={4000}

@@ -47,7 +47,10 @@ class ZoomWebhookController extends Controller
     private function urlValidation(array $payload): JsonResponse
     {
         $plainToken = (string) ($payload['plainToken'] ?? '');
-        $secret = (string) config('services.zoom.webhook_secret_token');
+        $secret = (string) request()->attributes->get('zoom_webhook_secret', '');
+        if ($secret === '') {
+            $secret = (string) config('services.zoom.webhook_secret_token');
+        }
         $encryptedToken = hash_hmac('sha256', $plainToken, $secret);
 
         return response()->json([
