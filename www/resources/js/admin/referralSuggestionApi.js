@@ -5,6 +5,13 @@ export const ONE_TO_ONE_DIRECTION_LABELS = {
     target_to_owner: '相手→自分向け',
     mutual: '相互',
     unclear: '不明',
+    subject_should_meet: '主役が会うべきメンバー',
+    via_connector: 'つなぎ手経由（社外）',
+};
+
+export const CORPUS_SOURCE_LABELS = {
+    self: '自分の議事録',
+    member_network: '他メンバーのネットワーク',
 };
 
 export const MEETING_DIRECTION_LABELS = {
@@ -13,6 +20,8 @@ export const MEETING_DIRECTION_LABELS = {
     owner_introduces_subject: 'ownerが登壇者を紹介',
     mutual: '相互',
     unclear: '不明',
+    subject_should_meet: '主役が会うべきメンバー',
+    via_connector: 'つなぎ手経由（社外）',
 };
 
 export const MEETING_SECTION_LABELS = {
@@ -65,10 +74,33 @@ export async function fetchOneToOneReferralSuggestions(oneToOneId, runId) {
     return data;
 }
 
-export async function generateOneToOneReferralSuggestions(oneToOneId) {
+export async function fetchReferralCorpusSettings() {
+    const res = await religoFetch('/api/referral-corpus-settings', { headers: { Accept: 'application/json' } });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        throw new Error(data.message || `設定の取得に失敗しました (${res.status})`);
+    }
+    return data;
+}
+
+export async function patchReferralCorpusSettings(payload) {
+    const res = await religoFetch('/api/referral-corpus-settings', {
+        method: 'PATCH',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        throw new Error(data.message || `設定の更新に失敗しました (${res.status})`);
+    }
+    return data;
+}
+
+export async function generateOneToOneReferralSuggestions(oneToOneId, contextMode = 'relationship') {
     const res = await religoFetch(`/api/one-to-ones/${oneToOneId}/referral-suggestions/generate`, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ context_mode: contextMode }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -89,10 +121,11 @@ export async function fetchMeetingReferralSuggestions(meetingId, runId) {
     return data;
 }
 
-export async function generateMeetingReferralSuggestions(meetingId) {
+export async function generateMeetingReferralSuggestions(meetingId, contextMode = 'relationship') {
     const res = await religoFetch(`/api/meetings/${meetingId}/referral-suggestions/generate`, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ context_mode: contextMode }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -127,6 +160,30 @@ export function buildDefaultIntroductionNote(suggestion) {
         parts.push(`紹介先候補: ${suggestion.suggested_to_label.trim()}`);
     }
     return parts.filter(Boolean).join('\n\n');
+}
+
+/**
+ * relationship run の corpus_meta を表示用に整形。
+ */
+export function formatCorpusMetaSummary(meta, contextMode) {
+    if (!meta || contextMode !== 'relationship') return null;
+    const parts = [];
+    if (meta.consented_owner_count != null) {
+        parts.push(`横断共有 ON: ${meta.consented_owner_count} 名`);
+    }
+    if (meta.o2o_excerpt_count != null && meta.o2o_excerpt_count > 0) {
+        parts.push(`121 抜粋: ${meta.o2o_excerpt_count} 件`);
+    }
+    if (meta.meeting_count != null && meta.meeting_count > 0) {
+        parts.push(`関連定例会: ${meta.meeting_count} 回`);
+    }
+    if (meta.introduction_count != null && meta.introduction_count > 0) {
+        parts.push(`紹介履歴: ${meta.introduction_count} 件`);
+    }
+    if (parts.length === 0) {
+        return '横断コーパスは主役の当該議事録のみ（他者共有 OFF または記録少）';
+    }
+    return `参照コーパス — ${parts.join(' · ')}`;
 }
 
 export function canRegisterIntroduction(suggestion) {

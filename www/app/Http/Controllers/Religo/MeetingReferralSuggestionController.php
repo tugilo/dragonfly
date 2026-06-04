@@ -26,7 +26,7 @@ class MeetingReferralSuggestionController extends Controller
         private ReferralIntroductionRegistrationService $registrationService,
     ) {}
 
-    public function generate(Meeting $meeting): JsonResponse
+    public function generate(Request $request, Meeting $meeting): JsonResponse
     {
         if ($resp = $this->guard()) {
             return $resp;
@@ -40,8 +40,10 @@ class MeetingReferralSuggestionController extends Controller
 
         $meeting->loadMissing('meetingMinute');
 
+        $contextMode = (string) $request->input('context_mode', 'document');
+
         try {
-            $payload = $this->service->generate($meeting, $user, $cred);
+            $payload = $this->service->generate($meeting, $user, $cred, $contextMode);
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

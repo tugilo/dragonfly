@@ -34,8 +34,12 @@ export function RegisterReferralIntroductionDialog({
 
     useEffect(() => {
         if (!open || !suggestion) return;
+        const viaConnector = suggestion.direction === 'via_connector';
         setFromId(suggestion.suggested_from_member_id != null ? String(suggestion.suggested_from_member_id) : '');
         setToId(suggestion.suggested_to_member_id != null ? String(suggestion.suggested_to_member_id) : '');
+        if (viaConnector && suggestion.suggested_from_member_id && !suggestion.suggested_to_member_id) {
+            setToId('');
+        }
         setNote(buildDefaultIntroductionNote(suggestion));
         setIntroducedAt(defaultIntroducedAt ?? '');
         setError(null);

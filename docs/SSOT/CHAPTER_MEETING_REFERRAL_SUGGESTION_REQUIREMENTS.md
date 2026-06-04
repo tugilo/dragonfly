@@ -1,10 +1,10 @@
 # 定例会議事録リファーラル提案（メインプレ等）— SSOT
 
 **Spec ID:** SPEC-016（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**ステータス:** active（要件確定・**実装未着手**）  
+**ステータス:** active（要件確定・MVP 190–192 実装済み・**全記録理念は COMMON §0 Phase F**）  
 **作成:** 2026-06-04 12:54 JST  
-**最終更新:** 2026-06-04 12:54 JST  
-**共通:** [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)  
+**最終更新:** 2026-06-04 22:14 JST  
+**共通:** [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)（§0 理念・§0.7 共有同意・**§0.8 つなぎ手経由**・§0.8.6 二経路・**§0.8.7 Givers Gain**）  
 **前提:** [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）、[REFERRAL_RECORDING_REQUIREMENTS.md](REFERRAL_RECORDING_REQUIREMENTS.md)（SPEC-009）、[MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)、[DATA_MODEL.md](DATA_MODEL.md)
 
 ---
@@ -15,7 +15,12 @@
 
 利用者が確認・編集したうえで、既存 **`introductions`（SPEC-009）** に接続し、**`meeting_id`** で定例会由来を追跡する。
 
-121 側は [ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md](ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md)（SPEC-015）。共通原則は [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)。
+121 側は [ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md](ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md)（SPEC-015）。共通原則（BNI きっかけ作り・Givers Gain・二経路）は [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md) **§0.8**。
+
+### 1.0 BNI 理念との位置づけ
+
+- **MVP:** 当回 `body_markdown` からの抽出（経路 **①** に近い — owner がつなげる紹介の取りこぼし防止）。
+- **Phase F:** MP 横断・他者 121 由来の **②** では **つなぎ手 A 経由・from=A**（COMMON §0.8.6–7）。B への直接導線は出さない。
 
 ### 1.1 解く課題
 
@@ -32,6 +37,7 @@
 - **リファラル発表セクション**（週次件数・サンキュー読み上げ）の自動記録 — 既に交換済みの報告。候補抽出の主対象にしない（P1）。
 - 定例会議事録の **管理画面編集**（SPEC-014 非目標のまま）。
 - **全参加者分**を owner 無関係に生成 — ログインユーザーの **owner 視点**（自分がつなげる紹介）に限定。
+- COMMON §0.8 非目的: **contact B への直接コンタクト**、**つなぎ手 A の功績の横取り**。
 
 ---
 
@@ -305,4 +311,5 @@ COMMON §3 ＋ 定例会 FK:
 
 | 日付 | 内容 |
 |------|------|
+| 2026-06-04 22:14 JST | §1.0 COMMON §0.8（きっかけ作り・Givers Gain・二経路）。非目的に直接コンタクト・横取り。 |
 | 2026-06-04 12:54 JST | 初版。定例会議事録（MP・ウィークリー・ビジター等）からのリファーラル提案を SPEC-016 として要件化。COMMON・DATA_MODEL §4.20 連携。 |

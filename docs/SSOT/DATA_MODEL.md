@@ -549,7 +549,7 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 
 **実装:** `2026_05_30_103100_create_one_to_one_attachments_table`（Phase 155）。ファイルは `Storage::disk('local')`（private）。
 
-### 4.19 one_to_one_referral_suggestion_runs / one_to_one_referral_suggestions（SPEC-015・実装予定）
+### 4.19 one_to_one_referral_suggestion_runs / one_to_one_referral_suggestions（SPEC-015・Phase 190–195）
 
 **目的:** 1 to 1 実施後の議事録（`one_to_ones.notes`）から抽出した **リファーラル提案**と、**生成実行（run）**の履歴。採用時は既存 `introductions`（§4.13）へリンクし、「どの 121・どの notes 版から生まれた紹介か」を追跡する。
 
@@ -557,8 +557,8 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 
 | テーブル | 要点 |
 |----------|------|
-| **one_to_one_referral_suggestion_runs** | `one_to_one_id`, `owner_member_id`, `workspace_id`, `notes_digest`, `notes_char_count`, `generator`, `model`, `raw_response`, `created_at` |
-| **one_to_one_referral_suggestions** | `run_id`, `one_to_one_id`, `direction`, `summary`, `rationale`, `quality_notes`, `suggested_from_member_id`, `suggested_to_member_id`, `suggested_to_label`, `confidence`, `status`（pending/accepted/dismissed/deferred）, `introduction_id`（nullable）, `accepted_at`, `dismissed_at`, `edited_snapshot`（json） |
+| **one_to_one_referral_suggestion_runs** | 上記 ＋ Phase 195: `context_mode`（document/relationship）, `context_digest`, `subject_member_id`, `corpus_meta`（json） |
+| **one_to_one_referral_suggestions** | 上記 ＋ Phase 195: `corpus_source`（self/member_network）, `suggested_contact_label`, `source_one_to_one_id`, `source_meeting_id` |
 
 **関係:**
 
@@ -567,9 +567,9 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 - **再生成**のたびに **新 run** を追加（同一 `notes_digest` の重複 run は API 層で抑制 — SPEC-015 §4.2）
 - **物理削除なし**（`one_to_ones` と同様に履歴保持）
 
-**実装:** migration `2026_06_04_140000_create_referral_suggestion_tables`（Phase 190）。API・UI は Phase 190（API）/ 191（UI）以降。
+**実装:** migration `2026_06_04_140000`（Phase 190）, `2026_06_04_220000_referral_suggestion_cross_match`（Phase 195）。
 
-### 4.20 meeting_referral_suggestion_runs / meeting_referral_suggestions（SPEC-016・実装予定）
+### 4.20 meeting_referral_suggestion_runs / meeting_referral_suggestions（SPEC-016・Phase 190–195）
 
 **目的:** チャプター定例会議事録（`meeting_minutes.body_markdown`）から抽出した **リファーラル提案**と **生成 run** の履歴。MP・ウィークリー・ビジター紹介等が主な抽出対象。採用時は `introductions`（§4.13）へリンクし **`meeting_id`** で定例会由来を追跡する。
 
@@ -577,8 +577,8 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 
 | テーブル | 要点 |
 |----------|------|
-| **meeting_referral_suggestion_runs** | `meeting_id`, `meeting_minute_id`, `owner_member_id`, `workspace_id`, `body_digest`, `body_char_count`, `generator`, `model`, `raw_response`, `created_at` |
-| **meeting_referral_suggestions** | `run_id`, `meeting_id`, `source_section`, `subject_member_id`, `direction`, `summary`, `rationale`, `quality_notes`, `suggested_from_member_id`, `suggested_to_member_id`, `suggested_to_label`, `confidence`, `status`, `introduction_id`, `accepted_at`, `dismissed_at`, `edited_snapshot` |
+| **meeting_referral_suggestion_runs** | 上記 ＋ Phase 195: `context_mode`, `context_digest`, `subject_member_id`, `corpus_meta` |
+| **meeting_referral_suggestions** | 上記 ＋ Phase 195: `corpus_source`, `suggested_contact_label`, `source_one_to_one_id`, `source_meeting_id` |
 
 **関係:**
 
@@ -588,7 +588,15 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 - `introductions.meeting_id` — 紹介登録時にセット（SPEC-016 §7）
 - **再生成**・**digest 重複抑制**・**物理削除なし** — COMMON §3 と同型
 
-**実装:** migration `2026_06_04_140000_create_referral_suggestion_tables`（Phase 190）。API・UI は Phase 190（API）/ 191（UI）以降。
+**実装:** migration `2026_06_04_140000`（Phase 190）, `2026_06_04_220000`（Phase 195）。
+
+### 4.21 member_referral_corpus_settings（Phase 195・§0.7）
+
+| 列 | 説明 |
+|----|------|
+| `member_id` | 設定主体（unique） |
+| `workspace_id` | 章（nullable） |
+| `allow_cross_corpus_contribution` | 他者の relationship 生成に自分の 121 を使うか（**default false**） |
 
 ---
 
