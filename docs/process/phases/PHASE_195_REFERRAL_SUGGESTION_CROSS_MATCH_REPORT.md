@@ -47,7 +47,7 @@
 
 | 項目 | 値 |
 |------|-----|
-| merge commit id | （develop merge 後に記録） |
+| merge commit id | `8d7768badcb2a27cd6cc2e18b50ec3344a3c6fac` |
 | source branch | `feature/phase195-referral-suggest-cross-match` |
 | target branch | develop |
 | phase id | 195 |
