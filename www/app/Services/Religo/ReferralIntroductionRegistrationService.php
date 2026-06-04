@@ -36,20 +36,14 @@ class ReferralIntroductionRegistrationService
             throw new InvalidArgumentException('1 to 1 が見つかりません。');
         }
 
-        $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
-        $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? 0);
-        if ($fromId <= 0 || $toId <= 0) {
-            throw new InvalidArgumentException('from_member_id と to_member_id（メンバー）が必要です。チャプター外の紹介先はラベルのみのため、to をメンバーで指定してください。');
-        }
-        if ($fromId === $toId) {
-            throw new InvalidArgumentException('from_member_id と to_member_id は異なる必要があります。');
-        }
+        [$fromId, $toId] = $this->resolveFromToForOneToOne($suggestion, $ownerMemberId, $data);
 
+        $contactLabel = $suggestion->suggested_contact_label ?? null;
         $note = $this->resolveNote(
             $data['note'] ?? null,
             $suggestion->summary,
             $suggestion->rationale,
-            $suggestion->suggested_to_label,
+            $contactLabel ?? $suggestion->suggested_to_label,
             sprintf('[1 to 1 提案 #%d / 121 #%d]', $suggestion->id, $oneToOne->id),
         );
 
@@ -112,20 +106,14 @@ class ReferralIntroductionRegistrationService
             throw new InvalidArgumentException('例会が見つかりません。');
         }
 
-        $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
-        $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? 0);
-        if ($fromId <= 0 || $toId <= 0) {
-            throw new InvalidArgumentException('from_member_id と to_member_id（メンバー）が必要です。');
-        }
-        if ($fromId === $toId) {
-            throw new InvalidArgumentException('from_member_id と to_member_id は異なる必要があります。');
-        }
+        [$fromId, $toId] = $this->resolveFromToForMeeting($suggestion, $ownerMemberId, $data);
 
+        $contactLabel = $suggestion->suggested_contact_label ?? null;
         $note = $this->resolveNote(
             $data['note'] ?? null,
             $suggestion->summary,
             $suggestion->rationale,
-            $suggestion->suggested_to_label,
+            $contactLabel ?? $suggestion->suggested_to_label,
             sprintf('[定例会提案 #%d / 第%s回]', $suggestion->id, $meeting->number ?? '?'),
         );
 
@@ -172,6 +160,60 @@ class ReferralIntroductionRegistrationService
         if ($runOwnerId !== $ownerMemberId) {
             throw new InvalidArgumentException('権限がありません。');
         }
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array{0: int, 1: int}
+     */
+    private function resolveFromToForOneToOne(
+        OneToOneReferralSuggestion $suggestion,
+        int $ownerMemberId,
+        array $data,
+    ): array {
+        if ($suggestion->direction === 'via_connector') {
+            $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
+            $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? $ownerMemberId);
+        } else {
+            $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
+            $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? 0);
+        }
+
+        if ($fromId <= 0 || $toId <= 0) {
+            throw new InvalidArgumentException('from_member_id と to_member_id（メンバー）が必要です。チャプター外の紹介先はラベルのみのため、to をメンバーで指定してください。');
+        }
+        if ($fromId === $toId) {
+            throw new InvalidArgumentException('from_member_id と to_member_id は異なる必要があります。');
+        }
+
+        return [$fromId, $toId];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array{0: int, 1: int}
+     */
+    private function resolveFromToForMeeting(
+        MeetingReferralSuggestion $suggestion,
+        int $ownerMemberId,
+        array $data,
+    ): array {
+        if ($suggestion->direction === 'via_connector') {
+            $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
+            $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? $ownerMemberId);
+        } else {
+            $fromId = (int) ($data['from_member_id'] ?? $suggestion->suggested_from_member_id ?? 0);
+            $toId = (int) ($data['to_member_id'] ?? $suggestion->suggested_to_member_id ?? 0);
+        }
+
+        if ($fromId <= 0 || $toId <= 0) {
+            throw new InvalidArgumentException('from_member_id と to_member_id（メンバー）が必要です。');
+        }
+        if ($fromId === $toId) {
+            throw new InvalidArgumentException('from_member_id と to_member_id は異なる必要があります。');
+        }
+
+        return [$fromId, $toId];
     }
 
     private function resolveNote(

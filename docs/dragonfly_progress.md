@@ -12,6 +12,8 @@
 | 2026-06-04 21:12 JST | **西浦雅 第1回121 ローカルDB反映:** `one_to_ones.id=66` を `completed`（2026-06-04 JST 15:00–16:00）。Zoom取り込み済み planned から更新。`dragonfly:import-1to1-notes` で notes 全文（6611字）。議事録・`docs/INDEX.md` に id 追記。`make db-export`。 |
 | 2026-06-04 20:11 JST | **1to1 第1回議事録（西浦雅・Draci／DragonFly）:** [`1to1_nishiura_miyabi_draci.md`](meetings/1to1/1to1_nishiura_miyabi_draci.md) 新規。Zoom要約反映。**3層アカウント管理**（平岡氏ログイン専用・システム管理1アカウント・通常メンバー）、掲示板テストサーバー・支部検索来週・フォント変更。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-04 16:33 JST | **遠藤聡美 第1回121 ローカルDB反映:** `workspaces.id=11`（BNI SILVIS）、`members.id=164`（visitor）、`one_to_ones.id=72` を `completed`（2026-06-04 JST 14:00–15:00）。`dragonfly:import-1to1-notes` で notes 全文（8754字）。議事録・`docs/INDEX.md` に id 追記。`make db-export`。 |
+| 2026-06-04 22:20 JST | **implement / Phase 195 着手:** migration・横断コーパス API・relationship 生成（121）・設定 UI・via_connector。ブランチ `feature/phase195-referral-suggest-cross-match`。 |
+| 2026-06-04 22:19 JST | **docs / Phase 195 PLAN:** 横断マッチング・共有同意・つなぎ手経由・Givers Gain DoD。三点セット・REGISTRY 195 追加・190–192 completed。 |
 | 2026-06-04 22:14 JST | **docs / リファーラル提案 横断反映:** SPEC-015/016 §1.0、SPEC-009 §2.1、SSOT_REGISTRY、INDEX、ロードマップ Phase 195 DoD（§0.8.6–7 含む）。 |
 | 2026-06-04 22:13 JST | **docs / リファーラル提案:** §0.8.7 Givers Gain 整合（与えるのはつなぎ手 A、C の横取り非目的）。 |
 | 2026-06-04 22:12 JST | **docs / リファーラル提案:** §0.8.6 自己履歴① vs 他者ネットワーク②（②は必ずつなぎ手仲介→紹介、リファーラル連鎖）。 |

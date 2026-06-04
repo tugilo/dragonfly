@@ -188,11 +188,12 @@
 | 187 | 1 to 1 予定キャンセル mock v2 更新 | implement | completed | feature/phase187-onetoones-cancel-mock-p1 | 2026-06-03 |
 | 188 | 1 to 1 予定キャンセル Fit/Gap 解消記録 | docs | completed | feature/phase188-onetoones-cancel-fit-gap-p1 | 2026-06-03 |
 | 189 | Zoom ユーザー資格情報（BYO app credentials・暗号化） | implement | completed | feature/phase189-zoom-user-credentials | 2026-06-04 |
-| 190 | リファーラル提案 MVP API（121＋定例会・migration・generate/get/patch） | implement | in_progress | feature/phase190-referral-suggest-mvp-api | 2026-06-04 |
-| 191 | リファーラル提案 MVP UI（1to1・Meetings モーダル・build） | implement | planned | feature/phase191-referral-suggest-mvp-ui | 2026-06-04 |
-| 192 | リファーラル提案 register-introduction・stale・過去 run | implement | planned | feature/phase192-referral-suggest-register-stale | 2026-06-04 |
+| 190 | リファーラル提案 MVP API（121＋定例会・migration・generate/get/patch） | implement | completed | feature/phase190-referral-suggest-mvp-api | 2026-06-04 |
+| 191 | リファーラル提案 MVP UI（1to1・Meetings モーダル・build） | implement | completed | feature/phase191-referral-suggest-mvp-ui | 2026-06-04 |
+| 192 | リファーラル提案 register-introduction・stale・過去 run | implement | completed | feature/phase192-referral-suggest-register-stale | 2026-06-04 |
 | 193 | リファーラル提案 レポート・introductions 由来フィルタ・KPI | implement | planned | feature/phase193-referral-suggest-reporting | 2026-06-04 |
 | 194 | リファーラル提案 ルール前処理 P2（121 表・MP 節） | implement | planned | feature/phase194-referral-suggest-rules-p2 | 2026-06-04 |
+| 195 | リファーラル提案 横断マッチング（共有同意・つなぎ手経由・Givers Gain） | implement | completed | feature/phase195-referral-suggest-cross-match | 2026-06-04 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

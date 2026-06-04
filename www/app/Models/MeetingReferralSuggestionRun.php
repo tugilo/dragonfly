@@ -17,6 +17,10 @@ class MeetingReferralSuggestionRun extends Model
         'workspace_id',
         'body_digest',
         'body_char_count',
+        'context_mode',
+        'context_digest',
+        'subject_member_id',
+        'corpus_meta',
         'generator',
         'model',
         'raw_response',
@@ -27,6 +31,7 @@ class MeetingReferralSuggestionRun extends Model
     {
         return [
             'created_at' => 'datetime',
+            'corpus_meta' => 'array',
         ];
     }
 

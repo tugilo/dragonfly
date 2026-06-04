@@ -15,7 +15,7 @@
 | **192** | `feature/phase192-referral-suggest-register-stale` | implement | register-introduction・stale バッジ・過去 run UI | C | [PLAN](PHASE_192_REFERRAL_SUGGESTION_REGISTER_STALE_PLAN.md) / [WORKLOG](PHASE_192_REFERRAL_SUGGESTION_REGISTER_STALE_WORKLOG.md) / [REPORT](PHASE_192_REFERRAL_SUGGESTION_REGISTER_STALE_REPORT.md) |
 | **193** | `feature/phase193-referral-suggest-reporting` | implement | introductions 由来フィルタ・ダッシュボード KPI 足場 | D | [PLAN](PHASE_193_REFERRAL_SUGGESTION_REPORTING_PLAN.md) / [WORKLOG](PHASE_193_REFERRAL_SUGGESTION_REPORTING_WORKLOG.md) / [REPORT](PHASE_193_REFERRAL_SUGGESTION_REPORTING_REPORT.md) |
 | **194** | `feature/phase194-referral-suggest-rules-p2` | implement | 121 紹介表・MP 節のルール前処理（AI 併用） | E | [PLAN](PHASE_194_REFERRAL_SUGGESTION_RULES_P2_PLAN.md) / [WORKLOG](PHASE_194_REFERRAL_SUGGESTION_RULES_P2_WORKLOG.md) / [REPORT](PHASE_194_REFERRAL_SUGGESTION_RULES_P2_REPORT.md) |
-| **195** | `feature/phase195-referral-suggest-cross-match` | implement | §0 理想: 横断・§0.7 同意・§0.8/8.6 二経路・§0.8.7 Givers Gain・紹介お願い UX | F | PLAN 未作成 |
+| **195** | `feature/phase195-referral-suggest-cross-match` | implement | §0 理想: 横断・§0.7 同意・§0.8/8.6 二経路・§0.8.7 Givers Gain・紹介お願い UX | F | [PLAN](PHASE_195_REFERRAL_SUGGESTION_CROSS_MATCH_PLAN.md) / [WORKLOG](PHASE_195_REFERRAL_SUGGESTION_CROSS_MATCH_WORKLOG.md) / [REPORT](PHASE_195_REFERRAL_SUGGESTION_CROSS_MATCH_REPORT.md) |
 
 **North Star:** [REFERRAL_SUGGESTION_COMMON.md](../../SSOT/REFERRAL_SUGGESTION_COMMON.md) §0・§0.5・§0.7・§0.8・**§0.8.6–7**。
 
@@ -60,6 +60,7 @@
 
 | 日付 | 内容 |
 |------|------|
+| 2026-06-04 22:19 JST | Phase 195 PLAN/WORKLOG/REPORT 三点セット作成。 |
 | 2026-06-04 22:14 JST | Phase 195 DoD 表（§0.8.6 二経路・§0.8.7 Givers Gain・B 直接禁止）。 |
 | 2026-06-04 22:07 JST | Phase 195 に §0.7 横断共有同意（設定 UI・同意済みコーパスのみ）を明記。 |
 | 2026-06-04 22:03 JST | Phase 195 候補（全記録・関係コンテキスト）をロードマップに追記。COMMON §0 理念と整合。 |
