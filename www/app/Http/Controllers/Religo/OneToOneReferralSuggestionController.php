@@ -26,7 +26,7 @@ class OneToOneReferralSuggestionController extends Controller
         private ReferralIntroductionRegistrationService $registrationService,
     ) {}
 
-    public function generate(OneToOne $oneToOne): JsonResponse
+    public function generate(Request $request, OneToOne $oneToOne): JsonResponse
     {
         if ($resp = $this->guard($oneToOne)) {
             return $resp;
@@ -38,8 +38,13 @@ class OneToOneReferralSuggestionController extends Controller
             return response()->json(['message' => 'AI が未設定です。設定画面で AI を有効化し API キーを登録してください。'], 422);
         }
 
+        $contextMode = (string) $request->input('context_mode', 'document');
+        if (! in_array($contextMode, ['relationship', 'document'], true)) {
+            $contextMode = 'relationship';
+        }
+
         try {
-            $payload = $this->service->generate($oneToOne, $user, $cred);
+            $payload = $this->service->generate($oneToOne, $user, $cred, $contextMode);
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

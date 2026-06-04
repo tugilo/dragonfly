@@ -16,6 +16,10 @@ class OneToOneReferralSuggestionRun extends Model
         'workspace_id',
         'notes_digest',
         'notes_char_count',
+        'context_mode',
+        'context_digest',
+        'subject_member_id',
+        'corpus_meta',
         'generator',
         'model',
         'raw_response',
@@ -26,6 +30,7 @@ class OneToOneReferralSuggestionRun extends Model
     {
         return [
             'created_at' => 'datetime',
+            'corpus_meta' => 'array',
         ];
     }
 

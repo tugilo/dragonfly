@@ -12,6 +12,7 @@ import {
 import { RegisterReferralIntroductionDialog } from './RegisterReferralIntroductionDialog';
 import {
     CONFIDENCE_LABELS,
+    CORPUS_SOURCE_LABELS,
     MEETING_DIRECTION_LABELS,
     MEETING_SECTION_LABELS,
     ONE_TO_ONE_DIRECTION_LABELS,
@@ -25,12 +26,26 @@ function directionLabel(kind, direction) {
     return map[direction] ?? direction ?? '—';
 }
 
-function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedAt }) {
+function memberLabel(suggestion, idKey, nameKey, fallbackPrefix = 'メンバー') {
+    const name = suggestion?.[nameKey];
+    if (name) return name;
+    const id = suggestion?.[idKey];
+    if (id != null) return `${fallbackPrefix} #${id}`;
+    return null;
+}
+
+function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedAt, subjectLabel }) {
     const [patching, setPatching] = useState(false);
     const [registerOpen, setRegisterOpen] = useState(false);
     const status = suggestion?.status ?? 'pending';
     const isPending = status === 'pending' || status === 'deferred';
     const canRegister = canRegisterIntroduction(suggestion);
+    const isSubjectMeet = suggestion.direction === 'subject_should_meet';
+    const connectorLabel = memberLabel(suggestion, 'suggested_from_member_id', 'suggested_from_member_name', 'つなぎ手');
+    const matchLabel = memberLabel(suggestion, 'suggested_to_member_id', 'suggested_to_member_name', '候補');
+    const subjectName =
+        suggestion.subject_member_name ||
+        (subjectLabel ? subjectLabel.replace(/^主役:\s*/, '') : null);
 
     const patchStatus = async (nextStatus) => {
         if (!suggestion?.id || patching) return;
@@ -79,6 +94,15 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                             sx={{ height: 22, fontSize: '0.7rem' }}
                         />
                     ) : null}
+                    {suggestion.corpus_source ? (
+                        <Chip
+                            size="small"
+                            label={CORPUS_SOURCE_LABELS[suggestion.corpus_source] ?? suggestion.corpus_source}
+                            color={suggestion.corpus_source === 'member_network' ? 'secondary' : 'default'}
+                            variant="outlined"
+                            sx={{ height: 22, fontSize: '0.7rem' }}
+                        />
+                    ) : null}
                     {kind === 'meeting' && suggestion.source_section ? (
                         <Chip
                             size="small"
@@ -91,12 +115,39 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                 <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
                     {suggestion.summary || '（要約なし）'}
                 </Typography>
+                {isSubjectMeet && (subjectName || matchLabel) ? (
+                    <Typography variant="body2" color="primary.main" sx={{ mb: 0.5 }}>
+                        つなぐ: {subjectName ? `${subjectName} ↔ ` : '主役 ↔ '}
+                        {matchLabel ?? '（メンバー未特定）'}
+                    </Typography>
+                ) : null}
+                {suggestion.suggested_contact_label ? (
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                        紹介してほしい相手: {suggestion.suggested_contact_label}
+                    </Typography>
+                ) : null}
                 {suggestion.suggested_to_label ? (
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                         紹介先候補: {suggestion.suggested_to_label}
                     </Typography>
                 ) : null}
-                {suggestion.rationale ? (
+                {Array.isArray(suggestion.evidence_lines) && suggestion.evidence_lines.length > 0 ? (
+                    <Box
+                        component="ul"
+                        sx={{
+                            m: 0,
+                            mb: 1,
+                            pl: 2.25,
+                            color: 'text.secondary',
+                            fontSize: '0.875rem',
+                            whiteSpace: 'pre-wrap',
+                        }}
+                    >
+                        {suggestion.evidence_lines.map((line, idx) => (
+                            <li key={idx}>{line}</li>
+                        ))}
+                    </Box>
+                ) : suggestion.rationale ? (
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 1, whiteSpace: 'pre-wrap' }}>
                         根拠: {suggestion.rationale}
                     </Typography>
@@ -107,6 +158,32 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                     </Typography>
                 ) : null}
                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    {isSubjectMeet && suggestion.suggested_to_member_id ? (
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                            component="a"
+                            href={`/one-to-ones/create?target_member_id=${suggestion.suggested_to_member_id}`}
+                            disabled={patching}
+                        >
+                            {matchLabel ? `${matchLabel} さんと 1 to 1（つなぐ）` : '1 to 1 を作成（つなぐ）'}
+                        </Button>
+                    ) : null}
+                    {suggestion.direction === 'via_connector' && suggestion.suggested_from_member_id ? (
+                        <Button
+                            size="small"
+                            variant="contained"
+                            color="secondary"
+                            component="a"
+                            href={`/one-to-ones/create?target_member_id=${suggestion.suggested_from_member_id}`}
+                            disabled={patching}
+                        >
+                            {connectorLabel
+                                ? `${connectorLabel} さんに紹介をお願い`
+                                : `メンバー #${suggestion.suggested_from_member_id} に紹介をお願い`}
+                        </Button>
+                    ) : null}
                     <Button
                         size="small"
                         variant="outlined"
@@ -175,6 +252,7 @@ export function ReferralSuggestionList({
     notify,
     loading,
     defaultIntroducedAt,
+    subjectLabel = null,
 }) {
     if (loading) {
         return (
@@ -205,6 +283,7 @@ export function ReferralSuggestionList({
                     onUpdated={onSuggestionUpdated}
                     notify={notify}
                     defaultIntroducedAt={defaultIntroducedAt}
+                    subjectLabel={subjectLabel}
                 />
             ))}
         </Stack>

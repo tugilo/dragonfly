@@ -21,15 +21,33 @@ class OneToOneReferralSuggestionService
         private ReferralSuggestionAiService $aiService,
         private ReferralSuggestionPayloadNormalizer $normalizer,
         private ReferralSuggestionMemberRoster $roster,
+        private ReferralRelationshipContextBuilder $contextBuilder,
+        private ReferralSuggestionDisplayHelper $displayHelper,
     ) {}
 
     /**
      * @return array<string, mixed>
      */
-    public function generate(OneToOne $oneToOne, User $user, UserAiCredential $credential): array
-    {
+    public function generate(
+        OneToOne $oneToOne,
+        User $user,
+        UserAiCredential $credential,
+        string $contextMode = 'relationship',
+    ): array {
         $this->assertGeneratable($oneToOne);
 
+        $contextMode = $contextMode === 'document' ? 'document' : 'relationship';
+
+        return $contextMode === 'document'
+            ? $this->generateDocumentMode($oneToOne, $user, $credential)
+            : $this->generateRelationshipMode($oneToOne, $user, $credential);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function generateDocumentMode(OneToOne $oneToOne, User $user, UserAiCredential $credential): array
+    {
         $notes = trim((string) $oneToOne->notes);
         $digest = ReferralSuggestionDigest::digest($notes);
         $charCount = ReferralSuggestionDigest::charCount($notes);
@@ -37,6 +55,7 @@ class OneToOneReferralSuggestionService
         $existing = OneToOneReferralSuggestionRun::query()
             ->where('one_to_one_id', $oneToOne->id)
             ->where('owner_member_id', $user->owner_member_id)
+            ->where('context_mode', 'document')
             ->where('notes_digest', $digest)
             ->orderByDesc('id')
             ->first();
@@ -60,6 +79,7 @@ class OneToOneReferralSuggestionService
             $validIds,
             (int) $oneToOne->owner_member_id,
             (int) $oneToOne->target_member_id,
+            false,
         );
 
         $run = DB::transaction(function () use ($oneToOne, $user, $digest, $charCount, $ai, $parsed) {
@@ -69,27 +89,16 @@ class OneToOneReferralSuggestionService
                 'workspace_id' => $oneToOne->workspace_id,
                 'notes_digest' => $digest,
                 'notes_char_count' => $charCount,
+                'context_mode' => 'document',
+                'context_digest' => $digest,
+                'subject_member_id' => $oneToOne->target_member_id,
                 'generator' => 'ai_'.$ai['provider'],
                 'model' => $ai['model'],
                 'raw_response' => $ai['raw'],
                 'created_at' => now(),
             ]);
 
-            foreach ($parsed as $row) {
-                OneToOneReferralSuggestion::create([
-                    'run_id' => $run->id,
-                    'one_to_one_id' => $oneToOne->id,
-                    'direction' => $row['direction'],
-                    'summary' => $row['summary'],
-                    'rationale' => $row['rationale'],
-                    'quality_notes' => $row['quality_notes'],
-                    'suggested_from_member_id' => $row['suggested_from_member_id'],
-                    'suggested_to_member_id' => $row['suggested_to_member_id'],
-                    'suggested_to_label' => $row['suggested_to_label'],
-                    'confidence' => $row['confidence'],
-                    'status' => OneToOneReferralSuggestion::STATUS_PENDING,
-                ]);
-            }
+            $this->persistSuggestions($run, $oneToOne, $parsed);
 
             return $run->load('suggestions');
         });
@@ -100,10 +109,121 @@ class OneToOneReferralSuggestionService
     /**
      * @return array<string, mixed>
      */
+    private function generateRelationshipMode(OneToOne $oneToOne, User $user, UserAiCredential $credential): array
+    {
+        $notes = trim((string) $oneToOne->notes);
+        $notesDigest = ReferralSuggestionDigest::digest($notes);
+        $charCount = ReferralSuggestionDigest::charCount($notes);
+        $requesterId = (int) $user->owner_member_id;
+
+        $pack = $this->contextBuilder->buildForOneToOne($oneToOne, $requesterId);
+        $contextDigest = $pack['digest'];
+
+        $existing = OneToOneReferralSuggestionRun::query()
+            ->where('one_to_one_id', $oneToOne->id)
+            ->where('owner_member_id', $user->owner_member_id)
+            ->where('context_mode', 'relationship')
+            ->where('context_digest', $contextDigest)
+            ->orderByDesc('id')
+            ->first();
+
+        if ($existing !== null) {
+            $existing->load('suggestions');
+
+            return $this->formatGenerateResponse($existing, $oneToOne, true);
+        }
+
+        try {
+            $ai = $this->aiService->generateForOneToOneRelationship(
+                $oneToOne,
+                $credential,
+                $pack['prompt_text'],
+                $requesterId,
+            );
+        } catch (AiGenerationException $e) {
+            throw new InvalidArgumentException($e->getMessage(), 0, $e);
+        }
+
+        $rosterRows = $this->roster->rosterForWorkspace($oneToOne->workspace_id);
+        $validIds = $this->roster->validMemberIds($rosterRows);
+        $parsed = $this->normalizer->parseOneToOneSuggestions(
+            $ai['raw'],
+            $validIds,
+            (int) $oneToOne->owner_member_id,
+            (int) $oneToOne->target_member_id,
+            true,
+        );
+
+        $run = DB::transaction(function () use ($oneToOne, $user, $notesDigest, $charCount, $ai, $parsed, $pack) {
+            $run = OneToOneReferralSuggestionRun::create([
+                'one_to_one_id' => $oneToOne->id,
+                'owner_member_id' => $user->owner_member_id,
+                'workspace_id' => $oneToOne->workspace_id,
+                'notes_digest' => $notesDigest,
+                'notes_char_count' => $charCount,
+                'context_mode' => 'relationship',
+                'context_digest' => $pack['digest'],
+                'subject_member_id' => $pack['subject_member_id'],
+                'corpus_meta' => $pack['meta'],
+                'generator' => 'ai_'.$ai['provider'],
+                'model' => $ai['model'],
+                'raw_response' => $ai['raw'],
+                'created_at' => now(),
+            ]);
+
+            $this->persistSuggestions($run, $oneToOne, $parsed);
+
+            return $run->load('suggestions');
+        });
+
+        return $this->formatGenerateResponse($run, $oneToOne, false);
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $parsed
+     */
+    private function persistSuggestions(
+        OneToOneReferralSuggestionRun $run,
+        OneToOne $oneToOne,
+        array $parsed,
+    ): void {
+        foreach ($parsed as $row) {
+            OneToOneReferralSuggestion::create([
+                'run_id' => $run->id,
+                'one_to_one_id' => $oneToOne->id,
+                'direction' => $row['direction'],
+                'corpus_source' => $row['corpus_source'] ?? 'self',
+                'summary' => $row['summary'],
+                'rationale' => $row['rationale'],
+                'quality_notes' => $row['quality_notes'],
+                'suggested_from_member_id' => $row['suggested_from_member_id'],
+                'suggested_to_member_id' => $row['suggested_to_member_id'],
+                'suggested_to_label' => $row['suggested_to_label'],
+                'suggested_contact_label' => $row['suggested_contact_label'] ?? null,
+                'source_one_to_one_id' => $row['source_one_to_one_id'] ?? null,
+                'source_meeting_id' => $row['source_meeting_id'] ?? null,
+                'confidence' => $row['confidence'],
+                'status' => OneToOneReferralSuggestion::STATUS_PENDING,
+            ]);
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public function list(OneToOne $oneToOne, int $ownerMemberId, ?int $runId = null): array
     {
         $notes = trim((string) $oneToOne->notes);
-        $currentDigest = $notes === '' ? null : ReferralSuggestionDigest::digest($notes);
+        $currentNotesDigest = $notes === '' ? null : ReferralSuggestionDigest::digest($notes);
+        $currentContextDigest = null;
+        if ($notes !== '') {
+            try {
+                $pack = $this->contextBuilder->buildForOneToOne($oneToOne, $ownerMemberId);
+                $currentContextDigest = $pack['digest'];
+            } catch (\Throwable) {
+                $currentContextDigest = null;
+            }
+        }
 
         $runs = OneToOneReferralSuggestionRun::query()
             ->where('one_to_one_id', $oneToOne->id)
@@ -128,26 +248,42 @@ class OneToOneReferralSuggestionService
                 ->first();
         }
 
+        $nameMap = $this->displayHelper->nameMapFromRoster(
+            $this->roster->rosterForWorkspace($oneToOne->workspace_id),
+        );
+        $subjectId = (int) $oneToOne->target_member_id;
+
         $suggestions = [];
         if ($selectedRun !== null) {
             $suggestions = OneToOneReferralSuggestion::query()
                 ->where('run_id', $selectedRun->id)
                 ->orderBy('id')
                 ->get()
-                ->map(fn (OneToOneReferralSuggestion $s) => $this->formatSuggestion($s))
+                ->map(fn (OneToOneReferralSuggestion $s) => $this->displayHelper->enrichSuggestion(
+                    $this->formatSuggestion($s),
+                    $nameMap,
+                    $subjectId,
+                ))
                 ->all();
         }
 
-        $latestDigest = $runs->first()['notes_digest'] ?? null;
-        $stale = $currentDigest !== null
-            && $latestDigest !== null
-            && $currentDigest !== $latestDigest;
+        $latestRun = $runs->first();
+        $stale = false;
+        if ($latestRun !== null && $currentNotesDigest !== null) {
+            $mode = $latestRun['context_mode'] ?? 'document';
+            if ($mode === 'relationship' && $currentContextDigest !== null) {
+                $stale = ($latestRun['context_digest'] ?? null) !== $currentContextDigest;
+            } else {
+                $stale = ($latestRun['notes_digest'] ?? null) !== $currentNotesDigest;
+            }
+        }
 
         return [
             'runs' => $runs->values()->all(),
             'run' => $selectedRun ? $this->formatRunSummary($selectedRun) : null,
             'suggestions' => $suggestions,
-            'current_notes_digest' => $currentDigest,
+            'current_notes_digest' => $currentNotesDigest,
+            'current_context_digest' => $currentContextDigest,
             'referral_suggestion_stale' => $stale,
         ];
     }
@@ -210,6 +346,10 @@ class OneToOneReferralSuggestionService
             'one_to_one_id' => $run->one_to_one_id,
             'notes_digest' => $run->notes_digest,
             'notes_char_count' => $run->notes_char_count,
+            'context_mode' => $run->context_mode ?? 'document',
+            'context_digest' => $run->context_digest,
+            'subject_member_id' => $run->subject_member_id,
+            'corpus_meta' => $run->corpus_meta,
             'generator' => $run->generator,
             'model' => $run->model,
             'created_at' => $run->created_at?->toIso8601String(),
@@ -229,12 +369,16 @@ class OneToOneReferralSuggestionService
             'run_id' => $s->run_id,
             'one_to_one_id' => $s->one_to_one_id,
             'direction' => $s->direction,
+            'corpus_source' => $s->corpus_source ?? 'self',
             'summary' => $s->summary,
             'rationale' => $s->rationale,
             'quality_notes' => $s->quality_notes,
             'suggested_from_member_id' => $s->suggested_from_member_id,
             'suggested_to_member_id' => $s->suggested_to_member_id,
             'suggested_to_label' => $s->suggested_to_label,
+            'suggested_contact_label' => $s->suggested_contact_label,
+            'source_one_to_one_id' => $s->source_one_to_one_id,
+            'source_meeting_id' => $s->source_meeting_id,
             'confidence' => $s->confidence,
             'status' => $s->status,
             'introduction_id' => $s->introduction_id,

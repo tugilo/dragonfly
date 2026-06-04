@@ -18,6 +18,7 @@ import {
     CircularProgress,
 } from '@mui/material';
 import { religoFetch } from '../religoApiFetch';
+import { fetchReferralCorpusSettings, patchReferralCorpusSettings } from '../referralSuggestionApi';
 
 const AI_PROVIDER_LABELS = { openai: 'OpenAI', anthropic: 'Claude (Anthropic)', google: 'Gemini (Google)' };
 
@@ -32,19 +33,31 @@ function AiSettingsCard({ notify }) {
     const [hasKey, setHasKey] = useState(false);
     const [providers, setProviders] = useState(['openai']);
     const [implemented, setImplemented] = useState(['openai']);
+    const [availableModels, setAvailableModels] = useState({ openai: [] });
+    const [defaultModel, setDefaultModel] = useState('gpt-4o-mini');
     const [testing, setTesting] = useState(false);
+    const [credentialDecryptError, setCredentialDecryptError] = useState(false);
 
     const load = useCallback(async () => {
         setLoading(true);
         try {
             const res = await religoFetch('/api/ai/credentials', { headers: { Accept: 'application/json' } });
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                notify(data.message || 'AI 設定の読み込みに失敗しました', 'error');
+                return;
+            }
+            setCredentialDecryptError(Boolean(data.credential_decrypt_error));
             setAiEnabled(Boolean(data.ai_enabled));
             setProvider(data.provider || 'openai');
             setModel(data.model || '');
             setHasKey(Boolean(data.has_api_key));
             setProviders(Array.isArray(data.available_providers) ? data.available_providers : ['openai']);
             setImplemented(Array.isArray(data.implemented_providers) ? data.implemented_providers : ['openai']);
+            setAvailableModels(
+                data.available_models && typeof data.available_models === 'object' ? data.available_models : { openai: [] }
+            );
+            setDefaultModel(data.default_model || 'gpt-4o-mini');
         } catch {
             /* 未ログイン等 */
         } finally {
@@ -73,6 +86,7 @@ function AiSettingsCard({ notify }) {
             }
             setApiKey('');
             setHasKey(Boolean(data.has_api_key));
+            setCredentialDecryptError(Boolean(data.credential_decrypt_error));
             notify('AI 設定を保存しました');
         } catch {
             notify('保存に失敗しました', 'error');
@@ -101,6 +115,9 @@ function AiSettingsCard({ notify }) {
         }
     };
 
+    const modelOptions = Array.isArray(availableModels[provider]) ? availableModels[provider] : [];
+    const modelInList = model === '' || modelOptions.some((m) => m.id === model);
+
     if (loading) return null;
 
     return (
@@ -115,6 +132,12 @@ function AiSettingsCard({ notify }) {
                     label="AI を利用する"
                     sx={{ mb: 1 }}
                 />
+                {credentialDecryptError && (
+                    <Alert severity="warning" sx={{ mb: 2 }}>
+                        保存済みの API キーを復号できません（別環境の DB をローカルで使っている可能性があります）。
+                        API キーを再入力して保存してください。
+                    </Alert>
+                )}
                 {aiEnabled && (
                     <>
                         <FormControl fullWidth size="small" sx={{ mb: 2 }}>
@@ -123,7 +146,14 @@ function AiSettingsCard({ notify }) {
                                 labelId="ai-provider-label"
                                 label="プロバイダ"
                                 value={provider}
-                                onChange={(e) => setProvider(String(e.target.value))}
+                                onChange={(e) => {
+                                    const next = String(e.target.value);
+                                    setProvider(next);
+                                    const nextOptions = Array.isArray(availableModels[next]) ? availableModels[next] : [];
+                                    if (model !== '' && !nextOptions.some((m) => m.id === model)) {
+                                        setModel('');
+                                    }
+                                }}
                             >
                                 {providers.map((p) => (
                                     <MenuItem key={p} value={p} disabled={!implemented.includes(p)}>
@@ -133,15 +163,29 @@ function AiSettingsCard({ notify }) {
                                 ))}
                             </Select>
                         </FormControl>
-                        <TextField
-                            label="モデル（任意・空なら既定）"
-                            size="small"
-                            fullWidth
-                            value={model}
-                            onChange={(e) => setModel(e.target.value)}
-                            placeholder="例: gpt-4o-mini"
-                            sx={{ mb: 2 }}
-                        />
+                        <FormControl fullWidth size="small" sx={{ mb: 2 }}>
+                            <InputLabel id="ai-model-label">モデル</InputLabel>
+                            <Select
+                                labelId="ai-model-label"
+                                label="モデル"
+                                value={model}
+                                onChange={(e) => setModel(String(e.target.value))}
+                            >
+                                <MenuItem value="">
+                                    <em>既定（{defaultModel}）</em>
+                                </MenuItem>
+                                {modelOptions.map((m) => (
+                                    <MenuItem key={m.id} value={m.id}>
+                                        {m.label || m.id}
+                                    </MenuItem>
+                                ))}
+                                {!modelInList && model !== '' && (
+                                    <MenuItem value={model}>
+                                        {model}（一覧外・保存済み）
+                                    </MenuItem>
+                                )}
+                            </Select>
+                        </FormControl>
                         <TextField
                             label={hasKey ? 'API キー（登録済み・変更時のみ入力）' : 'API キー'}
                             size="small"
@@ -186,12 +230,18 @@ function ZoomSettingsCard({ notify }) {
     const [redirectUri, setRedirectUri] = useState('');
     const [configured, setConfigured] = useState(false);
     const [credentialSource, setCredentialSource] = useState(null);
+    const [credentialDecryptError, setCredentialDecryptError] = useState(false);
 
     const load = useCallback(async () => {
         setLoading(true);
         try {
             const res = await religoFetch('/api/zoom/credentials', { headers: { Accept: 'application/json' } });
-            const data = await res.json();
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                notify(data.message || 'Zoom 設定の読み込みに失敗しました', 'error');
+                return;
+            }
+            setCredentialDecryptError(Boolean(data.credential_decrypt_error));
             setClientId(data.client_id || '');
             setHasClientSecret(Boolean(data.has_client_secret));
             setHasWebhookSecret(Boolean(data.has_webhook_secret));
@@ -231,6 +281,7 @@ function ZoomSettingsCard({ notify }) {
             setHasWebhookSecret(Boolean(data.has_webhook_secret));
             setConfigured(Boolean(data.configured));
             setCredentialSource(data.credential_source || null);
+            setCredentialDecryptError(Boolean(data.credential_decrypt_error));
             notify('Zoom 資格情報を保存しました');
         } catch {
             notify('保存に失敗しました', 'error');
@@ -277,6 +328,12 @@ function ZoomSettingsCard({ notify }) {
                 {!redirectUri && (
                     <Alert severity="warning" sx={{ mb: 2 }}>
                         ZOOM_REDIRECT_URI が未設定です。管理者にサーバー設定を依頼してください。
+                    </Alert>
+                )}
+                {credentialDecryptError && (
+                    <Alert severity="warning" sx={{ mb: 2 }}>
+                        保存済みの Client Secret / Webhook Secret を復号できません（別環境の DB の可能性があります）。
+                        Secret を再入力して保存してください。
                     </Alert>
                 )}
                 {credentialSource === 'env' && !hasClientSecret && (
@@ -327,6 +384,70 @@ function ZoomSettingsCard({ notify }) {
                         状態: {credentialSource === 'user' ? '自分の資格情報で利用可能' : credentialSource === 'env' ? 'サーバー共通設定で利用可能' : '未設定'}
                     </Typography>
                 )}
+            </CardContent>
+        </Card>
+    );
+}
+
+/** Phase 195: 横断コーパス共有（§0.7 Givers Gain）。 */
+function ReferralCorpusSettingsCard({ notify }) {
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
+    const [allow, setAllow] = useState(false);
+    const [peerCount, setPeerCount] = useState(0);
+
+    const load = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await fetchReferralCorpusSettings();
+            setAllow(Boolean(data.allow_cross_corpus_contribution));
+            setPeerCount(Number(data.consented_peer_count) || 0);
+        } catch {
+            /* ignore */
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    const save = async () => {
+        setSaving(true);
+        try {
+            const data = await patchReferralCorpusSettings({ allow_cross_corpus_contribution: allow });
+            setAllow(Boolean(data.allow_cross_corpus_contribution));
+            setPeerCount(Number(data.consented_peer_count) || 0);
+            notify('リファーラル横断共有の設定を保存しました');
+        } catch (e) {
+            notify(e.message || '保存に失敗しました', 'error');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    if (loading) return null;
+
+    return (
+        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
+            <CardContent>
+                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>リファーラル提案 — 記録の共有</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    ON にすると、あなたの 1 to 1 議事録（completed）が、他メンバーの「つなぎ手経由」リファーラル提案の材料になります。
+                    他者のネットワークを直接たどるのではなく、つなぎ手（Givers Gain）経由のきっかけ作りです。
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                    現在、章内で共有 ON の他メンバー: {peerCount} 名
+                </Typography>
+                <FormControlLabel
+                    control={<Switch checked={allow} onChange={(e) => setAllow(e.target.checked)} />}
+                    label="他メンバーのリファーラル提案に、自分の 1 to 1 記録を使ってよい"
+                    sx={{ mb: 1, display: 'block' }}
+                />
+                <Button variant="contained" onClick={save} disabled={saving}>
+                    {saving ? '保存中…' : '共有設定を保存'}
+                </Button>
             </CardContent>
         </Card>
     );
@@ -471,6 +592,7 @@ export default function ReligoSettings() {
                     )}
                 </CardContent>
             </Card>
+            <ReferralCorpusSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
             <AiSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
             <ZoomSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
             <Snackbar

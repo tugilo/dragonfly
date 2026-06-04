@@ -37,6 +37,7 @@ use App\Http\Controllers\Zoom\ZoomWebhookController;
 use App\Http\Controllers\Ai\UserAiCredentialController;
 use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
 use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
+use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
 use Illuminate\Support\Facades\Route;
 
@@ -108,6 +109,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/one-to-ones/{oneToOne}/attachments/url', [OneToOnePrepController::class, 'storeUrl']);
     Route::delete('/one-to-ones/{oneToOne}/attachments/{attachment}', [OneToOnePrepController::class, 'destroyAttachment']);
     Route::post('/one-to-ones/{oneToOne}/prep/generate', [OneToOnePrepController::class, 'generate']);
+
+    Route::get('/referral-corpus-settings', [ReferralCorpusSettingsController::class, 'show']);
+    Route::patch('/referral-corpus-settings', [ReferralCorpusSettingsController::class, 'update']);
 
     Route::post('/one-to-ones/{oneToOne}/referral-suggestions/generate', [OneToOneReferralSuggestionController::class, 'generate']);
     Route::get('/one-to-ones/{oneToOne}/referral-suggestions', [OneToOneReferralSuggestionController::class, 'index']);

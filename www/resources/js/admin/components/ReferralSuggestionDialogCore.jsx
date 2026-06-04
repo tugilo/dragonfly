@@ -25,6 +25,7 @@ import { MarkdownView } from './MarkdownView';
 import { ReferralSuggestionList } from './ReferralSuggestionList';
 import {
     fetchAiCredentialsSummary,
+    formatCorpusMetaSummary,
     isAiReady,
 } from '../referralSuggestionApi';
 
@@ -137,6 +138,10 @@ export function ReferralSuggestionDialogCore({
     const aiReady = isAiReady(aiCreds);
     const runs = Array.isArray(payload?.runs) ? payload.runs : [];
     const stale = Boolean(payload?.referral_suggestion_stale);
+    const corpusSummary = formatCorpusMetaSummary(
+        payload?.run?.corpus_meta,
+        payload?.run?.context_mode,
+    );
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth scroll="paper">
@@ -169,6 +174,15 @@ export function ReferralSuggestionDialogCore({
                 {stale ? (
                     <Alert severity="info" sx={{ mb: 2 }}>
                         議事録が更新されています。再生成すると最新内容に基づく提案 run が作成されます。
+                    </Alert>
+                ) : null}
+
+                {corpusSummary ? (
+                    <Alert severity="info" variant="outlined" sx={{ mb: 2 }}>
+                        {corpusSummary}
+                        <Typography variant="caption" display="block" sx={{ mt: 0.5, color: 'text.secondary' }}>
+                            121・定例会・紹介履歴が増えるほど参照範囲が厚くなります（直近上限あり）。設定で横断共有を ON にすると他メンバーの 121 も含まれます。
+                        </Typography>
                     </Alert>
                 ) : null}
 
@@ -265,6 +279,7 @@ export function ReferralSuggestionDialogCore({
                     notify={notify}
                     onSuggestionUpdated={handleSuggestionUpdated}
                     defaultIntroducedAt={defaultIntroducedAt}
+                    subjectLabel={subtitle || title}
                 />
             </DialogContent>
             <DialogActions>

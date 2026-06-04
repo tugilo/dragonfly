@@ -11,7 +11,14 @@ final class ReferralSuggestionPayloadNormalizer
 {
     private const CONFIDENCE = ['high', 'medium', 'low'];
 
-    private const O2O_DIRECTIONS = ['owner_to_target', 'target_to_owner', 'mutual', 'unclear'];
+    private const O2O_DIRECTIONS = [
+        'owner_to_target',
+        'target_to_owner',
+        'mutual',
+        'unclear',
+        'subject_should_meet',
+        'via_connector',
+    ];
 
     private const MEETING_DIRECTIONS = [
         'subject_seeks_intros',
@@ -19,6 +26,8 @@ final class ReferralSuggestionPayloadNormalizer
         'owner_introduces_subject',
         'mutual',
         'unclear',
+        'subject_should_meet',
+        'via_connector',
     ];
 
     private const MEETING_SECTIONS = [
@@ -34,8 +43,13 @@ final class ReferralSuggestionPayloadNormalizer
      * @param  Collection<int, int>  $validMemberIds
      * @return list<array<string, mixed>>
      */
-    public function parseOneToOneSuggestions(string $rawJson, Collection $validMemberIds, int $ownerMemberId, ?int $targetMemberId): array
-    {
+    public function parseOneToOneSuggestions(
+        string $rawJson,
+        Collection $validMemberIds,
+        int $ownerMemberId,
+        ?int $targetMemberId,
+        bool $relationshipMode = false,
+    ): array {
         $items = $this->extractSuggestionsArray($rawJson);
         $out = [];
         foreach ($items as $item) {
@@ -54,16 +68,62 @@ final class ReferralSuggestionPayloadNormalizer
             if (! in_array($confidence, self::CONFIDENCE, true)) {
                 $confidence = 'medium';
             }
-            $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $targetMemberId]);
-            $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
+
+            $connectorId = $this->filterId(
+                $item['connector_member_id'] ?? null,
+                $validMemberIds,
+            );
+
+            $sourceO2oId = isset($item['source_one_to_one_id']) ? (int) $item['source_one_to_one_id'] : null;
+            $sourceMeetingId = isset($item['source_meeting_id']) ? (int) $item['source_meeting_id'] : null;
+            $corpusFromAi = (string) ($item['corpus_source'] ?? '');
+
+            if ($direction === 'via_connector') {
+                $fromId = $connectorId ?? $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds);
+                $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
+                    ?? $ownerMemberId;
+                $contactLabel = $this->nullableString(
+                    $item['suggested_contact_label'] ?? $item['suggested_to_label'] ?? null,
+                );
+                $corpusSource = 'member_network';
+                if ($fromId === null || $contactLabel === null) {
+                    continue;
+                }
+            } elseif ($direction === 'subject_should_meet') {
+                $matchId = $this->filterId(
+                    $item['match_member_id'] ?? $item['suggested_to_member_id'] ?? null,
+                    $validMemberIds,
+                );
+                if ($matchId === null || $matchId === $targetMemberId) {
+                    continue;
+                }
+                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
+                    ?? $ownerMemberId;
+                $toId = $matchId;
+                $contactLabel = null;
+                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+                if ($relationshipMode && $sourceO2oId > 0) {
+                    $corpusSource = 'member_network';
+                }
+            } else {
+                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $targetMemberId]);
+                $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
+                $contactLabel = null;
+                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+            }
+
             $out[] = [
                 'direction' => $direction,
+                'corpus_source' => $corpusSource,
                 'summary' => $summary,
                 'rationale' => $this->nullableString($item['rationale'] ?? null),
                 'quality_notes' => $this->encodeQualityNotes($item['quality_notes'] ?? null),
                 'suggested_from_member_id' => $fromId,
                 'suggested_to_member_id' => $toId,
                 'suggested_to_label' => $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null,
+                'suggested_contact_label' => $contactLabel,
+                'source_one_to_one_id' => $sourceO2oId > 0 ? $sourceO2oId : null,
+                'source_meeting_id' => $sourceMeetingId > 0 ? $sourceMeetingId : null,
                 'confidence' => $confidence,
             ];
         }
@@ -75,8 +135,12 @@ final class ReferralSuggestionPayloadNormalizer
      * @param  Collection<int, int>  $validMemberIds
      * @return list<array<string, mixed>>
      */
-    public function parseMeetingSuggestions(string $rawJson, Collection $validMemberIds, int $ownerMemberId): array
-    {
+    public function parseMeetingSuggestions(
+        string $rawJson,
+        Collection $validMemberIds,
+        int $ownerMemberId,
+        bool $relationshipMode = false,
+    ): array {
         $items = $this->extractSuggestionsArray($rawJson);
         $out = [];
         foreach ($items as $item) {
@@ -100,18 +164,64 @@ final class ReferralSuggestionPayloadNormalizer
                 $confidence = 'medium';
             }
             $subjectId = $this->filterId($item['subject_member_id'] ?? null, $validMemberIds);
-            $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $subjectId]);
-            $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
+
+            $connectorId = $this->filterId(
+                $item['connector_member_id'] ?? null,
+                $validMemberIds,
+            );
+
+            $sourceO2oId = isset($item['source_one_to_one_id']) ? (int) $item['source_one_to_one_id'] : null;
+            $sourceMeetingId = isset($item['source_meeting_id']) ? (int) $item['source_meeting_id'] : null;
+            $corpusFromAi = (string) ($item['corpus_source'] ?? '');
+
+            if ($direction === 'via_connector') {
+                $fromId = $connectorId ?? $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds);
+                $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
+                    ?? $ownerMemberId;
+                $contactLabel = $this->nullableString(
+                    $item['suggested_contact_label'] ?? $item['suggested_to_label'] ?? null,
+                );
+                $corpusSource = 'member_network';
+                if ($fromId === null || $contactLabel === null) {
+                    continue;
+                }
+            } elseif ($direction === 'subject_should_meet') {
+                $matchId = $this->filterId(
+                    $item['match_member_id'] ?? $item['suggested_to_member_id'] ?? null,
+                    $validMemberIds,
+                );
+                if ($matchId === null || ($subjectId !== null && $matchId === $subjectId)) {
+                    continue;
+                }
+                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId])
+                    ?? $ownerMemberId;
+                $toId = $matchId;
+                $contactLabel = null;
+                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+                if ($relationshipMode && $sourceO2oId > 0) {
+                    $corpusSource = 'member_network';
+                }
+            } else {
+                $fromId = $this->filterId($item['suggested_from_member_id'] ?? null, $validMemberIds, [$ownerMemberId, $subjectId]);
+                $toId = $this->filterId($item['suggested_to_member_id'] ?? null, $validMemberIds);
+                $contactLabel = null;
+                $corpusSource = $corpusFromAi === 'member_network' ? 'member_network' : 'self';
+            }
+
             $out[] = [
                 'source_section' => $section,
                 'subject_member_id' => $subjectId,
                 'direction' => $direction,
+                'corpus_source' => $corpusSource,
                 'summary' => $summary,
                 'rationale' => $this->nullableString($item['rationale'] ?? null),
                 'quality_notes' => $this->encodeQualityNotes($item['quality_notes'] ?? null),
                 'suggested_from_member_id' => $fromId ?? $ownerMemberId,
                 'suggested_to_member_id' => $toId,
                 'suggested_to_label' => $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null,
+                'suggested_contact_label' => $contactLabel,
+                'source_one_to_one_id' => $sourceO2oId > 0 ? $sourceO2oId : null,
+                'source_meeting_id' => $sourceMeetingId > 0 ? $sourceMeetingId : null,
                 'confidence' => $confidence,
             ];
         }

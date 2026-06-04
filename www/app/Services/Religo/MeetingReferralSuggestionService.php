@@ -23,16 +23,38 @@ class MeetingReferralSuggestionService
         private ReferralSuggestionAiService $aiService,
         private ReferralSuggestionPayloadNormalizer $normalizer,
         private ReferralSuggestionMemberRoster $roster,
+        private ReferralRelationshipContextBuilder $contextBuilder,
+        private ReferralSuggestionDisplayHelper $displayHelper,
     ) {}
 
     /**
      * @return array<string, mixed>
      */
-    public function generate(Meeting $meeting, User $user, UserAiCredential $credential): array
-    {
+    public function generate(
+        Meeting $meeting,
+        User $user,
+        UserAiCredential $credential,
+        string $contextMode = 'relationship',
+    ): array {
         $minute = $this->resolveMinute($meeting);
         $this->assertGeneratable($minute);
 
+        $contextMode = $contextMode === 'document' ? 'document' : 'relationship';
+
+        return $contextMode === 'document'
+            ? $this->generateDocumentMode($meeting, $minute, $user, $credential)
+            : $this->generateRelationshipMode($meeting, $minute, $user, $credential);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function generateDocumentMode(
+        Meeting $meeting,
+        MeetingMinute $minute,
+        User $user,
+        UserAiCredential $credential,
+    ): array {
         $body = trim((string) $minute->body_markdown);
         $digest = ReferralSuggestionDigest::digest($body);
         $charCount = ReferralSuggestionDigest::charCount($body);
@@ -41,6 +63,7 @@ class MeetingReferralSuggestionService
         $existing = MeetingReferralSuggestionRun::query()
             ->where('meeting_id', $meeting->id)
             ->where('owner_member_id', $user->owner_member_id)
+            ->where('context_mode', 'document')
             ->where('body_digest', $digest)
             ->orderByDesc('id')
             ->first();
@@ -48,7 +71,7 @@ class MeetingReferralSuggestionService
         if ($existing !== null) {
             $existing->load('suggestions');
 
-            return $this->formatGenerateResponse($existing, $meeting, $minute, true);
+            return $this->formatGenerateResponse($existing, $meeting, true);
         }
 
         $participants = $this->participantsSummary($meeting);
@@ -72,6 +95,7 @@ class MeetingReferralSuggestionService
             $ai['raw'],
             $validIds,
             (int) $user->owner_member_id,
+            false,
         );
 
         $run = DB::transaction(function () use ($meeting, $minute, $user, $workspaceId, $digest, $charCount, $ai, $parsed) {
@@ -82,34 +106,132 @@ class MeetingReferralSuggestionService
                 'workspace_id' => $workspaceId,
                 'body_digest' => $digest,
                 'body_char_count' => $charCount,
+                'context_mode' => 'document',
+                'context_digest' => $digest,
                 'generator' => 'ai_'.$ai['provider'],
                 'model' => $ai['model'],
                 'raw_response' => $ai['raw'],
                 'created_at' => now(),
             ]);
 
-            foreach ($parsed as $row) {
-                MeetingReferralSuggestion::create([
-                    'run_id' => $run->id,
-                    'meeting_id' => $meeting->id,
-                    'source_section' => $row['source_section'],
-                    'subject_member_id' => $row['subject_member_id'],
-                    'direction' => $row['direction'],
-                    'summary' => $row['summary'],
-                    'rationale' => $row['rationale'],
-                    'quality_notes' => $row['quality_notes'],
-                    'suggested_from_member_id' => $row['suggested_from_member_id'],
-                    'suggested_to_member_id' => $row['suggested_to_member_id'],
-                    'suggested_to_label' => $row['suggested_to_label'],
-                    'confidence' => $row['confidence'],
-                    'status' => MeetingReferralSuggestion::STATUS_PENDING,
-                ]);
-            }
+            $this->persistSuggestions($run, $meeting, $parsed);
 
             return $run->load('suggestions');
         });
 
-        return $this->formatGenerateResponse($run, $meeting, $minute, false);
+        return $this->formatGenerateResponse($run, $meeting, false);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function generateRelationshipMode(
+        Meeting $meeting,
+        MeetingMinute $minute,
+        User $user,
+        UserAiCredential $credential,
+    ): array {
+        $body = trim((string) $minute->body_markdown);
+        $bodyDigest = ReferralSuggestionDigest::digest($body);
+        $charCount = ReferralSuggestionDigest::charCount($body);
+        $workspaceId = ReligoActorContext::resolveWorkspaceIdForUser($user);
+        $requesterId = (int) $user->owner_member_id;
+        $participants = $this->participantsSummary($meeting);
+
+        $pack = $this->contextBuilder->buildForMeeting($meeting, $minute, $requesterId, $workspaceId, $participants);
+        $contextDigest = $pack['digest'];
+
+        $existing = MeetingReferralSuggestionRun::query()
+            ->where('meeting_id', $meeting->id)
+            ->where('owner_member_id', $user->owner_member_id)
+            ->where('context_mode', 'relationship')
+            ->where('context_digest', $contextDigest)
+            ->orderByDesc('id')
+            ->first();
+
+        if ($existing !== null) {
+            $existing->load('suggestions');
+
+            return $this->formatGenerateResponse($existing, $meeting, true);
+        }
+
+        try {
+            $ai = $this->aiService->generateForMeetingRelationship(
+                $meeting,
+                $credential,
+                $pack['prompt_text'],
+                $requesterId,
+                $workspaceId,
+                $participants,
+            );
+        } catch (AiGenerationException $e) {
+            throw new InvalidArgumentException($e->getMessage(), 0, $e);
+        }
+
+        $rosterRows = $this->roster->rosterForWorkspace($workspaceId);
+        $validIds = $this->roster->validMemberIds($rosterRows);
+        $parsed = $this->normalizer->parseMeetingSuggestions(
+            $ai['raw'],
+            $validIds,
+            $requesterId,
+            true,
+        );
+
+        $run = DB::transaction(function () use ($meeting, $minute, $user, $workspaceId, $bodyDigest, $charCount, $ai, $parsed, $pack) {
+            $run = MeetingReferralSuggestionRun::create([
+                'meeting_id' => $meeting->id,
+                'meeting_minute_id' => $minute->id,
+                'owner_member_id' => $user->owner_member_id,
+                'workspace_id' => $workspaceId,
+                'body_digest' => $bodyDigest,
+                'body_char_count' => $charCount,
+                'context_mode' => 'relationship',
+                'context_digest' => $pack['digest'],
+                'subject_member_id' => $pack['subject_member_id'],
+                'corpus_meta' => $pack['meta'],
+                'generator' => 'ai_'.$ai['provider'],
+                'model' => $ai['model'],
+                'raw_response' => $ai['raw'],
+                'created_at' => now(),
+            ]);
+
+            $this->persistSuggestions($run, $meeting, $parsed);
+
+            return $run->load('suggestions');
+        });
+
+        return $this->formatGenerateResponse($run, $meeting, false);
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $parsed
+     */
+    private function persistSuggestions(
+        MeetingReferralSuggestionRun $run,
+        Meeting $meeting,
+        array $parsed,
+    ): void {
+        foreach ($parsed as $row) {
+            MeetingReferralSuggestion::create([
+                'run_id' => $run->id,
+                'meeting_id' => $meeting->id,
+                'source_section' => $row['source_section'],
+                'subject_member_id' => $row['subject_member_id'],
+                'direction' => $row['direction'],
+                'corpus_source' => $row['corpus_source'] ?? 'self',
+                'summary' => $row['summary'],
+                'rationale' => $row['rationale'],
+                'quality_notes' => $row['quality_notes'],
+                'suggested_from_member_id' => $row['suggested_from_member_id'],
+                'suggested_to_member_id' => $row['suggested_to_member_id'],
+                'suggested_to_label' => $row['suggested_to_label'],
+                'suggested_contact_label' => $row['suggested_contact_label'] ?? null,
+                'source_one_to_one_id' => $row['source_one_to_one_id'] ?? null,
+                'source_meeting_id' => $row['source_meeting_id'] ?? null,
+                'confidence' => $row['confidence'],
+                'status' => MeetingReferralSuggestion::STATUS_PENDING,
+            ]);
+        }
     }
 
     /**
@@ -119,7 +241,17 @@ class MeetingReferralSuggestionService
     {
         $minute = $meeting->meetingMinute;
         $body = $minute ? trim((string) $minute->body_markdown) : '';
-        $currentDigest = $body === '' ? null : ReferralSuggestionDigest::digest($body);
+        $currentBodyDigest = $body === '' ? null : ReferralSuggestionDigest::digest($body);
+        $currentContextDigest = null;
+        if ($body !== '' && $minute !== null) {
+            try {
+                $participants = $this->participantsSummary($meeting);
+                $pack = $this->contextBuilder->buildForMeeting($meeting, $minute, $ownerMemberId, null, $participants);
+                $currentContextDigest = $pack['digest'];
+            } catch (\Throwable) {
+                $currentContextDigest = null;
+            }
+        }
 
         $runs = MeetingReferralSuggestionRun::query()
             ->where('meeting_id', $meeting->id)
@@ -144,26 +276,42 @@ class MeetingReferralSuggestionService
                 ->first();
         }
 
+        $workspaceId = $selectedRun?->workspace_id;
+        $nameMap = $this->displayHelper->nameMapFromRoster(
+            $this->roster->rosterForWorkspace($workspaceId !== null ? (int) $workspaceId : null),
+        );
+
         $suggestions = [];
         if ($selectedRun !== null) {
             $suggestions = MeetingReferralSuggestion::query()
                 ->where('run_id', $selectedRun->id)
                 ->orderBy('id')
                 ->get()
-                ->map(fn (MeetingReferralSuggestion $s) => $this->formatSuggestion($s))
+                ->map(fn (MeetingReferralSuggestion $s) => $this->displayHelper->enrichSuggestion(
+                    $this->formatSuggestion($s),
+                    $nameMap,
+                    $s->subject_member_id !== null ? (int) $s->subject_member_id : null,
+                ))
                 ->all();
         }
 
-        $latestDigest = $runs->first()['body_digest'] ?? null;
-        $stale = $currentDigest !== null
-            && $latestDigest !== null
-            && $currentDigest !== $latestDigest;
+        $latestRun = $runs->first();
+        $stale = false;
+        if ($latestRun !== null && $currentBodyDigest !== null) {
+            $mode = $latestRun['context_mode'] ?? 'document';
+            if ($mode === 'relationship' && $currentContextDigest !== null) {
+                $stale = ($latestRun['context_digest'] ?? null) !== $currentContextDigest;
+            } else {
+                $stale = ($latestRun['body_digest'] ?? null) !== $currentBodyDigest;
+            }
+        }
 
         return [
             'runs' => $runs->values()->all(),
             'run' => $selectedRun ? $this->formatRunSummary($selectedRun) : null,
             'suggestions' => $suggestions,
-            'current_body_digest' => $currentDigest,
+            'current_body_digest' => $currentBodyDigest,
+            'current_context_digest' => $currentContextDigest,
             'referral_suggestion_stale' => $stale,
         ];
     }
@@ -238,7 +386,6 @@ class MeetingReferralSuggestionService
     private function formatGenerateResponse(
         MeetingReferralSuggestionRun $run,
         Meeting $meeting,
-        MeetingMinute $minute,
         bool $reused,
     ): array {
         $payload = $this->list($meeting, (int) $run->owner_member_id, (int) $run->id);
@@ -257,6 +404,10 @@ class MeetingReferralSuggestionService
             'meeting_id' => $run->meeting_id,
             'body_digest' => $run->body_digest,
             'body_char_count' => $run->body_char_count,
+            'context_mode' => $run->context_mode ?? 'document',
+            'context_digest' => $run->context_digest,
+            'subject_member_id' => $run->subject_member_id,
+            'corpus_meta' => $run->corpus_meta,
             'generator' => $run->generator,
             'model' => $run->model,
             'created_at' => $run->created_at?->toIso8601String(),
@@ -278,12 +429,16 @@ class MeetingReferralSuggestionService
             'source_section' => $s->source_section,
             'subject_member_id' => $s->subject_member_id,
             'direction' => $s->direction,
+            'corpus_source' => $s->corpus_source ?? 'self',
             'summary' => $s->summary,
             'rationale' => $s->rationale,
             'quality_notes' => $s->quality_notes,
             'suggested_from_member_id' => $s->suggested_from_member_id,
             'suggested_to_member_id' => $s->suggested_to_member_id,
             'suggested_to_label' => $s->suggested_to_label,
+            'suggested_contact_label' => $s->suggested_contact_label,
+            'source_one_to_one_id' => $s->source_one_to_one_id,
+            'source_meeting_id' => $s->source_meeting_id,
             'confidence' => $s->confidence,
             'status' => $s->status,
             'introduction_id' => $s->introduction_id,
