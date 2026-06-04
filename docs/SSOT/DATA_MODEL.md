@@ -494,9 +494,22 @@ API `GET /api/dragonfly/members/one-to-one-status?owner_member_id=` が各行に
 | **外部キー** | user_id → users.id (cascadeOnDelete) |
 | **ユニーク制約** | user_id（1 user = 1 Zoom 接続） |
 | **主要カラム** | id, user_id, zoom_user_id (nullable), zoom_account_id (nullable), zoom_email (nullable), **access_token (text, encrypted)**, **refresh_token (text, encrypted)**, token_expires_at (datetime, nullable), scopes (text, nullable), timestamps |
-| **セキュリティ** | access_token / refresh_token は Eloquent `encrypted` キャスト（APP_KEY 由来）。アプリ資格情報（Client ID/Secret 等）は `.env`（`config/services.zoom.*`）で別管理（SPEC-012 §6）。 |
+| **セキュリティ** | access_token / refresh_token は Eloquent `encrypted` キャスト（APP_KEY 由来）。アプリ資格情報（Client ID/Secret 等）は `user_zoom_credentials`（Phase 189）または `.env` フォールバック（SPEC-012 §6）。 |
 
 **実装:** マイグレーション `2026_05_30_060000_create_zoom_accounts_table`（Phase 152）。
+
+### 4.15.1 user_zoom_credentials（Zoom OAuth アプリ資格情報・SPEC-012 拡張 Phase 189）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | ユーザーごとの Zoom OAuth アプリ資格情報（BYO app credentials）。AI BYO key（`user_ai_credentials`）と同型。 |
+| **主キー** | id (bigIncrements) |
+| **外部キー** | user_id → users.id (cascadeOnDelete) |
+| **ユニーク制約** | user_id（1 user = 1 資格情報セット） |
+| **主要カラム** | id, user_id, client_id (nullable), **client_secret (text, encrypted)**, **webhook_secret_token (text, encrypted, nullable)**, is_active (bool, default true), timestamps |
+| **セキュリティ** | client_secret / webhook_secret_token は Eloquent `encrypted` キャスト。API には平文を返さない（`has_*` フラグのみ）。`ZOOM_REDIRECT_URI` は `.env` 共通。 |
+
+**実装:** マイグレーション `2026_06_04_120000_create_user_zoom_credentials_table`（Phase 189）。
 
 ### 4.16 zoom_meeting_imports（Zoom 取り込みステージング・SPEC-012）
 

@@ -458,7 +458,21 @@ export default function ZoomImport() {
 
             {status && !status.configured && (
                 <Alert severity="warning" sx={{ mb: 2 }}>
-                    Zoom 連携が未設定です（.env の ZOOM_CLIENT_ID / ZOOM_CLIENT_SECRET / ZOOM_REDIRECT_URI）。
+                    Zoom 連携が未設定です。設定画面で Client ID / Client Secret を登録するか、管理者に ZOOM_REDIRECT_URI の設定を確認してください。
+                </Alert>
+            )}
+
+            {status?.configured && !status?.connected && (
+                <Alert severity="info" sx={{ mb: 2 }}>
+                    <strong>「Zoom から取得」</strong>を使うには、先に下の<strong>「Zoom と連携」</strong>で OAuth 認可を完了してください（連携中チップが表示されたら取得可能）。
+                    {status.redirect_uri?.startsWith('http://') && (
+                        <>
+                            {' '}
+                            現在の Redirect URI が <Typography component="code" variant="body2">{status.redirect_uri}</Typography>{' '}
+                            のため、Zoom OAuth は <strong>HTTPS</strong> が必要です。ngrok 等で HTTPS トンネルを立て、
+                            <Link href="#/settings">設定</Link> に表示される Redirect URI と Zoom Marketplace の Allow List を一致させてください。
+                        </>
+                    )}
                 </Alert>
             )}
 
