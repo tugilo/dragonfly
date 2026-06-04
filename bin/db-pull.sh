@@ -49,6 +49,7 @@ compose_exec_db mariadb -u root -proot -e \
 compose_exec_db mariadb -u root -proot "$PROJECT" < "$TMP_FILE"
 
 religo_patch_dragonfly_workspace_name "$REPO_ROOT"
+religo_apply_pending_migrations "$REPO_ROOT"
 
 # Re-export from patched local DB (do not copy raw remote dump — it still has Default Workspace).
 bash "$REPO_ROOT/bin/db-export.sh"

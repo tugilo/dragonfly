@@ -1,10 +1,10 @@
 # 1 to 1 実施後リファーラル提案 — SSOT
 
 **Spec ID:** SPEC-015（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**ステータス:** active（要件確定・**実装未着手**）  
+**ステータス:** active（要件確定・MVP 190–192 実装済み・**全記録理念は COMMON §0 Phase F**）  
 **作成:** 2026-06-04 12:43 JST  
-**最終更新:** 2026-06-04 12:54 JST  
-**共通:** [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)（機能族全体）  
+**最終更新:** 2026-06-04 22:14 JST  
+**共通:** [REFERRAL_SUGGESTION_COMMON.md](REFERRAL_SUGGESTION_COMMON.md)（**§0 理念**・§0.5 フライホイール・§0.7 共有同意・**§0.8 つなぎ手経由**・§0.8.6 二経路・**§0.8.7 Givers Gain**）  
 **姉妹 Spec:** [CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md](CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md)（SPEC-016・定例会 MP 等）  
 **前提:** [PROJECT_NAMING.md](../PROJECT_NAMING.md)、[REFERRAL_RECORDING_REQUIREMENTS.md](REFERRAL_RECORDING_REQUIREMENTS.md)（SPEC-009）、[ONETOONE_PREP_PROFILE_REQUIREMENTS.md](ONETOONE_PREP_PROFILE_REQUIREMENTS.md)（SPEC-013）、[DATA_MODEL.md](DATA_MODEL.md)
 
@@ -13,6 +13,17 @@
 ## 1. 目的
 
 **121（1 to 1）の実施結果**（主に `one_to_ones.notes` の議事録 Markdown）から、**外部リファーラルとして記録しうる紹介候補**を抽出し、利用者に**提案**する。利用者が確認・編集したうえで、既存の **`introductions`（SPEC-009）** に接続できるようにする。
+
+機能族全体の製品理念（BNI リファーラル・マーケット、つなぎ手経由、Givers Gain）は **COMMON §0・§0.8** を正とする。本 SPEC は **121 入口**と **MVP（当該 `notes` のみ）** の要件を定義する。
+
+### 1.0 BNI 理念との位置づけ（COMMON 参照）
+
+| テーマ | 本 SPEC / MVP | Phase F（COMMON §0） |
+|--------|---------------|----------------------|
+| **Givers Gain** | 議事録で **自分が from** として紹介する合意の履行（経路 **① 自己履歴**） | 他者ネットワーク由来は **A に紹介依頼**（経路 **②**）。`from=A`, `to=C`（§0.8.7） |
+| **きっかけ作り** | 121 一覧「リファーラル」で **取りこぼし防止** | 横断マッチングで **②** の候補。B へ直接コンタクト UI **禁止** |
+| **秘匿** | 他者 121 は参照しない | §0.7 横断共有 ON/OFF |
+| **記録の正** | `introductions`（SPEC-009） | 同上。自動作成禁止 |
 
 ### 1.1 解く課題
 
@@ -29,6 +40,8 @@
 - **内部リファーラル（TYFCB）** の自動提案（P2 以降の拡張候補。P1 は外部のみ）。  
 - Introduction Hint（Board）の置き換え（Hint は BO 同席ベースの横断発想。本機能族は **接触議事録文脈** — COMMON §8）。  
 - **定例会議事録**からの提案 — **SPEC-016** を正とする（本書は 121 のみ）。
+- **他メンバーのネットワークの B へ C が直接コンタクトする**導線（COMMON §0.8 非目的。Phase F でも禁止）。
+- **A のネットワークを C が from として横取り**する introductions 既定（§0.8.7）。
 
 ---
 
@@ -41,6 +54,8 @@
 | **提案実行（run）** | ある時点の `notes`（および参照メンバー一覧）を入力に、提案一覧を**生成した 1 回の処理**。再生成のたびに新しい run が増える。 |
 | **採用（accept）** | 提案を承認し、内容を編集可能な状態で**保存**する。任意で `introductions` 行を作成しリンクする。 |
 | **つなぎ履歴** | 確定した `introductions`（＋任意で「121 のどの run から生まれたか」）による、**誰→誰**の記録。 |
+| **つなぎ手・依頼者・contact** | COMMON §0.8.2。Phase F の **② 他者ネットワーク** 提案で使用。 |
+| **corpus_source** | `self` \| `member_network` — COMMON §0.8.6。UI 分岐（Phase F）。 |
 
 ---
 
@@ -332,5 +347,6 @@
 
 | 日付 | 内容 |
 |------|------|
+| 2026-06-04 22:14 JST | §1.0 BNI 理念（COMMON §0.8・§0.8.6–7）。非目的に直接コンタクト・横取り禁止。用語に corpus_source 等。 |
 | 2026-06-04 12:54 JST | COMMON・SPEC-016 連携。非目的に定例会を明記。関連 SSOT 更新。 |
 | 2026-06-04 12:43 JST | 初版。一覧リファーラルボタン・提案モーダル・run 保存・つなぎ履歴（introductions リンク）を製品既定として整理。 |
