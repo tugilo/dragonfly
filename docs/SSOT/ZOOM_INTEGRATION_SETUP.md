@@ -6,7 +6,8 @@
 
 > 重要原則（[.cursorrules](../../.cursorrules) 準拠）
 > - `.env` は **手動編集しない**。`php -r`（`preg_replace`）で安全に書き換える（sed 禁止）。
-> - API キー等のアプリ資格情報は `.env`（`config/services.zoom`）で管理し、コード・リポジトリに **ハードコードしない**。
+> - **Client ID / Client Secret / Webhook Secret は管理画面「設定」でユーザーごとに登録**（Phase 189・暗号化保存）。`.env` の `ZOOM_CLIENT_ID` 等は移行期間のフォールバック。
+> - **`ZOOM_REDIRECT_URI` のみサーバー共通**（全ユーザー同一 callback・`.env` 必須）。
 
 ---
 
@@ -16,9 +17,9 @@
 flowchart TB
   A[1. Zoom アプリ作成 OAuth] --> B[2. HTTPS トンネル ngrok]
   B --> C[3. Redirect/Webhook URL を Zoom に登録]
-  C --> D[4. .env を php -r で設定]
-  D --> E[5. config:clear]
-  E --> F[6. 管理画面で Zoom と連携]
+  C --> D[4. ZOOM_REDIRECT_URI を .env に設定]
+  D --> E[5. 設定画面で Client ID/Secret 登録]
+  E --> F[6. 管理画面で Zoom OAuth 連携]
   F --> G[7. 取得→複数選択→1to1 登録]
   G --> H[8. 要約取得 任意]
   C --> I[9. Webhook 動作確認 任意]

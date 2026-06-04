@@ -15,25 +15,26 @@ use RuntimeException;
  * - リフレッシュトークンによる更新
  * - 期限切れトークンの自動更新（ensureFreshAccessToken）
  *
- * 資格情報は config('services.zoom')（= .env）から読む。トークンは zoom_accounts に暗号化保存。
+ * アプリ資格情報は ZoomCredentialResolver（ユーザー DB → .env フォールバック）。
+ * トークンは zoom_accounts に暗号化保存。
  */
 class ZoomTokenService
 {
+    public function __construct(private ZoomCredentialResolver $credentials) {}
+
     /**
      * 認可コードをトークンに交換し、ユーザーの ZoomAccount を作成/更新する。
      */
     public function exchangeCodeForToken(User $user, string $code): ZoomAccount
     {
-        $redirect = (string) config('services.zoom.redirect');
+        $config = $this->requireCredentials($user);
+
         $response = Http::asForm()
-            ->withBasicAuth(
-                (string) config('services.zoom.client_id'),
-                (string) config('services.zoom.client_secret')
-            )
+            ->withBasicAuth($config['client_id'], $config['client_secret'])
             ->post($this->oauthTokenUrl(), [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => $redirect,
+                'redirect_uri' => $config['redirect'],
             ]);
 
         if (! $response->successful()) {
@@ -56,11 +57,15 @@ class ZoomTokenService
             throw new RuntimeException('Zoom account has no refresh token; re-connect required.');
         }
 
+        $user = $account->user;
+        if ($user === null) {
+            throw new RuntimeException('Zoom account has no associated user.');
+        }
+
+        $config = $this->requireCredentials($user);
+
         $response = Http::asForm()
-            ->withBasicAuth(
-                (string) config('services.zoom.client_id'),
-                (string) config('services.zoom.client_secret')
-            )
+            ->withBasicAuth($config['client_id'], $config['client_secret'])
             ->post($this->oauthTokenUrl(), [
                 'grant_type' => 'refresh_token',
                 'refresh_token' => $account->refresh_token,
@@ -70,7 +75,7 @@ class ZoomTokenService
             throw new RuntimeException('Zoom token refresh failed: '.$response->status().' '.$response->body());
         }
 
-        return $this->persistToken($account->user, $response->json());
+        return $this->persistToken($user, $response->json());
     }
 
     /**
@@ -145,15 +150,30 @@ class ZoomTokenService
     /**
      * SPA が開く認可 URL を組み立てる（state は呼び出し側で付与）。
      */
-    public function authorizeUrl(string $state): string
+    public function authorizeUrl(User $user, string $state): string
     {
+        $config = $this->requireCredentials($user);
+
         $query = http_build_query([
             'response_type' => 'code',
-            'client_id' => (string) config('services.zoom.client_id'),
-            'redirect_uri' => (string) config('services.zoom.redirect'),
+            'client_id' => $config['client_id'],
+            'redirect_uri' => $config['redirect'],
             'state' => $state,
         ]);
 
         return rtrim((string) config('services.zoom.oauth_base_url'), '/').'/oauth/authorize?'.$query;
+    }
+
+    /**
+     * @return array{client_id: string, client_secret: string, redirect: string, webhook_secret_token: string, source: string}
+     */
+    private function requireCredentials(User $user): array
+    {
+        $config = $this->credentials->resolveForUser($user);
+        if ($config === null) {
+            throw new RuntimeException('Zoom credentials not configured for user.');
+        }
+
+        return $config;
     }
 }

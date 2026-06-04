@@ -74,6 +74,42 @@ class ZoomWebhookTest extends TestCase
         Queue::assertPushed(ProcessZoomMeetingEndedJob::class);
     }
 
+    public function test_user_webhook_secret_is_accepted(): void
+    {
+        config(['services.zoom.webhook_secret_token' => '']);
+        $userSecret = 'user-specific-webhook-secret';
+
+        $user = \App\Models\User::create([
+            'name' => 'wh',
+            'email' => 'wh@example.com',
+            'password' => bcrypt('secret-password'),
+            'religo_role' => \App\Models\User::RELIGO_ROLE_MEMBER,
+        ]);
+        \App\Models\UserZoomCredential::create([
+            'user_id' => $user->id,
+            'client_id' => 'cid',
+            'client_secret' => 'csec',
+            'webhook_secret_token' => $userSecret,
+            'is_active' => true,
+        ]);
+
+        $body = json_encode([
+            'event' => 'endpoint.url_validation',
+            'payload' => ['plainToken' => 'tok456'],
+        ]);
+        $ts = (string) time();
+        $headers = [
+            'x-zm-request-timestamp' => $ts,
+            'x-zm-signature' => 'v0='.hash_hmac('sha256', 'v0:'.$ts.':'.$body, $userSecret),
+            'Content-Type' => 'application/json',
+        ];
+
+        $res = $this->call('POST', '/api/zoom/webhook', [], [], [], $this->toServer($headers), $body);
+
+        $res->assertOk();
+        $res->assertJsonPath('encryptedToken', hash_hmac('sha256', 'tok456', $userSecret));
+    }
+
     /**
      * @param  array<string, string>  $headers
      * @return array<string, string>

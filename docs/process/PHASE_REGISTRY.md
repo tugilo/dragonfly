@@ -187,6 +187,7 @@
 | 186 | 1 to 1 予定キャンセル UI（一覧 Dialog・理由 Chip・Edit 調整） | implement | completed | feature/phase186-onetoones-cancel-ui-p1 | 2026-06-03 |
 | 187 | 1 to 1 予定キャンセル mock v2 更新 | implement | completed | feature/phase187-onetoones-cancel-mock-p1 | 2026-06-03 |
 | 188 | 1 to 1 予定キャンセル Fit/Gap 解消記録 | docs | completed | feature/phase188-onetoones-cancel-fit-gap-p1 | 2026-06-03 |
+| 189 | Zoom ユーザー資格情報（BYO app credentials・暗号化） | implement | completed | feature/phase189-zoom-user-credentials | 2026-06-04 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
