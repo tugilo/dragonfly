@@ -181,7 +181,7 @@ export function ReferralSuggestionDialogCore({
                     <Alert severity="info" variant="outlined" sx={{ mb: 2 }}>
                         {corpusSummary}
                         <Typography variant="caption" display="block" sx={{ mt: 0.5, color: 'text.secondary' }}>
-                            121・定例会・紹介履歴が増えるほど参照範囲が厚くなります（直近上限あり）。設定で横断共有を ON にすると他メンバーの 121 も含まれます。
+                            横断コーパスは社外紹介・つなぎ手経由の発見用です（同章メンバー同士の紹介は提案しません）。設定で横断共有 ON にすると他者の 121 も参照されます。
                         </Typography>
                     </Alert>
                 ) : null}
