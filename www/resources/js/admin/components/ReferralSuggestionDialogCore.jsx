@@ -49,6 +49,7 @@ export function ReferralSuggestionDialogCore({
     fetchSuggestions,
     generateSuggestions,
     notify,
+    defaultIntroducedAt,
 }) {
     const [aiCreds, setAiCreds] = useState(null);
     const [payload, setPayload] = useState(null);
@@ -263,6 +264,7 @@ export function ReferralSuggestionDialogCore({
                     loading={loading}
                     notify={notify}
                     onSuggestionUpdated={handleSuggestionUpdated}
+                    defaultIntroducedAt={defaultIntroducedAt}
                 />
             </DialogContent>
             <DialogActions>

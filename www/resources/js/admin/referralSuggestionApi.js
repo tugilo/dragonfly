@@ -101,6 +101,40 @@ export async function generateMeetingReferralSuggestions(meetingId) {
     return data;
 }
 
+export async function registerReferralIntroduction(kind, suggestionId, body) {
+    const path =
+        kind === 'meeting'
+            ? `/api/meeting-referral-suggestions/${suggestionId}/register-introduction`
+            : `/api/one-to-one-referral-suggestions/${suggestionId}/register-introduction`;
+    const res = await religoFetch(path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        throw new Error(data.message || `紹介登録に失敗しました (${res.status})`);
+    }
+    return data;
+}
+
+export function buildDefaultIntroductionNote(suggestion) {
+    const parts = [String(suggestion?.summary ?? '').trim()];
+    if (suggestion?.rationale?.trim()) {
+        parts.push(`根拠: ${suggestion.rationale.trim()}`);
+    }
+    if (suggestion?.suggested_to_label?.trim()) {
+        parts.push(`紹介先候補: ${suggestion.suggested_to_label.trim()}`);
+    }
+    return parts.filter(Boolean).join('\n\n');
+}
+
+export function canRegisterIntroduction(suggestion) {
+    if (!suggestion || suggestion.introduction_id) return false;
+    if (suggestion.status !== 'pending' && suggestion.status !== 'deferred') return false;
+    return Boolean(suggestion.suggested_to_member_id);
+}
+
 export async function patchReferralSuggestion(kind, suggestionId, body) {
     const path =
         kind === 'meeting'

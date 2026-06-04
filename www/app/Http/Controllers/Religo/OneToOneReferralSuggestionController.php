@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Religo\PatchReferralSuggestionRequest;
+use App\Http\Requests\Religo\RegisterReferralIntroductionRequest;
+use App\Services\Religo\ReferralIntroductionRegistrationService;
 use App\Models\OneToOne;
 use App\Models\OneToOneReferralSuggestion;
 use App\Models\User;
@@ -19,7 +21,10 @@ use InvalidArgumentException;
  */
 class OneToOneReferralSuggestionController extends Controller
 {
-    public function __construct(private OneToOneReferralSuggestionService $service) {}
+    public function __construct(
+        private OneToOneReferralSuggestionService $service,
+        private ReferralIntroductionRegistrationService $registrationService,
+    ) {}
 
     public function generate(OneToOne $oneToOne): JsonResponse
     {
@@ -75,6 +80,31 @@ class OneToOneReferralSuggestionController extends Controller
         }
 
         return response()->json($payload);
+    }
+
+    public function registerIntroduction(
+        RegisterReferralIntroductionRequest $request,
+        OneToOneReferralSuggestion $oneToOneReferralSuggestion,
+    ): JsonResponse {
+        $user = ReligoActorContext::actingUser();
+        if ($user === null || $user->owner_member_id === null) {
+            return response()->json(['message' => 'No acting user.'], 403);
+        }
+
+        try {
+            $payload = $this->registrationService->registerFromOneToOne(
+                $oneToOneReferralSuggestion,
+                (int) $user->owner_member_id,
+                $request->validated(),
+                fn ($s) => $this->service->formatSuggestion($s),
+            );
+        } catch (InvalidArgumentException $e) {
+            $code = str_contains($e->getMessage(), '権限') ? 403 : 422;
+
+            return response()->json(['message' => $e->getMessage()], $code);
+        }
+
+        return response()->json($payload, 201);
     }
 
     private function guard(OneToOne $oneToOne): ?JsonResponse

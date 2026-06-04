@@ -3528,6 +3528,22 @@ export function MeetingsList() {
                     <FunctionField label="BO数" render={(r) => <BreakoutCountField record={r} />} />
                     <FunctionField label="メモ" render={(r) => <HasMemoField record={r} />} />
                     <FunctionField label="議事録" render={(r) => <HasMinutesField record={r} onMinutesClick={handleMinutesClick} />} />
+                    <FunctionField
+                        label="リファーラル"
+                        render={(r) =>
+                            r?.referral_suggestion_stale ? (
+                                <Chip
+                                    size="small"
+                                    label="要再生成"
+                                    color="warning"
+                                    variant="outlined"
+                                    sx={{ height: 20, fontSize: '0.7rem' }}
+                                />
+                            ) : (
+                                <span>—</span>
+                            )
+                        }
+                    />
                     <FunctionField label="参加者PDF" render={(r) => <HasParticipantPdfField record={r} />} />
                     <FunctionField label="Actions" render={(r) => <MeetingActionsField record={r} onMemoClick={handleMeetingMemoClick} onEditClick={handleMeetingEditClick} onPdfClick={handlePdfActionClick} onReferralClick={handleReferralClick} />} />
                 </Datagrid>

@@ -112,10 +112,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/one-to-ones/{oneToOne}/referral-suggestions/generate', [OneToOneReferralSuggestionController::class, 'generate']);
     Route::get('/one-to-ones/{oneToOne}/referral-suggestions', [OneToOneReferralSuggestionController::class, 'index']);
     Route::patch('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}', [OneToOneReferralSuggestionController::class, 'update']);
+    Route::post('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}/register-introduction', [OneToOneReferralSuggestionController::class, 'registerIntroduction']);
 
     Route::post('/meetings/{meeting}/referral-suggestions/generate', [MeetingReferralSuggestionController::class, 'generate']);
     Route::get('/meetings/{meeting}/referral-suggestions', [MeetingReferralSuggestionController::class, 'index']);
     Route::patch('/meeting-referral-suggestions/{meetingReferralSuggestion}', [MeetingReferralSuggestionController::class, 'update']);
+    Route::post('/meeting-referral-suggestions/{meetingReferralSuggestion}/register-introduction', [MeetingReferralSuggestionController::class, 'registerIntroduction']);
 });
 
 /*
