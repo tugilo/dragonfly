@@ -35,6 +35,8 @@ use App\Http\Controllers\Zoom\ZoomImportController;
 use App\Http\Controllers\Zoom\ZoomOAuthController;
 use App\Http\Controllers\Zoom\ZoomWebhookController;
 use App\Http\Controllers\Ai\UserAiCredentialController;
+use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
+use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
 use Illuminate\Support\Facades\Route;
 
@@ -106,6 +108,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/one-to-ones/{oneToOne}/attachments/url', [OneToOnePrepController::class, 'storeUrl']);
     Route::delete('/one-to-ones/{oneToOne}/attachments/{attachment}', [OneToOnePrepController::class, 'destroyAttachment']);
     Route::post('/one-to-ones/{oneToOne}/prep/generate', [OneToOnePrepController::class, 'generate']);
+
+    Route::post('/one-to-ones/{oneToOne}/referral-suggestions/generate', [OneToOneReferralSuggestionController::class, 'generate']);
+    Route::get('/one-to-ones/{oneToOne}/referral-suggestions', [OneToOneReferralSuggestionController::class, 'index']);
+    Route::patch('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}', [OneToOneReferralSuggestionController::class, 'update']);
+
+    Route::post('/meetings/{meeting}/referral-suggestions/generate', [MeetingReferralSuggestionController::class, 'generate']);
+    Route::get('/meetings/{meeting}/referral-suggestions', [MeetingReferralSuggestionController::class, 'index']);
+    Route::patch('/meeting-referral-suggestions/{meetingReferralSuggestion}', [MeetingReferralSuggestionController::class, 'update']);
 });
 
 /*

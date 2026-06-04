@@ -2,6 +2,7 @@ import React from 'react';
 import { SelectInput, TextInput, DateTimeInput, required } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { Box, Chip, Typography } from '@mui/material';
+import { extractMarkdownSourcePath, MarkdownReadablePanel } from '../components/MarkdownView';
 import {
     MemberSearchAutocompleteInput,
     OwnerScopedTargetSelect,
@@ -47,6 +48,7 @@ export function OneToOneFormFields({
     const status = useWatch({ control, name: 'status' });
     const cancelReason = useWatch({ control, name: 'cancel_reason' });
     const cancelRemark = useWatch({ control, name: 'cancel_remark' });
+    const notes = useWatch({ control, name: 'notes' });
     const reasonLabel = cancelReasonLabel(cancelReason);
 
     return (
@@ -109,6 +111,19 @@ export function OneToOneFormFields({
                 minRows={mode === 'create' ? 3 : 4}
                 helperText={mode === 'create' ? NOTES_HELPER_CREATE : NOTES_HELPER_EDIT}
             />
+            {mode === 'edit' && typeof notes === 'string' && notes.trim() ? (
+                <Box sx={{ mt: 1 }}>
+                    <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 0.75 }}>
+                        プレビュー（保存後の表示イメージ・例会議事録と同じ Markdown 表示）
+                    </Typography>
+                    {extractMarkdownSourcePath(notes) ? (
+                        <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 0.75 }}>
+                            ソース: {extractMarkdownSourcePath(notes)}
+                        </Typography>
+                    ) : null}
+                    <MarkdownReadablePanel markdown={notes.trim()} dense={false} />
+                </Box>
+            ) : null}
         </>
     );
 }

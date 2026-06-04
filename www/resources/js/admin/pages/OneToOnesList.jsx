@@ -39,7 +39,9 @@ import {
     TextField,
     Alert,
 } from '@mui/material';
-import { MarkdownView, createMarkdownComponents } from '../components/MarkdownView';
+import CloseIcon from '@mui/icons-material/Close';
+import ArticleIcon from '@mui/icons-material/Article';
+import { MarkdownView, extractMarkdownSourcePath } from '../components/MarkdownView';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -51,6 +53,11 @@ import { formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
 import { religoFetch } from '../religoApiFetch';
 import { cancelReasonLabel, ONE_TO_ONE_CANCEL_REASONS } from '../utils/oneToOneCancel';
+import { OneToOneReferralSuggestionDialog } from './OneToOneReferralSuggestionDialog';
+import {
+    canOpenOneToOneReferral,
+    oneToOneReferralDisabledReason,
+} from '../referralSuggestionApi';
 
 const STATUS_CHOICES = [
     { id: 'planned', name: '予定' },
@@ -113,15 +120,7 @@ function MeetingLabelChip({ record }) {
     );
 }
 
-function createOneToOneMarkdownComponents(dense) {
-    return createMarkdownComponents(dense);
-}
-
-function OneToOneMarkdownView({ markdown, dense }) {
-    return <MarkdownView markdown={markdown} dense={dense} />;
-}
-
-function OneToOneNotesPreview({ record }) {
+function OneToOneNotesPreview({ record, onOpen }) {
     const raw = typeof record?.notes === 'string' ? record.notes.trim() : '';
     if (!raw) {
         return (
@@ -131,25 +130,18 @@ function OneToOneNotesPreview({ record }) {
         );
     }
     return (
-        <Box
-            sx={{
-                minWidth: { xs: 240, sm: 320 },
-                maxWidth: { xs: 360, sm: 520 },
-                maxHeight: { xs: 200, sm: 260 },
-                overflowY: 'auto',
-                overflowX: 'hidden',
-                pr: 0.5,
-                pb: 0.25,
-                borderRadius: 1,
-                border: '1px solid',
-                borderColor: 'divider',
-                bgcolor: 'background.default',
-                px: 1,
-                py: 0.75,
+        <Chip
+            size="small"
+            icon={<ArticleIcon sx={{ fontSize: 16 }} />}
+            label="メモあり"
+            sx={{ height: 22, fontSize: '0.75rem', cursor: onOpen ? 'pointer' : 'default' }}
+            color="success"
+            variant="outlined"
+            onClick={(e) => {
+                e.stopPropagation();
+                onOpen?.(record);
             }}
-        >
-            <OneToOneMarkdownView markdown={raw} dense />
-        </Box>
+        />
     );
 }
 
@@ -329,6 +321,7 @@ function OneToOnesStatsCards() {
 
 function OneToOneTargetDisplay({ record }) {
     const name = record?.target_name ?? '—';
+    const category = record?.target_category_label;
     const ch = record?.target_workspace_name;
     const cross = record?.is_cross_chapter;
     return (
@@ -336,6 +329,11 @@ function OneToOneTargetDisplay({ record }) {
             <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-word', lineHeight: 1.25 }}>
                 {name}
             </Typography>
+            {category ? (
+                <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }}>
+                    {category}
+                </Typography>
+            ) : null}
             {ch ? (
                 <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }}>
                     {ch}
@@ -816,7 +814,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
     );
 }
 
-function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
+function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
     const { total, isLoading } = useListContext();
 
     return (
@@ -825,7 +823,7 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
                 予定・実施・キャンセル履歴の管理。1 to 1 は関係性の履歴として保持し、レコード削除は行いません。予定を無効化する場合は状態を「キャンセル」に変更してください。
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ px: 2, pt: 0.5, pb: 0, display: 'block', maxWidth: 860 }}>
-                「相手」下の小さな文字は相手メンバーの所属チャプターです。メモ列は Markdown で表示され、枠内をスクロールして読めます。
+                「相手」列は氏名の下にカテゴリー・所属チャプターを表示します。メモ列の「メモあり」を押すと、例会の議事録と同様の Markdown ビューで全文を表示します。
             </Typography>
             <OneToOnesStatsCards />
             {!isLoading && (
@@ -847,7 +845,7 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
                 <FunctionField label="相手" render={(r) => <OneToOneTargetDisplay record={r} />} />
                 <FunctionField label="状態" render={(record) => <OneToOneStatusChip record={record} />} />
-                <FunctionField label="メモ" render={(r) => <OneToOneNotesPreview record={r} />} />
+                <FunctionField label="メモ" render={(r) => <OneToOneNotesPreview record={r} onOpen={onMemoOpen} />} />
                 <FunctionField label="例会" render={(record) => <MeetingLabelChip record={record} />} />
                 <FunctionField
                     label="操作"
@@ -869,6 +867,25 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
                                     キャンセル
                                 </Button>
                             ) : null}
+                            {(() => {
+                                const enabled = canOpenOneToOneReferral(record);
+                                const reason = oneToOneReferralDisabledReason(record);
+                                const btn = (
+                                    <Button
+                                        size="small"
+                                        variant="text"
+                                        disabled={!enabled}
+                                        onClick={() => enabled && onReferralOpen(record)}
+                                    >
+                                        リファーラル
+                                    </Button>
+                                );
+                                return reason && !enabled ? (
+                                    <Tooltip title={reason}>
+                                        <span>{btn}</span>
+                                    </Tooltip>
+                                ) : btn;
+                            })()}
                         </Stack>
                     )}
                 />
@@ -877,45 +894,64 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen }) {
     );
 }
 
-function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOpen, cancelRecord, setCancelRecord }) {
+function OneToOnesListInner({
+    memoRecord,
+    setMemoRecord,
+    createOpen,
+    setCreateOpen,
+    cancelRecord,
+    setCancelRecord,
+    referralRecord,
+    setReferralRecord,
+}) {
     return (
         <>
-            <OneToOnesListBody onMemoOpen={setMemoRecord} onCancelOpen={setCancelRecord} />
+            <OneToOnesListBody
+                onMemoOpen={setMemoRecord}
+                onCancelOpen={setCancelRecord}
+                onReferralOpen={setReferralRecord}
+            />
             <OneToOnesQuickCreateDialog open={createOpen} onClose={() => setCreateOpen(false)} />
             <OneToOneCancelDialog
                 record={cancelRecord}
                 open={Boolean(cancelRecord)}
                 onClose={() => setCancelRecord(null)}
             />
-            <Dialog open={Boolean(memoRecord)} onClose={() => setMemoRecord(null)} maxWidth="md" fullWidth>
-                <DialogTitle>
-                    📝 メモ（notes）
-                    {memoRecord?.target_name && (
-                        <Typography component="span" variant="body2" color="text.secondary" fontWeight={400} sx={{ ml: 1 }}>
-                            — {memoRecord.target_name}
+            <Dialog
+                open={Boolean(memoRecord)}
+                onClose={() => setMemoRecord(null)}
+                maxWidth="md"
+                fullWidth
+                scroll="paper"
+            >
+                <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pr: 1, gap: 1 }}>
+                    <Box sx={{ minWidth: 0 }}>
+                        <Typography component="span" variant="h6">
+                            1to1 メモ{memoRecord?.target_name ? ` — ${memoRecord.target_name}` : ''}
                         </Typography>
-                    )}
-                    {memoRecord?.target_workspace_name ? (
-                        <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
-                            相手所属: {memoRecord.target_workspace_name}
-                        </Typography>
-                    ) : null}
+                        {memoRecord?.target_workspace_name ? (
+                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+                                相手所属: {memoRecord.target_workspace_name}
+                            </Typography>
+                        ) : null}
+                    </Box>
+                    <IconButton size="small" onClick={() => setMemoRecord(null)} aria-label="閉じる" sx={{ mt: -0.5 }}>
+                        <CloseIcon />
+                    </IconButton>
                 </DialogTitle>
-                <DialogContent
-                    dividers
-                    sx={{
-                        maxHeight: { xs: '70vh', sm: '72vh' },
-                        overflowY: 'auto',
-                    }}
-                >
-                    <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-                        この1to1レコードに紐づく要約メモです（Markdown 表示）。長文・履歴は今後 contact_memos で扱う想定。
-                    </Typography>
+                <DialogContent dividers sx={{ px: 2, py: 1.5 }}>
                     {memoRecord?.notes?.trim() ? (
-                        <OneToOneMarkdownView markdown={memoRecord.notes.trim()} dense={false} />
+                        <>
+                            {extractMarkdownSourcePath(memoRecord.notes) && (
+                                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                                    ソース: {extractMarkdownSourcePath(memoRecord.notes)}
+                                </Typography>
+                            )}
+                            <MarkdownView markdown={memoRecord.notes.trim()} dense={false} />
+                        </>
                     ) : (
                         <Typography variant="body2" color="text.secondary">
-                            （メモなし）
+                            メモはまだありません。編集画面の「この回で話した内容」から追記できます。
                         </Typography>
                     )}
                 </DialogContent>
@@ -923,11 +959,14 @@ function OneToOnesListInner({ memoRecord, setMemoRecord, createOpen, setCreateOp
                     <Button component={Link} to={`/one-to-ones/${memoRecord?.id}`} onClick={() => setMemoRecord(null)}>
                         編集でメモを更新
                     </Button>
-                    <Button variant="contained" onClick={() => setMemoRecord(null)}>
-                        閉じる
-                    </Button>
+                    <Button onClick={() => setMemoRecord(null)}>閉じる</Button>
                 </DialogActions>
             </Dialog>
+            <OneToOneReferralSuggestionDialog
+                open={Boolean(referralRecord)}
+                onClose={() => setReferralRecord(null)}
+                record={referralRecord}
+            />
         </>
     );
 }
@@ -939,6 +978,7 @@ export function OneToOnesList() {
     const [memoRecord, setMemoRecord] = useState(null);
     const [createOpen, setCreateOpen] = useState(false);
     const [cancelRecord, setCancelRecord] = useState(null);
+    const [referralRecord, setReferralRecord] = useState(null);
     const [listReady, setListReady] = useState(false);
 
     useEffect(() => {
@@ -972,6 +1012,8 @@ export function OneToOnesList() {
                 setCreateOpen={setCreateOpen}
                 cancelRecord={cancelRecord}
                 setCancelRecord={setCancelRecord}
+                referralRecord={referralRecord}
+                setReferralRecord={setReferralRecord}
             />
         </List>
     );

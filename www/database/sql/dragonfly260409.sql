@@ -1727,7 +1727,7 @@ CREATE TABLE `workspaces` (
 --
 
 INSERT INTO `workspaces` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'Default Workspace', 'default', '2026-03-04 13:07:41', '2026-03-04 13:07:41');
+(1, 'DragonFly', 'bni_dragonfly', '2026-03-04 13:07:41', '2026-06-04 10:00:00');
 
 --
 -- ダンプしたテーブルのインデックス

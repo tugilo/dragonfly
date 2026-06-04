@@ -29,7 +29,7 @@ make db-import
 | コマンド | 内容 |
 |----------|------|
 | `make db-export` | ローカル DB → `dragonfly.sql` に上書き出力 |
-| `make db-import` | `dragonfly.sql` → ローカル DB に全置換 |
+| `make db-import` | `dragonfly.sql` → ローカル DB に全置換（取り込み後に workspace 名を DragonFly へ補正） |
 
 ---
 
@@ -50,7 +50,8 @@ make db-pull TARGET=dev    # テストをローカルへ
 ```
 
 - ローカル `dragonfly` を **DROP→CREATE→流し込み**（完全置換）。
-- 同時に `www/database/sync/dragonfly.sql` も更新（Git 同期用に揃える）。
+- 取り込み後、**workspace id=1** の表示名を `Default Workspace` → **DragonFly**（`bni_dragonfly`）へ自動補正（本番ダンプは旧名のままのため）。
+- 補正後に `make db-export` で `www/database/sync/dragonfly.sql` を再出力（リモート生ダンプのコピーはしない）。
 - 確認プロンプトあり。CI 等で省略する場合は `RELIGO_DB_ASSUME_YES=1`。
 
 ### 送る（ローカル → 本番/テスト）※破壊的

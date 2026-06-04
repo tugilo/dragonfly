@@ -67,6 +67,30 @@ class OneToOneIndexTest extends TestCase
         $this->assertSame('Test', $data[0]['notes']);
         $this->assertSame('Owner', $data[0]['owner_name']);
         $this->assertSame('Target1', $data[0]['target_name']);
+        $this->assertNull($data[0]['target_category_label']);
+    }
+
+    public function test_index_includes_target_category_label(): void
+    {
+        $catId = (int) DB::table('categories')->insertGetId([
+            'group_name' => 'IT',
+            'name' => 'Web制作',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('members')->where('id', $this->target1Id)->update(['category_id' => $catId]);
+
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'completed',
+            'scheduled_at' => '2026-03-01 10:00:00',
+        ]);
+
+        $res = $this->getJson('/api/one-to-ones');
+        $res->assertOk();
+        $this->assertSame('IT / Web制作', $res->json()[0]['target_category_label']);
     }
 
     public function test_order_by_started_at_then_scheduled_at_desc(): void
