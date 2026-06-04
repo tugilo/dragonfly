@@ -115,8 +115,14 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use 20 2>/dev/null || true
 
+            # rsync excludes node_modules; stale trees cause npm ENOTEMPTY on ci.
             if [ ! -d "node_modules" ] || [ "package-lock.json" -nt "node_modules/.package-lock.json" ]; then
-              npm ci --prefer-offline --no-audit --no-fund
+              rm -rf node_modules
+              if ! npm ci --prefer-offline --no-audit --no-fund; then
+                echo "⚠️  npm ci failed; retrying once after clean node_modules"
+                rm -rf node_modules
+                npm ci --prefer-offline --no-audit --no-fund
+              fi
               echo "✅ NPM dependencies updated"
             else
               echo "✅ NPM dependencies are up to date"
