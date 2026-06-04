@@ -845,6 +845,22 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
                 <FunctionField label="相手" render={(r) => <OneToOneTargetDisplay record={r} />} />
                 <FunctionField label="状態" render={(record) => <OneToOneStatusChip record={record} />} />
+                <FunctionField
+                    label="リファーラル"
+                    render={(record) =>
+                        record?.referral_suggestion_stale ? (
+                            <Chip
+                                size="small"
+                                label="要再生成"
+                                color="warning"
+                                variant="outlined"
+                                sx={{ height: 20, fontSize: '0.7rem' }}
+                            />
+                        ) : (
+                            <span>—</span>
+                        )
+                    }
+                />
                 <FunctionField label="メモ" render={(r) => <OneToOneNotesPreview record={r} onOpen={onMemoOpen} />} />
                 <FunctionField label="例会" render={(record) => <MeetingLabelChip record={record} />} />
                 <FunctionField

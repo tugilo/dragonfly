@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class OneToOneIndexService
 {
+    public function __construct(
+        private ReferralSuggestionStaleIndexEnricher $staleEnricher,
+    ) {}
     /**
      * Index / Stats 共通の WHERE。一覧の filter と統計がズレないようにする（ONETOONES-P4）。
      *
@@ -104,7 +107,10 @@ class OneToOneIndexService
 
         $items = $query->get();
 
-        return $items->map(fn (OneToOne $o) => $this->formatRecord($o))->values()->all();
+        $rows = $items->map(fn (OneToOne $o) => $this->formatRecord($o))->values()->all();
+        $ownerId = ! empty($filters['owner_member_id']) ? (int) $filters['owner_member_id'] : 0;
+
+        return $this->staleEnricher->enrichOneToOnes($rows, $ownerId);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Religo\PatchReferralSuggestionRequest;
+use App\Http\Requests\Religo\RegisterReferralIntroductionRequest;
+use App\Services\Religo\ReferralIntroductionRegistrationService;
 use App\Models\Meeting;
 use App\Models\MeetingReferralSuggestion;
 use App\Models\User;
@@ -19,7 +21,10 @@ use InvalidArgumentException;
  */
 class MeetingReferralSuggestionController extends Controller
 {
-    public function __construct(private MeetingReferralSuggestionService $service) {}
+    public function __construct(
+        private MeetingReferralSuggestionService $service,
+        private ReferralIntroductionRegistrationService $registrationService,
+    ) {}
 
     public function generate(Meeting $meeting): JsonResponse
     {
@@ -79,6 +84,32 @@ class MeetingReferralSuggestionController extends Controller
         }
 
         return response()->json($payload);
+    }
+
+    public function registerIntroduction(
+        RegisterReferralIntroductionRequest $request,
+        MeetingReferralSuggestion $meetingReferralSuggestion,
+    ): JsonResponse {
+        if ($resp = $this->guard()) {
+            return $resp;
+        }
+
+        $user = ReligoActorContext::actingUser();
+
+        try {
+            $payload = $this->registrationService->registerFromMeeting(
+                $meetingReferralSuggestion,
+                (int) $user->owner_member_id,
+                $request->validated(),
+                fn ($s) => $this->service->formatSuggestion($s),
+            );
+        } catch (InvalidArgumentException $e) {
+            $code = str_contains($e->getMessage(), '権限') ? 403 : 422;
+
+            return response()->json(['message' => $e->getMessage()], $code);
+        }
+
+        return response()->json($payload, 201);
     }
 
     private function guard(): ?JsonResponse
