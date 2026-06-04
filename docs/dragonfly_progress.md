@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-04 10:36 JST | **Phase 189 → main 反映:** develop を main に merge・push（`f6285a8`）。本番デプロイ待ち。 |
 | 2026-06-04 10:33 JST | **Phase 189 merge → develop:** Zoom ユーザー資格情報（BYO app credentials・encrypted）を develop へ取り込み。 |
 | 2026-06-04 09:05 JST | **Phase 189 / Zoom ユーザー資格情報:** `user_zoom_credentials` 新設（Client ID/Secret/Webhook Secret・encrypted）。API `GET/PUT/POST /api/zoom/credentials`・設定画面カード・`ZoomCredentialResolver`（ユーザー→.env フォールバック）・Webhook 署名を per-user secret 対応。Zoom テスト 26 passed、`npm run build` OK。 |
 | 2026-06-04 08:39 JST | **1to1 121履歴DB反映:** Zoom取り込み済みの `planned` を `completed` へ更新。寺田直史 `one_to_ones.id=40`（2026-06-01 17:00–18:00）、山本葉子 `one_to_ones.id=41`（2026-06-03 15:00–16:00）。議事録へ id 追記、`make db-export` 同期。飯田香（6/3）は議事録が予定のままのため未登録。 |
