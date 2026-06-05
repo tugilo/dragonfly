@@ -27,18 +27,22 @@ class OpenAiTextGenerator implements AiTextGenerator
         $useModel = $model ?: ($this->model ?: (string) config('services.ai.openai.default_model'));
         $timeout = (int) config('services.ai.request_timeout', 60);
 
+        $payload = [
+            'model' => $useModel,
+            'messages' => [
+                ['role' => 'system', 'content' => $systemPrompt],
+                ['role' => 'user', 'content' => $userPrompt],
+            ],
+        ];
+        if ($this->supportsCustomTemperature($useModel)) {
+            $payload['temperature'] = 0.4;
+        }
+
         try {
             $response = Http::withToken($this->apiKey)
                 ->acceptJson()
                 ->timeout($timeout)
-                ->post($base.'/chat/completions', [
-                    'model' => $useModel,
-                    'messages' => [
-                        ['role' => 'system', 'content' => $systemPrompt],
-                        ['role' => 'user', 'content' => $userPrompt],
-                    ],
-                    'temperature' => 0.4,
-                ]);
+                ->post($base.'/chat/completions', $payload);
         } catch (\Throwable $e) {
             throw new AiGenerationException('OpenAI への接続に失敗しました: '.$e->getMessage());
         }
@@ -60,5 +64,20 @@ class OpenAiTextGenerator implements AiTextGenerator
         }
 
         return trim($content);
+    }
+
+    /**
+     * o 系・GPT-5 系は temperature のカスタム値非対応（既定 1 のみ・パラメータ自体を送らない）。
+     */
+    private function supportsCustomTemperature(string $model): bool
+    {
+        $name = strtolower(trim($model));
+        foreach (config('services.ai.openai.models_without_sampling_params', []) as $blocked) {
+            if ($name === strtolower((string) $blocked)) {
+                return false;
+            }
+        }
+
+        return ! preg_match('/^(o\d|gpt-5)/', $name);
     }
 }

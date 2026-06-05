@@ -37,10 +37,16 @@ class UserAiCredentialController extends Controller
             return response()->json(['message' => 'No acting user.'], 403);
         }
 
+        $provider = (string) ($request->input('provider') ?? UserAiCredential::where('user_id', $user->id)->value('provider') ?? UserAiCredential::PROVIDER_OPENAI);
+        $modelRule = ['nullable', 'string', 'max:100'];
+        if ($provider === UserAiCredential::PROVIDER_OPENAI) {
+            $modelRule[] = Rule::in($this->openAiModelIds());
+        }
+
         $validated = $request->validate([
             'ai_enabled' => ['required', 'boolean'],
             'provider' => ['nullable', 'string', Rule::in(UserAiCredential::PROVIDERS)],
-            'model' => ['nullable', 'string', 'max:100'],
+            'model' => $modelRule,
             'api_key' => ['nullable', 'string', 'max:500'],
             'is_active' => ['nullable', 'boolean'],
         ]);
@@ -75,6 +81,13 @@ class UserAiCredentialController extends Controller
             return response()->json(['message' => 'No acting user.'], 403);
         }
         $cred = UserAiCredential::where('user_id', $user->id)->first();
+        if ($cred !== null && $cred->apiKeyDecryptFailed()) {
+            return response()->json([
+                'ok' => false,
+                'credential_decrypt_error' => true,
+                'message' => '保存済みの API キーを復号できません（別環境の APP_KEY で暗号化されたデータの可能性があります）。API キーを再入力して保存してください。',
+            ], 422);
+        }
         if ($cred === null || ! $cred->hasUsableKey()) {
             return response()->json(['ok' => false, 'message' => 'AI が有効化されていないか、API キーが未登録です。先に保存してください。'], 422);
         }
@@ -109,9 +122,46 @@ class UserAiCredentialController extends Controller
             'provider' => $cred?->provider,
             'model' => $cred?->model,
             'is_active' => (bool) ($cred?->is_active ?? true),
-            'has_api_key' => ! empty($cred?->api_key),
+            'has_api_key' => $cred !== null && $cred->readEncryptedAttribute('api_key') !== null,
+            'credential_decrypt_error' => (bool) ($cred?->apiKeyDecryptFailed()),
             'available_providers' => UserAiCredential::PROVIDERS,
             'implemented_providers' => [UserAiCredential::PROVIDER_OPENAI],
+            'default_model' => (string) config('services.ai.openai.default_model'),
+            'available_models' => $this->availableModelsByProvider(),
         ];
+    }
+
+    /**
+     * @return array<string, list<array{id: string, label: string}>>
+     */
+    private function availableModelsByProvider(): array
+    {
+        $openai = config('services.ai.openai.models', []);
+        if (! is_array($openai)) {
+            $openai = [];
+        }
+
+        return [
+            UserAiCredential::PROVIDER_OPENAI => array_values(array_filter($openai, static function ($row): bool {
+                return is_array($row) && isset($row['id'], $row['label']);
+            })),
+            UserAiCredential::PROVIDER_ANTHROPIC => [],
+            UserAiCredential::PROVIDER_GOOGLE => [],
+        ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function openAiModelIds(): array
+    {
+        $ids = [];
+        foreach (config('services.ai.openai.models', []) as $row) {
+            if (is_array($row) && isset($row['id']) && is_string($row['id'])) {
+                $ids[] = $row['id'];
+            }
+        }
+
+        return $ids;
     }
 }

@@ -16,7 +16,13 @@ class AiClientFactory
             throw new AiGenerationException('AI が有効化されていないか、API キーが未登録です。設定画面で登録してください。');
         }
 
-        $apiKey = (string) $credential->api_key;
+        if ($credential->apiKeyDecryptFailed()) {
+            throw new AiGenerationException(
+                '保存済みの API キーを復号できません。設定画面で API キーを再登録してください（ローカルと本番で APP_KEY が異なる場合に発生します）。'
+            );
+        }
+
+        $apiKey = (string) $credential->readEncryptedAttribute('api_key');
         $model = $credential->model;
 
         return match ($credential->provider) {

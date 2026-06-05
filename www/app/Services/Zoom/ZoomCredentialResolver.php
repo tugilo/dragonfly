@@ -27,11 +27,16 @@ class ZoomCredentialResolver
         if ($user !== null) {
             $cred = UserZoomCredential::where('user_id', $user->id)->first();
             if ($cred !== null && $cred->hasUsableOAuthCredentials()) {
+                $clientSecret = $cred->readEncryptedAttribute('client_secret');
+                if ($clientSecret === null) {
+                    return null;
+                }
+
                 return [
                     'client_id' => (string) $cred->client_id,
-                    'client_secret' => (string) $cred->client_secret,
+                    'client_secret' => $clientSecret,
                     'redirect' => $redirect,
-                    'webhook_secret_token' => (string) ($cred->webhook_secret_token ?? ''),
+                    'webhook_secret_token' => (string) ($cred->readEncryptedAttribute('webhook_secret_token') ?? ''),
                     'source' => self::SOURCE_USER,
                 ];
             }
@@ -72,8 +77,9 @@ class ZoomCredentialResolver
             ->where('is_active', true)
             ->get()
             ->each(function (UserZoomCredential $cred) use (&$secrets): void {
-                if ($cred->hasWebhookSecret()) {
-                    $secrets[] = (string) $cred->webhook_secret_token;
+                $token = $cred->readEncryptedAttribute('webhook_secret_token');
+                if ($cred->is_active && $token !== null) {
+                    $secrets[] = $token;
                 }
             });
 
