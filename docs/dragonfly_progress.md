@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-05 09:27 JST | **メンバー同一人物マージ（木村杏那）:** 旧姓山田杏奈・名簿誤記「山本杏那」（guest `id=117`）を正式メンバー **木村杏那**（`id=149`・No.18）へ `MemberMergeService` で統合。ローカル Docker DB・本番 `religo_app`・開発 `religo_dev` 反映。Zoom import `id=42` の `matched_member_id` を 149 に修正。議事録 [`chapter_weekly_20260602`](meetings/chapter/chapter_weekly_20260602.md)・[`1to1_mitarai_fudotech`](meetings/1to1/1to1_mitarai_fudotech.md) に旧姓注記。 |
 | 2026-06-04 21:16 JST | **develop 統合コミット準備:** Phase 190–191 リファーラル提案 MVP、1to1 議事録複数件（西浦/遠藤/福田/垣谷/山本/飯田等）・DB 同期、ImportOneToOneNotes、workspace 名補正、Webマスター引き継ぎ docs。テスト **456 passed**。develop→main 反映予定。 |
 | 2026-06-04 21:12 JST | **西浦雅 第1回121 ローカルDB反映:** `one_to_ones.id=66` を `completed`（2026-06-04 JST 15:00–16:00）。Zoom取り込み済み planned から更新。`dragonfly:import-1to1-notes` で notes 全文（6611字）。議事録・`docs/INDEX.md` に id 追記。`make db-export`。 |
 | 2026-06-04 20:11 JST | **1to1 第1回議事録（西浦雅・Draci／DragonFly）:** [`1to1_nishiura_miyabi_draci.md`](meetings/1to1/1to1_nishiura_miyabi_draci.md) 新規。Zoom要約反映。**3層アカウント管理**（平岡氏ログイン専用・システム管理1アカウント・通常メンバー）、掲示板テストサーバー・支部検索来週・フォント変更。`docs/INDEX.md` 同期。コード変更なし。 |
