@@ -73,6 +73,13 @@ class UserZoomCredentialController extends Controller
         }
 
         $cred = UserZoomCredential::where('user_id', $user->id)->first();
+        if ($cred !== null && $cred->clientSecretDecryptFailed()) {
+            return response()->json([
+                'ok' => false,
+                'credential_decrypt_error' => true,
+                'message' => '保存済みの Client Secret を復号できません（別環境の APP_KEY で暗号化されたデータの可能性があります）。Client Secret を再入力して保存してください。',
+            ], 422);
+        }
         if ($cred === null || ! $cred->hasUsableOAuthCredentials()) {
             return response()->json([
                 'ok' => false,
@@ -119,8 +126,9 @@ class UserZoomCredentialController extends Controller
 
         return [
             'client_id' => $cred?->client_id,
-            'has_client_secret' => ! empty($cred?->client_secret),
-            'has_webhook_secret' => ! empty($cred?->webhook_secret_token),
+            'has_client_secret' => $cred !== null && $cred->readEncryptedAttribute('client_secret') !== null,
+            'has_webhook_secret' => $cred !== null && $cred->readEncryptedAttribute('webhook_secret_token') !== null,
+            'credential_decrypt_error' => (bool) ($cred?->clientSecretDecryptFailed() || $cred?->webhookSecretDecryptFailed()),
             'is_active' => (bool) ($cred?->is_active ?? true),
             'has_user_credentials' => $cred !== null && $cred->hasUsableOAuthCredentials(),
             'configured' => $resolved !== null,

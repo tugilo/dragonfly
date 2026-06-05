@@ -49,6 +49,8 @@ class UserAiCredentialTest extends TestCase
         $res = $this->getJson('/api/ai/credentials')->assertOk();
         $this->assertArrayNotHasKey('api_key', $res->json());
         $this->assertSame(true, $res->json('has_api_key'));
+        $this->assertIsArray($res->json('available_models.openai'));
+        $this->assertNotEmpty($res->json('available_models.openai'));
 
         // DB は暗号化（平文一致しない）
         $row = UserAiCredential::first();
@@ -91,5 +93,51 @@ class UserAiCredentialTest extends TestCase
             ->assertOk()
             ->assertJsonPath('has_api_key', true);
         $this->assertSame('sk-keep', UserAiCredential::first()->api_key);
+    }
+
+    public function test_rejects_unknown_openai_model(): void
+    {
+        Sanctum::actingAs($this->user());
+
+        $this->putJson('/api/ai/credentials', [
+            'ai_enabled' => true,
+            'provider' => 'openai',
+            'model' => 'not-a-real-model',
+            'api_key' => 'sk-test',
+        ])->assertStatus(422);
+    }
+
+    public function test_show_handles_unreadable_encrypted_api_key(): void
+    {
+        $u = $this->user();
+        Sanctum::actingAs($u);
+        $cred = UserAiCredential::create([
+            'user_id' => $u->id,
+            'ai_enabled' => true,
+            'provider' => 'openai',
+            'model' => 'gpt-4o-mini',
+            'is_active' => true,
+        ]);
+        \Illuminate\Support\Facades\DB::table('user_ai_credentials')
+            ->where('id', $cred->id)
+            ->update(['api_key' => 'eyJpdiI6InRlc3QiLCJ2YWx1ZSI6ImZha2UiLCJtYWMiOiJmYWtlIiwidGFnIjoiIn0=']);
+
+        $this->getJson('/api/ai/credentials')
+            ->assertOk()
+            ->assertJsonPath('has_api_key', false)
+            ->assertJsonPath('credential_decrypt_error', true);
+    }
+
+    public function test_accepts_gpt5_5_model(): void
+    {
+        Sanctum::actingAs($this->user());
+
+        $this->putJson('/api/ai/credentials', [
+            'ai_enabled' => true,
+            'provider' => 'openai',
+            'model' => 'gpt-5.5',
+            'api_key' => 'sk-test',
+        ])->assertOk()
+            ->assertJsonPath('model', 'gpt-5.5');
     }
 }

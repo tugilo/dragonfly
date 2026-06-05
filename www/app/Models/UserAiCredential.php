@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ReadsEncryptedAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class UserAiCredential extends Model
 {
+    use ReadsEncryptedAttributes;
+
     public const PROVIDER_OPENAI = 'openai';
 
     public const PROVIDER_ANTHROPIC = 'anthropic';
@@ -57,6 +60,11 @@ class UserAiCredential extends Model
         return $this->ai_enabled
             && $this->is_active
             && ! empty($this->provider)
-            && ! empty($this->api_key);
+            && $this->readEncryptedAttribute('api_key') !== null;
+    }
+
+    public function apiKeyDecryptFailed(): bool
+    {
+        return $this->encryptedAttributeUnreadable('api_key');
     }
 }

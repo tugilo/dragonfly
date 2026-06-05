@@ -70,6 +70,26 @@ return [
         'openai' => [
             'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
             'default_model' => env('OPENAI_DEFAULT_MODEL', 'gpt-4o-mini'),
+            // UI 選択肢（id は Chat Completions の model パラメータにそのまま渡す）
+            'models' => [
+                ['id' => 'gpt-4o-mini', 'label' => 'GPT-4o mini（推奨・低コスト）'],
+                ['id' => 'gpt-4o', 'label' => 'GPT-4o'],
+                ['id' => 'gpt-4.1-mini', 'label' => 'GPT-4.1 mini'],
+                ['id' => 'gpt-4.1', 'label' => 'GPT-4.1'],
+                ['id' => 'o4-mini', 'label' => 'o4-mini（推論）'],
+                ['id' => 'o3-mini', 'label' => 'o3-mini（推論）'],
+                ['id' => 'gpt-5-mini', 'label' => 'GPT-5 mini'],
+                ['id' => 'gpt-5', 'label' => 'GPT-5'],
+                ['id' => 'gpt-5.5', 'label' => 'GPT-5.5'],
+                ['id' => 'gpt-5.5-pro', 'label' => 'GPT-5.5 Pro'],
+            ],
+            // temperature / top_p 等のサンプリングパラメータ非対応（API 既定のみ）
+            'models_without_sampling_params' => [
+                'gpt-5',
+                'gpt-5-mini',
+                'gpt-5.5',
+                'gpt-5.5-pro',
+            ],
         ],
     ],
 

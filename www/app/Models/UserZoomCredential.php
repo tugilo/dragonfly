@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\ReadsEncryptedAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class UserZoomCredential extends Model
 {
+    use ReadsEncryptedAttributes;
+
     protected $table = 'user_zoom_credentials';
 
     protected $fillable = [
@@ -44,11 +47,21 @@ class UserZoomCredential extends Model
     {
         return $this->is_active
             && ! empty($this->client_id)
-            && ! empty($this->client_secret);
+            && $this->readEncryptedAttribute('client_secret') !== null;
     }
 
     public function hasWebhookSecret(): bool
     {
-        return $this->is_active && ! empty($this->webhook_secret_token);
+        return $this->is_active && $this->readEncryptedAttribute('webhook_secret_token') !== null;
+    }
+
+    public function clientSecretDecryptFailed(): bool
+    {
+        return $this->encryptedAttributeUnreadable('client_secret');
+    }
+
+    public function webhookSecretDecryptFailed(): bool
+    {
+        return $this->encryptedAttributeUnreadable('webhook_secret_token');
     }
 }
