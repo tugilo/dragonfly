@@ -8,6 +8,9 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-08 17:27 JST | **メインプレ リハ版 アジェンダ・資料化:** [KeySkills 5分原稿 §4.1](academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) に今日のアジェンダ説明を追加。事業事例に改善効果（確認・転記半分以下、数時間分の確認作業削減）を追記。**§4.1.1 Gensark資料化プロンプト**（文字少なめ・図多め・10枚構成）を追加し、`docs/INDEX.md` 同期。 |
+| 2026-06-08 17:15 JST | **メインプレ リハ版 5分圧縮:** [KeySkills 5分原稿 §4.1](academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) を、次廣本人の言葉・重複排除・時間内収束を優先して再調整。運命的な出会い／ニセ理系／言語化は残し、事業説明と締めの「時間・余白・現場」重複を整理。`docs/INDEX.md` 同期。 |
+| 2026-06-08 17:02 JST | **メインプレ リハ版（§4.1）:** [KeySkills 5分原稿](academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) に第1回リハ向け通し稿を追記（3部構成・**私**・想い優先・藤井さん「あったらいいなを形にしてくれる」）。[Intro Living Document](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) 場面別ナビ・`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-06 16:32 JST | **1to1 第1回詳細要約反映（礒部昌之・レブリー）:** [`1to1_isobe_masayuki_nestle_detective.md`](meetings/1to1/1to1_isobe_masayuki_nestle_detective.md) を更新。正式日時 **2026-05-16 10:00〜11:00 JST**。Living Document §2.6/§10.9 追記。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-04 21:16 JST | **develop 統合コミット準備:** Phase 190–191 リファーラル提案 MVP、1to1 議事録複数件（西浦/遠藤/福田/垣谷/山本/飯田等）・DB 同期、ImportOneToOneNotes、workspace 名補正、Webマスター引き継ぎ docs。テスト **456 passed**。develop→main 反映予定。 |
 | 2026-06-04 21:12 JST | **西浦雅 第1回121 ローカルDB反映:** `one_to_ones.id=66` を `completed`（2026-06-04 JST 15:00–16:00）。Zoom取り込み済み planned から更新。`dragonfly:import-1to1-notes` で notes 全文（6611字）。議事録・`docs/INDEX.md` に id 追記。`make db-export`。 |
