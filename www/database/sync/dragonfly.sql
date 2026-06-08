@@ -1,5 +1,5 @@
 -- dragonfly dev DB sync dump
--- generated: 2026-06-04 21:12:42 JST
+-- generated: 2026-06-08 22:05:17 JST
 -- database: dragonfly
 -- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
 
@@ -1061,6 +1061,115 @@ INSERT INTO `meeting_participant_imports` VALUES
 UNLOCK TABLES;
 
 --
+-- Table structure for table `meeting_referral_suggestion_runs`
+--
+
+DROP TABLE IF EXISTS `meeting_referral_suggestion_runs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `meeting_referral_suggestion_runs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `meeting_id` bigint(20) unsigned NOT NULL,
+  `meeting_minute_id` bigint(20) unsigned NOT NULL,
+  `owner_member_id` bigint(20) unsigned NOT NULL,
+  `workspace_id` bigint(20) unsigned DEFAULT NULL,
+  `body_digest` varchar(64) NOT NULL,
+  `body_char_count` int(10) unsigned NOT NULL,
+  `context_mode` varchar(16) NOT NULL DEFAULT 'document',
+  `context_digest` varchar(64) DEFAULT NULL,
+  `generator` varchar(32) NOT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `raw_response` longtext DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `subject_member_id` bigint(20) unsigned DEFAULT NULL,
+  `corpus_meta` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`corpus_meta`)),
+  PRIMARY KEY (`id`),
+  KEY `meeting_referral_suggestion_runs_meeting_minute_id_foreign` (`meeting_minute_id`),
+  KEY `meeting_referral_suggestion_runs_owner_member_id_foreign` (`owner_member_id`),
+  KEY `meeting_referral_suggestion_runs_workspace_id_foreign` (`workspace_id`),
+  KEY `mtg_ref_run_mtg_created_idx` (`meeting_id`,`created_at`),
+  KEY `mtg_ref_run_digest_idx` (`body_digest`),
+  KEY `meeting_referral_suggestion_runs_subject_member_id_foreign` (`subject_member_id`),
+  CONSTRAINT `meeting_referral_suggestion_runs_meeting_id_foreign` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `meeting_referral_suggestion_runs_meeting_minute_id_foreign` FOREIGN KEY (`meeting_minute_id`) REFERENCES `meeting_minutes` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `meeting_referral_suggestion_runs_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`),
+  CONSTRAINT `meeting_referral_suggestion_runs_subject_member_id_foreign` FOREIGN KEY (`subject_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestion_runs_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meeting_referral_suggestion_runs`
+--
+
+LOCK TABLES `meeting_referral_suggestion_runs` WRITE;
+/*!40000 ALTER TABLE `meeting_referral_suggestion_runs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `meeting_referral_suggestion_runs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `meeting_referral_suggestions`
+--
+
+DROP TABLE IF EXISTS `meeting_referral_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `meeting_referral_suggestions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `run_id` bigint(20) unsigned NOT NULL,
+  `meeting_id` bigint(20) unsigned NOT NULL,
+  `source_section` varchar(32) NOT NULL DEFAULT 'other',
+  `subject_member_id` bigint(20) unsigned DEFAULT NULL,
+  `direction` varchar(32) NOT NULL,
+  `corpus_source` varchar(24) NOT NULL DEFAULT 'self',
+  `summary` text NOT NULL,
+  `rationale` text DEFAULT NULL,
+  `quality_notes` text DEFAULT NULL,
+  `suggested_from_member_id` bigint(20) unsigned DEFAULT NULL,
+  `suggested_to_member_id` bigint(20) unsigned DEFAULT NULL,
+  `suggested_to_label` varchar(255) DEFAULT NULL,
+  `suggested_contact_label` varchar(255) DEFAULT NULL,
+  `confidence` varchar(16) NOT NULL DEFAULT 'medium',
+  `status` varchar(16) NOT NULL DEFAULT 'pending',
+  `introduction_id` bigint(20) unsigned DEFAULT NULL,
+  `accepted_at` timestamp NULL DEFAULT NULL,
+  `dismissed_at` timestamp NULL DEFAULT NULL,
+  `edited_snapshot` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`edited_snapshot`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `source_one_to_one_id` bigint(20) unsigned DEFAULT NULL,
+  `source_meeting_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `meeting_referral_suggestions_suggested_from_member_id_foreign` (`suggested_from_member_id`),
+  KEY `meeting_referral_suggestions_suggested_to_member_id_foreign` (`suggested_to_member_id`),
+  KEY `mtg_ref_sugg_mtg_created_idx` (`meeting_id`,`created_at`),
+  KEY `mtg_ref_sugg_run_idx` (`run_id`),
+  KEY `mtg_ref_sugg_subject_idx` (`subject_member_id`),
+  KEY `mtg_ref_sugg_intro_idx` (`introduction_id`),
+  KEY `mtg_ref_sugg_status_idx` (`status`),
+  KEY `meeting_referral_suggestions_source_one_to_one_id_foreign` (`source_one_to_one_id`),
+  KEY `meeting_referral_suggestions_source_meeting_id_foreign` (`source_meeting_id`),
+  CONSTRAINT `meeting_referral_suggestions_introduction_id_foreign` FOREIGN KEY (`introduction_id`) REFERENCES `introductions` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestions_meeting_id_foreign` FOREIGN KEY (`meeting_id`) REFERENCES `meetings` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `meeting_referral_suggestions_run_id_foreign` FOREIGN KEY (`run_id`) REFERENCES `meeting_referral_suggestion_runs` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `meeting_referral_suggestions_source_meeting_id_foreign` FOREIGN KEY (`source_meeting_id`) REFERENCES `meetings` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestions_source_one_to_one_id_foreign` FOREIGN KEY (`source_one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestions_subject_member_id_foreign` FOREIGN KEY (`subject_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestions_suggested_from_member_id_foreign` FOREIGN KEY (`suggested_from_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `meeting_referral_suggestions_suggested_to_member_id_foreign` FOREIGN KEY (`suggested_to_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `meeting_referral_suggestions`
+--
+
+LOCK TABLES `meeting_referral_suggestions` WRITE;
+/*!40000 ALTER TABLE `meeting_referral_suggestions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `meeting_referral_suggestions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `meetings`
 --
 
@@ -1101,6 +1210,39 @@ INSERT INTO `meetings` VALUES
 (12,209,'2026-05-26','第209回定例会',2,'2026-05-25 17:33:03','2026-05-25 17:33:03'),
 (13,210,'2026-06-02','第210回定例会',2,'2026-06-02 08:49:44','2026-06-02 08:49:44');
 /*!40000 ALTER TABLE `meetings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `member_referral_corpus_settings`
+--
+
+DROP TABLE IF EXISTS `member_referral_corpus_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member_referral_corpus_settings` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `workspace_id` bigint(20) unsigned DEFAULT NULL,
+  `member_id` bigint(20) unsigned NOT NULL,
+  `allow_cross_corpus_contribution` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `member_ref_corpus_settings_member_uq` (`member_id`),
+  KEY `member_referral_corpus_settings_workspace_id_foreign` (`workspace_id`),
+  CONSTRAINT `member_referral_corpus_settings_member_id_foreign` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `member_referral_corpus_settings_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member_referral_corpus_settings`
+--
+
+LOCK TABLES `member_referral_corpus_settings` WRITE;
+/*!40000 ALTER TABLE `member_referral_corpus_settings` DISABLE KEYS */;
+INSERT INTO `member_referral_corpus_settings` VALUES
+(1,1,37,0,'2026-06-04 22:26:50','2026-06-04 22:26:50');
+/*!40000 ALTER TABLE `member_referral_corpus_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1816,7 +1958,6 @@ INSERT INTO `members` VALUES
 (114,'能見　芽衣子','のうみ　めいこ',NULL,230,NULL,'guest','G2',NULL,NULL,NULL,2,47,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (115,'村野　秀二','むらの　しゅうじ',NULL,231,NULL,'guest','G3',NULL,NULL,NULL,2,25,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (116,'高橋　聡一郎','たかはし　そういちろう',NULL,232,NULL,'guest','G4',NULL,NULL,NULL,2,32,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
-(117,'山本　杏那','やまもと　あんな',NULL,233,NULL,'guest','G5',NULL,NULL,NULL,13,2,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (118,'佐野　早紀','さの　はやき',NULL,234,NULL,'guest','G6',NULL,NULL,NULL,13,20,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (119,'前田　和良',NULL,NULL,NULL,NULL,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 16:13:21'),
 (120,'辻　亮',NULL,NULL,NULL,8,'visitor',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-21 16:13:21','2026-05-21 17:09:19'),
@@ -1846,7 +1987,7 @@ INSERT INTO `members` VALUES
 (146,'深澤 歩',NULL,NULL,NULL,2,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:33:45','2026-05-30 13:33:45'),
 (147,'岩原 聡',NULL,NULL,NULL,8,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:34:19','2026-05-30 13:34:19'),
 (148,'加門 紀乃',NULL,NULL,NULL,9,'guest',NULL,NULL,NULL,NULL,NULL,NULL,'2026-05-30 13:35:12','2026-05-30 13:35:12'),
-(149,'木村　杏那','きむら　あんな',NULL,247,NULL,'member','18',NULL,NULL,NULL,NULL,NULL,'2026-06-02 08:49:44','2026-06-02 08:49:44'),
+(149,'木村　杏那','きむら　あんな',NULL,247,NULL,'member','18',NULL,NULL,NULL,NULL,NULL,'2026-06-02 08:49:44','2026-06-05 09:27:03'),
 (150,'門脇　優衣','かどわき　ゆい',NULL,249,NULL,'visitor','V1',NULL,NULL,NULL,11,11,'2026-06-02 08:49:44','2026-06-02 08:49:44'),
 (151,'岩本　裕太','いわもと　ゆうた',NULL,250,NULL,'visitor','V2',NULL,NULL,NULL,17,20,'2026-06-02 08:49:44','2026-06-02 08:49:44'),
 (152,'寺本　勲','てらもと　いさお',NULL,251,NULL,'visitor','V3',NULL,NULL,NULL,11,34,'2026-06-02 08:49:44','2026-06-02 08:49:44'),
@@ -1877,7 +2018,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1947,7 +2088,9 @@ INSERT INTO `migrations` VALUES
 (59,'2026_06_02_153400_create_meeting_minutes_table',31),
 (60,'2026_06_03_131800_add_cancel_fields_to_one_to_ones_table',32),
 (61,'2026_06_04_120000_create_user_zoom_credentials_table',33),
-(62,'2026_06_04_100000_rename_default_workspace_to_dragonfly',34);
+(62,'2026_06_04_100000_rename_default_workspace_to_dragonfly',34),
+(63,'2026_06_04_140000_create_referral_suggestion_tables',35),
+(64,'2026_06_04_220000_referral_suggestion_cross_match',36);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1988,6 +2131,123 @@ CREATE TABLE `one_to_one_attachments` (
 LOCK TABLES `one_to_one_attachments` WRITE;
 /*!40000 ALTER TABLE `one_to_one_attachments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `one_to_one_attachments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `one_to_one_referral_suggestion_runs`
+--
+
+DROP TABLE IF EXISTS `one_to_one_referral_suggestion_runs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `one_to_one_referral_suggestion_runs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `one_to_one_id` bigint(20) unsigned NOT NULL,
+  `owner_member_id` bigint(20) unsigned NOT NULL,
+  `workspace_id` bigint(20) unsigned DEFAULT NULL,
+  `notes_digest` varchar(64) NOT NULL,
+  `notes_char_count` int(10) unsigned NOT NULL,
+  `context_mode` varchar(16) NOT NULL DEFAULT 'document',
+  `context_digest` varchar(64) DEFAULT NULL,
+  `generator` varchar(32) NOT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `raw_response` longtext DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `subject_member_id` bigint(20) unsigned DEFAULT NULL,
+  `corpus_meta` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`corpus_meta`)),
+  PRIMARY KEY (`id`),
+  KEY `one_to_one_referral_suggestion_runs_owner_member_id_foreign` (`owner_member_id`),
+  KEY `one_to_one_referral_suggestion_runs_workspace_id_foreign` (`workspace_id`),
+  KEY `o2o_ref_run_o2o_created_idx` (`one_to_one_id`,`created_at`),
+  KEY `o2o_ref_run_digest_idx` (`notes_digest`),
+  KEY `one_to_one_referral_suggestion_runs_subject_member_id_foreign` (`subject_member_id`),
+  CONSTRAINT `one_to_one_referral_suggestion_runs_one_to_one_id_foreign` FOREIGN KEY (`one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `one_to_one_referral_suggestion_runs_owner_member_id_foreign` FOREIGN KEY (`owner_member_id`) REFERENCES `members` (`id`),
+  CONSTRAINT `one_to_one_referral_suggestion_runs_subject_member_id_foreign` FOREIGN KEY (`subject_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_referral_suggestion_runs_workspace_id_foreign` FOREIGN KEY (`workspace_id`) REFERENCES `workspaces` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `one_to_one_referral_suggestion_runs`
+--
+
+LOCK TABLES `one_to_one_referral_suggestion_runs` WRITE;
+/*!40000 ALTER TABLE `one_to_one_referral_suggestion_runs` DISABLE KEYS */;
+INSERT INTO `one_to_one_referral_suggestion_runs` VALUES
+(1,72,37,1,'69bcde22a2eabd7602f0139f5fed432a853037f3ce5a62afc15cb2e978deb894',8742,'relationship','f6ac326f575bad2e4c98755ecc07aa30f16d51bbbb716c57dd3446524baaefd1','ai_openai',NULL,'```json\n{\n  \"suggestions\": [\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"遠藤聡美さんはシングルマザー専門の住宅購入アドバイザーであり、特にシングルマザー向けの住宅相談に特化しています。彼女のネットワークには、シングルマザーや子育て中の女性が多く含まれている可能性があります。\",\n      \"rationale\": \"第210回定例会議事録において、シングルマザー向けの住宅相談に関するニーズが示されています。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 164,\n      \"suggested_contact_label\": \"シングルマザーや子育て中の女性\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": 13,\n      \"confidence\": \"high\"\n    },\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"遠藤聡美さんの専門性を活かし、シングルマザー向けの住宅購入に関心を持つ人々を紹介することができます。\",\n      \"rationale\": \"定例会でのリファーラルの中で、シングルマザー向けのサービスに関連したニーズが確認されています。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 164,\n      \"suggested_contact_label\": \"シングルマザー向けの住宅購入を考えている方\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": 13,\n      \"confidence\": \"high\"\n    }\n  ]\n}\n```','2026-06-04 22:42:31',164,'{\"consented_owner_count\":0,\"o2o_excerpt_count\":0,\"meeting_count\":6}'),
+(2,66,37,1,'c0362868eb907042a1532ec9dcb97f2f2747eedbdb7df81929624f0389b7c53c',6608,'relationship','5d2707145e070cd2e5e50259ddbd75bf8aabb0014d4ea1380df071d3fbbec604','ai_openai',NULL,'```json\n{\n  \"suggestions\": [\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"西浦さんが紹介したいと思うSNSマーケティングの専門家とつなぐ。\",\n      \"rationale\": \"第210回定例会でのビジター紹介から、SNSマーケティングの専門家が紹介されているため。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 12,\n      \"suggested_contact_label\": \"門脇唯\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": 13,\n      \"confidence\": \"high\"\n    },\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"医療専門FPの岩本悠太さんとつなぐことで、医療機関向けのサービスを拡大できる可能性がある。\",\n      \"rationale\": \"第210回定例会でのビジター紹介から、医療専門FPが紹介されているため。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 12,\n      \"suggested_contact_label\": \"岩本悠太\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": 13,\n      \"confidence\": \"medium\"\n    },\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"経営者向けのマッチングプラットフォームを提供する遠藤哲也さんとつなぐ。\",\n      \"rationale\": \"第210回定例会でのビジター紹介から、経営者マッチングの専門家が紹介されているため。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 12,\n      \"suggested_contact_label\": \"遠藤哲也\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": 13,\n      \"confidence\": \"medium\"\n    }\n  ]\n}\n```','2026-06-04 22:43:47',12,'{\"consented_owner_count\":0,\"o2o_excerpt_count\":0,\"meeting_count\":6}'),
+(3,37,37,1,'502a35f50c30a8798f5d24e5c9781ca05500f28a60bad8e34c8ef10be5495353',15083,'relationship','76a0cb0d6cd38d80406df88987f4e392f338e4dbd597a186a8a31209ed02d4e0','ai_openai',NULL,'```json\n{\n  \"suggestions\": [\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"原田里織さんは店舗・施設集客を高めるデジタルサイネージの専門家です。\",\n      \"rationale\": \"定例会議事録において、リファーラルの交換が行われており、原田さんのビジネスに関連する紹介が期待されるため。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 18,\n      \"suggested_contact_label\": \"店舗・施設集客を高めるデジタルサイネージの専門家\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": null,\n      \"confidence\": \"high\"\n    },\n    {\n      \"direction\": \"via_connector\",\n      \"corpus_source\": \"member_network\",\n      \"summary\": \"原田里織さんは経理や簿記に関心があり、関連するビジネスの紹介が有効です。\",\n      \"rationale\": \"定例会議事録において、経理や簿記に関心を持つ原田さんに対して、これらの分野の専門家を紹介することで相互に利益が得られるため。\",\n      \"quality_notes\": [],\n      \"connector_member_id\": 1,\n      \"suggested_from_member_id\": 37,\n      \"suggested_to_member_id\": 18,\n      \"suggested_contact_label\": \"経理や簿記の専門家\",\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": null,\n      \"confidence\": \"medium\"\n    }\n  ]\n}\n```','2026-06-04 22:44:21',18,'{\"consented_owner_count\":0,\"o2o_excerpt_count\":0,\"meeting_count\":6}'),
+(4,36,37,1,'2ae3c51cf67e707a14bd18a909f6590bf109e878c1f2356ed2d946f1cd56066c',16164,'relationship','f065b4d020cd85821aa131bf543e47643d9c6abdfd0ab2beb63bc490d8ef2af1','ai_openai',NULL,'```json\n{\n  \"suggestions\": [\n    {\n      \"direction\": \"subject_should_meet\",\n      \"corpus_source\": \"self\",\n      \"summary\": \"神保さんは、ビジネス特化型クレジットカードを提供する山本葉子さんと会うべきです。彼女のサービスは、神保さんのビジネスにおける顧客管理や決済の効率化に寄与する可能性があります。\",\n      \"rationale\": \"引用: 121#38 の一文\",\n      \"match_member_id\": 27,\n      \"connector_member_id\": null,\n      \"suggested_from_member_id\": 138,\n      \"suggested_to_member_id\": 27,\n      \"suggested_contact_label\": null,\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": null,\n      \"confidence\": \"high\"\n    },\n    {\n      \"direction\": \"subject_should_meet\",\n      \"corpus_source\": \"self\",\n      \"summary\": \"神保さんは、飲食店向け集客アプリを提供する今西俊明さんと会うべきです。アプリを通じて、神保さんのサービスを飲食業界に広める手助けが期待できます。\",\n      \"rationale\": \"引用: 121#38 の一文\",\n      \"match_member_id\": 41,\n      \"connector_member_id\": null,\n      \"suggested_from_member_id\": 138,\n      \"suggested_to_member_id\": 41,\n      \"suggested_contact_label\": null,\n      \"suggested_to_label\": null,\n      \"source_one_to_one_id\": null,\n      \"source_meeting_id\": null,\n      \"confidence\": \"high\"\n    }\n  ]\n}\n```','2026-06-04 22:51:26',138,'{\"consented_owner_count\":0,\"o2o_excerpt_count\":0,\"meeting_count\":0,\"introduction_count\":0}');
+/*!40000 ALTER TABLE `one_to_one_referral_suggestion_runs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `one_to_one_referral_suggestions`
+--
+
+DROP TABLE IF EXISTS `one_to_one_referral_suggestions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `one_to_one_referral_suggestions` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `run_id` bigint(20) unsigned NOT NULL,
+  `one_to_one_id` bigint(20) unsigned NOT NULL,
+  `direction` varchar(32) NOT NULL,
+  `corpus_source` varchar(24) NOT NULL DEFAULT 'self',
+  `summary` text NOT NULL,
+  `rationale` text DEFAULT NULL,
+  `quality_notes` text DEFAULT NULL,
+  `suggested_from_member_id` bigint(20) unsigned DEFAULT NULL,
+  `suggested_to_member_id` bigint(20) unsigned DEFAULT NULL,
+  `suggested_to_label` varchar(255) DEFAULT NULL,
+  `suggested_contact_label` varchar(255) DEFAULT NULL,
+  `confidence` varchar(16) NOT NULL DEFAULT 'medium',
+  `status` varchar(16) NOT NULL DEFAULT 'pending',
+  `introduction_id` bigint(20) unsigned DEFAULT NULL,
+  `accepted_at` timestamp NULL DEFAULT NULL,
+  `dismissed_at` timestamp NULL DEFAULT NULL,
+  `edited_snapshot` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`edited_snapshot`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `source_one_to_one_id` bigint(20) unsigned DEFAULT NULL,
+  `source_meeting_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `one_to_one_referral_suggestions_suggested_from_member_id_foreign` (`suggested_from_member_id`),
+  KEY `one_to_one_referral_suggestions_suggested_to_member_id_foreign` (`suggested_to_member_id`),
+  KEY `o2o_ref_sugg_o2o_created_idx` (`one_to_one_id`,`created_at`),
+  KEY `o2o_ref_sugg_run_idx` (`run_id`),
+  KEY `o2o_ref_sugg_intro_idx` (`introduction_id`),
+  KEY `o2o_ref_sugg_status_idx` (`status`),
+  KEY `one_to_one_referral_suggestions_source_one_to_one_id_foreign` (`source_one_to_one_id`),
+  KEY `one_to_one_referral_suggestions_source_meeting_id_foreign` (`source_meeting_id`),
+  CONSTRAINT `one_to_one_referral_suggestions_introduction_id_foreign` FOREIGN KEY (`introduction_id`) REFERENCES `introductions` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_referral_suggestions_one_to_one_id_foreign` FOREIGN KEY (`one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `one_to_one_referral_suggestions_run_id_foreign` FOREIGN KEY (`run_id`) REFERENCES `one_to_one_referral_suggestion_runs` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `one_to_one_referral_suggestions_source_meeting_id_foreign` FOREIGN KEY (`source_meeting_id`) REFERENCES `meetings` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_referral_suggestions_source_one_to_one_id_foreign` FOREIGN KEY (`source_one_to_one_id`) REFERENCES `one_to_ones` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_referral_suggestions_suggested_from_member_id_foreign` FOREIGN KEY (`suggested_from_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `one_to_one_referral_suggestions_suggested_to_member_id_foreign` FOREIGN KEY (`suggested_to_member_id`) REFERENCES `members` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `one_to_one_referral_suggestions`
+--
+
+LOCK TABLES `one_to_one_referral_suggestions` WRITE;
+/*!40000 ALTER TABLE `one_to_one_referral_suggestions` DISABLE KEYS */;
+INSERT INTO `one_to_one_referral_suggestions` VALUES
+(1,1,72,'via_connector','member_network','遠藤聡美さんはシングルマザー専門の住宅購入アドバイザーであり、特にシングルマザー向けの住宅相談に特化しています。彼女のネットワークには、シングルマザーや子育て中の女性が多く含まれている可能性があります。','第210回定例会議事録において、シングルマザー向けの住宅相談に関するニーズが示されています。','[]',1,37,NULL,'シングルマザーや子育て中の女性','high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:42:31','2026-06-04 22:42:31',NULL,13),
+(2,1,72,'via_connector','member_network','遠藤聡美さんの専門性を活かし、シングルマザー向けの住宅購入に関心を持つ人々を紹介することができます。','定例会でのリファーラルの中で、シングルマザー向けのサービスに関連したニーズが確認されています。','[]',1,37,NULL,'シングルマザー向けの住宅購入を考えている方','high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:42:31','2026-06-04 22:42:31',NULL,13),
+(3,2,66,'via_connector','member_network','西浦さんが紹介したいと思うSNSマーケティングの専門家とつなぐ。','第210回定例会でのビジター紹介から、SNSマーケティングの専門家が紹介されているため。','[]',1,12,NULL,'門脇唯','high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:43:47','2026-06-04 22:43:47',NULL,13),
+(4,2,66,'via_connector','member_network','医療専門FPの岩本悠太さんとつなぐことで、医療機関向けのサービスを拡大できる可能性がある。','第210回定例会でのビジター紹介から、医療専門FPが紹介されているため。','[]',1,12,NULL,'岩本悠太','medium','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:43:47','2026-06-04 22:43:47',NULL,13),
+(5,2,66,'via_connector','member_network','経営者向けのマッチングプラットフォームを提供する遠藤哲也さんとつなぐ。','第210回定例会でのビジター紹介から、経営者マッチングの専門家が紹介されているため。','[]',1,12,NULL,'遠藤哲也','medium','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:43:47','2026-06-04 22:43:47',NULL,13),
+(6,3,37,'via_connector','member_network','原田里織さんは店舗・施設集客を高めるデジタルサイネージの専門家です。','定例会議事録において、リファーラルの交換が行われており、原田さんのビジネスに関連する紹介が期待されるため。','[]',1,18,NULL,'店舗・施設集客を高めるデジタルサイネージの専門家','high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:44:21','2026-06-04 22:44:21',NULL,NULL),
+(7,3,37,'via_connector','member_network','原田里織さんは経理や簿記に関心があり、関連するビジネスの紹介が有効です。','定例会議事録において、経理や簿記に関心を持つ原田さんに対して、これらの分野の専門家を紹介することで相互に利益が得られるため。','[]',1,18,NULL,'経理や簿記の専門家','medium','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:44:21','2026-06-04 22:44:21',NULL,NULL),
+(8,4,36,'subject_should_meet','self','神保さんは、ビジネス特化型クレジットカードを提供する山本葉子さんと会うべきです。彼女のサービスは、神保さんのビジネスにおける顧客管理や決済の効率化に寄与する可能性があります。','引用: 121#38 の一文',NULL,37,27,NULL,NULL,'high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:51:26','2026-06-04 22:51:26',NULL,NULL),
+(9,4,36,'subject_should_meet','self','神保さんは、飲食店向け集客アプリを提供する今西俊明さんと会うべきです。アプリを通じて、神保さんのサービスを飲食業界に広める手助けが期待できます。','引用: 121#38 の一文',NULL,37,41,NULL,NULL,'high','pending',NULL,NULL,NULL,NULL,'2026-06-04 22:51:26','2026-06-04 22:51:26',NULL,NULL);
+/*!40000 ALTER TABLE `one_to_one_referral_suggestions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2087,8 +2347,8 @@ INSERT INTO `one_to_ones` VALUES
 (64,1,37,17,NULL,'82144696668','hSM5Q+RMS5C8RhTSLcRR8Q==','zoom','2026-05-01 14:00:00','2026-05-01 14:00:00',NULL,'completed',NULL,NULL,NULL,NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (65,1,37,148,NULL,'86886689396','HIJgRFSzQeKajNVl/0ci9Q==','zoom','2026-05-01 09:00:00','2026-05-01 09:00:00',NULL,'completed',NULL,NULL,NULL,NULL,'2026-05-30 13:35:23','2026-05-30 13:35:23'),
 (66,1,37,12,NULL,'85842362927',NULL,'zoom','2026-06-04 15:00:00','2026-06-04 15:00:00','2026-06-04 16:00:00','completed',NULL,NULL,NULL,'【ソース: docs/meetings/1to1/1to1_nishiura_miyabi_draci.md】\n\n# 1to1_西浦雅_Draci\n\n---\n\n**文書の位置づけ:** BNI DragonFly メンバー・西浦雅さんとの 1to1 を **1ファイルで時系列管理**する。  \n**整理:** tugilo（次廣 淳）× **BNI DragonFly** — **クライアント案件（Draci / WordPress 会員サイト改善）** の進捗報告・運用設計の協議を中心に記録。  \n**日時:** 第1回 **2026-06-04（水）JST 15:00–16:00** 実施済み（途中 PC 切替のため再接続あり）。  \n**Religo 1to1 レコード:** `one_to_ones.id` = **66**\n\n**案件の位置づけ**\n\n| 項目 | 内容 |\n|------|------|\n| **プロジェクト名** | **Draci**（WordPress 会員サイト改善） |\n| **主な依頼元** | 西浦雅さん（実運用担当）、平岡国彦さん（チャプター代表・名義上のアカウント保持者） |\n| **次廣の役割** | 掲示板機能実装、プラグイン整理、アカウント体系の再設計 |\n| **関連提案** | [`wordpress_bulletin_client_proposal_skeleton.md`](../../proposals/wordpress_bulletin_client_proposal_skeleton.md) |\n| **追加費用** | 今回合意した作業は **既存プロジェクトに含め、追加費用なし** |\n\n---\n\n## ■ 基本プロフィール（固定情報）\n\n※ BNI DragonFly 会員名簿ベース。\n\n| 項目 | 内容 |\n|------|------|\n| **名前** | 西浦 雅（にしうら みやび） |\n| **カテゴリー** | 中小企業サポート |\n| **専門** | 外構工事特化型SNS集客 |\n| **チャプター役職** | ビジターホストCo・エデュケーションCoサポート・OCCサポート |\n| **BNI との接点** | DragonFly 内の実務担当。平岡代表名義の WordPress 運用を西浦さんが実質担当 |\n| **次廣との接点** | Draci（WordPress）改善案件の窓口、寺田直史さん（Tifonet）紹介元 |\n\n---\n\n## ■ サマリー（最新状況）\n\n- **関係性:** 第1回 121 実施済み（2026-06-04）。Draci 掲示板の **基本実装完了・テストサーバー確認段階**、**3層アカウント管理体系** の方針合意。\n- **決定:** 平岡氏アカウントを **通常メンバー相当** に降格、**システム管理用アカウントを1つ新設**（複数人同時ログイン可）。掲示板は **テストサーバーで西浦さん確認** → フォント変更・スマホ表示改善。**支部検索** を来週中実装目標。\n- **次アクション:** **次廣** — テストサーバーリンク送付（当日〜翌日）、アカウント分離設定、支部検索調査・実装、フォント変更。**西浦** — テストサーバーで掲示板確認・FB。**明後日** 西浦さん参加予定（翌日は不在）。\n\n---\n\n## ■ 1to1 履歴\n\n### 【第1回】2026-06-04\n\n#### 基本情報\n\n- **日時:** 2026-06-04（水）JST **15:00–16:00**\n- **実施方法:** Zoom（西浦さんがレコーディング。次廣が画面共有。途中 PC 切替のため一度切断・再接続）\n- **Religo 1to1 レコード:** `one_to_ones.id` = **66**\n- **主題:** ① Draci 掲示板機能の進捗報告 ② WordPress **3層アカウント管理** の説明・合意\n\n---\n\n#### ■ パートA — 3層アカウント管理体系\n\n##### 背景・現状の課題\n\n| 論点 | 内容 |\n|------|------|\n| **平岡氏のアカウント** | 現状、WordPress **管理画面全体** にアクセス可能 |\n| **平岡氏の意向** | 管理作業は **一切したくない・触りたくない** |\n| **実運用** | ログイン情報は **西浦さん** に渡され、西浦さんが実質的な管理を担当 |\n| **次廣の懸念** | 以前から「平岡氏がこの権限状態で運用できるのか」と疑問を持っていた |\n\n##### 合意した3層構成\n\n| 層 | アカウント種別 | 権限・用途 |\n|----|----------------|------------|\n| **1** | **ドレスシー管理者アカウント**（平岡氏用） | 会員の **承認管理など限定的な機能のみ**。通常メンバーと同様の **ログイン専用** に変更 |\n| **2** | **WordPress システム管理アカウント** | テーマ・設定など **技術的管理機能**。システムを動かす人専用。**1アカウントで十分**（複数人が同時ログインして作業可能） |\n| **3** | **通常メンバーアカウント** | 一般ユーザー向けの標準アクセス。プロフィール自己編集・掲示板利用等 |\n\n##### 決定事項\n\n- **アカウント体系の分離:** 平岡氏のアカウントを通常メンバーと同様の **ログイン専用** にし、別途 **システム管理用アカウント** を作成する\n- **管理画面へのアクセス制限:** 平岡氏は WordPress 管理画面を **一切触らない**。システム運用者向けログインを **別途用意**\n- **管理者アカウント数:** システム管理用は **1つで十分**（複数人同時ログイン可）\n- **作業の無償提供:** 提案書に基づく作業は **既存プロジェクトに含め、追加費用なし**\n- **権限設計の考え方:** 管理画面は普段使わない想定。誤操作防止のため不要機能へのアクセスを制限\n\n##### 会員登録フロー（現状）\n\n1. 新規メンバーが **LINE** で登録申請\n2. **Myria-mu** 側でオリエンテーション\n3. ユーザー枠を作成し **パスワードを発行**\n4. メンバーに情報を渡し、**自分でプロフィールを作成**（Nキャスト方式）\n5. **西浦さん** がユーザー作成〜パスワード発行まで担当。**平岡氏は登録プロセスに直接関与していない**\n\n##### 確認待ち・技術検討\n\n| 項目 | 状態 |\n|------|------|\n| **同一アカウントでの同時ログイン時のバッティング** | 次廣が確認中（「大丈夫だと思う」が **未検証**） |\n| **具体的な権限設定の詳細仕様** | 今後詰める |\n\n##### アクション（アカウント）\n\n| 担当 | 内容 |\n|------|------|\n| **次廣** | WordPress アカウント管理体系を **3種類に分離** して設定 |\n| **次廣** | 平岡氏用権限を **通常メンバーレベル** に変更 |\n| **次廣** | **システム管理用アカウントを1つ** 新規作成（複数作成も可） |\n| **次廣** | **西浦さんと一緒に** アカウント整理作業を実施 |\n\n---\n\n#### ■ パートB — Draci 掲示板・支部検索の進捗（再接続後）\n\n##### 主な成果\n\n- **掲示板機能の基本実装が完了** し、**テストサーバーでの確認段階** に到達\n- 西浦さんから **当初想定より早い完了** について高評価\n- **プラグインなし** で基本機能を実装できたことが成功要因として共有された\n- **支部検索機能** が新規要件として浮上。**来週中の実装** を目指す\n\n##### 完了した機能（掲示板）\n\n| 機能 | 状態 |\n|------|------|\n| **カテゴリー選択・投稿・添付ファイル** | 実装済み |\n| **カテゴリー検索** | 別画面で実装。検索結果を下部表示 |\n| **スマートフォン対応** | 表示最適化が必要な箇所を特定 |\n| **基本仕組み** | 見た目調整は残るが **機能要件は充足** |\n\n##### 決定事項（掲示板・支部）\n\n| 決定 | 内容 |\n|------|------|\n| **テスト公開** | 次廣がテストサーバーを構築し、西浦さんからアクセス可能にして要件確認 |\n| **フォント変更** | 現状の明朝体から **別フォントへ**（西浦さん要望） |\n| **支部検索** | ユーザー管理画面に **支部選択項目** を追加。会員紹介ページで **支部による絞り込み** |\n| **検索仕様** | **単一選択**（チェックボックス式ではない）。1支部選択で該当メンバーのみ表示。未選択時は **全国表示** |\n| **支部と地域の関係** | 掲示板の **地域選択** と会員管理の **支部** は **別概念** と確認 |\n\n##### 新規要件: 支部検索機能\n\n**背景:** 支部が今後設立されていく予定。メンバーに支部情報をタグ付けしておくと将来の管理が容易。\n\n**ユーザー管理側**\n\n- ユーザー編集画面に **支部選択項目**（プルダウン想定）\n- **カスタムフィールド** で支部情報を拡張する可能性\n\n**会員紹介ページ側**\n\n- 各メンバー表示に **支部情報** を追加（アイコン・名前・HP に加えて）\n- 左側に **支部検索**（掲示板カテゴリー検索と同様の UI）\n- 支部未選択時は全国メンバー表示\n\n**未確定**\n\n- 支部名称（東京支部等）は **今後決定**\n- WordPress ユーザー管理の拡張・カスタムフィールド／プラグインの選定は調査中\n\n##### 確認待ち\n\n| 項目 | 内容 |\n|------|------|\n| **掲示板の要件充足** | テストサーバー公開後、西浦さん側で実要件を満たしているか確認 |\n| **支部名称** | 具体名は未確定 |\n\n##### アクション（掲示板・支部）\n\n| 担当 | 期限目安 | 内容 |\n|------|----------|------|\n| **次廣** | **当日〜翌日** | 掲示板 **テストサーバーリンク** を西浦さんへ送付 |\n| **西浦** | リンク受領後 | テストサーバーで掲示板確認し **修正点を FB** |\n| **次廣** | **来週中** | 支部検索の実装方法を調査・実装 |\n| **次廣** | — | 掲示板 **フォント変更** |\n| **次廣** | — | **スマートフォン表示** の見やすさ改善 |\n| **次廣** | — | 掲示板追加に伴う **レイアウトずれ** の修正 |\n\n##### 次回確認\n\n- **明後日:** 西浦さん参加予定（**翌日は不在**）\n- テストサーバー確認後の **詳細 FB**\n- **来週中:** 支部検索の実装状況確認\n\n---\n\n#### ■ その他の議論（文脈メモ）\n\n##### WordPress 構成・開発体制の課題（西浦さんからの継続要望）\n\n| 論点 | 内容 |\n|------|------|\n| **プラグイン過多** | 動作が重い。基本機能は **余計なプラグインなし** で実装可能 |\n| **セキュリティプラグイン** | 過去にメール配信等のトラブルを引き起こした |\n| **倉本氏の実装** | 高度すぎて他メンバーが運用困難。ユーザー目線の設計になっていない |\n| **データ混在** | 独自コードにより朝礼スライド等で新旧データ混在のトラブル |\n| **簡素化要望** | 倉本氏以外が **トラブル時も自己解決できる** 程度の簡素化を西浦さんは継続要望（未実現） |\n| **ウェブマス** | 松本氏・今井氏も早期体制変更を望む。西浦・太田氏等はウェブマス参加を断り続けている |\n\n##### 次廣のウェブマス参画\n\n- 次廣が **ウェブマスチームに参加** し、**2026-06-03 から** 徐々に業務引き継ぎ開始（朝礼スライド作成等）\n- 関連: [`webmaster_handover_20260603.md`](../webmaster/webmaster_handover_20260603.md)\n\n##### 雑談・環境メモ\n\n- 次廣は Zoom で豪華ホテル風背景。西浦さんは「圧を強めたい日」に使うと発言\n- 西浦さんの iPad が息子のゲーム用になり仕事で使えない。打合せメモは iPad で殴り書き\n- 打合せ中 Wi-Fi 問題あり、西浦さんが切替対応\n\n---\n\n## ■ 累積インサイト\n\n- **西浦さん = 実務のハブ:** 平岡代表名義でも、WordPress・会員登録の **実運用は西浦さん**。アカウント整理も **西浦さんとペア** で進めるのが自然。\n- **平岡氏の権限最小化は合意済み:** 「触らせない」が正式な運用方針。提案書作業は **追加費用なし** でプロジェクト内対応。\n- **掲示板は評価良好:** 早い進捗・プラグイン最小化が刺さっている。次の品質ゲートは **テストサーバー上の西浦さん FB**。\n- **支部検索は将来拡張の布石:** 名称未確定だが、ユーザー属性＋紹介ページ UI の両方に載せる方針で来週実装。\n- **LTST／旧 WordPress 資産:** 簡素化・引き継ぎ可能な設計への不満は継続テーマ。Draci 改善が **対照的な成功例** として位置づけられている。\n\n---\n\n## ■ 関連リンク・参照\n\n| 種別 | パス |\n|------|------|\n| 提案骨子 | [`docs/proposals/wordpress_bulletin_client_proposal_skeleton.md`](../../proposals/wordpress_bulletin_client_proposal_skeleton.md) |\n| 要件定義 | [`docs/requirements/wordpress_bulletin_and_plugin_reorganization_requirements.md`](../../requirements/wordpress_bulletin_and_plugin_reorganization_requirements.md) |\n| Webマス引き継ぎ | [`docs/meetings/webmaster/webmaster_handover_20260603.md`](../webmaster/webmaster_handover_20260603.md) |\n| 西浦さん紹介 121 | [`1to1_terada_tifonet_engineer_collaboration.md`](1to1_terada_tifonet_engineer_collaboration.md) |\n\n---\n\n## ■ 変更履歴\n\n| 日付 | 内容 |\n|------|------|\n| 2026-06-04 20:11 JST | 初版作成。Zoom 要約（アカウント管理＋掲示板進捗・再接続後）を反映。 |','2026-06-04 01:43:27','2026-06-04 21:12:40'),
-(67,1,37,51,NULL,'81031997027',NULL,'zoom','2026-06-10 15:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:43:27','2026-06-04 01:43:27'),
-(68,1,37,117,NULL,'85299085926',NULL,'zoom','2026-06-11 14:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:43:27','2026-06-04 01:43:27'),
+(67,1,37,51,NULL,'81031997027',NULL,'zoom','2026-06-10 13:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:43:27','2026-06-06 07:36:30'),
+(68,1,37,149,NULL,'85299085926',NULL,'zoom','2026-06-11 14:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:43:27','2026-06-05 09:27:03'),
 (69,1,37,50,NULL,'82538110131',NULL,'zoom','2026-06-12 09:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:43:27','2026-06-04 01:43:27'),
 (70,1,37,48,NULL,'82306905507',NULL,'zoom','2026-06-12 10:00:00',NULL,NULL,'planned',NULL,NULL,NULL,NULL,'2026-06-04 01:44:30','2026-06-04 01:44:30'),
 (71,1,37,163,NULL,NULL,NULL,'manual','2026-06-04 11:00:00','2026-06-04 11:00:00','2026-06-04 12:00:00','completed',NULL,NULL,NULL,'【ソース: docs/meetings/1to1/1to1_kakiya_naoto_dock.md】\n\n# 1to1_垣谷直人_dock.\n\n---\n\n**文書の位置づけ:** BNI カーネル（KerNel）チャプター・垣谷直人さんとの 1to1 を **1ファイルで時系列管理**する。  \n**整理:** tugilo（次廣 淳）× **BNI カーネル** クロスチャプター。SEOコンサルタント（コンバージョン・CRO重視）× tugilo の AI業務改善・予約管理システムの協業・相互紹介を確認した。  \n**接点の経緯:** [**田村広大**](1to1_tamura_kodai_money_cooking.md) さん（カーネル）第1回 1to1（2026-05-07）で「SEOコンサルタント紹介」を約束 → 本セッション。  \n**日時:** 第1回 **2026-06-04（水）JST 11:00–12:00** 実施済み（Zoom 予定60分）。  \n**Religo 1to1 レコード:** `one_to_ones.id` = **71**（相手 member `id=163`・BNI カーネル）  \n**NCAS:** [Myプロフィール (kernel)](https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=cTdrQWl2aUhmbDhKdDQyeFZlS3ltdz09&chapter=ZHZIdEZYMUpuYk1jWjMyZXBmTUdtUT09)\n\n**表記ゆれ（解消済み）**\n\n| 出典 | 表記 |\n|------|------|\n| NCAS・正式 | **垣谷 直人**（かきや なおと） |\n| Zoom 文字起こし要約 | **柿谷**（誤変換） |\n\n---\n\n## ■ 基本プロフィール（NCAS ＋ 第1回要約）\n\n| 項目 | 内容 |\n|------|------|\n| **名前** | 垣谷 直人（かきや なおと / Kakiya Naoto） |\n| **所属チャプター** | BNI **KerNel**（カーネル） |\n| **会社** | **合同会社 dock.**（代表） |\n| **社名の由来** | 舞鶴の港町出身・ボート競技経験。「dock」＝船を修理する施設。社会の荒波に立ち向かう企業（船）を全力サポート |\n| **カテゴリー** | SEOコンサルタント（SEOconsultant） |\n| **BNI 役職** | メンバーシップ委員会（**チャプターデベロップメント**） |\n| **BNI 入会** | **2025-01-14**（宣誓式）。2019年頃から BNI 認知。個人事業主時代の知り合いライターが BNI 入会後に多くのリファラルをくれ、BNI 未入会なのに売上500万円を達成したため、独立後に満を持して入会 |\n| **経験年数** | 現ビジネス **10年目**（NCAS）。法人設立は第1回要約ベースで約1年 |\n| **紹介者** | [**田村広大**](1to1_tamura_kodai_money_cooking.md)（お金の料理教室／BNI カーネル） |\n| **拠点** | **京都府京都市下京区**（〒600-8824）。出身: **京都府舞鶴市** |\n| **連絡先** | Tel **080-2456-2420**／`kakiya@dock.boats`／[Facebook](https://www.facebook.com/naoto.kakiya) |\n| **ホームページ** | NCAS 上は未登録 |\n\n### コンセプト・専門（NCAS）\n\n> **【名刺代わりのサイトを売上が上がる Web サイトに】**  \n> SEO を中心に Web マーケ。特に **コンテンツ領域** と **集客後の導線設計（CRO）** が得意。順位より **売上につながる指標** を重視。\n\n**スキル（NCAS）:** 順位にとらわれない SEO／CRO（サイト内導線設計）／EFO（問い合わせフォーム最適化）\n\n**他社にない強み（NCAS）**\n\n1. スタッフ全員が自身で Web サイト運用経験あり → 知識だけでなく実体験ベースのコンサル\n2. 施策提示だけでなく、制作会社へのディレクション・実務も一部巻き取り → クライアントリソース最小化\n\n### 事業概要\n\n| サービス | 内容 |\n|----------|------|\n| **SEOコンサルティング** | B2B 無形商材中心。順位・アクセスより **問い合わせ・購入（コンバージョン）** を重視 |\n| **HP制作会社向け SEO顧問** | 制作会社が他社と差別化し、顧客から選ばれやすくするための黒子支援（第1回要約） |\n| **その他** | MEO・Web サイト制作も提供実績あり（NCAS 顧客リスト） |\n\n**実績（NCAS G.A.I.N.S. ＋ 第1回要約）**\n\n| 案件 | 成果 |\n|------|------|\n| 24時間365日卓球マシン専用無人卓球場 | 会員登録 **411%増**（1年6ヶ月） |\n| 広告代理店オウンドメディア | 月間問合せ **400%増**（1年6ヶ月） |\n| OEM（オリジナルグッズ制作） | 月間アクセス **296%アップ**（1年） |\n| システム開発会社 | 月間問合せ **1件→10件**（1年） |\n| 卓球場FC（タクトル等・要約） | 2年半で新規会員大幅増 |\n| 支援企業数 | **60社超**（要約） |\n\n**対応業界:** BtoB／BtoC／FC本部／オウンドメディア／EC／HR／専門学校／食品／スポーツ／M&A／美容 等\n\n**メディア・登壇:** プレジデント舞鶴（2025-02）／北近畿経済新聞（2025-06）／ランサーズオンラインセミナー（2025-12）／舞鶴ドリームピッチ審査員（2026-03）\n\n### HP制作会社向け SEO顧問（第1回要約・詳細）\n\n| 項目 | 内容 |\n|------|------|\n| **提供価値** | 制作会社の単価アップ・成約率向上・保守管理獲得 |\n| **内容** | 月1定例＋チャット。GA・GSC レポートを制作会社がクライアントへ納品。提案・営業方法も共同設計。補助金会社連携 |\n| **料金** | 垣谷氏 → 制作会社: 月額 **5万〜10万円**（3プラン） |\n| **独自性** | 全国でも制作会社向け SEO 顧問はほぼ存在しない |\n\n### 直近顧客例（NCAS・業種のみ）\n\n印刷（関東・500名以上）／AI活用税理士法人（大阪）／SNS広告代理店（京都）／AI×DXシステム開発（東京）／OEMメーカー（関西）／卓球FC本部（東北）／文房具卸（関西）／BtoB観葉植物EC（関西）／物販スクール（群馬）／専門学校（全国）\n\n**顧客の入り方:** 基本 **紹介**（交流会・コワーキング・友人の会社）\n\n### 個人・家族（NCAS ＋ 第1回）\n\n| 項目 | 内容 |\n|------|------|\n| **高校** | ボート競技・**全国大会3回**。パラリンピック選手にボート指導。香取慎吾・小池百合子・浅田真央にも指導経験 |\n| **大学** | 体育系。体育教師 or スポーツトレーナー志望 |\n| **SEOとの出会い** | 大学時代グルメブログ → 検索流入分析 |\n| **職歴（NCAS）** | 焼肉・居酒屋・バー・マッサージ・花屋・精肉・ラーメン・おでん／Webライター／オウンドメディア責任者／MEO・SEOコンサル |\n| **職歴（要約）** | わかさ生活（3ヶ月）→ フリーランスライター2年 → 広告代理店 → 渋谷SEO代理店（ソフトバンク・楽天・リナックス等）→ 滋賀アウトドア（カフェ店長・残業1000h・**弁護士相談中**）→ 独立 |\n| **家族** | 配偶者なし。還暦前に退職金でセカンドライフの母・おばんざい屋勤務の弟 |\n| **趣味** | 外食・料理・銭湯・サウナ・釣り・筋トレ。毎朝6:30起床・7時ジム（要約） |\n| **その他** | 脱毛開始。Claude Code 触っている。**KerNel メンバー中心の大阪野球チーム** |\n| **強い願望** | やりたいことを、やりたいときに、やりたい人とできる人生 |\n| **成功の鍵** | できるまでやる。向いていない・やりたくないと思ったら即辞める（※やるべきことはやる） |\n\n---\n\n## ■ G.A.I.N.S.（NCAS 要約）\n\n| 項目 | 要点 |\n|------|------|\n| **Goal** | 成果に繋がる SEO の普及（順位イメージの払拭）／Webマーケスクール事業／東京会社員向けスナック／舞鶴に海で遊べる施設 |\n| **Accomplishments** | 上記実績・メディア登壇 |\n| **Interests** | 経営者の独立きっかけ・仕事を選んだ背景 |\n| **Networks** | ブランディング・SNS・税理士・サロン支援・求人制作・工務店ライター等（NCAS に具体名記載） |\n| **Skills** | SEO／CRO／EFO |\n\n---\n\n## ■ リファーラル設計（NCAS Contact Circle）\n\n### コンタクトサークル Top3\n\n1. **広告代理店**（Web系 or 総合）\n2. **HP制作会社**\n3. **Web に参入したい印刷会社**（紙以外も提案したい）\n\n### コンタクトサークル（10）\n\n広告代理店／Web制作／Web参入印刷／**システム開発会社**／Webディレクター／Web広告運用／ブランディング／FCコンサル／経営コンサル／営業コンサル\n\n### 質の高いリファーラル\n\n- 大手・上場サイト制作経験の Web 制作会社代表\n- 10店舗以上 FC 本部コンサル\n- Web 参入したい印刷会社\n- 商品企画・開発に携わる方\n- 電通／博報堂／リクルート出身\n\n### 不適切なリファーラル（NCAS 明記）\n\n- 駆け出し Web 制作者・デザイナー・ライター（**実務3年未満**）\n- **MEO の方**\n- **コーチングの方**\n\n※第1回要約では MEO 業者を次廣へ紹介する旨の合意あり → **121内の相互紹介** と **BNI プロフィール上の不適切リファーラル** は文脈が異なる。紹介時は垣谷さんに確認。\n\n### 紹介の切り口（NCAS）\n\n- 「Web 全般に詳しい SEO の人がいますよ」\n- 「大手・上場企業も対応した SEO の人がいますよ」\n\n### 理想顧客（NCAS）\n\n商圏制限なし・全国展開・無形商材・EC／Web 問合せ増・Web 担当退職で回らない／高角度リストで営業効率化\n\n---\n\n## ■ サマリー（最新状況）\n\n- **2026-06-04** 初回121（田村広大さん紹介）。DragonFly × カーネルのクロスチャプター接点。\n- **相互理解:** 次廣の AI業務改善・伴走型システム開発と、垣谷氏のコンバージョン重視 SEO・HP制作会社向け顧問モデルを共有。\n- **協業の芽:** **予約管理システム × SEO/MEO** でホットペッパー代替。HP制作会社向け **システム開発＋SEO顧問** セット。\n- **相互紹介合意:** 垣谷氏 → 業務改善コンサル、建設・製造、MEO業者。次廣 → HP制作会社、**システム開発会社**（垣谷氏 Contact Circle #4 と一致）、静岡協業先。\n- **共通人脈:** 静岡県内に山田・原田・福沢・小永・深澤等。\n- **次回:** 日時未定。資料共有・紹介先リスト・協業パッケージ詳細。\n\n---\n\n## ■ 協業仮説（第1回時点）\n\n### 1. ホットペッパー代替パッケージ\n\n| 要素 | 役割 |\n|------|------|\n| 次廣 | LINE連携予約管理（事業者目線・AI提案型・夏頃リリース） |\n| 垣谷氏 | SEO / MEO・GBP 連携マーケ |\n| 価値 | 自社システムで獲得した顧客へのサービス提供（一見さん依存からの脱却） |\n\n### 2. HP制作会社向けセット提案\n\n| 要素 | 役割 |\n|------|------|\n| 次廣 | システム開発（予約・業務改善等） |\n| 垣谷氏 | SEO顧問（黒子）＋CRO／EFO |\n| 顧客 | HP制作会社（垣谷氏 Top3 ＋ 次廣のデザイナー協業） |\n\n### 3. システム開発会社チャネル\n\n- NCAS 直近顧客に **AI×DXシステム開発（東京）** あり。問合せ 1→10件/年の実績。\n- 次廣の **伴走型業務改善** と垣谷氏の **SEO/CRO** は、システム開発会社のクライアント向け **セット提案** に相性良い。\n\n---\n\n## ■ 次廣側プロフィール（第1回共有・相手への理解用）\n\n| 項目 | 内容 |\n|------|------|\n| **屋号** | ヤノツギロ |\n| **カテゴリー** | AI業務改善システム構築 |\n| **経験** | SE 26年目、独立23年 |\n| **拠点** | 静岡県藤枝市 |\n| **予約管理** | 夏頃リリース。ホットペッパー代替。事業者目線・AI提案型 |\n\n**金のガチョウ:** ウェブデザイナー、**SEO/MEO業者**、業務改善コンサル、建設・製造 等\n\n---\n\n## ■ 共通の知見（第1回）\n\n| テーマ | 内容 |\n|--------|------|\n| **SEOとCV** | 順位より反応（コンバージョン）が本質 |\n| **効果期間** | 半年〜1年（業界による） |\n| **デザインとCV** | デザイン変更も積極提案。制作会社と必ず協働 |\n| **法人化** | 売上・依頼しやすさ vs 固定費・手元資金 |\n\n### 静岡県内の共通人脈\n\n山田（元サンダーボルト・休会中）／原田（DragonFly・協業中）／福沢・小永（協業中）／深澤\n\n---\n\n## ■ tugiloとしての戦略\n\n- **田村さん紹介 SEO が着地。** Contact Circle **#2 HP制作・#4 システム開発** と次廣の紹介軸が **NCAS 上も一致**。\n- **予約管理 GTM:** 神保・辻・原田・山本ルートと並行。垣谷氏は **CRO/EFO** まで踏み込むため「集客→CV→予約」一気通貫のストーリーが作れる。\n- **紹介文:** 「順位 SEO」ではなく **問い合わせ・売上・予約が増える Web マーケ**（NCAS コンセプトと一致）。\n- **AI 共通言語:** Claude Code 利用・直近顧客に AI 税理士・AI×DX 開発会社 → 次廣の AI 業務改善と紹介文が作りやすい。\n- **注意:** NCAS では MEO 紹介を「不適切」と明記。121 合意の MEO 紹介は **個別関係・協業文脈** として確認してから進める。\n\n---\n\n## ■ リファーラル戦略（BNI特化）\n\n### 次廣 → 垣谷氏\n\n| 優先 | 像 |\n|:---:|-----|\n| ★ | **HP制作会社**（DragonFly 新規ウェブデザイナー含む） |\n| ★ | **システム開発会社**（HP も作れる・AI×DX） |\n| ○ | 静岡県内協業先 |\n\n### 垣谷氏 → 次廣\n\n| 優先 | 像 |\n|:---:|-----|\n| ★ | 業務改善コンサル、建設・製造（システム化） |\n| ○ | MEO 業者（121 合意・要確認） |\n\n**紹介文たたき台（次廣 → 垣谷氏）**\n\n> 垣谷さんは、順位や PV ではなく **問い合わせ・成約・売上** を上げる SEO コンサルです。合同会社 dock. の代表で、大手・上場も経験。HP 制作会社向け SEO 顧問（黒子）もやっており、CRO・フォーム最適化まで踏み込みます。「名刺代わりのサイトを売上が上がる Web サイトに」がコンセプトです。\n\n**紹介文たたき台（垣谷氏 → 次廣）**\n\n> 次廣さんは、現場のやり方を大きく変えず Excel や LINE のバラバラ管理を一つの流れにまとめるシステムを作る人です。予約管理（ホットペッパー代替）も夏頃出ます。SEO で集客した先の予約・問合せ・現場オペまでつなげたい制作会社・システム開発会社に相性が良いです。\n\n---\n\n## ■ メモ（人物・温度感）\n\n- **成果一筋。** NCAS も Zoom 要約も「順位 SEO のイメージ払拭」が Goal。\n- **ボート・筋トレ・野球・サウナ** — アクティブ。Claude Code も触っている。\n- **率直な法人化トーク**（手元資金）で信頼良好。\n- **dock. の社名ストーリー**（港・ボート）は紹介時の記憶フックになる。\n- カーネル **CD MS** — チャプター横断の紹介力あり。\n\n---\n\n## ■ 1to1履歴\n\n### 【第1回】2026-06-04 実施済み\n\n#### 基本情報\n\n- **日時:** **2026-06-04（水）JST 11:00–12:00**\n- **実施方法:** Zoom\n- **紹介:** [**田村広大**](1to1_tamura_kodai_money_cooking.md) さん\n- **Religo 1to1 レコード:** `one_to_ones.id` = **71**（相手 member `id=163`・BNI カーネル）\n\n#### 決定事項・合意\n\n| 項目 | 内容 |\n|------|------|\n| 紹介（垣谷→） | 業務改善コンサル、建設・製造、MEO業者 |\n| 紹介（次廣→） | HP制作会社、システム開発会社、静岡協業先 |\n| 協業 | 予約管理＋SEO/MEO、HP制作会社向けシステム＋SEO顧問 |\n| 次回121 | 日程未定 |\n\n#### アクションアイテム\n\n| 担当 | アクション | 状態 |\n|------|------------|------|\n| 垣谷氏 | MEO・業務改善・建設・製造の紹介先確認・連絡 | TODO |\n| 次廣 | HP制作・システム開発の紹介先確認・連絡 | TODO |\n| 両者 | 資料共有・協業パッケージ具体化 | TODO |\n| 次廣 | Religo 登録・`one_to_ones.id` 反映 | TODO |\n| 次廣 | 田村さんへ SEO 紹介完了の一声 | TODO |\n\n---\n\n## ■ 累積インサイト（超重要）\n\n- **正式名は垣谷直人・合同会社 dock.** Zoom「柿谷」は誤変換。\n- **Contact Circle #2 HP制作・#4 システム開発** が次廣の紹介軸と直結。NCAS 直近顧客の AI×DX 開発会社は **橋渡し候補**。\n- **CRO/EFO** までカバー → 予約管理システムの「CV 改善」パートナーとして最優先クラス。\n- **MEO:** NCAS 不適切リファーラルと 121 合意の両立 → 紹介前に垣谷さん確認。\n- **田村さん紹介3名:** SE（下辻）✓／SEO（本件）✓／FC **TODO**。\n\n---\n\n**更新履歴**\n\n| 日時（JST） | 内容 |\n|-------------|------|\n| 2026-06-04 12:24 | 初版（Zoom要約）。ファイル名 `1to1_kakiya_seo_consultant.md` |\n| 2026-06-04 12:35 | NCAS プロフィール反映。正式表記 **垣谷直人**・**合同会社 dock.**。G.A.I.N.S.・Contact Circle・顧客例・連絡先。リネーム `1to1_kakiya_naoto_dock.md` |','2026-06-04 12:34:16','2026-06-04 12:34:19'),
@@ -2931,7 +3191,7 @@ INSERT INTO `participants` VALUES
 (661,11,114,'guest',2,47,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (662,11,115,'guest',2,25,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (663,11,116,'guest',2,32,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
-(664,11,117,'guest',13,2,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
+(664,11,149,'guest',13,2,'2026-05-18 22:56:51','2026-06-05 09:27:03'),
 (665,11,118,'guest',13,20,'2026-05-18 22:56:51','2026-05-18 22:56:51'),
 (731,12,1,'regular',NULL,NULL,'2026-05-26 09:03:23','2026-05-26 09:03:23'),
 (732,12,2,'regular',NULL,NULL,'2026-05-26 09:03:23','2026-05-26 09:03:23'),
@@ -3114,7 +3374,7 @@ CREATE TABLE `personal_access_tokens` (
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3124,12 +3384,14 @@ CREATE TABLE `personal_access_tokens` (
 LOCK TABLES `personal_access_tokens` WRITE;
 /*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
 INSERT INTO `personal_access_tokens` VALUES
-(1,'App\\Models\\User',2,'religo-admin','fc4ea95195a45cca5d253758c75a777ab10a1eaea63435f2fb5a577fddc2e1a0','[\"*\"]','2026-06-04 01:09:07',NULL,'2026-05-28 22:27:00','2026-06-04 01:09:07'),
-(2,'App\\Models\\User',2,'religo-admin','461a044d5c3c6fe7af4276d62bc24a78e2b3229a30d0a977b6d4dc06777225e9','[\"*\"]','2026-06-04 01:44:30',NULL,'2026-05-29 05:37:44','2026-06-04 01:44:30'),
+(1,'App\\Models\\User',2,'religo-admin','fc4ea95195a45cca5d253758c75a777ab10a1eaea63435f2fb5a577fddc2e1a0','[\"*\"]','2026-06-07 12:34:49',NULL,'2026-05-28 22:27:00','2026-06-07 12:34:49'),
+(2,'App\\Models\\User',2,'religo-admin','461a044d5c3c6fe7af4276d62bc24a78e2b3229a30d0a977b6d4dc06777225e9','[\"*\"]','2026-06-08 10:25:25',NULL,'2026-05-29 05:37:44','2026-06-08 10:25:25'),
 (3,'App\\Models\\User',2,'religo-admin','5a013168a09435757d78cd53bebe302298b93c5dbecdee1a67b4956a9ed44b81','[\"*\"]','2026-06-02 17:06:02',NULL,'2026-05-31 10:39:42','2026-06-02 17:06:02'),
 (4,'App\\Models\\User',2,'religo-admin','004bea0cf450f71345d60499007a1b3a2ab93131aacf27e98dcfe67e344ef4d7','[\"*\"]','2026-06-04 12:08:33',NULL,'2026-06-04 10:46:26','2026-06-04 12:08:33'),
 (5,'App\\Models\\User',2,'religo-admin','a04df85751ca37c955412e0b49891ccb6232707516c57cfd78a50d649e9b866c','[\"*\"]','2026-06-04 12:40:26',NULL,'2026-06-04 10:46:55','2026-06-04 12:40:26'),
-(6,'App\\Models\\User',2,'religo-admin','30fd7c4ed4e1d227707022ebc48db08506f09f134cfe4d4260a3b30f3e6ca4de','[\"*\"]','2026-06-04 13:57:00',NULL,'2026-06-04 13:57:00','2026-06-04 13:57:00');
+(6,'App\\Models\\User',2,'religo-admin','30fd7c4ed4e1d227707022ebc48db08506f09f134cfe4d4260a3b30f3e6ca4de','[\"*\"]','2026-06-04 22:51:19',NULL,'2026-06-04 13:57:00','2026-06-04 22:51:19'),
+(7,'App\\Models\\User',2,'religo-admin','8d129c7bce11344718683a6f6f7e26debb88267dfcd480a8d341f48578aea330','[\"*\"]','2026-06-06 16:24:05',NULL,'2026-06-06 16:24:05','2026-06-06 16:24:05'),
+(8,'App\\Models\\User',2,'religo-admin','e7707deb10c03a21e3e691a7b8609625acf2b8f457f608bcd7711b5f699a6668','[\"*\"]','2026-06-07 05:11:18',NULL,'2026-06-06 07:35:59','2026-06-07 05:11:18');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3268,10 +3530,14 @@ INSERT INTO `sessions` VALUES
 ('2hAyNHhhIWQh9V9cXNhW8BYYTC8aAwVCwe7kRBRX',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiS3JjM0lYZ1k1akRnS05NQmpGQ212VjF0SktkOGdkVXdqMjdObGNDZiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780387562),
 ('2kJDuICn1B9jcPZ8JrruKfNICjhBn3ATwRXoftXw',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiUUUxVHp0VE4yMnFKY0FrMjNXSmRCMXVwZGZIQ2x1Y3lQdUxZR3ZZSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780191569),
 ('B30RzX1J45hjoVivXwxXM3oYIr9gIVrUWrQ3UHpG',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiZjNiWG1NdVlRcHRFZTNvWkppZmxzampGM2xzdmN6TkhyeDRoYnc0UyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779756264),
+('byPD0nqHR8UJGCzKqFHVqbLAHIpYiU3S4zYIUngh',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiNk9WNmZkc0gzMlJmTEN3OHlkVTdDNUVoenNveHBzNUlkRTYwZGNxUiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780581073),
 ('lM6CKS3r2USMorBNmlNfAOigiQSAxH7w4AuCrlCv',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cursor/3.6.31 Chrome/142.0.7444.265 Electron/39.8.1 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiVjkxS29RM2VwY2o5UURrV3JqSFE3NEFsZ1FTMzNhRTczWFlNU3g5SiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780537571),
 ('Meqyew7J78nPd6pajenpDoa65UnkvVh5LZ6abs8o',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiMUg0dDFPTnlDbkh4elJmYVc0eWd4a01BT2VoZDRweDJuMDVMamNTSSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780294130),
 ('nMdzjVAqtQnKWrZY3SEHZmY3YoXXiVZna3Dodqdj',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiM0hOc3ZRUUREZ0IzQU1SRDA4VlZXbHJUMDk0N3htY215NmtscGpPZCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780544425),
+('tR8vFR2K7h2Cfq3KvWkQBPlntglyy9cU1iZMPt0h',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoidjlwVEx0NmxuSEFod2x0Z1VRRnJqMDRUQTl4eHJTQjhCRk5JVW5qSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780730543),
+('xyyC9el4kmDCaM70DKPOy3SGo9pKcRDNgTAlFk0k',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiRmZ0dWpSNXVlZTdKZWVKczJoRllINmI5U3Z2blRPc2IxekRIV0NqcyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780730122),
 ('Y1oy1eynIkgLaXS5m7Ezr52zaJF3s9E7CylrsDTg',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoieUVQMUVOcGlQMTB4c3hFS1padmgxNjZXa2NxNUpBbzNqaVRkUVZkYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1779688657),
+('YbbcNhIvK95xMEVaRSVkiiYYJNUQNLQ0XrQWwzxi',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoidDNFb0xsdE5jdXlZNWVQd2Z4VTNZaXhkckV4NmJnMzFMaFZGNnFzYSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MTY6Imh0dHA6Ly9sb2NhbGhvc3QiO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780730140),
 ('YsBTRl5Z1bOpkv3QbNw12zf2772zotFpeD5G7EAL',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoiSXJrZjJwVTlDTU03UU80bXlRaXNZbm55b1hNeWxvSGFXdzJVZ3hkRyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1780537576);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3306,7 +3572,7 @@ CREATE TABLE `user_ai_credentials` (
 LOCK TABLES `user_ai_credentials` WRITE;
 /*!40000 ALTER TABLE `user_ai_credentials` DISABLE KEYS */;
 INSERT INTO `user_ai_credentials` VALUES
-(1,2,1,'openai','eyJpdiI6IjhJQ1owVTR0SXNCMlBLWGJpTjczN2c9PSIsInZhbHVlIjoiZFFmdzJvTS9uRFhhK1Z1UEtIWlJhN3U3ZmxZMEJTd1pVWXBkSVAweldxTlBOMlUzOHhVbEYxalNRaWtkdFhJaUdoSjV0dUQyMHcyR1JDTjhSalZZbFZpSDF1dS8yTmdvUk5pVHRiekduUUtBN1M1dEhjam9icm1uRjZtemZ1RkdXTFZFclVubzA5MWNpeEUvOHdlUXdtM1NNYnZ6emlXYU1WNDN1RDZIRVJ6S1NyN3NNQndVWlZacUNXWmpPSm5vRkFuWWZFZEJkUlZGT2lvdEVTU3NCSUxoODIxUGo3S2VqbWpyQThBRzBQZz0iLCJtYWMiOiJmNjMwMWFiZWRlMDhhNTQ5ZmNlZTkxYTA3MjE1MDNjNGEyNWI5NDVmMDU5ZDUxNTYyODQzZjBlMDRkZTI1YTg4IiwidGFnIjoiIn0=',NULL,1,'2026-05-30 08:46:35','2026-05-30 08:46:35');
+(1,2,1,'openai','eyJpdiI6IlIxemFwMjV6aXdvRFFlYmJXaEh2U3c9PSIsInZhbHVlIjoiN3N6cm5hU2hNZWM0YXRreEgrV3hlSk43S2wzUDR5TG5nZm9tcnlSQ1lEd1ZhWlhqVXpOUm5GUm1OTGl3U1EydytUUDAwaVQyRWVVQmR0T045dnYya1ZxK0k5b2pxSytiTE13UFJFNmdMMFZYeTJYWUtRNDY5bjBWcmNNcjZxTlNUM2liQnNYWHQwSGNTek53eVdpRVA1L3ZTdW1NOFM5SU5jc1F5T1RZeENsM2daTHBwSjczc04xNk53cW1razc3SFJQb3BoTWl3VVlhWUFWM1U1c3pLTWc2Z1NKeVhOWjlaL2RiVzdTcmd6QT0iLCJtYWMiOiJhZmY3OTE2ZWZjYTE4YThiZWY0NTZiZDIwNTRiOTI1NTc0MDFmZTRiNWRkYjA0N2JjOTU1YTJmMmM5MGRhNDMwIiwidGFnIjoiIn0=',NULL,1,'2026-05-30 08:46:35','2026-06-04 22:41:56');
 /*!40000 ALTER TABLE `user_ai_credentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3595,7 +3861,7 @@ INSERT INTO `zoom_meeting_imports` VALUES
 (39,2,37,1,'85842362927',NULL,'scheduled','西浦さん打合せ','2026-06-04 15:00:00',NULL,60,NULL,1,'medium',12,'matched','西浦',NULL,1,'imported',66,'{\"uuid\":\"D\\/XRfMY8Q+eCrwx53TgrXg==\",\"id\":85842362927,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u897f\\u6d66\\u3055\\u3093\\u6253\\u5408\\u305b\",\"type\":2,\"start_time\":\"2026-06-04T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-03T14:08:54Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85842362927?pwd=hK6VWE1KJSXtC1gU5gbznMHsezWxqe.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
 (40,2,37,1,'81031997027',NULL,'scheduled','飯田香さん: 1to1調整用','2026-06-10 15:00:00',NULL,60,NULL,1,'medium',51,'matched','飯田香',NULL,1,'imported',67,'{\"uuid\":\"s6ZX0wLeRHSsFDGrd7pbyw==\",\"id\":81031997027,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u98ef\\u7530\\u9999\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-10T06:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-05-31T10:41:42Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/81031997027?pwd=bIshNvaguBxcAjkKEHADoTqyWZj2jI.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
 (41,2,37,1,'86846787039',NULL,'scheduled','株式会社J.NOVA 打田康平さん: 1to1調整用','2026-06-11 11:00:00',NULL,60,NULL,1,'medium',NULL,'new','打田康平',NULL,0,'held',NULL,'{\"uuid\":\"8bTLQJbWRVSOhzISlVyROA==\",\"id\":86846787039,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eJ.NOVA \\u6253\\u7530\\u5eb7\\u5e73\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-11T02:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-03T08:43:50Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/86846787039?pwd=zosZOT4EBSsdLW7ffqmsSYnphQjbnn.1\"}','2026-06-04 01:41:40','2026-06-04 01:44:28'),
-(42,2,37,1,'85299085926',NULL,'scheduled','株式会社Andirich 木村杏那さん: 1to1調整用','2026-06-11 14:00:00',NULL,60,NULL,1,'medium',117,'matched','木村杏那',NULL,1,'imported',68,'{\"uuid\":\"79SMQbboStWlDku\\/1dZ2Ag==\",\"id\":85299085926,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eAndirich \\u6728\\u6751\\u674f\\u90a3\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-11T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-02T13:06:19Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85299085926?pwd=GWD2NBUlONxJaQ4pueEujRHrgVm3b4.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
+(42,2,37,1,'85299085926',NULL,'scheduled','株式会社Andirich 木村杏那さん: 1to1調整用','2026-06-11 14:00:00',NULL,60,NULL,1,'medium',149,'matched','木村杏那',NULL,1,'imported',68,'{\"uuid\":\"79SMQbboStWlDku\\/1dZ2Ag==\",\"id\":85299085926,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eAndirich \\u6728\\u6751\\u674f\\u90a3\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-11T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-02T13:06:19Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/85299085926?pwd=GWD2NBUlONxJaQ4pueEujRHrgVm3b4.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
 (43,2,37,1,'82538110131',NULL,'scheduled','飯田千帆さん: 1to1調整用','2026-06-12 09:00:00',NULL,60,NULL,1,'medium',50,'matched','飯田千帆',NULL,1,'imported',69,'{\"uuid\":\"X7hpvFTiQL65x\\/cQDhqlcg==\",\"id\":82538110131,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u98ef\\u7530\\u5343\\u5e06\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-12T00:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-02T04:02:12Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82538110131?pwd=5vBZNOQVq0PVNaURpaH7MgEBbDVD1T.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
 (44,2,37,1,'82306905507',NULL,'scheduled','株式会社u\'i 清原佳彩美さん: 1to1調整用','2026-06-12 10:00:00',NULL,60,NULL,1,'medium',48,'matched','清原佳彩美',NULL,1,'imported',70,'{\"uuid\":\"6bwZ7SwkQBaFe0Q4lmq1aQ==\",\"id\":82306905507,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u682a\\u5f0f\\u4f1a\\u793eu\'i \\u6e05\\u539f\\u4f73\\u5f69\\u7f8e\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-12T01:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-02T08:19:01Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82306905507?pwd=cqrPA4vKEy90wTYjOh4t2SnaN2YuOz.1\"}','2026-06-04 01:41:40','2026-06-04 01:44:30'),
 (45,2,37,1,'82063966389',NULL,'scheduled','熊谷龍笙さん: 1to1調整用','2026-06-17 14:00:00',NULL,60,NULL,1,'medium',NULL,'new','熊谷龍笙',NULL,1,'held',NULL,'{\"uuid\":\"EoCycEd6TZqStx3VpF5jmA==\",\"id\":82063966389,\"host_id\":\"NHCBopvRQtCYXFKPsKfc-g\",\"topic\":\"\\u718a\\u8c37\\u9f8d\\u7b19\\u3055\\u3093: 1to1\\u8abf\\u6574\\u7528\",\"type\":2,\"start_time\":\"2026-06-17T05:00:00Z\",\"duration\":60,\"timezone\":\"Asia\\/Tokyo\",\"created_at\":\"2026-06-02T23:39:52Z\",\"join_url\":\"https:\\/\\/us06web.zoom.us\\/j\\/82063966389?pwd=pmrLZXu1NVyDmr0tagaz5BE6fdhqGw.1\"}','2026-06-04 01:41:40','2026-06-04 01:43:27'),
@@ -3620,4 +3886,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-04 12:12:43
+-- Dump completed on 2026-06-08 13:05:17
