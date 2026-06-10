@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-10 21:33 JST | **パワーチーム WS 受講メモ完成:** [`academy/005_パワーチームワークショップ/BNI_PowerTeam_workshop_notes_20260610.md`](academy/005_パワーチームワークショップ/BNI_PowerTeam_workshop_notes_20260610.md) に ver3.1 全27枚＋Zoom文字起こし要約を反映（15:00–17:30 JST・山崎ARD）。アカデミー資料を `004_メンバーアクセラレーター` / `005_パワーチームワークショップ` に整理。MTLR・100点までの道のり PDF を [`pdf/260609/`](pdf/260609/) に追加。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-09 14:22 JST | **スリーバイス チームMTG 2026-06-09 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260609.md`](meetings/team/team_threebiz_20260609.md) に反映。BOD（7/28）向け40人リスト戦略・チーム目標ビジター3〜4名・入会率10%・メンバー別リスト・推薦の言葉・大名優勝特典。`chapter_weekly_20260609.md` に同日 MTG リンク追加。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-09 14:35 JST | **用語統一（害虫ブロック）:** 誤記「外注ブロック」を docs 全体で **害虫ブロック** に修正（定例会211・メインプレ原稿・1to1議事録6件・progress 等）。`dragonfly.sql` の 1to1 notes は Markdown 再取込で同期可能。 |
 | 2026-06-09 14:31 JST | **定例会 第211回 議事録完成:** [`chapter_weekly_20260609.md`](meetings/chapter/chapter_weekly_20260609.md) に Zoom 文字起こし要約を反映。RF134・八田入会/竹内更新・MP倉持/佐藤・清原1位・久米→原田900万円RF・増本→次廣推薦の言葉等。5月度外部RF・サンキュー表記を第210回と整合。`docs/INDEX.md` 同期。コード変更なし。 |
