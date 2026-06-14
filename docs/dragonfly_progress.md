@@ -60,6 +60,7 @@
 | 2026-06-08 17:15 JST | **メインプレ リハ版 5分圧縮:** [KeySkills 5分原稿 §4.1](academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) を、次廣本人の言葉・重複排除・時間内収束を優先して再調整。運命的な出会い／ニセ理系／言語化は残し、事業説明と締めの「時間・余白・現場」重複を整理。`docs/INDEX.md` 同期。 |
 | 2026-06-08 17:02 JST | **メインプレ リハ版（§4.1）:** [KeySkills 5分原稿](academy/キースキルズ/メインプレゼン/BNI_KeySkills_MainPresentation_5min_Tsugihiro_202604.md) に第1回リハ向け通し稿を追記（3部構成・**私**・想い優先・藤井さん「あったらいいなを形にしてくれる」）。[Intro Living Document](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) 場面別ナビ・`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-06-06 16:32 JST | **1to1 第1回詳細要約反映（礒部昌之・レブリー）:** [`1to1_isobe_masayuki_nestle_detective.md`](meetings/1to1/1to1_isobe_masayuki_nestle_detective.md) を更新。正式日時 **2026-05-16 10:00〜11:00 JST**。Living Document §2.6/§10.9 追記。`docs/INDEX.md` 同期。コード変更なし。 |
+| 2026-06-05 09:27 JST | **メンバー同一人物マージ（木村杏那）:** 旧姓山田杏奈・名簿誤記「山本杏那」（guest `id=117`）を正式メンバー **木村杏那**（`id=149`・No.18）へ `MemberMergeService` で統合。ローカル Docker DB・本番 `religo_app`・開発 `religo_dev` 反映。Zoom import `id=42` の `matched_member_id` を 149 に修正。議事録 [`chapter_weekly_20260602`](meetings/chapter/chapter_weekly_20260602.md)・[`1to1_mitarai_fudotech`](meetings/1to1/1to1_mitarai_fudotech.md) に旧姓注記。 |
 | 2026-06-04 21:16 JST | **develop 統合コミット準備:** Phase 190–191 リファーラル提案 MVP、1to1 議事録複数件（西浦/遠藤/福田/垣谷/山本/飯田等）・DB 同期、ImportOneToOneNotes、workspace 名補正、Webマスター引き継ぎ docs。テスト **456 passed**。develop→main 反映予定。 |
 | 2026-06-04 21:12 JST | **西浦雅 第1回121 ローカルDB反映:** `one_to_ones.id=66` を `completed`（2026-06-04 JST 15:00–16:00）。Zoom取り込み済み planned から更新。`dragonfly:import-1to1-notes` で notes 全文（6611字）。議事録・`docs/INDEX.md` に id 追記。`make db-export`。 |
 | 2026-06-04 20:11 JST | **1to1 第1回議事録（西浦雅・Draci／DragonFly）:** [`1to1_nishiura_miyabi_draci.md`](meetings/1to1/1to1_nishiura_miyabi_draci.md) 新規。Zoom要約反映。**3層アカウント管理**（平岡氏ログイン専用・システム管理1アカウント・通常メンバー）、掲示板テストサーバー・支部検索来週・フォント変更。`docs/INDEX.md` 同期。コード変更なし。 |
@@ -519,6 +520,7 @@
 | 2026-03-04 | `cc22f08f79a367e937b9d15f2f8c0095ca0fec6f` | Phase04〜08（一覧 summary、メモ/1to1 API、Board メモ追加、Board 1to1 登録、workspace_id 自動取得） | 13 passed (58 assertions) |
 | 2026-03-05 | `3278e8cd74bbb8e7bf5968861732d644d85387a4` | Phase12U / Phase12V / Phase12W（Board 3ペインIA / Members+Meetings List / Boardショートカット導線） | 27 passed (125 assertions) |
 | 2026-03-05 | `73e7525e878a489fb80e3e698a7d61a39ae7358f` | 証跡の main 反映（docs: record release to main (Religo)） | 27 passed (125 assertions) |
+| 2026-06-14 | `adb360de1628958a182f5742acb7c37de46c89c7` | Phase 196〜216（Myria-mu/YUINIWA 提案資料・要件定義・商談モック） | 475 passed (1764 assertions) |
 
 - **develop HEAD（反映時点）:** `fff8e16`（証跡追記前）
 - **手順:** develop を main に no-ff merge → テスト実行 → push main → 本証跡を develop に追記して push。
