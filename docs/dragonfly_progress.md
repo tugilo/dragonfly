@@ -520,6 +520,7 @@
 | 2026-03-04 | `cc22f08f79a367e937b9d15f2f8c0095ca0fec6f` | Phase04〜08（一覧 summary、メモ/1to1 API、Board メモ追加、Board 1to1 登録、workspace_id 自動取得） | 13 passed (58 assertions) |
 | 2026-03-05 | `3278e8cd74bbb8e7bf5968861732d644d85387a4` | Phase12U / Phase12V / Phase12W（Board 3ペインIA / Members+Meetings List / Boardショートカット導線） | 27 passed (125 assertions) |
 | 2026-03-05 | `73e7525e878a489fb80e3e698a7d61a39ae7358f` | 証跡の main 反映（docs: record release to main (Religo)） | 27 passed (125 assertions) |
+| 2026-06-14 | `adb360de1628958a182f5742acb7c37de46c89c7` | Phase 196〜216（Myria-mu/YUINIWA 提案資料・要件定義・商談モック） | 475 passed (1764 assertions) |
 
 - **develop HEAD（反映時点）:** `fff8e16`（証跡追記前）
 - **手順:** develop を main に no-ff merge → テスト実行 → push main → 本証跡を develop に追記して push。
