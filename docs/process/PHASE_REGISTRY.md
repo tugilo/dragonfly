@@ -194,6 +194,27 @@
 | 193 | リファーラル提案 レポート・introductions 由来フィルタ・KPI | implement | planned | feature/phase193-referral-suggest-reporting | 2026-06-04 |
 | 194 | リファーラル提案 ルール前処理 P2（121 表・MP 節） | implement | planned | feature/phase194-referral-suggest-rules-p2 | 2026-06-04 |
 | 195 | リファーラル提案 横断マッチング（共有同意・つなぎ手経由・Givers Gain） | implement | completed | feature/phase195-referral-suggest-cross-match | 2026-06-04 |
+| 196 | 西浦雅 Myria-mu 管理システム相談 121記録 | docs | completed | develop | 2026-06-14 |
+| 197 | Myria-mu 外構紹介・施工店送客・報酬管理 要件定義書 | docs | completed | develop | 2026-06-14 |
+| 198 | Myria-mu 外構紹介事業 成長基盤提案書 | docs | completed | develop | 2026-06-14 |
+| 199 | Myria-mu 外構紹介プラットフォーム提案書リライト | docs | completed | develop | 2026-06-14 |
+| 200 | Myria-mu 外構紹介管理プラットフォーム 要件定義書リライト | docs | completed | develop | 2026-06-14 |
+| 201 | Myria-mu 要件定義 実装向け追加要件 | docs | completed | develop | 2026-06-14 |
+| 202 | Myria-mu 要件定義 初期スコープ簡素化 | docs | completed | develop | 2026-06-14 |
+| 203 | Myria-mu 提案書 Phase1範囲・差別化明確化 | docs | completed | develop | 2026-06-14 |
+| 204 | Myria-mu 初期導入版提案書 | docs | completed | develop | 2026-06-14 |
+| 205 | Myria-mu 初期導入版 2段階プラン化 | docs | completed | develop | 2026-06-14 |
+| 206 | Myria-mu 初期導入版 180万円完成版化 | docs | completed | develop | 2026-06-14 |
+| 207 | Myria-mu 初期導入版 180万円単独提案化 | docs | completed | develop | 2026-06-14 |
+| 208 | Myria-mu 提案書 提出用/内部資料 位置づけ整理 | docs | completed | develop | 2026-06-14 |
+| 209 | Myria-mu 初期導入版 160万円MVP化 | docs | completed | develop | 2026-06-14 |
+| 210 | Myria-mu 初期導入版 提案の視点追加 | docs | completed | develop | 2026-06-14 |
+| 211 | Myria-mu 初期導入版 金額表現最終調整 | docs | completed | develop | 2026-06-14 |
+| 212 | Myria-mu 初期導入版 160-180万円表現確定 | docs | completed | develop | 2026-06-14 |
+| 213 | Myria-mu 初期導入版 対象利用者追記 | docs | completed | develop | 2026-06-14 |
+| 214 | Myria-mu 初期導入版 Gensparkスライドプロンプト | docs | completed | develop | 2026-06-14 |
+| 215 | Myria-mu / YUINIWA サービス名反映 | docs | completed | develop | 2026-06-14 |
+| 216 | YUINIWA 提案用クリッカブルモック作成 | implement | completed | develop | 2026-06-14 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
