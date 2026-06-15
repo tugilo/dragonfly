@@ -2,7 +2,7 @@
 
 | Phase ID | 219 |
 |----------|-----|
-| Status | completed（merge 前） |
+| Status | completed |
 | 完了日 | 2026-06-16 08:51 JST |
 
 ## 変更概要
@@ -14,7 +14,7 @@
 
 ## Merge Evidence
 
-- **merge commit id:** （develop merge 後に記録）
+- **merge commit id:** 5e55cc8e184cd6af3190b8ada1530b2ac869f543
 - **source branch:** feature/phase219-bo-multi-room-save
 - **target branch:** develop
 - **phase id:** 219
@@ -22,8 +22,20 @@
 - **related ssot:** DATA_MODEL §4.5/§4.6, FIT_AND_GAP_BO_COPY_FROM_PREVIOUS
 - **test command:** php artisan test
 - **test result:** 479 passed
-- **build:** npm run build OK
-- **changed files:** 下記 git diff 参照
+- **build:** npm run build OK（merge 前 feature ブランチで実施）
+- **changed files:**
+  - docs/INDEX.md
+  - docs/SSOT/FIT_AND_GAP_BO_COPY_FROM_PREVIOUS.md
+  - docs/dragonfly_progress.md
+  - docs/process/PHASE_REGISTRY.md
+  - docs/process/phases/PHASE_219_bo_multi_room_save_PLAN.md
+  - docs/process/phases/PHASE_219_bo_multi_room_save_REPORT.md
+  - docs/process/phases/PHASE_219_bo_multi_room_save_WORKLOG.md
+  - www/app/Http/Controllers/Religo/MeetingBreakoutController.php
+  - www/app/Http/Requests/Religo/UpdateMeetingBreakoutsRequest.php
+  - www/app/Services/Religo/MeetingBreakoutService.php
+  - www/resources/js/admin/pages/DragonFlyBoard.jsx
+  - www/tests/Feature/Religo/MeetingBreakoutsTest.php
 - **scope check:** OK
 - **ssot check:** OK（FIT_AND_GAP 更新）
 - **dod check:** OK
