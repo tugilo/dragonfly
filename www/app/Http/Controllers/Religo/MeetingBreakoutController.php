@@ -10,7 +10,7 @@ use App\Services\Religo\MeetingBreakoutService;
 use Illuminate\Http\JsonResponse;
 
 /**
- * GET/PUT /api/meetings/{meetingId}/breakouts — Religo BO1/BO2 割当取得・保存. SSOT: DATA_MODEL §4.5, §4.6.
+ * GET/PUT /api/meetings/{meetingId}/breakouts — Religo BO（BO1..BOn）割当取得・保存. SSOT: DATA_MODEL §4.5, §4.6.
  * PUT: `rooms` 必須。**任意** `owner_member_id` — どの BO にも含まれないとき BO1 にマージ（Phase124）。
  */
 class MeetingBreakoutController extends Controller

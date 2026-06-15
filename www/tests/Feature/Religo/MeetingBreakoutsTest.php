@@ -237,6 +237,83 @@ class MeetingBreakoutsTest extends TestCase
         $res->assertJsonValidationErrors(['rooms']);
     }
 
+    /** Phase219: BO3 以上を保存・再 GET できる */
+    public function test_put_three_rooms_then_get_returns_all(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => 'R1', 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => 'R2', 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO3', 'notes' => 'R3', 'member_ids' => [$this->member3]],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload)->assertOk();
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $get->assertOk();
+        $rooms = collect($get->json('rooms'));
+        $this->assertCount(3, $rooms);
+        $bo3 = $rooms->firstWhere('room_label', 'BO3');
+        $this->assertNotNull($bo3);
+        $this->assertSame('R3', $bo3['notes']);
+        $this->assertSame([$this->member3], $bo3['member_ids']);
+    }
+
+    /** Phase219: payload に無い BO3 は削除される */
+    public function test_put_two_rooms_after_three_removes_bo3_room(): void
+    {
+        $three = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member2]],
+                ['room_label' => 'BO3', 'notes' => null, 'member_ids' => [$this->member3]],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $three)->assertOk();
+        $this->assertDatabaseHas('breakout_rooms', [
+            'meeting_id' => $this->meetingId,
+            'room_label' => 'BO3',
+        ]);
+
+        $two = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => [$this->member1]],
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => [$this->member2]],
+            ],
+        ];
+        $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $two)->assertOk();
+        $this->assertDatabaseMissing('breakout_rooms', [
+            'meeting_id' => $this->meetingId,
+            'room_label' => 'BO3',
+        ]);
+        $get = $this->getJson("/api/meetings/{$this->meetingId}/breakouts");
+        $this->assertCount(2, $get->json('rooms'));
+    }
+
+    public function test_validation_rejects_non_sequential_bo_labels(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO1', 'notes' => null, 'member_ids' => []],
+                ['room_label' => 'BO3', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+    }
+
+    public function test_validation_rejects_when_not_starting_with_bo1(): void
+    {
+        $payload = [
+            'rooms' => [
+                ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
+            ],
+        ];
+        $res = $this->putJson("/api/meetings/{$this->meetingId}/breakouts", $payload);
+        $res->assertStatus(422);
+        $res->assertJsonValidationErrors(['rooms']);
+    }
+
     /** BO-AUDIT-P2: breakouts 保存監査に既定 workspace_id が載る */
     public function test_put_breakouts_audit_row_has_workspace_when_workspaces_exist(): void
     {
