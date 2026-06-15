@@ -215,6 +215,9 @@
 | 214 | Myria-mu 初期導入版 Gensparkスライドプロンプト | docs | completed | develop | 2026-06-14 |
 | 215 | Myria-mu / YUINIWA サービス名反映 | docs | completed | develop | 2026-06-14 |
 | 216 | YUINIWA 提案用クリッカブルモック作成 | implement | completed | develop | 2026-06-14 |
+| 217 | 木村杏那 初回121事前準備（株式会社Andirich／建設業の業務改善パートナー） | docs | completed | develop | 2026-06-15 |
+| 218 | 木村杏那 第1回121 DB登録・本番同期 | implement | completed | develop | 2026-06-15 |
+| 219 | BO 3枠以上の保存（breakouts API + Connections コピー一般化） | implement | completed | feature/phase219-bo-multi-room-save | 2026-06-16 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

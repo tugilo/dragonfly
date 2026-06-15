@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Religo: Meeting の BO1/BO2 割当取得・保存（Phase10 互換）.
+ * Religo: Meeting の BO（同室枠 BO1..BOn）割当取得・保存.
  * breakout_rounds テーブルが無い環境でも動作するよう meeting_id + room_label で breakout_rooms を扱う. SSOT: DATA_MODEL §4.5, §4.6.
  */
 class MeetingBreakoutService
 {
-    private const ROOM_LABELS = ['BO1', 'BO2'];
+    /** UI/API で扱う room_label の最大数（BO1..BO20） */
+    public const MAX_BO_ROOMS = 20;
 
     /**
      * Connections のグローバル Owner がどの BO にも含まれないとき、BO1 に追加する（同一保存ペイロード内で完結）。
-     * G11 で同一 member を BO1/BO2 両方に入れてよいため、「いずれかのルームにいれば」追加しない。
+     * G11 で同一 member を複数 BO に入れてよいため、「いずれかのルームにいれば」追加しない。
      *
      * @param  array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>  $rooms
      * @return array<int, array{room_label: string, notes?: string|null, member_ids?: array<int>}>
@@ -51,38 +52,29 @@ class MeetingBreakoutService
     }
 
     /**
-     * GET 用: meeting と rooms（BO1/BO2）.
+     * GET 用: meeting と rooms（BO1..BOn、DB に存在する分）.
      */
     public function getBreakouts(Meeting $meeting): array
     {
         $rooms = BreakoutRoom::where('meeting_id', $meeting->id)
-            ->whereIn('room_label', self::ROOM_LABELS)
-            ->orderBy('room_label')
-            ->get();
+            ->get()
+            ->filter(fn (BreakoutRoom $room) => self::isManagedBoLabel($room->room_label))
+            ->sortBy(fn (BreakoutRoom $room) => self::boNumberFromLabel($room->room_label))
+            ->values();
 
         $result = [];
-        foreach (self::ROOM_LABELS as $label) {
-            $room = $rooms->firstWhere('room_label', $label);
-            if ($room) {
-                $memberIds = $room->participants()
-                    ->whereNotIn('type', ['absent', 'proxy'])
-                    ->pluck('member_id')
-                    ->values()
-                    ->all();
-                $result[] = [
-                    'id' => $room->id,
-                    'room_label' => $room->room_label,
-                    'notes' => $room->notes,
-                    'member_ids' => array_map('intval', $memberIds),
-                ];
-            } else {
-                $result[] = [
-                    'id' => null,
-                    'room_label' => $label,
-                    'notes' => null,
-                    'member_ids' => [],
-                ];
-            }
+        foreach ($rooms as $room) {
+            $memberIds = $room->participants()
+                ->whereNotIn('type', ['absent', 'proxy'])
+                ->pluck('member_id')
+                ->values()
+                ->all();
+            $result[] = [
+                'id' => $room->id,
+                'room_label' => $room->room_label,
+                'notes' => $room->notes,
+                'member_ids' => array_map('intval', $memberIds),
+            ];
         }
 
         return [
@@ -96,7 +88,8 @@ class MeetingBreakoutService
     }
 
     /**
-     * PUT 用: BO1/BO2 の rooms を保存.
+     * PUT 用: BO1..BOn の rooms を保存（payload が正）。
+     * payload に無い BO* ルームは削除する（BO 以外の room_label は触らない）。
      *
      * 各 member_id には当該例会の participants 行が必須。無い場合は自動作成せず ValidationException。
      * SPEC-007 / CONN-BO-PARTICIPANT-REQUIRED-P1.
@@ -105,21 +98,37 @@ class MeetingBreakoutService
      */
     public function updateBreakouts(Meeting $meeting, array $rooms): void
     {
-        // G11: 同一 member を BO1/BO2 の両方に入れてよい。同一 BO 内のみ重複を防ぐ。
+        // G11: 同一 member を複数 BO に入れてよい。同一 BO 内のみ重複を防ぐ。
         DB::transaction(function () use ($meeting, $rooms) {
-            $roomLabels = array_column($rooms, 'room_label');
+            $payloadByLabel = [];
+            foreach ($rooms as $payload) {
+                $label = (string) ($payload['room_label'] ?? '');
+                $payloadByLabel[$label] = $payload;
+            }
+
             $roomMap = [];
-            foreach (self::ROOM_LABELS as $label) {
-                $idx = array_search($label, $roomLabels, true);
-                $payload = $idx !== false ? $rooms[$idx] : ['room_label' => $label, 'notes' => null, 'member_ids' => []];
+            foreach ($payloadByLabel as $label => $payload) {
                 $memberIds = array_values(array_unique(array_map('intval', $payload['member_ids'] ?? [])));
+                $sortOrder = self::boNumberFromLabel($label);
                 $room = BreakoutRoom::firstOrCreate(
                     ['meeting_id' => $meeting->id, 'room_label' => $label],
-                    ['sort_order' => 1]
+                    ['sort_order' => $sortOrder]
                 );
-                $room->update(['notes' => $payload['notes'] ?? null]);
+                $room->update([
+                    'notes' => $payload['notes'] ?? null,
+                    'sort_order' => $sortOrder,
+                ]);
                 $roomMap[$label] = ['room' => $room, 'member_ids' => $memberIds];
             }
+
+            $labelsInPayload = array_keys($payloadByLabel);
+            BreakoutRoom::where('meeting_id', $meeting->id)
+                ->get()
+                ->filter(function (BreakoutRoom $room) use ($labelsInPayload) {
+                    return self::isManagedBoLabel($room->room_label)
+                        && ! in_array($room->room_label, $labelsInPayload, true);
+                })
+                ->each(fn (BreakoutRoom $room) => $room->delete());
 
             $allMemberIds = [];
             foreach ($roomMap as $data) {
@@ -181,9 +190,11 @@ class MeetingBreakoutService
             }
 
             $breakoutRoomIds = collect($roomMap)->pluck('room.id')->all();
-            DB::table('participant_breakout')
-                ->whereIn('breakout_room_id', $breakoutRoomIds)
-                ->delete();
+            if ($breakoutRoomIds !== []) {
+                DB::table('participant_breakout')
+                    ->whereIn('breakout_room_id', $breakoutRoomIds)
+                    ->delete();
+            }
 
             foreach ($roomMap as $label => $data) {
                 $roomId = $data['room']->id;
@@ -197,5 +208,19 @@ class MeetingBreakoutService
                 }
             }
         });
+    }
+
+    public static function isManagedBoLabel(string $label): bool
+    {
+        return (bool) preg_match('/^BO\d+$/', $label);
+    }
+
+    public static function boNumberFromLabel(string $label): int
+    {
+        if (preg_match('/^BO(\d+)$/', $label, $m)) {
+            return (int) $m[1];
+        }
+
+        return PHP_INT_MAX;
     }
 }
