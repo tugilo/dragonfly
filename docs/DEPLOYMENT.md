@@ -139,7 +139,8 @@ sudo systemctl reload apache2
 | migrate 失敗 | DB 名・`.env` の `DB_DATABASE` |
 | `npm ERR! ENOTEMPTY` … `node_modules` | サーバーで `cd $DEPLOY_PATH && rm -rf node_modules && npm ci --include=dev && npm run build`。以降は Actions が deploy 前に `rm -rf node_modules` する |
 | `sh: 1: vite: not found`（build 127） | devDependencies 未インストール。`NODE_ENV=production` だと `npm ci` が vite を入れない。`rm -rf node_modules && NODE_ENV=development npm ci --include=dev && npm run build` |
-| `npm warn tar TAR_ENTRY_ERROR` | キャッシュ破損のことが多い。`npm cache clean --force` のうえ `npm ci --include=dev`（`--prefer-offline` なし） |
+| `npm warn tar TAR_ENTRY_ERROR` | VPS の npm キャッシュ破損が多い。**npm ci は警告だけで exit 0 のまま** node_modules が欠損しうる（例: `ra-ui-materialui`）。`npm cache clean --force` → `npm ci --include=dev`（`--prefer-offline` 禁止）。deploy.yml は毎回クリーン install + 検証 |
+| Rollup failed to resolve `ra-ui-materialui` | 上記 TAR 欠損の症状。`ls node_modules/ra-ui-materialui` が無ければ `rm -rf node_modules && npm cache clean --force && NODE_ENV=development npm ci --include=dev` |
 | `database.sqlite` does not exist | `.env` 未作成または sqlite 設定のまま |
 | `require PHP ">= 8.4.0"`（白画面） | Apache が 8.3 のまま → **php8.4-fpm + SetHandler** |
 | `Failed to clear cache`（Actions） | php-fpm が `storage/framework/cache/data` を www-data 所有 → deploy.yml の data 再作成フォールバック |

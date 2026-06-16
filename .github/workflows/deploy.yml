@@ -118,27 +118,39 @@ jobs:
             # vite lives in devDependencies; npm ci skips dev when NODE_ENV=production.
             export NODE_ENV=development
 
-            install_npm() {
-              rm -rf node_modules
-              npm ci --include=dev --no-audit --no-fund "$@"
+            verify_npm_tree() {
+              local missing=0
+              for path in node_modules/.bin/vite node_modules/ra-ui-materialui/package.json node_modules/react-admin/package.json; do
+                if [ ! -e "$path" ]; then
+                  echo "❌ Missing: $path"
+                  missing=1
+                fi
+              done
+              return "$missing"
             }
 
-            # rsync excludes node_modules; stale trees cause npm ENOTEMPTY on ci.
-            # Also reinstall when vite is missing (e.g. prior production-only node_modules).
-            if [ ! -d "node_modules" ] \
-              || [ "package-lock.json" -nt "node_modules/.package-lock.json" ] \
-              || [ ! -x "node_modules/.bin/vite" ]; then
-              if ! install_npm --prefer-offline; then
-                echo "⚠️  npm ci failed; retrying once without offline cache"
-                install_npm
-              fi
-              echo "✅ NPM dependencies updated"
-            else
-              echo "✅ NPM dependencies are up to date"
-            fi
+            install_npm() {
+              rm -rf node_modules
+              npm cache clean --force 2>/dev/null || true
+              # Do not use --prefer-offline: stale VPS cache causes TAR_ENTRY_ERROR and partial trees.
+              npm ci --include=dev --no-audit --no-fund
+            }
 
-            if [ ! -x "node_modules/.bin/vite" ]; then
-              echo "❌ node_modules/.bin/vite missing after npm ci (devDependencies not installed?)"
+            # Always fresh npm ci on deploy. Skipping reuse hid corrupted/partial node_modules
+            # (npm ci exits 0 even when tar extraction warns — e.g. missing ra-ui-materialui).
+            npm_attempt=1
+            while [ "$npm_attempt" -le 2 ]; do
+              echo "📦 npm ci attempt ${npm_attempt}/2"
+              if install_npm && verify_npm_tree; then
+                echo "✅ NPM dependencies installed and verified"
+                break
+              fi
+              echo "⚠️  npm tree incomplete; retrying after cache clean"
+              npm_attempt=$((npm_attempt + 1))
+            done
+
+            if ! verify_npm_tree; then
+              echo "❌ npm install incomplete (check disk space: df -h; npm cache: npm cache verify)"
               exit 1
             fi
 

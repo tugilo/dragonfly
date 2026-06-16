@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-16 18:06 JST | **Deploy fix (2):** `ra-ui-materialui` 解決失敗対策。毎回 `npm cache clean` + クリーン `npm ci`、vite/ra-ui-materialui 検証・2回リトライ。`--prefer-offline` 廃止。 |
 | 2026-06-16 18:01 JST | **Deploy fix:** develop CI `vite: not found` 対策。`.github/workflows/deploy.yml` で `NODE_ENV=development` + `npm ci --include=dev`、`node_modules/.bin/vite` 存在チェック。`docs/DEPLOYMENT.md` トラブルシュート追記。 |
 | 2026-06-16 17:55 JST | **Phase 221 Claude Code セットアップ（docs）完了・develop push:** `docs/AI_TOOLING.md`・`CLAUDE.md`・`.claude/settings.json` + Skills 12 本（phase-start 等）。`.cursorrules` 更新。INDEX・PHASE_REGISTRY・REPORT 同期。 |
 | 2026-06-16 17:16 JST | **DB一括同期・本番リプレイス:** 未反映の定例会議事録（第208–211回・6/16モメンタム・7/28 BOD）と 1to1 notes（44件）を `import-chapter-minutes` / `import-1to1-notes` でローカル反映。`meetings.session_type` 対応済み（モメンタム `id=16`・BOD `id=17`）。`make db-export`（1544429 bytes）→ `make db-push TARGET=prod`（バックアップ `backups/prod_20260616_171533.sql`）。テスト 482 passed。develop へ push。 |
