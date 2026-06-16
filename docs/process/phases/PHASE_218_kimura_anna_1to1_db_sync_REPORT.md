@@ -33,7 +33,7 @@
 ## Merge Evidence
 | 項目 | 内容 |
 |------|------|
-| merge commit id | develop 直コミット（Phase 217–218 docs + session_type + DB 同期バンドル） |
+| merge commit id | `fd78237` |
 | source branch | develop |
 | target branch | develop |
 | phase id | 218 |
