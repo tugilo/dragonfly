@@ -75,7 +75,7 @@ docs フェーズのためスキップ
 
 | 項目 | 内容 |
 |------|------|
-| **commit id** | （push 後に記入） |
+| **commit id** | `23f590f` |
 | **ブランチ** | develop（docs Phase・直接コミット） |
 | **phase id** | 221 |
 | **phase type** | docs |
