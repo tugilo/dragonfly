@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Meeting;
 use App\Models\MeetingMinute;
+use App\Support\MeetingDisplay;
 use Illuminate\Console\Command;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -84,10 +85,18 @@ class ImportChapterMinutesCommand extends Command
      */
     private function collectMarkdownFiles(string $directory): array
     {
-        $files = glob(rtrim($directory, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'chapter_weekly*.md') ?: [];
+        $files = glob(rtrim($directory, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'chapter_*.md') ?: [];
         sort($files);
 
-        return array_values(array_filter($files, fn (string $f) => is_file($f) && is_readable($f)));
+        return array_values(array_filter($files, function (string $f): bool {
+            if (! is_file($f) || ! is_readable($f)) {
+                return false;
+            }
+            $base = basename($f);
+
+            return str_starts_with($base, 'chapter_weekly')
+                || str_starts_with($base, 'chapter_bod');
+        }));
     }
 
     private function importFile(string $absolutePath): int
@@ -107,23 +116,10 @@ class ImportChapterMinutesCommand extends Command
             return self::FAILURE;
         }
 
-        $meetingNumber = $this->option('meeting_number');
-        if ($meetingNumber !== null && $meetingNumber !== '') {
-            if (! ctype_digit((string) $meetingNumber) || (int) $meetingNumber <= 0) {
-                $this->error('--meeting_number must be a positive integer.');
-
-                return self::FAILURE;
-            }
-            $number = (int) $meetingNumber;
-        } else {
-            $rawNumber = $frontMatter['meeting_number'] ?? null;
-            if (! is_numeric($rawNumber) || (int) $rawNumber <= 0) {
-                $this->error("meeting_number is required in front matter or --meeting_number: {$absolutePath}");
-
-                return self::FAILURE;
-            }
-            $number = (int) $rawNumber;
-        }
+        $docType = $this->stringOrNull($frontMatter['doc_type'] ?? null);
+        $sessionType = $this->stringOrNull($frontMatter['session_type'] ?? null)
+            ?? MeetingDisplay::sessionTypeFromDocType($docType)
+            ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY;
 
         $heldOn = $this->option('held_on');
         if ($heldOn === null || $heldOn === '') {
@@ -135,23 +131,58 @@ class ImportChapterMinutesCommand extends Command
             return self::FAILURE;
         }
 
+        $number = null;
+        if (MeetingDisplay::isNumberedSession($sessionType)) {
+            $meetingNumber = $this->option('meeting_number');
+            if ($meetingNumber !== null && $meetingNumber !== '') {
+                if (! ctype_digit((string) $meetingNumber) || (int) $meetingNumber <= 0) {
+                    $this->error('--meeting_number must be a positive integer.');
+
+                    return self::FAILURE;
+                }
+                $number = (int) $meetingNumber;
+            } else {
+                $rawNumber = $frontMatter['meeting_number'] ?? null;
+                if (! is_numeric($rawNumber) || (int) $rawNumber <= 0) {
+                    $this->error("meeting_number is required in front matter or --meeting_number: {$absolutePath}");
+
+                    return self::FAILURE;
+                }
+                $number = (int) $rawNumber;
+            }
+        }
+
         $sourcePath = $this->toRepoRelativePath($absolutePath);
         $now = now();
 
-        $meeting = Meeting::updateOrCreate(
-            ['number' => $number],
-            [
-                'held_on' => $heldOn,
-                'name' => sprintf('第%d回定例会', $number),
-            ]
-        );
+        if (MeetingDisplay::isNumberedSession($sessionType)) {
+            $meeting = Meeting::updateOrCreate(
+                ['number' => $number],
+                [
+                    'session_type' => MeetingDisplay::SESSION_CHAPTER_WEEKLY,
+                    'held_on' => $heldOn,
+                    'name' => MeetingDisplay::defaultName(MeetingDisplay::SESSION_CHAPTER_WEEKLY, $number),
+                ]
+            );
+        } else {
+            $meeting = Meeting::updateOrCreate(
+                [
+                    'session_type' => $sessionType,
+                    'held_on' => $heldOn,
+                ],
+                [
+                    'number' => null,
+                    'name' => MeetingDisplay::defaultName($sessionType, null),
+                ]
+            );
+        }
 
         MeetingMinute::updateOrCreate(
             ['meeting_id' => $meeting->id],
             [
                 'body_markdown' => trim($body),
                 'source_path' => $sourcePath,
-                'doc_type' => $this->stringOrNull($frontMatter['doc_type'] ?? null),
+                'doc_type' => $docType,
                 'session_date' => $heldOn,
                 'session_time_jst' => $this->stringOrNull($frontMatter['session_time_jst'] ?? null),
                 'session_time_note' => $this->stringOrNull($frontMatter['session_time_note'] ?? null),
@@ -162,7 +193,7 @@ class ImportChapterMinutesCommand extends Command
             ]
         );
 
-        $this->line("  #{$number} ({$heldOn}) ← {$sourcePath}");
+        $this->line('  '.MeetingDisplay::displayLabel($meeting)." ({$heldOn}) ← {$sourcePath}");
 
         return self::SUCCESS;
     }

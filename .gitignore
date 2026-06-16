@@ -11,6 +11,10 @@ www/.env
 # プロジェクトルート
 project.env
 
+# Claude Code（個人設定・ローカル上書き）
+.claude/settings.local.json
+.claude/*.local.json
+
 # docker volume
 db_data
 

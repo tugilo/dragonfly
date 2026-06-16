@@ -18,6 +18,7 @@ import {
     formatMemberWithChapterPrimary,
 } from '../utils/memberDisplay';
 import { religoFetch } from '../religoApiFetch';
+import { meetingDisplayLabel } from '../meetingLabel';
 
 async function fetchJson(url) {
     const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
@@ -353,10 +354,10 @@ export function OneToOneCreateScheduleFields({ duration, onDurationChange }) {
 
 export function meetingOptionLabel(record) {
     if (!record) return '';
-    const num = record.number != null ? record.number : '—';
+    const label = record.display_label ?? meetingDisplayLabel(record);
     const held = record.held_on ?? '—';
-    const name = record.name ?? '';
-    return `第${num}回 / ${held} / ${name}`;
+    const name = record.name && record.number == null ? ` / ${record.name}` : '';
+    return `${label} / ${held}${name}`;
 }
 
 /** GET /api/meetings を Autocomplete で選択（ONETOONES_CREATE_UX_P1） */

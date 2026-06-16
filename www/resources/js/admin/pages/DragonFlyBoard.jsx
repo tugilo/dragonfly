@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { meetingListLabel, meetingDisplayLabel } from '../meetingLabel';
 import {
     Box,
     Stack,
@@ -712,6 +713,40 @@ export default function DragonFlyBoard() {
         );
     };
 
+    /** 直前の BO から member_ids / notes を完全上書きコピー（BO2 以降） */
+    const copyBoFromPreviousRoom = (targetRoomLabel, prevRoomLabel, targetDisplayLabel) => {
+        setDirty(true);
+        setRoundsEdit((prev) => {
+            const r0 = prev[0];
+            const rs = r0?.rooms ?? [];
+            const prevRoom = rs.find((r) => r.room_label === prevRoomLabel);
+            const rawPrevIds = prevRoom?.member_ids ?? [];
+            const filteredIds = filterBoAssignableMemberIds(rawPrevIds, membersById);
+            const dropped = rawPrevIds.length - filteredIds.length;
+            if (dropped > 0) {
+                setSnackbarMessage(
+                    `${targetDisplayLabel} には割当可能なメンバーのみコピーしました（${dropped}名を除外）。`
+                );
+            }
+            const targetCopy = prevRoom
+                ? {
+                    room_label: targetRoomLabel,
+                    notes: prevRoom.notes ?? '',
+                    member_ids: filteredIds,
+                }
+                : { room_label: targetRoomLabel, notes: '', member_ids: [] };
+            const nextRooms = rs
+                .filter((r) => r.room_label !== targetRoomLabel)
+                .concat(targetCopy)
+                .sort(
+                    (a, b) =>
+                        parseInt(String(a.room_label).replace(/^BO/, ''), 10) -
+                        parseInt(String(b.room_label).replace(/^BO/, ''), 10)
+                );
+            return [{ ...r0, rooms: nextRooms }];
+        });
+    };
+
     const saveRounds = async () => {
         if (!selectedMeetingId) return;
         const rooms = roundsEdit[0]?.rooms ?? [];
@@ -1064,7 +1099,7 @@ export default function DragonFlyBoard() {
                                 <MenuItem value="">例会を選択</MenuItem>
                                 {meetings.map((m) => (
                                     <MenuItem key={m.id} value={String(m.id)}>
-                                        #{m.number} — {m.held_on}
+                                        {meetingListLabel(m)}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -1141,40 +1176,24 @@ export default function DragonFlyBoard() {
                                                         {boDisplayLabel}
                                                     </Typography>
                                                     <Stack direction="row" spacing={0.5} alignItems="center">
-                                                        {roomLabel === 'BO2' && (() => {
-                                                            const bo1 = rooms.find((r) => r.room_label === 'BO1');
-                                                            return bo1 ? (
+                                                        {roomIndex >= 1 && (() => {
+                                                            const prevRoom = rooms[roomIndex - 1];
+                                                            const prevLabel = prevRoom?.room_label;
+                                                            const prevDisplayLabel = `BO${roomIndex}`;
+                                                            return prevLabel ? (
                                                                 <Button
                                                                     size="small"
                                                                     variant="outlined"
                                                                     sx={{ fontSize: 11 }}
-                                                                    onClick={() => {
-                                                                        setDirty(true);
-                                                                        setRoundsEdit((prev) => {
-                                                                            const r0 = prev[0];
-                                                                            const rs = r0?.rooms ?? [];
-                                                                            const bo1Room = rs.find((r) => r.room_label === 'BO1');
-                                                                            const rawBo1Ids = bo1Room?.member_ids ?? [];
-                                                                            const filteredIds = filterBoAssignableMemberIds(rawBo1Ids, membersById);
-                                                                            const dropped = rawBo1Ids.length - filteredIds.length;
-                                                                            if (dropped > 0) {
-                                                                                setSnackbarMessage(
-                                                                                    `BO2 には割当可能なメンバーのみコピーしました（${dropped}名を除外）。`
-                                                                                );
-                                                                            }
-                                                                            const bo2Copy = bo1Room
-                                                                                ? {
-                                                                                    room_label: 'BO2',
-                                                                                    notes: bo1Room.notes ?? '',
-                                                                                    member_ids: filteredIds,
-                                                                                }
-                                                                                : { room_label: 'BO2', notes: '', member_ids: [] };
-                                                                            const nextRooms = rs.filter((r) => r.room_label !== 'BO2').concat(bo2Copy);
-                                                                            return [{ ...r0, rooms: nextRooms }];
-                                                                        });
-                                                                    }}
+                                                                    onClick={() =>
+                                                                        copyBoFromPreviousRoom(
+                                                                            roomLabel,
+                                                                            prevLabel,
+                                                                            boDisplayLabel
+                                                                        )
+                                                                    }
                                                                 >
-                                                                    BO1→BO2 コピー
+                                                                    {prevDisplayLabel}→{boDisplayLabel} コピー
                                                                 </Button>
                                                             ) : null;
                                                         })()}
@@ -1453,7 +1472,7 @@ export default function DragonFlyBoard() {
                                                     </Typography>
                                                     <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
                                                         直近同室: {summary.last_same_room_meeting
-                                                            ? `#${summary.last_same_room_meeting.number ?? ''} (${summary.last_same_room_meeting.held_on ?? ''})`
+                                                            ? `${summary.last_same_room_meeting.display_label ?? (summary.last_same_room_meeting.number != null ? `第${summary.last_same_room_meeting.number}回` : summary.last_same_room_meeting.name ?? '—')} (${summary.last_same_room_meeting.held_on ?? ''})`
                                                             : '—'}
                                                     </Typography>
                                                     <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
@@ -1706,7 +1725,7 @@ export default function DragonFlyBoard() {
                 <DialogContent>
                     {memoContextTargetMemberId != null && (
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
+                            Meeting {meetingDisplayLabel(selectedMeeting) || `#${memoContextMeetingId}`} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
                         </Typography>
                     )}
                     <FormControl fullWidth size="small" sx={{ mt: 1 }} disabled={memoContextTargetMemberId != null}>

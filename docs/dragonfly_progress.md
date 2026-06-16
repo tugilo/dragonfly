@@ -8,6 +8,14 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-16 18:06 JST | **Deploy fix (2):** `ra-ui-materialui` 解決失敗対策。毎回 `npm cache clean` + クリーン `npm ci`、vite/ra-ui-materialui 検証・2回リトライ。`--prefer-offline` 廃止。 |
+| 2026-06-16 18:01 JST | **Deploy fix:** develop CI `vite: not found` 対策。`.github/workflows/deploy.yml` で `NODE_ENV=development` + `npm ci --include=dev`、`node_modules/.bin/vite` 存在チェック。`docs/DEPLOYMENT.md` トラブルシュート追記。 |
+| 2026-06-16 17:55 JST | **Phase 221 Claude Code セットアップ（docs）完了・develop push:** `docs/AI_TOOLING.md`・`CLAUDE.md`・`.claude/settings.json` + Skills 12 本（phase-start 等）。`.cursorrules` 更新。INDEX・PHASE_REGISTRY・REPORT 同期。 |
+| 2026-06-16 17:16 JST | **DB一括同期・本番リプレイス:** 未反映の定例会議事録（第208–211回・6/16モメンタム・7/28 BOD）と 1to1 notes（44件）を `import-chapter-minutes` / `import-1to1-notes` でローカル反映。`meetings.session_type` 対応済み（モメンタム `id=16`・BOD `id=17`）。`make db-export`（1544429 bytes）→ `make db-push TARGET=prod`（バックアップ `backups/prod_20260616_171533.sql`）。テスト 482 passed。develop へ push。 |
+| 2026-06-16 13:38 JST | **モメンタムトレーニング議事録反映:** [`chapter_weekly_20260616.md`](meetings/chapter/chapter_weekly_20260616.md) に Zoom 文字起こし要約を推敲・校正（BOD準備・75名目標・**百華繚凛**・BOR共有項目・3RF・コーヒーセッション・EOD賞賛・イベント等）。`import-chapter-minutes` で Religo 同期。モメンタムに加え **BOD（2026-07-28）** も `meeting_number` なし。`chapter/README.md`・SPEC-014・[`chapter_bod_20260728.md`](meetings/chapter/chapter_bod_20260728.md) プレースホルダー。`docs/INDEX.md` 同期。 |
+| 2026-06-16 09:53 JST | **Phase 220 meetings session_type:** `meetings.session_type` 追加・`number` nullable。モメンタム/BOD の議事録・参加者 CSV 取り込み、Meetings UI 表示ラベル（`MeetingDisplay` / `meetingLabel.js`）。誤登録 `number=212` をモメンタム行へ移行。 |
+| 2026-06-16 09:34 JST | **モメンタムは第212回ではない:** 2026-06-16 を定例会回数外（`doc_type: chapter_momentum`）に修正。前回=第211回、次回定例会=第212回（6/23予定）。Religo 誤登録 `meetings.number=212` を削除。**212** は次回定例会用に確保。CSV→`dragonfly_momentum_20260616_members_only.csv`。`docs/INDEX.md` 同期。 |
+| 2026-06-16 08:51 JST | **Phase 219 BO 3枠以上保存:** `MeetingBreakoutService` / `UpdateMeetingBreakoutsRequest` で BO1..BO20 を PUT/GET 永続化。payload 外 BO は削除。Connections に BO2 以降「直前 BO→現在 BO コピー」一般化。テスト 479 passed。 |
 | 2026-06-13 09:02 JST | **1to1議事録・DB同期 統合コミット:** 飯田千帆（鑑定質問リスト・事前送付文案・`id=69`）、清原佳彩美（Zoom誤記校正・`id=70`）、増本重孝（`id=76`）、吉田拓磨（`id=77`）の議事録更新。`www/database/sync/dragonfly.sql` 同期。`docs/INDEX.md` に Religo id 追記。develop コミット・push、続けて develop→main 反映予定。 |
 | 2026-06-13 09:00 JST | **飯田千帆 121 notes DB再取り込み・本番反映:** [`meetings/1to1/1to1_iida_chiho_sui.md`](meetings/1to1/1to1_iida_chiho_sui.md) の最新Markdown（6/22鑑定質問リスト・事前送付文案）を `one_to_ones.id=69` の `notes` へ再取り込み（16862→19889字）。`make db-export` で `www/database/sync/dragonfly.sql` 更新後、`make db-push TARGET=prod` で本番 `religo_app` をローカルDBから上書き反映。リモートバックアップ: `backups/prod_20260613_085953.sql`。 |
 | 2026-06-13 08:48 JST | **飯田千帆 鑑定事前送付文案を調整:** [`meetings/1to1/1to1_iida_chiho_sui.md`](meetings/1to1/1to1_iida_chiho_sui.md) の送付文案を、質問リストを先に押し出すより、鑑定前に必要な情報・整理しておくことがあるか千帆さんへ確認する流れに変更。 |

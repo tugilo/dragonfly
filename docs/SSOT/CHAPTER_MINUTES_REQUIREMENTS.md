@@ -16,6 +16,19 @@
 - 管理画面からの議事録編集
 - DB → Markdown の書き出し
 - `contact_memos`（例会メモ）との統合
+- **モメンタムトレーニング・BOD 等、定例会回数外イベント** の `meetings.number` 自動採番（`meeting_number` なし Markdown は SSOT のみ。取り込みコマンドは対象外）
+
+### 定例会回数に含めないイベント
+
+| 種別 | `doc_type` | `meeting_number` | DB 取り込み |
+|------|------------|------------------|-------------|
+| 週次定例会 | `chapter_weekly` | 必須 | 可 |
+| モメンタムトレーニング | `chapter_momentum` | 付けない | 不可（エラー） |
+| BOD | `chapter_bod` | 付けない | 不可（エラー） |
+
+例: DragonFly **2026-06-16** モメンタムは **第212回ではない**。**2026-07-28** BOD も同様。次の定例会 **第212回** は **2026-06-23**（予定）。
+
+詳細: [meetings/chapter/README.md](../meetings/chapter/README.md)
 
 ---
 

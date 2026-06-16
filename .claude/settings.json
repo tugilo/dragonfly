@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "Bash(docker compose *)",
+      "Bash(make *)",
+      "Bash(TZ=Asia/Tokyo date *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(git add *)"
+    ],
+    "ask": [
+      "Write(**)",
+      "Edit(**)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(make db-push *)",
+      "Bash(make db-pull *)"
+    ],
+    "deny": [
+      "Read(./project.env)",
+      "Read(./www/.env)",
+      "Read(./www/.env.*)",
+      "Read(./secrets/**)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(composer *)",
+      "Bash(sed *)",
+      "Bash(rm -rf *)"
+    ]
+  }
+}
