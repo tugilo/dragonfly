@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\MeetingDisplay;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +14,7 @@ class Meeting extends Model
 
     protected $fillable = [
         'number',
+        'session_type',
         'held_on',
         'name',
     ];
@@ -62,5 +64,15 @@ class Meeting extends Model
     public function meetingMinute(): HasOne
     {
         return $this->hasOne(MeetingMinute::class);
+    }
+
+    public function isNumberedChapterWeekly(): bool
+    {
+        return MeetingDisplay::isNumberedSession($this->session_type);
+    }
+
+    public function displayLabel(): string
+    {
+        return MeetingDisplay::displayLabel($this);
     }
 }

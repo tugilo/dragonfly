@@ -12,6 +12,7 @@ use App\Models\Meeting;
 use App\Models\MeetingCsvApplyLog;
 use App\Models\MeetingMinute;
 use App\Models\Participant;
+use App\Support\MeetingDisplay;
 use App\Services\Religo\CandidateMemberMatchService;
 use App\Services\Religo\MeetingBreakoutService;
 use App\Services\Religo\ReferralSuggestionStaleIndexEnricher;
@@ -53,8 +54,10 @@ class MeetingController extends Controller
         if (is_string($q) && trim($q) !== '') {
             $q = trim($q);
             $query->where(function ($qb) use ($q) {
-                $qb->where('meetings.number', 'like', '%' . $q . '%')
-                    ->orWhereRaw('DATE(meetings.held_on) LIKE ?', [$q . '%']);
+                $qb->where('meetings.number', 'like', '%'.$q.'%')
+                    ->orWhere('meetings.name', 'like', '%'.$q.'%')
+                    ->orWhere('meetings.session_type', 'like', '%'.$q.'%')
+                    ->orWhereRaw('DATE(meetings.held_on) LIKE ?', [$q.'%']);
             });
         }
 
@@ -112,14 +115,16 @@ class MeetingController extends Controller
     public function store(StoreMeetingRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $number = (int) $validated['number'];
+        $sessionType = (string) ($validated['session_type'] ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY);
+        $number = $request->isNumberedSession() ? (int) $validated['number'] : null;
         $name = $validated['name'] ?? null;
         if ($name === null || trim((string) $name) === '') {
-            $name = sprintf('第%d回定例会', $number);
+            $name = MeetingDisplay::defaultName($sessionType, $number);
         }
 
         $meeting = Meeting::query()->create([
             'number' => $number,
+            'session_type' => $sessionType,
             'held_on' => $validated['held_on'],
             'name' => $name,
         ]);
@@ -143,10 +148,11 @@ class MeetingController extends Controller
         }
 
         $validated = $request->validated();
-        $number = (int) $validated['number'];
+        $sessionType = (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY);
+        $number = MeetingDisplay::isNumberedSession($sessionType) ? (int) $validated['number'] : null;
         $name = $validated['name'] ?? null;
         if ($name === null || trim((string) $name) === '') {
-            $name = sprintf('第%d回定例会', $number);
+            $name = MeetingDisplay::defaultName($sessionType, $number);
         }
 
         $meeting->update([
@@ -166,13 +172,15 @@ class MeetingController extends Controller
     /**
      * GET index / POST store / PATCH update で返す一覧1行の形（name を含む）.
      *
-     * @return array{id: int, number: int, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool, has_minutes: bool}
+     * @return array{id: int, number: int|null, session_type: string, display_label: string, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool, has_minutes: bool}
      */
     private function meetingToListRowPayload(Meeting $m): array
     {
         return [
             'id' => $m->id,
             'number' => $m->number,
+            'session_type' => (string) ($m->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
+            'display_label' => MeetingDisplay::displayLabel($m),
             'held_on' => $m->held_on?->format('Y-m-d'),
             'name' => $m->name,
             'breakout_count' => (int) $m->breakout_rooms_count,
@@ -214,7 +222,10 @@ class MeetingController extends Controller
         $nextMeetingPayload = $nextMeeting ? [
             'id' => $nextMeeting->id,
             'number' => $nextMeeting->number,
+            'session_type' => (string) ($nextMeeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
+            'display_label' => MeetingDisplay::displayLabel($nextMeeting),
             'held_on' => $nextMeeting->held_on?->format('Y-m-d'),
+            'name' => $nextMeeting->name,
         ] : null;
 
         return response()->json([
@@ -341,6 +352,8 @@ class MeetingController extends Controller
             'meeting' => [
                 'id' => $meeting->id,
                 'number' => $meeting->number,
+                'session_type' => (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
+                'display_label' => MeetingDisplay::displayLabel($meeting),
                 'held_on' => $meeting->held_on?->format('Y-m-d'),
                 'name' => $meeting->name,
                 'breakout_count' => (int) $meeting->breakout_rooms_count,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { meetingListLabel, meetingDisplayLabel } from '../meetingLabel';
 import {
     Box,
     Stack,
@@ -1098,7 +1099,7 @@ export default function DragonFlyBoard() {
                                 <MenuItem value="">例会を選択</MenuItem>
                                 {meetings.map((m) => (
                                     <MenuItem key={m.id} value={String(m.id)}>
-                                        #{m.number} — {m.held_on}
+                                        {meetingListLabel(m)}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -1471,7 +1472,7 @@ export default function DragonFlyBoard() {
                                                     </Typography>
                                                     <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
                                                         直近同室: {summary.last_same_room_meeting
-                                                            ? `#${summary.last_same_room_meeting.number ?? ''} (${summary.last_same_room_meeting.held_on ?? ''})`
+                                                            ? `${summary.last_same_room_meeting.display_label ?? (summary.last_same_room_meeting.number != null ? `第${summary.last_same_room_meeting.number}回` : summary.last_same_room_meeting.name ?? '—')} (${summary.last_same_room_meeting.held_on ?? ''})`
                                                             : '—'}
                                                     </Typography>
                                                     <Typography sx={{ fontSize: 11, color: 'text.secondary', mb: 0.5 }}>
@@ -1724,7 +1725,7 @@ export default function DragonFlyBoard() {
                 <DialogContent>
                     {memoContextTargetMemberId != null && (
                         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            Meeting #{selectedMeeting?.number ?? memoContextMeetingId} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
+                            Meeting {meetingDisplayLabel(selectedMeeting) || `#${memoContextMeetingId}`} / {memoContextRoundLabel || 'BO'} / {memoContextRoomLabel || 'Room'} / 相手: {members.find((m) => m.id === memoContextTargetMemberId)?.name ?? `#${memoContextTargetMemberId}`}（例会メモ）
                         </Typography>
                     )}
                     <FormControl fullWidth size="small" sx={{ mt: 1 }} disabled={memoContextTargetMemberId != null}>

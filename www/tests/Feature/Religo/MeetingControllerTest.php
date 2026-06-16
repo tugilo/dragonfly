@@ -598,11 +598,58 @@ class MeetingControllerTest extends TestCase
         $res->assertJsonValidationErrors(['number']);
     }
 
-    public function test_store_requires_number_and_held_on(): void
+    public function test_store_requires_number_and_held_on_for_chapter_weekly(): void
     {
         $this->postJson('/api/meetings', [])->assertUnprocessable()->assertJsonValidationErrors(['number', 'held_on']);
         $this->postJson('/api/meetings', ['number' => 930])->assertUnprocessable()->assertJsonValidationErrors(['held_on']);
         $this->postJson('/api/meetings', ['held_on' => '2026-01-01'])->assertUnprocessable()->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_store_creates_momentum_training_without_number(): void
+    {
+        $res = $this->postJson('/api/meetings', [
+            'session_type' => 'momentum_training',
+            'held_on' => '2026-06-16',
+        ]);
+        $res->assertCreated();
+        $res->assertJsonPath('number', null);
+        $res->assertJsonPath('session_type', 'momentum_training');
+        $res->assertJsonPath('display_label', 'モメンタムトレーニング');
+        $res->assertJsonPath('name', 'モメンタムトレーニング');
+        $this->assertTrue(
+            Meeting::query()->whereNull('number')->where('session_type', 'momentum_training')->whereDate('held_on', '2026-06-16')->exists()
+        );
+    }
+
+    public function test_store_prohibits_number_for_momentum_training(): void
+    {
+        $res = $this->postJson('/api/meetings', [
+            'session_type' => 'momentum_training',
+            'number' => 999,
+            'held_on' => '2026-06-16',
+        ]);
+        $res->assertUnprocessable();
+        $res->assertJsonValidationErrors(['number']);
+    }
+
+    public function test_index_includes_display_label_for_special_meeting(): void
+    {
+        $id = (int) DB::table('meetings')->insertGetId([
+            'number' => null,
+            'session_type' => 'momentum_training',
+            'held_on' => '2026-06-16',
+            'name' => 'モメンタムトレーニング',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $res = $this->getJson('/api/meetings');
+        $res->assertOk();
+        $row = collect($res->json())->firstWhere('id', $id);
+        $this->assertNotNull($row);
+        $this->assertNull($row['number']);
+        $this->assertSame('momentum_training', $row['session_type']);
+        $this->assertSame('モメンタムトレーニング', $row['display_label']);
     }
 
     public function test_update_changes_number_held_on_name(): void

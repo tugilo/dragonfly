@@ -23,7 +23,7 @@ related_proposals: "docs/proposals/wordpress_bulletin_client_proposal_skeleton.m
 **文書の位置づけ:** BNI DragonFly メンバー・西浦雅さんとの 1to1 を **1ファイルで時系列管理**する。  
 **整理:** tugilo（次廣 淳）× **BNI DragonFly** — **クライアント案件（Draci / WordPress 会員サイト改善）** と、**株式会社Myria-mu の外構SNS集客・施工店送客・インフルエンサー報酬管理の業務システム相談**を記録。  
 **日時:** 第1回 **2026-06-04（水）JST 15:00–16:00** 実施済み（途中 PC 切替のため再接続あり）。第2回 **2026-06-14（日）JST 20:00〜** 実施済み（終了時刻 TODO）。  
-**Religo 1to1 レコード:** 第1回 `one_to_ones.id` = **66**／第2回 TODO
+**Religo 1to1 レコード:** 第1回 `one_to_ones.id` = **66**／第2回 `one_to_ones.id` = **78**
 
 **案件の位置づけ**
 
@@ -207,7 +207,7 @@ related_proposals: "docs/proposals/wordpress_bulletin_client_proposal_skeleton.m
 
 - **日時:** 2026-06-14（日）JST **20:00〜**（終了時刻 TODO）
 - **実施方法:** Zoom（ユーザー提供メモ・Zoom要約ベース）
-- **Religo 1to1 レコード:** TODO
+- **Religo 1to1 レコード:** `one_to_ones.id` = **78**
 - **主題:** 株式会社Myria-mu の外構SNS集客・施工店送客・インフルエンサー報酬管理を、管理システムとして構築できるかの打診
 
 ---

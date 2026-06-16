@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\MemberRole;
 use App\Models\Participant;
 use App\Models\Role;
+use App\Support\MeetingDisplay;
 use Illuminate\Console\Command;
 
 /**
@@ -18,15 +19,18 @@ use Illuminate\Console\Command;
  *
  * 使用例:
  *   php artisan dragonfly:import-participants-csv 200 database/csv/dragonfly_59people.csv --held_on=2026-03-10
+ *   php artisan dragonfly:import-participants-csv - database/csv/dragonfly_momentum_20260616_members_only.csv --session-type=momentum_training --held_on=2026-06-16
  */
 class ImportParticipantsCsvCommand extends Command
 {
     protected $signature = 'dragonfly:import-participants-csv
-                            {meeting_number : 定例会回番号（例: 200）}
+                            {meeting_number : 定例会回番号。番号なしイベントは - を指定}
                             {csv_path : CSVファイルパス}
-                            {--held_on= : 開催日 YYYY-MM-DD}';
+                            {--session-type=chapter_weekly : chapter_weekly|momentum_training|business_open_day}
+                            {--held_on= : 開催日 YYYY-MM-DD}
+                            {--name= : 表示名（番号なしイベント用）}';
 
-    protected $description = '定例会参加者CSVを members / participants に投入する（第200回等で再利用可）';
+    protected $description = '定例会・チャプターイベント参加者CSVを members / participants に投入する';
 
     private const REQUIRED_HEADERS = ['種別', '名前'];
 
@@ -42,11 +46,36 @@ class ImportParticipantsCsvCommand extends Command
 
     public function handle(): int
     {
-        $meetingNumber = $this->argument('meeting_number');
-        $csvPath = $this->argument('csv_path');
+        $meetingNumberArg = (string) $this->argument('meeting_number');
+        $csvPath = (string) $this->argument('csv_path');
+        $sessionType = (string) $this->option('session-type');
         $heldOn = $this->option('held_on');
+        $displayName = $this->option('name');
 
-        if (! $this->validateMeetingNumber($meetingNumber)) {
+        if (! in_array($sessionType, MeetingDisplay::SESSION_TYPES, true)) {
+            $this->error('--session-type must be one of: '.implode(', ', MeetingDisplay::SESSION_TYPES));
+
+            return self::FAILURE;
+        }
+
+        $meetingNumber = null;
+        if ($meetingNumberArg !== '' && $meetingNumberArg !== '-') {
+            if (! ctype_digit((string) $meetingNumberArg) || (int) $meetingNumberArg <= 0) {
+                $this->error('meeting_number must be a positive integer, or - for unnumbered events.');
+
+                return self::FAILURE;
+            }
+            $meetingNumber = (int) $meetingNumberArg;
+            $sessionType = MeetingDisplay::SESSION_CHAPTER_WEEKLY;
+        } elseif (! MeetingDisplay::isNumberedSession($sessionType)) {
+            if (! is_string($heldOn) || ! preg_match('/^\d{4}-\d{2}-\d{2}$/', $heldOn)) {
+                $this->error('For events without meeting_number, --held_on=YYYY-MM-DD is required.');
+
+                return self::FAILURE;
+            }
+        } else {
+            $this->error('meeting_number is required for chapter_weekly, or use --session-type=momentum_training|business_open_day with --held_on.');
+
             return self::FAILURE;
         }
 
@@ -72,7 +101,7 @@ class ImportParticipantsCsvCommand extends Command
         // 同一 member.id の氏名が別人で上書きされ、one_to_ones 等の FK がずれるのを防ぐ）
         $rows = $this->reorderRowsForStableMemberImport($rows);
 
-        $meeting = $this->resolveMeeting((int) $meetingNumber, $heldOn);
+        $meeting = $this->resolveMeeting($sessionType, $meetingNumber, $heldOn, is_string($displayName) ? $displayName : null);
         $nameToMemberId = [];
         $visitorIndex = 0;
         $guestIndex = 0;
@@ -100,23 +129,12 @@ class ImportParticipantsCsvCommand extends Command
             );
         }
 
-        $this->info("Imported {$meeting->number} meeting: ".count($rows).' participants.');
+        $this->info('Imported '.MeetingDisplay::displayLabel($meeting)." (id={$meeting->id}): ".count($rows).' participants.');
         if ($this->warningCount > 0) {
             $this->warn("Warnings: {$this->warningCount}");
         }
 
         return self::SUCCESS;
-    }
-
-    private function validateMeetingNumber(string $meetingNumber): bool
-    {
-        if (! ctype_digit($meetingNumber) || (int) $meetingNumber <= 0) {
-            $this->error('meeting_number must be a positive integer.');
-
-            return false;
-        }
-
-        return true;
     }
 
     private function resolveCsvPath(string $csvPath): ?string
@@ -240,24 +258,46 @@ class ImportParticipantsCsvCommand extends Command
         return $content;
     }
 
-    private function resolveMeeting(int $meetingNumber, ?string $heldOn): Meeting
+    private function resolveMeeting(string $sessionType, ?int $meetingNumber, ?string $heldOn, ?string $displayName): Meeting
     {
-        $attrs = [
-            'held_on' => $heldOn ?? now()->toDateString(),
-            'name' => "第{$meetingNumber}回定例会",
-        ];
-        $meeting = Meeting::firstOrCreate(
-            ['number' => $meetingNumber],
-            $attrs
-        );
-        if ($heldOn !== null && $heldOn !== '') {
-            $current = $meeting->held_on?->format('Y-m-d');
-            if ($current !== $heldOn) {
-                $meeting->update(['held_on' => $heldOn, 'name' => $attrs['name']]);
+        if (MeetingDisplay::isNumberedSession($sessionType)) {
+            $attrs = [
+                'session_type' => MeetingDisplay::SESSION_CHAPTER_WEEKLY,
+                'held_on' => $heldOn ?? now()->toDateString(),
+                'name' => MeetingDisplay::defaultName(MeetingDisplay::SESSION_CHAPTER_WEEKLY, $meetingNumber),
+            ];
+            $meeting = Meeting::firstOrCreate(
+                ['number' => $meetingNumber],
+                $attrs
+            );
+            if ($heldOn !== null && $heldOn !== '') {
+                $current = $meeting->held_on?->format('Y-m-d');
+                if ($current !== $heldOn) {
+                    $meeting->update(['held_on' => $heldOn, 'name' => $attrs['name']]);
+                }
             }
+
+            return $meeting;
         }
 
-        return $meeting;
+        if ($heldOn === null || $heldOn === '') {
+            throw new \InvalidArgumentException('held_on is required for unnumbered events.');
+        }
+
+        $name = ($displayName !== null && trim($displayName) !== '')
+            ? trim($displayName)
+            : MeetingDisplay::defaultName($sessionType, null);
+
+        return Meeting::updateOrCreate(
+            [
+                'session_type' => $sessionType,
+                'held_on' => $heldOn,
+            ],
+            [
+                'number' => null,
+                'name' => $name,
+            ]
+        );
     }
 
     /**

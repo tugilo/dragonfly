@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNotify } from 'react-admin';
 import { religoFetch } from '../religoApiFetch';
+import { meetingDisplayLabel } from '../meetingLabel';
 import { ReferralSuggestionDialogCore } from '../components/ReferralSuggestionDialogCore';
 import {
     fetchMeetingReferralSuggestions,
@@ -51,8 +52,8 @@ export function MeetingReferralSuggestionDialog({ open, onClose, meeting, minute
         return generateMeetingReferralSuggestions(meetingId);
     }, [meetingId]);
 
-    const title = meeting?.number != null
-        ? `リファーラル提案 — 第${meeting.number}回`
+    const title = meeting
+        ? `リファーラル提案 — ${meeting.display_label ?? meetingDisplayLabel(meeting)}`
         : 'リファーラル提案（定例会）';
 
     let defaultIntroducedAt = '';

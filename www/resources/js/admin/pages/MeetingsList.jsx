@@ -49,6 +49,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import ArticleIcon from '@mui/icons-material/Article';
 import { religoFetch } from '../religoApiFetch';
+import { meetingDisplayLabel, meetingNumberCell, meetingShortTitle } from '../meetingLabel';
 import { MarkdownView } from '../components/MarkdownView';
 import { MeetingReferralSuggestionDialog } from './MeetingReferralSuggestionDialog';
 import {
@@ -457,6 +458,7 @@ function MeetingsListTopActions({ onMeetingCreated }) {
     const refresh = useRefresh();
     const notify = useNotify();
     const [createOpen, setCreateOpen] = useState(false);
+    const [sessionTypeInput, setSessionTypeInput] = useState('chapter_weekly');
     const [numberInput, setNumberInput] = useState('');
     const [heldOnInput, setHeldOnInput] = useState('');
     const [nameInput, setNameInput] = useState('');
@@ -468,10 +470,14 @@ function MeetingsListTopActions({ onMeetingCreated }) {
     };
 
     const submitCreate = async () => {
-        const num = parseInt(numberInput, 10);
-        if (Number.isNaN(num)) {
-            notify('番号は整数で入力してください', { type: 'warning' });
-            return;
+        const isNumbered = sessionTypeInput === 'chapter_weekly';
+        let num = null;
+        if (isNumbered) {
+            num = parseInt(numberInput, 10);
+            if (Number.isNaN(num)) {
+                notify('番号は整数で入力してください', { type: 'warning' });
+                return;
+            }
         }
         if (!heldOnInput || String(heldOnInput).trim() === '') {
             notify('開催日を入力してください', { type: 'warning' });
@@ -479,13 +485,17 @@ function MeetingsListTopActions({ onMeetingCreated }) {
         }
         setCreating(true);
         try {
-            const payload = { number: num, held_on: heldOnInput };
+            const payload = { session_type: sessionTypeInput, held_on: heldOnInput };
+            if (isNumbered) {
+                payload.number = num;
+            }
             if (nameInput.trim() !== '') {
                 payload.name = nameInput.trim();
             }
             await postMeeting(payload);
-            notify('例会を作成しました', { type: 'success' });
+            notify('集会を作成しました', { type: 'success' });
             setCreateOpen(false);
+            setSessionTypeInput('chapter_weekly');
             setNumberInput('');
             setHeldOnInput('');
             setNameInput('');
@@ -511,19 +521,35 @@ function MeetingsListTopActions({ onMeetingCreated }) {
                 <Button component={Link} to="/connections" variant="contained" size="small">🗺 Connectionsで編集</Button>
             </TopToolbar>
             <Dialog open={createOpen} onClose={handleCloseCreate} maxWidth="sm" fullWidth>
-                <DialogTitle>新規例会</DialogTitle>
+                <DialogTitle>新規集会</DialogTitle>
                 <DialogContent>
-                    <MuiTextField
-                        autoFocus
-                        margin="dense"
-                        label="例会番号（必須）"
-                        type="number"
-                        fullWidth
-                        value={numberInput}
-                        onChange={(e) => setNumberInput(e.target.value)}
-                        disabled={creating}
-                        sx={{ mt: 0.5 }}
-                    />
+                    <FormControl fullWidth margin="dense" sx={{ mt: 0.5 }}>
+                        <InputLabel id="create-session-type-label">種別</InputLabel>
+                        <Select
+                            labelId="create-session-type-label"
+                            label="種別"
+                            value={sessionTypeInput}
+                            onChange={(e) => setSessionTypeInput(e.target.value)}
+                            disabled={creating}
+                        >
+                            <MenuItem value="chapter_weekly">定例会（番号あり）</MenuItem>
+                            <MenuItem value="momentum_training">モメンタムトレーニング</MenuItem>
+                            <MenuItem value="business_open_day">BOD（ビジネスオープンデイ）</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {sessionTypeInput === 'chapter_weekly' && (
+                        <MuiTextField
+                            autoFocus
+                            margin="dense"
+                            label="例会番号（必須）"
+                            type="number"
+                            fullWidth
+                            value={numberInput}
+                            onChange={(e) => setNumberInput(e.target.value)}
+                            disabled={creating}
+                            sx={{ mt: 1 }}
+                        />
+                    )}
                     <MuiTextField
                         margin="dense"
                         label="開催日（必須）"
@@ -542,8 +568,12 @@ function MeetingsListTopActions({ onMeetingCreated }) {
                         value={nameInput}
                         onChange={(e) => setNameInput(e.target.value)}
                         disabled={creating}
-                        placeholder="例: 第200回定例会"
-                        helperText="未入力のときは「第N回定例会」になります（N＝例会番号）"
+                        placeholder={sessionTypeInput === 'chapter_weekly' ? '例: 第200回定例会' : '未入力時は種別の既定名'}
+                        helperText={
+                            sessionTypeInput === 'chapter_weekly'
+                                ? '未入力のときは「第N回定例会」になります（N＝例会番号）'
+                                : '番号なしイベント。未入力時は種別に応じた名称になります'
+                        }
                         sx={{ mt: 1 }}
                     />
                 </DialogContent>
@@ -651,7 +681,7 @@ function MeetingsStatsCards({ stats, loading, error }) {
         );
     }
     const nextLabel = stats.next_meeting
-        ? `#${stats.next_meeting.number} — ${stats.next_meeting.held_on ? new Date(stats.next_meeting.held_on).toLocaleDateString('ja-JP') : '—'}`
+        ? `${stats.next_meeting.display_label ?? meetingDisplayLabel(stats.next_meeting)} — ${stats.next_meeting.held_on ? new Date(stats.next_meeting.held_on).toLocaleDateString('ja-JP') : '—'}`
         : 'なし';
     return (
         <Grid container spacing={2} sx={{ px: 1, py: 1.5, mb: 1 }}>
@@ -1182,7 +1212,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                     <>
                         <Box sx={{ mb: 2 }}>
                             <Typography variant="subtitle1" fontWeight={700}>
-                                #{meeting.number}
+                                {meetingDisplayLabel(meeting)}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 {meeting.held_on ? new Date(meeting.held_on).toLocaleDateString('ja-JP') : '—'}
@@ -3220,7 +3250,7 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
         <Dialog open={minutesModalOpen} onClose={closeMinutesModal} maxWidth="md" fullWidth scroll="paper">
             <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: 1 }}>
                 <Typography component="span" variant="h6">
-                    議事録{meeting ? ` — #${meeting.number}` : ''}
+                    議事録{meeting ? ` — ${meetingDisplayLabel(meeting)}` : ''}
                 </Typography>
                 <IconButton size="small" onClick={closeMinutesModal} aria-label="閉じる">
                     <CloseIcon />
@@ -3461,10 +3491,14 @@ export function MeetingsList() {
 
     const submitMeetingEdit = useCallback(async () => {
         if (!editTargetMeeting?.id) return;
-        const num = parseInt(editNumberInput, 10);
-        if (Number.isNaN(num)) {
-            notify('番号は整数で入力してください', { type: 'warning' });
-            return;
+        const isNumbered = (editTargetMeeting.session_type ?? 'chapter_weekly') === 'chapter_weekly';
+        let num = null;
+        if (isNumbered) {
+            num = parseInt(editNumberInput, 10);
+            if (Number.isNaN(num)) {
+                notify('番号は整数で入力してください', { type: 'warning' });
+                return;
+            }
         }
         if (!editHeldOnInput || String(editHeldOnInput).trim() === '') {
             notify('開催日を入力してください', { type: 'warning' });
@@ -3472,7 +3506,10 @@ export function MeetingsList() {
         }
         setEditSaving(true);
         try {
-            const payload = { number: num, held_on: editHeldOnInput };
+            const payload = { held_on: editHeldOnInput };
+            if (isNumbered) {
+                payload.number = num;
+            }
             if (editNameInput.trim() !== '') {
                 payload.name = editNameInput.trim();
             }
@@ -3523,7 +3560,8 @@ export function MeetingsList() {
                 <Datagrid
                     rowClick={(id, resource, record) => openDetail(record)}
                 >
-                    <TextField source="number" label="番号" />
+                    <FunctionField label="番号" render={(r) => meetingNumberCell(r)} />
+                    <FunctionField label="表示" render={(r) => meetingDisplayLabel(r)} />
                     <FunctionField label="開催日" render={(r) => <HeldOnField record={r} />} />
                     <FunctionField label="BO数" render={(r) => <BreakoutCountField record={r} />} />
                     <FunctionField label="メモ" render={(r) => <HasMemoField record={r} />} />
@@ -3569,19 +3607,26 @@ export function MeetingsList() {
                 minutesMarkdown={referralMinutesMarkdown}
             />
             <Dialog open={editDialogOpen} onClose={closeEditDialog} maxWidth="sm" fullWidth>
-                <DialogTitle>例会を編集{editTargetMeeting ? ` — id ${editTargetMeeting.id}` : ''}</DialogTitle>
+                <DialogTitle>集会を編集{editTargetMeeting ? ` — ${meetingShortTitle(editTargetMeeting)}` : ''}</DialogTitle>
                 <DialogContent>
-                    <MuiTextField
-                        autoFocus
-                        margin="dense"
-                        label="例会番号（必須）"
-                        type="number"
-                        fullWidth
-                        value={editNumberInput}
-                        onChange={(e) => setEditNumberInput(e.target.value)}
-                        disabled={editSaving}
-                        sx={{ mt: 0.5 }}
-                    />
+                    {(editTargetMeeting?.session_type ?? 'chapter_weekly') === 'chapter_weekly' && (
+                        <MuiTextField
+                            autoFocus
+                            margin="dense"
+                            label="例会番号（必須）"
+                            type="number"
+                            fullWidth
+                            value={editNumberInput}
+                            onChange={(e) => setEditNumberInput(e.target.value)}
+                            disabled={editSaving}
+                            sx={{ mt: 0.5 }}
+                        />
+                    )}
+                    {(editTargetMeeting?.session_type ?? 'chapter_weekly') !== 'chapter_weekly' && (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 1 }}>
+                            種別: {meetingDisplayLabel(editTargetMeeting)}（番号なし）
+                        </Typography>
+                    )}
                     <MuiTextField
                         margin="dense"
                         label="開催日（必須）"
@@ -3601,7 +3646,11 @@ export function MeetingsList() {
                         onChange={(e) => setEditNameInput(e.target.value)}
                         disabled={editSaving}
                         placeholder="例: 第200回定例会"
-                        helperText="未入力のときは「第N回定例会」になります（N＝例会番号）"
+                        helperText={
+                            (editTargetMeeting?.session_type ?? 'chapter_weekly') === 'chapter_weekly'
+                                ? '未入力のときは「第N回定例会」になります（N＝例会番号）'
+                                : '番号なしイベントの表示名'
+                        }
                         sx={{ mt: 1 }}
                     />
                 </DialogContent>
@@ -3613,7 +3662,7 @@ export function MeetingsList() {
                 </DialogActions>
             </Dialog>
             <Dialog open={memoDialogOpen} onClose={closeMemoDialog} maxWidth="sm" fullWidth>
-                <DialogTitle>📝 例会メモ編集{memoTargetMeeting ? ` — #${memoTargetMeeting.number}` : ''}</DialogTitle>
+                <DialogTitle>📝 例会メモ編集{memoTargetMeeting ? ` — ${meetingShortTitle(memoTargetMeeting)}` : ''}</DialogTitle>
                 <DialogContent>
                     <MuiTextField
                         autoFocus
@@ -3641,7 +3690,7 @@ export function MeetingsList() {
                 </DialogActions>
             </Dialog>
             <Dialog open={pdfModalOpen} onClose={closePdfModal} maxWidth="sm" fullWidth>
-                <DialogTitle>参加者PDF登録{pdfTargetMeeting ? ` — #${pdfTargetMeeting.number}` : ''}</DialogTitle>
+                <DialogTitle>参加者PDF登録{pdfTargetMeeting ? ` — ${meetingShortTitle(pdfTargetMeeting)}` : ''}</DialogTitle>
                 <DialogContent>
                     <DialogContentText variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                         例会前日に届いた参加者一覧PDFをアップロードします。参加者の自動登録は P2 以降で対応予定です。

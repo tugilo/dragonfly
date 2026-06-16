@@ -71,12 +71,18 @@
 | [meetings/chapter/chapter_weekly_20260526.md](meetings/chapter/chapter_weekly_20260526.md) | **DragonFly 定例会 第209回 2026-05-26**（Zoom）。参加56・RF110・新メンバー2名承認（米沢・森園）・MP木村・中村・教育「紹介の解像度を上げる」・小中SS。次廣招待ビジター石原氏フォロー対象。 |
 | [meetings/chapter/chapter_weekly_20260602.md](meetings/chapter/chapter_weekly_20260602.md) | **DragonFly 定例会 第210回 2026-06-02**（Zoom）。RF146（内部16・外部130）・新メンバー木村アンナ承認・畑山/今西更新承認・MP田渕（庵治石）/松倉（エアロゲル透明断熱フィルム）・教育「3週間の配球」・次廣RF 9件で今週1位。 |
 | [meetings/chapter/chapter_weekly_20260609.md](meetings/chapter/chapter_weekly_20260609.md) | **DragonFly 定例会 第211回 2026-06-09**（Zoom）。RF134（内部19・外部115）・新規八田奈緒美・更新竹内駿太・MP倉持/佐藤・教育「バレーボールローテーション」・清原RF15件で1位・久米→原田約900万円RF確認・増本→次廣推薦の言葉・部屋9デモBOR。 |
+| [meetings/chapter/chapter_weekly_20260616.md](meetings/chapter/chapter_weekly_20260616.md) | **DragonFly モメンタムトレーニング 2026-06-16**（Zoom）。**定例会回数外**（9回目扱い）。前回定例会=第211回、次回=第212回（6/23予定）。メンバー53名（八田欠席）・ビジター/ゲストなし。 |
+| [meetings/chapter/chapter_weekly_20260616_momentum_script.md](meetings/chapter/chapter_weekly_20260616_momentum_script.md) | **モメンタムトレーニング進行原稿**（2026-06-16）。BOR 6テーマの冒頭・各室ガイド・締め。 |
+| [meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md](meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md) | **モメンタム BOR — 次廣個人原稿**（2026-06-16）。6テーマ各30秒版。メインプレ §4.1 反映。 |
+| [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（月）。**定例会回数外**。半期イベント。プレースホルダー。 |
+| [pdf/260616/dragonfly_momentum_20260616_members_only.csv](pdf/260616/dragonfly_momentum_20260616_members_only.csv) | モメンタムトレーニング参加者 CSV（メンバーのみ・八田欠席）。 |
 
 #### チーム MTG（docs/meetings/team/）
 
 | ファイル | 説明 |
 |----------|------|
 | [meetings/team/team_threebiz_20260609.md](meetings/team/team_threebiz_20260609.md) | **スリーバイス チームMTG 2026-06-09**（火 8:00–8:45 JST・Zoom）。**BOD（7/28）** 向け40人リスト戦略・チーム目標ビジター3〜4名・入会率10%・メンバー別リストレビュー・推薦の言葉・大名優勝特典。次廣×石原氏はチーム目標の半分見込み。 |
+| [meetings/team/team_threebiz_20260616.md](meetings/team/team_threebiz_20260616.md) | **スリーバイス チームMTG 2026-06-16**（火 8:00–・早期解散）。モメンタム週・カテゴリー設定ガイドライン・来週以降パーソナル軸セッション決定・横山氏カテゴリー変更提出方針。 |
 | [meetings/team/team_threebiz_20260602.md](meetings/team/team_threebiz_20260602.md) | **スリーバイス チームMTG 2026-06-02**（火 8:00–8:45 JST・定例会前）。**新メンバー 米澤 侑桂** 加入。**自己紹介・ビジネス紹介**から開始。次廣×米澤 **121 2026-04-08 実施済み**（`one_to_ones.id=12`）。MTG 後追記枠あり。 |
 | [meetings/team/team_threebiz_20260519.md](meetings/team/team_threebiz_20260519.md) | **スリーバイス チームMTG 2026-05-19**（火 8:00–8:45 JST・Zoom）。小中氏 AI/Claude Code 共有、BOD ビジター4名選抜（期限 **6/16**）、パワーチーム連携・セキュリティ議論。次廣×小中 ローカルLM 1to1 予定。 |
 

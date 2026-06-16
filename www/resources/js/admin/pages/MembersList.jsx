@@ -12,6 +12,7 @@ import {
     useGetList,
 } from 'react-admin';
 import { Link } from 'react-router-dom';
+import { meetingListLabel } from '../meetingLabel';
 import {
     Dialog,
     DialogTitle,
@@ -780,7 +781,7 @@ function MemoModal({ open, member, onClose, onSaved }) {
                         <Select value={meetingId} label="例会（任意）" onChange={(e) => setMeetingId(e.target.value)}>
                             <MenuItem value="">—</MenuItem>
                             {meetings.map((m) => (
-                                <MenuItem key={m.id} value={String(m.id)}>#{m.number} — {m.held_on}</MenuItem>
+                                <MenuItem key={m.id} value={String(m.id)}>{meetingListLabel(m)}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -887,7 +888,7 @@ function O2oModal({ open, member, onClose, onSaved }) {
                     <Select value={meetingId} label="関連例会（任意）" onChange={(e) => setMeetingId(e.target.value)}>
                         <MenuItem value="">—</MenuItem>
                         {meetings.map((m) => (
-                            <MenuItem key={m.id} value={String(m.id)}>#{m.number} — {m.held_on}</MenuItem>
+                            <MenuItem key={m.id} value={String(m.id)}>{meetingListLabel(m)}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
