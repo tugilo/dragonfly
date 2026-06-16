@@ -137,11 +137,14 @@ sudo systemctl reload apache2
 | 500 / 白画面 | `{religo_*}/.env`、`storage` 権限 |
 | フロントが古い | サーバー上 `npm run build` の成否（Actions SSH ログ） |
 | migrate 失敗 | DB 名・`.env` の `DB_DATABASE` |
-| `npm ERR! ENOTEMPTY` … `node_modules` | サーバーで `cd $DEPLOY_PATH && rm -rf node_modules && npm ci && npm run build`。以降は Actions が deploy 前に `rm -rf node_modules` する |
+| `npm ERR! ENOTEMPTY` … `node_modules` | サーバーで `cd $DEPLOY_PATH && rm -rf node_modules && npm ci --include=dev && npm run build`。以降は Actions が deploy 前に `rm -rf node_modules` する |
+| `sh: 1: vite: not found`（build 127） | devDependencies 未インストール。`NODE_ENV=production` だと `npm ci` が vite を入れない。`rm -rf node_modules && NODE_ENV=development npm ci --include=dev && npm run build` |
+| `npm warn tar TAR_ENTRY_ERROR` | キャッシュ破損のことが多い。`npm cache clean --force` のうえ `npm ci --include=dev`（`--prefer-offline` なし） |
 | `database.sqlite` does not exist | `.env` 未作成または sqlite 設定のまま |
 | `require PHP ">= 8.4.0"`（白画面） | Apache が 8.3 のまま → **php8.4-fpm + SetHandler** |
 | `Failed to clear cache`（Actions） | php-fpm が `storage/framework/cache/data` を www-data 所有 → deploy.yml の data 再作成フォールバック |
 
 ---
 
+**更新:** 2026-06-16 18:00 JST — deploy: `npm ci --include=dev`、vite 存在チェック  
 **更新:** 2026-05-28 JST — Laravel 直置き、rsync + サーバー composer/npm build

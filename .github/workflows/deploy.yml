@@ -115,17 +115,31 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
             nvm use 20 2>/dev/null || true
 
-            # rsync excludes node_modules; stale trees cause npm ENOTEMPTY on ci.
-            if [ ! -d "node_modules" ] || [ "package-lock.json" -nt "node_modules/.package-lock.json" ]; then
+            # vite lives in devDependencies; npm ci skips dev when NODE_ENV=production.
+            export NODE_ENV=development
+
+            install_npm() {
               rm -rf node_modules
-              if ! npm ci --prefer-offline --no-audit --no-fund; then
-                echo "⚠️  npm ci failed; retrying once after clean node_modules"
-                rm -rf node_modules
-                npm ci --prefer-offline --no-audit --no-fund
+              npm ci --include=dev --no-audit --no-fund "$@"
+            }
+
+            # rsync excludes node_modules; stale trees cause npm ENOTEMPTY on ci.
+            # Also reinstall when vite is missing (e.g. prior production-only node_modules).
+            if [ ! -d "node_modules" ] \
+              || [ "package-lock.json" -nt "node_modules/.package-lock.json" ] \
+              || [ ! -x "node_modules/.bin/vite" ]; then
+              if ! install_npm --prefer-offline; then
+                echo "⚠️  npm ci failed; retrying once without offline cache"
+                install_npm
               fi
               echo "✅ NPM dependencies updated"
             else
               echo "✅ NPM dependencies are up to date"
+            fi
+
+            if [ ! -x "node_modules/.bin/vite" ]; then
+              echo "❌ node_modules/.bin/vite missing after npm ci (devDependencies not installed?)"
+              exit 1
             fi
 
             NODE_OPTIONS="--max-old-space-size=4096" npm run build 2>&1

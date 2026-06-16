@@ -8,7 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-06-16 17:55 JST | **Phase 221 Claude Code セットアップ（docs）完了・develop push:** `docs/AI_TOOLING.md`・`CLAUDE.md`・`.claude/settings.json` + Skills 12 本（phase-start 等）。`.cursorrules` 更新。INDEX・PHASE_REGISTRY・REPORT 同期。 |
+| 2026-06-16 18:01 JST | **Deploy fix:** develop CI `vite: not found` 対策。`.github/workflows/deploy.yml` で `NODE_ENV=development` + `npm ci --include=dev`、`node_modules/.bin/vite` 存在チェック。`docs/DEPLOYMENT.md` トラブルシュート追記。 | `docs/AI_TOOLING.md`・`CLAUDE.md`・`.claude/settings.json` + Skills 12 本（phase-start 等）。`.cursorrules` 更新。INDEX・PHASE_REGISTRY・REPORT 同期。 |
 | 2026-06-16 17:16 JST | **DB一括同期・本番リプレイス:** 未反映の定例会議事録（第208–211回・6/16モメンタム・7/28 BOD）と 1to1 notes（44件）を `import-chapter-minutes` / `import-1to1-notes` でローカル反映。`meetings.session_type` 対応済み（モメンタム `id=16`・BOD `id=17`）。`make db-export`（1544429 bytes）→ `make db-push TARGET=prod`（バックアップ `backups/prod_20260616_171533.sql`）。テスト 482 passed。develop へ push。 |
 | 2026-06-16 13:38 JST | **モメンタムトレーニング議事録反映:** [`chapter_weekly_20260616.md`](meetings/chapter/chapter_weekly_20260616.md) に Zoom 文字起こし要約を推敲・校正（BOD準備・75名目標・**百華繚凛**・BOR共有項目・3RF・コーヒーセッション・EOD賞賛・イベント等）。`import-chapter-minutes` で Religo 同期。モメンタムに加え **BOD（2026-07-28）** も `meeting_number` なし。`chapter/README.md`・SPEC-014・[`chapter_bod_20260728.md`](meetings/chapter/chapter_bod_20260728.md) プレースホルダー。`docs/INDEX.md` 同期。 |
 | 2026-06-16 09:53 JST | **Phase 220 meetings session_type:** `meetings.session_type` 追加・`number` nullable。モメンタム/BOD の議事録・参加者 CSV 取り込み、Meetings UI 表示ラベル（`MeetingDisplay` / `meetingLabel.js`）。誤登録 `number=212` をモメンタム行へ移行。 |
