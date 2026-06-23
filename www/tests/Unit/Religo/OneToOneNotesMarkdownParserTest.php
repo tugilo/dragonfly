@@ -42,6 +42,14 @@ MD;
         $this->assertSame(11, $sessions[1]['one_to_one_id']);
     }
 
+    public function test_extract_session_number_from_notes_source_anchor(): void
+    {
+        $n = $this->parser->extractSessionNumberFromNotes(
+            "【ソース: docs/meetings/1to1/1to1_test.md#第2回】\n\n### 【第2回】\n\nBody"
+        );
+        $this->assertSame(2, $n);
+    }
+
     public function test_extract_source_path_with_session_anchor(): void
     {
         $text = "【ソース: docs/meetings/1to1/1to1_test.md#第2回】\n\nBody";

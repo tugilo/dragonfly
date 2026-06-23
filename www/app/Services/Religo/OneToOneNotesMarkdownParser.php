@@ -71,4 +71,24 @@ class OneToOneNotesMarkdownParser
 
         return null;
     }
+
+    /**
+     * notes から議事録上の回番号（第N回）を抽出。import 後はソース行の #第N回、本文見出しも可。
+     */
+    public function extractSessionNumberFromNotes(string $notes): ?int
+    {
+        if (preg_match('/#第(\d+)回/u', $notes, $matches)) {
+            return (int) $matches[1];
+        }
+
+        if (preg_match('/^###\s*【第(\d+)回】/mu', $notes, $matches)) {
+            return (int) $matches[1];
+        }
+
+        if (preg_match('/###\s*【第(\d+)回】/u', $notes, $matches)) {
+            return (int) $matches[1];
+        }
+
+        return null;
+    }
 }

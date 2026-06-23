@@ -121,6 +121,25 @@ function MeetingLabelChip({ record }) {
     );
 }
 
+function OneToOneSessionLabel({ record }) {
+    const label = record?.session_label;
+    if (!label) {
+        return (
+            <Typography component="span" variant="body2" color="text.disabled">
+                —
+            </Typography>
+        );
+    }
+    return (
+        <Chip
+            size="small"
+            label={label}
+            variant="outlined"
+            sx={{ height: 22, fontSize: '0.75rem', fontWeight: 600 }}
+        />
+    );
+}
+
 function OneToOneNotesPreview({ record, onOpen }) {
     const raw = typeof record?.notes === 'string' ? record.notes.trim() : '';
     const hasSeries = Boolean(record?.has_series_memo);
@@ -846,6 +865,7 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
                 }}
             >
                 <FunctionField label="予定/実施日" render={(record) => <EffectiveDateField record={record} />} />
+                <FunctionField label="回" render={(record) => <OneToOneSessionLabel record={record} />} />
                 <FunctionField label="相手" render={(r) => <OneToOneTargetDisplay record={r} />} />
                 <FunctionField label="状態" render={(record) => <OneToOneStatusChip record={record} />} />
                 <FunctionField

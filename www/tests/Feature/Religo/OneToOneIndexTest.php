@@ -321,4 +321,47 @@ class OneToOneIndexTest extends TestCase
         $this->assertNotNull($row);
         $this->assertTrue($row['referral_suggestion_stale']);
     }
+
+    public function test_index_includes_session_label_from_notes_and_ordinal_fallback(): void
+    {
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'completed',
+            'started_at' => '2026-05-08 14:00:00',
+            'notes' => "【ソース: docs/meetings/1to1/1to1_pair.md#第1回】\n\n### 【第1回】\n\nFirst.",
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target1Id,
+            'status' => 'completed',
+            'started_at' => '2026-05-29 14:00:00',
+            'notes' => "【ソース: docs/meetings/1to1/1to1_pair.md#第2回】\n\n### 【第2回】\n\nSecond.",
+        ]);
+        OneToOne::create([
+            'workspace_id' => $this->workspaceId,
+            'owner_member_id' => $this->ownerId,
+            'target_member_id' => $this->target2Id,
+            'status' => 'completed',
+            'started_at' => '2026-06-01 10:00:00',
+            'notes' => 'No session marker',
+        ]);
+
+        $res = $this->getJson('/api/one-to-ones?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+
+        $target1Rows = collect($res->json())->where('target_member_id', $this->target1Id);
+        $first = $target1Rows->firstWhere('session_number', 1);
+        $second = $target1Rows->firstWhere('session_number', 2);
+        $this->assertNotNull($first);
+        $this->assertNotNull($second);
+        $this->assertSame('第1回', $first['session_label']);
+        $this->assertSame('第2回', $second['session_label']);
+
+        $target2Row = collect($res->json())->firstWhere('target_member_id', $this->target2Id);
+        $this->assertSame('第1回', $target2Row['session_label']);
+        $this->assertSame(1, $target2Row['session_number']);
+    }
 }
