@@ -37,4 +37,4 @@ SPEC-018 Phase C: `GET /api/meeting-types` と `GET /api/meetings` の種別/チ
 - [x] 一覧/詳細に種別メタ列
 - [x] Feature test pass
 - [x] php artisan test pass
-- [ ] develop merge + push
+- [x] develop merge + push
