@@ -12,4 +12,4 @@
 
 1to1 を直下に混在させると、提案書や複数者ミーティングと区別しづらくなるため、**1to1 は `1to1/` に集約**する。
 
-詳細な**ファイル命名・DB連携の想定**は、定例会 [`chapter/README.md`](chapter/README.md)、1to1 は [`1to1/README.md`](1to1/README.md) を参照。
+詳細な**ファイル命名・DB連携の想定**は、定例会 [`chapter/README.md`](chapter/README.md)、チーム MTG は [`team/README.md`](team/README.md)（**SPEC-018**）、1to1 は [`1to1/README.md`](1to1/README.md) を参照。

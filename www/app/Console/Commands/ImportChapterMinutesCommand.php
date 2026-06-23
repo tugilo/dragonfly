@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Meeting;
 use App\Models\MeetingMinute;
+use App\Models\MeetingType;
 use App\Support\MeetingDisplay;
 use Illuminate\Console\Command;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -159,7 +160,9 @@ class ImportChapterMinutesCommand extends Command
             $meeting = Meeting::updateOrCreate(
                 ['number' => $number],
                 [
+                    'meeting_type_id' => MeetingType::idForCode(MeetingDisplay::SESSION_CHAPTER_WEEKLY),
                     'session_type' => MeetingDisplay::SESSION_CHAPTER_WEEKLY,
+                    'team_id' => '',
                     'held_on' => $heldOn,
                     'name' => MeetingDisplay::defaultName(MeetingDisplay::SESSION_CHAPTER_WEEKLY, $number),
                 ]
@@ -171,7 +174,9 @@ class ImportChapterMinutesCommand extends Command
                     'held_on' => $heldOn,
                 ],
                 [
+                    'meeting_type_id' => MeetingType::idForCode($sessionType),
                     'number' => null,
+                    'team_id' => '',
                     'name' => MeetingDisplay::defaultName($sessionType, null),
                 ]
             );

@@ -1,6 +1,6 @@
 ---
 name: import-religo
-description: Import Markdown or CSV data into Religo DB in dragonfly. Use for chapter meeting minutes, 1to1 notes, or participant CSV sync after editing docs/meetings files.
+description: Import Markdown or CSV data into Religo DB in dragonfly. Use for chapter meeting minutes, team meeting minutes, 1to1 notes, or participant CSV sync after editing docs/meetings files.
 ---
 
 # Religo データ取り込み（file → DB）
@@ -9,7 +9,7 @@ description: Import Markdown or CSV data into Religo DB in dragonfly. Use for ch
 
 - コンテナ起動済み
 - パスは `docs/meetings/...` または `database/csv/...`（コンテナ内 `www/` 基準で解決）
-- 詳細 SSOT: `docs/SSOT/CHAPTER_MINUTES_REQUIREMENTS.md`（SPEC-014）
+- 詳細 SSOT: `docs/SSOT/CHAPTER_MINUTES_REQUIREMENTS.md`（SPEC-014）、チーム MTG は `docs/SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md`（SPEC-018）
 
 ```bash
 COMPOSE="docker compose -f infra/compose/docker-compose.yml --env-file project.env"
@@ -30,6 +30,24 @@ $COMPOSE exec app php artisan dragonfly:import-chapter-minutes docs/meetings/cha
 
 - 定例会: `chapter_weekly_*.md`
 - モメンタム/BOD: front matter の `doc_type` / `session_type` を確認（`meeting_number` なし可）
+
+## チーム MTG 議事録（SPEC-018）
+
+```bash
+# 単一ファイル
+$COMPOSE exec app php artisan dragonfly:import-team-minutes docs/meetings/team/team_threebiz_20260623.md
+
+# ディレクトリ一括（team_*.md）
+$COMPOSE exec app php artisan dragonfly:import-team-minutes docs/meetings/team/
+
+# held_on 上書き
+$COMPOSE exec app php artisan dragonfly:import-team-minutes docs/meetings/team/file.md --held_on=2026-06-23
+```
+
+- 対象: `team_*.md`（front matter `doc_type: team_meeting`）
+- 必須: `team_id`, `session_date`
+- 自然キー: `(team_meeting, team_id, held_on)` — 再取込は上書き
+- 詳細: `docs/meetings/team/README.md`
 
 ## 1to1 議事録
 

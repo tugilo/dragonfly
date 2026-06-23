@@ -11,6 +11,7 @@ use App\Models\Member;
 use App\Models\Meeting;
 use App\Models\MeetingCsvApplyLog;
 use App\Models\MeetingMinute;
+use App\Models\MeetingType;
 use App\Models\Participant;
 use App\Support\MeetingDisplay;
 use App\Services\Religo\CandidateMemberMatchService;
@@ -43,6 +44,7 @@ class MeetingController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Meeting::query()
+            ->with('meetingType')
             ->withCount('breakoutRooms')
             ->addSelect([
                 DB::raw("exists(select 1 from contact_memos where contact_memos.meeting_id = meetings.id and contact_memos.memo_type = 'meeting') as has_memo"),
@@ -94,6 +96,17 @@ class MeetingController extends Controller
             );
         }
 
+        $meetingType = $request->input('meeting_type');
+        if (is_string($meetingType) && trim($meetingType) !== '') {
+            $code = trim($meetingType);
+            $query->whereHas('meetingType', fn ($qb) => $qb->where('code', $code));
+        }
+
+        $teamId = $request->input('team_id');
+        if (is_string($teamId) && trim($teamId) !== '') {
+            $query->where('meetings.team_id', trim($teamId));
+        }
+
         $meetings = $query
             ->orderByDesc('held_on')
             ->orderByDesc('id')
@@ -124,7 +137,9 @@ class MeetingController extends Controller
 
         $meeting = Meeting::query()->create([
             'number' => $number,
+            'meeting_type_id' => MeetingType::idForCode($sessionType),
             'session_type' => $sessionType,
+            'team_id' => '',
             'held_on' => $validated['held_on'],
             'name' => $name,
         ]);
@@ -172,11 +187,11 @@ class MeetingController extends Controller
     /**
      * GET index / POST store / PATCH update で返す一覧1行の形（name を含む）.
      *
-     * @return array{id: int, number: int|null, session_type: string, display_label: string, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool, has_minutes: bool}
+     * @return array{id: int, number: int|null, session_type: string, display_label: string, held_on: string|null, name: string|null, breakout_count: int, has_memo: bool, has_participant_pdf: bool, has_minutes: bool, meeting_type_code: string, meeting_type_name_ja: string|null, team_id: string|null, supports_participants: bool, supports_breakouts: bool, supports_referral_suggestions: bool}
      */
     private function meetingToListRowPayload(Meeting $m): array
     {
-        return [
+        return array_merge([
             'id' => $m->id,
             'number' => $m->number,
             'session_type' => (string) ($m->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
@@ -187,12 +202,13 @@ class MeetingController extends Controller
             'has_memo' => (bool) $m->has_memo,
             'has_participant_pdf' => (bool) $m->has_participant_pdf,
             'has_minutes' => (bool) ($m->has_minutes ?? false),
-        ];
+        ], $this->meetingTypeMetaPayload($m));
     }
 
     private function findMeetingForListPayload(int $id): ?Meeting
     {
         return Meeting::query()
+            ->with('meetingType')
             ->withCount('breakoutRooms')
             ->addSelect([
                 DB::raw("exists(select 1 from contact_memos where contact_memos.meeting_id = meetings.id and contact_memos.memo_type = 'meeting') as has_memo"),
@@ -239,6 +255,7 @@ class MeetingController extends Controller
     public function show(int $meetingId): JsonResponse
     {
         $meeting = Meeting::query()
+            ->with('meetingType')
             ->with('participantImport')
             ->with('meetingMinute')
             ->with(['csvImports' => fn ($q) => $q->orderByDesc('uploaded_at')->limit(1)])
@@ -349,7 +366,7 @@ class MeetingController extends Controller
         ];
 
         return response()->json([
-            'meeting' => [
+            'meeting' => array_merge([
                 'id' => $meeting->id,
                 'number' => $meeting->number,
                 'session_type' => (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
@@ -359,7 +376,7 @@ class MeetingController extends Controller
                 'breakout_count' => (int) $meeting->breakout_rooms_count,
                 'has_memo' => (bool) $meeting->has_memo,
                 'has_minutes' => (bool) ($meeting->has_minutes ?? false),
-            ],
+            ], $this->meetingTypeMetaPayload($meeting)),
             'memo_body' => $memoBody,
             'minutes' => $this->minuteToPayload($meeting->meetingMinute),
             'participants_summary' => $participantsSummary,
@@ -406,5 +423,54 @@ class MeetingController extends Controller
             'source' => $minute->source,
             'imported_at' => $minute->imported_at?->toIso8601String(),
         ];
+    }
+
+    /**
+     * @return array{meeting_type_code: string, meeting_type_name_ja: string|null, team_id: string|null, supports_participants: bool, supports_breakouts: bool, supports_referral_suggestions: bool}
+     */
+    private function meetingTypeMetaPayload(Meeting $meeting): array
+    {
+        $type = $this->resolveMeetingType($meeting);
+        if ($type === null) {
+            return [
+                'meeting_type_code' => (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY),
+                'meeting_type_name_ja' => null,
+                'team_id' => $this->nullableTeamId($meeting),
+                'supports_participants' => true,
+                'supports_breakouts' => true,
+                'supports_referral_suggestions' => true,
+            ];
+        }
+
+        return [
+            'meeting_type_code' => $type->code,
+            'meeting_type_name_ja' => $type->name_ja,
+            'team_id' => $this->nullableTeamId($meeting),
+            'supports_participants' => $type->supports_participants,
+            'supports_breakouts' => $type->supports_breakouts,
+            'supports_referral_suggestions' => $type->supports_referral_suggestions,
+        ];
+    }
+
+    private function resolveMeetingType(Meeting $meeting): ?MeetingType
+    {
+        if ($meeting->relationLoaded('meetingType') && $meeting->meetingType !== null) {
+            return $meeting->meetingType;
+        }
+
+        if ($meeting->meeting_type_id !== null) {
+            return MeetingType::query()->find($meeting->meeting_type_id);
+        }
+
+        $code = (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY);
+
+        return MeetingType::query()->where('code', $code)->first();
+    }
+
+    private function nullableTeamId(Meeting $meeting): ?string
+    {
+        $teamId = trim((string) ($meeting->team_id ?? ''));
+
+        return $teamId === '' ? null : $teamId;
     }
 }

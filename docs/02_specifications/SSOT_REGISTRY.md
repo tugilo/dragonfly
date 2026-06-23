@@ -21,6 +21,9 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-014 | 定例会議事録 DB 化（meeting_minutes・file→DB・Meeting ハブ IA） | ../SSOT/CHAPTER_MINUTES_REQUIREMENTS.md | active（主要コード）／記録: Phase 180 |
 | SPEC-015 | 1 to 1 実施後リファーラル提案（一覧ボタン・提案モーダル・run 保存・introductions リンク） | ../SSOT/ONETOONE_REFERRAL_SUGGESTION_REQUIREMENTS.md | active（**MVP 190–192 実装済み**／Phase F=195） |
 | SPEC-016 | 定例会議事録リファーラル提案（MP・ウィークリー等・Meetings 入口・run 保存・introductions＋meeting_id） | ../SSOT/CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md | active（**MVP 190–192 実装済み**／Phase F=195） |
+| SPEC-017 | SONAE 要件定義（Religo 拡張／単体利用対応・小規模コミュニティ向け安否確認・緊急連絡） | ../SSOT/SONAE_REQUIREMENTS.md | draft／記録: Phase 224・232 |
+| SPEC-018 | チームMTG議事録 DB 化（meeting_types・team_id・import-team-minutes・Meetings 種別履歴） | ../SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md | active（要件確定・実装未着手）／記録: Phase 234 |
+| SPEC-019 | 1to1 議事録マルチセッション取り込み（`### 【第N回】` → 複数 `one_to_ones` 行・import-1to1-notes 拡張） | ../SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md | draft（要件確定・実装未着手） |
 | — | リファーラル提案 共通（§0 理念・§0.8 つなぎ手・§0.8.6 二経路・§0.8.7 Givers Gain） | ../SSOT/REFERRAL_SUGGESTION_COMMON.md | active |
 
 ## Statusの値

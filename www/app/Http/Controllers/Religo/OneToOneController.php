@@ -12,6 +12,7 @@ use App\Http\Requests\Religo\UpdateOneToOneRequest;
 use App\Models\ContactMemo;
 use App\Models\OneToOne;
 use App\Services\Religo\OneToOneIndexService;
+use App\Services\Religo\OneToOneSeriesMarkdownService;
 use App\Services\Religo\OneToOneService;
 use App\Services\Religo\OneToOneStatsService;
 use Illuminate\Http\JsonResponse;
@@ -21,7 +22,8 @@ class OneToOneController extends Controller
     public function __construct(
         private OneToOneService $oneToOneService,
         private OneToOneIndexService $indexService,
-        private OneToOneStatsService $statsService
+        private OneToOneStatsService $statsService,
+        private OneToOneSeriesMarkdownService $seriesMarkdownService,
     ) {}
 
     /**
@@ -98,6 +100,19 @@ class OneToOneController extends Controller
         ]);
 
         return response()->json($this->indexService->formatRecord($o2o));
+    }
+
+    /**
+     * GET /api/one-to-ones/{id}/series-markdown — 相手共通の 1to1 シリーズ全文（SPEC-019 §4.6）。
+     */
+    public function seriesMarkdown(OneToOne $oneToOne): JsonResponse
+    {
+        $payload = $this->seriesMarkdownService->getSeriesMarkdown(
+            (int) $oneToOne->owner_member_id,
+            (int) $oneToOne->target_member_id,
+        );
+
+        return response()->json($payload);
     }
 
     /**

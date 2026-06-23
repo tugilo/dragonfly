@@ -16,6 +16,7 @@ use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
 use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
+use App\Http\Controllers\Religo\MeetingTypeController;
 use App\Http\Controllers\Religo\MeetingMemoController;
 use App\Http\Controllers\Religo\CategorySearchController;
 use App\Http\Controllers\Religo\MemberSearchController;
@@ -192,6 +193,7 @@ Route::get('/meeting-memos', [MeetingMemoController::class, 'index']);
 Route::get('/one-to-ones/stats', [OneToOneController::class, 'stats']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
+Route::get('/one-to-ones/{oneToOne}/series-markdown', [OneToOneController::class, 'seriesMarkdown']);
 Route::get('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosIndex']);
 Route::post('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosStore']);
 Route::get('/one-to-ones/{oneToOne}', [OneToOneController::class, 'show']);
@@ -211,6 +213,7 @@ Route::patch('/internal-referrals/{internalReferral}', [InternalReferralControll
 Route::get('/member-roles', [MemberRoleController::class, 'index']);
 
 Route::get('/members/search', [MemberSearchController::class, 'search']);
+Route::get('/meeting-types', [MeetingTypeController::class, 'index']);
 Route::get('/meetings', [MeetingController::class, 'index']);
 Route::post('/meetings', [MeetingController::class, 'store']);
 Route::get('/meetings/stats', [MeetingController::class, 'stats']);

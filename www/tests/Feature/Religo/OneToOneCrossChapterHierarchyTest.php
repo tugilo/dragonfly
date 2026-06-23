@@ -109,4 +109,41 @@ class OneToOneCrossChapterHierarchyTest extends TestCase
         $res->assertOk();
         $res->assertJsonPath('is_cross_chapter', false);
     }
+
+    public function test_visitor_target_is_marked_non_bni_member(): void
+    {
+        $ws = (int) DB::table('workspaces')->insertGetId([
+            'name' => 'DragonFly',
+            'slug' => 'df-visitor-o2o',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $ownerId = (int) DB::table('members')->insertGetId([
+            'name' => 'Owner',
+            'type' => 'active',
+            'workspace_id' => $ws,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $visitorId = (int) DB::table('members')->insertGetId([
+            'name' => '熊谷 龍笙',
+            'type' => 'visitor',
+            'workspace_id' => $ws,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $o2o = OneToOne::create([
+            'workspace_id' => $ws,
+            'owner_member_id' => $ownerId,
+            'target_member_id' => $visitorId,
+            'status' => 'completed',
+            'started_at' => '2026-06-17 14:15:00',
+        ]);
+
+        $res = $this->getJson('/api/one-to-ones/'.$o2o->id);
+        $res->assertOk();
+        $res->assertJsonPath('target_member_type', 'visitor');
+        $res->assertJsonPath('is_bni_member', false);
+        $res->assertJsonPath('target_non_bni_label', 'ビジター（BNI会員以外）');
+    }
 }

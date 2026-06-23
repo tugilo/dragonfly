@@ -136,4 +136,16 @@ Markdown 表示品質: [FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIE
 
 ---
 
+## Phase 238 — SPEC-018 種別フィルタ・Drawer 出し分け（2026-06-23）
+
+| 項目 | モック（FIT_AND_GAP 列） | 実 UI | 判定 |
+|------|--------------------------|-------|------|
+| 一覧フィルタ | 検索・メモ・PDF・議事録のみ | **+ 種別 Select・チーム Select（チームMTG時）** | **Gap（意図）:** SPEC-018 §8.1。モック v2 未反映 |
+| サブタイトル | 「例会管理 / BO割当 / メモ」系 | **「集会・議事録履歴」** | **Gap（意図）:** 種別混在を明示 |
+| Drawer タブ | 概要 / 参加者 / BO / メモ 固定 | **supports_* で参加者・BO タブ非表示（team_meeting）** | **Gap（意図）:** SPEC-018 §8.2 |
+| 議事録未取込ヘルプ | import-chapter-minutes 固定想定 | **種別で import-team-minutes / import-chapter-minutes 出し分け** | **Fit（SSOT）** |
+| リファーラル Actions | 議事録ありで有効 | **team_meeting では非表示** | **Gap（意図）:** SPEC-018 §8.2 |
+
+---
+
 **関連:** [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §5 Meetings、[MOCK_UI_VERIFICATION.md](MOCK_UI_VERIFICATION.md)、[FIT_AND_GAP_MARKDOWN_VIEWER.md](FIT_AND_GAP_MARKDOWN_VIEWER.md)

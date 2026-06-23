@@ -18,7 +18,7 @@ alwaysApply: true
 6. PRは禁止。mergeはローカルで実施する。ブランチ名は feature/phaseXXX-name 形式。
 7. REPORTにMerge Evidenceを必ず記録する。
 8. Phase完了時に PHASE_REGISTRY.md を更新する。
-9. push は 1 Phase 完了時に 1 回（feature 側・必要なら）。**加えて、`develop` に merge したあと必ず `git push origin develop`** し、フェーズごとにリモート統合ブランチを更新する（ローカルだけ先行を溜めない）。
+9. **`develop` への push は Phase 完了ごとに 1 回**（feature 側 push は必要なら別）。merge → Merge Evidence 記録コミットまでローカルで済ませてから **1 push**（2 連 push 禁止・Actions 渋滞防止）。
 10. Scope違反・SSOT不明・DoD未定義を検出したら即座に作業停止する。
 
 ## Phase開始時の確認手順（必須・省略禁止）
@@ -94,4 +94,7 @@ git pull origin develop
 git merge --no-ff feature/phaseXXX-name -m "Merge feature/phaseXXX-name into develop"
 # implement フェーズのみ
 php artisan test
-git push origin develop
+# Merge Evidence を REPORT に追記して commit（push 前）
+git add docs/process/phases/PHASE_XXX_*_REPORT.md docs/process/PHASE_REGISTRY.md
+git commit -m "docs: Phase XXX merge evidence を REPORT に記録する。"
+git push origin develop   # Phase あたり 1 回

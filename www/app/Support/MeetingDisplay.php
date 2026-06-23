@@ -15,18 +15,24 @@ final class MeetingDisplay
 
     public const SESSION_BUSINESS_OPEN_DAY = 'business_open_day';
 
+    public const SESSION_TEAM_MEETING = 'team_meeting';
+
+    public const SESSION_WEBMASTER_MEETING = 'webmaster_meeting';
+
     /** @var list<string> */
     public const SESSION_TYPES = [
         self::SESSION_CHAPTER_WEEKLY,
         self::SESSION_MOMENTUM_TRAINING,
         self::SESSION_BUSINESS_OPEN_DAY,
+        self::SESSION_TEAM_MEETING,
     ];
 
-    /** @var array<string, string> doc_type → session_type */
+    /** @var array<string, string> doc_type → session_type / meeting_types.code */
     public const DOC_TYPE_TO_SESSION_TYPE = [
         'chapter_weekly' => self::SESSION_CHAPTER_WEEKLY,
         'chapter_momentum' => self::SESSION_MOMENTUM_TRAINING,
         'chapter_bod' => self::SESSION_BUSINESS_OPEN_DAY,
+        'team_meeting' => self::SESSION_TEAM_MEETING,
     ];
 
     public static function isNumberedSession(?string $sessionType): bool
@@ -34,11 +40,19 @@ final class MeetingDisplay
         return ($sessionType ?? self::SESSION_CHAPTER_WEEKLY) === self::SESSION_CHAPTER_WEEKLY;
     }
 
-    public static function defaultName(string $sessionType, ?int $number = null): string
+    public static function requiresTeamId(?string $sessionType): bool
+    {
+        return ($sessionType ?? '') === self::SESSION_TEAM_MEETING;
+    }
+
+    public static function defaultName(string $sessionType, ?int $number = null, ?string $teamNameJa = null): string
     {
         return match ($sessionType) {
             self::SESSION_MOMENTUM_TRAINING => 'モメンタムトレーニング',
             self::SESSION_BUSINESS_OPEN_DAY => 'ビジネスオープンデイ（BOD）',
+            self::SESSION_TEAM_MEETING => ($teamNameJa !== null && trim($teamNameJa) !== '')
+                ? trim($teamNameJa).' チームMTG'
+                : 'チームMTG',
             default => sprintf('第%d回定例会', (int) $number),
         };
     }

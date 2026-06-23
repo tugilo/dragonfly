@@ -1,4 +1,5 @@
 import { religoFetch } from './religoApiFetch';
+import { meetingTypeCode, SESSION_TEAM_MEETING } from './utils/meetingTypeUi';
 
 export const ONE_TO_ONE_DIRECTION_LABELS = {
     owner_to_target: '自分→相手向け',
@@ -221,11 +222,21 @@ export function oneToOneReferralDisabledReason(record) {
 }
 
 export function canOpenMeetingReferral(record) {
+    if (record?.supports_referral_suggestions === false) {
+        return false;
+    }
+    if (meetingTypeCode(record) === SESSION_TEAM_MEETING) {
+        return false;
+    }
+
     return Boolean(record?.has_minutes);
 }
 
 export function meetingReferralDisabledReason(record) {
     if (!record) return 'レコードがありません';
+    if (record.supports_referral_suggestions === false || meetingTypeCode(record) === SESSION_TEAM_MEETING) {
+        return 'この種別の集会ではリファーラル提案は利用できません';
+    }
     if (!record.has_minutes) return '議事録が未取り込みのため提案できません';
     return null;
 }
