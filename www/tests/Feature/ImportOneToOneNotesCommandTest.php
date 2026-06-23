@@ -110,6 +110,134 @@ class ImportOneToOneNotesCommandTest extends TestCase
         $this->assertSame("【ソース: {$sourcePath}】", $row->notes);
     }
 
+    public function test_imports_multi_session_sections_into_separate_records(): void
+    {
+        $workspaceId = (int) \Illuminate\Support\Facades\DB::table('workspaces')->insertGetId([
+            'name' => 'Default',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $ownerId = (int) \Illuminate\Support\Facades\DB::table('members')->insertGetId([
+            'name' => 'Owner',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $targetId = (int) \Illuminate\Support\Facades\DB::table('members')->insertGetId([
+            'name' => 'Target',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $firstId = (int) OneToOne::query()->insertGetId([
+            'workspace_id' => $workspaceId,
+            'owner_member_id' => $ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'completed',
+            'notes' => '【ソース: docs/meetings/1to1/1to1_multi_session.md】',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $secondId = (int) OneToOne::query()->insertGetId([
+            'workspace_id' => $workspaceId,
+            'owner_member_id' => $ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'completed',
+            'notes' => '',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $sourcePath = 'docs/meetings/1to1/1to1_multi_session.md';
+        $markdown = <<<MD
+---
+doc_type: 1to1_series
+---
+
+## ■ 基本プロフィール
+
+Shared profile block must not land in session notes.
+
+## ■ 1to1履歴
+
+### 【第1回】2026-05-08 実施済み
+
+- **Religo 1to1 レコード:** `one_to_ones.id` = **{$firstId}**
+
+First session unique alpha content.
+
+### 【第2回】2026-05-29 実施済み
+
+- **Religo 1to1 レコード:** `one_to_ones.id` = **{$secondId}**
+
+Second session unique beta content.
+MD;
+
+        $path = $this->writeFixture('1to1_multi_session.md', $markdown);
+        Artisan::call('dragonfly:import-1to1-notes', ['path' => $path]);
+
+        $first = OneToOne::query()->find($firstId);
+        $second = OneToOne::query()->find($secondId);
+        $this->assertNotNull($first);
+        $this->assertNotNull($second);
+
+        $this->assertStringContainsString('#第1回', $first->notes);
+        $this->assertStringContainsString('alpha', $first->notes);
+        $this->assertStringNotContainsString('beta', $first->notes);
+        $this->assertStringNotContainsString('Shared profile', $first->notes);
+
+        $this->assertStringContainsString('#第2回', $second->notes);
+        $this->assertStringContainsString('beta', $second->notes);
+        $this->assertStringNotContainsString('alpha', $second->notes);
+        $this->assertStringContainsString($sourcePath, $second->notes);
+    }
+
+    public function test_skips_canceled_rows_on_multi_session_import(): void
+    {
+        $workspaceId = (int) \Illuminate\Support\Facades\DB::table('workspaces')->insertGetId([
+            'name' => 'Default',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $ownerId = (int) \Illuminate\Support\Facades\DB::table('members')->insertGetId([
+            'name' => 'Owner',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $targetId = (int) \Illuminate\Support\Facades\DB::table('members')->insertGetId([
+            'name' => 'Target',
+            'type' => 'active',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $canceledId = (int) OneToOne::query()->insertGetId([
+            'workspace_id' => $workspaceId,
+            'owner_member_id' => $ownerId,
+            'target_member_id' => $targetId,
+            'status' => 'canceled',
+            'notes' => 'old canceled notes',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $markdown = <<<MD
+### 【第1回】2026-05-08 実施済み
+
+- **Religo 1to1 レコード:** `one_to_ones.id` = **{$canceledId}**
+
+Should not overwrite canceled.
+MD;
+
+        $path = $this->writeFixture('1to1_canceled_skip.md', $markdown);
+        Artisan::call('dragonfly:import-1to1-notes', ['path' => $path]);
+
+        $row = OneToOne::query()->find($canceledId);
+        $this->assertSame('old canceled notes', $row->notes);
+    }
+
     private function writeFixture(string $filename, string $content): string
     {
         $path = $this->fixturesDir.DIRECTORY_SEPARATOR.$filename;

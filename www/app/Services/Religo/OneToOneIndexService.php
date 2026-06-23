@@ -5,6 +5,7 @@ namespace App\Services\Religo;
 use App\Models\Meeting;
 use App\Models\OneToOne;
 use App\Support\CategoryLabel;
+use App\Support\MemberEnrollmentType;
 use App\Support\MemberWorkspaceAttributes;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -15,6 +16,7 @@ class OneToOneIndexService
 {
     public function __construct(
         private ReferralSuggestionStaleIndexEnricher $staleEnricher,
+        private OneToOneSeriesMarkdownService $seriesMarkdownService,
     ) {}
     /**
      * Index / Stats 共通の WHERE。一覧の filter と統計がズレないようにする（ONETOONES-P4）。
@@ -108,9 +110,39 @@ class OneToOneIndexService
         $items = $query->get();
 
         $rows = $items->map(fn (OneToOne $o) => $this->formatRecord($o))->values()->all();
+        $rows = $this->enrichWithSeriesMemoFlags($rows);
         $ownerId = ! empty($filters['owner_member_id']) ? (int) $filters['owner_member_id'] : 0;
 
         return $this->staleEnricher->enrichOneToOnes($rows, $ownerId);
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $rows
+     * @return list<array<string, mixed>>
+     */
+    private function enrichWithSeriesMemoFlags(array $rows): array
+    {
+        $pairFlags = [];
+        foreach ($rows as $row) {
+            $ownerId = (int) ($row['owner_member_id'] ?? 0);
+            $targetId = (int) ($row['target_member_id'] ?? 0);
+            if ($ownerId <= 0 || $targetId <= 0) {
+                continue;
+            }
+            $key = $ownerId.'-'.$targetId;
+            if (! array_key_exists($key, $pairFlags)) {
+                $pairFlags[$key] = $this->seriesMarkdownService->hasSeriesMemo($ownerId, $targetId);
+            }
+        }
+
+        return array_map(function (array $row) use ($pairFlags) {
+            $ownerId = (int) ($row['owner_member_id'] ?? 0);
+            $targetId = (int) ($row['target_member_id'] ?? 0);
+            $key = $ownerId.'-'.$targetId;
+            $row['has_series_memo'] = $pairFlags[$key] ?? false;
+
+            return $row;
+        }, $rows);
     }
 
     /**
@@ -133,6 +165,7 @@ class OneToOneIndexService
         $targetWsId = $targetFlat['workspace_id'];
         $isCrossChapter = $recordingWsId !== null && $targetWsId !== null
             && (int) $recordingWsId !== (int) $targetWsId;
+        $targetMemberType = $o->targetMember?->type;
 
         return [
             'id' => $o->id,
@@ -164,6 +197,9 @@ class OneToOneIndexService
             'target_country_id' => $targetFlat['country_id'],
             'target_country_name' => $targetFlat['country_name'],
             'is_cross_chapter' => $isCrossChapter,
+            'target_member_type' => $targetMemberType,
+            'is_bni_member' => MemberEnrollmentType::isBniMember($targetMemberType),
+            'target_non_bni_label' => MemberEnrollmentType::nonBniHistoryChipLabel($targetMemberType),
         ];
     }
 

@@ -54,6 +54,7 @@ import { useReligoOwner } from '../ReligoOwnerContext';
 import { religoFetch } from '../religoApiFetch';
 import { cancelReasonLabel, ONE_TO_ONE_CANCEL_REASONS } from '../utils/oneToOneCancel';
 import { OneToOneReferralSuggestionDialog } from './OneToOneReferralSuggestionDialog';
+import { OneToOneEnrollmentChip } from '../components/OneToOneEnrollmentChip';
 import {
     canOpenOneToOneReferral,
     oneToOneReferralDisabledReason,
@@ -122,7 +123,8 @@ function MeetingLabelChip({ record }) {
 
 function OneToOneNotesPreview({ record, onOpen }) {
     const raw = typeof record?.notes === 'string' ? record.notes.trim() : '';
-    if (!raw) {
+    const hasSeries = Boolean(record?.has_series_memo);
+    if (!raw && !hasSeries) {
         return (
             <Typography component="span" variant="body2" color="text.disabled">
                 —
@@ -342,6 +344,7 @@ function OneToOneTargetDisplay({ record }) {
             {cross ? (
                 <Chip size="small" label="他チャプター" color="info" variant="outlined" sx={{ height: 22, mt: 0.25 }} />
             ) : null}
+            <OneToOneEnrollmentChip record={record} />
         </Stack>
     );
 }
@@ -823,7 +826,7 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
                 予定・実施・キャンセル履歴の管理。1 to 1 は関係性の履歴として保持し、レコード削除は行いません。予定を無効化する場合は状態を「キャンセル」に変更してください。
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ px: 2, pt: 0.5, pb: 0, display: 'block', maxWidth: 860 }}>
-                「相手」列は氏名の下にカテゴリー・所属チャプターを表示します。メモ列の「メモあり」を押すと、例会の議事録と同様の Markdown ビューで全文を表示します。
+                「相手」列は氏名の下にカテゴリー・所属チャプターを表示します。他チャプター BNI メンバーは「他チャプター」、ビジター・ゲストなど BNI 会員以外は「BNI会員以外」Chip で区別します。メモ列の「メモあり」を押すと、相手との共通ファイル（1to1 シリーズ全文）を Markdown モーダルで表示します。
             </Typography>
             <OneToOnesStatsCards />
             {!isLoading && (
@@ -910,6 +913,99 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
     );
 }
 
+function OneToOneMemoDialog({ record, onClose }) {
+    const [loading, setLoading] = useState(false);
+    const [seriesMarkdown, setSeriesMarkdown] = useState('');
+    const [seriesSourcePath, setSeriesSourcePath] = useState(null);
+    const [fetchError, setFetchError] = useState(null);
+
+    useEffect(() => {
+        if (!record?.id) {
+            setSeriesMarkdown('');
+            setSeriesSourcePath(null);
+            setFetchError(null);
+            return;
+        }
+
+        let cancelled = false;
+        setLoading(true);
+        setFetchError(null);
+
+        fetchJson(`/api/one-to-ones/${record.id}/series-markdown`)
+            .then((data) => {
+                if (cancelled) return;
+                setSeriesMarkdown(typeof data?.markdown === 'string' ? data.markdown : '');
+                setSeriesSourcePath(data?.source_path ?? null);
+            })
+            .catch(() => {
+                if (cancelled) return;
+                setFetchError('共通メモの取得に失敗しました。');
+                setSeriesMarkdown(typeof record?.notes === 'string' ? record.notes.trim() : '');
+                setSeriesSourcePath(extractMarkdownSourcePath(record?.notes ?? ''));
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [record?.id, record?.notes]);
+
+    const displaySource =
+        seriesSourcePath || extractMarkdownSourcePath(seriesMarkdown) || extractMarkdownSourcePath(record?.notes ?? '');
+
+    return (
+        <Dialog open={Boolean(record)} onClose={onClose} maxWidth="md" fullWidth scroll="paper">
+            <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pr: 1, gap: 1 }}>
+                <Box sx={{ minWidth: 0 }}>
+                    <Typography component="span" variant="h6">
+                        1to1 メモ{record?.target_name ? ` — ${record.target_name}` : ''}
+                    </Typography>
+                    {record?.target_workspace_name ? (
+                        <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+                            相手所属: {record.target_workspace_name}
+                        </Typography>
+                    ) : null}
+                </Box>
+                <IconButton size="small" onClick={onClose} aria-label="閉じる" sx={{ mt: -0.5 }}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent dividers sx={{ px: 2, py: 1.5 }}>
+                {loading ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, py: 2 }}>
+                        <CircularProgress size={22} />
+                        <Typography variant="body2" color="text.secondary">読み込み中…</Typography>
+                    </Box>
+                ) : fetchError ? (
+                    <Alert severity="warning" sx={{ mb: 1 }}>{fetchError}</Alert>
+                ) : null}
+                {!loading && seriesMarkdown.trim() ? (
+                    <>
+                        {displaySource ? (
+                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+                                ソース: {displaySource}
+                            </Typography>
+                        ) : null}
+                        <MarkdownView markdown={seriesMarkdown.trim()} dense={false} />
+                    </>
+                ) : !loading ? (
+                    <Typography variant="body2" color="text.secondary">
+                        メモはまだありません。編集画面の「この回で話した内容」から追記できます。
+                    </Typography>
+                ) : null}
+            </DialogContent>
+            <DialogActions>
+                <Button component={Link} to={`/one-to-ones/${record?.id}`} onClick={onClose}>
+                    詳細へ
+                </Button>
+                <Button onClick={onClose}>閉じる</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}
+
 function OneToOnesListInner({
     memoRecord,
     setMemoRecord,
@@ -933,51 +1029,7 @@ function OneToOnesListInner({
                 open={Boolean(cancelRecord)}
                 onClose={() => setCancelRecord(null)}
             />
-            <Dialog
-                open={Boolean(memoRecord)}
-                onClose={() => setMemoRecord(null)}
-                maxWidth="md"
-                fullWidth
-                scroll="paper"
-            >
-                <DialogTitle sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', pr: 1, gap: 1 }}>
-                    <Box sx={{ minWidth: 0 }}>
-                        <Typography component="span" variant="h6">
-                            1to1 メモ{memoRecord?.target_name ? ` — ${memoRecord.target_name}` : ''}
-                        </Typography>
-                        {memoRecord?.target_workspace_name ? (
-                            <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
-                                相手所属: {memoRecord.target_workspace_name}
-                            </Typography>
-                        ) : null}
-                    </Box>
-                    <IconButton size="small" onClick={() => setMemoRecord(null)} aria-label="閉じる" sx={{ mt: -0.5 }}>
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent dividers sx={{ px: 2, py: 1.5 }}>
-                    {memoRecord?.notes?.trim() ? (
-                        <>
-                            {extractMarkdownSourcePath(memoRecord.notes) && (
-                                <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-                                    ソース: {extractMarkdownSourcePath(memoRecord.notes)}
-                                </Typography>
-                            )}
-                            <MarkdownView markdown={memoRecord.notes.trim()} dense={false} />
-                        </>
-                    ) : (
-                        <Typography variant="body2" color="text.secondary">
-                            メモはまだありません。編集画面の「この回で話した内容」から追記できます。
-                        </Typography>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    <Button component={Link} to={`/one-to-ones/${memoRecord?.id}`} onClick={() => setMemoRecord(null)}>
-                        編集でメモを更新
-                    </Button>
-                    <Button onClick={() => setMemoRecord(null)}>閉じる</Button>
-                </DialogActions>
-            </Dialog>
+            <OneToOneMemoDialog record={memoRecord} onClose={() => setMemoRecord(null)} />
             <OneToOneReferralSuggestionDialog
                 open={Boolean(referralRecord)}
                 onClose={() => setReferralRecord(null)}
