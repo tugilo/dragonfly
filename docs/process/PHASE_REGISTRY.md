@@ -234,6 +234,7 @@
 | 233 | スリーバイス 2026-06-23 横山尚武 パーソナル軸議事録 | docs | completed | develop（commit / merge 未実施） | 2026-06-23 |
 | 234 | チームMTG議事録 DB 化 要件整理（SPEC-018・meeting_types・import-team-minutes・Meetings 種別履歴） | docs | completed | develop | 2026-06-23 |
 | 235 | meeting_types DB（SPEC-018 Phase A・migration/seed/backfill・MeetingType） | implement | completed | develop | 2026-06-23 |
+| 236 | import-team-minutes（SPEC-018 Phase B・ImportTeamMinutesCommand） | implement | completed | feature/phase236-import-team-minutes | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
