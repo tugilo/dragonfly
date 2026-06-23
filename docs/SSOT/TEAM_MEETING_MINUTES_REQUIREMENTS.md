@@ -1,7 +1,7 @@
 # チームMTG議事録 DB 化 — SSOT
 
 **Spec ID:** SPEC-018（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**Status:** active（Phase 235 で meeting_types DB 実装済み・**import/UI 未着手**）  
+**Status:** active（Phase 235 DB + Phase 236 import 実装済み・**API/UI 未着手**）  
 **作成:** 2026-06-23 19:25 JST  
 **Related:** [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）、[MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)、[DATA_MODEL.md](DATA_MODEL.md) §4.6 / §4.6a / §4.6b、[meetings/team/README.md](../meetings/team/README.md)
 
@@ -274,10 +274,10 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/
 - [x] `MeetingDisplay` team_meeting 定数・doc_type マップ
 - [x] Feature test: backfill・UNIQUE 衝突
 
-### Phase B — 取り込み（implement）
+### Phase B — 取り込み（implement） — Phase 236 完了
 
-- [ ] `ImportTeamMinutesCommand` + Feature test（単一・一括・再取込・team_id 必須）
-- [ ] 既存 `team_threebiz_*.md` 5 件の取込 smoke
+- [x] `ImportTeamMinutesCommand` + Feature test（単一・一括・再取込・team_id 必須）
+- [x] 既存 `team_threebiz_*.md` 5 件の取込 smoke
 
 ### Phase C — API（implement）
 
