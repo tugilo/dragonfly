@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Support\MeetingDisplay;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -14,7 +15,9 @@ class Meeting extends Model
 
     protected $fillable = [
         'number',
+        'meeting_type_id',
         'session_type',
+        'team_id',
         'held_on',
         'name',
     ];
@@ -24,6 +27,24 @@ class Meeting extends Model
         return [
             'held_on' => 'date',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Meeting $meeting): void {
+            if ($meeting->meeting_type_id === null) {
+                $code = (string) ($meeting->session_type ?? MeetingDisplay::SESSION_CHAPTER_WEEKLY);
+                $meeting->meeting_type_id = MeetingType::idForCode($code);
+            }
+            if ($meeting->team_id === null) {
+                $meeting->team_id = '';
+            }
+        });
+    }
+
+    public function meetingType(): BelongsTo
+    {
+        return $this->belongsTo(MeetingType::class);
     }
 
     public function participantImport(): HasOne

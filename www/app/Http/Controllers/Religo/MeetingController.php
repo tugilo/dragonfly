@@ -11,6 +11,7 @@ use App\Models\Member;
 use App\Models\Meeting;
 use App\Models\MeetingCsvApplyLog;
 use App\Models\MeetingMinute;
+use App\Models\MeetingType;
 use App\Models\Participant;
 use App\Support\MeetingDisplay;
 use App\Services\Religo\CandidateMemberMatchService;
@@ -124,7 +125,9 @@ class MeetingController extends Controller
 
         $meeting = Meeting::query()->create([
             'number' => $number,
+            'meeting_type_id' => MeetingType::idForCode($sessionType),
             'session_type' => $sessionType,
+            'team_id' => '',
             'held_on' => $validated['held_on'],
             'name' => $name,
         ]);

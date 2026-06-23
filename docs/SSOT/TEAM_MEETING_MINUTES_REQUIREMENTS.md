@@ -1,7 +1,7 @@
 # チームMTG議事録 DB 化 — SSOT
 
 **Spec ID:** SPEC-018（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**Status:** active（要件確定・**実装未着手**）  
+**Status:** active（Phase 235 で meeting_types DB 実装済み・**import/UI 未着手**）  
 **作成:** 2026-06-23 19:25 JST  
 **Related:** [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）、[MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)、[DATA_MODEL.md](DATA_MODEL.md) §4.6 / §4.6a / §4.6b、[meetings/team/README.md](../meetings/team/README.md)
 
@@ -266,13 +266,13 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/
 
 ## 10. 実装 Phase 順序（DoD チェックリスト）
 
-### Phase A — DB（implement）
+### Phase A — DB（implement） — Phase 235 完了
 
-- [ ] migration: `meeting_types` + seed
-- [ ] migration: `meetings.meeting_type_id`, `meetings.team_id` + backfill + UNIQUE 制約
-- [ ] Model: `MeetingType`, `Meeting` リレーション
-- [ ] `MeetingDisplay` を `meeting_types` 参照に段階移行（`session_type` 互換維持）
-- [ ] Feature test: backfill・UNIQUE 衝突
+- [x] migration: `meeting_types` + seed
+- [x] migration: `meetings.meeting_type_id`, `meetings.team_id` + backfill + UNIQUE 制約
+- [x] Model: `MeetingType`, `Meeting` リレーション
+- [x] `MeetingDisplay` team_meeting 定数・doc_type マップ
+- [x] Feature test: backfill・UNIQUE 衝突
 
 ### Phase B — 取り込み（implement）
 

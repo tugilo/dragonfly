@@ -67,8 +67,8 @@ docs/process/phases/PHASE_234_team_meeting_minutes_requirements_REPORT.md
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未 merge — docs のみ・develop 直反映想定） |
-| source branch | develop |
+| merge commit id | 164b5cf1fbd1d9ded7722be6a030caef5317f384 |
+| source branch | feature/phase234-team-meeting-minutes-requirements |
 | target branch | develop |
 | phase id | 234 |
 | phase type | docs |
