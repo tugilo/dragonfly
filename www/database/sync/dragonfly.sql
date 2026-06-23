@@ -1,5 +1,5 @@
 -- dragonfly dev DB sync dump
--- generated: 2026-06-23 23:04:25 JST
+-- generated: 2026-06-23 23:08:31 JST
 -- database: dragonfly
 -- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
 
@@ -4410,4 +4410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 14:04:26
+-- Dump completed on 2026-06-23 14:08:31
