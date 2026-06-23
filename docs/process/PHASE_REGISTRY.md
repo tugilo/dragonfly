@@ -235,6 +235,7 @@
 | 234 | チームMTG議事録 DB 化 要件整理（SPEC-018・meeting_types・import-team-minutes・Meetings 種別履歴） | docs | completed | develop | 2026-06-23 |
 | 235 | meeting_types DB（SPEC-018 Phase A・migration/seed/backfill・MeetingType） | implement | completed | develop | 2026-06-23 |
 | 236 | import-team-minutes（SPEC-018 Phase B・ImportTeamMinutesCommand） | implement | completed | develop | 2026-06-23 |
+| 237 | Meetings API 種別フィルタ（SPEC-018 Phase C・meeting-types・種別メタ） | implement | completed | feature/phase237-meetings-api-filters | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

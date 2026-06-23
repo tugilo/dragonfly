@@ -5,6 +5,8 @@ namespace Tests\Feature\Religo;
 use App\Models\BreakoutRoom;
 use App\Models\ContactMemo;
 use App\Models\Meeting;
+use App\Models\MeetingType;
+use App\Support\MeetingDisplay;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -801,5 +803,89 @@ class MeetingControllerTest extends TestCase
         $res = $this->getJson("/api/meetings/{$meeting->id}/minutes");
         $res->assertOk();
         $res->assertJsonPath('minutes', null);
+    }
+
+    public function test_index_includes_meeting_type_meta_fields(): void
+    {
+        $teamTypeId = MeetingType::idForCode(MeetingDisplay::SESSION_TEAM_MEETING);
+        $meeting = Meeting::query()->create([
+            'number' => null,
+            'meeting_type_id' => $teamTypeId,
+            'session_type' => MeetingDisplay::SESSION_TEAM_MEETING,
+            'team_id' => 'threebiz',
+            'held_on' => '2026-06-23',
+            'name' => 'スリーバイス チームMTG',
+        ]);
+
+        $res = $this->getJson('/api/meetings');
+        $res->assertOk();
+        $row = collect($res->json())->firstWhere('id', $meeting->id);
+        $this->assertNotNull($row);
+        $this->assertSame('team_meeting', $row['meeting_type_code']);
+        $this->assertSame('チームMTG', $row['meeting_type_name_ja']);
+        $this->assertSame('threebiz', $row['team_id']);
+        $this->assertFalse($row['supports_participants']);
+        $this->assertFalse($row['supports_breakouts']);
+        $this->assertFalse($row['supports_referral_suggestions']);
+    }
+
+    public function test_index_filters_by_meeting_type_and_team_id(): void
+    {
+        $weeklyTypeId = MeetingType::idForCode(MeetingDisplay::SESSION_CHAPTER_WEEKLY);
+        $teamTypeId = MeetingType::idForCode(MeetingDisplay::SESSION_TEAM_MEETING);
+
+        $weekly = Meeting::query()->create([
+            'number' => 910,
+            'meeting_type_id' => $weeklyTypeId,
+            'session_type' => MeetingDisplay::SESSION_CHAPTER_WEEKLY,
+            'team_id' => '',
+            'held_on' => '2026-06-23',
+            'name' => '第910回定例会',
+        ]);
+        $team = Meeting::query()->create([
+            'number' => null,
+            'meeting_type_id' => $teamTypeId,
+            'session_type' => MeetingDisplay::SESSION_TEAM_MEETING,
+            'team_id' => 'threebiz',
+            'held_on' => '2026-06-23',
+            'name' => 'スリーバイス チームMTG',
+        ]);
+        $otherTeam = Meeting::query()->create([
+            'number' => null,
+            'meeting_type_id' => $teamTypeId,
+            'session_type' => MeetingDisplay::SESSION_TEAM_MEETING,
+            'team_id' => 'other',
+            'held_on' => '2026-06-23',
+            'name' => 'other チームMTG',
+        ]);
+
+        $res = $this->getJson('/api/meetings?meeting_type=team_meeting&team_id=threebiz');
+        $res->assertOk();
+        $ids = collect($res->json())->pluck('id')->all();
+        $this->assertContains($team->id, $ids);
+        $this->assertNotContains($weekly->id, $ids);
+        $this->assertNotContains($otherTeam->id, $ids);
+    }
+
+    public function test_show_includes_meeting_type_meta_fields(): void
+    {
+        $teamTypeId = MeetingType::idForCode(MeetingDisplay::SESSION_TEAM_MEETING);
+        $meeting = Meeting::query()->create([
+            'number' => null,
+            'meeting_type_id' => $teamTypeId,
+            'session_type' => MeetingDisplay::SESSION_TEAM_MEETING,
+            'team_id' => 'threebiz',
+            'held_on' => '2026-06-16',
+            'name' => 'スリーバイス チームMTG',
+        ]);
+
+        $res = $this->getJson("/api/meetings/{$meeting->id}");
+        $res->assertOk();
+        $res->assertJsonPath('meeting.meeting_type_code', 'team_meeting');
+        $res->assertJsonPath('meeting.meeting_type_name_ja', 'チームMTG');
+        $res->assertJsonPath('meeting.team_id', 'threebiz');
+        $res->assertJsonPath('meeting.supports_participants', false);
+        $res->assertJsonPath('meeting.supports_breakouts', false);
+        $res->assertJsonPath('meeting.supports_referral_suggestions', false);
     }
 }

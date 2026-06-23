@@ -16,6 +16,7 @@ use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
 use App\Http\Controllers\Religo\MeetingBreakoutRoundsController;
 use App\Http\Controllers\Religo\MeetingController;
+use App\Http\Controllers\Religo\MeetingTypeController;
 use App\Http\Controllers\Religo\MeetingMemoController;
 use App\Http\Controllers\Religo\CategorySearchController;
 use App\Http\Controllers\Religo\MemberSearchController;
@@ -211,6 +212,7 @@ Route::patch('/internal-referrals/{internalReferral}', [InternalReferralControll
 Route::get('/member-roles', [MemberRoleController::class, 'index']);
 
 Route::get('/members/search', [MemberSearchController::class, 'search']);
+Route::get('/meeting-types', [MeetingTypeController::class, 'index']);
 Route::get('/meetings', [MeetingController::class, 'index']);
 Route::post('/meetings', [MeetingController::class, 'store']);
 Route::get('/meetings/stats', [MeetingController::class, 'stats']);
