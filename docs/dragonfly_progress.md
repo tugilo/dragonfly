@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-23 22:48 JST | **Phase 240 完了（merge）:** SPEC-019 P1・P3 を develop へ merge（`c2c2b897`）。import 一括 46 件更新。506 tests passed。`git push origin develop` 済み。 |
 | 2026-06-23 22:45 JST | **Phase 240 implement（SPEC-019 P1・P3）:** `OneToOneNotesMarkdownParser` / `OneToOneNotesImportService` で `import-1to1-notes` を `### 【第N回】` 単位に拡張。`OneToOneSeriesMarkdownService` + `GET /api/one-to-ones/{id}/series-markdown`、一覧メモモーダルを相手共通全文表示に変更。506 tests passed、npm build OK。merge 未実施。 |
 | 2026-06-23 22:41 JST | **Phase 240 PLAN:** SPEC-019 **P1**（`import-1to1-notes` セクション単位）+ **P3**（一覧「メモあり」→ 相手共通ファイルモーダル）の implement Phase PLAN/WORKLOG/REPORT 作成。`feature/phase240-onetoone-multi-session-import`。P2（`--create-missing`）は Phase 241 予定。 |
 | 2026-06-23 22:39 JST | **SPEC-019 §4.6 UI 合意:** 一覧「メモあり」タップで **相手共通ファイル**を Markdown モーダル表示。`FIT_AND_GAP_MOCK_VS_UI` O12/O17 Gap 追記。 |

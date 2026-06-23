@@ -80,7 +80,7 @@ www/tests/Unit/Religo/OneToOneNotesMarkdownParserTest.php
 
 ## 取り込み証跡（Merge Evidence）
 
-merge commit id: （merge 後に記録）  
+merge commit id: c2c2b897c2baf39ca4bb6139bf5935286cc5dade  
 source branch: feature/phase240-onetoone-multi-session-import  
 target branch: develop  
 phase id: 240  
@@ -90,7 +90,7 @@ related ssot: SPEC-019
 test command: php artisan test  
 test result: 506 passed  
 
-changed files: （merge 後に記録）  
+changed files: docs/02_specifications/SSOT_REGISTRY.md, docs/INDEX.md, docs/SSOT/DATA_MODEL.md, docs/SSOT/FIT_AND_GAP_MOCK_VS_UI.md, docs/SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md, docs/dragonfly_progress.md, docs/meetings/1to1/README.md, docs/process/PHASE_REGISTRY.md, docs/process/phases/PHASE_240_onetoone_multi_session_import_PLAN.md, docs/process/phases/PHASE_240_onetoone_multi_session_import_WORKLOG.md, docs/process/phases/PHASE_240_onetoone_multi_session_import_REPORT.md, www/app/Console/Commands/ImportOneToOneNotesCommand.php, www/app/Http/Controllers/Religo/OneToOneController.php, www/app/Services/Religo/OneToOneIndexService.php, www/app/Services/Religo/OneToOneNotesImportService.php, www/app/Services/Religo/OneToOneNotesMarkdownParser.php, www/app/Services/Religo/OneToOneSeriesMarkdownService.php, www/resources/js/admin/pages/OneToOnesList.jsx, www/routes/api.php, www/tests/Feature/ImportOneToOneNotesCommandTest.php, www/tests/Feature/Religo/OneToOneSeriesMarkdownApiTest.php, www/tests/Unit/Religo/OneToOneNotesMarkdownParserTest.php  
 
 scope check: OK  
 ssot check: OK  
