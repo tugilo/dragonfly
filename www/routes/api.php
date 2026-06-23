@@ -193,6 +193,7 @@ Route::get('/meeting-memos', [MeetingMemoController::class, 'index']);
 Route::get('/one-to-ones/stats', [OneToOneController::class, 'stats']);
 Route::get('/one-to-ones', [OneToOneController::class, 'index']);
 Route::post('/one-to-ones', [OneToOneController::class, 'store']);
+Route::get('/one-to-ones/{oneToOne}/series-markdown', [OneToOneController::class, 'seriesMarkdown']);
 Route::get('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosIndex']);
 Route::post('/one-to-ones/{oneToOne}/memos', [OneToOneController::class, 'memosStore']);
 Route::get('/one-to-ones/{oneToOne}', [OneToOneController::class, 'show']);

@@ -8,6 +8,11 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-23 22:45 JST | **Phase 240 implement（SPEC-019 P1・P3）:** `OneToOneNotesMarkdownParser` / `OneToOneNotesImportService` で `import-1to1-notes` を `### 【第N回】` 単位に拡張。`OneToOneSeriesMarkdownService` + `GET /api/one-to-ones/{id}/series-markdown`、一覧メモモーダルを相手共通全文表示に変更。506 tests passed、npm build OK。merge 未実施。 |
+| 2026-06-23 22:41 JST | **Phase 240 PLAN:** SPEC-019 **P1**（`import-1to1-notes` セクション単位）+ **P3**（一覧「メモあり」→ 相手共通ファイルモーダル）の implement Phase PLAN/WORKLOG/REPORT 作成。`feature/phase240-onetoone-multi-session-import`。P2（`--create-missing`）は Phase 241 予定。 |
+| 2026-06-23 22:39 JST | **SPEC-019 §4.6 UI 合意:** 一覧「メモあり」タップで **相手共通ファイル**を Markdown モーダル表示。`FIT_AND_GAP_MOCK_VS_UI` O12/O17 Gap 追記。 |
+| 2026-06-23 22:36 JST | **SPEC-019 住み分け合意反映:** 121 **履歴は 1回1レコード**、**メモは owner×target で共有可**（`contact_memos`・`one_to_one_id` 任意）を [`ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md`](SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md) §4.5・[`DATA_MODEL.md`](SSOT/DATA_MODEL.md) §1.2/§4.12・[`meetings/1to1/README.md`](meetings/1to1/README.md) に反映。 |
+| 2026-06-23 22:33 JST | **SPEC-019 1to1 マルチセッション取り込み要件:** [`SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md`](SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md) を新規作成。1相手1ファイル・`### 【第N回】` ごとの `one_to_ones` 更新/作成、`import-1to1-notes` 拡張案（セクション単位 `notes`・`--create-missing`・dedup）、As-Is/To-Be・DoD・Open Questions を整理。`docs/02_specifications/SSOT_REGISTRY.md`、`docs/INDEX.md`、[`meetings/1to1/README.md`](meetings/1to1/README.md) DB 節を同期。実装未着手。 |
 | 2026-06-23 22:21 JST | **Phase 239 チームMTG docs 同期（SPEC-018 Phase E）:** [`meetings/team/README.md`](meetings/team/README.md) に DB/API/UI 実装済みを反映、`.claude/skills/import-religo` に `import-team-minutes` 節追加。SPEC-018 全 Phase 完了。 |
 | 2026-06-23 22:12 JST | **Phase 238 MeetingsList UI 種別対応（SPEC-018 Phase D）:** 種別/チームフィルタ、Drawer・Actions・議事録モーダル出し分け、`meetingTypeUi.js`、FIT_AND_GAP 追記。npm build OK。 |
 | 2026-06-23 22:06 JST | **Phase 237 Meetings API 種別フィルタ（SPEC-018 Phase C）:** `GET /api/meeting-types`、`GET /api/meetings?meeting_type&team_id`、一覧/詳細に種別メタ列。Feature test 追加。 |

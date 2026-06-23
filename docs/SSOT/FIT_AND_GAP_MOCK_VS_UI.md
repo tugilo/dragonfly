@@ -186,8 +186,9 @@
 | O9 | 相手列 | 太字名 | `target_name` | **Fit** |
 | O10 | ステータス列 | chip ＋ 日本語（予定/完了/キャンセル系） | MUI **Chip**＋日本語。**canceled 行は理由 Chip 追加**（Phase 186） | **Fit** |
 | O11 | Meeting 列 | `#247 — 日付` 形式の chip | **`meeting_label`（Chip）**＋ API で `meeting_number` / `meeting_held_on` 付与 | **Fit（ONETOONES-P2）** |
-| O12 | メモ列 | ellipsis | `notes` + `ellipsis` | **Fit** |
+| O12 | メモ列 | ellipsis | **「メモあり」Chip** → モーダル（`MarkdownView`） | **Fit（Phase 240）:** `GET series-markdown` で **相手共通シリーズ全文**を表示 |
 | O13 | 行アクション | 📝 メモ、✏️ 編集、**planned 行にキャンセル**（Phase 187） | **操作**列: メモ Dialog・編集・**planned のみ「キャンセル」→ Dialog**（Phase 186）。物理 DELETE なし | **Fit（Phase 186–187）** |
+| O17 | メモモーダル本文 | （モックは ellipsis のみ・モーダル詳細は FIT 未展開） | **owner×target 共通の 1to1 ファイル相当**（`OneToOneSeriesMarkdownService`） | **Fit（Phase 240 / SPEC-019 §4.6）** |
 | O16 | 行アクション：リファーラル | （モック v2 未収録 — FIT_AND_GAP 正） | **「リファーラル」** → Dialog。却下/あとで/採用（register-introduction）。一覧 **要再生成** Chip（`referral_suggestion_stale`） | **Fit（Phase 191–192 / SPEC-015）** |
 | O14 | 新規登録 UI | **モーダル** | **クイック作成 Dialog**（一覧）＋ **`/one-to-ones/create` フルページ** | **Partial Fit（ONETOONES-P3）:** 主導線を Dialog に寄せた |
 | O15 | 新規フォーム項目 | 日付・時刻・相手・ステータス・関連例会・メモ | クイック: 相手・状態・**datetime-local**・`meeting_id`・**notes**。フル: Owner（**me 既定・変更可**）・他 | **Partial Fit:** Owner は一覧と Create で自動初期化。**Gap:** モックの日付+時刻分割 |
@@ -199,7 +200,7 @@
   1. （**ONETOONES-P4 で概ね解消**: stats は一覧 filter と連動。微差分が残れば FIT を更新。）
   2. **モック級の補助文案**（例: 先月比、カード副文案の細部）。
   3. **新規 UI:** モックの単一モーダルとは異なり **Dialog＋フルページ** の二段（ONETOONES-P3）。
-  4. **行メモ:** 一覧は `notes` 閲覧＋編集誘導。`contact_memos` 本格・Members 連携は未。
+  4. **行メモ:** 一覧メモモーダルは Phase 240 で **series-markdown API** 対応済み（SPEC-019 §4.6）。
   5. **キャンセル:** 物理 DELETE は不採用。**POST cancel + 一覧 Dialog** で理由付きキャンセル（Phase 184–187）。詳細 [ONETOONES_CANCEL_FIT_AND_GAP.md](ONETOONES_CANCEL_FIT_AND_GAP.md)。
 
 ### 6.4 実装メモ（ONETOONES-P1）

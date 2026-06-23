@@ -238,6 +238,7 @@
 | 237 | Meetings API 種別フィルタ（SPEC-018 Phase C・meeting-types・種別メタ） | implement | completed | develop | 2026-06-23 |
 | 238 | MeetingsList UI 種別対応（SPEC-018 Phase D・フィルタ・Drawer 出し分け） | implement | completed | develop | 2026-06-23 |
 | 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | develop | 2026-06-23 |
+| 240 | 1to1 マルチセッション取り込み + 一覧共通メモモーダル（SPEC-019 P1・P3） | implement | in_progress | feature/phase240-onetoone-multi-session-import | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
