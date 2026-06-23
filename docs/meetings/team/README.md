@@ -6,7 +6,7 @@ BNI **パワーチーム**（例: スリーバイス）の定例会前後枠 MTG
 
 | 種別 | ディレクトリ | front matter `doc_type` | `meeting_number` | Religo DB |
 |------|--------------|-------------------------|------------------|-----------|
-| **チーム MTG** | 本ディレクトリ | `team_meeting` | **付けない** | SPEC-018 で取込予定 |
+| **チーム MTG** | 本ディレクトリ | `team_meeting` | **付けない** | **実装済み**（SPEC-018 Phase A–D） |
 
 - **チャプター定例会** → [`../chapter/`](../chapter/)
 - **1to1** → [`../1to1/`](../1to1/)
@@ -65,7 +65,24 @@ team_<slug>_YYYYMMDD.md
 
 **source of truth = 本ディレクトリの Markdown。** DB は取り込みコピー（一方向）。
 
-### 取り込み（実装 Phase B 以降）
+### DB スキーマ（概要）
+
+| テーブル | 役割 |
+|----------|------|
+| `meeting_types` | 種別マスタ（`team_meeting` 等） |
+| `meetings` | `meeting_type_id` + `team_id` + `held_on` |
+| `meeting_minutes` | 議事録本文（`meetings` と 1:1） |
+
+**自然キー:** `(meeting_types.code=team_meeting, meetings.team_id, meetings.held_on)`
+
+| 項目 | DB 列 |
+|------|--------|
+| 種別 | `meeting_types.code = team_meeting` |
+| チーム | `meetings.team_id` |
+| 開催日 | `meetings.held_on` ← `session_date` |
+| 議事録 | `meeting_minutes.body_markdown` 等 |
+
+### 取り込み（`dragonfly:import-team-minutes`）
 
 ```bash
 # 1ファイル
@@ -77,16 +94,25 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
   php artisan dragonfly:import-team-minutes docs/meetings/team/
 ```
 
-| 項目 | DB キー |
-|------|---------|
-| 種別 | `meeting_types.code = team_meeting` |
-| チーム | `meetings.team_id` |
-| 開催日 | `meetings.held_on` ← `session_date` |
-| 議事録 | `meeting_minutes`（meeting と 1:1） |
+- idempotent: 同一自然キーで上書き（`meeting_minutes` 行は増殖しない）
+- 再取込: ファイル編集後に同コマンドを再実行
 
-**自然キー:** `(team_meeting, team_id, held_on)` — 同一チーム・同一日は 1 行。
+### API（Meetings ハブ）
 
-詳細: [TEAM_MEETING_MINUTES_REQUIREMENTS.md](../../SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md)
+| エンドポイント | 用途 |
+|----------------|------|
+| `GET /api/meeting-types` | 種別マスタ（フィルタ UI） |
+| `GET /api/meetings?meeting_type=team_meeting&team_id=threebiz` | チーム MTG 一覧 |
+| `GET /api/meetings/{id}/minutes` | 議事録閲覧（定例会と同一） |
+
+### 管理 UI（Meetings 一覧）
+
+- **種別フィルタ:** チームMTG を選択
+- **チームフィルタ:** 種別=チームMTG 時のみ表示（`team_id`）
+- **Drawer:** 参加者 PDF / BO / リファーラルは非表示（議事録・メモは表示）
+- **議事録モーダル:** 未取込時ヘルプに `import-team-minutes` を表示
+
+詳細 SSOT: [TEAM_MEETING_MINUTES_REQUIREMENTS.md](../../SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md)（**SPEC-018**）
 
 ---
 
@@ -94,4 +120,5 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-06-23 22:21 | Phase 239: DB/API/UI 実装済みを反映。import 手順・自然キー・Meetings 操作を追記 |
 | 2026-06-23 19:25 | 初版。命名・front matter・SPEC-018 DB 連携方針を整理 |

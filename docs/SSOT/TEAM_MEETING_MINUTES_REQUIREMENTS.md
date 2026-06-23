@@ -1,7 +1,7 @@
 # チームMTG議事録 DB 化 — SSOT
 
 **Spec ID:** SPEC-018（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**Status:** active（Phase 235–238 実装済み・**Phase E docs 同期 未着手**）  
+**Status:** completed（Phase 234–239 で SPEC-018 実装・docs 同期完了）  
 **作成:** 2026-06-23 19:25 JST  
 **Related:** [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）、[MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)、[DATA_MODEL.md](DATA_MODEL.md) §4.6 / §4.6a / §4.6b、[meetings/team/README.md](../meetings/team/README.md)
 
@@ -294,10 +294,10 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/
 - [x] `npm run build`
 - [x] FIT_AND_GAP 記録
 
-### Phase E — docs 同期
+### Phase E — docs 同期 — Phase 239 完了
 
-- [ ] `meetings/team/README.md` DB 連携節
-- [ ] INDEX / progress / import-religo skill 更新
+- [x] `meetings/team/README.md` DB 連携節
+- [x] INDEX / progress / import-religo skill 更新
 
 ---
 
@@ -327,3 +327,4 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/
 | 日時 (JST) | 内容 |
 |------------|------|
 | 2026-06-23 19:25 | Phase 234 初版。meeting_types・team_id・取込/API/UI/実装順序を要件確定 |
+| 2026-06-23 22:21 | Phase 239。Phase A–E 完了を反映（Status: completed） |
