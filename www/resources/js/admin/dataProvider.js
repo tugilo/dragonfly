@@ -91,6 +91,12 @@ export const dragonflyDataProvider = {
             else if (f.has_participant_pdf === false || f.has_participant_pdf === '0') q.set('has_participant_pdf', '0');
             if (f.has_minutes === true || f.has_minutes === '1') q.set('has_minutes', '1');
             else if (f.has_minutes === false || f.has_minutes === '0') q.set('has_minutes', '0');
+            if (f.meeting_type != null && String(f.meeting_type).trim() !== '') {
+                q.set('meeting_type', String(f.meeting_type).trim());
+            }
+            if (f.team_id != null && String(f.team_id).trim() !== '') {
+                q.set('team_id', String(f.team_id).trim());
+            }
             const url = `/api/meetings${q.toString() ? `?${q.toString()}` : ''}`;
             const data = await request(url);
             const arr = Array.isArray(data) ? data : [];

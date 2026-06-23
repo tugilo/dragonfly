@@ -56,6 +56,15 @@ import {
     canOpenMeetingReferral,
     meetingReferralDisabledReason,
 } from '../referralSuggestionApi';
+import {
+    minutesImportHelp,
+    resolveDefaultDrawerTabForMeeting,
+    supportsBreakouts,
+    supportsParticipants,
+    supportsReferralSuggestions,
+    visibleDrawerTabs,
+    SESSION_TEAM_MEETING,
+} from '../utils/meetingTypeUi';
 
 const API_BASE = '';
 
@@ -71,8 +80,7 @@ function isPastMeeting(heldOn) {
 }
 
 function resolveDefaultDrawerTab(meeting) {
-    if (!isPastMeeting(meeting?.held_on)) return 'bo';
-    return 'overview';
+    return resolveDefaultDrawerTabForMeeting(meeting);
 }
 
 function shouldOpenMinutesFromTab(tab) {
@@ -117,6 +125,18 @@ async function putMeetingMemo(meetingId, body) {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ body: body == null ? '' : String(body).trim() }),
     });
+    if (!res.ok) throw new Error(`API ${res.status}`);
+    return res.json();
+}
+
+async function fetchMeetingTypes() {
+    const res = await religoFetch(`${API_BASE}/api/meeting-types`, { headers: { Accept: 'application/json' } });
+    if (!res.ok) throw new Error(`API ${res.status}`);
+    return res.json();
+}
+
+async function fetchMeetingsList(query = '') {
+    const res = await religoFetch(`${API_BASE}/api/meetings${query}`, { headers: { Accept: 'application/json' } });
     if (!res.ok) throw new Error(`API ${res.status}`);
     return res.json();
 }
@@ -594,13 +614,44 @@ function MeetingsToolbar() {
     const hasMemo = filterValues?.has_memo ?? '';
     const hasParticipantPdf = filterValues?.has_participant_pdf ?? '';
     const hasMinutes = filterValues?.has_minutes ?? '';
+    const meetingType = filterValues?.meeting_type ?? '';
+    const teamId = filterValues?.team_id ?? '';
+    const [meetingTypes, setMeetingTypes] = useState([]);
+    const [teamIds, setTeamIds] = useState([]);
+
+    useEffect(() => {
+        fetchMeetingTypes()
+            .then(setMeetingTypes)
+            .catch(() => setMeetingTypes([]));
+    }, []);
+
+    useEffect(() => {
+        if (meetingType !== SESSION_TEAM_MEETING) {
+            setTeamIds([]);
+            return;
+        }
+        fetchMeetingsList('?meeting_type=team_meeting')
+            .then((rows) => {
+                const ids = [...new Set((rows || []).map((row) => row.team_id).filter(Boolean))].sort();
+                setTeamIds(ids);
+            })
+            .catch(() => setTeamIds([]));
+    }, [meetingType]);
+
+    const handleMeetingTypeChange = (value) => {
+        const next = { ...filterValues, meeting_type: value === '' ? undefined : value };
+        if (value !== SESSION_TEAM_MEETING) {
+            delete next.team_id;
+        }
+        setFilters(next);
+    };
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', px: 1, py: 1.5 }}>
-            <Typography variant="subtitle2" color="text.secondary" sx={{ mr: 1 }}>例会一覧</Typography>
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mr: 1 }}>集会一覧</Typography>
             <MuiTextField
                 size="small"
-                placeholder="番号 / 日付"
+                placeholder="番号 / 名称 / 日付"
                 value={q}
                 onChange={(e) => setFilters({ ...filterValues, q: e.target.value.trim() || undefined })}
                 sx={{ minWidth: 160 }}
@@ -612,6 +663,40 @@ function MeetingsToolbar() {
                     ),
                 }}
             />
+            <FormControl size="small" sx={{ minWidth: 140 }}>
+                <InputLabel id="meetings-type-label">種別</InputLabel>
+                <Select
+                    labelId="meetings-type-label"
+                    label="種別"
+                    value={meetingType}
+                    onChange={(e) => handleMeetingTypeChange(e.target.value)}
+                >
+                    <MenuItem value="">すべて</MenuItem>
+                    {meetingTypes.map((type) => (
+                        <MenuItem key={type.code} value={type.code}>{type.name_ja}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+            {meetingType === SESSION_TEAM_MEETING && (
+                <FormControl size="small" sx={{ minWidth: 140 }}>
+                    <InputLabel id="meetings-team-label">チーム</InputLabel>
+                    <Select
+                        labelId="meetings-team-label"
+                        label="チーム"
+                        value={teamId}
+                        onChange={(e) => setFilters({
+                            ...filterValues,
+                            meeting_type: SESSION_TEAM_MEETING,
+                            team_id: e.target.value === '' ? undefined : e.target.value,
+                        })}
+                    >
+                        <MenuItem value="">すべて</MenuItem>
+                        {teamIds.map((id) => (
+                            <MenuItem key={id} value={id}>{id}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            )}
             <FormControl size="small" sx={{ minWidth: 120 }}>
                 <InputLabel id="meetings-has-memo-label">メモ</InputLabel>
                 <Select
@@ -660,7 +745,7 @@ function MeetingsListTitle() {
     return (
         <>
             <Typography variant="h5" component="span">Meetings</Typography>
-            <Typography variant="body2" color="text.secondary" display="block" sx={{ mt: 0.25 }}>例会管理 / 議事録 / BO / メモ</Typography>
+            <Typography variant="body2" color="text.secondary" display="block" sx={{ mt: 0.25 }}>集会・議事録履歴</Typography>
         </>
     );
 }
@@ -791,9 +876,11 @@ function HasMinutesField({ record, onMinutesClick }) {
 
 function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick, onReferralClick }) {
     if (!record) return null;
+    const showParticipants = supportsParticipants(record);
+    const showBreakouts = supportsBreakouts(record);
     const referralEnabled = canOpenMeetingReferral(record);
     const referralReason = meetingReferralDisabledReason(record);
-    const referralBtn = (
+    const referralBtn = showBreakouts ? (
         <Button
             size="small"
             variant="outlined"
@@ -803,7 +890,7 @@ function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick, onR
         >
             リファーラル
         </Button>
-    );
+    ) : null;
     return (
         <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap onClick={(e) => e.stopPropagation()}>
             <Button
@@ -822,28 +909,32 @@ function MeetingActionsField({ record, onMemoClick, onEditClick, onPdfClick, onR
             >
                 📝 メモ
             </Button>
-            <Button
-                size="small"
-                variant="outlined"
-                onClick={() => onPdfClick?.(record)}
-                sx={{ minWidth: 'auto', px: 1 }}
-            >
-                📄 PDF
-            </Button>
-            <Button
-                component={Link}
-                to="/connections"
-                size="small"
-                variant="outlined"
-                sx={{ minWidth: 'auto', px: 1 }}
-            >
-                🗺 BO編集
-            </Button>
-            {referralReason && !referralEnabled ? (
+            {showParticipants && (
+                <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => onPdfClick?.(record)}
+                    sx={{ minWidth: 'auto', px: 1 }}
+                >
+                    📄 PDF
+                </Button>
+            )}
+            {showBreakouts && (
+                <Button
+                    component={Link}
+                    to="/connections"
+                    size="small"
+                    variant="outlined"
+                    sx={{ minWidth: 'auto', px: 1 }}
+                >
+                    🗺 BO編集
+                </Button>
+            )}
+            {referralBtn && (referralReason && !referralEnabled ? (
                 <Tooltip title={referralReason}>
                     <span>{referralBtn}</span>
                 </Tooltip>
-            ) : referralBtn}
+            ) : referralBtn)}
         </Stack>
     );
 }
@@ -966,6 +1057,10 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
     const appliedCount = participantImport?.applied_count ?? null;
     const csvImport = data?.csv_import;
     const csvApplyLogsRecent = Array.isArray(data?.csv_apply_logs_recent) ? data.csv_apply_logs_recent : [];
+    const showParticipantsUi = supportsParticipants(meeting);
+    const showBreakoutsUi = supportsBreakouts(meeting);
+    const showReferralUi = supportsReferralSuggestions(meeting);
+    const drawerTabs = meeting ? visibleDrawerTabs(meeting) : DRAWER_TABS;
 
     const hasCsvMemberApplyTarget =
         csvMemberDiffData &&
@@ -1015,9 +1110,13 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
 
     useEffect(() => {
         if (!open || !meeting) return;
-        const preferred = normalizeDrawerTab(initialTab) ?? resolveDefaultDrawerTab(meeting);
+        let preferred = normalizeDrawerTab(initialTab) ?? resolveDefaultDrawerTab(meeting);
+        const allowed = visibleDrawerTabs(meeting);
+        if (!allowed.includes(preferred)) {
+            preferred = 'overview';
+        }
         setDrawerTab(preferred);
-    }, [open, meeting?.id, meeting?.held_on, initialTab]);
+    }, [open, meeting?.id, meeting?.held_on, meeting?.supports_breakouts, meeting?.supports_participants, initialTab]);
 
     useEffect(() => {
         if (open && initialOpenMinutes && !loading && meeting) {
@@ -1219,7 +1318,9 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                             </Typography>
                         </Box>
                         <Stack direction="row" spacing={1} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
-                            <Chip size="small" label={`BO数 ${meeting.breakout_count ?? 0}`} color="primary" variant="outlined" />
+                            {showBreakoutsUi && (
+                                <Chip size="small" label={`BO数 ${meeting.breakout_count ?? 0}`} color="primary" variant="outlined" />
+                            )}
                             <Chip size="small" label={meeting.has_memo ? 'メモあり' : 'メモなし'} color={meeting.has_memo ? 'success' : 'default'} variant="outlined" />
                             <Chip
                                 size="small"
@@ -1230,15 +1331,17 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                 onClick={meeting.has_minutes ? openMinutesModal : undefined}
                                 sx={meeting.has_minutes ? { cursor: 'pointer' } : undefined}
                             />
-                            <Chip
-                                size="small"
-                                icon={participantImport?.has_pdf ? <PictureAsPdfIcon sx={{ fontSize: 16 }} /> : undefined}
-                                label={participantImport?.has_pdf ? '参加者PDFあり' : '参加者PDFなし'}
-                                color={participantImport?.has_pdf ? 'success' : 'default'}
-                                variant="outlined"
-                                onClick={() => setDrawerTab('participants')}
-                                sx={{ cursor: 'pointer' }}
-                            />
+                            {showParticipantsUi && (
+                                <Chip
+                                    size="small"
+                                    icon={participantImport?.has_pdf ? <PictureAsPdfIcon sx={{ fontSize: 16 }} /> : undefined}
+                                    label={participantImport?.has_pdf ? '参加者PDFあり' : '参加者PDFなし'}
+                                    color={participantImport?.has_pdf ? 'success' : 'default'}
+                                    variant="outlined"
+                                    onClick={() => setDrawerTab('participants')}
+                                    sx={{ cursor: 'pointer' }}
+                                />
+                            )}
                         </Stack>
                         <Tabs
                             value={drawerTab}
@@ -1247,29 +1350,33 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                             scrollButtons="auto"
                             sx={{ mb: 2, minHeight: 36, '& .MuiTab-root': { minHeight: 36, py: 0.5 } }}
                         >
-                            {DRAWER_TABS.map((tab) => (
+                            {drawerTabs.map((tab) => (
                                 <Tab key={tab} value={tab} label={drawerTabLabel(tab)} />
                             ))}
                         </Tabs>
                         <Box sx={{ flex: 1, overflowY: 'auto', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                         {drawerTab === 'overview' && (
                             <Stack spacing={2} sx={{ mb: 2 }}>
-                                <Box>
-                                    <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>参加者</Typography>
-                                    <Typography variant="body2">
-                                        登録 {participantsSummary?.total ?? 0} 名
-                                        {participantsSummary?.by_type && Object.keys(participantsSummary.by_type).length > 0 && (
-                                            <>（{Object.entries(participantsSummary.by_type).map(([k, v]) => `${k}:${v}`).join(' · ')}）</>
-                                        )}
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>BO</Typography>
-                                    <Typography variant="body2">
-                                        {breakoutSummary?.room_count ?? 0} 部屋 · 割当 {breakoutSummary?.assigned_member_count ?? 0} 名
-                                    </Typography>
-                                </Box>
-                                {!isPastMeeting(meeting.held_on) && (
+                                {showParticipantsUi && (
+                                    <Box>
+                                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>参加者</Typography>
+                                        <Typography variant="body2">
+                                            登録 {participantsSummary?.total ?? 0} 名
+                                            {participantsSummary?.by_type && Object.keys(participantsSummary.by_type).length > 0 && (
+                                                <>（{Object.entries(participantsSummary.by_type).map(([k, v]) => `${k}:${v}`).join(' · ')}）</>
+                                            )}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {showBreakoutsUi && (
+                                    <Box>
+                                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>BO</Typography>
+                                        <Typography variant="body2">
+                                            {breakoutSummary?.room_count ?? 0} 部屋 · 割当 {breakoutSummary?.assigned_member_count ?? 0} 名
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {showBreakoutsUi && !isPastMeeting(meeting.held_on) && (
                                     <Alert severity="info" sx={{ py: 0.5 }}>今後の例会です。BO 割当は Connections で編集してください。</Alert>
                                 )}
                                 {isPastMeeting(meeting.held_on) && meeting.has_minutes && (
@@ -1277,32 +1384,34 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                         議事録を表示
                                     </Button>
                                 )}
-                                <Box>
-                                    <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>参加者PDF</Typography>
-                                    {participantImport?.has_pdf ? (
-                                        <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
-                                            <PictureAsPdfIcon color="error" fontSize="small" />
-                                            <Typography variant="body2" noWrap sx={{ flex: 1, minWidth: 0 }}>
-                                                {participantImport.original_filename || '参加者一覧.pdf'}
-                                            </Typography>
-                                            <Button size="small" variant="outlined" onClick={() => setDrawerTab('participants')}>
-                                                詳細
-                                            </Button>
-                                        </Stack>
-                                    ) : (
-                                        <Stack direction="row" spacing={1} flexWrap="wrap" alignItems="center">
-                                            <Typography variant="body2" color="text.secondary">未登録</Typography>
-                                            <Button
-                                                size="small"
-                                                variant="outlined"
-                                                startIcon={<CloudUploadIcon />}
-                                                onClick={() => pdfTargetRecord?.id && onPdfRegisterClick?.(pdfTargetRecord)}
-                                            >
-                                                参加者PDF登録
-                                            </Button>
-                                        </Stack>
-                                    )}
-                                </Box>
+                                {showParticipantsUi && (
+                                    <Box>
+                                        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 0.5 }}>参加者PDF</Typography>
+                                        {participantImport?.has_pdf ? (
+                                            <Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
+                                                <PictureAsPdfIcon color="error" fontSize="small" />
+                                                <Typography variant="body2" noWrap sx={{ flex: 1, minWidth: 0 }}>
+                                                    {participantImport.original_filename || '参加者一覧.pdf'}
+                                                </Typography>
+                                                <Button size="small" variant="outlined" onClick={() => setDrawerTab('participants')}>
+                                                    詳細
+                                                </Button>
+                                            </Stack>
+                                        ) : (
+                                            <Stack direction="row" spacing={1} flexWrap="wrap" alignItems="center">
+                                                <Typography variant="body2" color="text.secondary">未登録</Typography>
+                                                <Button
+                                                    size="small"
+                                                    variant="outlined"
+                                                    startIcon={<CloudUploadIcon />}
+                                                    onClick={() => pdfTargetRecord?.id && onPdfRegisterClick?.(pdfTargetRecord)}
+                                                >
+                                                    参加者PDF登録
+                                                </Button>
+                                            </Stack>
+                                        )}
+                                    </Box>
+                                )}
                             </Stack>
                         )}
                         {drawerTab === 'memo' && (
@@ -3228,12 +3337,12 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                                     メモ編集
                                 </Button>
                             )}
-                            {(drawerTab === 'overview' || drawerTab === 'participants') && !participantImport?.has_pdf && pdfTargetRecord?.id && (
+                            {showParticipantsUi && (drawerTab === 'overview' || drawerTab === 'participants') && !participantImport?.has_pdf && pdfTargetRecord?.id && (
                                 <Button size="small" variant="outlined" startIcon={<CloudUploadIcon />} onClick={() => onPdfRegisterClick?.(pdfTargetRecord)} sx={{ flex: 1 }}>
                                     参加者PDF登録
                                 </Button>
                             )}
-                            {(drawerTab === 'overview' || drawerTab === 'participants') && (
+                            {showBreakoutsUi && (drawerTab === 'overview' || drawerTab === 'participants') && (
                                 <Button component={Link} to={`/connections?meetingId=${meeting.id}`} size="small" variant="outlined" sx={{ flex: 1 }}>
                                     Connectionsへ
                                 </Button>
@@ -3268,12 +3377,12 @@ function MeetingDetailDrawer({ open, onClose, data, loading, meetingFromList, on
                     </>
                 ) : (
                     <Typography variant="body2" color="text.secondary">
-                        議事録は未取り込みです。`dragonfly:import-chapter-minutes` で Markdown から取り込んでください。
+                        {minutesImportHelp(meeting ?? meetingFromList)}
                     </Typography>
                 )}
             </DialogContent>
             <DialogActions>
-                {meeting?.has_minutes ? (
+                {meeting?.has_minutes && showReferralUi ? (
                     <Button
                         variant="outlined"
                         onClick={() => {
@@ -3569,7 +3678,9 @@ export function MeetingsList() {
                     <FunctionField
                         label="リファーラル"
                         render={(r) =>
-                            r?.referral_suggestion_stale ? (
+                            !supportsReferralSuggestions(r) ? (
+                                <span>—</span>
+                            ) : r?.referral_suggestion_stale ? (
                                 <Chip
                                     size="small"
                                     label="要再生成"

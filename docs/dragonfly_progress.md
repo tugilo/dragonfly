@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-23 22:12 JST | **Phase 238 MeetingsList UI 種別対応（SPEC-018 Phase D）:** 種別/チームフィルタ、Drawer・Actions・議事録モーダル出し分け、`meetingTypeUi.js`、FIT_AND_GAP 追記。npm build OK。 |
 | 2026-06-23 22:06 JST | **Phase 237 Meetings API 種別フィルタ（SPEC-018 Phase C）:** `GET /api/meeting-types`、`GET /api/meetings?meeting_type&team_id`、一覧/詳細に種別メタ列。Feature test 追加。 |
 | 2026-06-23 22:02 JST | **Phase 236 import-team-minutes（SPEC-018 Phase B）:** `dragonfly:import-team-minutes` 新規、自然キー `(team_meeting, team_id, held_on)`、Feature test 6 件、`team_threebiz_*.md` 5 件 smoke import。494 tests passed。 |
 | 2026-06-23 21:55 JST | **Phase 235 meeting_types DB（SPEC-018 Phase A）:** `meeting_types` テーブル + 5 種 seed、`meetings.meeting_type_id` / `team_id` 拡張・backfill・UNIQUE、`MeetingType` モデル、`MeetingDisplay` team_meeting 対応、import/store 整合。488 tests passed。develop merge 済み。 |

@@ -1,7 +1,7 @@
 # チームMTG議事録 DB 化 — SSOT
 
 **Spec ID:** SPEC-018（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
-**Status:** active（Phase 235 DB + Phase 236 import + Phase 237 API 実装済み・**UI 未着手**）  
+**Status:** active（Phase 235–238 実装済み・**Phase E docs 同期 未着手**）  
 **作成:** 2026-06-23 19:25 JST  
 **Related:** [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）、[MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md)、[DATA_MODEL.md](DATA_MODEL.md) §4.6 / §4.6a / §4.6b、[meetings/team/README.md](../meetings/team/README.md)
 
@@ -286,13 +286,13 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/
 - [x] `MeetingController` show に種別メタ
 - [x] Feature test
 
-### Phase D — UI（implement）
+### Phase D — UI（implement） — Phase 238 完了
 
-- [ ] MeetingsList: 種別・チームフィルタ
-- [ ] Drawer タブ / アクション出し分け
-- [ ] 議事録モーダルヘルプ文言
-- [ ] `npm run build`
-- [ ] FIT_AND_GAP 記録
+- [x] MeetingsList: 種別・チームフィルタ
+- [x] Drawer タブ / アクション出し分け
+- [x] 議事録モーダルヘルプ文言
+- [x] `npm run build`
+- [x] FIT_AND_GAP 記録
 
 ### Phase E — docs 同期
 
