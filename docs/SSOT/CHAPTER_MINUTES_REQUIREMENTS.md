@@ -1,7 +1,7 @@
 # SPEC-014 — チャプター定例会議事録の DB 化
 
 **Status:** active（Phase 180 実装）  
-**Related:** [MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md), [DATA_MODEL.md](DATA_MODEL.md) §4.6a, [CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md](CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md)（SPEC-016・議事録からのリファーラル提案・実装未着手）
+**Related:** [MEETING_DOMAIN_IA.md](MEETING_DOMAIN_IA.md), [DATA_MODEL.md](DATA_MODEL.md) §4.6a, [CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md](CHAPTER_MEETING_REFERRAL_SUGGESTION_REQUIREMENTS.md)（SPEC-016・議事録からのリファーラル提案）、[TEAM_MEETING_MINUTES_REQUIREMENTS.md](TEAM_MEETING_MINUTES_REQUIREMENTS.md)（SPEC-018・チーム MTG は別 Spec）
 
 ---
 
@@ -16,15 +16,16 @@
 - 管理画面からの議事録編集
 - DB → Markdown の書き出し
 - `contact_memos`（例会メモ）との統合
-- **モメンタムトレーニング・BOD 等、定例会回数外イベント** の `meetings.number` 自動採番（`meeting_number` なし Markdown は SSOT のみ。取り込みコマンドは対象外）
+- **チーム MTG** の取り込み（→ [TEAM_MEETING_MINUTES_REQUIREMENTS.md](TEAM_MEETING_MINUTES_REQUIREMENTS.md) SPEC-018）
+- **モメンタムトレーニング・BOD 等** の `meetings.number` 自動採番（`meeting_number` なし。`number` は NULL）
 
-### 定例会回数に含めないイベント
+### 定例会回数に含めないイベント（チャプター）
 
 | 種別 | `doc_type` | `meeting_number` | DB 取り込み |
 |------|------------|------------------|-------------|
-| 週次定例会 | `chapter_weekly` | 必須 | 可 |
-| モメンタムトレーニング | `chapter_momentum` | 付けない | 不可（エラー） |
-| BOD | `chapter_bod` | 付けない | 不可（エラー） |
+| 週次定例会 | `chapter_weekly` | 必須 | 可（`meetings.number`） |
+| モメンタムトレーニング | `chapter_momentum` | 付けない | 可（`session_type` + `held_on`、number=NULL） |
+| BOD | `chapter_bod` | 付けない | 可（`session_type` + `held_on`、number=NULL） |
 
 例: DragonFly **2026-06-16** モメンタムは **第212回ではない**。**2026-07-28** BOD も同様。次の定例会 **第212回** は **2026-06-23**（予定）。
 
@@ -72,7 +73,7 @@ php artisan dragonfly:import-chapter-minutes path/to/file.md --meeting_number=20
 ### 処理
 
 1. YAML front matter を `Symfony\Component\Yaml\Yaml` で解析
-2. `meeting_number` / `session_date` で `Meeting::updateOrCreate(['number' => N], ['held_on' => ...])`
+2. 番号付き: `Meeting::updateOrCreate(['number' => N], …)`。非番号: `Meeting::updateOrCreate(['session_type', 'held_on'], number=null)`
 3. `MeetingMinute::updateOrCreate(['meeting_id' => ...], [...])`
 4. 再取り込み時は同一 `meeting_id` の行を上書き（重複行は作らない）
 

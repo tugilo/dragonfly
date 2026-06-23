@@ -220,6 +220,19 @@
 | 219 | BO 3枠以上の保存（breakouts API + Connections コピー一般化） | implement | completed | develop | 2026-06-16 |
 | 220 | meetings session_type（モメンタム・BOD・番号なしイベント） | implement | completed | develop | 2026-06-16 |
 | 221 | Claude Code セットアップ（AI_TOOLING / CLAUDE.md / .claude） | docs | completed | develop | 2026-06-16 |
+| 222 | 熊谷龍笙 121事前準備（株式会社Lifinity／通信費削減） | docs | completed | develop | 2026-06-17 |
+| 223 | 熊谷龍笙 第1回121 Zoom要約反映 | docs | completed | develop | 2026-06-17 |
+| 224 | SONAE 要件定義（Religo拡張／単体利用対応・DragonFly MVP） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-18 |
+| 225 | SONAE 飯田香さん向け提案書（DragonFly BCP担当向け） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-18 |
+| 226 | 福士利明 121事前準備（株式会社ユニバースプロダクツ／コンクリート内部防水テクノロジー） | docs | completed | develop（commit / merge 未実施） | 2026-06-19 |
+| 227 | 福士利明 第1回121 Zoom要約反映（CTP2000・国際物流・システム相談） | docs | completed | develop（commit / merge 未実施） | 2026-06-19 |
+| 228 | 平野眞邦 121事前準備（有限会社 美研テクノ／防水工事・害虫ブロック） | docs | completed | develop（commit / merge 未実施） | 2026-06-19 |
+| 229 | 横山太樹 121事前準備（株式会社ARATAS／資金調達支援） | docs | completed | develop（commit / merge 未実施） | 2026-06-19 |
+| 230 | 横山太樹 第1回121 Zoom要約反映（ARATAS財務顧問・法人化相談・DragonFly入会検討） | docs | completed | develop（commit / merge 未実施） | 2026-06-19 |
+| 231 | DragonFly 定例会 2026-06-23 議事録保存 | docs | completed | develop（commit / merge 未実施） | 2026-06-23 |
+| 232 | SONAE Community 戦略反映（共創トライアル・LINE公式アカウント方針・課金仮説） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-23 |
+| 233 | スリーバイス 2026-06-23 横山尚武 パーソナル軸議事録 | docs | completed | develop（commit / merge 未実施） | 2026-06-23 |
+| 234 | チームMTG議事録 DB 化 要件整理（SPEC-018・meeting_types・import-team-minutes・Meetings 種別履歴） | docs | completed | develop（commit / merge 未実施） | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
