@@ -237,7 +237,7 @@
 | 236 | import-team-minutes（SPEC-018 Phase B・ImportTeamMinutesCommand） | implement | completed | develop | 2026-06-23 |
 | 237 | Meetings API 種別フィルタ（SPEC-018 Phase C・meeting-types・種別メタ） | implement | completed | develop | 2026-06-23 |
 | 238 | MeetingsList UI 種別対応（SPEC-018 Phase D・フィルタ・Drawer 出し分け） | implement | completed | develop | 2026-06-23 |
-| 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | feature/phase239-team-meeting-docs-sync | 2026-06-23 |
+| 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | develop | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

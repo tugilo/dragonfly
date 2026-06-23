@@ -57,7 +57,7 @@ Phase A (235) → B (236) → C (237) → D (238) → E (239) すべて完了。
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未 merge） |
+| merge commit id | 6682fafef124aadbdd97a493890059a55ec4cebe |
 | source branch | feature/phase239-team-meeting-docs-sync |
 | target branch | develop |
 | phase id | 239 |
