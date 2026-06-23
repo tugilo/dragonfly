@@ -236,6 +236,7 @@
 | 235 | meeting_types DB（SPEC-018 Phase A・migration/seed/backfill・MeetingType） | implement | completed | develop | 2026-06-23 |
 | 236 | import-team-minutes（SPEC-018 Phase B・ImportTeamMinutesCommand） | implement | completed | develop | 2026-06-23 |
 | 237 | Meetings API 種別フィルタ（SPEC-018 Phase C・meeting-types・種別メタ） | implement | completed | develop | 2026-06-23 |
+| 238 | MeetingsList UI 種別対応（SPEC-018 Phase D・フィルタ・Drawer 出し分け） | implement | completed | feature/phase238-meetings-list-ui | 2026-06-23 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
