@@ -38,7 +38,7 @@ SPEC-018 Phase B: `dragonfly:import-team-minutes` で `docs/meetings/team/team_*
 - [x] Feature test pass
 - [x] 既存 `team_threebiz_*.md` 5 件 smoke import
 - [x] php artisan test pass
-- [ ] develop merge + push
+- [x] develop merge + push
 
 ---
 

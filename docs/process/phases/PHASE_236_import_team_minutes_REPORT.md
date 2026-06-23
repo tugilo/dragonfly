@@ -69,7 +69,7 @@ php artisan dragonfly:import-team-minutes docs/meetings/team/  → Imported 5 fi
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未 merge） |
+| merge commit id | be1ae4882ca73e1b53f2754d695dd27333312786 |
 | source branch | feature/phase236-import-team-minutes |
 | target branch | develop |
 | phase id | 236 |
