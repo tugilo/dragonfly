@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-23 22:06 JST | **Phase 237 Meetings API 種別フィルタ（SPEC-018 Phase C）:** `GET /api/meeting-types`、`GET /api/meetings?meeting_type&team_id`、一覧/詳細に種別メタ列。Feature test 追加。 |
 | 2026-06-23 22:02 JST | **Phase 236 import-team-minutes（SPEC-018 Phase B）:** `dragonfly:import-team-minutes` 新規、自然キー `(team_meeting, team_id, held_on)`、Feature test 6 件、`team_threebiz_*.md` 5 件 smoke import。494 tests passed。 |
 | 2026-06-23 21:55 JST | **Phase 235 meeting_types DB（SPEC-018 Phase A）:** `meeting_types` テーブル + 5 種 seed、`meetings.meeting_type_id` / `team_id` 拡張・backfill・UNIQUE、`MeetingType` モデル、`MeetingDisplay` team_meeting 対応、import/store 整合。488 tests passed。develop merge 済み。 |
 | 2026-06-23 19:25 JST | **Phase 234 チームMTG議事録 DB 化 要件整理:** [`SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md`](SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md) を **SPEC-018** として新規作成。`meeting_types` マスタ、`meetings.team_id`、自然キー `(team_meeting, team_id, held_on)`、`dragonfly:import-team-minutes`、Meetings 種別/チームフィルタ・UI 出し分け、実装 Phase A–D を確定。関連 SSOT（SPEC-014 / MEETING_DOMAIN_IA / DATA_MODEL）整合、[`meetings/team/README.md`](meetings/team/README.md) 新規。Phase 234 PLAN/WORKLOG/REPORT、`docs/INDEX.md`、`docs/process/PHASE_REGISTRY.md` を同期。 |
