@@ -1,30 +1,32 @@
 # 定例会ドメイン IA（Meeting 中心）
 
-**Spec ID:** SPEC-014（議事録 DB 化と連携）／Meeting ドメイン全体の IA  
+**Spec ID:** SPEC-014（議事録 DB 化と連携）／SPEC-018（チーム MTG 議事録）／Meeting ドメイン全体の IA  
 **Status:** active  
 **作成日:** 2026-06-02 JST  
-**記録:** Phase 180（初版）、Phase 183（議事録モーダル・参加者PDF導線）
+**記録:** Phase 180（初版）、Phase 183（議事録モーダル・参加者PDF導線）、Phase 234（種別マスタ・チーム MTG IA）
 
 ---
 
 ## 1. 目的
 
-Religo における **定例会（Meeting）** を集約ルートとし、参加者・BO・議事録・メモを 1 回の定例会の下に束ねる。UI の役割分担（Meetings / Connections）をデータモデルと一致させる。
+Religo における **集会（Meeting）** を集約ルートとし、種別（定例会・チーム MTG 等）に応じたファセットを 1 回の meeting の下に束ねる。UI の役割分担（Meetings / Connections）をデータモデルと一致させる。
+
+**種別マスタ:** `meeting_types`（SPEC-018）。`supports_participants` / `supports_breakouts` / `supports_referral_suggestions` で UI 出し分け。
 
 ---
 
 ## 2. Meeting = 集約ルート
 
-| ファセット | テーブル / データ | 意味 | 編集 UI |
-|------------|-------------------|------|---------|
-| **参加者** | `participants` | その回に誰が参加したか | Meetings（CSV/PDF 取込） |
-| **BO** | `breakout_rooms`, `participant_breakout` | 同室割当 | **Connections**（編集面）／Meetings（読み取り＋導線） |
-| **議事録** | `meeting_minutes` | チャプター定例会の全体記録（Markdown） | ファイルが正 → artisan 取り込み／Meetings（閲覧） |
-| **例会メモ** | `contact_memos`（`memo_type=meeting`） | owner の個人メモ（1 meeting あたり 1 現在メモ） | Meetings（編集） |
+| ファセット | テーブル / データ | 意味 | 編集 UI | 種別 |
+|------------|-------------------|------|---------|------|
+| **参加者** | `participants` | その回に誰が参加したか | Meetings（CSV/PDF 取込） | `supports_participants` |
+| **BO** | `breakout_rooms`, `participant_breakout` | 同室割当 | **Connections**（編集面）／Meetings（読み取り＋導線） | `supports_breakouts` |
+| **議事録** | `meeting_minutes` | 集会の全体記録（Markdown） | ファイルが正 → artisan 取り込み／Meetings（閲覧） | 全種別 |
+| **例会メモ** | `contact_memos`（`memo_type=meeting`） | owner の個人メモ（1 meeting あたり 1 現在メモ） | Meetings（編集） | 全種別（BO 導線は種別依存） |
 
 **議事録と例会メモの区別:**
 
-- **議事録（`meeting_minutes`）:** 会全体の記録。チャプター定例会の Zoom 要約等。owner→target ではない。
+- **議事録（`meeting_minutes`）:** 会全体の記録。定例会 Zoom 要約・**チーム MTG パーソナル軸** 等。owner→target ではない。
 - **例会メモ（`contact_memos`）:** 利用者（owner）個人のメモ。Dashboard KPI の `meetings_with_memo` はこちらを指す（既存仕様維持）。
 
 ---
@@ -41,15 +43,17 @@ Religo における **定例会（Meeting）** を集約ルートとし、参加
 
 ## 4. Meetings の役割（管理ハブ）
 
-**Meetings（`/meetings` = MeetingsList）は定例会の管理ハブ。**
+**Meetings（`/meetings` = MeetingsList）は集会の管理ハブ（種別横断）。**
 
-Drawer タブ構成:
+一覧: **種別フィルタ**（定例会 / チーム MTG / …）、チーム MTG 時は **team_id フィルタ**。
+
+Drawer タブ構成（**種別で出し分け** — `meeting_types` メタ）:
 
 | タブ | 内容 |
 |------|------|
 | **概要** | 番号・日付・BO数・メモ有無・参加者 PDF 状態・議事録有無。議事録あり時は **「議事録を表示」→ モーダル** |
-| **参加者** | 参加者 PDF / CSV 取込・解析・反映。PDF 未登録時は登録ボタン |
-| **BO** | 割当の読み取り ＋ **「Connections で編集」** 導線 |
+| **参加者** | 参加者 PDF / CSV 取込・解析・反映 | **chapter_* のみ** |
+| **BO** | 割当の読み取り ＋ **「Connections で編集」** 導線 | **chapter_* のみ** |
 | **メモ** | 既存の `contact_memos` 例会メモ（`MarkdownView` 閲覧・Dialog 編集） |
 
 **議事録（モーダル）:** Drawer タブには含めない。`meeting_minutes.body_markdown` を共有 `MarkdownView` で **Dialog モーダル**表示。起動: ヘッダー「議事録あり」Chip、概要ボタン、一覧「あり」Chip、`/meetings?meetingId=&tab=minutes`（Connections 導線）。
@@ -65,9 +69,12 @@ Drawer タブ構成:
 
 ## 5. 議事録の source of truth
 
-- **正:** `docs/meetings/chapter/chapter_weekly_YYYYMMDD.md`
+| 種別 | 正（Markdown） | 取込コマンド |
+|------|----------------|--------------|
+| 定例会・モメンタム・BOD | `docs/meetings/chapter/` | `dragonfly:import-chapter-minutes` |
+| チーム MTG | `docs/meetings/team/team_*.md` | `dragonfly:import-team-minutes`（SPEC-018・未実装） |
+
 - **DB:** `meeting_minutes`（file → DB の一方向取り込みのみ）
-- **コマンド:** `php artisan dragonfly:import-chapter-minutes {path}`
 
 ### front matter 推奨キー
 
@@ -80,11 +87,22 @@ Drawer タブ構成:
 | `format` | 任意 | 例: `zoom` |
 | `source` | 任意 | 取得元 |
 
+### チーム MTG（`doc_type: team_meeting`）— SPEC-018
+
+| キー | 必須 | 用途 |
+|------|------|------|
+| `team_id` | 必須 | `meetings.team_id` |
+| `team_name_ja` | 推奨 | 表示名 |
+| `session_date` | 必須 | `held_on` |
+
+詳細: [TEAM_MEETING_MINUTES_REQUIREMENTS.md](TEAM_MEETING_MINUTES_REQUIREMENTS.md) / [meetings/team/README.md](../meetings/team/README.md)
+
 ---
 
 ## 6. API 拡張（本 Phase）
 
-- `GET /api/meetings` — 各行に `has_minutes`（boolean）
+- `GET /api/meetings` — 各行に `has_minutes`（boolean）、**種別メタ**（SPEC-018）、`meeting_type` / `team_id` フィルタ
+- `GET /api/meeting-types` — 種別マスタ一覧（SPEC-018・未実装）
 - `GET /api/meetings/{id}` — `minutes` オブジェクト、`participant_count`、BO 要約
 - `GET /api/meetings/{id}/minutes` — 議事録本文（読み取り専用）
 
@@ -93,6 +111,7 @@ Drawer タブ構成:
 ## 7. 関連 SSOT
 
 - [DATA_MODEL.md](DATA_MODEL.md) §4.6 meetings、§4.6a meeting_minutes
-- [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)
+- [CHAPTER_MINUTES_REQUIREMENTS.md](CHAPTER_MINUTES_REQUIREMENTS.md)（SPEC-014）
+- [TEAM_MEETING_MINUTES_REQUIREMENTS.md](TEAM_MEETING_MINUTES_REQUIREMENTS.md)（SPEC-018）
 - [MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md](MEMBERS_VISITOR_GUEST_PROXY_CONNECTIONS_POLICY.md) — Connections と participants
 - [FIT_AND_GAP_MEETINGS.md](FIT_AND_GAP_MEETINGS.md)
