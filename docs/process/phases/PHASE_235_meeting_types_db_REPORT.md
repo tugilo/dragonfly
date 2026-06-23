@@ -71,7 +71,7 @@ Tests: 488 passed (1817 assertions)
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未 merge — feature/phase235-meeting-types-db） |
+| merge commit id | 5f2f2a68bfa3c601b554e83eb37bca0500decfd1 |
 | source branch | feature/phase235-meeting-types-db |
 | target branch | develop |
 | phase id | 235 |
