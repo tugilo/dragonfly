@@ -37,6 +37,6 @@ php artisan test → 499 passed
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未 merge） |
+| merge commit id | de7f8387a673419020cbf3fbbdf59355b9542e25 |
 | source branch | feature/phase238-meetings-list-ui |
 | target branch | develop |
