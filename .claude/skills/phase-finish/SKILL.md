@@ -20,11 +20,12 @@ description: Finish a DevOS Phase in dragonfly. Use when completing work, writin
    ```
 3. **React 変更あり:** `/react-build`
 4. **docs 変更あり:** `/docs-sync`
-5. **REPORT** 作成（Merge Evidence 含む）
+5. **REPORT** 作成（Merge Evidence は merge 後に確定 ID を埋める）
 6. **更新:**
    - `docs/process/PHASE_REGISTRY.md`（Status: completed）
 7. **merge（人間確認後）:** `/merge-develop` を参照
-8. **REPORT に取り込み証跡**（merge commit id 等）を追記
+8. **Merge Evidence を REPORT / REGISTRY に追記 → ローカル commit**
+9. **`git push origin develop` は Phase あたり 1 回**（merge + evidence をまとめて push。2 回 push しない）
 
 ## Merge Evidence（REPORT 必須）
 
