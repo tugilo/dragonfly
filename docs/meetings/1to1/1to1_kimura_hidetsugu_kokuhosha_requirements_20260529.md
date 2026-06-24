@@ -1,7 +1,7 @@
 ---
 doc_type: 1to1_requirements_summary
 source_1to1_id: kimura_hidetsugu_kokuhosha
-source_one_to_one_record_id: 38
+source_one_to_one_record_id: 43
 counterparty_name_ja: "木村秀継"
 organization_ja: "株式会社国宝社 / BPS木村"
 source_session_date: "2026-05-29"
@@ -13,7 +13,7 @@ created_at_jst: "2026-05-31 10:11"
 
 ## 位置づけ
 
-この文書は、木村秀継さんとの **第2回 1to1（2026-05-29 JST 14:00-15:00 / Religo `one_to_ones.id=38`）** で確認した、製本販売管理システム改善に関する要望を切り出したもの。
+この文書は、木村秀継さんとの **第2回 1to1（2026-05-29 JST 14:00-15:00 / Religo `one_to_ones.id=43`）** で確認した、製本販売管理システム改善に関する要望を切り出したもの。
 
 元の会話履歴は [1to1_木村秀継_株式会社国宝社](1to1_kimura_hidetsugu_kokuhosha.md) に残し、本書は **提案書・簡易モック・次回ヒアリング** のための作業用整理とする。
 
