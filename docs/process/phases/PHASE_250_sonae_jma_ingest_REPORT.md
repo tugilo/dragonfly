@@ -24,4 +24,18 @@ php artisan test — 536 passed（SonaeJmaIngestTest 含む）
 
 ## Merge Evidence
 
-Phase 249 と同一 merge（L2 パイプライン一括取り込み）。詳細は PHASE_249 REPORT 参照。
+```
+merge commit id: 24577c583a7320df208bed8bb712bb0b93af118f
+source branch: feature/phase249-sonae-jma-fetch
+target branch: develop
+phase id: 250
+phase type: implement
+related ssot: SPEC-017 §9 JMAXML 9種
+
+test command: php artisan test
+test result: 536 passed (SonaeJmaIngestTest 含む)
+
+scope check: OK
+ssot check: OK
+dod check: OK
+```

@@ -8,8 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-06-24 21:53 JST | **Phase 252 完了（merge）:** SONAE PoC Runbook（[`SSOT/SONAE_POC_RUNBOOK.md`](SSOT/SONAE_POC_RUNBOOK.md)）。244–252 実装ロードマップ完了。 |
-| 2026-06-24 21:53 JST | **Phase 249–251 完了（merge）:** SONAE L2 — JMA fixture 取得・9種 Normalizer ingest・発報条件 + 自動発報・JMA/発報条件 UI。536 tests passed、npm build OK。**L2 達成。** |
+| 2026-06-24 21:53 JST | **Phase 252 完了（merge）:** SONAE PoC Runbook（[`SSOT/SONAE_POC_RUNBOOK.md`](SSOT/SONAE_POC_RUNBOOK.md)）。merge `24577c5`。244–252 実装ロードマップ完了。 |
+| 2026-06-24 21:53 JST | **Phase 249–251 完了（merge）:** SONAE L2 — JMA fixture 取得・9種 Normalizer ingest・発報条件 + 自動発報・JMA/発報条件 UI。merge `24577c5`。536 tests passed、npm build OK。**L2 達成。** |
 | 2026-06-24 21:28 JST | **Phase 248 完了（merge）:** SONAE Religo Shell 統合。merge `01ce97b9`。531 tests passed。L1 運用パス（244→248）完了。 |
 | 2026-06-24 21:22 JST | **Phase 247 完了（merge）:** SONAE 管理画面 React `/sonae/*`。527 tests passed。 |
 | 2026-06-24 21:17 JST | **Phase 246 完了（merge）:** SONAE 訓練・回答・集計（L1）。525 tests passed。 |

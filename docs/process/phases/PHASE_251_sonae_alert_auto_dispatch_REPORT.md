@@ -36,4 +36,19 @@ npm run build — success
 
 ## Merge Evidence
 
-（merge 後に確定）
+```
+merge commit id: 24577c583a7320df208bed8bb712bb0b93af118f
+source branch: feature/phase249-sonae-jma-fetch
+target branch: develop
+phase id: 251
+phase type: implement
+related ssot: SPEC-017 §9.6、§5.5
+
+test command: php artisan test
+test result: 536 passed (2045 assertions)
+npm run build: success
+
+scope check: OK
+ssot check: OK
+dod check: OK
+```
