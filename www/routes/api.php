@@ -42,6 +42,8 @@ use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
 use App\Http\Controllers\Sonae\SonaeAlertThresholdOptionController;
 use App\Http\Controllers\Sonae\SonaeChapterController;
+use App\Http\Controllers\Sonae\SonaeLineAccountController;
+use App\Http\Controllers\Sonae\SonaeLineLinkController;
 use App\Http\Controllers\Sonae\SonaeMemberController;
 use Illuminate\Support\Facades\Route;
 
@@ -140,6 +142,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/chapters/{chapter}/members/{member}', [SonaeMemberController::class, 'update']);
         Route::post('/chapters/{chapter}/members/sync', [SonaeMemberController::class, 'sync']);
         Route::post('/chapters/{chapter}/members/import-csv', [SonaeMemberController::class, 'importCsv']);
+        Route::get('/chapters/{chapter}/line-account', [SonaeLineAccountController::class, 'show']);
+        Route::put('/chapters/{chapter}/line-account', [SonaeLineAccountController::class, 'update']);
+        Route::post('/chapters/{chapter}/members/{member}/line-invite', [SonaeLineLinkController::class, 'issueInvite']);
+        Route::post('/chapters/{chapter}/members/{member}/line-link', [SonaeLineLinkController::class, 'linkDirect']);
+        Route::post('/chapters/{chapter}/members/{member}/line-push-test', [SonaeLineLinkController::class, 'pushTest']);
     });
 });
 
