@@ -2,7 +2,8 @@
 
 **SSOT:** [SONAE_REQUIREMENTS.md](SONAE_REQUIREMENTS.md) §5.6  
 **実装計画:** [SONAE_IMPLEMENTATION_PLAN.md](SONAE_IMPLEMENTATION_PLAN.md)  
-**最終更新:** 2026-06-24 21:53 JST
+**開発環境（religo-dev）:** [SONAE_DEV_ENV_SETUP.md](SONAE_DEV_ENV_SETUP.md) — 本番データ複製・開発 LINE・L1 検証の具体手順  
+**最終更新:** 2026-06-24 22:18 JST
 
 ---
 
