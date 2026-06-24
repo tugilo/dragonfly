@@ -247,6 +247,10 @@
 | 246 | SONAE 訓練・回答・集計（L1 達成） | implement | completed | develop | 2026-06-24 |
 | 247 | SONAE 管理画面 UI（React `/sonae/*`） | implement | completed | develop | 2026-06-24 |
 | 248 | SONAE Religo Shell 統合 | implement | completed | develop | 2026-06-24 |
+| 249 | SONAE JMA 取得基盤（fixture フィード・設定 API・手動取得・ログ） | implement | completed | develop | 2026-06-24 |
+| 250 | SONAE JMA Normalizer + Ingest（9種・alert_events） | implement | completed | develop | 2026-06-24 |
+| 251 | SONAE 発報条件 + 自動発報（L2 達成） | implement | completed | develop | 2026-06-24 |
+| 252 | SONAE PoC 伴走（Runbook・L1/L2 完了確認） | docs | completed | develop | 2026-06-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

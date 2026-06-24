@@ -133,6 +133,60 @@ export async function fetchSonaeNotificationSummary(chapterId, notificationId) {
     return parseJson(res);
 }
 
+export async function fetchSonaeJmaSettings() {
+    const res = await religoFetch('/api/sonae/jma/settings', {
+        headers: { Accept: 'application/json' },
+    });
+    const data = await parseJson(res);
+    return data.data;
+}
+
+export async function updateSonaeJmaSettings(body) {
+    const res = await religoFetch('/api/sonae/jma/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const data = await parseJson(res);
+    return data.data;
+}
+
+export async function runSonaeJmaFetch() {
+    const res = await religoFetch('/api/sonae/jma/fetch', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+    });
+    const data = await parseJson(res);
+    return data.data;
+}
+
+export async function fetchSonaeJmaLogs(limit = 20) {
+    const q = new URLSearchParams({ limit: String(limit) });
+    const res = await religoFetch(`/api/sonae/jma/logs?${q.toString()}`, {
+        headers: { Accept: 'application/json' },
+    });
+    const data = await parseJson(res);
+    return data.data ?? [];
+}
+
+export async function fetchSonaeAlertSettings(chapterId) {
+    const res = await religoFetch(`/api/sonae/chapters/${chapterId}/alert-settings`, {
+        headers: { Accept: 'application/json' },
+    });
+    const data = await parseJson(res);
+    return data.data ?? [];
+}
+
+export async function updateSonaeAlertSettings(chapterId, settings) {
+    const res = await religoFetch(`/api/sonae/chapters/${chapterId}/alert-settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ settings }),
+    });
+    const data = await parseJson(res);
+    return data.data ?? [];
+}
+
 export function formatRate(rate) {
     if (rate == null) return '—';
     return `${Math.round(Number(rate) * 1000) / 10}%`;

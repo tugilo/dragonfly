@@ -2,6 +2,8 @@
 
 use App\Console\Commands\DashboardVerifySummaryCommand;
 use App\Console\Commands\ImportParticipantsCsvCommand;
+use App\Console\Commands\Sonae\BootstrapDragonFlyCommand;
+use App\Console\Commands\Sonae\JmaFetchCommand;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -31,5 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([
         DashboardVerifySummaryCommand::class,
         ImportParticipantsCsvCommand::class,
+        JmaFetchCommand::class,
+        BootstrapDragonFlyCommand::class,
     ])
     ->create();

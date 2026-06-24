@@ -1,4 +1,11 @@
 *
 !private/
 !public/
+!sonae/
+sonae/*
+!sonae/jma/
+sonae/jma/*
+!sonae/jma/fixtures/
+sonae/jma/fixtures/*
+!sonae/jma/fixtures/**
 !.gitignore

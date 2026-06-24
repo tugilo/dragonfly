@@ -155,6 +155,22 @@ export const ReligoMenu = () => {
             >
                 訓練・集計
             </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/sonae/jma"
+                selected={isActive('/sonae/jma')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                気象庁連携
+            </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/sonae/alert-settings"
+                selected={isActive('/sonae/alert-settings')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                発報条件
+            </MenuItem>
             <ListSubheader
                 disableSticky
                 sx={{
