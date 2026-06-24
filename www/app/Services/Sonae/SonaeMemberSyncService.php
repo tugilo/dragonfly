@@ -7,6 +7,7 @@ use App\Models\Sonae\SonaeChapter;
 use App\Models\Sonae\SonaeConstants;
 use App\Models\Sonae\SonaeMember;
 use App\Models\Workspace;
+use App\Support\MemberEnrollmentType;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -41,6 +42,10 @@ class SonaeMemberSyncService
     public function syncOne(SonaeChapter $chapter, Member $religoMember): bool
     {
         if (empty($religoMember->name)) {
+            return false;
+        }
+
+        if (! MemberEnrollmentType::isBniMember($religoMember->type)) {
             return false;
         }
 

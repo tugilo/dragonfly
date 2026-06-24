@@ -40,4 +40,10 @@ final class SonaeConstants
     public const ATTENDANCE_CANNOT = 'cannot_attend';
 
     public const ATTENDANCE_UNDECIDED = 'undecided';
+
+    public const LINE_LINK_ACTIVE = 'active';
+
+    public const LINE_LINK_BLOCKED = 'blocked';
+
+    public const LINE_LINK_UNLINKED = 'unlinked';
 }

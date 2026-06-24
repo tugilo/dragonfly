@@ -28,4 +28,9 @@ class SonaeAlertType extends Model
     {
         return $this->hasMany(SonaeAlertEvent::class, 'alert_type_id');
     }
+
+    public function thresholdOptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SonaeAlertThresholdOption::class, 'alert_type_id');
+    }
 }

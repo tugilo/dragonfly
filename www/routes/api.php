@@ -40,6 +40,9 @@ use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
 use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
 use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
+use App\Http\Controllers\Sonae\SonaeAlertThresholdOptionController;
+use App\Http\Controllers\Sonae\SonaeChapterController;
+use App\Http\Controllers\Sonae\SonaeMemberController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -123,6 +126,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/meetings/{meeting}/referral-suggestions', [MeetingReferralSuggestionController::class, 'index']);
     Route::patch('/meeting-referral-suggestions/{meetingReferralSuggestion}', [MeetingReferralSuggestionController::class, 'update']);
     Route::post('/meeting-referral-suggestions/{meetingReferralSuggestion}/register-introduction', [MeetingReferralSuggestionController::class, 'registerIntroduction']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SONAE API (SPEC-017 Phase 244+)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('sonae')->group(function () {
+        Route::get('/alert-threshold-options', [SonaeAlertThresholdOptionController::class, 'index']);
+        Route::get('/chapters/{chapter}', [SonaeChapterController::class, 'show']);
+        Route::get('/chapters/{chapter}/members', [SonaeMemberController::class, 'index']);
+        Route::get('/chapters/{chapter}/members/unlinked', [SonaeMemberController::class, 'unlinked']);
+        Route::patch('/chapters/{chapter}/members/{member}', [SonaeMemberController::class, 'update']);
+        Route::post('/chapters/{chapter}/members/sync', [SonaeMemberController::class, 'sync']);
+        Route::post('/chapters/{chapter}/members/import-csv', [SonaeMemberController::class, 'importCsv']);
+    });
 });
 
 /*

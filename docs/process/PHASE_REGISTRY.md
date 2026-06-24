@@ -242,6 +242,8 @@
 | 241 | SONAE PoC 提案同期（sonae_proposal.pdf・開発費削除・PoC表現） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-24 |
 | 242 | SONAE P1 DB 基盤（sonae_* migration・bootstrap・member sync） | implement | completed | develop | 2026-06-24 |
 | 243 | SONAE 壁打ち要件 SSOT 反映（Member Roster・JMA 9種・閾値 UI・LINE 紐付け通知・将来地域別回答） | docs | completed | develop | 2026-06-24 |
+| 244 | SONAE Roster Core（閾値マスタ・type=member sync・名簿 API・CSV・通知対象 Resolver） | implement | completed | develop | 2026-06-24 |
+| 245 | SONAE LINE 連携（設定 API・Webhook・友だち紐付け・Push） | implement | planned | — | 2026-06-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

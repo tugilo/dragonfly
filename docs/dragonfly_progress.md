@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-24 21:15 JST | **Phase 244 完了（merge 予定）:** SONAE Roster Core。`sonae_alert_threshold_options`、guest/visitor 除外 sync、`SonaeNotificationTargetResolver`、名簿 API・CSV・KPI（`/api/sonae/*`）。519 tests passed。[`SSOT/SONAE_IMPLEMENTATION_PLAN.md`](SSOT/SONAE_IMPLEMENTATION_PLAN.md) 新規。 |
+| 2026-06-24 21:09 JST | **Phase 244 PLAN:** SONAE 実装ロードマップ [`SSOT/SONAE_IMPLEMENTATION_PLAN.md`](SSOT/SONAE_IMPLEMENTATION_PLAN.md) を新規作成。Religo 疎結合・Phase 244–252 分割（L1: 244→248、L2: 249→251）。次 implement は **244 Roster Core**（閾値マスタ、`type=member` sync 修正、名簿 API・CSV・通知対象 Resolver）。[`SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) §5.4 更新。Phase 244 PLAN/WORKLOG/REPORT、`docs/INDEX.md`、`docs/process/PHASE_REGISTRY.md` 同期。実装未着手。 |
 | 2026-06-24 20:09 JST | **Phase 242 完了（merge）:** SONAE P1 DB 基盤。`sonae_*` migration、Models、AlertType 9種 seeder、`SonaeBootstrapService` + `sonae:bootstrap-dragonfly`、Religo members sync。513 tests passed。merge `85841aa`。 |
 | 2026-06-24 18:35 JST | **Phase 243 追記（develop merge）:** LINE 紐付け済みのみ Push 通知対象・段階展開（パイロットフラグなし）、被害あり定義（軽傷以上）、訓練回答率比較、導入5ステップ Runbook、訓練/本番同一 UI、飯田香さん確認事項 §16.1 統合。[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) §5.5–5.6・§6.4、[`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) §3・§8 更新。 |
 | 2026-06-24 18:22 JST | **Phase 243 SONAE 壁打ち要件 SSOT 反映:** [`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) 新規、[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) 更新（§2.6 Member Roster、§2.7 sonae_*、PoC L1/L2、JMAXML 9種、発報条件 UI、将来地域別回答義務）。Religo オプション・`sonae_members` 正・type=member sync・閾値マスタ。Phase 243 PLAN/WORKLOG/REPORT、INDEX、PHASE_REGISTRY 同期。 |

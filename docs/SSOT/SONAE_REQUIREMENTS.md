@@ -3,7 +3,7 @@
 **Spec ID:** SPEC-017（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 参照）  
 **ステータス:** draft（DragonFly PoC / Community 展開 要件定義）  
 **作成:** 2026-06-18 18:00 JST  
-**更新:** 2026-06-24 18:35:01 JST  
+**更新:** 2026-06-24 21:09 JST  
 **対象サービス:** SONAE  
 **壁打ち合意:** [SONAE_WALL_BOUNCE_DECISIONS.md](SONAE_WALL_BOUNCE_DECISIONS.md)（PoC 着手前・2026-06-24）  
 **コンセプト:** つながる備え。  
@@ -220,13 +220,17 @@ Religo 既存表（`members`, `users` 等）との衝突を避けるため、SON
 
 ### 5.4 PoC 実装フェーズ（推奨順）
 
-| 順 | 内容 | 完了目安 |
-|----|------|----------|
-| P0 | 要件確定（本書・壁打ち doc）、LINE 準備 | 着手前 |
-| P1 | SONAE core: `sonae_members` + 手動訓練 + LINE + 回答 + 集計 | L1 |
-| P2 | Religo adapter: sync + 管理画面 `/sonae/*` | L1 |
-| P3 | JMA: 9種 Normalizer + 発報条件 UI + 自動発報 | L2 |
-| P4 | DragonFly 初回訓練伴走・改善 | PoC 後 |
+**詳細ロードマップ（DevOS Phase 244–252）:** [SONAE_IMPLEMENTATION_PLAN.md](SONAE_IMPLEMENTATION_PLAN.md)
+
+| 順 | 内容 | 完了目安 | DevOS Phase |
+|----|------|----------|-------------|
+| P0 | 要件確定（本書・壁打ち doc）、LINE 準備 | 着手前 | 243 完了 |
+| P1a | DB 基盤・bootstrap・sync | — | **242 完了** |
+| P1b | Roster Core（名簿 API・CSV・閾値マスタ・通知対象 Resolver） | L1 準備 | **244** |
+| P1c | LINE 連携 + 訓練・回答・集計 + 管理 UI | L1 | 245–247 |
+| P2 | Religo Shell 統合（メニュー・chapter 解決） | L1 運用 | 248 |
+| P3 | JMA: 9種 Normalizer + 発報条件 UI + 自動発報 | L2 | 249–251 |
+| P4 | DragonFly 初回訓練伴走・改善 | PoC 後 | 252 |
 
 ### 5.5 通知対象と段階展開
 
