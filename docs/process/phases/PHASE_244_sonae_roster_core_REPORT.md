@@ -78,16 +78,45 @@ Tests: 519 passed (1954 assertions)
 
 ## Merge Evidence
 
-merge commit id: （merge 後に記録）  
-source branch: feature/phase244-sonae-roster-core  
-target branch: develop  
-phase id: 244  
-phase type: implement  
-related ssot: SPEC-017  
+```
+merge commit id: 2b59715c0e3de6a3e4fdca2a8acdaaa044f63d71
+source branch: feature/phase244-sonae-roster-core
+target branch: develop
+phase id: 244
+phase type: implement
+related ssot: SPEC-017
 
-test command: php artisan test  
-test result: 519 passed  
+test command: php artisan test
+test result: 519 passed (1954 assertions)
 
-scope check: OK  
-ssot check: OK  
-dod check: OK  
+changed files:
+docs/02_specifications/SSOT_REGISTRY.md
+docs/INDEX.md
+docs/SSOT/SONAE_IMPLEMENTATION_PLAN.md
+docs/SSOT/SONAE_REQUIREMENTS.md
+docs/SSOT/SONAE_WALL_BOUNCE_DECISIONS.md
+docs/dragonfly_progress.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_244_sonae_roster_core_PLAN.md
+docs/process/phases/PHASE_244_sonae_roster_core_REPORT.md
+docs/process/phases/PHASE_244_sonae_roster_core_WORKLOG.md
+www/app/Http/Controllers/Sonae/SonaeAlertThresholdOptionController.php
+www/app/Http/Controllers/Sonae/SonaeChapterController.php
+www/app/Http/Controllers/Sonae/SonaeMemberController.php
+www/app/Models/Sonae/SonaeAlertThresholdOption.php
+www/app/Models/Sonae/SonaeAlertType.php
+www/app/Models/Sonae/SonaeConstants.php
+www/app/Models/Sonae/SonaeMember.php
+www/app/Services/Sonae/SonaeCsvImportService.php
+www/app/Services/Sonae/SonaeMemberService.php
+www/app/Services/Sonae/SonaeMemberSyncService.php
+www/app/Services/Sonae/SonaeNotificationTargetResolver.php
+www/database/migrations/2026_06_24_210900_create_sonae_alert_threshold_options_table.php
+www/database/seeders/SonaeAlertThresholdOptionSeeder.php
+www/routes/api.php
+www/tests/Feature/Sonae/SonaeRosterCoreTest.php
+
+scope check: OK
+ssot check: OK
+dod check: OK
+```
