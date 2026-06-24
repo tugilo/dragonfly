@@ -25,10 +25,8 @@ npm run build — success
 
 ## Merge Evidence
 
-（merge 後に確定）
-
 ```
-merge commit id:
+merge commit id: 01ce97b9fd2a8b8b79b5f66fd50a8bbd88c332a6
 source branch: feature/phase248-sonae-religo-shell
 target branch: develop
 phase id: 248
@@ -37,6 +35,23 @@ related ssot: SPEC-017 §2.2
 
 test command: php artisan test
 test result: 531 passed (2013 assertions)
+
+changed files:
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_248_sonae_religo_shell_PLAN.md
+docs/process/phases/PHASE_248_sonae_religo_shell_REPORT.md
+docs/process/phases/PHASE_248_sonae_religo_shell_WORKLOG.md
+www/app/Http/Controllers/Sonae/SonaeChapterController.php
+www/app/Http/Middleware/EnsureSonaeChapterAccess.php
+www/app/Services/Sonae/SonaeChapterResolver.php
+www/bootstrap/app.php
+www/resources/js/admin/pages/sonae/SonaeDashboard.jsx
+www/resources/js/admin/sonae/SonaeChapterContext.jsx
+www/resources/js/admin/sonae/SonaeShell.jsx
+www/resources/js/admin/sonae/sonaeApi.js
+www/routes/api.php
+www/tests/Feature/Sonae/*
+www/tests/Support/SonaeChapterTestHelpers.php
 
 scope check: OK
 ssot check: OK
