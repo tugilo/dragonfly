@@ -8,13 +8,12 @@ use App\Models\Sonae\SonaeLineAccount;
 use App\Models\Sonae\SonaeLineUserLink;
 use App\Models\Sonae\SonaeMember;
 use App\Models\Sonae\SonaeNotificationTarget;
-use App\Models\Sonae\SonaeOrganization;
 use App\Models\User;
 use Database\Seeders\SonaeAlertTypeSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Laravel\Sanctum\Sanctum;
+use Tests\Support\SonaeChapterTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -23,6 +22,7 @@ use Tests\TestCase;
 class SonaeTrainingResponseTest extends TestCase
 {
     use RefreshDatabase;
+    use SonaeChapterTestHelpers;
 
     private User $user;
 
@@ -39,12 +39,12 @@ class SonaeTrainingResponseTest extends TestCase
 
     public function test_training_dispatch_response_and_aggregation(): void
     {
-        Sanctum::actingAs($this->user);
         Http::fake(['api.line.me/*' => Http::response([], 200)]);
 
         $chapter = $this->createChapterWithLinkedMember();
+        $this->authenticateSonaeUser($this->user, $chapter['workspace']);
 
-        $this->postJson("/api/sonae/chapters/{$chapter->id}/training-events/dispatch", [
+        $this->postJson("/api/sonae/chapters/{$chapter['chapter']->id}/training-events/dispatch", [
             'name' => '2026年6月訓練',
         ])->assertCreated()
             ->assertJsonPath('data.sent', 1);
@@ -75,7 +75,7 @@ class SonaeTrainingResponseTest extends TestCase
             'comment' => 'テスト回答',
         ])->assertRedirect();
 
-        $this->getJson("/api/sonae/chapters/{$chapter->id}/notifications/{$notificationId}/summary")
+        $this->getJson("/api/sonae/chapters/{$chapter['chapter']->id}/notifications/{$notificationId}/summary")
             ->assertOk()
             ->assertJsonPath('data.summary.response_rate', 1)
             ->assertJsonPath('data.summary.harmful_count', 1)
@@ -83,19 +83,19 @@ class SonaeTrainingResponseTest extends TestCase
             ->assertJsonPath('data.summary.meeting_cannot_attend_count', 1)
             ->assertJsonPath('data.summary.unanswered_count', 0);
 
-        $this->getJson("/api/sonae/chapters/{$chapter->id}/training-events")
+        $this->getJson("/api/sonae/chapters/{$chapter['chapter']->id}/training-events")
             ->assertOk()
             ->assertJsonPath('data.0.response_rate', 1);
     }
 
     public function test_training_response_rate_comparison(): void
     {
-        Sanctum::actingAs($this->user);
         Http::fake(['api.line.me/*' => Http::response([], 200)]);
 
         $chapter = $this->createChapterWithLinkedMember();
+        $this->authenticateSonaeUser($this->user, $chapter['workspace']);
 
-        $this->postJson("/api/sonae/chapters/{$chapter->id}/training-events/dispatch", [
+        $this->postJson("/api/sonae/chapters/{$chapter['chapter']->id}/training-events/dispatch", [
             'name' => '第1回訓練',
         ])->assertCreated();
 
@@ -106,11 +106,11 @@ class SonaeTrainingResponseTest extends TestCase
             'meeting_attendance_status' => SonaeConstants::ATTENDANCE_CAN,
         ]);
 
-        $this->postJson("/api/sonae/chapters/{$chapter->id}/training-events/dispatch", [
+        $this->postJson("/api/sonae/chapters/{$chapter['chapter']->id}/training-events/dispatch", [
             'name' => '第2回訓練',
         ])->assertCreated();
 
-        $list = $this->getJson("/api/sonae/chapters/{$chapter->id}/training-events")
+        $list = $this->getJson("/api/sonae/chapters/{$chapter['chapter']->id}/training-events")
             ->assertOk()
             ->json('data');
 
@@ -135,22 +135,13 @@ class SonaeTrainingResponseTest extends TestCase
         return $matches[1];
     }
 
-    private function createChapterWithLinkedMember(): SonaeChapter
+    /**
+     * @return array{workspace: \App\Models\Workspace, chapter: SonaeChapter}
+     */
+    private function createChapterWithLinkedMember(): array
     {
-        $org = SonaeOrganization::query()->create([
-            'name' => 'Test Org',
-            'source_system' => SonaeConstants::SOURCE_SONAE,
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
-
-        $chapter = SonaeChapter::query()->create([
-            'organization_id' => $org->id,
-            'name' => 'Test Chapter',
-            'code' => 'TEST',
-            'chapter_key' => 'test_chapter',
-            'source_system' => SonaeConstants::SOURCE_SONAE,
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
+        $workspace = $this->createReligoWorkspace();
+        $chapter = $this->createReligoSonaeChapter($workspace);
 
         $lineAccount = SonaeLineAccount::query()->create([
             'chapter_id' => $chapter->id,
@@ -177,6 +168,9 @@ class SonaeTrainingResponseTest extends TestCase
             'status' => SonaeConstants::LINE_LINK_ACTIVE,
         ]);
 
-        return $chapter->fresh(['lineAccount']);
+        return [
+            'workspace' => $workspace,
+            'chapter' => $chapter->fresh(['lineAccount']),
+        ];
     }
 }

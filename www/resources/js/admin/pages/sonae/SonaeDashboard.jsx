@@ -8,6 +8,7 @@ import {
     CardContent,
     Container,
     Grid,
+    Snackbar,
     Stack,
     Typography,
 } from '@mui/material';
@@ -35,12 +36,14 @@ function KpiCard({ label, value, sub }) {
 }
 
 export default function SonaeDashboard() {
-    const { chapterMeta, chapterDetail } = useSonaeChapter();
+    const { chapterMeta, chapterDetail, syncing, syncFromReligo } = useSonaeChapter();
     const [trainings, setTrainings] = useState([]);
     const [trainingsError, setTrainingsError] = useState(null);
+    const [snack, setSnack] = useState({ open: false, message: '', severity: 'info' });
 
     const chapterId = chapterDetail?.id ?? chapterMeta?.id;
     const kpi = chapterDetail?.kpi;
+    const religoLinked = chapterDetail?.religo_linked;
 
     useEffect(() => {
         if (chapterId == null) return;
@@ -74,6 +77,30 @@ export default function SonaeDashboard() {
                     </Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
+                    {religoLinked ? (
+                        <Button
+                            variant="outlined"
+                            disabled={syncing}
+                            onClick={async () => {
+                                try {
+                                    const result = await syncFromReligo();
+                                    setSnack({
+                                        open: true,
+                                        message: `Religo 同期完了: ${result?.synced ?? 0} 件`,
+                                        severity: 'success',
+                                    });
+                                } catch (e) {
+                                    setSnack({
+                                        open: true,
+                                        message: e instanceof Error ? e.message : '同期に失敗しました',
+                                        severity: 'error',
+                                    });
+                                }
+                            }}
+                        >
+                            Religo 同期
+                        </Button>
+                    ) : null}
                     <Button component={RouterLink} to="/sonae/training" variant="contained">
                         訓練を発報
                     </Button>
@@ -139,6 +166,10 @@ export default function SonaeDashboard() {
                     </Button>
                 </CardContent>
             </Card>
+
+            <Snackbar open={snack.open} autoHideDuration={5000} onClose={() => setSnack((s) => ({ ...s, open: false }))}>
+                <Alert severity={snack.severity}>{snack.message}</Alert>
+            </Snackbar>
         </Container>
     );
 }

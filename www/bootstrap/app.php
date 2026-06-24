@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'religo.chapter_admin' => \App\Http\Middleware\EnsureReligoChapterAdmin::class,
             'zoom.webhook' => \App\Http\Middleware\VerifyZoomWebhookSignature::class,
             'sonae.line.webhook' => \App\Http\Middleware\VerifySonaeLineWebhookSignature::class,
+            'sonae.chapter' => \App\Http\Middleware\EnsureSonaeChapterAccess::class,
         ]);
         $middleware->api(prepend: [
             \App\Http\Middleware\RejectInvalidSanctumBearerToken::class,
