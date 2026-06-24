@@ -41,10 +41,12 @@ use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
 use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
 use App\Http\Controllers\Sonae\SonaeAlertThresholdOptionController;
+use App\Http\Controllers\Sonae\SonaeChapterAlertSettingController;
 use App\Http\Controllers\Sonae\SonaeChapterController;
 use App\Http\Controllers\Sonae\SonaeLineAccountController;
 use App\Http\Controllers\Sonae\SonaeLineLinkController;
 use App\Http\Controllers\Sonae\SonaeMemberController;
+use App\Http\Controllers\Sonae\SonaeJmaController;
 use App\Http\Controllers\Sonae\SonaeTrainingController;
 use Illuminate\Support\Facades\Route;
 
@@ -141,6 +143,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/chapters/bootstrap', [SonaeChapterController::class, 'bootstrap']);
         Route::get('/chapters/resolve', [SonaeChapterController::class, 'resolve']);
 
+        Route::get('/jma/settings', [SonaeJmaController::class, 'showSettings']);
+        Route::put('/jma/settings', [SonaeJmaController::class, 'updateSettings']);
+        Route::post('/jma/fetch', [SonaeJmaController::class, 'fetchManual']);
+        Route::get('/jma/logs', [SonaeJmaController::class, 'logs']);
+
         Route::middleware('sonae.chapter')->group(function () {
             Route::get('/chapters/{chapter}', [SonaeChapterController::class, 'show']);
             Route::get('/chapters/{chapter}/members', [SonaeMemberController::class, 'index']);
@@ -156,6 +163,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/chapters/{chapter}/training-events/dispatch', [SonaeTrainingController::class, 'dispatch']);
             Route::get('/chapters/{chapter}/training-events', [SonaeTrainingController::class, 'index']);
             Route::get('/chapters/{chapter}/notifications/{notification}/summary', [SonaeTrainingController::class, 'summary']);
+            Route::get('/chapters/{chapter}/alert-settings', [SonaeChapterAlertSettingController::class, 'show']);
+            Route::put('/chapters/{chapter}/alert-settings', [SonaeChapterAlertSettingController::class, 'update']);
         });
     });
 });

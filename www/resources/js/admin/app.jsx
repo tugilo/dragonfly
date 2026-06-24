@@ -32,6 +32,8 @@ import SonaeDashboard from './pages/sonae/SonaeDashboard';
 import SonaeMembersPage from './pages/sonae/SonaeMembersPage';
 import SonaeLinePage from './pages/sonae/SonaeLinePage';
 import SonaeTrainingPage from './pages/sonae/SonaeTrainingPage';
+import SonaeJmaPage from './pages/sonae/SonaeJmaPage';
+import SonaeAlertSettingsPage from './pages/sonae/SonaeAlertSettingsPage';
 
 const root = document.getElementById('admin-root');
 if (root) {
@@ -54,6 +56,8 @@ if (root) {
                     <Route path="members" element={<SonaeMembersPage />} />
                     <Route path="line" element={<SonaeLinePage />} />
                     <Route path="training" element={<SonaeTrainingPage />} />
+                    <Route path="jma" element={<SonaeJmaPage />} />
+                    <Route path="alert-settings" element={<SonaeAlertSettingsPage />} />
                 </Route>
             </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />

@@ -1,4 +1,6 @@
 *
 !private/
 !public/
+!sonae/jma/fixtures/
+!sonae/jma/fixtures/**
 !.gitignore
