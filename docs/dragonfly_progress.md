@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-24 15:08 JST | **docs:** [1to1_kimura_anna_andirich.md](meetings/1to1/1to1_kimura_anna_andirich.md) に第2回121（2026-06-24）Zoom要約を校正反映。補助金チーム参画、運送会社クライアントのスプレッドシート限界・次廣依頼意向、Religo共同サービス化、次アクションを整理。 |
+| 2026-06-24 12:55 JST | **Phase 241 SONAE PoC 提案同期:** 最新PDF [`proposals/sonae_proposal.pdf`](proposals/sonae_proposal.pdf) を反映し、[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md)、[`proposals/sonae_bcp_proposal_iida_kaori.md`](proposals/sonae_bcp_proposal_iida_kaori.md)、[`proposals/sonae_bcp_proposal_iida_kaori_genspark_slide_prompt.md`](proposals/sonae_bcp_proposal_iida_kaori_genspark_slide_prompt.md) を更新。20万円開発費前提を削除し、DragonFlyをモデルチャプターにしたPoC（実証実験）、開発費・利用料請求なし、PoCで作る範囲、対象外、LINE通数/プラン費用は別途確認という整理へ同期。`docs/02_specifications/SSOT_REGISTRY.md`、`docs/INDEX.md`、`docs/process/PHASE_REGISTRY.md`、Phase 241 PLAN/WORKLOG/REPORT を同期。 |
 | 2026-06-23 22:48 JST | **Phase 240 完了（merge）:** SPEC-019 P1・P3 を develop へ merge（`c2c2b897`）。import 一括 46 件更新。506 tests passed。`git push origin develop` 済み。 |
 | 2026-06-23 22:45 JST | **Phase 240 implement（SPEC-019 P1・P3）:** `OneToOneNotesMarkdownParser` / `OneToOneNotesImportService` で `import-1to1-notes` を `### 【第N回】` 単位に拡張。`OneToOneSeriesMarkdownService` + `GET /api/one-to-ones/{id}/series-markdown`、一覧メモモーダルを相手共通全文表示に変更。506 tests passed、npm build OK。merge 未実施。 |
 | 2026-06-23 22:41 JST | **Phase 240 PLAN:** SPEC-019 **P1**（`import-1to1-notes` セクション単位）+ **P3**（一覧「メモあり」→ 相手共通ファイルモーダル）の implement Phase PLAN/WORKLOG/REPORT 作成。`feature/phase240-onetoone-multi-session-import`。P2（`--create-missing`）は Phase 241 予定。 |

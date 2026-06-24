@@ -239,6 +239,7 @@
 | 238 | MeetingsList UI 種別対応（SPEC-018 Phase D・フィルタ・Drawer 出し分け） | implement | completed | develop | 2026-06-23 |
 | 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | develop | 2026-06-23 |
 | 240 | 1to1 マルチセッション取り込み + 一覧共通メモモーダル（SPEC-019 P1・P3） | implement | completed | develop | 2026-06-23 |
+| 241 | SONAE PoC 提案同期（sonae_proposal.pdf・開発費削除・PoC表現） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -156,6 +156,7 @@ first_session_time_jst: "17:00-TODO"
 
 - 日時：**2026-05-14（木）JST 17:00–TODO**（ユーザー申告。終了時刻は実施後に確定）
 - 実施方法：TODO
+- **Religo 1to1 レコード:** `one_to_ones.id` = **82**
 
 #### 話した内容（重要）
 
