@@ -199,8 +199,9 @@ SSOT §16.1 に統合。実装前に BCP と合意する。
 |-------|------|------|
 | 224 | SONAE 要件定義初版 | completed |
 | 241 | PoC 提案書同期 | completed |
-| 242 | DB 基盤 implement（途中・保留） | 未 merge |
-| 243 | 本壁打ち要件の SSOT 反映 | 本 doc |
+| 242 | DB 基盤 implement | completed（merge `85841aa`） |
+| 243 | 本壁打ち要件の SSOT 反映 | completed |
+| 244 | Roster Core（名簿 API・CSV・閾値マスタ） | PLAN 確定 |
 
 ---
 
@@ -210,3 +211,4 @@ SSOT §16.1 に統合。実装前に BCP と合意する。
 |------|------|
 | 2026-06-24 18:22:02 JST | 初版。壁打ち合意を集約 |
 | 2026-06-24 18:35:01 JST | LINE 紐付け済みのみ通知対象、段階展開（パイロットフラグなし）、提案書ギャップ（被害あり・回答率比較・導入 Runbook・訓練/本番同一 UI）を追記 |
+| 2026-06-24 21:09 JST | Phase 244 PLAN・[SONAE_IMPLEMENTATION_PLAN.md](SONAE_IMPLEMENTATION_PLAN.md) 追加。Phase 242 merge 済みに更新 |

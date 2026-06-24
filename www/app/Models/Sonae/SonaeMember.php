@@ -5,6 +5,7 @@ namespace App\Models\Sonae;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SonaeMember extends Model
 {
@@ -37,6 +38,23 @@ class SonaeMember extends Model
     public function lineUserLinks(): HasMany
     {
         return $this->hasMany(SonaeLineUserLink::class, 'member_id');
+    }
+
+    public function activeLineUserLink(): HasOne
+    {
+        return $this->hasOne(SonaeLineUserLink::class, 'member_id')
+            ->where('status', SonaeConstants::LINE_LINK_ACTIVE);
+    }
+
+    public function hasActiveLineLink(): bool
+    {
+        if ($this->relationLoaded('activeLineUserLink')) {
+            return $this->activeLineUserLink !== null;
+        }
+
+        return $this->lineUserLinks()
+            ->where('status', SonaeConstants::LINE_LINK_ACTIVE)
+            ->exists();
     }
 
     public function notificationTargets(): HasMany
