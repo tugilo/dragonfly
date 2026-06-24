@@ -240,6 +240,7 @@
 | 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | develop | 2026-06-23 |
 | 240 | 1to1 マルチセッション取り込み + 一覧共通メモモーダル（SPEC-019 P1・P3） | implement | completed | develop | 2026-06-23 |
 | 241 | SONAE PoC 提案同期（sonae_proposal.pdf・開発費削除・PoC表現） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-24 |
+| 242 | SONAE P1 DB 基盤（sonae_* migration・bootstrap・member sync） | implement | completed | develop | 2026-06-24 |
 | 243 | SONAE 壁打ち要件 SSOT 反映（Member Roster・JMA 9種・閾値 UI・LINE 紐付け通知・将来地域別回答） | docs | completed | develop | 2026-06-24 |
 
 ## Statusの値
