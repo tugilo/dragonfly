@@ -105,6 +105,56 @@ export const ReligoMenu = () => {
                 <span style={{ marginRight: 8 }}>🎥</span>
                 Zoom 取り込み
             </MenuItem>
+            <Divider
+                sx={{
+                    my: 1,
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    backgroundColor: 'transparent',
+                }}
+            />
+            <ListSubheader
+                disableSticky
+                sx={{
+                    lineHeight: 2,
+                    fontSize: '0.75rem',
+                    backgroundColor: 'transparent',
+                    color: 'rgba(255,255,255,0.45)',
+                }}
+            >
+                SONAE
+            </ListSubheader>
+            <MenuItem
+                component={Link}
+                to="/sonae"
+                selected={path === '/sonae'}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                ダッシュボード
+            </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/sonae/members"
+                selected={isActive('/sonae/members')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                メンバー
+            </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/sonae/line"
+                selected={isActive('/sonae/line')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                LINE 設定
+            </MenuItem>
+            <MenuItem
+                component={Link}
+                to="/sonae/training"
+                selected={isActive('/sonae/training')}
+                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                訓練・集計
+            </MenuItem>
             <ListSubheader
                 disableSticky
                 sx={{

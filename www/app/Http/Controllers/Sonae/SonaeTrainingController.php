@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sonae;
 use App\Http\Controllers\Controller;
 use App\Models\Sonae\SonaeAlertNotification;
 use App\Models\Sonae\SonaeChapter;
+use App\Models\Sonae\SonaeConstants;
 use App\Models\Sonae\SonaeTrainingEvent;
 use App\Services\Sonae\SonaeAggregationService;
 use App\Services\Sonae\SonaeTrainingDispatchService;
@@ -49,10 +50,17 @@ class SonaeTrainingController extends Controller
             ->orderByDesc('id')
             ->get()
             ->map(function (SonaeTrainingEvent $training) use ($aggregation, $chapter) {
+                $notification = SonaeAlertNotification::query()
+                    ->where('training_event_id', $training->id)
+                    ->where('notification_type', SonaeConstants::NOTIFICATION_TRAINING)
+                    ->latest('id')
+                    ->first();
+
                 return [
                     'id' => $training->id,
                     'name' => $training->name,
                     'executed_at' => $training->executed_at?->toIso8601String(),
+                    'notification_id' => $notification?->id,
                     'response_rate' => $aggregation->responseRateForTraining($training),
                     'comparison' => $aggregation->previousTrainingComparison($chapter, $training),
                 ];

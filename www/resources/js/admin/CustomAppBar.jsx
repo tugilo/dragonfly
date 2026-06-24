@@ -20,6 +20,10 @@ const PATH_TO_LABEL = {
     '/roles': 'Roles',
     '/settings': '設定',
     '/login': 'ログイン',
+    '/sonae': 'SONAE',
+    '/sonae/members': 'SONAE メンバー',
+    '/sonae/line': 'SONAE LINE',
+    '/sonae/training': 'SONAE 訓練',
 };
 
 const getLabel = (pathname) => {
@@ -28,6 +32,7 @@ const getLabel = (pathname) => {
     if (pathname.startsWith('/categories/')) return 'Category';
     if (pathname.startsWith('/roles/')) return 'Role';
     if (pathname.startsWith('/one-to-ones/')) return '1 to 1';
+    if (pathname.startsWith('/sonae/')) return PATH_TO_LABEL[pathname] ?? 'SONAE';
     return pathname.split('/').filter(Boolean).pop() || 'Dashboard';
 };
 

@@ -137,6 +137,7 @@ Route::middleware('auth:sanctum')->group(function () {
     */
     Route::prefix('sonae')->group(function () {
         Route::get('/alert-threshold-options', [SonaeAlertThresholdOptionController::class, 'index']);
+        Route::get('/chapters/resolve', [SonaeChapterController::class, 'resolve']);
         Route::get('/chapters/{chapter}', [SonaeChapterController::class, 'show']);
         Route::get('/chapters/{chapter}/members', [SonaeMemberController::class, 'index']);
         Route::get('/chapters/{chapter}/members/unlinked', [SonaeMemberController::class, 'unlinked']);
