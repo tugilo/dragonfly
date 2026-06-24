@@ -24,4 +24,18 @@ php artisan test — 523 passed (1970 assertions)
 
 ## Merge Evidence
 
-（merge 後に記録）
+```
+merge commit id: 742f00662ecfbb7f0713ce05bc3c2614eb89abcc
+source branch: feature/phase245-sonae-line-integration
+target branch: develop
+phase id: 245
+phase type: implement
+related ssot: SPEC-017 §10
+
+test command: php artisan test
+test result: 523 passed (1970 assertions)
+
+scope check: OK
+ssot check: OK
+dod check: OK
+```
