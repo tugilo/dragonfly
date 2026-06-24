@@ -45,6 +45,7 @@ use App\Http\Controllers\Sonae\SonaeChapterController;
 use App\Http\Controllers\Sonae\SonaeLineAccountController;
 use App\Http\Controllers\Sonae\SonaeLineLinkController;
 use App\Http\Controllers\Sonae\SonaeMemberController;
+use App\Http\Controllers\Sonae\SonaeTrainingController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -147,6 +148,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/chapters/{chapter}/members/{member}/line-invite', [SonaeLineLinkController::class, 'issueInvite']);
         Route::post('/chapters/{chapter}/members/{member}/line-link', [SonaeLineLinkController::class, 'linkDirect']);
         Route::post('/chapters/{chapter}/members/{member}/line-push-test', [SonaeLineLinkController::class, 'pushTest']);
+        Route::post('/chapters/{chapter}/training-events/dispatch', [SonaeTrainingController::class, 'dispatch']);
+        Route::get('/chapters/{chapter}/training-events', [SonaeTrainingController::class, 'index']);
+        Route::get('/chapters/{chapter}/notifications/{notification}/summary', [SonaeTrainingController::class, 'summary']);
     });
 });
 
