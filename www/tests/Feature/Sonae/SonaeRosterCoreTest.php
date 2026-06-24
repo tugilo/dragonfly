@@ -20,6 +20,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
+use Tests\Support\SonaeChapterTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -28,6 +29,7 @@ use Tests\TestCase;
 class SonaeRosterCoreTest extends TestCase
 {
     use RefreshDatabase;
+    use SonaeChapterTestHelpers;
 
     private User $user;
 
@@ -81,7 +83,7 @@ class SonaeRosterCoreTest extends TestCase
             'workspace_id' => $workspace->id,
         ]);
 
-        $chapter = $this->createReligoChapter($workspace);
+        $chapter = $this->createReligoSonaeChapter($workspace);
         $result = app(SonaeMemberSyncService::class)->syncChapterFromReligo($chapter, $workspace);
 
         $this->assertSame(1, $result['synced']);
@@ -128,8 +130,9 @@ class SonaeRosterCoreTest extends TestCase
 
     public function test_csv_import_preview_and_import_via_api(): void
     {
-        Sanctum::actingAs($this->user);
-        $chapter = $this->createStandaloneChapter();
+        $workspace = $this->createReligoWorkspace();
+        $chapter = $this->createReligoSonaeChapter($workspace);
+        $this->authenticateSonaeUser($this->user, $workspace);
 
         $csv = <<<'CSV'
 name,name_kana,email
@@ -160,8 +163,9 @@ CSV;
 
     public function test_members_unlinked_list_and_update(): void
     {
-        Sanctum::actingAs($this->user);
-        $chapter = $this->createStandaloneChapter();
+        $workspace = $this->createReligoWorkspace();
+        $chapter = $this->createReligoSonaeChapter($workspace);
+        $this->authenticateSonaeUser($this->user, $workspace);
         $member = SonaeMember::query()->create([
             'chapter_id' => $chapter->id,
             'name' => 'Inactive Target',
@@ -182,8 +186,6 @@ CSV;
 
     public function test_religo_sync_endpoint(): void
     {
-        Sanctum::actingAs($this->user);
-
         $workspace = Workspace::query()->create([
             'name' => 'DragonFly',
             'slug' => 'bni_dragonfly',
@@ -194,7 +196,8 @@ CSV;
             'workspace_id' => $workspace->id,
         ]);
 
-        $chapter = $this->createReligoChapter($workspace);
+        $chapter = $this->createReligoSonaeChapter($workspace);
+        $this->authenticateSonaeUser($this->user, $workspace);
 
         $this->postJson("/api/sonae/chapters/{$chapter->id}/members/sync")
             ->assertOk()
@@ -225,21 +228,6 @@ CSV;
 
     private function createReligoChapter(Workspace $workspace): SonaeChapter
     {
-        $org = SonaeOrganization::query()->create([
-            'name' => 'BNI',
-            'source_system' => SonaeConstants::SOURCE_RELIGO,
-            'external_id' => 'bni',
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
-
-        return SonaeChapter::query()->create([
-            'organization_id' => $org->id,
-            'name' => $workspace->name,
-            'code' => 'DF',
-            'chapter_key' => 'bni_dragonfly',
-            'source_system' => SonaeConstants::SOURCE_RELIGO,
-            'external_id' => (string) $workspace->id,
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
+        return $this->createReligoSonaeChapter($workspace);
     }
 }

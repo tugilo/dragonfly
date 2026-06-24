@@ -9,6 +9,24 @@ async function parseJson(res) {
     return data;
 }
 
+export async function fetchSonaeContext() {
+    const res = await religoFetch('/api/sonae/context', {
+        headers: { Accept: 'application/json' },
+    });
+    const data = await parseJson(res);
+    return data.data;
+}
+
+export async function bootstrapSonaeChapter(body = {}) {
+    const res = await religoFetch('/api/sonae/chapters/bootstrap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const data = await parseJson(res);
+    return data.data;
+}
+
 export async function resolveSonaeChapter(workspaceId) {
     const q = new URLSearchParams({ workspace_id: String(workspaceId) });
     const res = await religoFetch(`/api/sonae/chapters/resolve?${q.toString()}`, {

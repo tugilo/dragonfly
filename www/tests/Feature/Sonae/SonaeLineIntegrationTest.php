@@ -7,8 +7,8 @@ use App\Models\Sonae\SonaeConstants;
 use App\Models\Sonae\SonaeLineAccount;
 use App\Models\Sonae\SonaeLineUserLink;
 use App\Models\Sonae\SonaeMember;
-use App\Models\Sonae\SonaeOrganization;
 use App\Models\User;
+use App\Models\Workspace;
 use App\Services\Sonae\SonaeLineLinkService;
 use App\Services\Sonae\SonaeNotificationTargetResolver;
 use Database\Seeders\SonaeAlertTypeSeeder;
@@ -16,6 +16,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\Sanctum;
+use Tests\Support\SonaeChapterTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -24,6 +25,7 @@ use Tests\TestCase;
 class SonaeLineIntegrationTest extends TestCase
 {
     use RefreshDatabase;
+    use SonaeChapterTestHelpers;
 
     private User $user;
 
@@ -41,8 +43,9 @@ class SonaeLineIntegrationTest extends TestCase
 
     public function test_line_account_update_and_show(): void
     {
-        Sanctum::actingAs($this->user);
-        $chapter = $this->createChapterWithLineAccount();
+        $workspace = $this->createReligoWorkspace();
+        $chapter = $this->createChapterWithLineAccount($workspace);
+        $this->authenticateSonaeUser($this->user, $workspace);
 
         $this->putJson("/api/sonae/chapters/{$chapter->id}/line-account", [
             'channel_id' => '123456',
@@ -58,12 +61,12 @@ class SonaeLineIntegrationTest extends TestCase
 
         $this->getJson("/api/sonae/chapters/{$chapter->id}/line-account")
             ->assertOk()
-            ->assertJsonPath('data.webhook_url', url('/sonae/line/webhook/test_chapter'));
+            ->assertJsonPath('data.webhook_url', url('/sonae/line/webhook/'.$chapter->chapter_key));
     }
 
     public function test_webhook_message_links_member_by_invite_token(): void
     {
-        $chapter = $this->createChapterWithLineAccount('secret-value');
+        $chapter = $this->createChapterWithLineAccount(null, 'secret-value');
         $member = $this->createMember($chapter);
         $invite = app(SonaeLineLinkService::class)->issueInviteToken($member);
 
@@ -84,7 +87,7 @@ class SonaeLineIntegrationTest extends TestCase
 
         $this->call(
             'POST',
-            '/sonae/line/webhook/test_chapter',
+            '/sonae/line/webhook/'.$chapter->chapter_key,
             [],
             [],
             [],
@@ -107,7 +110,7 @@ class SonaeLineIntegrationTest extends TestCase
 
     public function test_webhook_unfollow_unlinks_member(): void
     {
-        $chapter = $this->createChapterWithLineAccount('secret-value');
+        $chapter = $this->createChapterWithLineAccount(null, 'secret-value');
         $member = $this->createMember($chapter);
         $lineAccount = $chapter->lineAccount;
 
@@ -132,7 +135,7 @@ class SonaeLineIntegrationTest extends TestCase
 
         $this->call(
             'POST',
-            '/sonae/line/webhook/test_chapter',
+            '/sonae/line/webhook/'.$chapter->chapter_key,
             [],
             [],
             [],
@@ -149,12 +152,13 @@ class SonaeLineIntegrationTest extends TestCase
 
     public function test_direct_link_and_push_test(): void
     {
-        Sanctum::actingAs($this->user);
         Http::fake([
             'api.line.me/*' => Http::response([], 200),
         ]);
 
-        $chapter = $this->createChapterWithLineAccount();
+        $workspace = $this->createReligoWorkspace();
+        $chapter = $this->createChapterWithLineAccount($workspace);
+        $this->authenticateSonaeUser($this->user, $workspace);
         $lineAccount = $chapter->lineAccount;
         $lineAccount->channel_id = '123';
         $lineAccount->messaging_api_access_token_encrypted = 'access-token-value';
@@ -178,22 +182,10 @@ class SonaeLineIntegrationTest extends TestCase
         });
     }
 
-    private function createChapterWithLineAccount(?string $secret = null): SonaeChapter
+    private function createChapterWithLineAccount(?Workspace $workspace = null, ?string $secret = null): SonaeChapter
     {
-        $org = SonaeOrganization::query()->create([
-            'name' => 'Test Org',
-            'source_system' => SonaeConstants::SOURCE_SONAE,
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
-
-        $chapter = SonaeChapter::query()->create([
-            'organization_id' => $org->id,
-            'name' => 'Test Chapter',
-            'code' => 'TEST',
-            'chapter_key' => 'test_chapter',
-            'source_system' => SonaeConstants::SOURCE_SONAE,
-            'status' => SonaeConstants::STATUS_ACTIVE,
-        ]);
+        $workspace ??= $this->createReligoWorkspace();
+        $chapter = $this->createReligoSonaeChapter($workspace);
 
         $account = SonaeLineAccount::query()->create([
             'chapter_id' => $chapter->id,

@@ -246,6 +246,7 @@
 | 245 | SONAE LINE 連携（設定 API・Webhook・友だち紐付け・Push） | implement | completed | develop | 2026-06-24 |
 | 246 | SONAE 訓練・回答・集計（L1 達成） | implement | completed | develop | 2026-06-24 |
 | 247 | SONAE 管理画面 UI（React `/sonae/*`） | implement | completed | develop | 2026-06-24 |
+| 248 | SONAE Religo Shell 統合 | implement | completed | develop | 2026-06-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
