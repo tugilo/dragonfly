@@ -27,7 +27,10 @@ export function ReligoLayout(props) {
         );
     }
 
-    const settingsBypass = pathname === '/settings' || pathname === '/member-merge';
+    const settingsBypass =
+        pathname === '/settings' ||
+        pathname === '/member-merge' ||
+        pathname.startsWith('/sonae');
 
     const main =
         settingsBypass || ownerMemberId != null ? (
