@@ -4,7 +4,7 @@
 # - make new-project <NAME> … テンプレートから新規プロジェクトを作成しセットアップ（テンプレート内で実行）
 # - make setup [PROJECT]      … このプロジェクトの infra で Docker + Laravel をセットアップ（プロジェクト内で実行）
 
-.PHONY: setup new-project project doctor db-export db-import db-pull db-push
+.PHONY: setup new-project project doctor db-export db-import db-pull db-push db-replicate-prod-to-dev db-restore-dev
 
 # 基盤自己診断: Docker・ポート・project.env・healthcheck・Laravel応答
 doctor:
@@ -25,6 +25,18 @@ db-pull:
 # ローカル DB → 本番/テスト（SSH 経由・全置換・要確認/自動バックアップ）。例: make db-push TARGET=dev
 db-push:
 	@bash "$(CURDIR)/bin/db-push.sh" "$(TARGET)"
+
+# 本番 DB → テスト DB（SSH 直結・dev バックアップ必須・確認フレーズ）。ローカル Docker 不要。
+db-replicate-prod-to-dev:
+	@bash "$(CURDIR)/bin/db-replicate-prod-to-dev.sh"
+
+# テスト DB をローカルバックアップから復元。例: make db-restore-dev BACKUP=backups/dev_YYYYMMDD_HHMMSS.sql
+db-restore-dev:
+	@if [ -z "$(BACKUP)" ]; then \
+		echo "Usage: make db-restore-dev BACKUP=backups/dev_YYYYMMDD_HHMMSS.sql"; \
+		exit 1; \
+	fi
+	@bash "$(CURDIR)/bin/db-restore-dev.sh" "$(BACKUP)"
 
 # 新規プロジェクト作成: 隣に <NAME> ディレクトリを作り、infra/bin 等をコピーしてから make setup
 # 例: make new-project fluo → ../fluo に fluo プロジェクトができる

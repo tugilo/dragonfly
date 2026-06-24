@@ -10,6 +10,7 @@
 # DB credentials are read from the remote .env on the fly (never hardcoded here).
 
 RELIGO_REMOTE_SSH="${RELIGO_REMOTE_SSH:-tugilo.com}"
+RELIGO_REMOTE_PHP="${RELIGO_REMOTE_PHP:-/usr/bin/php8.4}"
 
 remote_path_for() {
   case "$1" in
@@ -54,4 +55,24 @@ MYSQL_PWD="${DB_PASSWORD:-}" mariadb -u"${DB_USERNAME:-root}" "${DB_DATABASE}" <
 rm -f "$TMP"
 echo "Loaded into ${DB_DATABASE} on $(hostname)."
 REMOTE
+}
+
+# remote_artisan <target> <artisan-args...>  — run php artisan on the remote deploy path.
+remote_artisan() {
+  local target="$1"
+  shift
+  local path args_quoted="" arg
+
+  if [ "$#" -eq 0 ]; then
+    echo "Error: remote_artisan requires artisan arguments" >&2
+    return 1
+  fi
+
+  path="$(remote_path_for "$target")" || return 1
+  for arg in "$@"; do
+    args_quoted+=" $(printf '%q' "$arg")"
+  done
+
+  ssh -o BatchMode=yes "$RELIGO_REMOTE_SSH" \
+    "cd $(printf '%q' "$path") && $(printf '%q' "$RELIGO_REMOTE_PHP") artisan${args_quoted}"
 }
