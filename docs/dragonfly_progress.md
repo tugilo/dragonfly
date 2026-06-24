@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-24 21:17 JST | **Phase 245 完了（merge 予定）:** SONAE LINE 連携。設定 API、Webhook 署名検証、SONAE-LINK 紐付け、Push。523 tests passed。 |
 | 2026-06-24 21:15 JST | **Phase 244 完了（merge）:** SONAE Roster Core。merge `2b59715`。519 tests passed。 |
 | 2026-06-24 21:09 JST | **Phase 244 PLAN:** SONAE 実装ロードマップ [`SSOT/SONAE_IMPLEMENTATION_PLAN.md`](SSOT/SONAE_IMPLEMENTATION_PLAN.md) を新規作成。Religo 疎結合・Phase 244–252 分割（L1: 244→248、L2: 249→251）。次 implement は **244 Roster Core**（閾値マスタ、`type=member` sync 修正、名簿 API・CSV・通知対象 Resolver）。[`SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) §5.4 更新。Phase 244 PLAN/WORKLOG/REPORT、`docs/INDEX.md`、`docs/process/PHASE_REGISTRY.md` 同期。実装未着手。 |
 | 2026-06-24 20:09 JST | **Phase 242 完了（merge）:** SONAE P1 DB 基盤。`sonae_*` migration、Models、AlertType 9種 seeder、`SonaeBootstrapService` + `sonae:bootstrap-dragonfly`、Religo members sync。513 tests passed。merge `85841aa`。 |
