@@ -36,10 +36,8 @@ php artisan test — 525 passed (1996 assertions)
 
 ## Merge Evidence
 
-（merge 後に確定）
-
 ```
-merge commit id:
+merge commit id: 3445d0b6d94e2f47c84c6c7787637db1e671b357
 source branch: feature/phase246-sonae-training-response
 target branch: develop
 phase id: 246
@@ -48,6 +46,22 @@ related ssot: SPEC-017 §6–§8
 
 test command: php artisan test
 test result: 525 passed (1996 assertions)
+
+changed files:
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_246_sonae_training_response_PLAN.md
+docs/process/phases/PHASE_246_sonae_training_response_REPORT.md
+docs/process/phases/PHASE_246_sonae_training_response_WORKLOG.md
+www/app/Http/Controllers/Sonae/SonaeResponseController.php
+www/app/Http/Controllers/Sonae/SonaeTrainingController.php
+www/app/Services/Sonae/SonaeAggregationService.php
+www/app/Services/Sonae/SonaeResponseTokenService.php
+www/app/Services/Sonae/SonaeSafetyResponseService.php
+www/app/Services/Sonae/SonaeTrainingDispatchService.php
+www/resources/views/sonae/respond.blade.php
+www/routes/api.php
+www/routes/web.php
+www/tests/Feature/Sonae/SonaeTrainingResponseTest.php
 
 scope check: OK
 ssot check: OK
