@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-24 18:35 JST | **Phase 243 追記（develop merge）:** LINE 紐付け済みのみ Push 通知対象・段階展開（パイロットフラグなし）、被害あり定義（軽傷以上）、訓練回答率比較、導入5ステップ Runbook、訓練/本番同一 UI、飯田香さん確認事項 §16.1 統合。[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) §5.5–5.6・§6.4、[`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) §3・§8 更新。 |
+| 2026-06-24 18:22 JST | **Phase 243 SONAE 壁打ち要件 SSOT 反映:** [`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) 新規、[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) 更新（§2.6 Member Roster、§2.7 sonae_*、PoC L1/L2、JMAXML 9種、発報条件 UI、将来地域別回答義務）。Religo オプション・`sonae_members` 正・type=member sync・閾値マスタ。Phase 243 PLAN/WORKLOG/REPORT、INDEX、PHASE_REGISTRY 同期。 |
 | 2026-06-24 15:08 JST | **docs:** [1to1_kimura_anna_andirich.md](meetings/1to1/1to1_kimura_anna_andirich.md) に第2回121（2026-06-24）Zoom要約を校正反映。補助金チーム参画、運送会社クライアントのスプレッドシート限界・次廣依頼意向、Religo共同サービス化、次アクションを整理。 |
 | 2026-06-24 12:55 JST | **Phase 241 SONAE PoC 提案同期:** 最新PDF [`proposals/sonae_proposal.pdf`](proposals/sonae_proposal.pdf) を反映し、[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md)、[`proposals/sonae_bcp_proposal_iida_kaori.md`](proposals/sonae_bcp_proposal_iida_kaori.md)、[`proposals/sonae_bcp_proposal_iida_kaori_genspark_slide_prompt.md`](proposals/sonae_bcp_proposal_iida_kaori_genspark_slide_prompt.md) を更新。20万円開発費前提を削除し、DragonFlyをモデルチャプターにしたPoC（実証実験）、開発費・利用料請求なし、PoCで作る範囲、対象外、LINE通数/プラン費用は別途確認という整理へ同期。`docs/02_specifications/SSOT_REGISTRY.md`、`docs/INDEX.md`、`docs/process/PHASE_REGISTRY.md`、Phase 241 PLAN/WORKLOG/REPORT を同期。 |
 | 2026-06-23 22:48 JST | **Phase 240 完了（merge）:** SPEC-019 P1・P3 を develop へ merge（`c2c2b897`）。import 一括 46 件更新。506 tests passed。`git push origin develop` 済み。 |
