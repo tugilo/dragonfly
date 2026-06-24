@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-24 20:09 JST | **Phase 242 SONAE P1 DB 基盤（implement）:** `sonae_*` 全テーブル migration、Eloquent Models、AlertType 9種 seeder、`SonaeBootstrapService` + `sonae:bootstrap-dragonfly`、Religo members → `sonae_members` sync。513 tests passed。develop merge 予定。 |
 | 2026-06-24 18:35 JST | **Phase 243 追記（develop merge）:** LINE 紐付け済みのみ Push 通知対象・段階展開（パイロットフラグなし）、被害あり定義（軽傷以上）、訓練回答率比較、導入5ステップ Runbook、訓練/本番同一 UI、飯田香さん確認事項 §16.1 統合。[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) §5.5–5.6・§6.4、[`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) §3・§8 更新。 |
 | 2026-06-24 18:22 JST | **Phase 243 SONAE 壁打ち要件 SSOT 反映:** [`SSOT/SONAE_WALL_BOUNCE_DECISIONS.md`](SSOT/SONAE_WALL_BOUNCE_DECISIONS.md) 新規、[`SSOT/SONAE_REQUIREMENTS.md`](SSOT/SONAE_REQUIREMENTS.md) 更新（§2.6 Member Roster、§2.7 sonae_*、PoC L1/L2、JMAXML 9種、発報条件 UI、将来地域別回答義務）。Religo オプション・`sonae_members` 正・type=member sync・閾値マスタ。Phase 243 PLAN/WORKLOG/REPORT、INDEX、PHASE_REGISTRY 同期。 |
 | 2026-06-24 15:08 JST | **docs:** [1to1_kimura_anna_andirich.md](meetings/1to1/1to1_kimura_anna_andirich.md) に第2回121（2026-06-24）Zoom要約を校正反映。補助金チーム参画、運送会社クライアントのスプレッドシート限界・次廣依頼意向、Religo共同サービス化、次アクションを整理。 |
