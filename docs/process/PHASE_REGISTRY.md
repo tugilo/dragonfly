@@ -251,6 +251,12 @@
 | 250 | SONAE JMA Normalizer + Ingest（9種・alert_events） | implement | completed | develop | 2026-06-24 |
 | 251 | SONAE 発報条件 + 自動発報（L2 達成） | implement | completed | develop | 2026-06-24 |
 | 252 | SONAE PoC 伴走（Runbook・L1/L2 完了確認） | docs | completed | develop | 2026-06-24 |
+| 253 | スリーバイス 2026-06-30 Religo共有 メインスピーカー準備 | docs | completed | develop（commit / merge 未実施） | 2026-06-25 |
+| 254 | 竹村裕司 第1回121 Zoom要約反映（ONODE／チアプリント） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 255 | 木村健悟 第2回121 Zoom要約反映（ハート・プランニング／Tシャツプリント・Religo・社内システム相談） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 256 | 太田一誠 第1回121 Zoom要約反映（ファインバブル／雑につなぐ相互紹介） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 257 | 軍司敦哉 第1回121 Zoom要約反映（Conduct／LINE公式アカウント運用代行・AIチャットボット協業） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 258 | 軍司敦哉 第2回121 Zoom要約反映（リンクアットジャパン／Lステップ + AIチャットボット提案） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

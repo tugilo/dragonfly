@@ -2,6 +2,8 @@
 
 namespace App\Support;
 
+use Illuminate\Database\Eloquent\Builder;
+
 /**
  * members.type の BNI 在籍メンバー判定（1to1 履歴表示・リード除外と同系）。
  *
@@ -49,5 +51,16 @@ final class MemberEnrollmentType
     public static function nonBniTypes(): array
     {
         return self::NON_BNI_MEMBER_TYPES;
+    }
+
+    /**
+     * Members 名簿など: guest / visitor を除外し、在籍メンバー（active / member / inactive・type 未設定）に限定。
+     */
+    public static function applyBniMembersScope(Builder $query, string $column = 'type'): void
+    {
+        $query->where(function ($q) use ($column) {
+            $q->whereNotIn($column, self::NON_BNI_MEMBER_TYPES)
+                ->orWhereNull($column);
+        });
     }
 }
