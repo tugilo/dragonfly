@@ -65,6 +65,7 @@ export const dragonflyDataProvider = {
             const q = new URLSearchParams();
             q.set('owner_member_id', String(owner));
             q.set('with_summary', '1');
+            q.set('bni_members_only', '1');
             const f = params?.filter ?? {};
             if (f.q != null && String(f.q).trim() !== '') q.set('q', String(f.q).trim());
             if (f.category_id != null) q.set('category_id', String(f.category_id));

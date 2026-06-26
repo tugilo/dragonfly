@@ -65,11 +65,35 @@ make db-push TARGET=prod   # ローカルを本番へ（確認フレーズ必須
 - `prod` は **`OVERWRITE religo_app` の入力**を要求。`dev` は y/N 確認。
 - リモート DB を DROP→CREATE→流し込み（完全置換）。
 
+### 本番 → テスト（SSH 直結・dev バックアップ必須）※破壊的
+
+PoC 等で **本番データを religo-dev に載せる**とき。ローカル Docker は不要。
+
+```bash
+make db-replicate-prod-to-dev
+```
+
+1. **dev を `backups/dev_<timestamp>.sql` にバックアップ**（空なら中断・dev 未変更）
+2. prod を dump（**本番は読み取りのみ**・変更しない）
+3. dev を DROP→CREATE→prod ダンプで全置換
+4. dev サーバ上で workspace 名補正 + 未適用 migration（develop 向け SONAE 等）
+
+- 確認フレーズ: **`REPLICATE prod to dev`**（CI 等は `RELIGO_DB_ASSUME_YES=1`）
+- **本番 DB は触らない**（dump のみ）
+
+#### dev のロールバック
+
+```bash
+make db-restore-dev BACKUP=backups/dev_YYYYMMDD_HHMMSS.sql
+```
+
+`db-replicate-prod-to-dev` 実行時に保存した dev バックアップを dev に戻す。
+
 ### 仕組み・設定
 
 - SSH ホストは既定 `tugilo.com`。変更は `RELIGO_REMOTE_SSH=<host> make db-pull ...`。
 - リモート DB 資格情報は **リモートの `.env`** から都度読む（ハードコードしない）。
-- スクリプト: `bin/db-pull.sh` / `bin/db-push.sh` / `bin/lib/remote.sh`。
+- スクリプト: `bin/db-pull.sh` / `bin/db-push.sh` / `bin/db-replicate-prod-to-dev.sh` / `bin/db-restore-dev.sh` / `bin/lib/remote.sh`。
 
 ## 注意
 

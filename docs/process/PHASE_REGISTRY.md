@@ -240,6 +240,23 @@
 | 239 | チームMTG docs 同期（SPEC-018 Phase E・team README・import-religo skill） | docs | completed | develop | 2026-06-23 |
 | 240 | 1to1 マルチセッション取り込み + 一覧共通メモモーダル（SPEC-019 P1・P3） | implement | completed | develop | 2026-06-23 |
 | 241 | SONAE PoC 提案同期（sonae_proposal.pdf・開発費削除・PoC表現） | docs | in_progress | develop（commit / merge 未実施） | 2026-06-24 |
+| 242 | SONAE P1 DB 基盤（sonae_* migration・bootstrap・member sync） | implement | completed | develop | 2026-06-24 |
+| 243 | SONAE 壁打ち要件 SSOT 反映（Member Roster・JMA 9種・閾値 UI・LINE 紐付け通知・将来地域別回答） | docs | completed | develop | 2026-06-24 |
+| 244 | SONAE Roster Core（閾値マスタ・type=member sync・名簿 API・CSV・通知対象 Resolver） | implement | completed | develop | 2026-06-24 |
+| 245 | SONAE LINE 連携（設定 API・Webhook・友だち紐付け・Push） | implement | completed | develop | 2026-06-24 |
+| 246 | SONAE 訓練・回答・集計（L1 達成） | implement | completed | develop | 2026-06-24 |
+| 247 | SONAE 管理画面 UI（React `/sonae/*`） | implement | completed | develop | 2026-06-24 |
+| 248 | SONAE Religo Shell 統合 | implement | completed | develop | 2026-06-24 |
+| 249 | SONAE JMA 取得基盤（fixture フィード・設定 API・手動取得・ログ） | implement | completed | develop | 2026-06-24 |
+| 250 | SONAE JMA Normalizer + Ingest（9種・alert_events） | implement | completed | develop | 2026-06-24 |
+| 251 | SONAE 発報条件 + 自動発報（L2 達成） | implement | completed | develop | 2026-06-24 |
+| 252 | SONAE PoC 伴走（Runbook・L1/L2 完了確認） | docs | completed | develop | 2026-06-24 |
+| 253 | スリーバイス 2026-06-30 Religo共有 メインスピーカー準備 | docs | completed | develop（commit / merge 未実施） | 2026-06-25 |
+| 254 | 竹村裕司 第1回121 Zoom要約反映（ONODE／チアプリント） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 255 | 木村健悟 第2回121 Zoom要約反映（ハート・プランニング／Tシャツプリント・Religo・社内システム相談） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 256 | 太田一誠 第1回121 Zoom要約反映（ファインバブル／雑につなぐ相互紹介） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 257 | 軍司敦哉 第1回121 Zoom要約反映（Conduct／LINE公式アカウント運用代行・AIチャットボット協業） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 258 | 軍司敦哉 第2回121 Zoom要約反映（リンクアットジャパン／Lステップ + AIチャットボット提案） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "type": "earthquake",
+      "source_event_key": "poc-earthquake-shizuoka-20260401",
+      "title": "静岡県東部で震度5弱",
+      "severity": "intensity_5_lower",
+      "severity_rank": 50,
+      "occurred_at": "2026-04-01T14:30:00+09:00",
+      "areas": [
+        {
+          "prefecture": "静岡県",
+          "city": "静岡市葵区"
+        }
+      ]
+    }
+  ]
+}

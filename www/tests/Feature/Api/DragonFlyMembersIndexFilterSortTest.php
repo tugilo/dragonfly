@@ -119,4 +119,33 @@ class DragonFlyMembersIndexFilterSortTest extends TestCase
         $this->assertNotContains($target2, $ids);
         $this->assertCount(1, $data);
     }
+
+    public function test_bni_members_only_excludes_guest_and_visitor(): void
+    {
+        DB::table('members')->insert([
+            ['name' => 'Chapter Member', 'display_no' => '12', 'type' => 'member', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Guest Person', 'display_no' => 'G1', 'type' => 'guest', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Visitor Person', 'display_no' => 'V1', 'type' => 'visitor', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        $response = $this->getJson('/api/dragonfly/members?bni_members_only=1');
+        $response->assertOk();
+        $names = array_column($response->json(), 'name');
+        $this->assertContains('Owner', $names);
+        $this->assertContains('Chapter Member', $names);
+        $this->assertNotContains('Guest Person', $names);
+        $this->assertNotContains('Visitor Person', $names);
+    }
+
+    public function test_without_bni_members_only_includes_guest_and_visitor(): void
+    {
+        DB::table('members')->insert([
+            ['name' => 'Guest Person', 'display_no' => 'G1', 'type' => 'guest', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        $response = $this->getJson('/api/dragonfly/members');
+        $response->assertOk();
+        $names = array_column($response->json(), 'name');
+        $this->assertContains('Guest Person', $names);
+    }
 }

@@ -38,6 +38,8 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'order' => ['nullable', 'string', Rule::in(self::ORDER_VALUES)],
             /** Connections: 当該例会の参加者（欠席除く）に紐づく member のみ。レスに participant_type / bo_assignable を付与。 */
             'meeting_id' => ['nullable', 'integer', 'exists:meetings,id'],
+            /** Members 名簿: guest / visitor を除外（Dashboard・1to1 リードと同系）。meeting_id スコープ時は無視。 */
+            'bni_members_only' => ['nullable', 'boolean'],
         ];
     }
 }

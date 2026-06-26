@@ -1,6 +1,6 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import { Route } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import { Admin, Resource, CustomRoutes } from 'react-admin';
 import { dragonflyDataProvider } from './dataProvider';
 import { religoTheme } from './theme/religoTheme';
@@ -27,6 +27,13 @@ import { CategoriesEdit } from './pages/CategoriesEdit';
 import { RolesList } from './pages/RolesList';
 import { RolesCreate } from './pages/RolesCreate';
 import { RolesEdit } from './pages/RolesEdit';
+import SonaeShell from './sonae/SonaeShell';
+import SonaeDashboard from './pages/sonae/SonaeDashboard';
+import SonaeMembersPage from './pages/sonae/SonaeMembersPage';
+import SonaeLinePage from './pages/sonae/SonaeLinePage';
+import SonaeTrainingPage from './pages/sonae/SonaeTrainingPage';
+import SonaeJmaPage from './pages/sonae/SonaeJmaPage';
+import SonaeAlertSettingsPage from './pages/sonae/SonaeAlertSettingsPage';
 
 const root = document.getElementById('admin-root');
 if (root) {
@@ -44,6 +51,14 @@ if (root) {
                 <Route path="/settings" element={<ReligoSettings />} />
                 <Route path="/member-merge" element={<MemberMerge />} />
                 <Route path="/zoom-import" element={<ZoomImport />} />
+                <Route path="/sonae/*" element={<SonaeShell />}>
+                    <Route index element={<SonaeDashboard />} />
+                    <Route path="members" element={<SonaeMembersPage />} />
+                    <Route path="line" element={<SonaeLinePage />} />
+                    <Route path="training" element={<SonaeTrainingPage />} />
+                    <Route path="jma" element={<SonaeJmaPage />} />
+                    <Route path="alert-settings" element={<SonaeAlertSettingsPage />} />
+                </Route>
             </CustomRoutes>
             <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
             <Resource name="members" list={MembersList} show={MemberShow} edit={MemberEdit} options={{ label: 'Members' }} />

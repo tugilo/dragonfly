@@ -40,6 +40,14 @@ use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
 use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
 use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
+use App\Http\Controllers\Sonae\SonaeAlertThresholdOptionController;
+use App\Http\Controllers\Sonae\SonaeChapterAlertSettingController;
+use App\Http\Controllers\Sonae\SonaeChapterController;
+use App\Http\Controllers\Sonae\SonaeLineAccountController;
+use App\Http\Controllers\Sonae\SonaeLineLinkController;
+use App\Http\Controllers\Sonae\SonaeMemberController;
+use App\Http\Controllers\Sonae\SonaeJmaController;
+use App\Http\Controllers\Sonae\SonaeTrainingController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -123,6 +131,42 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/meetings/{meeting}/referral-suggestions', [MeetingReferralSuggestionController::class, 'index']);
     Route::patch('/meeting-referral-suggestions/{meetingReferralSuggestion}', [MeetingReferralSuggestionController::class, 'update']);
     Route::post('/meeting-referral-suggestions/{meetingReferralSuggestion}/register-introduction', [MeetingReferralSuggestionController::class, 'registerIntroduction']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SONAE API (SPEC-017 Phase 244+)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('sonae')->group(function () {
+        Route::get('/alert-threshold-options', [SonaeAlertThresholdOptionController::class, 'index']);
+        Route::get('/context', [SonaeChapterController::class, 'context']);
+        Route::post('/chapters/bootstrap', [SonaeChapterController::class, 'bootstrap']);
+        Route::get('/chapters/resolve', [SonaeChapterController::class, 'resolve']);
+
+        Route::get('/jma/settings', [SonaeJmaController::class, 'showSettings']);
+        Route::put('/jma/settings', [SonaeJmaController::class, 'updateSettings']);
+        Route::post('/jma/fetch', [SonaeJmaController::class, 'fetchManual']);
+        Route::get('/jma/logs', [SonaeJmaController::class, 'logs']);
+
+        Route::middleware('sonae.chapter')->group(function () {
+            Route::get('/chapters/{chapter}', [SonaeChapterController::class, 'show']);
+            Route::get('/chapters/{chapter}/members', [SonaeMemberController::class, 'index']);
+            Route::get('/chapters/{chapter}/members/unlinked', [SonaeMemberController::class, 'unlinked']);
+            Route::patch('/chapters/{chapter}/members/{member}', [SonaeMemberController::class, 'update']);
+            Route::post('/chapters/{chapter}/members/sync', [SonaeMemberController::class, 'sync']);
+            Route::post('/chapters/{chapter}/members/import-csv', [SonaeMemberController::class, 'importCsv']);
+            Route::get('/chapters/{chapter}/line-account', [SonaeLineAccountController::class, 'show']);
+            Route::put('/chapters/{chapter}/line-account', [SonaeLineAccountController::class, 'update']);
+            Route::post('/chapters/{chapter}/members/{member}/line-invite', [SonaeLineLinkController::class, 'issueInvite']);
+            Route::post('/chapters/{chapter}/members/{member}/line-link', [SonaeLineLinkController::class, 'linkDirect']);
+            Route::post('/chapters/{chapter}/members/{member}/line-push-test', [SonaeLineLinkController::class, 'pushTest']);
+            Route::post('/chapters/{chapter}/training-events/dispatch', [SonaeTrainingController::class, 'dispatch']);
+            Route::get('/chapters/{chapter}/training-events', [SonaeTrainingController::class, 'index']);
+            Route::get('/chapters/{chapter}/notifications/{notification}/summary', [SonaeTrainingController::class, 'summary']);
+            Route::get('/chapters/{chapter}/alert-settings', [SonaeChapterAlertSettingController::class, 'show']);
+            Route::put('/chapters/{chapter}/alert-settings', [SonaeChapterAlertSettingController::class, 'update']);
+        });
+    });
 });
 
 /*

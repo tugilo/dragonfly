@@ -30,3 +30,16 @@ religo_apply_pending_migrations() {
   echo "Applying pending migrations on local DB ..."
   docker compose "${COMPOSE_ARGS[@]}" exec -T app php artisan migrate --force
 }
+
+# Post-import patches on remote dev/prod (after SQL load via SSH).
+religo_remote_apply_post_import_patches() {
+  local target="${1:-dev}"
+
+  echo "Patching workspace id=1 on remote ${target}: Default Workspace -> DragonFly ..."
+  remote_artisan "$target" migrate \
+    --path=database/migrations/2026_06_04_100000_rename_default_workspace_to_dragonfly.php \
+    --force
+
+  echo "Applying pending migrations on remote ${target} ..."
+  remote_artisan "$target" migrate --force
+}

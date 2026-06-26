@@ -7,6 +7,7 @@ use App\Http\Requests\Api\IndexDragonFlyMemberOneToOneStatusRequest;
 use App\Http\Requests\Api\IndexDragonFlyMembersRequest;
 use App\Models\Member;
 use App\Queries\Religo\MemberSummaryQuery;
+use App\Support\MemberEnrollmentType;
 use App\Support\MemberWorkspaceAttributes;
 use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
@@ -56,6 +57,8 @@ class DragonFlyMemberController extends Controller
                 $q->where('meeting_id', $meetingScopeId)
                     ->where('type', '!=', 'absent');
             }]);
+        } elseif ($request->boolean('bni_members_only')) {
+            MemberEnrollmentType::applyBniMembersScope($query);
         }
 
         if ($request->filled('q')) {
