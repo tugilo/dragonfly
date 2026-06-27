@@ -265,6 +265,7 @@
 | 264 | Admin API Role Enforcement（SPEC-020 Phase C・編集系を chapter_admin 限定） | implement | completed | develop | 2026-06-27 |
 | 265 | Member UI Separation（SPEC-020 Phase D・role でメニュー/Owner/編集画面を分離） | implement | completed | develop | 2026-06-27 |
 | 266 | Onboarding Preparation（SPEC-020 Phase E・自己登録方式確定） | docs | completed | develop | 2026-06-27 |
+| 267 | 1to1 Minutes MVP（SPEC-020 Phase F・順位 11・コピペ → notes 保存・owner 本人固定 UI） | implement | completed | develop | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

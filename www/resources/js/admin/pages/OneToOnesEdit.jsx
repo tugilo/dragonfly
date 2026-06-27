@@ -14,6 +14,7 @@ import { MarkdownReadablePanel } from '../components/MarkdownView';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload, inferDurationMinutes } from '../utils/oneToOnesTransform';
 import { religoFetch } from '../religoApiFetch';
+import { useReligoOwner } from '../ReligoOwnerContext';
 
 async function fetchJson(url) {
     const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
@@ -349,6 +350,7 @@ function OneToOnePrepPanel() {
 export function OneToOnesEdit() {
     const notify = useNotify();
     const redirect = useRedirect();
+    const { isChapterAdmin } = useReligoOwner();
     const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
     const [durationMinutes, setDurationMinutes] = useState(60);
 
@@ -382,6 +384,7 @@ export function OneToOnesEdit() {
                     durationMinutes={durationMinutes}
                     onDurationChange={setDurationMinutes}
                     statusHelperText={STATUS_HELPER_EDIT}
+                    ownerInputDisabled={!isChapterAdmin}
                 />
                 <OneToOnePrepPanel />
                 <OneToOneMemosPanel />

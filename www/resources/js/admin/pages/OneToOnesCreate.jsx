@@ -31,7 +31,7 @@ export function OneToOnesCreate() {
     const notify = useNotify();
     const redirect = useRedirect();
     const [searchParams] = useSearchParams();
-    const { ownerMemberId, loading: ownerLoading } = useReligoOwner();
+    const { ownerMemberId, loading: ownerLoading, isChapterAdmin } = useReligoOwner();
     const [workspaceId, setWorkspaceId] = useState(null);
     const [workspaceError, setWorkspaceError] = useState('');
     const [ownerMemberOptions, setOwnerMemberOptions] = useState([]);
@@ -123,6 +123,8 @@ export function OneToOnesCreate() {
                     ownerMemberOptions={ownerMemberOptions}
                     durationMinutes={durationMinutes}
                     onDurationChange={setDurationMinutes}
+                    ownerInputDisabled={!isChapterAdmin}
+                    suppressCreateOwnerHint={!isChapterAdmin}
                 />
             </SimpleForm>
         </Create>
