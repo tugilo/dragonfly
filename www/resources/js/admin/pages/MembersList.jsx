@@ -1042,7 +1042,7 @@ function O2oMemoModal({ open, member, onClose, onSaved }) {
 const MEMO_LIMIT = 20;
 
 const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o, onMemberUpdated }, ref) {
-    const { ownerMemberId } = useReligoOwner();
+    const { ownerMemberId, isChapterAdmin } = useReligoOwner();
     const [tab, setTab] = useState(0);
     const [memos, setMemos] = useState([]);
     const [o2oList, setO2oList] = useState([]);
@@ -1051,6 +1051,10 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
     const [ncastDraft, setNcastDraft] = useState('');
     const [ncastSaving, setNcastSaving] = useState(false);
     const [ncastError, setNcastError] = useState(null);
+    const [emailDraft, setEmailDraft] = useState('');
+    const [emailSaving, setEmailSaving] = useState(false);
+    const [emailError, setEmailError] = useState(null);
+    const [emailSaved, setEmailSaved] = useState(false);
 
     const refetchMemos = useCallback(() => {
         if (!member?.id || !open || ownerMemberId == null) return;
@@ -1088,6 +1092,13 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
         setNcastError(null);
     }, [member?.id, member?.ncast_profile_url]);
 
+    useEffect(() => {
+        if (!member?.id) return;
+        setEmailDraft(member.email ?? '');
+        setEmailError(null);
+        setEmailSaved(false);
+    }, [member?.id, member?.email]);
+
     if (!member) return null;
 
     const handleSaveNcast = () => {
@@ -1099,6 +1110,19 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
             })
             .catch((e) => setNcastError(e instanceof Error ? e.message : String(e)))
             .finally(() => setNcastSaving(false));
+    };
+
+    const handleSaveEmail = () => {
+        setEmailSaving(true);
+        setEmailError(null);
+        setEmailSaved(false);
+        putDragonflyMember(member.id, { email: emailDraft.trim() || null })
+            .then((json) => {
+                setEmailSaved(true);
+                onMemberUpdated?.(json);
+            })
+            .catch((e) => setEmailError(e instanceof Error ? e.message : String(e)))
+            .finally(() => setEmailSaving(false));
     };
 
     const categoryLabel = member?.category
@@ -1142,6 +1166,29 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
                                 <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
                                     <Typography variant="caption" color="text.secondary">直近メモ</Typography>
                                     <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>{lastMemoBody}</Typography>
+                                </CardContent></Card>
+                            )}
+                            {isChapterAdmin && (
+                                <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+                                    <Typography variant="caption" color="text.secondary">ログイン用メールアドレス</Typography>
+                                    <MuiTextField
+                                        size="small"
+                                        type="email"
+                                        fullWidth
+                                        placeholder="member@example.com"
+                                        value={emailDraft}
+                                        onChange={(e) => { setEmailDraft(e.target.value); setEmailSaved(false); }}
+                                        sx={{ mt: 1 }}
+                                        disabled={emailSaving}
+                                        helperText="初回アカウント作成（自己登録）に使用。チャプター内で重複不可。"
+                                    />
+                                    {emailError && <Typography variant="body2" color="error" sx={{ mt: 1 }}>{emailError}</Typography>}
+                                    {emailSaved && !emailError && <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>保存しました</Typography>}
+                                    <Stack direction="row" spacing={1} sx={{ mt: 1 }} alignItems="center">
+                                        <Button size="small" variant="outlined" onClick={handleSaveEmail} disabled={emailSaving}>
+                                            {emailSaving ? '保存中…' : 'メールを保存'}
+                                        </Button>
+                                    </Stack>
                                 </CardContent></Card>
                             )}
                             <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
