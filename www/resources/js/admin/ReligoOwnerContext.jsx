@@ -15,6 +15,7 @@ async function fetchJson(url, options = {}) {
 
 export function ReligoOwnerProvider({ children }) {
     const [ownerMemberId, setOwnerMemberId] = useState(null);
+    const [religoRole, setReligoRole] = useState('member');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [members, setMembers] = useState([]);
@@ -43,6 +44,7 @@ export function ReligoOwnerProvider({ children }) {
             const data = await fetchJson('/api/users/me');
             const id = data.owner_member_id != null ? Number(data.owner_member_id) : null;
             setOwnerMemberId(Number.isNaN(id) ? null : id);
+            setReligoRole(typeof data.religo_role === 'string' && data.religo_role !== '' ? data.religo_role : 'member');
             const wid = data.workspace_id != null ? Number(data.workspace_id) : null;
             setResolvedWorkspaceId(wid);
             await applyWorkspaceLabel(wid);
@@ -139,6 +141,8 @@ export function ReligoOwnerProvider({ children }) {
     const value = useMemo(
         () => ({
             ownerMemberId,
+            religoRole,
+            isChapterAdmin: religoRole === 'chapter_admin',
             loading,
             error,
             members,
@@ -151,6 +155,7 @@ export function ReligoOwnerProvider({ children }) {
         }),
         [
             ownerMemberId,
+            religoRole,
             loading,
             error,
             members,

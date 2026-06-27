@@ -6,7 +6,7 @@ organization_ja: "RyoTen（リョウテン）"
 chapter_primary: bni_dragonfly
 owner_side: tugilo
 first_session_date: "2025-03-16"
-first_session_time_jst: "TODO"
+first_session_time_jst: "11:00-12:00"
 ---
 
 # 1to1_岡元智美_RyoTen（勝てるプレゼン資料作成）
@@ -14,6 +14,8 @@ first_session_time_jst: "TODO"
 **文書の位置づけ:** 同一人物との 1to1 を **1ファイルで時系列管理**。新規セッションは **【第n回】** で追記し、サマリー・累積インサイト・戦略を更新する。  
 **整理:** tugilo（次廣 淳）  
 **事実と仮説:** **事実**＝会話メモ・公式サイト・ユーザーが根拠を示した記述。**仮説**＝tugilo視点の解釈・未検証の紹介パターン（根拠を併記）。
+
+**Religo 1to1 レコード:** `one_to_ones.id` = **102**。
 
 ---
 
@@ -120,8 +122,9 @@ first_session_time_jst: "TODO"
 
 #### 基本情報
 
-- **日時:** **2025-03-16** **JST 開始–終了 TODO**（旧メモに時刻未記載。カレンダーで要確認）
+- **日時:** **2025-03-16（日）JST 11:00–12:00**（ユーザー確認: 2026-06-26）
 - **実施方法:** **TODO**（対面 / オンライン 等。旧メモ未記入）
+- **Religo 1to1 レコード:** `one_to_ones.id` = **102**（相手 member `id=11`・岡元　智美）
 
 #### 話した内容（重要）
 

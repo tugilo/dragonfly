@@ -7,6 +7,7 @@ use App\Models\OneToOneReferralSuggestionRun;
 use App\Services\Religo\ReferralSuggestionDigest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -15,6 +16,7 @@ use Tests\TestCase;
 class OneToOneIndexTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
     private int $ownerId;
@@ -47,6 +49,7 @@ class OneToOneIndexTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_get_one_to_ones_returns_200(): void

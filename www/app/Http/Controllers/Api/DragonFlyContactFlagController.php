@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Http\Requests\DragonFly\UpsertContactFlagRequest;
 use App\Models\Member;
 use App\Models\DragonflyContactFlag;
@@ -11,20 +12,21 @@ use Illuminate\Http\JsonResponse;
 
 class DragonFlyContactFlagController extends Controller
 {
+    use ResolvesReligoOwner;
+
     public function __construct(
         private ContactFlagService $contactFlagService
     ) {}
 
     /**
-     * GET /api/dragonfly/flags — owner のフラグ一覧.
+     * GET /api/dragonfly/flags — owner のフラグ一覧（acting user owner に固定・SPEC-020 §4.5）.
      */
     public function index(): JsonResponse
     {
-        $ownerMemberId = request()->query('owner_member_id');
-        if ($ownerMemberId === null || $ownerMemberId === '') {
+        $ownerMemberId = $this->resolveOwnerMemberId(request());
+        if ($ownerMemberId === false) {
             return response()->json(['message' => 'owner_member_id is required.'], 400);
         }
-        $ownerMemberId = (int) $ownerMemberId;
         if (! Member::where('id', $ownerMemberId)->exists()) {
             return response()->json(['message' => 'Owner member not found.'], 404);
         }
@@ -46,7 +48,10 @@ class DragonFlyContactFlagController extends Controller
      */
     public function update(UpsertContactFlagRequest $request, int $target_member_id): JsonResponse
     {
-        $ownerMemberId = (int) $request->input('owner_member_id');
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return response()->json(['message' => 'owner_member_id is required.'], 400);
+        }
         $targetMemberId = (int) $target_member_id;
 
         if (! Member::where('id', $ownerMemberId)->exists()) {

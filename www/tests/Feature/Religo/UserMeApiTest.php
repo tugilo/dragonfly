@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -55,7 +56,7 @@ class UserMeApiTest extends TestCase
 
     private function actingAsUserId(int $id): void
     {
-        $this->actingAs(User::findOrFail($id));
+        Sanctum::actingAs(User::findOrFail($id));
     }
 
     public function test_show_me_returns_owner_member_id(): void
@@ -101,17 +102,17 @@ class UserMeApiTest extends TestCase
         $this->assertSame('member', $data['religo_role']);
     }
 
-    public function test_show_me_returns_404_when_user_not_found(): void
+    public function test_show_me_returns_401_when_unauthenticated(): void
     {
         $res = $this->getJson('/api/users/me');
-        $res->assertStatus(404);
+        $res->assertUnauthorized();
     }
 
     public function test_show_me_when_acting_as_second_user_returns_that_user(): void
     {
         $this->createMeUser($this->memberId, 1);
         $this->createMeUser($this->otherMemberId, 2);
-        $this->actingAs(User::find(2));
+        Sanctum::actingAs(User::find(2));
         $res = $this->getJson('/api/users/me');
         $res->assertOk();
         $data = $res->json();
@@ -187,7 +188,7 @@ class UserMeApiTest extends TestCase
     {
         $this->createMeUser(null, 1);
         $this->createMeUser(null, 2);
-        $this->actingAs(User::find(2));
+        Sanctum::actingAs(User::find(2));
         $res = $this->patchJson('/api/users/me', ['owner_member_id' => $this->memberId]);
         $res->assertOk();
         $this->assertSame(2, $res->json('id'));
@@ -244,9 +245,9 @@ class UserMeApiTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => 1, 'default_workspace_id' => null]);
     }
 
-    public function test_update_me_returns_404_when_user_not_found(): void
+    public function test_update_me_returns_401_when_unauthenticated(): void
     {
         $res = $this->patchJson('/api/users/me', ['owner_member_id' => $this->memberId]);
-        $res->assertStatus(404);
+        $res->assertUnauthorized();
     }
 }

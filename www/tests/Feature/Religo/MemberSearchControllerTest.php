@@ -5,6 +5,7 @@ namespace Tests\Feature\Religo;
 use App\Models\Member;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,13 @@ use Tests\TestCase;
 class MemberSearchControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser();
+    }
 
     public function test_search_returns_empty_when_q_empty(): void
     {

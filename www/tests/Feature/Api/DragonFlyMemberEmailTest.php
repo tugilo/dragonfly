@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -12,6 +13,13 @@ use Tests\TestCase;
 class DragonFlyMemberEmailTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser(null, 'member-email-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
+    }
 
     public function test_put_sets_and_returns_email(): void
     {

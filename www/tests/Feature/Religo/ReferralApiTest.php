@@ -6,6 +6,7 @@ use App\Models\Introduction;
 use App\Models\InternalReferral;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -14,6 +15,7 @@ use Tests\TestCase;
 class ReferralApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
 
@@ -52,6 +54,8 @@ class ReferralApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        // クロス owner のドメインロジック検証のため chapter_admin として実行（owner 指定可）。
+        $this->actingAsReligoUser($this->ownerId, 'referral-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_introductions_index_returns_empty(): void

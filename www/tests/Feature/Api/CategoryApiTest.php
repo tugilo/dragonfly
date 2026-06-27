@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\Category;
 use App\Models\Member;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,13 @@ use Tests\TestCase;
 class CategoryApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser(null, 'category-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
+    }
 
     public function test_index_returns_categories(): void
     {

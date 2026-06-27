@@ -4,11 +4,19 @@ namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 class DragonFlyMemberNcastProfileUrlTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser(null, 'member-ncast-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
+    }
 
     public function test_put_updates_ncast_profile_url(): void
     {

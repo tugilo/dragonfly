@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Box, IconButton, InputBase, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
+import { AppBar, Toolbar, Box, IconButton, InputBase, Button } from '@mui/material';
 import { SidebarToggleButton, useLogout } from 'react-admin';
 import { useReligoOwner } from './ReligoOwnerContext';
-import { formatMemberPrimaryLine } from './utils/memberDisplay';
 import { hasReligoAccessToken } from './religoApiFetch';
 
 const APPBAR_HEIGHT = 56;
@@ -38,7 +37,7 @@ const getLabel = (pathname) => {
 
 /**
  * Religo 管理画面用カスタム AppBar。モック v2 #appbar 準拠。
- * グローバル Owner Select — SSOT: ADMIN_GLOBAL_OWNER_SELECTION §4
+ * Owner はログインユーザー（/api/users/me）に固定。ヘッダーでの切替は行わない。
  */
 function useReligoSanctumTokenPresent() {
     const [has, setHas] = useState(() => hasReligoAccessToken());
@@ -55,24 +54,10 @@ export const CustomAppBar = () => {
     const logout = useLogout();
     const hasSanctumToken = useReligoSanctumTokenPresent();
     const currentLabel = getLabel(pathname);
-    const {
-        ownerMemberId,
-        members,
-        savingOwner,
-        patchOwner,
-        resolvedWorkspaceId,
-        resolvedWorkspaceName,
-    } = useReligoOwner();
+    const { resolvedWorkspaceId, resolvedWorkspaceName } = useReligoOwner();
 
     const chapterLabel =
         resolvedWorkspaceId != null ? resolvedWorkspaceName ?? `Workspace #${resolvedWorkspaceId}` : null;
-
-    const handleOwnerChange = (e) => {
-        const v = e.target.value;
-        if (v === '' || v == null) return;
-        const n = Number(v);
-        if (Number.isInteger(n)) patchOwner(n);
-    };
 
     return (
         <AppBar
@@ -152,29 +137,6 @@ export const CustomAppBar = () => {
                         inputProps={{ 'aria-label': '検索' }}
                     />
                 </Box>
-
-                <FormControl size="small" sx={{ minWidth: { xs: 120, sm: 160 } }}>
-                    <InputLabel id="religo-global-owner-label">Owner</InputLabel>
-                    <Select
-                        labelId="religo-global-owner-label"
-                        label="Owner"
-                        value={ownerMemberId != null ? String(ownerMemberId) : ''}
-                        onChange={handleOwnerChange}
-                        disabled={savingOwner || members.length === 0}
-                        displayEmpty
-                    >
-                        {ownerMemberId == null && (
-                            <MenuItem value="">
-                                <em>選択してください</em>
-                            </MenuItem>
-                        )}
-                        {members.map((m) => (
-                            <MenuItem key={m.id} value={String(m.id)}>
-                                {formatMemberPrimaryLine(m)}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
 
                 {hasSanctumToken ? (
                     <Button

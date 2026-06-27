@@ -6,11 +6,19 @@ use App\Models\Meeting;
 use App\Models\MeetingType;
 use App\Support\MeetingDisplay;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 class MeetingTypeApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser();
+    }
 
     public function test_index_returns_active_meeting_types_sorted(): void
     {

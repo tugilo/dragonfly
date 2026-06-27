@@ -8,10 +8,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | true: Bearer 無しのとき従来どおり users.id 昇順先頭を acting user にする（開発・テスト向け）。
-    | false: 未認証では acting user を解決しない（本番で認証必須に移行する際に false）。
+    | false: 未認証では acting user を解決しない（本番・メンバー展開の既定。SPEC-020 Phase A）。
     |
     */
-    'acting_user_fallback' => filter_var(env('RELIGO_ACTING_USER_FALLBACK', true), FILTER_VALIDATE_BOOLEAN),
+    'acting_user_fallback' => filter_var(env('RELIGO_ACTING_USER_FALLBACK', false), FILTER_VALIDATE_BOOLEAN),
 
     /*
     |--------------------------------------------------------------------------

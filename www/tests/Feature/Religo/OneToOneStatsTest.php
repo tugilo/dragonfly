@@ -7,6 +7,7 @@ use App\Models\OneToOne;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -15,6 +16,7 @@ use Tests\TestCase;
 class OneToOneStatsTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
 
@@ -42,11 +44,15 @@ class OneToOneStatsTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_stats_without_owner_aggregates_like_index(): void
     {
         Carbon::setTestNow(Carbon::parse('2026-03-15 12:00:00', config('app.timezone')));
+
+        // owner 無指定の全 owner 集計は chapter_admin（グローバル・owner 未固定）想定。
+        $this->actingAsReligoUser(null, 'stats-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
 
         $ownerB = (int) DB::table('members')->insertGetId([
             'name' => 'OwnerB',

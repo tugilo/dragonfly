@@ -47,26 +47,45 @@ if (root) {
             dashboard={Dashboard}
             theme={religoTheme}
         >
-            <CustomRoutes>
-                <Route path="/settings" element={<ReligoSettings />} />
-                <Route path="/member-merge" element={<MemberMerge />} />
-                <Route path="/zoom-import" element={<ZoomImport />} />
-                <Route path="/sonae/*" element={<SonaeShell />}>
-                    <Route index element={<SonaeDashboard />} />
-                    <Route path="members" element={<SonaeMembersPage />} />
-                    <Route path="line" element={<SonaeLinePage />} />
-                    <Route path="training" element={<SonaeTrainingPage />} />
-                    <Route path="jma" element={<SonaeJmaPage />} />
-                    <Route path="alert-settings" element={<SonaeAlertSettingsPage />} />
-                </Route>
-            </CustomRoutes>
-            <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
-            <Resource name="members" list={MembersList} show={MemberShow} edit={MemberEdit} options={{ label: 'Members' }} />
-            <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings' }} />
-            <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} edit={OneToOnesEdit} options={{ label: '1 to 1' }} />
-            <Resource name="role-history" list={RoleHistoryList} options={{ label: 'Role History' }} />
-            <Resource name="categories" list={CategoriesList} create={CategoriesCreate} edit={CategoriesEdit} options={{ label: 'Categories' }} />
-            <Resource name="roles" list={RolesList} create={RolesCreate} edit={RolesEdit} options={{ label: 'Roles' }} />
+            {(permissions) => {
+                const isAdmin = permissions === 'chapter_admin';
+                return (
+                    <>
+                        <CustomRoutes>
+                            <Route path="/settings" element={<ReligoSettings />} />
+                            <Route path="/zoom-import" element={<ZoomImport />} />
+                            {isAdmin && <Route path="/member-merge" element={<MemberMerge />} />}
+                            {isAdmin && (
+                                <Route path="/sonae/*" element={<SonaeShell />}>
+                                    <Route index element={<SonaeDashboard />} />
+                                    <Route path="members" element={<SonaeMembersPage />} />
+                                    <Route path="line" element={<SonaeLinePage />} />
+                                    <Route path="training" element={<SonaeTrainingPage />} />
+                                    <Route path="jma" element={<SonaeJmaPage />} />
+                                    <Route path="alert-settings" element={<SonaeAlertSettingsPage />} />
+                                </Route>
+                            )}
+                        </CustomRoutes>
+                        <Resource name="connections" list={DragonFlyBoard} options={{ label: 'Connections' }} />
+                        <Resource
+                            name="members"
+                            list={MembersList}
+                            show={MemberShow}
+                            edit={isAdmin ? MemberEdit : undefined}
+                            options={{ label: 'Members' }}
+                        />
+                        <Resource name="meetings" list={MeetingsList} options={{ label: 'Meetings' }} />
+                        <Resource name="one-to-ones" list={OneToOnesList} create={OneToOnesCreate} edit={OneToOnesEdit} options={{ label: '1 to 1' }} />
+                        <Resource name="role-history" list={RoleHistoryList} options={{ label: 'Role History' }} />
+                        {isAdmin && (
+                            <Resource name="categories" list={CategoriesList} create={CategoriesCreate} edit={CategoriesEdit} options={{ label: 'Categories' }} />
+                        )}
+                        {isAdmin && (
+                            <Resource name="roles" list={RolesList} create={RolesCreate} edit={RolesEdit} options={{ label: 'Roles' }} />
+                        )}
+                    </>
+                );
+            }}
         </Admin>
         </ReligoOwnerProvider>
     );

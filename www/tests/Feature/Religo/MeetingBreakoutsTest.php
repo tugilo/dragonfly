@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -19,6 +20,7 @@ use Tests\TestCase;
 class MeetingBreakoutsTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $meetingId;
     private int $member1;
@@ -28,6 +30,7 @@ class MeetingBreakoutsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser(null, 'breakouts-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
         $this->meetingId = (int) DB::table('meetings')->insertGetId([
             'number' => 100,
             'held_on' => now()->toDateString(),
@@ -355,6 +358,7 @@ class MeetingBreakoutsTest extends TestCase
             'email' => 'op-bo-p3@example.com',
             'password' => Hash::make('x'),
             'owner_member_id' => $this->member1,
+            'religo_role' => \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN,
             'remember_token' => null,
             'created_at' => now(),
             'updated_at' => now(),
@@ -407,6 +411,7 @@ class MeetingBreakoutsTest extends TestCase
             'password' => Hash::make('x'),
             'owner_member_id' => $this->member1,
             'default_workspace_id' => $wsDefault,
+            'religo_role' => \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN,
             'remember_token' => null,
             'created_at' => now(),
             'updated_at' => now(),

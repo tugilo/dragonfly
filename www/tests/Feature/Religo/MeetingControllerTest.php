@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -23,6 +24,13 @@ use Tests\TestCase;
 class MeetingControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser(null, 'meeting-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
+    }
 
     public function test_index_returns_meetings_with_breakout_count_and_has_memo(): void
     {

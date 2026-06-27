@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Http\Requests\DragonFly\GetContactSummaryRequest;
 use App\Models\Member;
 use App\Services\DragonFly\ContactSummaryService;
@@ -10,16 +11,21 @@ use Illuminate\Http\JsonResponse;
 
 class DragonFlyContactSummaryController extends Controller
 {
+    use ResolvesReligoOwner;
+
     public function __construct(
         private ContactSummaryService $contactSummaryService
     ) {}
 
     /**
-     * GET /api/dragonfly/contacts/{target_member_id}/summary — 人物カード用サマリ.
+     * GET /api/dragonfly/contacts/{target_member_id}/summary — 人物カード用サマリ（owner は acting user 固定・SPEC-020 §4.5）.
      */
     public function __invoke(GetContactSummaryRequest $request, int $target_member_id): JsonResponse
     {
-        $ownerMemberId = (int) $request->input('owner_member_id');
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return response()->json(['message' => 'owner_member_id is required.'], 400);
+        }
         $targetMemberId = (int) $target_member_id;
 
         if (! Member::where('id', $ownerMemberId)->exists()) {

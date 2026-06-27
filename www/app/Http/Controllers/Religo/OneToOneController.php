@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Http\Requests\Religo\CancelOneToOneRequest;
 use App\Http\Requests\Religo\IndexOneToOnesRequest;
 use App\Http\Requests\Religo\OneToOneStatsRequest;
@@ -19,6 +20,8 @@ use Illuminate\Http\JsonResponse;
 
 class OneToOneController extends Controller
 {
+    use ResolvesReligoOwner;
+
     public function __construct(
         private OneToOneService $oneToOneService,
         private OneToOneIndexService $indexService,
@@ -31,7 +34,10 @@ class OneToOneController extends Controller
      */
     public function index(IndexOneToOnesRequest $request): JsonResponse
     {
-        $filters = $request->validated();
+        $filters = $this->scopeFiltersToOwner($request, $request->validated());
+        if ($filters instanceof JsonResponse) {
+            return $filters;
+        }
         $data = $this->indexService->getIndex($filters);
         return response()->json($data);
     }
@@ -41,9 +47,36 @@ class OneToOneController extends Controller
      */
     public function stats(OneToOneStatsRequest $request): JsonResponse
     {
-        $payload = $this->statsService->getStats($request->validated());
+        $filters = $this->scopeFiltersToOwner($request, $request->validated());
+        if ($filters instanceof JsonResponse) {
+            return $filters;
+        }
+        $payload = $this->statsService->getStats($filters);
 
         return response()->json($payload);
+    }
+
+    /**
+     * 一覧/集計の filter を acting user の owner に固定する。
+     * member: 自分 owner に固定（未設定は 422）。chapter_admin: query 指定 or 無指定（全件）。
+     *
+     * @param  array<string, mixed>  $filters
+     * @return array<string, mixed>|JsonResponse
+     */
+    private function scopeFiltersToOwner($request, array $filters): array|JsonResponse
+    {
+        $owner = $this->resolveOwnerMemberId($request);
+        if ($owner === false) {
+            if (! $this->actorIsChapterAdmin(\App\Services\Religo\ReligoActorContext::actingUser())) {
+                return $this->ownerNotConfiguredResponse();
+            }
+            unset($filters['owner_member_id']);
+
+            return $filters;
+        }
+        $filters['owner_member_id'] = $owner;
+
+        return $filters;
     }
 
     /**
@@ -52,6 +85,11 @@ class OneToOneController extends Controller
     public function store(StoreOneToOneRequest $request): JsonResponse
     {
         $data = $request->validated();
+        $owner = $this->resolveOwnerMemberId($request);
+        if ($owner === false) {
+            return $this->ownerNotConfiguredResponse();
+        }
+        $data['owner_member_id'] = $owner;
         $o2o = $this->oneToOneService->store($data);
         $o2o->load(['ownerMember:id,name', 'targetMember:id,name', 'meeting:id,number,held_on']);
 
@@ -63,6 +101,8 @@ class OneToOneController extends Controller
      */
     public function show(OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
+
         return response()->json($this->indexService->formatRecord($oneToOne));
     }
 
@@ -71,6 +111,7 @@ class OneToOneController extends Controller
      */
     public function update(UpdateOneToOneRequest $request, OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
         $data = $request->validated();
         $o2o = $this->oneToOneService->update($oneToOne, $data);
 
@@ -82,6 +123,7 @@ class OneToOneController extends Controller
      */
     public function cancel(CancelOneToOneRequest $request, OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
         if ($oneToOne->status !== 'planned') {
             return response()->json([
                 'message' => 'キャンセルできるのは予定中（planned）の 1 to 1 のみです。',
@@ -107,6 +149,7 @@ class OneToOneController extends Controller
      */
     public function seriesMarkdown(OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
         $payload = $this->seriesMarkdownService->getSeriesMarkdown(
             (int) $oneToOne->owner_member_id,
             (int) $oneToOne->target_member_id,
@@ -120,6 +163,7 @@ class OneToOneController extends Controller
      */
     public function memosIndex(OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
         $items = ContactMemo::query()
             ->where('one_to_one_id', $oneToOne->id)
             ->orderByDesc('created_at')
@@ -142,6 +186,7 @@ class OneToOneController extends Controller
      */
     public function memosStore(StoreOneToOneMemoRequest $request, OneToOne $oneToOne): JsonResponse
     {
+        $this->assertOwnerMatchesActor((int) $oneToOne->owner_member_id);
         $body = $request->validated()['body'];
         $memo = new ContactMemo([
             'owner_member_id' => $oneToOne->owner_member_id,

@@ -189,6 +189,64 @@ function MembersStatsCards() {
     );
 }
 
+/**
+ * 名前・番号・かな検索フィールド。
+ * IME 変換中（composition）の途中文字列ではフィルタを実行せず、変換確定後に確定値で検索する。
+ * さらに 300ms デバウンスして入力途中の都度再取得を抑える。
+ */
+function MemberSearchField({ value, onCommit }) {
+    const [text, setText] = useState(value ?? '');
+    const composingRef = useRef(false);
+    const debounceRef = useRef(null);
+    const lastCommittedRef = useRef(value ?? '');
+
+    useEffect(() => {
+        const ext = value ?? '';
+        if (ext !== lastCommittedRef.current) {
+            lastCommittedRef.current = ext;
+            setText(ext);
+        }
+    }, [value]);
+
+    const scheduleCommit = useCallback((v) => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            lastCommittedRef.current = v ?? '';
+            onCommit(v || undefined);
+        }, 300);
+    }, [onCommit]);
+
+    useEffect(() => () => { if (debounceRef.current) clearTimeout(debounceRef.current); }, []);
+
+    const handleChange = (e) => {
+        const v = e.target.value;
+        setText(v);
+        if (composingRef.current) return;
+        scheduleCommit(v);
+    };
+
+    const handleCompositionStart = () => {
+        composingRef.current = true;
+    };
+
+    const handleCompositionEnd = (e) => {
+        composingRef.current = false;
+        scheduleCommit(e.target.value);
+    };
+
+    return (
+        <MuiTextField
+            size="small"
+            placeholder="名前・番号・かな"
+            value={text}
+            onChange={handleChange}
+            onCompositionStart={handleCompositionStart}
+            onCompositionEnd={handleCompositionEnd}
+            sx={{ minWidth: 180 }}
+        />
+    );
+}
+
 function MembersFilterBar() {
     const { sort, setSort, total, filterValues, setFilters } = useListContext();
     const { viewMode, setViewMode, displaySortKey, setDisplaySortKey } = useContext(ViewModeContext);
@@ -241,12 +299,9 @@ function MembersFilterBar() {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
-                <MuiTextField
-                    size="small"
-                    placeholder="名前・番号・かな"
+                <MemberSearchField
                     value={fv.q ?? ''}
-                    onChange={(e) => handleFilter('q', e.target.value || undefined)}
-                    sx={{ minWidth: 180 }}
+                    onCommit={(v) => handleFilter('q', v)}
                 />
                 <FormControl size="small" sx={{ minWidth: 140 }}>
                     <InputLabel>大カテゴリ</InputLabel>
