@@ -50,6 +50,6 @@ dod check: OK
 
 ### main 反映
 
-main merge commit id: <fill-main>  
+main merge commit id: d2b4aa4cbdda191fbd0f7d34bd5c746a71ea26ab  
 target branch: main  
 備考: ユーザー指示によりリリース反映として develop → main を merge・push。
