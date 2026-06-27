@@ -10,7 +10,7 @@ import { useReligoOwner } from './ReligoOwnerContext';
 /**
  * Religo 管理画面レイアウト。カスタムサイドバー・AppBar（モック v2 準拠）とカスタムメニューを使用。
  * Theme は app.jsx の Admin theme で一箇所のみ適用。CssBaseline でベースラインを統一。
- * SSOT: ADMIN_GLOBAL_OWNER_SELECTION §4.4（未設定時はメインを出さない。/settings のみ例外）
+ * owner_member_id 未設定時はメインを出さない（/settings 等のみ例外）。Owner はログインユーザー固定。
  */
 export function ReligoLayout(props) {
     const { loading, ownerMemberId } = useReligoOwner();
@@ -38,10 +38,10 @@ export function ReligoLayout(props) {
         ) : (
             <Box sx={{ p: 3, maxWidth: 720, mx: 'auto', mt: 4 }}>
                 <Typography variant="h6" component="p">
-                    Ownerを選択してください
+                    メンバー紐付けが必要です
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                    画面上部の Owner で「自分」に該当するメンバーを選ぶと、各画面のデータが表示されます。
+                    ログインアカウントにメンバー（Owner）が紐付いていません。自己登録でメールが一致していない場合は、チャプター管理者に連絡してください。
                 </Typography>
             </Box>
         );
