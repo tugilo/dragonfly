@@ -99,27 +99,6 @@ function OneToOneStatusChip({ record }) {
     );
 }
 
-function MeetingLabelChip({ record }) {
-    const label = record?.meeting_label;
-    if (!label) {
-        return (
-            <Typography component="span" variant="body2" color="text.disabled">
-                —
-            </Typography>
-        );
-    }
-    return (
-        <Chip
-            size="small"
-            label={label}
-            variant="outlined"
-            sx={{
-                maxWidth: '100%',
-                '& .MuiChip-label': { overflow: 'hidden', textOverflow: 'ellipsis' },
-            }}
-        />
-    );
-}
 
 function OneToOneSessionLabel({ record }) {
     const label = record?.session_label;
@@ -718,7 +697,6 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
             status: 'planned',
             target_member_id: prefillTargetId,
             scheduled_at: null,
-            meeting_id: null,
             notes: '',
         }),
         [resolvedOwnerId, formSession, prefillTargetId]
@@ -761,15 +739,23 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
         }
     };
 
-    const ownerLabel =
-        resolvedOwnerId != null && !Number.isNaN(resolvedOwnerId) ? String(resolvedOwnerId) : '未設定';
+    const ownerName = useMemo(() => {
+        if (resolvedOwnerId == null || Number.isNaN(resolvedOwnerId)) {
+            return null;
+        }
+        const m = (ownerMemberOptions || []).find((o) => Number(o.id) === Number(resolvedOwnerId));
+        if (!m) return null;
+        return `${m.display_no ? `#${m.display_no} ` : ''}${m.name ?? ''}`.trim() || null;
+    }, [ownerMemberOptions, resolvedOwnerId]);
+
+    const ownerLabel = ownerName || (resolvedOwnerId != null ? `ID ${resolvedOwnerId}` : '未設定');
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth scroll="paper">
             <DialogTitle>
-                📅 1 to 1 を追加
+                📅 1 to 1 を記録する
                 <Typography component="div" variant="caption" color="text.secondary" sx={{ mt: 0.5, fontWeight: 400 }}>
-                    Owner（自分）: {ownerLabel}（ヘッダーと同じ解決済み ID）
+                    あなた（記録する人）: {ownerLabel}
                 </Typography>
             </DialogTitle>
             {loading && (
@@ -794,7 +780,7 @@ function OneToOnesQuickCreateDialog({ open, onClose }) {
                         }}
                     >
                         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                            相手は一覧の Owner にスコープされたメンバーから検索して選びます（作成フォームと同じ）。
+                            相手を選び、日時と内容を入力して保存してください。自分のチャプター以外の相手も登録できます。
                         </Typography>
                         {error ? (
                             <Typography color="error" variant="body2" sx={{ mb: 1 }}>
@@ -885,7 +871,6 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
                     }
                 />
                 <FunctionField label="メモ" render={(r) => <OneToOneNotesPreview record={r} onOpen={onMemoOpen} />} />
-                <FunctionField label="例会" render={(record) => <MeetingLabelChip record={record} />} />
                 <FunctionField
                     label="操作"
                     render={(record) => (

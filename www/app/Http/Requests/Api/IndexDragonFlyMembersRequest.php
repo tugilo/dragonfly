@@ -28,6 +28,7 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'owner_member_id' => ['nullable', 'integer', 'exists:members,id'],
             'with_summary' => ['nullable', 'boolean'],
             'workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
+            'region_id' => ['nullable', 'integer', 'exists:regions,id'],
             'q' => ['nullable', 'string', 'max:255'],
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'group_name' => ['nullable', 'string', 'max:100'],
@@ -40,6 +41,8 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'meeting_id' => ['nullable', 'integer', 'exists:meetings,id'],
             /** Members 名簿: guest / visitor を除外（Dashboard・1to1 リードと同系）。meeting_id スコープ時は無視。 */
             'bni_members_only' => ['nullable', 'boolean'],
+            /** Members 名簿: DragonFly チャプター在籍メンバーのみ（他チャプター BNI 会員を除外）。 */
+            'dragonfly_chapter_only' => ['nullable', 'boolean'],
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Queries\Religo\MemberSummaryQuery;
 use App\Support\MemberEnrollmentType;
 use App\Support\MemberWorkspaceAttributes;
+use App\Support\ReligoDragonFlyWorkspace;
 use App\Services\Religo\MemberOneToOneLeadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -85,6 +86,21 @@ class DragonFlyMemberController extends Controller
             $query->whereHas('memberRoles', function ($q) use ($roleId) {
                 $q->whereNull('term_end')->where('role_id', $roleId);
             });
+        }
+
+        if ($request->filled('workspace_id')) {
+            $query->where('workspace_id', (int) $request->input('workspace_id'));
+        }
+
+        if ($request->filled('region_id')) {
+            $regionId = (int) $request->input('region_id');
+            $query->whereHas('workspace', function ($q) use ($regionId) {
+                $q->where('region_id', $regionId);
+            });
+        }
+
+        if ($request->boolean('dragonfly_chapter_only') && ! $request->filled('workspace_id') && ! $request->filled('region_id')) {
+            ReligoDragonFlyWorkspace::applyChapterMemberScope($query);
         }
 
         $ownerMemberId = $request->filled('owner_member_id') ? (int) $request->input('owner_member_id') : null;

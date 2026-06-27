@@ -3,14 +3,12 @@ import {
     FormDataConsumer,
     required,
     DateTimeInput,
-    ReferenceInput,
-    AutocompleteInput,
     useInput,
 } from 'react-admin';
 import { useFormContext, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box } from '@mui/material';
+import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box, ToggleButton, ToggleButtonGroup, Button, Alert } from '@mui/material';
 import {
     formatMemberPrimaryLine,
     formatMemberSecondaryLine,
@@ -18,7 +16,6 @@ import {
     formatMemberWithChapterPrimary,
 } from '../utils/memberDisplay';
 import { religoFetch } from '../religoApiFetch';
-import { meetingDisplayLabel } from '../meetingLabel';
 
 async function fetchJson(url) {
     const res = await religoFetch(url, { headers: { Accept: 'application/json' } });
@@ -125,12 +122,388 @@ export function addMinutesToEndIso(scheduledAt, minutes) {
     return end.toISOString();
 }
 
+async function postJson(url, body) {
+    const res = await religoFetch(url, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        throw new Error(data?.message || `API ${res.status}`);
+    }
+    return data;
+}
+
+const REGION_MANUAL = '__region_manual__';
+const WORKSPACE_MANUAL = '__workspace_manual__';
+
 /**
- * Owner（自分）に連動した相手メンバー一覧（GET /api/dragonfly/members?owner_member_id=）.
+ * 他チャプター: リージョン → チャプター → 相手名を設定し API で target_member_id を解決（SPEC-021）。
+ */
+function OtherChapterTargetFields({ ownerMemberId, ownerContext, disabled }) {
+    const { setValue, watch } = useFormContext();
+    const targetId = watch('target_member_id');
+
+    const [regions, setRegions] = useState([]);
+    const [workspaces, setWorkspaces] = useState([]);
+    const [regionKey, setRegionKey] = useState('');
+    const [regionManualName, setRegionManualName] = useState('');
+    const [workspaceKey, setWorkspaceKey] = useState('');
+    const [workspaceManualName, setWorkspaceManualName] = useState('');
+    const [targetName, setTargetName] = useState('');
+    const [resolving, setResolving] = useState(false);
+    const [resolveError, setResolveError] = useState('');
+    const [resolvedSummary, setResolvedSummary] = useState(null);
+
+    const regionManual = regionKey === REGION_MANUAL;
+    const workspaceManual = workspaceKey === WORKSPACE_MANUAL;
+    const selectedRegionId = !regionManual && regionKey !== '' ? Number(regionKey) : null;
+
+    useEffect(() => {
+        if (disabled) return;
+        let cancelled = false;
+        fetchJson('/api/regions')
+            .then((arr) => {
+                if (!cancelled && Array.isArray(arr)) setRegions(arr);
+            })
+            .catch(() => {
+                if (!cancelled) setRegions([]);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [disabled]);
+
+    useEffect(() => {
+        if (disabled || regionManual || selectedRegionId == null || Number.isNaN(selectedRegionId)) {
+            setWorkspaces([]);
+            return;
+        }
+        let cancelled = false;
+        fetchJson(`/api/workspaces?region_id=${encodeURIComponent(String(selectedRegionId))}`)
+            .then((arr) => {
+                if (!cancelled && Array.isArray(arr)) setWorkspaces(arr);
+            })
+            .catch(() => {
+                if (!cancelled) setWorkspaces([]);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [disabled, regionManual, selectedRegionId]);
+
+    useEffect(() => {
+        if (targetId == null || targetId === '') {
+            setResolvedSummary(null);
+            return;
+        }
+        let cancelled = false;
+        fetchJson(`/api/dragonfly/members/${encodeURIComponent(String(targetId))}`)
+            .then((member) => {
+                if (cancelled || !member?.id) return;
+                if (
+                    ownerContext?.workspace_id != null &&
+                    member.workspace_id != null &&
+                    Number(member.workspace_id) === Number(ownerContext.workspace_id)
+                ) {
+                    return;
+                }
+                setTargetName(member.name || '');
+                if (member.region_id != null) {
+                    setRegionKey(String(member.region_id));
+                    setRegionManualName('');
+                } else if (member.region_name) {
+                    setRegionKey(REGION_MANUAL);
+                    setRegionManualName(member.region_name);
+                }
+                if (member.workspace_id != null) {
+                    setWorkspaceKey(String(member.workspace_id));
+                    setWorkspaceManualName('');
+                } else if (member.workspace_name) {
+                    setWorkspaceKey(WORKSPACE_MANUAL);
+                    setWorkspaceManualName(member.workspace_name);
+                }
+                setResolvedSummary({
+                    name: member.name,
+                    workspace_name: member.workspace_name,
+                    region_name: member.region_name,
+                });
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [targetId, ownerContext?.workspace_id]);
+
+    const regionOptions = useMemo(() => {
+        const opts = regions.map((r) => ({ id: String(r.id), label: r.name }));
+        opts.push({ id: REGION_MANUAL, label: 'その他（手動入力）' });
+        return opts;
+    }, [regions]);
+
+    const workspaceOptions = useMemo(() => {
+        const opts = workspaces.map((w) => ({ id: String(w.id), label: w.name }));
+        opts.push({ id: WORKSPACE_MANUAL, label: '手動で登録' });
+        return opts;
+    }, [workspaces]);
+
+    const handleResolve = async () => {
+        setResolveError('');
+        const name = String(targetName || '').trim();
+        if (!name) {
+            setResolveError('相手の名前を入力してください');
+            return;
+        }
+        const body = { target_name: name };
+        if (regionManual) {
+            const rn = String(regionManualName || '').trim();
+            if (rn) body.region_name = rn;
+        } else if (selectedRegionId != null && !Number.isNaN(selectedRegionId)) {
+            body.region_id = selectedRegionId;
+        }
+        if (workspaceManual) {
+            const wn = String(workspaceManualName || '').trim();
+            if (!wn) {
+                setResolveError('チャプター名を入力してください');
+                return;
+            }
+            body.workspace_name = wn;
+        } else if (workspaceKey !== '' && workspaceKey !== WORKSPACE_MANUAL) {
+            body.workspace_id = Number(workspaceKey);
+        } else {
+            setResolveError('チャプターを選択するか、手動で登録してください');
+            return;
+        }
+
+        setResolving(true);
+        try {
+            const data = await postJson('/api/dragonfly/cross-chapter-targets/resolve', body);
+            setValue('target_member_id', data.target_member_id, { shouldValidate: true, shouldDirty: true });
+            setResolvedSummary({
+                name: data.target_name,
+                workspace_name: data.workspace_name,
+                region_name: data.region_name,
+            });
+        } catch (e) {
+            setResolveError(e.message || '相手の確定に失敗しました');
+        } finally {
+            setResolving(false);
+        }
+    };
+
+    const clearOtherTarget = () => {
+        setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
+        setResolvedSummary(null);
+        setResolveError('');
+    };
+
+    const showManualWorkspaceField = regionManual || workspaceManual;
+    const targetNameFilled = String(targetName || '').trim() !== '';
+
+    const stepLabelSx = {
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 22,
+        height: 22,
+        borderRadius: '50%',
+        bgcolor: 'primary.main',
+        color: 'primary.contrastText',
+        fontSize: 12,
+        fontWeight: 700,
+        mr: 1,
+        flexShrink: 0,
+    };
+
+    const StepHeading = ({ no, text, done }) => (
+        <Stack direction="row" alignItems="center" sx={{ mb: 0.75 }}>
+            <Box component="span" sx={{ ...stepLabelSx, bgcolor: done ? 'success.main' : 'primary.main' }}>
+                {done ? '✓' : no}
+            </Box>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                {text}
+            </Typography>
+        </Stack>
+    );
+
+    return (
+        <Box
+            sx={{
+                mb: 1,
+                p: 1.5,
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 1,
+                bgcolor: 'action.hover',
+            }}
+        >
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                他チャプターの相手は、所属を選んでお名前を入力するだけで登録できます。順番に進めてください。
+            </Typography>
+
+            <Box sx={{ mb: 2 }}>
+                <StepHeading no="1" text="リージョンを選ぶ" done={regionKey !== ''} />
+                <Autocomplete
+                    size="small"
+                    disabled={disabled}
+                    options={regionOptions}
+                    getOptionLabel={(o) => o.label}
+                    isOptionEqualToValue={(a, b) => a.id === b.id}
+                    value={regionOptions.find((o) => o.id === regionKey) ?? null}
+                    onChange={(_, v) => {
+                        setRegionKey(v?.id ?? '');
+                        setWorkspaceKey('');
+                        setWorkspaceManualName('');
+                        clearOtherTarget();
+                    }}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label="リージョン"
+                            placeholder="リージョンを選択（一覧にない場合は「その他」）"
+                        />
+                    )}
+                />
+                {regionManual ? (
+                    <TextField
+                        size="small"
+                        fullWidth
+                        disabled={disabled}
+                        label="リージョン名を入力"
+                        value={regionManualName}
+                        onChange={(e) => {
+                            setRegionManualName(e.target.value);
+                            clearOtherTarget();
+                        }}
+                        placeholder="例: BNI 東京港中央リージョン"
+                        sx={{ mt: 1 }}
+                    />
+                ) : null}
+            </Box>
+
+            <Box sx={{ mb: 2 }}>
+                <StepHeading no="2" text="チャプターを選ぶ" done={workspaceKey !== '' && !(workspaceManual && !workspaceManualName.trim())} />
+                {regionManual ? (
+                    <TextField
+                        size="small"
+                        fullWidth
+                        disabled={disabled}
+                        label="チャプター名を入力"
+                        value={workspaceManualName}
+                        onChange={(e) => {
+                            setWorkspaceManualName(e.target.value);
+                            clearOtherTarget();
+                        }}
+                        placeholder="例: BNI Example"
+                    />
+                ) : (
+                    <Autocomplete
+                        size="small"
+                        disabled={disabled || selectedRegionId == null}
+                        options={workspaceOptions}
+                        getOptionLabel={(o) => o.label}
+                        isOptionEqualToValue={(a, b) => a.id === b.id}
+                        value={workspaceOptions.find((o) => o.id === workspaceKey) ?? null}
+                        onChange={(_, v) => {
+                            setWorkspaceKey(v?.id ?? '');
+                            clearOtherTarget();
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="チャプター"
+                                placeholder={
+                                    selectedRegionId == null
+                                        ? 'まずリージョンを選んでください'
+                                        : 'チャプターを選択（一覧にない場合は「手動で登録」）'
+                                }
+                            />
+                        )}
+                    />
+                )}
+                {!regionManual && workspaceManual ? (
+                    <TextField
+                        size="small"
+                        fullWidth
+                        disabled={disabled}
+                        label="チャプター名を入力"
+                        value={workspaceManualName}
+                        onChange={(e) => {
+                            setWorkspaceManualName(e.target.value);
+                            clearOtherTarget();
+                        }}
+                        placeholder="例: BNI Example"
+                        sx={{ mt: 1 }}
+                    />
+                ) : null}
+            </Box>
+
+            <Box sx={{ mb: 1.5 }}>
+                <StepHeading no="3" text="相手のお名前を入力" done={targetNameFilled} />
+                <TextField
+                    size="small"
+                    fullWidth
+                    disabled={disabled}
+                    label="相手のお名前"
+                    value={targetName}
+                    onChange={(e) => {
+                        setTargetName(e.target.value);
+                        clearOtherTarget();
+                    }}
+                    placeholder="例: 山田 太郎"
+                />
+            </Box>
+
+            <Button
+                variant="contained"
+                fullWidth
+                disabled={disabled || resolving || !!resolvedSummary}
+                onClick={handleResolve}
+                startIcon={resolving ? <CircularProgress size={16} color="inherit" /> : null}
+            >
+                {resolvedSummary ? 'この相手で確定済み' : resolving ? '確定中…' : 'この相手で確定する'}
+            </Button>
+
+            {resolveError ? (
+                <Alert severity="error" sx={{ mt: 1, py: 0 }}>
+                    {resolveError}
+                </Alert>
+            ) : null}
+
+            {resolvedSummary ? (
+                <Alert
+                    severity="success"
+                    sx={{ mt: 1 }}
+                    action={
+                        disabled ? undefined : (
+                            <Button color="inherit" size="small" onClick={clearOtherTarget}>
+                                変更
+                            </Button>
+                        )
+                    }
+                >
+                    相手を設定しました：<strong>{resolvedSummary.name}</strong>
+                    {resolvedSummary.workspace_name ? `（${resolvedSummary.workspace_name}）` : ''}
+                </Alert>
+            ) : (
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                    他チャプターの相手は、お名前だけ登録します（メンバー名簿は表示されません）。
+                </Typography>
+            )}
+        </Box>
+    );
+}
+
+/**
+ * Owner に連動した相手選択。
+ * 自チャプター: 名簿から選択。他チャプター: リージョン・チャプター・名前を設定（SPEC-021）。
  */
 function ScopedTargetSelect({ ownerMemberId }) {
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [chapterKind, setChapterKind] = useState('own');
+    const [ownerContext, setOwnerContext] = useState(null);
     const { setValue, watch, getValues } = useFormContext();
     const targetId = watch('target_member_id');
 
@@ -140,17 +513,65 @@ function ScopedTargetSelect({ ownerMemberId }) {
             if (tid != null && tid !== '') {
                 setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
             }
+            setOwnerContext(null);
+            setChapterKind('own');
+            return;
         }
+        let cancelled = false;
+        fetchJson(`/api/dragonfly/members/${encodeURIComponent(String(ownerMemberId))}`)
+            .then((owner) => {
+                if (cancelled || !owner?.id) return;
+                setOwnerContext({
+                    workspace_id: owner.workspace_id ?? null,
+                    region_id: owner.region_id ?? null,
+                    workspace_name: owner.workspace_name ?? null,
+                });
+            })
+            .catch(() => {
+                if (!cancelled) setOwnerContext(null);
+            });
+        return () => {
+            cancelled = true;
+        };
     }, [ownerMemberId, setValue, getValues]);
 
     useEffect(() => {
-        if (ownerMemberId == null || ownerMemberId === '') {
+        if (targetId == null || targetId === '' || ownerContext?.workspace_id == null) {
+            return;
+        }
+        let cancelled = false;
+        fetchJson(`/api/dragonfly/members/${encodeURIComponent(String(targetId))}`)
+            .then((member) => {
+                if (cancelled || !member?.id) return;
+                if (
+                    member.workspace_id != null &&
+                    Number(member.workspace_id) !== Number(ownerContext.workspace_id)
+                ) {
+                    setChapterKind('other');
+                } else {
+                    setChapterKind('own');
+                }
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [targetId, ownerContext?.workspace_id]);
+
+    useEffect(() => {
+        if (chapterKind !== 'own' || ownerMemberId == null || ownerMemberId === '') {
             setOptions([]);
             return;
         }
         let cancelled = false;
         setLoading(true);
-        fetchJson(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(String(ownerMemberId))}`)
+        const params = new URLSearchParams();
+        params.set('owner_member_id', String(ownerMemberId));
+        params.set('bni_members_only', '1');
+        if (ownerContext?.workspace_id != null) {
+            params.set('workspace_id', String(ownerContext.workspace_id));
+        }
+        fetchJson(`/api/dragonfly/members?${params.toString()}`)
             .then((arr) => {
                 if (cancelled || !Array.isArray(arr)) return;
                 setOptions(arr);
@@ -164,36 +585,74 @@ function ScopedTargetSelect({ ownerMemberId }) {
         return () => {
             cancelled = true;
         };
-    }, [ownerMemberId]);
-
-    useEffect(() => {
-        if (ownerMemberId == null || ownerMemberId === '') {
-            return;
-        }
-        if (targetId == null || targetId === '') {
-            return;
-        }
-        if (options.length === 0) {
-            return;
-        }
-        if (!options.some((o) => String(o.id) === String(targetId))) {
-            setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
-        }
-    }, [ownerMemberId, options, targetId, setValue]);
+    }, [ownerMemberId, chapterKind, ownerContext?.workspace_id]);
 
     const disabled = ownerMemberId == null || ownerMemberId === '';
 
     return (
-        <MemberSearchAutocompleteInput
-            source="target_member_id"
-            label="相手"
-            options={options}
-            disabled={disabled}
-            loading={loading}
-            helperText={disabled ? '先に Owner（自分）を選択してください' : undefined}
-            validate={disabled ? [] : [required()]}
-        />
+        <Box sx={{ mb: 1 }}>
+            {!disabled ? (
+                <Box sx={{ mb: 1.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                        誰と 1 to 1 しましたか？
+                    </Typography>
+                    <ToggleButtonGroup
+                        size="small"
+                        exclusive
+                        fullWidth
+                        value={chapterKind}
+                        onChange={(_, v) => {
+                            if (v == null) return;
+                            setChapterKind(v);
+                            setValue('target_member_id', null, { shouldValidate: true, shouldDirty: true });
+                        }}
+                    >
+                        <ToggleButton value="own">
+                            自分のチャプター
+                        </ToggleButton>
+                        <ToggleButton value="other">
+                            他のチャプター
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
+            ) : null}
+            {chapterKind === 'own' ? (
+                <MemberSearchAutocompleteInput
+                    source="target_member_id"
+                    label="相手"
+                    options={options}
+                    disabled={disabled}
+                    loading={loading}
+                    helperText={
+                        disabled
+                            ? '先に Owner（自分）を選択してください'
+                            : ownerContext?.workspace_name
+                              ? `自チャプター（${ownerContext.workspace_name}）のメンバー`
+                              : '自チャプターのメンバー'
+                    }
+                    validate={disabled ? [] : [required()]}
+                />
+            ) : (
+                <>
+                    <OtherChapterTargetFields
+                        ownerMemberId={ownerMemberId}
+                        ownerContext={ownerContext}
+                        disabled={disabled}
+                    />
+                    <TargetMemberIdHiddenInput disabled={disabled} />
+                </>
+            )}
+        </Box>
     );
+}
+
+/** 他チャプター時: target_member_id の必須検証（resolve 後にセット） */
+function TargetMemberIdHiddenInput({ disabled }) {
+    useInput({
+        source: 'target_member_id',
+        validate: disabled ? [] : [required('「相手を確定」を押して相手を設定してください')],
+    });
+    return null;
 }
 
 /** SimpleForm 内: owner_member_id の値に応じて相手候補を loaded */
@@ -349,27 +808,5 @@ export function OneToOneCreateScheduleFields({ duration, onDurationChange }) {
                 終了予定（自動）: {previewText}
             </Typography>
         </>
-    );
-}
-
-export function meetingOptionLabel(record) {
-    if (!record) return '';
-    const label = record.display_label ?? meetingDisplayLabel(record);
-    const held = record.held_on ?? '—';
-    const name = record.name && record.number == null ? ` / ${record.name}` : '';
-    return `${label} / ${held}${name}`;
-}
-
-/** GET /api/meetings を Autocomplete で選択（ONETOONES_CREATE_UX_P1） */
-export function OneToOneMeetingReferenceInput() {
-    return (
-        <ReferenceInput source="meeting_id" reference="meetings" perPage={200}>
-            <AutocompleteInput
-                optionText={(record) => meetingOptionLabel(record)}
-                label="関連例会（任意）"
-                emptyText="未選択"
-                sx={{ minWidth: 280 }}
-            />
-        </ReferenceInput>
     );
 }

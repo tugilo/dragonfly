@@ -1,5 +1,5 @@
 -- dragonfly dev DB sync dump
--- generated: 2026-06-27 12:36:06 JST
+-- generated: 2026-06-27 18:26:15 JST
 -- database: dragonfly
 -- export: bin/db-export.sh (overwrite www/database/sync/dragonfly.sql)
 
@@ -3949,7 +3949,7 @@ INSERT INTO `personal_access_tokens` VALUES
 (6,'App\\Models\\User',2,'religo-admin','30fd7c4ed4e1d227707022ebc48db08506f09f134cfe4d4260a3b30f3e6ca4de','[\"*\"]','2026-06-24 15:54:46',NULL,'2026-06-04 13:57:00','2026-06-24 15:54:46'),
 (7,'App\\Models\\User',2,'religo-admin','8d129c7bce11344718683a6f6f7e26debb88267dfcd480a8d341f48578aea330','[\"*\"]','2026-06-06 16:24:05',NULL,'2026-06-06 16:24:05','2026-06-06 16:24:05'),
 (8,'App\\Models\\User',2,'religo-admin','e7707deb10c03a21e3e691a7b8609625acf2b8f457f608bcd7711b5f699a6668','[\"*\"]','2026-06-07 05:11:18',NULL,'2026-06-06 07:35:59','2026-06-07 05:11:18'),
-(9,'App\\Models\\User',2,'religo-admin','35b69e77c61132d3de2325e68d61b605d3f5f2af672e61d155f4753d36c2e445','[\"*\"]','2026-06-27 12:33:19',NULL,'2026-06-24 22:13:05','2026-06-27 12:33:19');
+(9,'App\\Models\\User',2,'religo-admin','35b69e77c61132d3de2325e68d61b605d3f5f2af672e61d155f4753d36c2e445','[\"*\"]','2026-06-27 12:46:00',NULL,'2026-06-24 22:13:05','2026-06-27 12:46:00');
 /*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4091,7 +4091,7 @@ INSERT INTO `sessions` VALUES
 ('BZF4dhtgQ9MuFIdkjDj0SSZh7kYpaAGkuP2XARdB',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiUGtiNDAxOE9qWDlBWnlYZVRqVEJsdWtKdUR6SWRpckpGQkl2MW5hRyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782284086),
 ('hXOGQ4OG1juQRra8w6to8kGTh9vZxxL42ueUjGtp',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiaDQ5UjVPTGo3Y3J1aDJWZUJNSmxkVElEamNzUklQYW1WQk1yTmdqcyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782465720),
 ('kgwOSl8TP9ZqElpfLvRBFHYa27ihrV0agZMDWAiR',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiMXRidW1PMlkzNDRsWkpvdXllV1d1czJGbWQxSEhEVk9jeWttUzNBdCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782276545),
-('NKYnRQmqe557gqLqoooRUGr4VCOkDbZqDCvj6sye',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoialdYeDhsQWJXNkxndnVWZ21TY3ZWeko1azFLMm9Lc2liRU1kN01ibCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782526600),
+('NKYnRQmqe557gqLqoooRUGr4VCOkDbZqDCvj6sye',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoialdYeDhsQWJXNkxndnVWZ21TY3ZWeko1azFLMm9Lc2liRU1kN01ibCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782531943),
 ('nqX4Ntnz2J1sJCn8LBBAoQP3cESM3OqSSmoSRnqx',NULL,'192.168.65.1','curl/8.7.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoicEJvTThweXBjYW9BREhsWUdPNDF2VkZ3RXNJWjRqdmdDblRab3FRNyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782530264),
 ('rzB7TeYpwuo16OrfaGlx6PGT2fHkKLbHSxhRT1OB',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoicmJmbTQ2UnpENU1OR2dEYVBOc3JjVEtMeU1HQ3RZS0JhbEw0TWpuTCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782454650),
 ('tNHfVvsMKlw3t3kRP9CuKPEy7mdc533Ujf1ll4rK',NULL,'192.168.65.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Cursor/3.9.8 Chrome/144.0.7559.236 Electron/40.10.3 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiOEM3eE1Ja1I3bFlEUFRJNFJPVDBURVNiSExTeVVUckVQY0h1emtOZyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjI6Imh0dHA6Ly9sb2NhbGhvc3QvYWRtaW4iO3M6NToicm91dGUiO047fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1782530526),
@@ -5183,4 +5183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-27  3:36:07
+-- Dump completed on 2026-06-27  9:26:16

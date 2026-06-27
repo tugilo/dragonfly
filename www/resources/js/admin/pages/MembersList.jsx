@@ -498,6 +498,7 @@ function MemberRowActions({ record }) {
             <Button size="small" variant="text" onClick={() => ctx.openO2oMemo(record)}>📝 1to1メモ</Button>
             <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary">🗺 Connections</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openFlagEdit(record)}>🚩 フラグ</Button>
+            <Button size="small" variant="outlined" color="warning" onClick={() => ctx.retireMember(record)}>退会済みにする</Button>
             <Button size="small" variant="outlined" color="inherit" onClick={() => ctx.openDrawer(record)}>詳細</Button>
         </Box>
     );
@@ -618,6 +619,7 @@ function MemberCard({ record }) {
                 <Button size="small" variant="contained" color="secondary" component={Link} to={`/one-to-ones/create?target_member_id=${record.id}`}>1to1作成</Button>
                 <Button size="small" variant="text" onClick={() => ctx?.openO2oMemo(record)}>📝 1to1メモ</Button>
                 <Button size="small" component={Link} to={`/connections?member_id=${record.id}`} variant="outlined" color="primary" sx={{ flexShrink: 0 }}>🗺 Connections で見る</Button>
+                <Button size="small" variant="outlined" color="warning" onClick={() => ctx?.retireMember(record)}>退会済み</Button>
                 <Button size="small" variant="outlined" color="inherit" sx={{ ml: 'auto' }} onClick={() => ctx?.openDrawer(record)}>詳細 →</Button>
             </Box>
             <Box className="mc-logs" sx={{ p: 1, borderTop: '1px solid', borderColor: 'grey.200' }}>
@@ -1357,6 +1359,7 @@ export function MembersList() {
     const [flagEditMember, setFlagEditMember] = useState(null);
     const drawerRef = useRef(null);
     const refresh = useRefresh();
+    const notify = useNotify();
 
     const openMemo = useCallback((member) => {
         setMemoMember(member);
@@ -1376,6 +1379,21 @@ export function MembersList() {
     const openDrawer = useCallback((member) => {
         setDrawerMember(member);
     }, []);
+
+    const retireMember = useCallback(async (member) => {
+        if (!member?.id) return;
+        const ok = window.confirm(`${member.name ?? 'このメンバー'} を退会済みにして、Members 一覧から外します。削除はされず、1to1履歴は残ります。よろしいですか？`);
+        if (!ok) return;
+        try {
+            await putDragonflyMember(member.id, { type: 'former' });
+            notify('退会済みにしました');
+            setDrawerMember((m) => (m && Number(m.id) === Number(member.id) ? null : m));
+            refresh();
+            reloadLeads();
+        } catch (e) {
+            notify(e.message || '退会済みへの更新に失敗しました', { type: 'error' });
+        }
+    }, [notify, refresh, reloadLeads]);
 
     const onSaved = useCallback(() => {
         refresh();
@@ -1404,7 +1422,7 @@ export function MembersList() {
 
     return (
         <MembersOneToOneLeadContext.Provider value={{ leadByMemberId, leadsLoading, reloadLeads }}>
-            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openFlagEdit, openDrawer }}>
+            <MembersModalContext.Provider value={{ openMemo, openO2o, openO2oMemo, openFlagEdit, openDrawer, retireMember }}>
                 <List
                     title={
                         <Box>
