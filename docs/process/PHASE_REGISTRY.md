@@ -267,6 +267,8 @@
 | 266 | Onboarding Preparation（SPEC-020 Phase E・自己登録方式確定） | docs | completed | develop | 2026-06-27 |
 | 267 | 1to1 Minutes MVP（SPEC-020 Phase F・順位 11・コピペ → notes 保存・owner 本人固定 UI） | implement | completed | develop | 2026-06-27 |
 | 268 | グローバル Owner セレクタ廃止（ヘッダー Owner 切替を撤去・ログインユーザー固定） | implement | completed | develop / main | 2026-06-27 |
+| 269 | 松倉健治 第1回121 Zoom要約反映（株式会社松和／エアロゲル透明断熱フィルム） | docs | completed | develop（commit / merge 未実施） | 2026-06-27 |
+| 270 | メンバー詳細ドロワーからの email インライン編集（Fit&Gap G1 解消・admin 限定） | implement | completed | develop / main | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
