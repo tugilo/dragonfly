@@ -25,7 +25,7 @@ class MeetingParticipantImportControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'participant-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
         Storage::fake('local');
     }
 

@@ -15,7 +15,7 @@ class DragonFlyMemberNcastProfileUrlTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'member-ncast-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_put_updates_ncast_profile_url(): void

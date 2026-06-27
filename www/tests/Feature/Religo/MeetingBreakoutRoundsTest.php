@@ -26,7 +26,7 @@ class MeetingBreakoutRoundsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'bo-rounds-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
         $this->meetingId = (int) DB::table('meetings')->insertGetId([
             'number' => 200,
             'held_on' => now()->toDateString(),
