@@ -3,34 +3,23 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Models\Member;
 use App\Services\Religo\DashboardService;
-use App\Services\Religo\ReligoActorContext;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * GET /api/dashboard/stats, tasks, activity, weekly-presentation. SSOT: DASHBOARD_REQUIREMENTS.md §5, SPEC-004.
- * owner: query > acting user の owner_member_id > 422（E-4 / BO-AUDIT-P4）.
+ * owner: acting user の owner_member_id を正（chapter_admin のみ query 指定可）。未設定は 422（E-4 / BO-AUDIT-P4 / SPEC-020 §4.5）.
  */
 class DashboardController extends Controller
 {
+    use ResolvesReligoOwner;
+
     public function __construct(
         private DashboardService $dashboardService
     ) {}
-
-    private function resolveOwnerMemberId(Request $request): int|false
-    {
-        if ($request->filled('owner_member_id')) {
-            return (int) $request->input('owner_member_id');
-        }
-        $user = ReligoActorContext::actingUser();
-        if ($user && $user->owner_member_id !== null) {
-            return (int) $user->owner_member_id;
-        }
-
-        return false;
-    }
 
     /**
      * GET /api/dashboard/stats — 未接触件数・今月1to1・リファーラル件数（紹介メモ集計）・例会メモ.

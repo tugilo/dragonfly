@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Http\Requests\Religo\IndexContactMemosRequest;
 use App\Http\Requests\Religo\StoreContactMemoRequest;
 use App\Models\ContactMemo;
@@ -11,19 +12,26 @@ use Illuminate\Http\JsonResponse;
 
 class ContactMemoController extends Controller
 {
+    use ResolvesReligoOwner;
+
     public function __construct(
         private ContactMemoService $contactMemoService
     ) {}
 
     /**
      * GET /api/contact-memos — 一覧. Phase17A. owner/target 必須、limit 任意.
+     * owner は acting user に固定（SPEC-020 §4.5・member 不一致は 403）。
      */
     public function index(IndexContactMemosRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return $this->ownerNotConfiguredResponse();
+        }
         $limit = isset($validated['limit']) ? (int) $validated['limit'] : 20;
         $items = ContactMemo::query()
-            ->where('owner_member_id', $validated['owner_member_id'])
+            ->where('owner_member_id', $ownerMemberId)
             ->where('target_member_id', $validated['target_member_id'])
             ->orderByDesc('created_at')
             ->limit($limit)
@@ -48,6 +56,11 @@ class ContactMemoController extends Controller
     public function store(StoreContactMemoRequest $request): JsonResponse
     {
         $data = $request->validated();
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return $this->ownerNotConfiguredResponse();
+        }
+        $data['owner_member_id'] = $ownerMemberId;
         $memo = $this->contactMemoService->store($data);
         return response()->json([
             'id' => $memo->id,
