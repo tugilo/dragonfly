@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\DragonflyContactFlag;
 use App\Models\Member;
 use App\Models\OneToOne;
+use App\Support\ReligoDragonFlyWorkspace;
 use Carbon\Carbon;
 
 /**
@@ -26,12 +27,12 @@ use Carbon\Carbon;
  *
  * **並び順（Dashboard / Members 整合）:** 応答配列は **会員番号の数値昇順**（`Member::orderByDisplayNoNumeric` — `display_no` が文字列でも 1,2,…,10,11… になる）。ステータス tier・want_1on1 による二次ソートは行わない。
  *
- * **対象から除外する members.type:** `guest`（ゲスト）・`visitor`（ビジター）は名簿上の在籍メンバーではないため **リード一覧に含めない**（`active` / `inactive` 等のみ）。
+ * **対象から除外する members.type:** `guest`（ゲスト）・`visitor`（ビジター）・`former`（退会済み）は名簿上の在籍メンバーではないため **リード一覧に含めない**（`active` / `inactive` 等のみ）。
  */
 class MemberOneToOneLeadService
 {
     /** Dashboard「次の1to1候補」の target から除外する members.type */
-    private const EXCLUDED_LEAD_TARGET_TYPES = ['guest', 'visitor'];
+    private const EXCLUDED_LEAD_TARGET_TYPES = ['guest', 'visitor', 'former'];
 
     /**
      * @return list<array{
@@ -65,6 +66,7 @@ class MemberOneToOneLeadService
         $targetIds = Member::query()
             ->where('id', '!=', $ownerMemberId)
             ->whereNotIn('type', self::EXCLUDED_LEAD_TARGET_TYPES)
+            ->tap(fn ($q) => ReligoDragonFlyWorkspace::applyChapterMemberScope($q))
             ->orderByDisplayNoNumeric('asc')
             ->pluck('id')
             ->all();

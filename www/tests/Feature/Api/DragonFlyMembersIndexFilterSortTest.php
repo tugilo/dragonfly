@@ -123,12 +123,13 @@ class DragonFlyMembersIndexFilterSortTest extends TestCase
         $this->assertCount(1, $data);
     }
 
-    public function test_bni_members_only_excludes_guest_and_visitor(): void
+    public function test_bni_members_only_excludes_guest_visitor_and_former(): void
     {
         DB::table('members')->insert([
             ['name' => 'Chapter Member', 'display_no' => '12', 'type' => 'member', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Guest Person', 'display_no' => 'G1', 'type' => 'guest', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Visitor Person', 'display_no' => 'V1', 'type' => 'visitor', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Former Person', 'display_no' => 'F1', 'type' => 'former', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
         $response = $this->getJson('/api/dragonfly/members?bni_members_only=1');
@@ -138,6 +139,7 @@ class DragonFlyMembersIndexFilterSortTest extends TestCase
         $this->assertContains('Chapter Member', $names);
         $this->assertNotContains('Guest Person', $names);
         $this->assertNotContains('Visitor Person', $names);
+        $this->assertNotContains('Former Person', $names);
     }
 
     public function test_without_bni_members_only_includes_guest_and_visitor(): void

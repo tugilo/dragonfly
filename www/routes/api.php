@@ -9,8 +9,10 @@ use App\Http\Controllers\Api\DragonFlyBreakoutMemoController;
 use App\Http\Controllers\Api\DragonFlyContactFlagController;
 use App\Http\Controllers\Api\DragonFlyContactSummaryController;
 use App\Http\Controllers\Api\DragonFlyMeetingController;
+use App\Http\Controllers\Api\CrossChapterTargetController;
 use App\Http\Controllers\Api\DragonFlyMemberController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\RegionController;
 use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Religo\ContactMemoController;
 use App\Http\Controllers\Religo\MeetingBreakoutController;
@@ -204,6 +206,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ->whereNumber('target_member_id');
 
     Route::get('/dragonfly/members', [DragonFlyMemberController::class, 'index']);
+    Route::post('/dragonfly/cross-chapter-targets/resolve', [CrossChapterTargetController::class, 'resolve']);
     Route::get('/dragonfly/members/one-to-one-status', [DragonFlyMemberController::class, 'oneToOneStatus']);
     Route::get('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'show'])->whereNumber('id');
 
@@ -215,6 +218,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/roles/search', [RoleSearchController::class, 'search']);
     Route::get('/roles/{id}', [RoleController::class, 'show'])->whereNumber('id');
 
+    Route::get('/regions', [RegionController::class, 'index']);
     Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
     Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
