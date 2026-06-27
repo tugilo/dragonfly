@@ -264,6 +264,7 @@
 | 263 | Owner Enforcement（SPEC-020 Phase B・owner サーバ固定・route model 403・users/me owner 変更制限） | implement | completed | develop | 2026-06-27 |
 | 264 | Admin API Role Enforcement（SPEC-020 Phase C・編集系を chapter_admin 限定） | implement | completed | develop | 2026-06-27 |
 | 265 | Member UI Separation（SPEC-020 Phase D・role でメニュー/Owner/編集画面を分離） | implement | completed | develop | 2026-06-27 |
+| 266 | Onboarding Preparation（SPEC-020 Phase E・自己登録方式確定） | docs | completed | develop | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
