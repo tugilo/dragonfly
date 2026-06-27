@@ -1043,6 +1043,7 @@ const MEMO_LIMIT = 20;
 
 const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member, onClose, openMemo, openO2o, onMemberUpdated }, ref) {
     const { ownerMemberId, isChapterAdmin } = useReligoOwner();
+    const [canEditMemberEmail, setCanEditMemberEmail] = useState(isChapterAdmin);
     const [tab, setTab] = useState(0);
     const [memos, setMemos] = useState([]);
     const [o2oList, setO2oList] = useState([]);
@@ -1085,6 +1086,26 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
             refetchO2o();
         }
     }, [open, member?.id, refetchMemos, refetchO2o]);
+
+    useEffect(() => {
+        if (!open) return;
+        let cancelled = false;
+        setCanEditMemberEmail(isChapterAdmin);
+        if (isChapterAdmin) return () => {
+            cancelled = true;
+        };
+        religoFetch('/api/users/me', { headers: { Accept: 'application/json' } })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+                if (!cancelled) setCanEditMemberEmail(data?.religo_role === 'chapter_admin');
+            })
+            .catch(() => {
+                if (!cancelled) setCanEditMemberEmail(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [open, isChapterAdmin]);
 
     useEffect(() => {
         if (!member?.id) return;
@@ -1168,7 +1189,7 @@ const MemberDetailDrawer = forwardRef(function MemberDetailDrawer({ open, member
                                     <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>{lastMemoBody}</Typography>
                                 </CardContent></Card>
                             )}
-                            {isChapterAdmin && (
+                            {canEditMemberEmail && (
                                 <Card variant="outlined"><CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
                                     <Typography variant="caption" color="text.secondary">ログイン用メールアドレス</Typography>
                                     <MuiTextField
