@@ -8,7 +8,6 @@ import {
     OwnerScopedTargetSelect,
     TargetMemberSummaryCard,
     OneToOneCreateScheduleFields,
-    OneToOneMeetingReferenceInput,
 } from './OneToOnesFormParts';
 import { cancelReasonLabel, ONE_TO_ONE_STATUS_CHOICES_EDIT } from '../utils/oneToOneCancel';
 
@@ -102,7 +101,6 @@ export function OneToOneFormFields({
                     <DateTimeInput source="ended_at" label="終了日時" />
                 </Box>
             )}
-            <OneToOneMeetingReferenceInput />
             <TextInput
                 source="notes"
                 label={NOTES_LABEL}

@@ -1,6 +1,7 @@
 /**
  * 1 to 1 Create/Edit の送信ペイロード正規化（ONETOONES_EDIT_UX_P2）。
- * Create を正とし、scheduled_at の ISO 化・meeting_id の正規化・所要時間からの ended_at を共通化。
+ * Create を正とし、scheduled_at の ISO 化・所要時間からの ended_at を共通化。
+ * 1to1 は定例会と独立管理のため meeting_id は常に null。
  */
 
 /**
@@ -67,7 +68,6 @@ export function inferDurationMinutes(scheduledAt, endedAt, status) {
  */
 export function buildOneToOnePayload(data, durationMinutes, options = {}) {
     const { mode = 'create', workspaceId } = options;
-    const meeting_id = normalizeMeetingId(data.meeting_id);
     const status = data.status;
     const scheduledRaw = data.scheduled_at;
 
@@ -110,7 +110,7 @@ export function buildOneToOnePayload(data, durationMinutes, options = {}) {
     const payload = {
         owner_member_id: data.owner_member_id,
         target_member_id: data.target_member_id,
-        meeting_id,
+        meeting_id: null,
         status: data.status,
         scheduled_at,
         started_at,

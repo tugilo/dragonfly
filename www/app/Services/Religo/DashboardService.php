@@ -27,7 +27,7 @@ class DashboardService
      *
      * @see MemberOneToOneLeadService（リード一覧と同じ除外）
      */
-    private const EXCLUDED_STALE_PEER_TYPES = ['guest', 'visitor'];
+    private const EXCLUDED_STALE_PEER_TYPES = ['guest', 'visitor', 'former'];
 
     public function __construct(
         private MemberSummaryQuery $summaryQuery

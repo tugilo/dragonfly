@@ -27,6 +27,9 @@ export function memberNonBniHistoryChipLabel(type) {
     if (type === 'guest') {
         return 'ゲスト（BNI会員以外）';
     }
+    if (type === 'former') {
+        return '退会済み';
+    }
     return 'BNI会員以外';
 }
 
