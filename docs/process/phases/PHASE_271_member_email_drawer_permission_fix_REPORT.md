@@ -25,7 +25,7 @@ Phase 270 で追加した Members 詳細ドロワーの email 編集カードに
 
 ## Merge Evidence
 
-merge commit id: <fill-develop>  
+merge commit id: 79423d198f94ed46db9d1754f146d27136deec82  
 source branch: feature/phase271-member-email-drawer-permission-fix  
 target branch: develop  
 phase id: 271  
