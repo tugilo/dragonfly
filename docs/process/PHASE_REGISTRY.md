@@ -261,6 +261,7 @@
 | 260 | 田渕恭平 第1回121 Zoom要約反映（田渕石材／庵治石・令和の新石器時代） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 | 261 | 門松直幸 第1回121事前準備・Zoom要約反映（株式会社サイクス／社外情シス担当・同業協業） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 | 262 | Auth Boundary Hardening（SPEC-020 Phase A・fallback 停止・Default user・sanctum 化） | implement | completed | develop（merge 902acd5） | 2026-06-27 |
+| 263 | Owner Enforcement（SPEC-020 Phase B・owner サーバ固定・route model 403・users/me owner 変更制限） | implement | completed | develop | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

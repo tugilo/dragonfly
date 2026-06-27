@@ -54,7 +54,8 @@ class ReferralApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        $this->actingAsReligoUser($this->ownerId);
+        // クロス owner のドメインロジック検証のため chapter_admin として実行（owner 指定可）。
+        $this->actingAsReligoUser($this->ownerId, 'referral-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_introductions_index_returns_empty(): void

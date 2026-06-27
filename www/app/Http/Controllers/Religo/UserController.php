@@ -54,7 +54,16 @@ class UserController extends Controller
         ]);
 
         if (array_key_exists('owner_member_id', $validated)) {
-            $user->owner_member_id = $validated['owner_member_id'];
+            $isAdmin = $user->religo_role === User::RELIGO_ROLE_CHAPTER_ADMIN;
+            $currentOwner = $user->owner_member_id !== null ? (int) $user->owner_member_id : null;
+            $requestedOwner = (int) $validated['owner_member_id'];
+            // SPEC-020 §4.5 / 順位 3: 一般 member は owner 設定済みなら別値への変更不可（初回 null→設定のみ）。
+            if (! $isAdmin && $currentOwner !== null && $currentOwner !== $requestedOwner) {
+                return response()->json([
+                    'message' => 'owner_member_id は変更できません。変更が必要な場合は管理者に依頼してください。',
+                ], 403);
+            }
+            $user->owner_member_id = $requestedOwner;
         }
         if (array_key_exists('default_workspace_id', $validated)) {
             $user->default_workspace_id = $validated['default_workspace_id'];

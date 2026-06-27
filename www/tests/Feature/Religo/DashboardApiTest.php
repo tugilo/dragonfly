@@ -100,6 +100,7 @@ class DashboardApiTest extends TestCase
 
     public function test_stats_returns_404_when_owner_not_found(): void
     {
+        $this->actingAsReligoUser($this->ownerId, 'dash-admin-stats@example.com', User::RELIGO_ROLE_CHAPTER_ADMIN);
         $res = $this->getJson('/api/dashboard/stats?owner_member_id=99999');
         $res->assertStatus(404);
         $data = $res->json();
@@ -143,6 +144,7 @@ class DashboardApiTest extends TestCase
 
     public function test_tasks_returns_404_when_owner_not_found(): void
     {
+        $this->actingAsReligoUser($this->ownerId, 'dash-admin-tasks@example.com', User::RELIGO_ROLE_CHAPTER_ADMIN);
         $res = $this->getJson('/api/dashboard/tasks?owner_member_id=99999');
         $res->assertStatus(404);
     }
@@ -191,6 +193,7 @@ class DashboardApiTest extends TestCase
 
     public function test_activity_returns_404_when_owner_not_found(): void
     {
+        $this->actingAsReligoUser($this->ownerId, 'dash-admin-activity@example.com', User::RELIGO_ROLE_CHAPTER_ADMIN);
         $res = $this->getJson('/api/dashboard/activity?owner_member_id=99999');
         $res->assertStatus(404);
     }
@@ -596,6 +599,7 @@ class DashboardApiTest extends TestCase
 
     public function test_weekly_presentation_returns_404_when_owner_member_not_found(): void
     {
+        $this->actingAsReligoUser($this->ownerId, 'dash-admin-weekly@example.com', User::RELIGO_ROLE_CHAPTER_ADMIN);
         $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=99999');
         $res->assertStatus(404);
     }

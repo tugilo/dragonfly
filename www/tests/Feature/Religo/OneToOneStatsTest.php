@@ -51,6 +51,9 @@ class OneToOneStatsTest extends TestCase
     {
         Carbon::setTestNow(Carbon::parse('2026-03-15 12:00:00', config('app.timezone')));
 
+        // owner 無指定の全 owner 集計は chapter_admin（グローバル・owner 未固定）想定。
+        $this->actingAsReligoUser(null, 'stats-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
+
         $ownerB = (int) DB::table('members')->insertGetId([
             'name' => 'OwnerB',
             'type' => 'active',

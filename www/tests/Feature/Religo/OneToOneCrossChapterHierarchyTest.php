@@ -19,7 +19,8 @@ class OneToOneCrossChapterHierarchyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        // クロスチャプター表示ロジックの検証が目的のため、owner スコープに縛られない chapter_admin で実行。
+        $this->actingAsReligoUser(null, 'cross-chapter-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_show_includes_target_workspace_and_cross_chapter_flag(): void
