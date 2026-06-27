@@ -4,6 +4,7 @@ namespace Tests\Feature\Religo;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class RelationshipLogCreateTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
     private int $targetId;
@@ -30,6 +32,7 @@ class RelationshipLogCreateTest extends TestCase
         $this->workspaceId = (int) DB::table('workspaces')->insertGetId([
             'name' => 'Default', 'slug' => 'default', 'created_at' => now(), 'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     /** 1) other: body 必須で作れる */

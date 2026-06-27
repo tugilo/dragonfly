@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Mockery;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -19,10 +20,12 @@ use Tests\TestCase;
 class MeetingParticipantImportControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser();
         Storage::fake('local');
     }
 

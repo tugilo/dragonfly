@@ -6,11 +6,13 @@ use App\Models\ContactMemo;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 class OneToOneSeriesMarkdownApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
 
@@ -38,6 +40,7 @@ class OneToOneSeriesMarkdownApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_series_markdown_assembles_pair_sessions(): void

@@ -101,7 +101,7 @@ related_chapter_meeting: "dragonfly_207_20260512"
 
 - **日時:** **2026-05-19（火）JST 16:00–17:00**（終了は Zoom／カレンダーで要確認）
 - **実施方法:** **TODO**（Zoom 想定 — 招待元で確認）
-- **Religo 1to1 レコード:** `one_to_ones.id` = **53**（`members.id` = **145**）
+- **Religo 1to1 レコード:** `one_to_ones.id` = **53**（`members.id` = **94**）
 
 #### 話した内容（重要）
 

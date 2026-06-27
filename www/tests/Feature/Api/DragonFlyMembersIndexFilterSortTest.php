@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class DragonFlyMembersIndexFilterSortTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
 
@@ -27,6 +29,7 @@ class DragonFlyMembersIndexFilterSortTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_q_filters_by_name(): void

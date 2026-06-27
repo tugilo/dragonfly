@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\MemberRole;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -14,6 +15,7 @@ use Tests\TestCase;
 class MemberRoleIndexTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $memberId;
     private int $roleId;
@@ -22,6 +24,7 @@ class MemberRoleIndexTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser();
         $member = Member::create(['name' => 'Test Member', 'type' => 'active']);
         $role = Role::create(['name' => 'プレジデント', 'description' => null]);
         $mr = MemberRole::create([

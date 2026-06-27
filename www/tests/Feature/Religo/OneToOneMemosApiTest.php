@@ -6,6 +6,7 @@ use App\Models\ContactMemo;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -14,6 +15,7 @@ use Tests\TestCase;
 class OneToOneMemosApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
 
@@ -50,6 +52,7 @@ class OneToOneMemosApiTest extends TestCase
             'status' => 'planned',
             'scheduled_at' => '2026-03-20 10:00:00',
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_index_returns_empty_array(): void

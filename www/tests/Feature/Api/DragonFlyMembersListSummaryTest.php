@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class DragonFlyMembersListSummaryTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
     private int $targetId;
@@ -26,6 +28,7 @@ class DragonFlyMembersListSummaryTest extends TestCase
         $this->targetId = (int) DB::table('members')->insertGetId([
             'name' => 'Target', 'type' => 'active', 'created_at' => now(), 'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_without_with_summary_returns_members_without_summary_lite(): void

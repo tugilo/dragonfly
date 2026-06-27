@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -20,6 +22,7 @@ use Tests\TestCase;
 class DashboardApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
 
@@ -32,20 +35,18 @@ class DashboardApiTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     private function createMeUser(?int $ownerMemberId): void
     {
-        DB::table('users')->insert([
-            'id' => 1,
-            'name' => 'Me',
-            'email' => 'me@example.com',
-            'password' => Hash::make('password'),
-            'remember_token' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
-            'owner_member_id' => $ownerMemberId,
-        ]);
+        $user = User::query()->orderBy('id')->first();
+        if ($user === null) {
+            $user = $this->createReligoUser($ownerMemberId, 'me@example.com');
+        } else {
+            $user->update(['owner_member_id' => $ownerMemberId]);
+        }
+        Sanctum::actingAs($user->fresh());
     }
 
     public function test_stats_returns_200_with_required_keys(): void
@@ -508,7 +509,7 @@ class DashboardApiTest extends TestCase
                 ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
             ],
         ];
-        $this->actingAs(User::findOrFail(1));
+        Sanctum::actingAs(User::findOrFail(1));
         $this->putJson("/api/meetings/{$meetingId}/breakouts", $payload)->assertOk();
         $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId);
         $res->assertOk();
@@ -584,6 +585,11 @@ class DashboardApiTest extends TestCase
 
     public function test_weekly_presentation_returns_422_without_owner(): void
     {
+        $user = User::query()->orderBy('id')->first();
+        $this->assertNotNull($user);
+        $user->update(['owner_member_id' => null]);
+        Sanctum::actingAs($user->fresh());
+
         $res = $this->getJson('/api/dashboard/weekly-presentation');
         $res->assertStatus(422);
     }

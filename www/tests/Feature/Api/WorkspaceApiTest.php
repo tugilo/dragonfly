@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use Database\Seeders\WorkspaceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -12,10 +13,12 @@ use Tests\TestCase;
 class WorkspaceApiTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser();
         $this->seed(WorkspaceSeeder::class);
     }
 
