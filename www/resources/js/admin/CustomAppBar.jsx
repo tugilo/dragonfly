@@ -62,7 +62,11 @@ export const CustomAppBar = () => {
         patchOwner,
         resolvedWorkspaceId,
         resolvedWorkspaceName,
+        isChapterAdmin,
     } = useReligoOwner();
+
+    const ownerMember = members.find((m) => Number(m.id) === Number(ownerMemberId));
+    const ownerLabel = ownerMember ? formatMemberPrimaryLine(ownerMember) : null;
 
     const chapterLabel =
         resolvedWorkspaceId != null ? resolvedWorkspaceName ?? `Workspace #${resolvedWorkspaceId}` : null;
@@ -153,28 +157,57 @@ export const CustomAppBar = () => {
                     />
                 </Box>
 
-                <FormControl size="small" sx={{ minWidth: { xs: 120, sm: 160 } }}>
-                    <InputLabel id="religo-global-owner-label">Owner</InputLabel>
-                    <Select
-                        labelId="religo-global-owner-label"
-                        label="Owner"
-                        value={ownerMemberId != null ? String(ownerMemberId) : ''}
-                        onChange={handleOwnerChange}
-                        disabled={savingOwner || members.length === 0}
-                        displayEmpty
+                {isChapterAdmin ? (
+                    <FormControl size="small" sx={{ minWidth: { xs: 120, sm: 160 } }}>
+                        <InputLabel id="religo-global-owner-label">Owner</InputLabel>
+                        <Select
+                            labelId="religo-global-owner-label"
+                            label="Owner"
+                            value={ownerMemberId != null ? String(ownerMemberId) : ''}
+                            onChange={handleOwnerChange}
+                            disabled={savingOwner || members.length === 0}
+                            displayEmpty
+                        >
+                            {ownerMemberId == null && (
+                                <MenuItem value="">
+                                    <em>選択してください</em>
+                                </MenuItem>
+                            )}
+                            {members.map((m) => (
+                                <MenuItem key={m.id} value={String(m.id)}>
+                                    {formatMemberPrimaryLine(m)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                ) : (
+                    /* SPEC-020 Phase D 順位 7: 一般 member は Owner 表示専用（変更不可）。 */
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.75,
+                            px: 1.25,
+                            py: 0.5,
+                            border: '1px solid #e0e0e0',
+                            borderRadius: '8px',
+                            fontSize: 12,
+                            color: '#1a1f36',
+                            maxWidth: 200,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                        title={ownerLabel ?? ''}
                     >
-                        {ownerMemberId == null && (
-                            <MenuItem value="">
-                                <em>選択してください</em>
-                            </MenuItem>
-                        )}
-                        {members.map((m) => (
-                            <MenuItem key={m.id} value={String(m.id)}>
-                                {formatMemberPrimaryLine(m)}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                        <Box component="span" sx={{ color: '#637381' }}>
+                            Owner:
+                        </Box>
+                        <Box component="span" sx={{ fontWeight: 500 }}>
+                            {ownerLabel ?? '未設定'}
+                        </Box>
+                    </Box>
+                )}
 
                 {hasSanctumToken ? (
                     <Button
