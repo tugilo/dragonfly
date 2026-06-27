@@ -80,3 +80,9 @@ test result: 577 passed
 scope check: OK  
 ssot check: OK  
 dod check: OK
+
+### main リリース反映
+
+main merge commit id: bdf69c268028f032f8ba12f65655680088e54881  
+source branch: develop  
+target branch: main
