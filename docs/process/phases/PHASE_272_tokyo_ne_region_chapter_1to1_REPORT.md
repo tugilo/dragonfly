@@ -69,7 +69,7 @@ www/tests/Feature/Religo/TokyoNeRegionChapterSeedTest.php
 
 ## Merge Evidence
 
-merge commit id: （develop merge 後に追記）  
+merge commit id: f1432e2380288f02ee7f91b4145ee7e5fc7f8a1a  
 source branch: feature/phase272-tokyo-ne-region-chapter-1to1  
 target branch: develop  
 phase id: 272  
