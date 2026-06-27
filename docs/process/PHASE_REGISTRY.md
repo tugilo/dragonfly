@@ -269,6 +269,7 @@
 | 268 | グローバル Owner セレクタ廃止（ヘッダー Owner 切替を撤去・ログインユーザー固定） | implement | completed | develop / main | 2026-06-27 |
 | 269 | 松倉健治 第1回121 Zoom要約反映（株式会社松和／エアロゲル透明断熱フィルム） | docs | completed | develop（commit / merge 未実施） | 2026-06-27 |
 | 270 | メンバー詳細ドロワーからの email インライン編集（Fit&Gap G1 解消・admin 限定） | implement | completed | develop / main | 2026-06-27 |
+| 271 | Members ドロワー email 編集の admin 判定安定化（/api/users/me で role 再確認） | implement | completed | develop / main | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
