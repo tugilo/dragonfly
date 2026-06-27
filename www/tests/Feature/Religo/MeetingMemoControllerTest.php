@@ -20,7 +20,7 @@ class MeetingMemoControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'meeting-memo-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_show_returns_404_for_unknown_meeting(): void
@@ -75,7 +75,7 @@ class MeetingMemoControllerTest extends TestCase
             'updated_at' => now(),
         ]);
         DB::table('members')->insert(['id' => 1, 'name' => 'First', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()]);
-        $user = User::factory()->create(['owner_member_id' => 1]);
+        $user = User::factory()->create(['owner_member_id' => 1, 'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN]);
         $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'New body']);
@@ -102,7 +102,7 @@ class MeetingMemoControllerTest extends TestCase
             'memo_type' => 'meeting',
             'body' => 'Existing',
         ]);
-        $user = User::factory()->create(['owner_member_id' => $memberId]);
+        $user = User::factory()->create(['owner_member_id' => $memberId, 'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN]);
         $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => '']);
@@ -129,7 +129,7 @@ class MeetingMemoControllerTest extends TestCase
             'memo_type' => 'meeting',
             'body' => 'Old',
         ]);
-        $user = User::factory()->create(['owner_member_id' => $memberId]);
+        $user = User::factory()->create(['owner_member_id' => $memberId, 'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN]);
         $this->actingAs($user);
 
         $res = $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'Updated text']);
@@ -147,7 +147,7 @@ class MeetingMemoControllerTest extends TestCase
             'updated_at' => now(),
         ]);
         DB::table('members')->insert(['id' => 2, 'name' => 'Actorless', 'type' => 'active', 'created_at' => now(), 'updated_at' => now()]);
-        $user = User::factory()->create(['owner_member_id' => null]);
+        $user = User::factory()->create(['owner_member_id' => null, 'religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN]);
         $this->actingAs($user);
 
         $this->putJson("/api/meetings/{$meetingId}/memo", ['body' => 'x'])

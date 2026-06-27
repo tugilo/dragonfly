@@ -206,21 +206,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dragonfly/members', [DragonFlyMemberController::class, 'index']);
     Route::get('/dragonfly/members/one-to-one-status', [DragonFlyMemberController::class, 'oneToOneStatus']);
     Route::get('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'show'])->whereNumber('id');
-    Route::put('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'update'])->whereNumber('id');
 
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/search', [CategorySearchController::class, 'search']);
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->whereNumber('id');
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->whereNumber('id');
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->whereNumber('id');
 
     Route::get('/roles', [RoleController::class, 'index']);
     Route::get('/roles/search', [RoleSearchController::class, 'search']);
     Route::get('/roles/{id}', [RoleController::class, 'show'])->whereNumber('id');
-    Route::post('/roles', [RoleController::class, 'store']);
-    Route::put('/roles/{id}', [RoleController::class, 'update'])->whereNumber('id');
-    Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->whereNumber('id');
 
     Route::get('/workspaces', [WorkspaceController::class, 'index']);
 
@@ -267,14 +260,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/members/search', [MemberSearchController::class, 'search']);
     Route::get('/meeting-types', [MeetingTypeController::class, 'index']);
     Route::get('/meetings', [MeetingController::class, 'index']);
-    Route::post('/meetings', [MeetingController::class, 'store']);
     Route::get('/meetings/stats', [MeetingController::class, 'stats']);
     Route::get('/meetings/{meetingId}', [MeetingController::class, 'show'])->whereNumber('meetingId');
-    Route::patch('/meetings/{meetingId}', [MeetingController::class, 'update'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/minutes', [MeetingController::class, 'minutes'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'show'])->whereNumber('meetingId');
-    Route::put('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'update'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import', [MeetingCsvImportController::class, 'store'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/preview', [MeetingCsvImportController::class, 'preview'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/diff-preview', [MeetingCsvImportController::class, 'diffPreview'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/member-diff-preview', [MeetingCsvImportController::class, 'memberDiffPreview'])->whereNumber('meetingId');
@@ -282,28 +271,55 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/meetings/{meetingId}/csv-import/unresolved', [MeetingCsvImportController::class, 'unresolved'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/unresolved-suggestions', [MeetingCsvImportController::class, 'unresolvedSuggestions'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/resolutions', [MeetingCsvImportController::class, 'listResolutions'])->whereNumber('meetingId');
-    Route::put('/meetings/{meetingId}/csv-import/resolutions/{resolutionId}', [MeetingCsvImportController::class, 'updateResolution'])->whereNumber('meetingId')->whereNumber('resolutionId');
-    Route::delete('/meetings/{meetingId}/csv-import/resolutions/{resolutionId}', [MeetingCsvImportController::class, 'destroyResolution'])->whereNumber('meetingId')->whereNumber('resolutionId');
-    Route::post('/meetings/{meetingId}/csv-import/resolutions', [MeetingCsvImportController::class, 'storeResolution'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/resolutions/create-member', [MeetingCsvImportController::class, 'createResolutionMember'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/resolutions/create-category', [MeetingCsvImportController::class, 'createResolutionCategory'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/resolutions/create-role', [MeetingCsvImportController::class, 'createResolutionRole'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/member-apply', [MeetingCsvImportController::class, 'memberApply'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/role-apply', [MeetingCsvImportController::class, 'roleApply'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/csv-import/apply-logs', [MeetingCsvImportController::class, 'applyLogs'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/csv-import/apply', [MeetingCsvImportController::class, 'apply'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/participants/import', [MeetingParticipantImportController::class, 'show'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/participants/import', [MeetingParticipantImportController::class, 'store'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/participants/import/parse', [MeetingParticipantImportController::class, 'parse'])->whereNumber('meetingId');
-    Route::put('/meetings/{meetingId}/participants/import/candidates', [MeetingParticipantImportController::class, 'updateCandidates'])->whereNumber('meetingId');
-    Route::post('/meetings/{meetingId}/participants/import/apply', [MeetingParticipantImportController::class, 'apply'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/participants/import/download', [MeetingParticipantImportController::class, 'download'])->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'show'])
         ->whereNumber('meetingId');
-    Route::put('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'update'])
-        ->whereNumber('meetingId');
     Route::get('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'show'])
         ->whereNumber('meetingId');
-    Route::put('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'update'])
-        ->whereNumber('meetingId');
+
+    /*
+    |--------------------------------------------------------------------------
+    | 管理者（chapter_admin）限定の編集系（SPEC-020 Phase C / 順位 5）
+    |--------------------------------------------------------------------------
+    | マスタ（Member / Categories / Roles）と例会管理（Meetings / CSV import /
+    | Participants / Breakouts）の書き込み。一般 member は 403。閲覧 GET は上記で全員可。
+    */
+    Route::middleware('religo.chapter_admin')->group(function () {
+        Route::put('/dragonfly/members/{id}', [DragonFlyMemberController::class, 'update'])->whereNumber('id');
+
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::put('/categories/{id}', [CategoryController::class, 'update'])->whereNumber('id');
+        Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->whereNumber('id');
+
+        Route::post('/roles', [RoleController::class, 'store']);
+        Route::put('/roles/{id}', [RoleController::class, 'update'])->whereNumber('id');
+        Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->whereNumber('id');
+
+        Route::post('/meetings', [MeetingController::class, 'store']);
+        Route::patch('/meetings/{meetingId}', [MeetingController::class, 'update'])->whereNumber('meetingId');
+        Route::put('/meetings/{meetingId}/memo', [MeetingMemoController::class, 'update'])->whereNumber('meetingId');
+
+        Route::post('/meetings/{meetingId}/csv-import', [MeetingCsvImportController::class, 'store'])->whereNumber('meetingId');
+        Route::put('/meetings/{meetingId}/csv-import/resolutions/{resolutionId}', [MeetingCsvImportController::class, 'updateResolution'])->whereNumber('meetingId')->whereNumber('resolutionId');
+        Route::delete('/meetings/{meetingId}/csv-import/resolutions/{resolutionId}', [MeetingCsvImportController::class, 'destroyResolution'])->whereNumber('meetingId')->whereNumber('resolutionId');
+        Route::post('/meetings/{meetingId}/csv-import/resolutions', [MeetingCsvImportController::class, 'storeResolution'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/resolutions/create-member', [MeetingCsvImportController::class, 'createResolutionMember'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/resolutions/create-category', [MeetingCsvImportController::class, 'createResolutionCategory'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/resolutions/create-role', [MeetingCsvImportController::class, 'createResolutionRole'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/member-apply', [MeetingCsvImportController::class, 'memberApply'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/role-apply', [MeetingCsvImportController::class, 'roleApply'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/csv-import/apply', [MeetingCsvImportController::class, 'apply'])->whereNumber('meetingId');
+
+        Route::post('/meetings/{meetingId}/participants/import', [MeetingParticipantImportController::class, 'store'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/participants/import/parse', [MeetingParticipantImportController::class, 'parse'])->whereNumber('meetingId');
+        Route::put('/meetings/{meetingId}/participants/import/candidates', [MeetingParticipantImportController::class, 'updateCandidates'])->whereNumber('meetingId');
+        Route::post('/meetings/{meetingId}/participants/import/apply', [MeetingParticipantImportController::class, 'apply'])->whereNumber('meetingId');
+
+        Route::put('/meetings/{meetingId}/breakouts', [MeetingBreakoutController::class, 'update'])
+            ->whereNumber('meetingId');
+        Route::put('/meetings/{meetingId}/breakout-rounds', [MeetingBreakoutRoundsController::class, 'update'])
+            ->whereNumber('meetingId');
+    });
 });

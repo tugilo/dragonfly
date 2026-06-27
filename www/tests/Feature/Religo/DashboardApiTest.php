@@ -512,7 +512,10 @@ class DashboardApiTest extends TestCase
                 ['room_label' => 'BO2', 'notes' => null, 'member_ids' => []],
             ],
         ];
-        Sanctum::actingAs(User::findOrFail(1));
+        // breakout 保存は chapter_admin 限定（SPEC-020 Phase C）。
+        $admin = User::findOrFail(1);
+        $admin->update(['religo_role' => User::RELIGO_ROLE_CHAPTER_ADMIN]);
+        Sanctum::actingAs($admin->fresh());
         $this->putJson("/api/meetings/{$meetingId}/breakouts", $payload)->assertOk();
         $res = $this->getJson('/api/dashboard/activity?owner_member_id='.$this->ownerId);
         $res->assertOk();

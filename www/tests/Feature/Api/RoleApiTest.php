@@ -20,7 +20,7 @@ class RoleApiTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'role-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_index_returns_roles(): void

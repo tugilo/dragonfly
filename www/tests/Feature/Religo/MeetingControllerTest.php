@@ -29,7 +29,7 @@ class MeetingControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->actingAsReligoUser();
+        $this->actingAsReligoUser(null, 'meeting-admin@example.com', \App\Models\User::RELIGO_ROLE_CHAPTER_ADMIN);
     }
 
     public function test_index_returns_meetings_with_breakout_count_and_has_memo(): void
