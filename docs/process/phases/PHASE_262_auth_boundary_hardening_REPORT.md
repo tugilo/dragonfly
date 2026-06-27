@@ -39,8 +39,17 @@ php artisan test — 549 passed (2064 assertions)
 
 | 項目 | 内容 |
 |------|------|
-| merge commit id | （未） |
+| merge commit id | `902acd5d2012410173bb00a9001414cc4101b87c` |
 | source branch | `feature/phase262-auth-boundary-hardening` |
 | target branch | develop |
+| phase id | 262 |
+| phase type | implement |
+| related ssot | SPEC-010 / SPEC-020 §11.6 順位 1〜2 |
 | test command | `php artisan test` |
-| test result | 549 passed |
+| test result | 549 passed (2064 assertions) |
+| scope check | OK |
+| ssot check | OK |
+| dod check | OK |
+| 手動確認 | migrate 実行で Default user owner 解除を確認 |
+
+**記録:** 2026-06-27 11:20 JST
