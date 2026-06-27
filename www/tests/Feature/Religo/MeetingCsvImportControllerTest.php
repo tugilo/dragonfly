@@ -14,6 +14,7 @@ use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -22,10 +23,12 @@ use Tests\TestCase;
 class MeetingCsvImportControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser();
         Storage::fake('local');
     }
 

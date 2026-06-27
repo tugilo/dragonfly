@@ -5,6 +5,7 @@ namespace Tests\Feature\Religo;
 use App\Models\ContactMemo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class ContactMemosIndexTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
     private int $targetId;
@@ -32,6 +34,7 @@ class ContactMemosIndexTest extends TestCase
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_index_returns_200_with_owner_and_target(): void

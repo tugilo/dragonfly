@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\Participant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class DragonFlyMembersMeetingScopeTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $ownerId;
 
@@ -67,6 +69,7 @@ class DragonFlyMembersMeetingScopeTest extends TestCase
             'member_id' => $this->proxyAttendeeId,
             'type' => 'proxy',
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_meeting_id_filters_to_participants_excluding_absent(): void

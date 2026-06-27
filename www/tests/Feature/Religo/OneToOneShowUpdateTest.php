@@ -5,6 +5,7 @@ namespace Tests\Feature\Religo;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class OneToOneShowUpdateTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
 
@@ -50,6 +52,7 @@ class OneToOneShowUpdateTest extends TestCase
             'scheduled_at' => '2026-04-01 09:00:00',
             'notes' => 'Agenda note',
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_show_returns_200_with_names(): void

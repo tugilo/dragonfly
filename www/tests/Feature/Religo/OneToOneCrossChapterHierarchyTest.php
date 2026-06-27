@@ -5,6 +5,7 @@ namespace Tests\Feature\Religo;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,13 @@ use Tests\TestCase;
 class OneToOneCrossChapterHierarchyTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser();
+    }
 
     public function test_show_includes_target_workspace_and_cross_chapter_flag(): void
     {

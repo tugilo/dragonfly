@@ -257,6 +257,10 @@
 | 256 | 太田一誠 第1回121 Zoom要約反映（ファインバブル／雑につなぐ相互紹介） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 | 257 | 軍司敦哉 第1回121 Zoom要約反映（Conduct／LINE公式アカウント運用代行・AIチャットボット協業） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
 | 258 | 軍司敦哉 第2回121 Zoom要約反映（リンクアットジャパン／Lステップ + AIチャットボット提案） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 259 | 髙月佑果 第1回121 Zoom要約反映（イートムラボ／ロジカルクッキング・包丁の持ち方レッスン） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 260 | 田渕恭平 第1回121 Zoom要約反映（田渕石材／庵治石・令和の新石器時代） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 261 | 門松直幸 第1回121事前準備・Zoom要約反映（株式会社サイクス／社外情シス担当・同業協業） | docs | completed | develop（commit / merge 未実施） | 2026-06-26 |
+| 262 | Auth Boundary Hardening（SPEC-020 Phase A・fallback 停止・Default user・sanctum 化） | implement | completed | feature/phase262-auth-boundary-hardening（merge 未実施） | 2026-06-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

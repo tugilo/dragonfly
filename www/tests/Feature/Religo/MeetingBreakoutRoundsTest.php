@@ -6,6 +6,7 @@ use App\Models\Meeting;
 use App\Models\Participant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -14,6 +15,7 @@ use Tests\TestCase;
 class MeetingBreakoutRoundsTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $meetingId;
     private int $member1;
@@ -24,6 +26,7 @@ class MeetingBreakoutRoundsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->actingAsReligoUser();
         $this->meetingId = (int) DB::table('meetings')->insertGetId([
             'number' => 200,
             'held_on' => now()->toDateString(),

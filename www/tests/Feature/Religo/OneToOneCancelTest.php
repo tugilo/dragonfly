@@ -5,6 +5,7 @@ namespace Tests\Feature\Religo;
 use App\Models\OneToOne;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -13,6 +14,7 @@ use Tests\TestCase;
 class OneToOneCancelTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
 
     private int $workspaceId;
 
@@ -49,6 +51,7 @@ class OneToOneCancelTest extends TestCase
             'status' => 'planned',
             'scheduled_at' => '2026-06-10 10:00:00',
         ]);
+        $this->actingAsReligoUser($this->ownerId);
     }
 
     public function test_cancel_planned_with_owner_convenience(): void

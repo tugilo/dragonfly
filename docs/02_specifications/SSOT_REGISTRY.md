@@ -24,6 +24,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-017 | SONAE 要件定義（Religo オプション／単体利用・Member Roster・JMAXML 9種・閾値 UI・DragonFly PoC） | ../SSOT/SONAE_REQUIREMENTS.md | draft／記録: Phase 224・232・241・243・244 PLAN |
 | SPEC-018 | チームMTG議事録 DB 化（meeting_types・team_id・import-team-minutes・Meetings 種別履歴） | ../SSOT/TEAM_MEETING_MINUTES_REQUIREMENTS.md | active（要件確定・実装未着手）／記録: Phase 234 |
 | SPEC-019 | 1to1 議事録マルチセッション取り込み（`### 【第N回】` → 複数 `one_to_ones` 行・import-1to1-notes 拡張） | ../SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md | draft（要件確定・実装未着手） |
+| SPEC-020 | 1to1 実施後記録のマルチユーザー化（要約コピペ・AI 校正 BYO key・プライベート DB 保存） | ../SSOT/ONETOONE_MULTIUSER_MINUTES_REQUIREMENTS.md | draft（要件確定・実装未着手） |
 | — | リファーラル提案 共通（§0 理念・§0.8 つなぎ手・§0.8.6 二経路・§0.8.7 Givers Gain） | ../SSOT/REFERRAL_SUGGESTION_COMMON.md | active |
 
 ## Statusの値

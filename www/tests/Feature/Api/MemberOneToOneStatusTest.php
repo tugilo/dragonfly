@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\ReligoSanctumTestHelpers;
 use Tests\TestCase;
 
 /**
@@ -15,6 +16,13 @@ use Tests\TestCase;
 class MemberOneToOneStatusTest extends TestCase
 {
     use RefreshDatabase;
+    use ReligoSanctumTestHelpers;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAsReligoUser();
+    }
 
     protected function tearDown(): void
     {
