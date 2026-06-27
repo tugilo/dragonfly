@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-06-27 12:42 JST | **ドキュメント:** [`TEST_USER_ONBOARDING_FLOW.md`](SSOT/TEST_USER_ONBOARDING_FLOW.md) を新規作成。DragonFly テストユーザー追加の運用フロー（admin が `members.email` 登録 → 初回アカウント作成案内 → 確認コードメール → パスワード設定 → 初回ログイン）を整理。`MemberEdit` による email 設定可否を確認済みと記載。パスワード再発行は未実装 Gap として明記。案内文テンプレート・チェックリスト・エラー対応を含む。 |
 | 2026-06-27 12:24 JST | **Phase 268 グローバル Owner セレクタ廃止 完了:** ヘッダーの Owner プルダウン（admin）・表示専用ラベル（member）を撤去し、Owner をログインユーザー（`/api/users/me`）に固定。`ReligoLayout` の未設定時案内も更新。データスコープは `ReligoOwnerContext` 経由で従来どおり。npm build 成功・567 tests passed（回帰）。ユーザー指示により develop → main へリリース反映。[`PHASE_268_remove_global_owner_selector_REPORT.md`](process/phases/PHASE_268_remove_global_owner_selector_REPORT.md) |
 | 2026-06-27 12:20 JST | **Phase 267 1to1 Minutes MVP 完了:** SPEC-020 Phase F（順位11）。メンバーが Zoom/AI 要約をコピペして自分の 1to1 実施後記録を `notes` に保存できるよう、`OneToOnesCreate`/`OneToOnesEdit` で一般 member の Owner 欄を本人固定（`ownerInputDisabled`）、`OneToOneFormFields` の notes label/helper を「実施後記録・コピペ可・Markdown 対応」に明示。owner 実体防御は Phase 263 のサーバ 403 で担保。npm build 成功・567 tests passed（回帰）。[`PHASE_267_onetoone_minutes_mvp_REPORT.md`](process/phases/PHASE_267_onetoone_minutes_mvp_REPORT.md) |
 | 2026-06-27 12:10 JST | **Phase 266 Onboarding Preparation 完了（docs）:** SPEC-020 Phase E（順位9）。自己登録 API/UI・owner 自動紐付けが実装済みであることを確認し、`docs/SSOT/ONBOARDING_AND_ACCOUNT_PROVISIONING.md` でアカウント作成方式を確定（自己登録採用・admin が `members.email` 整備・MVP 追加実装不要）。[`PHASE_266_onboarding_preparation_REPORT.md`](process/phases/PHASE_266_onboarding_preparation_REPORT.md) |
