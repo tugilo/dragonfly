@@ -34,7 +34,7 @@ SPEC-020 P0-A 順位 3〜4（owner サーバ固定・route model owner 検証）
 
 ## Merge Evidence
 
-merge commit id: （merge 後に追記）  
+merge commit id: 96661167a8c1e7da36267b9c15d68bc07e3a6568  
 source branch: feature/phase263-owner-enforcement  
 target branch: develop  
 phase id: 263  
