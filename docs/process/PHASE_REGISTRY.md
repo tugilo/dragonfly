@@ -271,6 +271,7 @@
 | 270 | メンバー詳細ドロワーからの email インライン編集（Fit&Gap G1 解消・admin 限定） | implement | completed | develop / main | 2026-06-27 |
 | 271 | Members ドロワー email 編集の admin 判定安定化（/api/users/me で role 再確認） | implement | completed | develop / main | 2026-06-27 |
 | 272 | 東京 NE リージョン・チャプターマスタシードと 1to1 相手選択（自チャプター／他チャプター・既存 121 履歴保持・モーダル UX 改善・他チャプター type 是正・Members チャプター絞り込み・退会済み機能） | implement | completed | develop / main | 2026-06-27 |
+| 273 | ウィークリープレゼン リテラシ配慮版へ差し替え（症状型「探す・書き写す・確認する」・§2.5.6 追記・member 37 weekly_presentation_body 更新・木村杏那さんとの役割分担） | implement | completed | feature/phase273-weekly-presentation-plain（commit / merge 未実施） | 2026-06-28 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
