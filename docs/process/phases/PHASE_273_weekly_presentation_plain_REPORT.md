@@ -36,9 +36,9 @@ ITリテラシが高くない聞き手にも伝わるよう、次廣のウィー
 
 | Item | Value |
 |------|-------|
-| merge commit id | 未実施（commit / merge 未依頼） |
+| merge commit id | 67122bbe0d904d3d1b73e17f317e01eab0fad965（develop） |
 | source branch | feature/phase273-weekly-presentation-plain |
-| target branch | develop |
+| target branch | develop（→ main へリリース反映） |
 | phase id | 273 |
 | phase type | implement |
 | related ssot | SPEC-004, Intro Living Document §2, `1to1_kimura_anna_andirich.md` |
