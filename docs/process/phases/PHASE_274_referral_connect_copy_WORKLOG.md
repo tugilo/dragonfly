@@ -15,10 +15,28 @@ tool: cursor-cloud-agent
 
 - `docs/SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md` 新規
 - Phase 274 PLAN / WORKLOG / REPORT スタブ
-- 実装は未着手（PLAN 完成後に feature ブランチで着手）
 
-### 次（implement）
+## 2026-07-08 08:02 JST — implement 完了
 
-- `ReferralConnectCopyService` + AI プロンプト + API 2 本
-- `ReferralConnectCopyDialog.jsx` + `ReferralSuggestionList` 行ボタン
-- Feature test
+### 判断
+
+- **API 構成:** `ReferralConnectCopyService` が 121/定例会の suggestion を共通処理。`ReferralConnectCopyAiService` は既存 `AiClientFactory` パターンに合わせ JSON blocks を返す。
+- **ブロック出し分け:** サーバ側で `direction` / `party_b_member_id` の有無により許可 key を決定し、AI 応答をフィルタ（SPEC §3.2 表に準拠）。
+- **`via_connector` 既存ボタン:** 「紹介をお願い」遷移は outlined「1 to 1」に降格。「紹介文を作成」が主導線（`connector_request` ブロック）。
+- **`introductions` マッピング:** MVP では文案生成は `introductions` を自動作成しない（SPEC §7）。相互接続の 1 件 vs 2 件は P2 で確定。
+- **初期値:** PHP `ReferralConnectCopyPartyDefaults` と JS `deriveDefaultParties` を同一ロジックで二重実装（UI 即時表示用）。
+
+### 実施（implement）
+
+| 領域 | ファイル |
+|------|----------|
+| API | `GenerateReferralConnectCopyRequest`, `ReferralConnectCopyService`, `ReferralConnectCopyAiService`, `ReferralConnectCopyCorpusBuilder`, `ReferralConnectCopyPartyDefaults` |
+| Controller | `OneToOneReferralSuggestionController::generateConnectCopy`, `MeetingReferralSuggestionController::generateConnectCopy` |
+| Routes | `POST .../generate-connect-copy` ×2 |
+| UI | `ReferralConnectCopyDialog.jsx`, `ReferralSuggestionList.jsx`（行ボタン）, `referralSuggestionApi.js` |
+| Test | `ReferralConnectCopyTest`, `ReferralConnectCopyPartyDefaultsTest` |
+
+### 検証
+
+- `npm run build` — 成功（cloud agent 環境・ホスト）
+- `php artisan test` — Docker 未利用のため未実施（ローカル merge 前にコンテナで実行必須）

@@ -8,7 +8,7 @@
 | Phase 種別 | implement |
 | ブランチ | `feature/phase274-referral-connect-copy` |
 | 開始 | 2026-07-08 07:57 JST |
-| Status | planned（PLAN / SPEC 完了・実装未着手） |
+| Status | in_progress（implement 完了・PR 待ち） |
 
 ## 背景・目的
 

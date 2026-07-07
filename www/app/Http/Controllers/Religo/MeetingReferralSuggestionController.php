@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Religo;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Religo\GenerateReferralConnectCopyRequest;
 use App\Http\Requests\Religo\PatchReferralSuggestionRequest;
 use App\Http\Requests\Religo\RegisterReferralIntroductionRequest;
 use App\Services\Religo\ReferralIntroductionRegistrationService;
@@ -11,6 +12,7 @@ use App\Models\MeetingReferralSuggestion;
 use App\Models\User;
 use App\Models\UserAiCredential;
 use App\Services\Religo\MeetingReferralSuggestionService;
+use App\Services\Religo\ReferralConnectCopyService;
 use App\Services\Religo\ReligoActorContext;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,6 +26,7 @@ class MeetingReferralSuggestionController extends Controller
     public function __construct(
         private MeetingReferralSuggestionService $service,
         private ReferralIntroductionRegistrationService $registrationService,
+        private ReferralConnectCopyService $connectCopyService,
     ) {}
 
     public function generate(Request $request, Meeting $meeting): JsonResponse
@@ -83,6 +86,36 @@ class MeetingReferralSuggestionController extends Controller
             );
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 403);
+        }
+
+        return response()->json($payload);
+    }
+
+    public function generateConnectCopy(
+        GenerateReferralConnectCopyRequest $request,
+        MeetingReferralSuggestion $meetingReferralSuggestion,
+    ): JsonResponse {
+        if ($resp = $this->guard()) {
+            return $resp;
+        }
+
+        $user = ReligoActorContext::actingUser();
+        $cred = UserAiCredential::where('user_id', $user->id)->first();
+        if ($cred === null || ! $cred->hasUsableKey()) {
+            return response()->json(['message' => 'AI が未設定です。設定画面で AI を有効化し API キーを登録してください。'], 422);
+        }
+
+        try {
+            $payload = $this->connectCopyService->generateForMeeting(
+                $meetingReferralSuggestion,
+                $user,
+                $cred,
+                $request->validated(),
+            );
+        } catch (InvalidArgumentException $e) {
+            $code = str_contains($e->getMessage(), '権限') ? 403 : 422;
+
+            return response()->json(['message' => $e->getMessage()], $code);
         }
 
         return response()->json($payload);
