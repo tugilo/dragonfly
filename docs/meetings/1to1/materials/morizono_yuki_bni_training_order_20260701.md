@@ -8,6 +8,9 @@
 **推奨順 SSOT:** **増本重孝**（DragonFly）さんから共有された受講順（下記13ステップ）。  
 **根拠:** `docs/academy/` 各フォルダの受講メモ・教材構成を要約（BNI内部資料の転載はしない）。
 
+**送付用PDF（森園さん向け・19枚）:** [`docs/proposals/DragonFly_BNI_トレーニングガイド_20260707005219.pdf`](../../../proposals/DragonFly_BNI_トレーニングガイド_20260707005219.pdf)（2026-07-07 修正版・表紙 **森園 友喜** · Step 2 **チームリーダーズトレーニング**）  
+**スライド原稿:** [`morizono_yuki_bni_training_order_20260701_slides.md`](morizono_yuki_bni_training_order_20260701_slides.md) · Genspark: [`morizono_yuki_bni_training_order_genspark_slide_prompt.md`](morizono_yuki_bni_training_order_genspark_slide_prompt.md)
+
 ---
 
 ## 森園さんの現在地（121で確認）
