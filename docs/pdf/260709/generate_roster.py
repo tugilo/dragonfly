@@ -26,6 +26,8 @@ PUBLIC_URL_PATH = "/events/bni-shizuoka-joint-social-20260709"
 EVENT_TITLE = "BNI 静岡合同懇親会 参加者名簿"
 EVENT_DATE = "2026-07-09"
 SOURCE_SHEET = "2026_07_09_BNI合同懇親会_参加者一覧"
+BNI_RED = "#CF2030"
+BNI_RED_DARK = "#A01825"
 
 
 def parse_markdown_table(path: Path) -> list[dict[str, str]]:
@@ -194,9 +196,19 @@ def build_print_html(chapters: list[tuple[str, list[dict[str, str]]]], total: in
 """
 
 
+def chapter_anchor(index: int) -> str:
+    return f"chapter-{index}"
+
+
 def build_mobile_html(chapters: list[tuple[str, list[dict[str, str]]]], total: int) -> str:
+    nav_parts: list[str] = []
     body_parts: list[str] = []
-    for chapter, members in chapters:
+    for index, (chapter, members) in enumerate(chapters):
+        anchor = chapter_anchor(index)
+        nav_parts.append(
+            f'<a class="chapter-link" href="#{anchor}">'
+            f"{esc(chapter)}（{len(members)}）</a>"
+        )
         cards: list[str] = []
         for row in members:
             email_link = (
@@ -204,8 +216,18 @@ def build_mobile_html(chapters: list[tuple[str, list[dict[str, str]]]], total: i
                 if row["email"]
                 else "（未入力）"
             )
+            search_blob = " ".join(
+                [
+                    chapter,
+                    row["name"],
+                    row["category"],
+                    row["email"],
+                    row["comment"],
+                ]
+            ).lower()
             cards.append(
-                f"""<article class="card">
+                f"""<article class="card" data-search="{esc(search_blob)}">
+  <p class="card-chapter">{esc(chapter)}</p>
   <h3>{esc(row['name'])}</h3>
   <dl>
     <dt>カテゴリ</dt><dd>{esc(row['category'])}</dd>
@@ -215,7 +237,7 @@ def build_mobile_html(chapters: list[tuple[str, list[dict[str, str]]]], total: i
 </article>"""
             )
         body_parts.append(
-            f"""<details class="chapter" open>
+            f"""<details class="chapter" id="{anchor}" open>
   <summary>{esc(chapter)}（{len(members)}名）</summary>
   <div class="cards">{''.join(cards)}</div>
 </details>"""
@@ -230,22 +252,163 @@ def build_mobile_html(chapters: list[tuple[str, list[dict[str, str]]]], total: i
   <title>{esc(EVENT_TITLE)} — スマホ閲覧用</title>
   <style>
     * {{ box-sizing: border-box; }}
-    body {{ font-family: "Hiragino Sans", "Yu Gothic", sans-serif; margin: 0; background: #f1f5f9; color: #0f172a; }}
-    header {{ background: #1e293b; color: #fff; padding: 16px; }}
-    h1 {{ font-size: 1.1rem; margin: 0 0 8px; }}
-    .meta {{ font-size: 0.82rem; opacity: 0.9; line-height: 1.5; }}
-    .notice {{ margin-top: 8px; font-size: 0.78rem; color: #fecaca; }}
-    main {{ padding: 12px; max-width: 640px; margin: 0 auto; }}
-    .chapter {{ background: #fff; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); }}
-    summary {{ cursor: pointer; font-weight: 700; padding: 12px 14px; background: #e2e8f0; list-style: none; }}
+    html {{ scroll-behavior: smooth; }}
+    body {{
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      margin: 0;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 16px;
+      line-height: 1.55;
+      padding-bottom: 5rem;
+    }}
+    header {{
+      background: linear-gradient(160deg, {BNI_RED} 0%, {BNI_RED_DARK} 100%);
+      color: #fff;
+      padding: 16px 14px 14px;
+      box-shadow: 0 2px 10px rgba(160, 24, 37, 0.25);
+    }}
+    h1 {{ font-size: 1.2rem; margin: 0 0 8px; line-height: 1.35; }}
+    .meta {{ font-size: 0.84rem; opacity: 0.95; line-height: 1.5; }}
+    .notice {{ margin-top: 8px; font-size: 0.8rem; color: #fef9c3; }}
+    .toolbar {{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      padding: 10px 12px 12px;
+    }}
+    .search-wrap {{ margin-bottom: 10px; }}
+    .search-wrap label {{
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }}
+    #search {{
+      width: 100%;
+      font-size: 1rem;
+      padding: 11px 12px;
+      border: 2px solid #94a3b8;
+      border-radius: 10px;
+      background: #f8fafc;
+    }}
+    #search:focus {{
+      outline: none;
+      border-color: #2563eb;
+      background: #fff;
+    }}
+    #search-status {{
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #64748b;
+      min-height: 1.2em;
+    }}
+    .chapter-nav-label {{
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin: 0 0 6px;
+    }}
+    .chapter-nav {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 9.5rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }}
+    .chapter-link {{
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #1e3a8a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #c7d2fe;
+      white-space: nowrap;
+    }}
+    .chapter-link:active {{ background: #c7d2fe; }}
+    main {{ padding: 12px; max-width: 680px; margin: 0 auto; }}
+    .chapter {{
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      scroll-margin-top: 11rem;
+    }}
+    .chapter[hidden] {{ display: none; }}
+    summary {{
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 14px;
+      background: #dbeafe;
+      color: #1e3a8a;
+      list-style: none;
+      border-bottom: 1px solid #bfdbfe;
+    }}
     summary::-webkit-details-marker {{ display: none; }}
-    .cards {{ padding: 8px 10px 12px; display: grid; gap: 10px; }}
-    .card {{ border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa; }}
-    .card h3 {{ margin: 0 0 8px; font-size: 1rem; }}
-    dl {{ margin: 0; display: grid; grid-template-columns: 4.5em 1fr; gap: 4px 8px; font-size: 0.88rem; }}
-    dt {{ color: #64748b; }}
-    dd {{ margin: 0; word-break: break-word; }}
-    a {{ color: #2563eb; }}
+    .cards {{ padding: 10px 10px 12px; display: grid; gap: 12px; }}
+    .card {{
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+    }}
+    .card[hidden] {{ display: none; }}
+    .card-chapter {{
+      margin: 0 0 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.02em;
+    }}
+    .card h3 {{
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+    }}
+    dl {{
+      margin: 0;
+      display: grid;
+      grid-template-columns: 4.8em 1fr;
+      gap: 6px 10px;
+      font-size: 0.92rem;
+    }}
+    dt {{
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }}
+    dd {{ margin: 0; word-break: break-word; color: #1e293b; }}
+    a {{ color: #1d4ed8; word-break: break-all; }}
+    #top-btn {{
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 30;
+      width: 3.1rem;
+      height: 3.1rem;
+      border: none;
+      border-radius: 999px;
+      background: #1d4ed8;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.15;
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.45);
+      cursor: pointer;
+    }}
+    #top-btn:active {{ transform: scale(0.96); }}
   </style>
 </head>
 <body>
@@ -254,9 +417,56 @@ def build_mobile_html(chapters: list[tuple[str, list[dict[str, str]]]], total: i
     <div class="meta">開催日: {esc(EVENT_DATE)} / 参加者: {total}名 / 生成: {esc(generated_at())}</div>
     <div class="notice">個人情報を含みます。限定共有 URL で閲覧してください。</div>
   </header>
+  <div class="toolbar">
+    <div class="search-wrap">
+      <label for="search">名前・カテゴリ・一言で検索</label>
+      <input id="search" type="search" inputmode="search" autocomplete="off"
+        placeholder="例: デザイン / ゴルフ / 姓">
+      <div id="search-status"></div>
+    </div>
+    <p class="chapter-nav-label">チャプターへジャンプ</p>
+    <nav class="chapter-nav" aria-label="チャプター一覧">
+      {''.join(nav_parts)}
+    </nav>
+  </div>
   <main>
     {''.join(body_parts)}
   </main>
+  <button id="top-btn" type="button" aria-label="ページトップへ戻る">▲<br>TOP</button>
+  <script>
+    (function () {{
+      var searchInput = document.getElementById("search");
+      var statusEl = document.getElementById("search-status");
+      var chapters = Array.prototype.slice.call(document.querySelectorAll(".chapter"));
+
+      function applySearch() {{
+        var query = searchInput.value.trim().toLowerCase();
+        var visibleCards = 0;
+        chapters.forEach(function (chapter) {{
+          var chapterCount = 0;
+          chapter.querySelectorAll(".card").forEach(function (card) {{
+            var blob = card.getAttribute("data-search") || "";
+            var show = !query || blob.indexOf(query) !== -1;
+            card.hidden = !show;
+            if (show) chapterCount += 1;
+          }});
+          chapter.hidden = chapterCount === 0;
+          if (query && chapterCount > 0) chapter.open = true;
+          visibleCards += chapterCount;
+        }});
+        if (query) {{
+          statusEl.textContent = visibleCards + " 件ヒット（全 {total} 名）";
+        }} else {{
+          statusEl.textContent = "";
+        }}
+      }}
+
+      searchInput.addEventListener("input", applySearch);
+      document.getElementById("top-btn").addEventListener("click", function () {{
+        window.scrollTo({{ top: 0, behavior: "smooth" }});
+      }});
+    }})();
+  </script>
 </body>
 </html>
 """
