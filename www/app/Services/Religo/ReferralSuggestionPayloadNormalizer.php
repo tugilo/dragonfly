@@ -89,7 +89,7 @@ final class ReferralSuggestionPayloadNormalizer
                     $item['suggested_contact_label'] ?? $item['suggested_to_label'] ?? null,
                 );
                 $corpusSource = 'member_network';
-                if ($fromId === null || $contactLabel === null) {
+                if ($this->rejectInvalidViaConnector($fromId, $toId, $ownerMemberId) || $contactLabel === null) {
                     continue;
                 }
             } else {
@@ -111,7 +111,9 @@ final class ReferralSuggestionPayloadNormalizer
                 'quality_notes' => $this->encodeQualityNotes($item['quality_notes'] ?? null),
                 'suggested_from_member_id' => $fromId,
                 'suggested_to_member_id' => $toId,
-                'suggested_to_label' => $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null,
+                'suggested_to_label' => $toId === null
+                    ? $this->nullableString($item['suggested_to_label'] ?? $item['suggested_contact_label'] ?? null)
+                    : null,
                 'suggested_contact_label' => $contactLabel,
                 'source_one_to_one_id' => $sourceO2oId > 0 ? $sourceO2oId : null,
                 'source_meeting_id' => $sourceMeetingId > 0 ? $sourceMeetingId : null,
@@ -173,7 +175,7 @@ final class ReferralSuggestionPayloadNormalizer
                     $item['suggested_contact_label'] ?? $item['suggested_to_label'] ?? null,
                 );
                 $corpusSource = 'member_network';
-                if ($fromId === null || $contactLabel === null) {
+                if ($this->rejectInvalidViaConnector($fromId, $toId, $ownerMemberId) || $contactLabel === null) {
                     continue;
                 }
             } else {
@@ -187,7 +189,9 @@ final class ReferralSuggestionPayloadNormalizer
                 continue;
             }
 
-            $toLabel = $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null;
+            $toLabel = $toId === null
+                ? $this->nullableString($item['suggested_to_label'] ?? $item['suggested_contact_label'] ?? null)
+                : null;
             if ($toId !== null && $toLabel === null && $direction !== 'via_connector') {
                 if ($subjectId === null || $toId !== $subjectId) {
                     continue;
@@ -204,7 +208,7 @@ final class ReferralSuggestionPayloadNormalizer
                 'quality_notes' => $this->encodeQualityNotes($item['quality_notes'] ?? null),
                 'suggested_from_member_id' => $fromId ?? $ownerMemberId,
                 'suggested_to_member_id' => $toId,
-                'suggested_to_label' => $toId === null ? $this->nullableString($item['suggested_to_label'] ?? null) : null,
+                'suggested_to_label' => $toLabel,
                 'suggested_contact_label' => $contactLabel,
                 'source_one_to_one_id' => $sourceO2oId > 0 ? $sourceO2oId : null,
                 'source_meeting_id' => $sourceMeetingId > 0 ? $sourceMeetingId : null,
@@ -273,6 +277,15 @@ final class ReferralSuggestionPayloadNormalizer
         }
 
         return true;
+    }
+
+    private function rejectInvalidViaConnector(?int $fromId, ?int $toId, int $ownerMemberId): bool
+    {
+        if ($fromId === null || $toId === null) {
+            return true;
+        }
+
+        return $fromId === $ownerMemberId || $fromId === $toId;
     }
 
     /**

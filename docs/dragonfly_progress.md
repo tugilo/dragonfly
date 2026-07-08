@@ -8,6 +8,10 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-08 14:52 JST | **Phase 276 リファーラル提案 自己つなぎ手誤提案ガード実装:** `via_connector` の requester=connector / from=to を Normalizer で reject、AI prompt を補強、通常社外紹介の `suggested_contact_label` fallback を追加。既存誤提案 `one_to_one_referral_suggestions.id=39` は `dismissed` 更新。検証: `php artisan test` **590 passed (2161 assertions)**。 |
+| 2026-07-08 14:41 JST | **Phase 276 リファーラル提案 自己つなぎ手誤提案 Fit&Gap / PLAN:** 海沼功 121 の `run #19` で `via_connector` が `from=37 / to=37` になった事象を [`FIT_AND_GAP_REFERRAL_SUGGESTION_SELF_CONNECTOR.md`](SSOT/FIT_AND_GAP_REFERRAL_SUGGESTION_SELF_CONNECTOR.md) に整理し、[`PHASE_276_referral_suggestion_self_connector_guard_PLAN.md`](process/phases/PHASE_276_referral_suggestion_self_connector_guard_PLAN.md) を作成。 |
+| 2026-07-08 14:35 JST | **Phase 275 海沼功 121 本番DB反映:** ローカルDBの `one_to_ones.id=110`（2026-07-08 JST 13:00–14:00、completed、notes反映済み）を本番 `religo_app` へ反映。事前テスト `587 passed (2156 assertions)`。remote backup: `backups/prod_20260708_143527.sql`。 |
+| 2026-07-08 14:14 JST | **Phase 275 海沼功 第1回121 Zoom要約反映:** [`meetings/1to1/1to1_kainuma_isao_financial_intelligence.md`](meetings/1to1/1to1_kainuma_isao_financial_intelligence.md) に **2026-07-08 JST 13:00–14:00** の文字起こし要約を校正して反映。Claude Code による補助金申請自動化、ChatGPT / NotebookLM / 資料生成AI 活用、ライフプラン支援・企業型DC・補助金支援、次廣のAI伴走型システム開発との協業方針、BNI所感、次回121・飲み会調整を整理。Religo `one_to_ones.id=110` へローカルDB反映済み。 |
 | 2026-07-08 09:36 JST | **1to1 重複防止ルール追加:** `.cursor/rules/1to1-dedup.mdc` 新規、`docs/meetings/1to1/README.md` §重複防止、`.claude/skills/import-religo/SKILL.md`、`.cursorrules` に Zoom取込×手動の二重登録防止手順を追記（西原海成 #94/#105 事例）。 |
 | 2026-07-08 09:35 JST | **西原海成 1to1 重複レコード統合:** 同一面談（2026-07-02 16:00–17:00）の `one_to_ones` **#94**（Zoom取込・planned）と **#105**（手動・completed＋議事録）を **#105** に統合。Zoom `89000861916` を #105 へ移し #94 削除。議事録・INDEX は id=105 のまま。 |
 | 2026-07-08 09:33 JST | **西原海成 第1回121 Zoom要約再反映:** [`meetings/1to1/1to1_nishihara_kaon_referral_imaishi.md`](meetings/1to1/1to1_nishihara_kaon_referral_imaishi.md) に **2026-07-02 JST 16:00–17:00** の文字起こし要約を再校正・照合。確認待ちを第1回セクションへ追記、Religo `one_to_ones.id=105` と INDEX を同期。 |
