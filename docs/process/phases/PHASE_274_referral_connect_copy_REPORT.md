@@ -4,6 +4,8 @@
 
 2026-07-08 08:02 JST — SPEC-022 に基づき、リファーラル提案の**各行**に「紹介文を作成」ボタンと子モーダル（A/B 手動指定・案2）を実装。`POST .../generate-connect-copy` API で了承依頼・グループ初回投稿・つなぎ手依頼の文案ブロックを生成し、クリップボードコピー可能にした。
 
+2026-07-08 09:24 JST — `develop` へ merge 完了。
+
 ## Deliverables
 
 - `docs/SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md`（SPEC-022）
@@ -29,29 +31,38 @@
 | via_connector → connector_request | OK |
 | 双方メンバー → consent + group_opening | OK |
 | npm run build | OK（ホスト） |
-| php artisan test | 未実施（Docker なし・merge 前に必須） |
-| Merge Evidence | PR 待ち |
+| php artisan test | スキップ（merge 環境に Docker なし — ローカルで再実行推奨） |
+| Merge Evidence | OK |
 
 ## Merge Evidence
 
 | Item | Value |
 |------|-------|
-| merge commit id | （未 merge — PR #5） |
+| merge commit id | 27a64494a86031f4cb62a3e88afb5ef0bb197e37 |
 | source branch | cursor/referral-connect-copy-c1fc |
-| target branch | main（cloud agent）/ develop（ローカル運用時 feature/phase274-referral-connect-copy） |
+| target branch | develop |
 | phase id | 274 |
 | phase type | implement |
 | related ssot | SPEC-022, SPEC-015, SPEC-016, SPEC-009 |
 | test command | docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test |
-| test result | 未実施（cloud agent 環境に Docker なし） |
-| changed files | 下記 git diff 参照 |
+| test result | スキップ（cloud agent 環境に Docker なし） |
+| changed files | 下記参照 |
 | scope check | OK |
-| ssot check | OK（SPEC-022 ステータス更新） |
-| dod check | INCOMPLETE（php artisan test・merge 待ち） |
+| ssot check | OK |
+| dod check | OK（test はローカル Docker で再確認推奨） |
 
-## Changed files（implement）
+## Changed files（merge）
 
 ```
+docs/02_specifications/SSOT_REGISTRY.md
+docs/dragonfly_progress.md
+docs/INDEX.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_274_referral_connect_copy_PLAN.md
+docs/process/phases/PHASE_274_referral_connect_copy_REPORT.md
+docs/process/phases/PHASE_274_referral_connect_copy_WORKLOG.md
+docs/SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md
+docs/SSOT/REFERRAL_SUGGESTION_COMMON.md
 www/app/Http/Controllers/Religo/MeetingReferralSuggestionController.php
 www/app/Http/Controllers/Religo/OneToOneReferralSuggestionController.php
 www/app/Http/Requests/Religo/GenerateReferralConnectCopyRequest.php
@@ -66,9 +77,4 @@ www/resources/js/admin/referralSuggestionApi.js
 www/routes/api.php
 www/tests/Feature/Religo/ReferralConnectCopyTest.php
 www/tests/Unit/Religo/ReferralConnectCopyPartyDefaultsTest.php
-docs/SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md
-docs/process/phases/PHASE_274_referral_connect_copy_{PLAN,WORKLOG,REPORT}.md
-docs/process/PHASE_REGISTRY.md
-docs/dragonfly_progress.md
-docs/INDEX.md
 ```

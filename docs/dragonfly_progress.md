@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-08 09:24 JST | **Phase 274 develop merge:** `cursor/referral-connect-copy-c1fc` → `develop`（merge `27a6449`）。つなぐ準備・紹介文コピペ機能。テストはローカル Docker で再確認推奨。[`PHASE_274_referral_connect_copy_REPORT.md`](process/phases/PHASE_274_referral_connect_copy_REPORT.md) |
 | 2026-07-08 08:02 JST | **Phase 274 implement 完了（つなぐ準備・紹介文コピペ）:** 提案各行に「紹介文を作成」ボタン、`ReferralConnectCopyDialog` で A/B 指定（案2）、`POST .../generate-connect-copy` API（121/定例会）、文案ブロックコピー UX。`via_connector` の主導線を子モーダルへ統合。`npm run build` OK。テストは merge 前に Docker で実行必須。PR #5。[`PHASE_274_referral_connect_copy_REPORT.md`](process/phases/PHASE_274_referral_connect_copy_REPORT.md) |
 | 2026-07-08 07:57 JST | **Phase 274 PLAN / SPEC-022 つなぐ準備:** リファーラル提案の各行に「紹介文を作成」ボタン、子モーダルで A/B 手動指定（案2）し了承依頼・グループ初回投稿をコピペする要件を [`CONNECTION_PREPARATION_REQUIREMENTS.md`](SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md) に確定。Related: SPEC-015/016/009。implement 未着手。[`PHASE_274_referral_connect_copy_PLAN.md`](process/phases/PHASE_274_referral_connect_copy_PLAN.md) |
 | 2026-07-07 23:08 JST | **DragonFly 定例会 第214回 議事録:** ユーザー提供の Zoom 文字起こし要約を校正し [`meetings/chapter/chapter_weekly_20260707.md`](meetings/chapter/chapter_weekly_20260707.md) に反映。参加57・6月度RF531/サンキュー約1億720万円・ビジター5名全員入会決定・MP里見允二/原田里織・教育「LCDメソッド」・小中貴晃更新・6月度表彰を整理。`docs/INDEX.md` と同日チームMTGリンクを同期。コード変更なし。 |

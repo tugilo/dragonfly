@@ -8,7 +8,7 @@
 | Phase 種別 | implement |
 | ブランチ | `feature/phase274-referral-connect-copy` |
 | 開始 | 2026-07-08 07:57 JST |
-| Status | in_progress（implement 完了・PR 待ち） |
+| Status | completed（develop merge 27a6449） |
 
 ## 背景・目的
 
