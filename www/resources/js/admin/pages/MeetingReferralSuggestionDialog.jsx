@@ -47,9 +47,9 @@ export function MeetingReferralSuggestionDialog({ open, onClose, meeting, minute
         [meetingId],
     );
 
-    const generateSuggestions = useCallback(() => {
+    const generateSuggestions = useCallback((force = false) => {
         if (!meetingId) return Promise.reject(new Error('例会 ID がありません'));
-        return generateMeetingReferralSuggestions(meetingId);
+        return generateMeetingReferralSuggestions(meetingId, 'relationship', force);
     }, [meetingId]);
 
     const title = meeting
