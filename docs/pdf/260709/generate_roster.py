@@ -12,10 +12,16 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 DIR = Path(__file__).resolve().parent
+REPO_ROOT = DIR.parent.parent.parent
 SOURCE = DIR / "source_form_responses.md"
 CSV_OUT = DIR / "bni_shizuoka_joint_social_roster_normalized.csv"
 PRINT_OUT = DIR / "bni_shizuoka_joint_social_roster_print.html"
 MOBILE_OUT = DIR / "bni_shizuoka_joint_social_roster_mobile.html"
+PUBLIC_DIR = REPO_ROOT / "www" / "public" / "events" / "bni-shizuoka-joint-social-20260709"
+PUBLIC_PRINT = PUBLIC_DIR / "print.html"
+PUBLIC_MOBILE = PUBLIC_DIR / "mobile.html"
+PUBLIC_INDEX = PUBLIC_DIR / "index.html"
+PUBLIC_URL_PATH = "/events/bni-shizuoka-joint-social-20260709"
 
 EVENT_TITLE = "BNI 静岡合同懇親会 参加者名簿"
 EVENT_DATE = "2026-07-09"
@@ -261,18 +267,63 @@ def chapter_summary(chapters: list[tuple[str, list[dict[str, str]]]]) -> str:
     return ", ".join(lines)
 
 
+def build_public_index_html(total: int) -> str:
+    return f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="refresh" content="0; url=mobile.html">
+  <title>{esc(EVENT_TITLE)}</title>
+  <style>
+    body {{ font-family: "Hiragino Sans", "Yu Gothic", sans-serif; margin: 2rem; line-height: 1.6; }}
+    a {{ color: #2563eb; }}
+  </style>
+</head>
+<body>
+  <h1>{esc(EVENT_TITLE)}</h1>
+  <p>開催日: {esc(EVENT_DATE)} / 参加者: {total}名 / 生成: {esc(generated_at())}</p>
+  <p>個人情報を含みます。参加者・運営関係者以外への転送は控えてください。</p>
+  <ul>
+    <li><a href="mobile.html">スマホ閲覧用名簿</a></li>
+    <li><a href="print.html">印刷用名簿（A4 横向き）</a></li>
+  </ul>
+</body>
+</html>
+"""
+
+
+def write_public_html(
+    chapters: list[tuple[str, list[dict[str, str]]]], total: int
+) -> None:
+    PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
+    print_html = build_print_html(chapters, total)
+    mobile_html = build_mobile_html(chapters, total)
+    PUBLIC_PRINT.write_text(print_html, encoding="utf-8")
+    PUBLIC_MOBILE.write_text(mobile_html, encoding="utf-8")
+    PUBLIC_INDEX.write_text(build_public_index_html(total), encoding="utf-8")
+
+
 def main() -> None:
     raw = parse_markdown_table(SOURCE)
     rows = dedupe(raw)
     chapters = sort_grouped(rows)
     total = write_csv(chapters)
-    PRINT_OUT.write_text(build_print_html(chapters, total), encoding="utf-8")
-    MOBILE_OUT.write_text(build_mobile_html(chapters, total), encoding="utf-8")
+    print_html = build_print_html(chapters, total)
+    mobile_html = build_mobile_html(chapters, total)
+    PRINT_OUT.write_text(print_html, encoding="utf-8")
+    MOBILE_OUT.write_text(mobile_html, encoding="utf-8")
+    write_public_html(chapters, total)
     print(f"Parsed raw rows: {len(raw)}")
     print(f"After dedupe: {total}")
     print(f"Chapters: {len(chapters)}")
     print(chapter_summary(chapters))
-    print(f"Wrote: {CSV_OUT.name}, {PRINT_OUT.name}, {MOBILE_OUT.name}")
+    print(
+        f"Wrote: {CSV_OUT.name}, {PRINT_OUT.name}, {MOBILE_OUT.name}, "
+        f"{PUBLIC_DIR.relative_to(REPO_ROOT)}/"
+    )
+    print(f"Public URLs (auth not required): http://localhost{PUBLIC_URL_PATH}/")
 
 
 if __name__ == "__main__":

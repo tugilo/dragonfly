@@ -59,7 +59,8 @@
 | [pdf/260709/bni_shizuoka_joint_social_roster_print.html](pdf/260709/bni_shizuoka_joint_social_roster_print.html) | 同上 — A4 横向き印刷用 HTML。 |
 | [pdf/260709/bni_shizuoka_joint_social_roster_print.pdf](pdf/260709/bni_shizuoka_joint_social_roster_print.pdf) | 同上 — A4 印刷用 PDF。 |
 | [pdf/260709/bni_shizuoka_joint_social_roster_mobile.html](pdf/260709/bni_shizuoka_joint_social_roster_mobile.html) | 同上 — スマホ閲覧用 HTML（チャプター別カード・mailto リンク）。 |
-| [pdf/260709/generate_roster.py](pdf/260709/generate_roster.py) | 同上 — `source_form_responses.md` から CSV / print / mobile を再生成するスクリプト。 |
+| [pdf/260709/generate_roster.py](pdf/260709/generate_roster.py) | 同上 — `source_form_responses.md` から CSV / print / mobile を再生成するスクリプト。`www/public/events/bni-shizuoka-joint-social-20260709/` へも同期。 |
+| [../www/public/events/bni-shizuoka-joint-social-20260709/](../www/public/events/bni-shizuoka-joint-social-20260709/) | **同上 — 認証不要の公開 HTML**（nginx 静的配信）。ローカル: http://localhost/events/bni-shizuoka-joint-social-20260709/ （`mobile.html` / `print.html`）。 |
 
 ### 開発 DB 同期（Git）
 
