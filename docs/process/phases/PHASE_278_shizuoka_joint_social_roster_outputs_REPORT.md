@@ -17,7 +17,7 @@
 
 ## Current Status
 
-completed（docs 作成完了。commit / merge / push は未実施）
+completed（develop merge 済み 2026-07-08 19:48 JST）
 
 ## Decisions
 
@@ -56,8 +56,8 @@ docs フェーズのためコードテストは対象外。
 ## Merge Evidence
 
 ```
-merge commit id: 未実施
-source branch: main
+merge commit id: b3d11ffeb474aca2e8fb795be09c9d5e441f3f55
+source branch: feature/phase278-shizuoka-joint-social-roster-outputs
 target branch: develop
 phase id: 278
 phase type: docs
@@ -68,15 +68,19 @@ changed files:
 docs/INDEX.md
 docs/dragonfly_progress.md
 docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_277_shizuoka_joint_social_roster_requirements_PLAN.md
+docs/process/phases/PHASE_277_shizuoka_joint_social_roster_requirements_REPORT.md
+docs/process/phases/PHASE_277_shizuoka_joint_social_roster_requirements_WORKLOG.md
 docs/process/phases/PHASE_278_shizuoka_joint_social_roster_outputs_PLAN.md
 docs/process/phases/PHASE_278_shizuoka_joint_social_roster_outputs_REPORT.md
 docs/process/phases/PHASE_278_shizuoka_joint_social_roster_outputs_WORKLOG.md
+docs/pdf/260709/bni_shizuoka_joint_social_roster_mobile.html
 docs/pdf/260709/bni_shizuoka_joint_social_roster_normalized.csv
 docs/pdf/260709/bni_shizuoka_joint_social_roster_print.html
 docs/pdf/260709/bni_shizuoka_joint_social_roster_print.pdf
-docs/pdf/260709/bni_shizuoka_joint_social_roster_mobile.html
 docs/pdf/260709/generate_roster.py
 docs/pdf/260709/source_form_responses.md
+docs/requirements/bni_shizuoka_joint_social_roster_requirements.md
 scope check: OK
 ssot check: OK
 dod check: OK
