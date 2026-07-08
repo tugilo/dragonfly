@@ -1,0 +1,43 @@
+---
+description: 1to1 の one_to_ones 重複防止（Zoom取込×手動×議事録import）
+globs: docs/meetings/1to1/**/*.md
+alwaysApply: false
+---
+
+# 1to1 重複防止（one_to_ones）
+
+**同一面談 = DB 1行。** Markdown は1相手1ファイル、DB は1回1行（`DATA_MODEL` §4.12）。
+
+## 禁止
+
+- Zoom 取込済み（`planned` / `completed`）の **同日・同相手** 1to1 があるのに **手動で新規行を作る**
+- 議事録 Markdown に **未確認の id** を書く（DB に実在しない id、または別セッションの id）
+- 重複発見時に **両方を残したまま** 議事録 import だけ続ける
+
+## 正しい手順（第1回・初回面談）
+
+1. **Zoom 1to1 調整** → Religo / `one_to_ones` に **planned** 行ができる（`external_source=zoom`）。**この id を正とする。**
+2. 面談 **実施後** → 同 id を `completed` に更新（開始・終了時刻を入れる）。**新規行は作らない。**
+3. `docs/meetings/1to1/1to1_*.md` を作成・更新し、**【第1回】に `one_to_ones.id` = その id** を明記。
+4. `dragonfly:import-1to1-notes` で **既存 id の notes のみ更新**（新規行は作らない）。
+
+## 重複が既にある場合
+
+- **残す行:** `notes` あり / `completed` / 議事録 Markdown が参照している id（例: 西原海成 **#105**）
+- **統合:** Zoom 側の `zoom_meeting_id` / `zoom_meeting_uuid` を残す行へ移す
+- **削除:** 空の `planned` 重複行（例: **#94**）。`zoom_meeting_imports.one_to_one_id` を残す行へ付け替え
+- 議事録 front matter / 【第1回】 / INDEX の id を **1つに統一**し、統合日時を1行メモ
+
+## AI 作業前チェック
+
+```bash
+# 相手 members.id が分かっているとき（例: 190）
+docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app \
+  php artisan tinker --execute="
+    \$rows = DB::table('one_to_ones')->where('target_member_id', MEMBER_ID)->orderBy('id')->get(['id','scheduled_at','status','external_source','zoom_meeting_id']);
+    foreach (\$rows as \$r) { echo json_encode(\$r, JSON_UNESCAPED_UNICODE).PHP_EOL; }
+  "
+```
+
+- 2件以上 → **統合してから** 議事録反映・import
+- 詳細: `docs/meetings/1to1/README.md` §重複防止、`docs/SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md`

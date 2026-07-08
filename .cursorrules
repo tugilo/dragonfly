@@ -31,6 +31,7 @@
 
 - **進捗ファイルは docs 直下に `dragonfly_progress.md` として必ず作成・使用する。** 例: fluo なら docs/fluo_progress.md。進捗はこの 1 ファイルに記録する。
 - **docs/INDEX.md を別ファイルで必ず管理する。** ドキュメントを追加・変更・削除したら必ず INDEX を更新する。進捗ファイルを更新したら INDEX に載っていることを確認する。
+- **1to1 議事録と DB:** 同一面談は `one_to_ones` **1行**。Zoom 取込済み id がある場合は **新規行を作らず** その id に `completed`・議事録・`import-1to1-notes` を載せる。重複時は `docs/meetings/1to1/README.md` §重複防止 / `.cursor/rules/1to1-dedup.mdc` を参照。
 - **ドキュメントに「いつの出来事か」を書くときは、日付だけでなく必ず時刻まで取得してから反映する**（打合せ・1to1・ミーティング・締切の記録など）。取得元はカレンダー・Zoom・チャット等でよい。**不明な場合は TODO と明記し、後から確定させる。** タイムゾーンが曖昧なときは **JST** と明記する。
 - **進捗・変更履歴・Phase REPORT を新規に追記するとき**は、作業実行時点の日時を使う。取得例: `TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'`（日付のみのプレースホルダーにしない）。
 - 詳細は docs/process/README.md および docs/INDEX.md を参照。
