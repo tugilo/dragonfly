@@ -193,6 +193,76 @@ export function canRegisterIntroduction(suggestion) {
     return Boolean(suggestion.suggested_to_member_id);
 }
 
+/**
+ * SPEC-022: 提案行からパーティ A/B 初期値（案2 — UI 初期値のみ）。
+ * PHP ReferralConnectCopyPartyDefaults と同じロジック。
+ */
+export function deriveDefaultParties(suggestion, ownerMemberId) {
+    if (!suggestion) {
+        return { party_a_member_id: ownerMemberId ?? null, party_b_member_id: null, party_b_label: null };
+    }
+    const direction = suggestion.direction ?? '';
+    const fromId = suggestion.suggested_from_member_id ?? null;
+    const toId = suggestion.suggested_to_member_id ?? null;
+    const toLabel = suggestion.suggested_to_label?.trim() || null;
+    const contactLabel = suggestion.suggested_contact_label?.trim() || null;
+    const subjectId = suggestion.subject_member_id ?? null;
+
+    let partyA = null;
+    let partyB = null;
+    let partyBLabel = null;
+
+    if (direction === 'via_connector') {
+        partyA = ownerMemberId ?? null;
+        partyB = fromId;
+        if (partyB == null && contactLabel) {
+            partyBLabel = contactLabel;
+        }
+    } else if (direction === 'subject_should_meet') {
+        partyA = subjectId ?? ownerMemberId ?? null;
+        partyB = toId;
+    } else if (direction === 'target_to_owner') {
+        partyA = fromId ?? subjectId ?? ownerMemberId ?? null;
+        partyB = ownerMemberId ?? null;
+    } else {
+        partyA = fromId ?? ownerMemberId ?? null;
+        partyB = toId;
+        if (partyB == null && toLabel) {
+            partyBLabel = toLabel;
+        }
+    }
+
+    if (partyA == null) {
+        partyA = ownerMemberId ?? null;
+    }
+    if (partyB == null && partyBLabel == null) {
+        partyBLabel = contactLabel ?? toLabel;
+    }
+
+    return {
+        party_a_member_id: partyA,
+        party_b_member_id: partyB,
+        party_b_label: partyBLabel,
+    };
+}
+
+export async function generateConnectCopy(kind, suggestionId, body) {
+    const path =
+        kind === 'meeting'
+            ? `/api/meeting-referral-suggestions/${suggestionId}/generate-connect-copy`
+            : `/api/one-to-one-referral-suggestions/${suggestionId}/generate-connect-copy`;
+    const res = await religoFetch(path, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+        throw new Error(data.message || `文案の生成に失敗しました (${res.status})`);
+    }
+    return data;
+}
+
 export async function patchReferralSuggestion(kind, suggestionId, body) {
     const path =
         kind === 'meeting'

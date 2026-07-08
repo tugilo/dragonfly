@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-08 08:02 JST | **Phase 274 implement 完了（つなぐ準備・紹介文コピペ）:** 提案各行に「紹介文を作成」ボタン、`ReferralConnectCopyDialog` で A/B 指定（案2）、`POST .../generate-connect-copy` API（121/定例会）、文案ブロックコピー UX。`via_connector` の主導線を子モーダルへ統合。`npm run build` OK。テストは merge 前に Docker で実行必須。PR #5。[`PHASE_274_referral_connect_copy_REPORT.md`](process/phases/PHASE_274_referral_connect_copy_REPORT.md) |
+| 2026-07-08 07:57 JST | **Phase 274 PLAN / SPEC-022 つなぐ準備:** リファーラル提案の各行に「紹介文を作成」ボタン、子モーダルで A/B 手動指定（案2）し了承依頼・グループ初回投稿をコピペする要件を [`CONNECTION_PREPARATION_REQUIREMENTS.md`](SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md) に確定。Related: SPEC-015/016/009。implement 未着手。[`PHASE_274_referral_connect_copy_PLAN.md`](process/phases/PHASE_274_referral_connect_copy_PLAN.md) |
 | 2026-07-07 23:08 JST | **DragonFly 定例会 第214回 議事録:** ユーザー提供の Zoom 文字起こし要約を校正し [`meetings/chapter/chapter_weekly_20260707.md`](meetings/chapter/chapter_weekly_20260707.md) に反映。参加57・6月度RF531/サンキュー約1億720万円・ビジター5名全員入会決定・MP里見允二/原田里織・教育「LCDメソッド」・小中貴晃更新・6月度表彰を整理。`docs/INDEX.md` と同日チームMTGリンクを同期。コード変更なし。 |
 | 2026-07-07 08:42 JST | **スリーバイス チームMTG 2026-07-07 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260707.md`](meetings/team/team_threebiz_20260707.md) に反映。GBM予定入力・山本洸太さんプライベート自己紹介（5LDK・画家・恋愛・幼少期）・7/9静岡NE合同懇親会45名。`docs/INDEX.md` 同期。コード変更なし。 |
 | 2026-07-03 16:50 JST | **岡元智美 第2回121 議事録反映:** [`meetings/1to1/1to1_okamoto_kachiteru_present.md`](meetings/1to1/1to1_okamoto_kachiteru_present.md) に Zoom要約を校正して実施後記録。単価6倍・資料×システム協業合意・Religo/RF構想・7/6 RF久保寺引き合わせ・来月クライアント提案相談・フィードバックを整理。INDEX 更新。 |

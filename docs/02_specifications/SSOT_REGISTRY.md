@@ -26,6 +26,7 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 | SPEC-019 | 1to1 議事録マルチセッション取り込み（`### 【第N回】` → 複数 `one_to_ones` 行・import-1to1-notes 拡張） | ../SSOT/ONETOONE_MULTI_SESSION_IMPORT_REQUIREMENTS.md | draft（要件確定・実装未着手） |
 | SPEC-020 | 1to1 実施後記録のマルチユーザー化（要約コピペ・AI 校正 BYO key・プライベート DB 保存） | ../SSOT/ONETOONE_MULTIUSER_MINUTES_REQUIREMENTS.md | draft（要件確定・実装未着手） |
 | SPEC-021 | リージョン・チャプターマスタとクロスチャプター 1to1 相手選択（東京 NE シード・手動 ad-hoc） | ../SSOT/REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1_REQUIREMENTS.md | active（**Phase 272** シード・API・1to1 UI 主要コード）／Fit&Gap: [FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md](../SSOT/FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md) |
+| SPEC-022 | つなぐ準備 — リファーラル候補ごとの紹介文作成（A/B 手動指定・了承依頼・グループ投稿コピペ） | ../SSOT/CONNECTION_PREPARATION_REQUIREMENTS.md | active（要件確定・**Phase 274** 実装予定） |
 | — | リファーラル提案 共通（§0 理念・§0.8 つなぎ手・§0.8.6 二経路・§0.8.7 Givers Gain） | ../SSOT/REFERRAL_SUGGESTION_COMMON.md | active |
 
 ## Statusの値

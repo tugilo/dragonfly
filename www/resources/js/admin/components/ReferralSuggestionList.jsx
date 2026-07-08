@@ -10,6 +10,7 @@ import {
     Typography,
 } from '@mui/material';
 import { RegisterReferralIntroductionDialog } from './RegisterReferralIntroductionDialog';
+import { ReferralConnectCopyDialog } from './ReferralConnectCopyDialog';
 import {
     CONFIDENCE_LABELS,
     CORPUS_SOURCE_LABELS,
@@ -34,9 +35,10 @@ function memberLabel(suggestion, idKey, nameKey, fallbackPrefix = 'メンバー'
     return null;
 }
 
-function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedAt, subjectLabel }) {
+function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedAt, subjectLabel, aiReady }) {
     const [patching, setPatching] = useState(false);
     const [registerOpen, setRegisterOpen] = useState(false);
+    const [connectCopyOpen, setConnectCopyOpen] = useState(false);
     const status = suggestion?.status ?? 'pending';
     const isPending = status === 'pending' || status === 'deferred';
     const canRegister = canRegisterIntroduction(suggestion);
@@ -158,6 +160,15 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                     </Typography>
                 ) : null}
                 <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                        disabled={patching}
+                        onClick={() => setConnectCopyOpen(true)}
+                    >
+                        紹介文を作成
+                    </Button>
                     {isSubjectMeet && suggestion.suggested_to_member_id ? (
                         <Button
                             size="small"
@@ -173,15 +184,15 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                     {suggestion.direction === 'via_connector' && suggestion.suggested_from_member_id ? (
                         <Button
                             size="small"
-                            variant="contained"
+                            variant="outlined"
                             color="secondary"
                             component="a"
                             href={`/one-to-ones/create?target_member_id=${suggestion.suggested_from_member_id}`}
                             disabled={patching}
                         >
                             {connectorLabel
-                                ? `${connectorLabel} さんに紹介をお願い`
-                                : `メンバー #${suggestion.suggested_from_member_id} に紹介をお願い`}
+                                ? `${connectorLabel} さんと 1 to 1`
+                                : `メンバー #${suggestion.suggested_from_member_id} と 1 to 1`}
                         </Button>
                     ) : null}
                     <Button
@@ -241,6 +252,14 @@ function SuggestionRow({ suggestion, kind, onUpdated, notify, defaultIntroducedA
                 notify={notify}
                 onSuccess={onUpdated}
             />
+            <ReferralConnectCopyDialog
+                open={connectCopyOpen}
+                onClose={() => setConnectCopyOpen(false)}
+                suggestion={suggestion}
+                kind={kind}
+                aiReady={aiReady}
+                notify={notify}
+            />
         </>
     );
 }
@@ -253,6 +272,7 @@ export function ReferralSuggestionList({
     loading,
     defaultIntroducedAt,
     subjectLabel = null,
+    aiReady = true,
 }) {
     if (loading) {
         return (
@@ -284,6 +304,7 @@ export function ReferralSuggestionList({
                     notify={notify}
                     defaultIntroducedAt={defaultIntroducedAt}
                     subjectLabel={subjectLabel}
+                    aiReady={aiReady}
                 />
             ))}
         </Stack>
