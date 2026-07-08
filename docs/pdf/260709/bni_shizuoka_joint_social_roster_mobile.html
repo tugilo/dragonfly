@@ -7,83 +7,244 @@
   <title>BNI 静岡合同懇親会 参加者名簿 — スマホ閲覧用</title>
   <style>
     * { box-sizing: border-box; }
-    body { font-family: "Hiragino Sans", "Yu Gothic", sans-serif; margin: 0; background: #f1f5f9; color: #0f172a; }
-    header { background: #1e293b; color: #fff; padding: 16px; }
-    h1 { font-size: 1.1rem; margin: 0 0 8px; }
-    .meta { font-size: 0.82rem; opacity: 0.9; line-height: 1.5; }
-    .notice { margin-top: 8px; font-size: 0.78rem; color: #fecaca; }
-    main { padding: 12px; max-width: 640px; margin: 0 auto; }
-    .chapter { background: #fff; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-    summary { cursor: pointer; font-weight: 700; padding: 12px 14px; background: #e2e8f0; list-style: none; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      margin: 0;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 16px;
+      line-height: 1.55;
+      padding-bottom: 5rem;
+    }
+    header {
+      background: linear-gradient(160deg, #CF2030 0%, #A01825 100%);
+      color: #fff;
+      padding: 16px 14px 14px;
+      box-shadow: 0 2px 10px rgba(160, 24, 37, 0.25);
+    }
+    h1 { font-size: 1.2rem; margin: 0 0 8px; line-height: 1.35; }
+    .meta { font-size: 0.84rem; opacity: 0.95; line-height: 1.5; }
+    .notice { margin-top: 8px; font-size: 0.8rem; color: #fef9c3; }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      padding: 10px 12px 12px;
+    }
+    .search-wrap { margin-bottom: 10px; }
+    .search-wrap label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    #search {
+      width: 100%;
+      font-size: 1rem;
+      padding: 11px 12px;
+      border: 2px solid #94a3b8;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+    #search:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: #fff;
+    }
+    #search-status {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #64748b;
+      min-height: 1.2em;
+    }
+    .chapter-nav-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin: 0 0 6px;
+    }
+    .chapter-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 9.5rem;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chapter-link {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #1e3a8a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #c7d2fe;
+      white-space: nowrap;
+    }
+    .chapter-link:active { background: #c7d2fe; }
+    main { padding: 12px; max-width: 680px; margin: 0 auto; }
+    .chapter {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      scroll-margin-top: 11rem;
+    }
+    .chapter[hidden] { display: none; }
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 14px 14px;
+      background: #dbeafe;
+      color: #1e3a8a;
+      list-style: none;
+      border-bottom: 1px solid #bfdbfe;
+    }
     summary::-webkit-details-marker { display: none; }
-    .cards { padding: 8px 10px 12px; display: grid; gap: 10px; }
-    .card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa; }
-    .card h3 { margin: 0 0 8px; font-size: 1rem; }
-    dl { margin: 0; display: grid; grid-template-columns: 4.5em 1fr; gap: 4px 8px; font-size: 0.88rem; }
-    dt { color: #64748b; }
-    dd { margin: 0; word-break: break-word; }
-    a { color: #2563eb; }
+    .cards { padding: 10px 10px 12px; display: grid; gap: 12px; }
+    .card {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+    .card[hidden] { display: none; }
+    .card-chapter {
+      margin: 0 0 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.02em;
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+    }
+    dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: 4.8em 1fr;
+      gap: 6px 10px;
+      font-size: 0.92rem;
+    }
+    dt {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    dd { margin: 0; word-break: break-word; color: #1e293b; }
+    a { color: #1d4ed8; word-break: break-all; }
+    #top-btn {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 30;
+      width: 3.1rem;
+      height: 3.1rem;
+      border: none;
+      border-radius: 999px;
+      background: #1d4ed8;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.15;
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.45);
+      cursor: pointer;
+    }
+    #top-btn:active { transform: scale(0.96); }
   </style>
 </head>
 <body>
   <header>
     <h1>BNI 静岡合同懇親会 参加者名簿</h1>
-    <div class="meta">開催日: 2026-07-09 / 参加者: 43名 / 生成: 2026-07-08 20:14 JST</div>
+    <div class="meta">開催日: 2026-07-09 / 参加者: 43名 / 生成: 2026-07-08 20:43 JST</div>
     <div class="notice">個人情報を含みます。限定共有 URL で閲覧してください。</div>
   </header>
+  <div class="toolbar">
+    <div class="search-wrap">
+      <label for="search">名前・カテゴリ・一言で検索</label>
+      <input id="search" type="search" inputmode="search" autocomplete="off"
+        placeholder="例: デザイン / ゴルフ / 姓">
+      <div id="search-status"></div>
+    </div>
+    <p class="chapter-nav-label">チャプターへジャンプ</p>
+    <nav class="chapter-nav" aria-label="チャプター一覧">
+      <a class="chapter-link" href="#chapter-0">DragonFly（8）</a><a class="chapter-link" href="#chapter-1">インフィニティー（6）</a><a class="chapter-link" href="#chapter-2">アクセル（4）</a><a class="chapter-link" href="#chapter-3">インテグラル（4）</a><a class="chapter-link" href="#chapter-4">EduTechエデュテック（3）</a><a class="chapter-link" href="#chapter-5">クロノス（3）</a><a class="chapter-link" href="#chapter-6">浜松やらまいか（3）</a><a class="chapter-link" href="#chapter-7">ENISHI（2）</a><a class="chapter-link" href="#chapter-8">ZETA（2）</a><a class="chapter-link" href="#chapter-9">BIGBANG（1）</a><a class="chapter-link" href="#chapter-10">ETOILE（1）</a><a class="chapter-link" href="#chapter-11">Revival（1）</a><a class="chapter-link" href="#chapter-12">TRINITY（1）</a><a class="chapter-link" href="#chapter-13">ThunderVolt（1）</a><a class="chapter-link" href="#chapter-14">アトラス（1）</a><a class="chapter-link" href="#chapter-15">ホルス（1）</a><a class="chapter-link" href="#chapter-16">千代田リージョン Diamond（1）</a>
+    </nav>
+  </div>
   <main>
-    <details class="chapter" open>
+    <details class="chapter" id="chapter-0" open>
   <summary>DragonFly（8名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="dragonfly 久米加代子 温活機器導入サポート slonberry20180214@gmail.com 介護施設、鍼灸整体、ピラティス等体に触れるお仕事の方、トリミングサロン">
+  <p class="card-chapter">DragonFly</p>
   <h3>久米加代子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>温活機器導入サポート</dd>
     <dt>メール</dt><dd><a href="mailto:slonberry20180214@gmail.com">slonberry20180214@gmail.com</a></dd>
     <dt>一言</dt><dd>介護施設、鍼灸整体、ピラティス等体に触れるお仕事の方、トリミングサロン</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 今村千絵 身体と心を整えるダイエットコーチング tarepannda.20081514@gmail.com 100人無料分析実施中ご協力頂ける方">
+  <p class="card-chapter">DragonFly</p>
   <h3>今村千絵</h3>
   <dl>
     <dt>カテゴリ</dt><dd>身体と心を整えるダイエットコーチング</dd>
     <dt>メール</dt><dd><a href="mailto:tarepannda.20081514@gmail.com">tarepannda.20081514@gmail.com</a></dd>
     <dt>一言</dt><dd>100人無料分析実施中ご協力頂ける方</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 今西俊明 飲食店向け集客アプリ t-imanishi@ail-c.com 金の卵:地元飲食店、金のガチョウ:飲食店の繋がりがある人、趣味:ゴルフ">
+  <p class="card-chapter">DragonFly</p>
   <h3>今西俊明</h3>
   <dl>
     <dt>カテゴリ</dt><dd>飲食店向け集客アプリ</dd>
     <dt>メール</dt><dd><a href="mailto:t-imanishi@ail-c.com">t-imanishi@ail-c.com</a></dd>
     <dt>一言</dt><dd>金の卵:地元飲食店、金のガチョウ:飲食店の繋がりがある人、趣味:ゴルフ</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 原田里織 店舗・施設集客を高めるデジタルサイネージ white.banbi.2022@gmail.com デジタルサイネージのメーカーです。サイネージの販売代理店募集をしています！！看板屋さん・電気工事の方と繋がりたいです！！">
+  <p class="card-chapter">DragonFly</p>
   <h3>原田里織</h3>
   <dl>
     <dt>カテゴリ</dt><dd>店舗・施設集客を高めるデジタルサイネージ</dd>
     <dt>メール</dt><dd><a href="mailto:white.banbi.2022@gmail.com">white.banbi.2022@gmail.com</a></dd>
     <dt>一言</dt><dd>デジタルサイネージのメーカーです。サイネージの販売代理店募集をしています！！看板屋さん・電気工事の方と繋がりたいです！！</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 増本重孝 虫が建物に近寄らない害虫ブロック yspaint0122@gmail.com 平日遊んでくれる人">
+  <p class="card-chapter">DragonFly</p>
   <h3>増本重孝</h3>
   <dl>
     <dt>カテゴリ</dt><dd>虫が建物に近寄らない害虫ブロック</dd>
     <dt>メール</dt><dd><a href="mailto:yspaint0122@gmail.com">yspaint0122@gmail.com</a></dd>
     <dt>一言</dt><dd>平日遊んでくれる人</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 山本洸太 デザインに強いweb制作 kota@quolia.jp デザイン会社と今回お集まりいただく居酒屋を経営しております。デザインでお困りの方いらっしゃったらお力になれるかもしれません。よろしくお願いいたします。">
+  <p class="card-chapter">DragonFly</p>
   <h3>山本洸太</h3>
   <dl>
     <dt>カテゴリ</dt><dd>デザインに強いWEB制作</dd>
     <dt>メール</dt><dd><a href="mailto:kota@quolia.jp">kota@quolia.jp</a></dd>
     <dt>一言</dt><dd>デザイン会社と今回お集まりいただく居酒屋を経営しております。デザインでお困りの方いらっしゃったらお力になれるかもしれません。よろしくお願いいたします。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 山本葉子 ビジネス特化型クレジットカード yoko.yamamoto.6200@idemitsu.com 最近使ってるカードのサービスがいまいちになったと感じている方のご相談にのります。">
+  <p class="card-chapter">DragonFly</p>
   <h3>山本葉子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>ビジネス特化型クレジットカード</dd>
     <dt>メール</dt><dd><a href="mailto:yoko.yamamoto.6200@idemitsu.com">yoko.yamamoto.6200@idemitsu.com</a></dd>
     <dt>一言</dt><dd>最近使ってるカードのサービスがいまいちになったと感じている方のご相談にのります。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="dragonfly 次廣淳 ai業務改善システム構築 tugi@tugilo.com システムエンジニア歴26年。お困りごとの言語化が得意。あったらいいなを実現します。">
+  <p class="card-chapter">DragonFly</p>
   <h3>次廣淳</h3>
   <dl>
     <dt>カテゴリ</dt><dd>AI業務改善システム構築</dd>
@@ -91,44 +252,50 @@
     <dt>一言</dt><dd>システムエンジニア歴26年。お困りごとの言語化が得意。あったらいいなを実現します。</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-1" open>
   <summary>インフィニティー（6名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="インフィニティー 三原あゆみ 食用油ろ過システム m.ayumi12190214@gmail.com 沢山お名刺交換できること楽しみにしております！">
+  <p class="card-chapter">インフィニティー</p>
   <h3>三原あゆみ</h3>
   <dl>
     <dt>カテゴリ</dt><dd>食用油ろ過システム</dd>
     <dt>メール</dt><dd><a href="mailto:m.ayumi12190214@gmail.com">m.ayumi12190214@gmail.com</a></dd>
     <dt>一言</dt><dd>沢山お名刺交換できること楽しみにしております！</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インフィニティー 三原直也 notionによる生産性向上支援 mihara_n@nomore-inc.com まずは仲良くなれれば">
+  <p class="card-chapter">インフィニティー</p>
   <h3>三原直也</h3>
   <dl>
     <dt>カテゴリ</dt><dd>Notionによる生産性向上支援</dd>
     <dt>メール</dt><dd><a href="mailto:mihara_n@nomore-inc.com">mihara_n@nomore-inc.com</a></dd>
     <dt>一言</dt><dd>まずは仲良くなれれば</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インフィニティー 加藤 翼 フルオーダースーツの仕立て t.k.0928@icloud.com 洋服にこだわりがあり、一生物のスーツを仕立てたい方">
+  <p class="card-chapter">インフィニティー</p>
   <h3>加藤 翼</h3>
   <dl>
     <dt>カテゴリ</dt><dd>フルオーダースーツの仕立て</dd>
     <dt>メール</dt><dd><a href="mailto:t.k.0928@icloud.com">t.k.0928@icloud.com</a></dd>
     <dt>一言</dt><dd>洋服にこだわりがあり、一生物のスーツを仕立てたい方</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インフィニティー 古屋 周治 通信サービス（スマホ・wi-fi） tf.llc524@gmail.com 通信で固定費削減お任せください♪">
+  <p class="card-chapter">インフィニティー</p>
   <h3>古屋 周治</h3>
   <dl>
     <dt>カテゴリ</dt><dd>通信サービス（スマホ・Wi-Fi）</dd>
     <dt>メール</dt><dd><a href="mailto:tf.llc524@gmail.com">tf.llc524@gmail.com</a></dd>
     <dt>一言</dt><dd>通信で固定費削減お任せください♪</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インフィニティー 櫻下 奨斗 充填加工 包装加工 lifix.sakurashita@gmail.com 自社商品販売会社">
+  <p class="card-chapter">インフィニティー</p>
   <h3>櫻下 奨斗</h3>
   <dl>
     <dt>カテゴリ</dt><dd>充填加工 包装加工</dd>
     <dt>メール</dt><dd><a href="mailto:lifix.sakurashita@gmail.com">lifix.sakurashita@gmail.com</a></dd>
     <dt>一言</dt><dd>自社商品販売会社</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インフィニティー 鈴木時彦 リフォーム・リノベーション suzuki.tokihiko@cameo.plala.or.jp 賃貸物件をお持ちのオーナー様・不動産会社様やリフォーム･リノベーションをお考えの個人法人様と繋がりたいです。室内外のリフォーム、除草作業もやってます！小さなことでもお任せ下さい！ 趣味はゴルフです。">
+  <p class="card-chapter">インフィニティー</p>
   <h3>鈴木時彦</h3>
   <dl>
     <dt>カテゴリ</dt><dd>リフォーム・リノベーション</dd>
@@ -136,30 +303,34 @@
     <dt>一言</dt><dd>賃貸物件をお持ちのオーナー様・不動産会社様やリフォーム･リノベーションをお考えの個人法人様と繋がりたいです。室内外のリフォーム、除草作業もやってます！小さなことでもお任せ下さい！ 趣味はゴルフです。</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-2" open>
   <summary>アクセル（4名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="アクセル 中島幸樹 超★顧客体験デザイナー xxx.bloom.garden.xxx@gmail.com 公式lineを中心とした販売動線の構築をしています！水樹奈々に会いたくて生きてます">
+  <p class="card-chapter">アクセル</p>
   <h3>中島幸樹</h3>
   <dl>
     <dt>カテゴリ</dt><dd>超★顧客体験デザイナー</dd>
     <dt>メール</dt><dd><a href="mailto:xxx.bloom.garden.xxx@gmail.com">xxx.bloom.garden.xxx@gmail.com</a></dd>
     <dt>一言</dt><dd>公式LINEを中心とした販売動線の構築をしています！水樹奈々に会いたくて生きてます</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="アクセル 中村謙介 弁護士 nkmr.k@wish.ocn.ne.jp お酒が大好きです。">
+  <p class="card-chapter">アクセル</p>
   <h3>中村謙介</h3>
   <dl>
     <dt>カテゴリ</dt><dd>弁護士</dd>
     <dt>メール</dt><dd><a href="mailto:nkmr.k@wish.ocn.ne.jp">nkmr.k@wish.ocn.ne.jp</a></dd>
     <dt>一言</dt><dd>お酒が大好きです。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="アクセル 玉川博己 がん検査キット販売 h-tamagawa@hoken-takumi.com 全国の損保系保険代理店経営者とお話ししたいです。 26社の生損保険会社を取り扱い、その他健康商材も紹介しております。">
+  <p class="card-chapter">アクセル</p>
   <h3>玉川博己</h3>
   <dl>
     <dt>カテゴリ</dt><dd>がん検査キット販売</dd>
     <dt>メール</dt><dd><a href="mailto:h-tamagawa@hoken-takumi.com">h-tamagawa@hoken-takumi.com</a></dd>
     <dt>一言</dt><dd>全国の損保系保険代理店経営者とお話ししたいです。 26社の生損保険会社を取り扱い、その他健康商材も紹介しております。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="アクセル 高野千恵 婚活コーディネーター chie-takano@outlook.jp 全国対応の結婚相談所を運営しています。皆さんとお繋がりになれるのを楽しみにしています！よろしくお願いします！">
+  <p class="card-chapter">アクセル</p>
   <h3>高野千恵</h3>
   <dl>
     <dt>カテゴリ</dt><dd>婚活コーディネーター</dd>
@@ -167,30 +338,34 @@
     <dt>一言</dt><dd>全国対応の結婚相談所を運営しています。皆さんとお繋がりになれるのを楽しみにしています！よろしくお願いします！</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-3" open>
   <summary>インテグラル（4名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="インテグラル 井出典子 まつげエクステ jicyan0919@icloud.com 色々な方と、繋がれたら嬉しいです(^^)筋トレが趣味です♪">
+  <p class="card-chapter">インテグラル</p>
   <h3>井出典子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>まつげエクステ</dd>
     <dt>メール</dt><dd><a href="mailto:jicyan0919@icloud.com">jicyan0919@icloud.com</a></dd>
     <dt>一言</dt><dd>色々な方と、繋がれたら嬉しいです(^^)筋トレが趣味です♪</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インテグラル 伴汐夏 スナック shioka.816@gmail.com カラオケのないスナックなので、仕事の話を話し込みたい時の場として利用して欲しい。店内でチラシ手渡し、事業紹介ができるので宣伝して欲しいことやイベントなどあればご依頼ください。">
+  <p class="card-chapter">インテグラル</p>
   <h3>伴汐夏</h3>
   <dl>
     <dt>カテゴリ</dt><dd>スナック</dd>
     <dt>メール</dt><dd><a href="mailto:shioka.816@gmail.com">shioka.816@gmail.com</a></dd>
     <dt>一言</dt><dd>カラオケのないスナックなので、仕事の話を話し込みたい時の場として利用して欲しい。店内でチラシ手渡し、事業紹介ができるので宣伝して欲しいことやイベントなどあればご依頼ください。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インテグラル 服部一志 営業戦略コンサルタント h.kazushi@kamiyon.co 営業戦略のサポートや、営業マン向けの社内研修などをさせていただいております。よろしくお願いいたします！">
+  <p class="card-chapter">インテグラル</p>
   <h3>服部一志</h3>
   <dl>
     <dt>カテゴリ</dt><dd>営業戦略コンサルタント</dd>
     <dt>メール</dt><dd><a href="mailto:h.kazushi@kamiyon.co">h.kazushi@kamiyon.co</a></dd>
     <dt>一言</dt><dd>営業戦略のサポートや、営業マン向けの社内研修などをさせていただいております。よろしくお願いいたします！</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="インテグラル 榎田 聡一 車買取 unity.kaitori13@gmail.com 社用車を複数台所有している法人さんと繋がりたいです、テニスが趣味で小学生の頃からやってます。よろしくお願いします！">
+  <p class="card-chapter">インテグラル</p>
   <h3>榎田 聡一</h3>
   <dl>
     <dt>カテゴリ</dt><dd>車買取</dd>
@@ -198,23 +373,26 @@
     <dt>一言</dt><dd>社用車を複数台所有している法人さんと繋がりたいです、テニスが趣味で小学生の頃からやってます。よろしくお願いします！</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-4" open>
   <summary>EduTechエデュテック（3名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="edutechエデュテック 左右田幸輝 snsマーケ souda@dotslinesolution.com snsをやりたい方、広告代理店の方">
+  <p class="card-chapter">EduTechエデュテック</p>
   <h3>左右田幸輝</h3>
   <dl>
     <dt>カテゴリ</dt><dd>SNSマーケ</dd>
     <dt>メール</dt><dd><a href="mailto:souda@dotslinesolution.com">souda@dotslinesolution.com</a></dd>
     <dt>一言</dt><dd>SNSをやりたい方、広告代理店の方</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="edutechエデュテック 後藤聡美 楽天市場の商品ページ制作・運用を中心に活動する集客支援デザイナーです。 sachidesign@icloud.com ecで商品を売りたい事業者様、ecコンサル、支援業の方、デザイナーと協業したい方">
+  <p class="card-chapter">EduTechエデュテック</p>
   <h3>後藤聡美</h3>
   <dl>
     <dt>カテゴリ</dt><dd>楽天市場の商品ページ制作・運用を中心に活動する集客支援デザイナーです。</dd>
     <dt>メール</dt><dd><a href="mailto:sachidesign@icloud.com">sachidesign@icloud.com</a></dd>
     <dt>一言</dt><dd>ECで商品を売りたい事業者様、ECコンサル、支援業の方、デザイナーと協業したい方</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="edutechエデュテック 鈴木知恵 lineマーケティング c.suzuki@arc-office.co.jp 趣味はゴルフ">
+  <p class="card-chapter">EduTechエデュテック</p>
   <h3>鈴木知恵</h3>
   <dl>
     <dt>カテゴリ</dt><dd>LINEマーケティング</dd>
@@ -222,23 +400,26 @@
     <dt>一言</dt><dd>趣味はゴルフ</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-5" open>
   <summary>クロノス（3名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="クロノス 山本真也 接骨院 yama.sekkotsuin8.5@gmail.com 同業者、弁護士、健康経営に興味あって福利厚生で接骨院を利用してくれる方、と繋がりたい">
+  <p class="card-chapter">クロノス</p>
   <h3>山本真也</h3>
   <dl>
     <dt>カテゴリ</dt><dd>接骨院</dd>
     <dt>メール</dt><dd><a href="mailto:yama.sekkotsuin8.5@gmail.com">yama.sekkotsuin8.5@gmail.com</a></dd>
     <dt>一言</dt><dd>同業者、弁護士、健康経営に興味あって福利厚生で接骨院を利用してくれる方、と繋がりたい</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="クロノス 能見芽衣子 スキンケア nomimeiko@gmail.com お客様の心と体に寄り添うエステティシャン、ネイリスト、美容師さんと繋がりたいです。">
+  <p class="card-chapter">クロノス</p>
   <h3>能見芽衣子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>スキンケア</dd>
     <dt>メール</dt><dd><a href="mailto:nomimeiko@gmail.com">nomimeiko@gmail.com</a></dd>
     <dt>一言</dt><dd>お客様の心と体に寄り添うエステティシャン、ネイリスト、美容師さんと繋がりたいです。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="クロノス 齊藤 慶太郎 フォトグラファー 広告撮影 フォトスタジオ経営 mauverire22826@gmail.com 仕事用のお写真や記念日撮影など幅広い撮影に対応しますので、ホームページなど写真が必要な方と繋がりたいです！">
+  <p class="card-chapter">クロノス</p>
   <h3>齊藤 慶太郎</h3>
   <dl>
     <dt>カテゴリ</dt><dd>フォトグラファー 広告撮影 フォトスタジオ経営</dd>
@@ -246,23 +427,26 @@
     <dt>一言</dt><dd>仕事用のお写真や記念日撮影など幅広い撮影に対応しますので、ホームページなど写真が必要な方と繋がりたいです！</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-6" open>
   <summary>浜松やらまいか（3名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="浜松やらまいか 伊藤ひろみ 介護 hiromi-lotuslife.623427coco@softbank.ne.jp さくら介護グループ・フランチャイズの静岡本部を運営しております。介護事業を新しい事業の柱にしたい経営者様と繋がりたいです。">
+  <p class="card-chapter">浜松やらまいか</p>
   <h3>伊藤ひろみ</h3>
   <dl>
     <dt>カテゴリ</dt><dd>介護</dd>
     <dt>メール</dt><dd><a href="mailto:hiromi-lotuslife.623427coco@softbank.ne.jp">hiromi-lotuslife.623427coco@softbank.ne.jp</a></dd>
     <dt>一言</dt><dd>さくら介護グループ・フランチャイズの静岡本部を運営しております。介護事業を新しい事業の柱にしたい経営者様と繋がりたいです。</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="浜松やらまいか 大石憲司 水道設備 http-kenji-www@docomo.ne.jp 水まわりリフォーム、水まわり修理24時間365日対応しています。家じゅうウルトラファインバブル代理店やってます">
+  <p class="card-chapter">浜松やらまいか</p>
   <h3>大石憲司</h3>
   <dl>
     <dt>カテゴリ</dt><dd>水道設備</dd>
     <dt>メール</dt><dd><a href="mailto:http-kenji-www@docomo.ne.jp">http-kenji-www@docomo.ne.jp</a></dd>
     <dt>一言</dt><dd>水まわりリフォーム、水まわり修理24時間365日対応しています。家じゅうウルトラファインバブル代理店やってます</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="浜松やらまいか 松下靖 webデザインシステム info@restyle1.com ホームページ制作を検討している方。ec構築を検討している方。印刷・oa機器会社">
+  <p class="card-chapter">浜松やらまいか</p>
   <h3>松下靖</h3>
   <dl>
     <dt>カテゴリ</dt><dd>WEBデザインシステム</dd>
@@ -270,16 +454,18 @@
     <dt>一言</dt><dd>ホームページ制作を検討している方。EC構築を検討している方。印刷・OA機器会社</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-7" open>
   <summary>ENISHI（2名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="enishi 牧田佐奈子 プロポーションカウンセラー holon375510386@gmail.com 外食が多い方男女ともに！お料理大好きな方 補正下着大好きな方">
+  <p class="card-chapter">ENISHI</p>
   <h3>牧田佐奈子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>プロポーションカウンセラー</dd>
     <dt>メール</dt><dd><a href="mailto:holon375510386@gmail.com">holon375510386@gmail.com</a></dd>
     <dt>一言</dt><dd>外食が多い方男女ともに！お料理大好きな方 補正下着大好きな方</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="enishi 種井利江 損害保険 rie.green1025@gmail.com ハラスメントや労務関係のトラブル対策に関心のある経営者の方やその対策や対応に強い社会保険労務、弁護士の方と繋がりたいです。">
+  <p class="card-chapter">ENISHI</p>
   <h3>種井利江</h3>
   <dl>
     <dt>カテゴリ</dt><dd>損害保険</dd>
@@ -287,16 +473,18 @@
     <dt>一言</dt><dd>ハラスメントや労務関係のトラブル対策に関心のある経営者の方やその対策や対応に強い社会保険労務、弁護士の方と繋がりたいです。</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-8" open>
   <summary>ZETA（2名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="zeta ミッチェル メグミ フラワーアレンジ blueinmitchell@gmail.com 静岡の葬祭業、関東、東京の花屋さん">
+  <p class="card-chapter">ZETA</p>
   <h3>ミッチェル メグミ</h3>
   <dl>
     <dt>カテゴリ</dt><dd>フラワーアレンジ</dd>
     <dt>メール</dt><dd><a href="mailto:blueinmitchell@gmail.com">blueinmitchell@gmail.com</a></dd>
     <dt>一言</dt><dd>静岡の葬祭業、関東、東京の花屋さん</dd>
   </dl>
-</article><article class="card">
+</article><article class="card" data-search="zeta 花城一樹 和牛販売 hanashiro.kg@gmail.com スーパー様や同業種(精肉店)、ギフト販売を行っている方">
+  <p class="card-chapter">ZETA</p>
   <h3>花城一樹</h3>
   <dl>
     <dt>カテゴリ</dt><dd>和牛販売</dd>
@@ -304,9 +492,10 @@
     <dt>一言</dt><dd>スーパー様や同業種(精肉店)、ギフト販売を行っている方</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-9" open>
   <summary>BIGBANG（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="bigbang 石川ゆう子 営業代行 reverelation@gmail.com ご縁を価値に変える、営業支援・pr支援の会社です。新規開拓や認知度アップをしたい企業さま、店舗さまと繋がりたいです。">
+  <p class="card-chapter">BIGBANG</p>
   <h3>石川ゆう子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>営業代行</dd>
@@ -314,9 +503,10 @@
     <dt>一言</dt><dd>ご縁を価値に変える、営業支援・PR支援の会社です。新規開拓や認知度アップをしたい企業さま、店舗さまと繋がりたいです。</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-10" open>
   <summary>ETOILE（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="etoile 出雲暖子 サービス名専門商標登録弁理士 shizuoka.danpat@gmail.com 私が考案した防撃スキーム（商標権を活用して売上アップ）を知って欲しいです">
+  <p class="card-chapter">ETOILE</p>
   <h3>出雲暖子</h3>
   <dl>
     <dt>カテゴリ</dt><dd>サービス名専門商標登録弁理士</dd>
@@ -324,9 +514,10 @@
     <dt>一言</dt><dd>私が考案した防撃スキーム（商標権を活用して売上アップ）を知って欲しいです</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-11" open>
   <summary>Revival（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="revival 長橋睦 料理写真 neo@st-shushu.net 広告代理店、デザイナー、アートディレクター">
+  <p class="card-chapter">Revival</p>
   <h3>長橋睦</h3>
   <dl>
     <dt>カテゴリ</dt><dd>料理写真</dd>
@@ -334,9 +525,10 @@
     <dt>一言</dt><dd>広告代理店、デザイナー、アートディレクター</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-12" open>
   <summary>TRINITY（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="trinity 竹田里美 建築業特化営業マン育成 runrunrunne@gmail.com 静岡での繋がりが欲しいです！わんちゃんイベントも島田でやってます！">
+  <p class="card-chapter">TRINITY</p>
   <h3>竹田里美</h3>
   <dl>
     <dt>カテゴリ</dt><dd>建築業特化営業マン育成</dd>
@@ -344,9 +536,10 @@
     <dt>一言</dt><dd>静岡での繋がりが欲しいです！わんちゃんイベントも島田でやってます！</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-13" open>
   <summary>ThunderVolt（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="thundervolt 丸山 修 絶景の温泉宿 maruyama@viewhotel.co.jp 別荘をお探しの方、ワンちゃんと旅行する方">
+  <p class="card-chapter">ThunderVolt</p>
   <h3>丸山 修</h3>
   <dl>
     <dt>カテゴリ</dt><dd>絶景の温泉宿</dd>
@@ -354,9 +547,10 @@
     <dt>一言</dt><dd>別荘をお探しの方、ワンちゃんと旅行する方</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-14" open>
   <summary>アトラス（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="アトラス 飯島伸之 googleビジネスプロフィール運用 nobuyuki.iijima1108@gmail.com meo対策をしています。google口コミが売り上げに影響があるビジネスをしている方と繋がりたいです。趣味はキャンプ、釣り">
+  <p class="card-chapter">アトラス</p>
   <h3>飯島伸之</h3>
   <dl>
     <dt>カテゴリ</dt><dd>Googleビジネスプロフィール運用</dd>
@@ -364,9 +558,10 @@
     <dt>一言</dt><dd>MEO対策をしています。Google口コミが売り上げに影響があるビジネスをしている方と繋がりたいです。趣味はキャンプ、釣り</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-15" open>
   <summary>ホルス（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="ホルス 太田宏信 デザイン会社 ohta@ohdot.jp 店舗集客、デザイン会社">
+  <p class="card-chapter">ホルス</p>
   <h3>太田宏信</h3>
   <dl>
     <dt>カテゴリ</dt><dd>デザイン会社</dd>
@@ -374,9 +569,10 @@
     <dt>一言</dt><dd>店舗集客、デザイン会社</dd>
   </dl>
 </article></div>
-</details><details class="chapter" open>
+</details><details class="chapter" id="chapter-16" open>
   <summary>千代田リージョン Diamond（1名）</summary>
-  <div class="cards"><article class="card">
+  <div class="cards"><article class="card" data-search="千代田リージョン diamond 權田真知子 ゴンダ 若返りインストラクター dogrunboo.x11@i.softbank.jp 犬大好きな方、ヨガ興味ある方、若返りに興味ある方、社員様１００名以上の企業様">
+  <p class="card-chapter">千代田リージョン Diamond</p>
   <h3>權田真知子 ゴンダ</h3>
   <dl>
     <dt>カテゴリ</dt><dd>若返りインストラクター</dd>
@@ -386,5 +582,40 @@
 </article></div>
 </details>
   </main>
+  <button id="top-btn" type="button" aria-label="ページトップへ戻る">▲<br>TOP</button>
+  <script>
+    (function () {
+      var searchInput = document.getElementById("search");
+      var statusEl = document.getElementById("search-status");
+      var chapters = Array.prototype.slice.call(document.querySelectorAll(".chapter"));
+
+      function applySearch() {
+        var query = searchInput.value.trim().toLowerCase();
+        var visibleCards = 0;
+        chapters.forEach(function (chapter) {
+          var chapterCount = 0;
+          chapter.querySelectorAll(".card").forEach(function (card) {
+            var blob = card.getAttribute("data-search") || "";
+            var show = !query || blob.indexOf(query) !== -1;
+            card.hidden = !show;
+            if (show) chapterCount += 1;
+          });
+          chapter.hidden = chapterCount === 0;
+          if (query && chapterCount > 0) chapter.open = true;
+          visibleCards += chapterCount;
+        });
+        if (query) {
+          statusEl.textContent = visibleCards + " 件ヒット（全 43 名）";
+        } else {
+          statusEl.textContent = "";
+        }
+      }
+
+      searchInput.addEventListener("input", applySearch);
+      document.getElementById("top-btn").addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+  </script>
 </body>
 </html>
