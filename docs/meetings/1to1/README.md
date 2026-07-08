@@ -94,6 +94,21 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 - **1ファイル → 1レコード**、`notes` にファイル全文を格納。
 - レコード未存在は **skip**（新規行は手動作成 + 本文に `one_to_ones.id` 追記が必要）。
 
+### 重複防止（必須・2026-07-08 西原海成事例）
+
+**事象:** Zoom 取込で `planned`（例: id=94）ができたあと、別途手動で `completed`（例: id=105）を作り、**同一面談が2行**になった。
+
+| 順序 | やること | やってはいけないこと |
+|------|----------|----------------------|
+| 1 | Zoom 調整 → できた **`one_to_ones.id` を正**とする | 同じ日・同相手でもう1行作る |
+| 2 | 実施後、**同 id** を `completed` + 開始/終了時刻 | 議事録用に新規 id を発行 |
+| 3 | Markdown 【第N回】に **その id** を書く | id 未確認のまま import |
+| 4 | `import-1to1-notes` で **既存 id の notes のみ更新** | import で新規行を期待する |
+
+**重複発見時:** `notes` / `completed` / Markdown 参照側を残し、Zoom 側の `zoom_meeting_id` を移して **`planned` 空行を削除**。`zoom_meeting_imports.one_to_one_id` も残す行へ付け替え。議事録に統合メモを1行残す。
+
+**確認コマンド（相手 `members.id` 既知）:** `one_to_ones` を `target_member_id` で一覧し、同一 `scheduled_at` 日が2件以上ないか見る（Cursor ルール: `.cursor/rules/1to1-dedup.mdc`）。
+
 ### 複数回ある相手（SPEC-019・未実装）
 
 第2回以降は現状 **手動**で `one_to_ones` を追加し、各 `### 【第N回】` ブロックに id を書いてから import する。

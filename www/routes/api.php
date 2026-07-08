@@ -128,11 +128,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/one-to-ones/{oneToOne}/referral-suggestions', [OneToOneReferralSuggestionController::class, 'index']);
     Route::patch('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}', [OneToOneReferralSuggestionController::class, 'update']);
     Route::post('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}/register-introduction', [OneToOneReferralSuggestionController::class, 'registerIntroduction']);
+    Route::post('/one-to-one-referral-suggestions/{oneToOneReferralSuggestion}/generate-connect-copy', [OneToOneReferralSuggestionController::class, 'generateConnectCopy']);
 
     Route::post('/meetings/{meeting}/referral-suggestions/generate', [MeetingReferralSuggestionController::class, 'generate']);
     Route::get('/meetings/{meeting}/referral-suggestions', [MeetingReferralSuggestionController::class, 'index']);
     Route::patch('/meeting-referral-suggestions/{meetingReferralSuggestion}', [MeetingReferralSuggestionController::class, 'update']);
     Route::post('/meeting-referral-suggestions/{meetingReferralSuggestion}/register-introduction', [MeetingReferralSuggestionController::class, 'registerIntroduction']);
+    Route::post('/meeting-referral-suggestions/{meetingReferralSuggestion}/generate-connect-copy', [MeetingReferralSuggestionController::class, 'generateConnectCopy']);
 
     /*
     |--------------------------------------------------------------------------

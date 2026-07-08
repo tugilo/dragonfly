@@ -280,6 +280,7 @@ export function ReferralSuggestionDialogCore({
                     onSuggestionUpdated={handleSuggestionUpdated}
                     defaultIntroducedAt={defaultIntroducedAt}
                     subjectLabel={subtitle || title}
+                    aiReady={aiReady}
                 />
             </DialogContent>
             <DialogActions>

@@ -67,6 +67,13 @@ $COMPOSE exec app php artisan dragonfly:import-1to1-notes docs/meetings/1to1/ --
 
 - 突合: front matter の `one_to_ones.id` または notes 内 source path
 
+### 重複防止（import 前に必ず）
+
+1. **Zoom 1to1 調整済み** → 既に `one_to_ones` 行（多くは `planned`）がある。**その id を Markdown に書く。新規行を作らない。**
+2. 面談後 → **同 id** を `completed` + 開始/終了時刻。議事録 Markdown 作成。
+3. `import-1to1-notes` は **既存 id の notes 更新のみ**（未存在 id は skip）。
+4. 同一 `target_member_id` + 同日に **2行以上**あれば統合してから import（手順: `docs/meetings/1to1/README.md` §重複防止、`.cursor/rules/1to1-dedup.mdc`）。
+
 ## 参加者 CSV
 
 ```bash
