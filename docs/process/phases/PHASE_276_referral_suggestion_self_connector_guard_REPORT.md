@@ -17,7 +17,7 @@
 
 ## Current Status
 
-in_progress（実装・テスト完了、merge 未実施）
+completed（develop merge 済み）
 
 ## Decisions
 
@@ -39,7 +39,7 @@ in_progress（実装・テスト完了、merge 未実施）
 | 既存 #39 の扱い | OK — `dismissed` 更新 |
 | test | OK — 590 passed / 2161 assertions |
 | React build | 対象外（`www/resources/js` 変更なし） |
-| Merge Evidence | 未実施 |
+| Merge Evidence | OK |
 
 ## Test Results
 
@@ -51,5 +51,33 @@ in_progress（実装・テスト完了、merge 未実施）
 
 ## Merge Evidence
 
-未実施。実装完了後に記録する。
+```
+merge commit id: c6132365aa4a1e7d8dacbc79c0faaf4afb921c53
+source branch: feature/phase276-referral-self-connector-guard
+target branch: develop
+phase id: 276
+phase type: implement
+related ssot: SPEC-015, SPEC-016, SPEC-022, REFERRAL_SUGGESTION_COMMON
+test command: php artisan test
+test result: 590 passed (2161 assertions)
+changed files:
+docs/INDEX.md
+docs/SSOT/FIT_AND_GAP_REFERRAL_SUGGESTION_SELF_CONNECTOR.md
+docs/dragonfly_progress.md
+docs/meetings/1to1/1to1_kainuma_isao_financial_intelligence.md
+docs/process/PHASE_REGISTRY.md
+docs/process/phases/PHASE_275_kainuma_isao_121_minutes_PLAN.md
+docs/process/phases/PHASE_275_kainuma_isao_121_minutes_REPORT.md
+docs/process/phases/PHASE_275_kainuma_isao_121_minutes_WORKLOG.md
+docs/process/phases/PHASE_276_referral_suggestion_self_connector_guard_PLAN.md
+docs/process/phases/PHASE_276_referral_suggestion_self_connector_guard_REPORT.md
+docs/process/phases/PHASE_276_referral_suggestion_self_connector_guard_WORKLOG.md
+www/app/Services/Ai/ReferralSuggestionAiService.php
+www/app/Services/Religo/ReferralSuggestionPayloadNormalizer.php
+www/database/sync/dragonfly.sql
+www/tests/Unit/Religo/ReferralSuggestionViaConnectorNormalizerTest.php
+scope check: OK
+ssot check: OK
+dod check: OK
+```
 
