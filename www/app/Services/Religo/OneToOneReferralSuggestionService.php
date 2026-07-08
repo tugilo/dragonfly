@@ -33,32 +33,40 @@ class OneToOneReferralSuggestionService
         User $user,
         UserAiCredential $credential,
         string $contextMode = 'relationship',
+        bool $force = false,
     ): array {
         $this->assertGeneratable($oneToOne);
 
         $contextMode = $contextMode === 'document' ? 'document' : 'relationship';
 
         return $contextMode === 'document'
-            ? $this->generateDocumentMode($oneToOne, $user, $credential)
-            : $this->generateRelationshipMode($oneToOne, $user, $credential);
+            ? $this->generateDocumentMode($oneToOne, $user, $credential, $force)
+            : $this->generateRelationshipMode($oneToOne, $user, $credential, $force);
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function generateDocumentMode(OneToOne $oneToOne, User $user, UserAiCredential $credential): array
-    {
+    private function generateDocumentMode(
+        OneToOne $oneToOne,
+        User $user,
+        UserAiCredential $credential,
+        bool $force = false,
+    ): array {
         $notes = trim((string) $oneToOne->notes);
         $digest = ReferralSuggestionDigest::digest($notes);
         $charCount = ReferralSuggestionDigest::charCount($notes);
 
-        $existing = OneToOneReferralSuggestionRun::query()
-            ->where('one_to_one_id', $oneToOne->id)
-            ->where('owner_member_id', $user->owner_member_id)
-            ->where('context_mode', 'document')
-            ->where('notes_digest', $digest)
-            ->orderByDesc('id')
-            ->first();
+        $existing = null;
+        if (! $force) {
+            $existing = OneToOneReferralSuggestionRun::query()
+                ->where('one_to_one_id', $oneToOne->id)
+                ->where('owner_member_id', $user->owner_member_id)
+                ->where('context_mode', 'document')
+                ->where('notes_digest', $digest)
+                ->orderByDesc('id')
+                ->first();
+        }
 
         if ($existing !== null) {
             $existing->load('suggestions');
@@ -109,8 +117,12 @@ class OneToOneReferralSuggestionService
     /**
      * @return array<string, mixed>
      */
-    private function generateRelationshipMode(OneToOne $oneToOne, User $user, UserAiCredential $credential): array
-    {
+    private function generateRelationshipMode(
+        OneToOne $oneToOne,
+        User $user,
+        UserAiCredential $credential,
+        bool $force = false,
+    ): array {
         $notes = trim((string) $oneToOne->notes);
         $notesDigest = ReferralSuggestionDigest::digest($notes);
         $charCount = ReferralSuggestionDigest::charCount($notes);
@@ -119,13 +131,16 @@ class OneToOneReferralSuggestionService
         $pack = $this->contextBuilder->buildForOneToOne($oneToOne, $requesterId);
         $contextDigest = $pack['digest'];
 
-        $existing = OneToOneReferralSuggestionRun::query()
-            ->where('one_to_one_id', $oneToOne->id)
-            ->where('owner_member_id', $user->owner_member_id)
-            ->where('context_mode', 'relationship')
-            ->where('context_digest', $contextDigest)
-            ->orderByDesc('id')
-            ->first();
+        $existing = null;
+        if (! $force) {
+            $existing = OneToOneReferralSuggestionRun::query()
+                ->where('one_to_one_id', $oneToOne->id)
+                ->where('owner_member_id', $user->owner_member_id)
+                ->where('context_mode', 'relationship')
+                ->where('context_digest', $contextDigest)
+                ->orderByDesc('id')
+                ->first();
+        }
 
         if ($existing !== null) {
             $existing->load('suggestions');

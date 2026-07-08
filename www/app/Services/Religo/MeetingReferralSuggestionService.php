@@ -35,6 +35,7 @@ class MeetingReferralSuggestionService
         User $user,
         UserAiCredential $credential,
         string $contextMode = 'relationship',
+        bool $force = false,
     ): array {
         $minute = $this->resolveMinute($meeting);
         $this->assertGeneratable($minute);
@@ -42,8 +43,8 @@ class MeetingReferralSuggestionService
         $contextMode = $contextMode === 'document' ? 'document' : 'relationship';
 
         return $contextMode === 'document'
-            ? $this->generateDocumentMode($meeting, $minute, $user, $credential)
-            : $this->generateRelationshipMode($meeting, $minute, $user, $credential);
+            ? $this->generateDocumentMode($meeting, $minute, $user, $credential, $force)
+            : $this->generateRelationshipMode($meeting, $minute, $user, $credential, $force);
     }
 
     /**
@@ -54,19 +55,23 @@ class MeetingReferralSuggestionService
         MeetingMinute $minute,
         User $user,
         UserAiCredential $credential,
+        bool $force = false,
     ): array {
         $body = trim((string) $minute->body_markdown);
         $digest = ReferralSuggestionDigest::digest($body);
         $charCount = ReferralSuggestionDigest::charCount($body);
         $workspaceId = ReligoActorContext::resolveWorkspaceIdForUser($user);
 
-        $existing = MeetingReferralSuggestionRun::query()
-            ->where('meeting_id', $meeting->id)
-            ->where('owner_member_id', $user->owner_member_id)
-            ->where('context_mode', 'document')
-            ->where('body_digest', $digest)
-            ->orderByDesc('id')
-            ->first();
+        $existing = null;
+        if (! $force) {
+            $existing = MeetingReferralSuggestionRun::query()
+                ->where('meeting_id', $meeting->id)
+                ->where('owner_member_id', $user->owner_member_id)
+                ->where('context_mode', 'document')
+                ->where('body_digest', $digest)
+                ->orderByDesc('id')
+                ->first();
+        }
 
         if ($existing !== null) {
             $existing->load('suggestions');
@@ -130,6 +135,7 @@ class MeetingReferralSuggestionService
         MeetingMinute $minute,
         User $user,
         UserAiCredential $credential,
+        bool $force = false,
     ): array {
         $body = trim((string) $minute->body_markdown);
         $bodyDigest = ReferralSuggestionDigest::digest($body);
@@ -141,13 +147,16 @@ class MeetingReferralSuggestionService
         $pack = $this->contextBuilder->buildForMeeting($meeting, $minute, $requesterId, $workspaceId, $participants);
         $contextDigest = $pack['digest'];
 
-        $existing = MeetingReferralSuggestionRun::query()
-            ->where('meeting_id', $meeting->id)
-            ->where('owner_member_id', $user->owner_member_id)
-            ->where('context_mode', 'relationship')
-            ->where('context_digest', $contextDigest)
-            ->orderByDesc('id')
-            ->first();
+        $existing = null;
+        if (! $force) {
+            $existing = MeetingReferralSuggestionRun::query()
+                ->where('meeting_id', $meeting->id)
+                ->where('owner_member_id', $user->owner_member_id)
+                ->where('context_mode', 'relationship')
+                ->where('context_digest', $contextDigest)
+                ->orderByDesc('id')
+                ->first();
+        }
 
         if ($existing !== null) {
             $existing->load('suggestions');

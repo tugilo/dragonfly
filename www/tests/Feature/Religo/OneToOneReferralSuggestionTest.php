@@ -141,6 +141,62 @@ class OneToOneReferralSuggestionTest extends TestCase
         Http::assertNothingSent();
     }
 
+    public function test_force_regenerate_creates_new_run_with_same_digest(): void
+    {
+        Sanctum::actingAs($this->user);
+        UserAiCredential::create([
+            'user_id' => $this->user->id, 'ai_enabled' => true, 'provider' => 'openai',
+            'api_key' => 'sk-test', 'is_active' => true,
+        ]);
+
+        $digest = ReferralSuggestionDigest::digest((string) $this->completed->notes);
+        $run = OneToOneReferralSuggestionRun::create([
+            'one_to_one_id' => $this->completed->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'notes_digest' => $digest,
+            'notes_char_count' => 10,
+            'generator' => 'ai_openai',
+            'created_at' => now(),
+        ]);
+        OneToOneReferralSuggestion::create([
+            'run_id' => $run->id,
+            'one_to_one_id' => $this->completed->id,
+            'direction' => 'unclear',
+            'summary' => 'existing',
+            'confidence' => 'low',
+            'status' => 'pending',
+        ]);
+
+        $json = json_encode([
+            'suggestions' => [[
+                'direction' => 'owner_to_target',
+                'summary' => 'forced regenerate',
+                'rationale' => 'test',
+                'quality_notes' => [],
+                'suggested_from_member_id' => $this->ownerId,
+                'suggested_to_member_id' => null,
+                'suggested_to_label' => '新しい候補',
+                'confidence' => 'medium',
+            ]],
+        ], JSON_UNESCAPED_UNICODE);
+
+        Http::fake(['api.openai.com/*' => Http::response([
+            'choices' => [['message' => ['content' => $json]]],
+        ], 200)]);
+
+        $res = $this->postJson("/api/one-to-ones/{$this->completed->id}/referral-suggestions/generate", [
+            'force' => true,
+        ])
+            ->assertCreated()
+            ->assertJsonPath('reused_existing_run', false);
+
+        $this->assertNotSame($run->id, $res->json('run.id'));
+        $this->assertSame('forced regenerate', $res->json('suggestions.0.summary'));
+        $this->assertDatabaseCount('one_to_one_referral_suggestion_runs', 2);
+        Http::assertSentCount(1);
+    }
+
     public function test_planned_one_to_one_rejected(): void
     {
         Sanctum::actingAs($this->user);

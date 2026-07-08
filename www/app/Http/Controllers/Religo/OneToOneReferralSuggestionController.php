@@ -45,9 +45,10 @@ class OneToOneReferralSuggestionController extends Controller
         if (! in_array($contextMode, ['relationship', 'document'], true)) {
             $contextMode = 'relationship';
         }
+        $force = filter_var($request->input('force', false), FILTER_VALIDATE_BOOLEAN);
 
         try {
-            $payload = $this->service->generate($oneToOne, $user, $cred, $contextMode);
+            $payload = $this->service->generate($oneToOne, $user, $cred, $contextMode, $force);
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

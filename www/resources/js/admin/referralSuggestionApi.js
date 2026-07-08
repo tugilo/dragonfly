@@ -97,11 +97,11 @@ export async function patchReferralCorpusSettings(payload) {
     return data;
 }
 
-export async function generateOneToOneReferralSuggestions(oneToOneId, contextMode = 'relationship') {
+export async function generateOneToOneReferralSuggestions(oneToOneId, contextMode = 'relationship', force = false) {
     const res = await religoFetch(`/api/one-to-ones/${oneToOneId}/referral-suggestions/generate`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ context_mode: contextMode }),
+        body: JSON.stringify({ context_mode: contextMode, force: Boolean(force) }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
@@ -122,11 +122,11 @@ export async function fetchMeetingReferralSuggestions(meetingId, runId) {
     return data;
 }
 
-export async function generateMeetingReferralSuggestions(meetingId, contextMode = 'relationship') {
+export async function generateMeetingReferralSuggestions(meetingId, contextMode = 'relationship', force = false) {
     const res = await religoFetch(`/api/meetings/${meetingId}/referral-suggestions/generate`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ context_mode: contextMode }),
+        body: JSON.stringify({ context_mode: contextMode, force: Boolean(force) }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {

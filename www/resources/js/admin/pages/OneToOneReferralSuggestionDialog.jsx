@@ -18,9 +18,9 @@ export function OneToOneReferralSuggestionDialog({ open, onClose, record }) {
         [oneToOneId],
     );
 
-    const generateSuggestions = useCallback(() => {
+    const generateSuggestions = useCallback((force = false) => {
         if (!oneToOneId) return Promise.reject(new Error('1 to 1 ID がありません'));
-        return generateOneToOneReferralSuggestions(oneToOneId);
+        return generateOneToOneReferralSuggestions(oneToOneId, 'relationship', force);
     }, [oneToOneId]);
 
     const title = record?.target_name

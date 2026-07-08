@@ -100,8 +100,9 @@ export function ReferralSuggestionDialogCore({
     const handleGenerate = async () => {
         setGenerating(true);
         setError(null);
+        const isRegenerate = Boolean(payload?.run);
         try {
-            const data = await generateSuggestions();
+            const data = await generateSuggestions(isRegenerate);
             setPayload(data);
             if (data?.run?.id != null) {
                 setSelectedRunId(String(data.run.id));
@@ -110,7 +111,9 @@ export function ReferralSuggestionDialogCore({
             notify(
                 reused
                     ? '同一内容の提案 run を再利用しました'
-                    : 'リファーラル提案を生成しました',
+                    : isRegenerate
+                        ? 'リファーラル提案を再生成しました'
+                        : 'リファーラル提案を生成しました',
                 { type: 'success' },
             );
         } catch (e) {
