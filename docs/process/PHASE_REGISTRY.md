@@ -275,6 +275,9 @@
 | 274 | リファーラル提案 — 紹介文作成（つなぐ準備・候補行ごとコピペ・A/B 手動指定・SPEC-022） | implement | completed | develop（merge 27a6449） | 2026-07-08 |
 | 275 | 海沼功 第1回121 Zoom要約反映（Financial Intelligence／AI補助金申請自動化・ライフプラン支援） | docs | completed | develop（commit / merge 未実施） | 2026-07-08 |
 | 276 | リファーラル提案 — 自己つなぎ手誤提案ガード（via_connector の requester=connector 防止・Fit&Gap） | implement | completed | develop（merge c613236）/ main | 2026-07-08 |
+| 277 | 静岡合同懇親会 参加者名簿要件整理 | docs | completed | develop（merge b3d11ff） | 2026-07-08 |
+| 278 | 静岡合同懇親会 参加者名簿作成（CSV・A4 PDF/HTML・スマホ HTML） | docs | completed | develop（merge b3d11ff） | 2026-07-08 |
+| 279 | リファーラル提案 — 再生成 force（同一 digest でも新 run・121/定例会） | implement | completed | develop（merge 7093b2a） | 2026-07-08 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

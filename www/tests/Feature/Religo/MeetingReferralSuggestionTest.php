@@ -144,6 +144,65 @@ class MeetingReferralSuggestionTest extends TestCase
         $this->assertDatabaseCount('meeting_referral_suggestion_runs', 1);
     }
 
+    public function test_force_regenerate_creates_new_run_with_same_digest(): void
+    {
+        Sanctum::actingAs($this->user);
+        UserAiCredential::create([
+            'user_id' => $this->user->id, 'ai_enabled' => true, 'provider' => 'openai',
+            'api_key' => 'sk-test', 'is_active' => true,
+        ]);
+        $minute = $this->meeting->meetingMinute;
+        $digest = ReferralSuggestionDigest::digest((string) $minute->body_markdown);
+        $run = MeetingReferralSuggestionRun::create([
+            'meeting_id' => $this->meeting->id,
+            'meeting_minute_id' => $minute->id,
+            'owner_member_id' => $this->ownerId,
+            'workspace_id' => $this->workspaceId,
+            'body_digest' => $digest,
+            'body_char_count' => 10,
+            'generator' => 'ai_openai',
+            'created_at' => now(),
+        ]);
+        MeetingReferralSuggestion::create([
+            'run_id' => $run->id,
+            'meeting_id' => $this->meeting->id,
+            'source_section' => 'other',
+            'direction' => 'unclear',
+            'summary' => 'cached',
+            'confidence' => 'low',
+            'status' => 'pending',
+        ]);
+
+        $json = json_encode([
+            'suggestions' => [[
+                'source_section' => 'main_presentation',
+                'direction' => 'subject_seeks_intros',
+                'summary' => 'forced meeting regenerate',
+                'rationale' => 'test',
+                'quality_notes' => [],
+                'suggested_from_member_id' => $this->ownerId,
+                'suggested_to_member_id' => null,
+                'suggested_to_label' => '新候補',
+                'confidence' => 'medium',
+            ]],
+        ], JSON_UNESCAPED_UNICODE);
+
+        Http::fake(['api.openai.com/*' => Http::response([
+            'choices' => [['message' => ['content' => $json]]],
+        ], 200)]);
+
+        $res = $this->postJson("/api/meetings/{$this->meeting->id}/referral-suggestions/generate", [
+            'force' => true,
+        ])
+            ->assertCreated()
+            ->assertJsonPath('reused_existing_run', false);
+
+        $this->assertNotSame($run->id, $res->json('run.id'));
+        $this->assertSame('forced meeting regenerate', $res->json('suggestions.0.summary'));
+        $this->assertDatabaseCount('meeting_referral_suggestion_runs', 2);
+        Http::assertSentCount(1);
+    }
+
     public function test_patch_deferred(): void
     {
         Sanctum::actingAs($this->user);
