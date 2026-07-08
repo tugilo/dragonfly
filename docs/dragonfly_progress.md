@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-08 19:44 JST | **Phase 278 静岡合同懇親会 参加者名簿作成:** Google フォーム回答 43名を正規化し [`pdf/260709/`](pdf/260709/) に CSV・A4 印刷 HTML/PDF・スマホ HTML を生成。チャプター順: DragonFly 8名 → インフィニティー 6名 → …（17チャプター）。生成: [`generate_roster.py`](pdf/260709/generate_roster.py)。 |
+| 2026-07-08 18:22 JST | **Phase 277 静岡合同懇親会 参加者名簿要件整理:** Google フォーム回答から A4 印刷用・スマホ閲覧用の参加者名簿を作る要件を [`requirements/bni_shizuoka_joint_social_roster_requirements.md`](requirements/bni_shizuoka_joint_social_roster_requirements.md) に整理。チャプター別参加者数順、チャプター内参加者名順、`その他` チャプターの実効名、メールアドレスを含む個人情報の公開範囲、未確認事項を記録。 |
 | 2026-07-08 14:52 JST | **Phase 276 リファーラル提案 自己つなぎ手誤提案ガード実装:** `via_connector` の requester=connector / from=to を Normalizer で reject、AI prompt を補強、通常社外紹介の `suggested_contact_label` fallback を追加。既存誤提案 `one_to_one_referral_suggestions.id=39` は `dismissed` 更新。検証: `php artisan test` **590 passed (2161 assertions)**。 |
 | 2026-07-08 14:41 JST | **Phase 276 リファーラル提案 自己つなぎ手誤提案 Fit&Gap / PLAN:** 海沼功 121 の `run #19` で `via_connector` が `from=37 / to=37` になった事象を [`FIT_AND_GAP_REFERRAL_SUGGESTION_SELF_CONNECTOR.md`](SSOT/FIT_AND_GAP_REFERRAL_SUGGESTION_SELF_CONNECTOR.md) に整理し、[`PHASE_276_referral_suggestion_self_connector_guard_PLAN.md`](process/phases/PHASE_276_referral_suggestion_self_connector_guard_PLAN.md) を作成。 |
 | 2026-07-08 14:35 JST | **Phase 275 海沼功 121 本番DB反映:** ローカルDBの `one_to_ones.id=110`（2026-07-08 JST 13:00–14:00、completed、notes反映済み）を本番 `religo_app` へ反映。事前テスト `587 passed (2156 assertions)`。remote backup: `backups/prod_20260708_143527.sql`。 |
