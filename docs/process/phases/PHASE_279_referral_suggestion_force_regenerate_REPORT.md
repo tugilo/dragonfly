@@ -13,7 +13,7 @@
 
 ## Current Status
 
-completed（feature commit 済み / develop merge 後に Merge Evidence 更新）
+completed（develop merge 済み 2026-07-08 20:12 JST）
 
 ## DoD Check
 
@@ -36,7 +36,7 @@ npm run build — OK
 ## Merge Evidence
 
 ```
-merge commit id: 未実施
+merge commit id: 7093b2aef5fcc44e3a3dabd83cf07e073573303d
 source branch: feature/phase279-referral-suggestion-force-regenerate
 target branch: develop
 phase id: 279
