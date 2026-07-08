@@ -18,6 +18,7 @@ class ReferralSuggestionAiService
     private const EXTERNAL_ONLY_RULE = <<<'TXT'
 【禁止】同章（名簿）のメンバー同士を「紹介」「1 to 1 すべき」として提案しない。定例会で既に接続済みのため。
 【許可】① 議事録の社外紹介先（suggested_to_member_id は null、suggested_to_label に業種像）② via_connector（つなぎ手 A の社外 contact B → 依頼者へ。connector_member_id は名簿の実 ID）
+【禁止】via_connector の connector_member_id に requester_member_id（依頼者本人）を入れない。connector A は requester 以外の章内メンバーで、根拠コーパスに登場する人物に限る。
 TXT;
 
     public function __construct(
@@ -89,7 +90,7 @@ TXT;
             self::EXTERNAL_ONLY_RULE,
             '',
             '横断コーパスは **社外紹介・つなぎ手経由の発見**に使う（他者 121 に書かれた A の顧客・紹介希望など）。',
-            '- via_connector: connector_member_id=A, suggested_to_member_id=依頼者, suggested_contact_label=B（必須）',
+            '- via_connector: connector_member_id=A（requester 以外の章内メンバー）, suggested_to_member_id=依頼者, suggested_contact_label=B（必須）',
             '- 議事録に明示された社外紹介: direction=owner_to_target 等、suggested_to_label のみ（to_member_id は null）',
             '- subject_should_meet / match_member_id / 名簿メンバー同士の紹介は出力しない',
         ]);
@@ -207,6 +208,7 @@ TXT;
             'スキーマ:',
             '{"suggestions":[{"direction":"owner_to_target|target_to_owner|mutual|unclear|via_connector","corpus_source":"self|member_network","summary":"...","rationale":"引用 121# / 定例会","quality_notes":[],"connector_member_id":null,"suggested_from_member_id":null,"suggested_to_member_id":null,"suggested_contact_label":null,"suggested_to_label":null,"source_one_to_one_id":null,"source_meeting_id":null,"confidence":"high|medium|low"}]}',
             'via_connector: corpus_source=member_network, connector_member_id + suggested_contact_label 必須, suggested_to_member_id=依頼者。',
+            'via_connector の connector_member_id は requester 以外の章内メンバー。requester 本人を connector にしない。',
             '社外紹介: suggested_to_member_id は null。suggested_to_label に紹介先像。',
             'Pack 内 introductions の既存 from→to は重複提案しない。',
         ]);
@@ -245,6 +247,7 @@ TXT;
             '応答は **有効な JSON オブジェクトのみ**。',
             'スキーマ:',
             '{"suggestions":[{"source_section":"main_presentation|weekly_presentation|visitor_intro|share_story|education|other","subject_member_id":null,"direction":"subject_seeks_intros|owner_introduces_to_subject|mutual|unclear|via_connector","corpus_source":"self|member_network","summary":"...","rationale":"...","quality_notes":[],"connector_member_id":null,"suggested_from_member_id":null,"suggested_to_member_id":null,"suggested_contact_label":null,"suggested_to_label":null,"source_one_to_one_id":null,"source_meeting_id":null,"confidence":"high|medium|low"}]}',
+            'via_connector の connector_member_id は requester 以外の章内メンバー。requester 本人を connector にしない。',
             'リファラル件数報告は無視。社外は suggested_to_label、to_member_id は null。',
         ]);
     }

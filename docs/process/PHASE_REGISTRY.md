@@ -273,6 +273,8 @@
 | 272 | 東京 NE リージョン・チャプターマスタシードと 1to1 相手選択（自チャプター／他チャプター・既存 121 履歴保持・モーダル UX 改善・他チャプター type 是正・Members チャプター絞り込み・退会済み機能） | implement | completed | develop / main | 2026-06-27 |
 | 273 | ウィークリープレゼン リテラシ配慮版へ差し替え（症状型「探す・書き写す・確認する」・§2.5.6 追記・§2.0 採用履歴・member 37 weekly_presentation_body 更新・木村杏那さんとの役割分担） | implement | completed | develop（merge 67122bb）/ main | 2026-06-28 |
 | 274 | リファーラル提案 — 紹介文作成（つなぐ準備・候補行ごとコピペ・A/B 手動指定・SPEC-022） | implement | completed | develop（merge 27a6449） | 2026-07-08 |
+| 275 | 海沼功 第1回121 Zoom要約反映（Financial Intelligence／AI補助金申請自動化・ライフプラン支援） | docs | completed | develop（commit / merge 未実施） | 2026-07-08 |
+| 276 | リファーラル提案 — 自己つなぎ手誤提案ガード（via_connector の requester=connector 防止・Fit&Gap） | implement | in_progress | feature/phase276-referral-self-connector-guard | 2026-07-08 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
