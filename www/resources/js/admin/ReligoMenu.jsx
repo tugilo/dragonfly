@@ -5,7 +5,7 @@ import { Divider, ListSubheader, MenuItem } from '@mui/material';
 
 /**
  * Religo 管理画面メニュー。SSOT: www/public/mock/religo-admin-mock.html
- * 並び: Dashboard → Connections → Members → Meetings → 1 to 1 → Role History → Settings(Categories, Roles)
+ * 並び: Dashboard → … → 1 to 1 → Role History → 設定 → Zoom 取り込み →（admin）マスタ管理
  * SPEC-020 Phase D（順位 6/10）: 一般 member には管理系（Member merge / SONAE / Categories / Roles）を出さない。
  */
 export const ReligoMenu = () => {
@@ -83,6 +83,15 @@ export const ReligoMenu = () => {
                     Role History
                 </MenuItem>
             )}
+            <MenuItem
+                component={Link}
+                to="/settings"
+                selected={isActive('/settings')}
+                sx={{ '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+            >
+                <span style={{ marginRight: 8 }}>⚙️</span>
+                設定
+            </MenuItem>
             <Divider
                 sx={{
                     my: 1,
@@ -192,45 +201,37 @@ export const ReligoMenu = () => {
                     発報条件
                 </MenuItem>
             )}
-            <ListSubheader
-                disableSticky
-                sx={{
-                    lineHeight: 2,
-                    fontSize: '0.75rem',
-                    backgroundColor: 'transparent',
-                    color: 'rgba(255,255,255,0.45)',
-                }}
-            >
-                SETTINGS
-            </ListSubheader>
             {isAdmin && (
-                <MenuItem
-                    component={Link}
-                    to="/categories"
-                    selected={isActive('/categories')}
-                    sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
-                >
-                    Categories
-                </MenuItem>
+                <>
+                    <ListSubheader
+                        disableSticky
+                        sx={{
+                            lineHeight: 2,
+                            fontSize: '0.75rem',
+                            backgroundColor: 'transparent',
+                            color: 'rgba(255,255,255,0.45)',
+                        }}
+                    >
+                        マスタ管理
+                    </ListSubheader>
+                    <MenuItem
+                        component={Link}
+                        to="/categories"
+                        selected={isActive('/categories')}
+                        sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+                    >
+                        Categories
+                    </MenuItem>
+                    <MenuItem
+                        component={Link}
+                        to="/roles"
+                        selected={isActive('/roles')}
+                        sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+                    >
+                        Roles
+                    </MenuItem>
+                </>
             )}
-            {isAdmin && (
-                <MenuItem
-                    component={Link}
-                    to="/roles"
-                    selected={isActive('/roles')}
-                    sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
-                >
-                    Roles
-                </MenuItem>
-            )}
-            <MenuItem
-                component={Link}
-                to="/settings"
-                selected={isActive('/settings')}
-                sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
-            >
-                所属チャプター
-            </MenuItem>
         </Menu>
     );
 };

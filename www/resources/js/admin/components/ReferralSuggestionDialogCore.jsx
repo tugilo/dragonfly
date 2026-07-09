@@ -184,7 +184,12 @@ export function ReferralSuggestionDialogCore({
                     <Alert severity="info" variant="outlined" sx={{ mb: 2 }}>
                         {corpusSummary}
                         <Typography variant="caption" display="block" sx={{ mt: 0.5, color: 'text.secondary' }}>
-                            横断コーパスは社外紹介・つなぎ手経由の発見用です（同章メンバー同士の紹介は提案しません）。設定で横断共有 ON にすると他者の 121 も参照されます。
+                            横断コーパスは社外紹介・つなぎ手経由の発見用です（同章メンバー同士の紹介は提案しません）。
+                            他メンバーの 121 を参照するには、そのメンバーが
+                            <Link component={RouterLink} to="/settings" sx={{ mx: 0.25 }}>
+                                設定
+                            </Link>
+                            で記録の共有を ON にしている必要があります。
                         </Typography>
                     </Alert>
                 ) : null}
