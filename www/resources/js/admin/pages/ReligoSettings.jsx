@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
+    Box,
     Button,
     Card,
     CardContent,
@@ -10,6 +11,7 @@ import {
     Link,
     MenuItem,
     Select,
+    Stack,
     Switch,
     TextField,
     Snackbar,
@@ -21,6 +23,31 @@ import { religoFetch } from '../religoApiFetch';
 import { fetchReferralCorpusSettings, patchReferralCorpusSettings } from '../referralSuggestionApi';
 
 const AI_PROVIDER_LABELS = { openai: 'OpenAI', anthropic: 'Claude (Anthropic)', google: 'Gemini (Google)' };
+
+/** tugilo 式: 設定ページ内のセクション見出し */
+function SettingsSection({ title, description, children }) {
+    return (
+        <Box component="section" sx={{ mb: 3 }}>
+            <Typography component="h2" sx={{ fontSize: 15, fontWeight: 700, mb: 0.5 }}>
+                {title}
+            </Typography>
+            {description ? (
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                    {description}
+                </Typography>
+            ) : null}
+            <Stack spacing={2}>{children}</Stack>
+        </Box>
+    );
+}
+
+function SettingsCard({ children }) {
+    return (
+        <Card variant="outlined" sx={{ borderRadius: '10px' }}>
+            <CardContent>{children}</CardContent>
+        </Card>
+    );
+}
 
 /** AI 設定カード（SPEC-013・ユーザーごと BYO key）。 */
 function AiSettingsCard({ notify }) {
@@ -121,9 +148,7 @@ function AiSettingsCard({ notify }) {
     if (loading) return null;
 
     return (
-        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
-            <CardContent>
-                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>AI 設定（1to1 原稿生成）</Typography>
+        <SettingsCard>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     AI 利用は任意です。利用する場合はプロバイダを選び、ご自身の API キーを登録してください（キーは暗号化保存・各自の契約で課金）。
                 </Typography>
@@ -212,8 +237,7 @@ function AiSettingsCard({ notify }) {
                         ※ 接続テストは「保存済み」のキー・モデルで実行します。変更したら先に保存してください。
                     </Typography>
                 )}
-            </CardContent>
-        </Card>
+        </SettingsCard>
     );
 }
 
@@ -313,9 +337,7 @@ function ZoomSettingsCard({ notify }) {
     if (loading) return null;
 
     return (
-        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
-            <CardContent>
-                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>Zoom 連携（1to1 取り込み）</Typography>
+        <SettingsCard>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     Zoom Marketplace で作成した OAuth アプリの Client ID / Secret を登録してください（Secret は暗号化保存）。
                     登録後、<Link href="#/zoom-import">Zoom 取り込み画面</Link>から OAuth 連携を行います。
@@ -384,8 +406,7 @@ function ZoomSettingsCard({ notify }) {
                         状態: {credentialSource === 'user' ? '自分の資格情報で利用可能' : credentialSource === 'env' ? 'サーバー共通設定で利用可能' : '未設定'}
                     </Typography>
                 )}
-            </CardContent>
-        </Card>
+        </SettingsCard>
     );
 }
 
@@ -430,12 +451,10 @@ function ReferralCorpusSettingsCard({ notify }) {
     if (loading) return null;
 
     return (
-        <Card variant="outlined" sx={{ borderRadius: '10px', mt: 2 }}>
-            <CardContent>
-                <Typography sx={{ fontWeight: 600, mb: 0.5 }}>リファーラル提案 — 記録の共有</Typography>
+        <SettingsCard>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     ON にすると、あなたの 1 to 1 議事録（completed）が、他メンバーの「つなぎ手経由」リファーラル提案の材料になります。
-                    他者のネットワークを直接たどるのではなく、つなぎ手（Givers Gain）経由のきっかけ作りです。
+                    他者の 121 を自分の提案に含めたい場合は、章内の他メンバーがここを ON にする必要があります（Givers Gain）。
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                     現在、章内で共有 ON の他メンバー: {peerCount} 名
@@ -448,8 +467,7 @@ function ReferralCorpusSettingsCard({ notify }) {
                 <Button variant="contained" onClick={save} disabled={saving}>
                     {saving ? '保存中…' : '共有設定を保存'}
                 </Button>
-            </CardContent>
-        </Card>
+        </SettingsCard>
     );
 }
 
@@ -462,7 +480,7 @@ async function fetchJson(url, options = {}) {
 }
 
 /**
- * 所属チャプター（workspace）設定。BO-AUDIT-P5. SSOT: default_workspace_id = 所属.
+ * 個人設定ハブ（tugilo 式）。所属チャプター・リファーラル共有・AI・Zoom を 1 ページに集約。
  * GET /api/workspaces + GET/PATCH /api/users/me
  */
 export default function ReligoSettings() {
@@ -538,16 +556,20 @@ export default function ReligoSettings() {
     }
 
     return (
-        <Container maxWidth="sm" sx={{ py: 2 }}>
-            <Typography component="h1" sx={{ fontSize: 21, fontWeight: 700, mb: 2 }}>
+        <Container maxWidth="md" sx={{ py: 2 }}>
+            <Typography component="h1" sx={{ fontSize: 21, fontWeight: 700, mb: 0.5 }}>
                 設定
             </Typography>
-            <Card variant="outlined" sx={{ borderRadius: '10px' }}>
-                <CardContent>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                ログイン中のあなた（Owner）に紐づく個人設定です。所属チャプター・AI・Zoom・リファーラル共有をここで管理します。
+            </Typography>
+
+            <SettingsSection
+                title="アカウント"
+                description="BNI の所属チャプターに相当する workspace を選択します（1 user = 1 workspace）。"
+            >
+                <SettingsCard>
                     <Typography sx={{ fontWeight: 600, mb: 0.5 }}>所属チャプター</Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                        BNI の所属チャプターに相当する workspace を選択します（SSOT: 1 user = 1 workspace）。
-                    </Typography>
                     {workspaces.length === 0 ? (
                         <Typography color="error" variant="body2">
                             登録されている workspace がありません。管理者に連絡してください。
@@ -586,15 +608,34 @@ export default function ReligoSettings() {
                                 onClick={handleSave}
                                 disabled={saving || selectedId === ''}
                             >
-                                {saving ? '保存中…' : '保存'}
+                                {saving ? '保存中…' : '所属チャプターを保存'}
                             </Button>
                         </>
                     )}
-                </CardContent>
-            </Card>
-            <ReferralCorpusSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
-            <AiSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
-            <ZoomSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
+                </SettingsCard>
+            </SettingsSection>
+
+            <SettingsSection
+                title="リファーラル提案"
+                description="章内の横断マッチング（つなぎ手経由）に、自分の 121 記録を貢献するかどうか。"
+            >
+                <ReferralCorpusSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
+            </SettingsSection>
+
+            <SettingsSection
+                title="AI 連携"
+                description="1 to 1 事前準備・リファーラル提案など。API キーは暗号化保存し、各自の契約で課金されます。"
+            >
+                <AiSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
+            </SettingsSection>
+
+            <SettingsSection
+                title="Zoom 連携"
+                description="1 to 1 の Zoom 取り込み用 OAuth アプリ資格情報。登録後は Zoom 取り込み画面から連携します。"
+            >
+                <ZoomSettingsCard notify={(message, severity = 'success') => setSnack({ open: true, message, severity })} />
+            </SettingsSection>
+
             <Snackbar
                 open={snack.open}
                 autoHideDuration={4000}

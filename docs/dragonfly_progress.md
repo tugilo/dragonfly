@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-08 21:39 JST | **Phase 280 森田悦章 初回121事前準備:** [`meetings/1to1/1to1_morita_yoshiaki_kantaka.md`](meetings/1to1/1to1_morita_yoshiaki_kantaka.md) を新規作成。2026-06-23 第212回定例会ビジター（舩杉牧子さん紹介）として、合同会社カンタカのAI活用コンサルティング、アンケート・対応履歴、2026-07-09 JST 09:00–10:00 初回121のアジェンダ・質問・紹介仮説を整理。Religo `one_to_ones.id=112`、DB時刻差分と member 重複候補は要確認として記録。 |
 | 2026-07-08 20:14 JST | **静岡合同懇親会 名簿 HTML 公開配置:** `www/public/events/bni-shizuoka-joint-social-20260709/` に index / mobile / print を配置（認証不要）。`generate_roster.py` 再生成時に同期。ローカル: http://localhost/events/bni-shizuoka-joint-social-20260709/ 。 |
 | 2026-07-08 20:06 JST | **Phase 279 リファーラル提案 再生成 force:** モーダル再生成時に `force=true` で同一 digest でも新 run を作成。121/定例会 Service・API・UI・Feature test 追加。検証: `php artisan test` **592 passed (2173 assertions)**、`npm run build` OK。 |
 | 2026-07-08 19:44 JST | **Phase 278 静岡合同懇親会 参加者名簿作成:** Google フォーム回答 43名を正規化し [`pdf/260709/`](pdf/260709/) に CSV・A4 印刷 HTML/PDF・スマホ HTML を生成。チャプター順: DragonFly 8名 → インフィニティー 6名 → …（17チャプター）。生成: [`generate_roster.py`](pdf/260709/generate_roster.py)。 |
