@@ -24,7 +24,7 @@ PUBLIC_PRINT = PUBLIC_DIR / "print.html"
 PUBLIC_MOBILE = PUBLIC_DIR / "mobile.html"
 PUBLIC_INDEX = PUBLIC_DIR / "index.html"
 OUTREACH_OUT = DIR / "bni_shizuoka_joint_social_outreach.html"
-PUBLIC_OUTREACH = PUBLIC_DIR / "outreach.html"
+PRIVATE_OUTREACH = REPO_ROOT / "www" / "resources" / "private" / "tools" / "bni-shizuoka-joint-social-outreach.html"
 PUBLIC_URL_PATH = "/events/bni-shizuoka-joint-social-20260709"
 
 EVENT_TITLE = "BNI 静岡合同懇親会 参加者名簿"
@@ -1110,11 +1110,15 @@ def write_public_html(
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     print_html = build_print_html(chapters, total)
     mobile_html = build_mobile_html(chapters, total)
-    outreach_html = build_outreach_html(outreach_targets(chapters))
     PUBLIC_PRINT.write_text(print_html, encoding="utf-8")
     PUBLIC_MOBILE.write_text(mobile_html, encoding="utf-8")
-    PUBLIC_OUTREACH.write_text(outreach_html, encoding="utf-8")
     PUBLIC_INDEX.write_text(build_public_index_html(total), encoding="utf-8")
+
+
+def write_private_outreach_html(chapters: list[tuple[str, list[dict[str, str]]]]) -> None:
+    outreach_html = build_outreach_html(outreach_targets(chapters))
+    PRIVATE_OUTREACH.parent.mkdir(parents=True, exist_ok=True)
+    PRIVATE_OUTREACH.write_text(outreach_html, encoding="utf-8")
 
 
 def main() -> None:
@@ -1129,6 +1133,7 @@ def main() -> None:
     MOBILE_OUT.write_text(mobile_html, encoding="utf-8")
     OUTREACH_OUT.write_text(outreach_html, encoding="utf-8")
     write_public_html(chapters, total)
+    write_private_outreach_html(chapters)
     outreach_total = len(outreach_targets(chapters))
     print(f"Parsed raw rows: {len(raw)}")
     print(f"After dedupe: {total}")
@@ -1137,10 +1142,11 @@ def main() -> None:
     print(chapter_summary(chapters))
     print(
         f"Wrote: {CSV_OUT.name}, {PRINT_OUT.name}, {MOBILE_OUT.name}, "
-        f"{OUTREACH_OUT.name}, {PUBLIC_DIR.relative_to(REPO_ROOT)}/"
+        f"{OUTREACH_OUT.name}, {PRIVATE_OUTREACH.relative_to(REPO_ROOT)}, "
+        f"{PUBLIC_DIR.relative_to(REPO_ROOT)}/"
     )
     print(f"Public URLs (auth not required): http://localhost{PUBLIC_URL_PATH}/")
-    print(f"Outreach tool: http://localhost{PUBLIC_URL_PATH}/outreach.html")
+    print("Outreach tool: Religo 管理画面メニュー「静岡懇親会 121案内」（本人専用）")
 
 
 if __name__ == "__main__":

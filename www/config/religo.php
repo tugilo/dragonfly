@@ -58,4 +58,15 @@ return [
         FILTER_VALIDATE_BOOLEAN
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | 静岡合同懇親会 お礼・121案内ツール（本人専用）
+    |--------------------------------------------------------------------------
+    |
+    | owner_member_id がこの値のログインユーザーのみ GET /api/tools/shizuoka-outreach
+    | および管理画面メニューからアクセス可能。
+    |
+    */
+    'shizuoka_outreach_owner_member_id' => max(1, (int) env('RELIGO_SHIZUOKA_OUTREACH_OWNER_MEMBER_ID', 37)),
+
 ];

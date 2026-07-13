@@ -34,6 +34,7 @@ import SonaeLinePage from './pages/sonae/SonaeLinePage';
 import SonaeTrainingPage from './pages/sonae/SonaeTrainingPage';
 import SonaeJmaPage from './pages/sonae/SonaeJmaPage';
 import SonaeAlertSettingsPage from './pages/sonae/SonaeAlertSettingsPage';
+import ShizuokaOutreachTool from './pages/ShizuokaOutreachTool';
 
 const root = document.getElementById('admin-root');
 if (root) {
@@ -54,6 +55,7 @@ if (root) {
                         <CustomRoutes>
                             <Route path="/settings" element={<ReligoSettings />} />
                             <Route path="/zoom-import" element={<ZoomImport />} />
+                            <Route path="/tools/shizuoka-outreach" element={<ShizuokaOutreachTool />} />
                             {isAdmin && <Route path="/member-merge" element={<MemberMerge />} />}
                             {isAdmin && (
                                 <Route path="/sonae/*" element={<SonaeShell />}>

@@ -40,7 +40,7 @@ use App\Http\Controllers\Zoom\ZoomWebhookController;
 use App\Http\Controllers\Ai\UserAiCredentialController;
 use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
 use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
-use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
+use App\Http\Controllers\Religo\ShizuokaOutreachToolController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
 use App\Http\Controllers\Sonae\SonaeAlertThresholdOptionController;
 use App\Http\Controllers\Sonae\SonaeChapterAlertSettingController;
@@ -234,6 +234,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/users/me', [UserController::class, 'showMe']);
     Route::patch('/users/me', [UserController::class, 'updateMe']);
+
+    Route::get('/tools/shizuoka-outreach', [ShizuokaOutreachToolController::class, 'show']);
 
     Route::get('/dragonfly/contacts/{target_member_id}/summary', [DragonFlyContactSummaryController::class, '__invoke'])
         ->whereNumber('target_member_id');
