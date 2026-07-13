@@ -50,6 +50,25 @@ Excelや手作業で回っている業務を、現場に合った仕組みに整
 OUTREACH_STORAGE_KEY = "bni-shizuoka-joint-social-20260709-outreach-sent-v1"
 OUTREACH_CARD_STORAGE_KEY = "bni-shizuoka-joint-social-20260709-outreach-card-v1"
 
+DEFAULT_OUTREACH_INTRO = (
+    "先日の7月9日 静岡合同懇親会ではありがとうございました。\n"
+    "人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。\n"
+    "このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。"
+)
+
+# 懇親会・二次会などで個別に接触があった方の冒頭文（キーはメールアドレス小文字）
+OUTREACH_INTRO_OVERRIDES: dict[str, str] = {
+    "maruyama@viewhotel.co.jp": (
+        "先日の7月9日 静岡合同懇親会ではありがとうございました。\n"
+        "二次会にもご一緒いただき、少しお話しできて嬉しかったです。\n"
+        "このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。"
+    ),
+}
+
+OUTREACH_CONTACT_NOTES: dict[str, str] = {
+    "maruyama@viewhotel.co.jp": "二次会で会話あり",
+}
+
 
 def parse_markdown_table(path: Path) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
@@ -521,12 +540,16 @@ def outreach_targets(
     return targets
 
 
-def build_outreach_message(name: str, chapter: str) -> str:
+def outreach_intro_for(email: str) -> str:
+    key = (email or "").strip().lower()
+    return OUTREACH_INTRO_OVERRIDES.get(key, DEFAULT_OUTREACH_INTRO)
+
+
+def build_outreach_message(name: str, chapter: str, email: str = "") -> str:
+    intro = outreach_intro_for(email)
     return (
         f"{name}さん\n\n"
-        f"先日の7月9日 静岡合同懇親会ではありがとうございました。\n"
-        "人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。\n"
-        "このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。\n\n"
+        f"{intro}\n\n"
         "改めて簡単に自己紹介させてください。\n\n"
         f"{SELF_INTRO_BODY}\n\n"
         "下記からご都合の良い日時をお選びください（60分・Zoom）。\n\n"
@@ -541,8 +564,14 @@ def build_outreach_message(name: str, chapter: str) -> str:
 def build_outreach_html(targets: list[dict[str, str]]) -> str:
     cards: list[str] = []
     for index, row in enumerate(targets):
-        message = build_outreach_message(row["name"], row["chapter_name"])
         email = row["email"] or ""
+        message = build_outreach_message(row["name"], row["chapter_name"], email)
+        contact_note = OUTREACH_CONTACT_NOTES.get(email.strip().lower(), "")
+        note_html = (
+            f'      <p class="card-note">{esc(contact_note)}</p>\n'
+            if contact_note
+            else ""
+        )
         search_blob = " ".join(
             [
                 row["chapter_name"],
@@ -568,7 +597,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       <p class="card-chapter">{esc(row['chapter_name'])}</p>
       <h3>{esc(row['name'])}</h3>
       <p class="card-category">{esc(row['category'])}</p>
-    </div>
+{note_html}    </div>
     <div class="card-checks">
       <label class="status-check card-check">
         <input type="checkbox" class="card-toggle" aria-label="{esc(row['name'])}と名刺交換済み">
@@ -762,6 +791,13 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       font-weight: 600;
       color: #334155;
       line-height: 1.4;
+    }}
+    .card-note {{
+      margin: 6px 0 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #9a3412;
+      line-height: 1.35;
     }}
     .status-check, .sent-check {{
       display: flex;
