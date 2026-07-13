@@ -563,8 +563,8 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
             mailto = ""
         cards.append(
             f"""<article class="card" id="target-{index}" data-id="{esc(email or row['name'])}" data-search="{esc(search_blob)}">
-  <header class="card-head">
-    <div>
+  <div class="card-head">
+    <div class="card-identity">
       <p class="card-chapter">{esc(row['chapter_name'])}</p>
       <h3>{esc(row['name'])}</h3>
       <p class="card-category">{esc(row['category'])}</p>
@@ -579,7 +579,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
         <span>送信済み</span>
       </label>
     </div>
-  </header>
+  </div>
   <pre class="message" id="msg-{index}">{esc(message)}</pre>
   <div class="actions">
     <button type="button" class="btn copy-btn" data-target="msg-{index}">文面をコピー</button>
@@ -608,7 +608,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       line-height: 1.55;
       padding-bottom: 5rem;
     }}
-    header {{
+    header.page-header {{
       background: linear-gradient(160deg, {BNI_RED} 0%, {BNI_RED_DARK} 100%);
       color: #fff;
       padding: 16px 14px 14px;
@@ -704,9 +704,10 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       background: #fff;
       border: 1px solid #cbd5e1;
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 0;
       margin-bottom: 12px;
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
     }}
     .card[hidden] {{ display: none; }}
     .card.sent {{
@@ -714,7 +715,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       background: #f0fdf4;
     }}
     .card.no-card {{
-      border-color: #fde68a;
+      border-color: #f59e0b;
       background: #fffbeb;
     }}
     .card-head {{
@@ -722,45 +723,68 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       justify-content: space-between;
       gap: 10px;
       align-items: flex-start;
-      margin-bottom: 10px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }}
+    .card.no-card .card-head {{
+      background: #fff7ed;
+      border-bottom-color: #fed7aa;
+    }}
+    .card.sent .card-head {{
+      background: #ecfdf5;
+      border-bottom-color: #bbf7d0;
     }}
     .card-checks {{
       display: flex;
       flex-direction: column;
       gap: 6px;
       align-items: flex-end;
+      flex-shrink: 0;
     }}
     .card-chapter {{
       margin: 0 0 4px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #64748b;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      letter-spacing: 0.02em;
     }}
     .card h3 {{
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
     }}
     .card-category {{
       margin: 4px 0 0;
-      font-size: 0.82rem;
-      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.4;
     }}
     .status-check, .sent-check {{
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
       user-select: none;
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1px solid transparent;
     }}
     .card-check {{
-      color: #1d4ed8;
+      color: #1e3a8a;
+      background: #dbeafe;
+      border-color: #93c5fd;
     }}
     .sent-check {{
-      color: #166534;
+      color: #14532d;
+      background: #dcfce7;
+      border-color: #86efac;
     }}
     .status-check input {{
       width: 1.1rem;
@@ -773,7 +797,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       accent-color: #16a34a;
     }}
     .message {{
-      margin: 0 0 10px;
+      margin: 12px 14px 10px;
       padding: 10px 12px;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
@@ -788,6 +812,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      padding: 0 14px 12px;
     }}
     .btn, .mailto {{
       display: inline-block;
@@ -846,7 +871,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
   </style>
 </head>
 <body>
-  <header>
+  <header class="page-header">
     <h1>{esc(OUTREACH_TITLE)}</h1>
     <div class="meta">送信者: {esc(SENDER_NAME)}（{esc(SENDER_CHAPTER_DISPLAY)}） / 対象: {total}名 / 生成: {esc(generated_at())}</div>
     <div class="notice">個人用ツールです。DragonFlyメンバーは対象外。名刺交換・送信状況はこの端末のブラウザに保存されます。</div>
