@@ -2,6 +2,9 @@ import React from 'react';
 import { Menu, useResourceDefinitions, usePermissions } from 'react-admin';
 import { Link, useLocation } from 'react-router-dom';
 import { Divider, ListSubheader, MenuItem } from '@mui/material';
+import { useReligoOwner } from './ReligoOwnerContext';
+
+const SHIZUOKA_OUTREACH_OWNER_MEMBER_ID = 37;
 
 /**
  * Religo 管理画面メニュー。SSOT: www/public/mock/religo-admin-mock.html
@@ -11,7 +14,9 @@ import { Divider, ListSubheader, MenuItem } from '@mui/material';
 export const ReligoMenu = () => {
     const resources = useResourceDefinitions();
     const { permissions } = usePermissions();
+    const { ownerMemberId, loading: ownerLoading } = useReligoOwner();
     const isAdmin = permissions === 'chapter_admin';
+    const showShizuokaOutreach = !ownerLoading && Number(ownerMemberId) === SHIZUOKA_OUTREACH_OWNER_MEMBER_ID;
     const location = useLocation();
     const path = location.pathname;
 
@@ -92,6 +97,37 @@ export const ReligoMenu = () => {
                 <span style={{ marginRight: 8 }}>⚙️</span>
                 設定
             </MenuItem>
+            {showShizuokaOutreach && (
+                <>
+                    <Divider
+                        sx={{
+                            my: 1,
+                            borderColor: 'rgba(255,255,255,0.12)',
+                            backgroundColor: 'transparent',
+                        }}
+                    />
+                    <ListSubheader
+                        disableSticky
+                        sx={{
+                            lineHeight: 2,
+                            fontSize: '0.75rem',
+                            backgroundColor: 'transparent',
+                            color: 'rgba(255,255,255,0.45)',
+                        }}
+                    >
+                        個人ツール
+                    </ListSubheader>
+                    <MenuItem
+                        component={Link}
+                        to="/tools/shizuoka-outreach"
+                        selected={isActive('/tools/shizuoka-outreach')}
+                        sx={{ pl: 3, '&.Mui-selected': { borderLeft: '3px solid', borderLeftColor: 'primary.main', borderRadius: 0 } }}
+                    >
+                        <span style={{ marginRight: 8 }}>✉️</span>
+                        静岡懇親会 121案内
+                    </MenuItem>
+                </>
+            )}
             <Divider
                 sx={{
                     my: 1,

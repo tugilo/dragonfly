@@ -8,6 +8,11 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-13 15:28 JST | **未登録121履歴 本番DB反映:** ローカル `dragonfly` を本番 `religo_app` へ全置換。事前 `import-1to1-notes --only-ids=116`（久保田龍輝）、`php artisan test` **592 passed**、`make db-export`（1,491,424 bytes）後 `make db-push TARGET=prod`。remote backup: `backups/prod_20260713_152818.sql`。主な反映: `one_to_ones` **#105** 西原海成・**#106** 横山尚武第2回・**#107** 八田玄治・**#108** 岡元智美第2回・**#111** 里見允二（completed＋notes）・**#116** 久保田龍輝（新規 completed）。#110 海沼功・Zoom予定 #109/#112–115 も同期。 |
+| 2026-07-13 12:06 JST | **静岡合同懇親会 お礼・121案内ツール:** 「名刺交換済み」チェックを追加（localStorage 別キー）。フィルタに名刺未交換・送付待ち（名刺あり・未送信）を追加。 |
+| 2026-07-13 11:45 JST | **久保田龍輝 第1回121 ローカルDB反映:** `one_to_ones.id=116` を manual/completed（2026-07-13 10:30–11:30）で作成し、[`1to1_kubota_ryuki_dosen_rise.md`](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) を `import-1to1-notes --only-ids=116` で notes 更新（1889 chars）。Zoom予定行なし・同日重複なし。 |
+| 2026-07-13 11:41 JST | **久保田龍輝 第1回121 Zoom要約反映:** [`meetings/1to1/1to1_kubota_ryuki_dosen_rise.md`](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) に **2026-07-13 JST 10:30–11:30** の文字起こし要約を校正して反映。手紙代行パッケージ（価格・AI・フロー）、単発プラン検討、屋号推奨、紹介方針、次回121合意を整理。Religo `members.id=197`、`one_to_ones.id` は未作成のため TODO。 |
+| 2026-07-12 22:45 JST | **久保田龍輝 初回121事前準備:** [`meetings/1to1/1to1_kubota_ryuki_dosen_rise.md`](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) を新規作成。2026-06-30 第213回定例会ビジター（平山真由美さん紹介・V05）として、ご縁フォロー秘書（想いが伝わる手紙の仕組み化）、対応履歴・オリエンメモ、**2026-07-13 JST 10:30–11:30** 初回121のアジェンダ・台本・紹介仮説を整理。Religo `members.id=197`、`one_to_ones.id` は未作成のため TODO。 |
 | 2026-07-08 21:39 JST | **Phase 280 森田悦章 初回121事前準備:** [`meetings/1to1/1to1_morita_yoshiaki_kantaka.md`](meetings/1to1/1to1_morita_yoshiaki_kantaka.md) を新規作成。2026-06-23 第212回定例会ビジター（舩杉牧子さん紹介）として、合同会社カンタカのAI活用コンサルティング、アンケート・対応履歴、2026-07-09 JST 09:00–10:00 初回121のアジェンダ・質問・紹介仮説を整理。Religo `one_to_ones.id=112`、DB時刻差分と member 重複候補は要確認として記録。 |
 | 2026-07-08 20:14 JST | **静岡合同懇親会 名簿 HTML 公開配置:** `www/public/events/bni-shizuoka-joint-social-20260709/` に index / mobile / print を配置（認証不要）。`generate_roster.py` 再生成時に同期。ローカル: http://localhost/events/bni-shizuoka-joint-social-20260709/ 。 |
 | 2026-07-08 20:06 JST | **Phase 279 リファーラル提案 再生成 force:** モーダル再生成時に `force=true` で同一 digest でも新 run を作成。121/定例会 Service・API・UI・Feature test 追加。検証: `php artisan test` **592 passed (2173 assertions)**、`npm run build` OK。 |

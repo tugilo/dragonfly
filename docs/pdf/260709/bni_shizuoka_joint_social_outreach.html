@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>BNI 静岡合同懇親会 — お礼・121案内</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      margin: 0;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 16px;
+      line-height: 1.55;
+      padding-bottom: 5rem;
+    }
+    header.page-header {
+      background: linear-gradient(160deg, #CF2030 0%, #A01825 100%);
+      color: #fff;
+      padding: 16px 14px 14px;
+      box-shadow: 0 2px 10px rgba(160, 24, 37, 0.25);
+    }
+    h1 { font-size: 1.15rem; margin: 0 0 8px; line-height: 1.35; }
+    .meta { font-size: 0.84rem; opacity: 0.95; line-height: 1.5; }
+    .notice { margin-top: 8px; font-size: 0.8rem; color: #fef9c3; }
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #fff;
+      border-bottom: 1px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      padding: 10px 12px 12px;
+    }
+    .progress {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+    .progress-sub {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      transition: width 0.2s ease;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .filter-tab {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .filter-tab.active {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+      color: #fff;
+    }
+    .search-wrap label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    #search {
+      width: 100%;
+      font-size: 1rem;
+      padding: 11px 12px;
+      border: 2px solid #94a3b8;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+    #search:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: #fff;
+    }
+    #search-status {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #64748b;
+      min-height: 1.2em;
+    }
+    main { padding: 12px; max-width: 680px; margin: 0 auto; }
+    .card {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 0;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+    }
+    .card[hidden] { display: none; }
+    .card.sent {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+    .card.no-card {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .card.no-card .card-head {
+      background: #fff7ed;
+      border-bottom-color: #fed7aa;
+    }
+    .card.sent .card-head {
+      background: #ecfdf5;
+      border-bottom-color: #bbf7d0;
+    }
+    .card-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+    .card-chapter {
+      margin: 0 0 4px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      letter-spacing: 0.02em;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+    .card-category {
+      margin: 4px 0 0;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #334155;
+      line-height: 1.4;
+    }
+    .status-check, .sent-check {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .card-check {
+      color: #1e3a8a;
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+    .sent-check {
+      color: #14532d;
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+    .status-check input {
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+    .card-check input {
+      accent-color: #2563eb;
+    }
+    .sent-check input {
+      accent-color: #16a34a;
+    }
+    .message {
+      margin: 12px 14px 10px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 0 14px 12px;
+    }
+    .btn, .mailto {
+      display: inline-block;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn {
+      border: none;
+      background: #1d4ed8;
+      color: #fff;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn.copied { background: #16a34a; }
+    .mailto {
+      background: #fff;
+      color: #1d4ed8;
+      border: 1px solid #93c5fd;
+    }
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 80px;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 40;
+    }
+    #toast.show { opacity: 0.95; }
+    #top-btn {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 30;
+      width: 3.1rem;
+      height: 3.1rem;
+      border: none;
+      border-radius: 999px;
+      background: #1d4ed8;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1.15;
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.45);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1>BNI 静岡合同懇親会 — お礼・121案内</h1>
+    <div class="meta">送信者: 次廣 淳（BNI 東京NEリージョン DragonFly） / 対象: 35名 / 生成: 2026-07-13 15:35 JST</div>
+    <div class="notice">個人用ツールです。DragonFlyメンバーは対象外。名刺交換・送信状況はこの端末のブラウザに保存されます。</div>
+  </header>
+  <div class="toolbar">
+    <div class="progress" id="progress-text">送付待ち（名刺交換済み・未送信）を確認してください</div>
+    <div class="progress-sub" id="progress-sub">名刺交換済み 0 / 35　｜　送信済み 0 / 35</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="filter-tabs" role="tablist" aria-label="表示フィルタ">
+      <button type="button" class="filter-tab active" data-filter="no-card">名刺未交換</button>
+      <button type="button" class="filter-tab" data-filter="ready">送付待ち</button>
+      <button type="button" class="filter-tab" data-filter="all">すべて</button>
+      <button type="button" class="filter-tab" data-filter="sent">送信済み</button>
+    </div>
+    <div class="search-wrap">
+      <label for="search">名前・チャプター・カテゴリで検索</label>
+      <input id="search" type="search" inputmode="search" autocomplete="off" placeholder="例: デザイン / ゴルフ / 姓">
+      <div id="search-status"></div>
+    </div>
+  </div>
+  <main id="cards">
+    <article class="card" id="target-0" data-id="m.ayumi12190214@gmail.com" data-search="インフィニティー 三原あゆみ 食用油ろ過システム m.ayumi12190214@gmail.com 沢山お名刺交換できること楽しみにしております！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>三原あゆみ</h3>
+      <p class="card-category">食用油ろ過システム</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="三原あゆみと名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="三原あゆみへの送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-0">三原あゆみさん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-0">文面をコピー</button>
+    <a class="mailto" href="mailto:m.ayumi12190214@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%B8%89%E5%8E%9F%E3%81%82%E3%82%86%E3%81%BF%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-1" data-id="mihara_n@nomore-inc.com" data-search="インフィニティー 三原直也 notionによる生産性向上支援 mihara_n@nomore-inc.com まずは仲良くなれれば">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>三原直也</h3>
+      <p class="card-category">Notionによる生産性向上支援</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="三原直也と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="三原直也への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-1">三原直也さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-1">文面をコピー</button>
+    <a class="mailto" href="mailto:mihara_n@nomore-inc.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%B8%89%E5%8E%9F%E7%9B%B4%E4%B9%9F%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-2" data-id="t.k.0928@icloud.com" data-search="インフィニティー 加藤 翼 フルオーダースーツの仕立て t.k.0928@icloud.com 洋服にこだわりがあり、一生物のスーツを仕立てたい方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>加藤 翼</h3>
+      <p class="card-category">フルオーダースーツの仕立て</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="加藤 翼と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="加藤 翼への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-2">加藤 翼さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-2">文面をコピー</button>
+    <a class="mailto" href="mailto:t.k.0928@icloud.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%8A%A0%E8%97%A4%20%E7%BF%BC%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-3" data-id="tf.llc524@gmail.com" data-search="インフィニティー 古屋 周治 通信サービス（スマホ・wi-fi） tf.llc524@gmail.com 通信で固定費削減お任せください♪">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>古屋 周治</h3>
+      <p class="card-category">通信サービス（スマホ・Wi-Fi）</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="古屋 周治と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="古屋 周治への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-3">古屋 周治さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-3">文面をコピー</button>
+    <a class="mailto" href="mailto:tf.llc524@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%8F%A4%E5%B1%8B%20%E5%91%A8%E6%B2%BB%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-4" data-id="lifix.sakurashita@gmail.com" data-search="インフィニティー 櫻下 奨斗 充填加工 包装加工 lifix.sakurashita@gmail.com 自社商品販売会社">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>櫻下 奨斗</h3>
+      <p class="card-category">充填加工 包装加工</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="櫻下 奨斗と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="櫻下 奨斗への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-4">櫻下 奨斗さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-4">文面をコピー</button>
+    <a class="mailto" href="mailto:lifix.sakurashita@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E6%AB%BB%E4%B8%8B%20%E5%A5%A8%E6%96%97%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-5" data-id="suzuki.tokihiko@cameo.plala.or.jp" data-search="インフィニティー 鈴木時彦 リフォーム・リノベーション suzuki.tokihiko@cameo.plala.or.jp 賃貸物件をお持ちのオーナー様・不動産会社様やリフォーム･リノベーションをお考えの個人法人様と繋がりたいです。室内外のリフォーム、除草作業もやってます！小さなことでもお任せ下さい！ 趣味はゴルフです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インフィニティー</p>
+      <h3>鈴木時彦</h3>
+      <p class="card-category">リフォーム・リノベーション</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="鈴木時彦と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="鈴木時彦への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-5">鈴木時彦さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-5">文面をコピー</button>
+    <a class="mailto" href="mailto:suzuki.tokihiko@cameo.plala.or.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%88%B4%E6%9C%A8%E6%99%82%E5%BD%A6%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-6" data-id="xxx.bloom.garden.xxx@gmail.com" data-search="アクセル 中島幸樹 超★顧客体験デザイナー xxx.bloom.garden.xxx@gmail.com 公式lineを中心とした販売動線の構築をしています！水樹奈々に会いたくて生きてます">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">アクセル</p>
+      <h3>中島幸樹</h3>
+      <p class="card-category">超★顧客体験デザイナー</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="中島幸樹と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="中島幸樹への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-6">中島幸樹さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-6">文面をコピー</button>
+    <a class="mailto" href="mailto:xxx.bloom.garden.xxx@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%B8%AD%E5%B3%B6%E5%B9%B8%E6%A8%B9%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-7" data-id="nkmr.k@wish.ocn.ne.jp" data-search="アクセル 中村謙介 弁護士 nkmr.k@wish.ocn.ne.jp お酒が大好きです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">アクセル</p>
+      <h3>中村謙介</h3>
+      <p class="card-category">弁護士</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="中村謙介と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="中村謙介への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-7">中村謙介さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-7">文面をコピー</button>
+    <a class="mailto" href="mailto:nkmr.k@wish.ocn.ne.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%B8%AD%E6%9D%91%E8%AC%99%E4%BB%8B%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-8" data-id="h-tamagawa@hoken-takumi.com" data-search="アクセル 玉川博己 がん検査キット販売 h-tamagawa@hoken-takumi.com 全国の損保系保険代理店経営者とお話ししたいです。 26社の生損保険会社を取り扱い、その他健康商材も紹介しております。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">アクセル</p>
+      <h3>玉川博己</h3>
+      <p class="card-category">がん検査キット販売</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="玉川博己と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="玉川博己への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-8">玉川博己さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-8">文面をコピー</button>
+    <a class="mailto" href="mailto:h-tamagawa@hoken-takumi.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E7%8E%89%E5%B7%9D%E5%8D%9A%E5%B7%B1%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-9" data-id="chie-takano@outlook.jp" data-search="アクセル 高野千恵 婚活コーディネーター chie-takano@outlook.jp 全国対応の結婚相談所を運営しています。皆さんとお繋がりになれるのを楽しみにしています！よろしくお願いします！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">アクセル</p>
+      <h3>高野千恵</h3>
+      <p class="card-category">婚活コーディネーター</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="高野千恵と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="高野千恵への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-9">高野千恵さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-9">文面をコピー</button>
+    <a class="mailto" href="mailto:chie-takano@outlook.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%AB%98%E9%87%8E%E5%8D%83%E6%81%B5%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-10" data-id="jicyan0919@icloud.com" data-search="インテグラル 井出典子 まつげエクステ jicyan0919@icloud.com 色々な方と、繋がれたら嬉しいです(^^)筋トレが趣味です♪">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インテグラル</p>
+      <h3>井出典子</h3>
+      <p class="card-category">まつげエクステ</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="井出典子と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="井出典子への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-10">井出典子さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-10">文面をコピー</button>
+    <a class="mailto" href="mailto:jicyan0919@icloud.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%BA%95%E5%87%BA%E5%85%B8%E5%AD%90%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-11" data-id="shioka.816@gmail.com" data-search="インテグラル 伴汐夏 スナック shioka.816@gmail.com カラオケのないスナックなので、仕事の話を話し込みたい時の場として利用して欲しい。店内でチラシ手渡し、事業紹介ができるので宣伝して欲しいことやイベントなどあればご依頼ください。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インテグラル</p>
+      <h3>伴汐夏</h3>
+      <p class="card-category">スナック</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="伴汐夏と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="伴汐夏への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-11">伴汐夏さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-11">文面をコピー</button>
+    <a class="mailto" href="mailto:shioka.816@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%BC%B4%E6%B1%90%E5%A4%8F%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-12" data-id="h.kazushi@kamiyon.co" data-search="インテグラル 服部一志 営業戦略コンサルタント h.kazushi@kamiyon.co 営業戦略のサポートや、営業マン向けの社内研修などをさせていただいております。よろしくお願いいたします！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インテグラル</p>
+      <h3>服部一志</h3>
+      <p class="card-category">営業戦略コンサルタント</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="服部一志と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="服部一志への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-12">服部一志さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-12">文面をコピー</button>
+    <a class="mailto" href="mailto:h.kazushi@kamiyon.co?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E6%9C%8D%E9%83%A8%E4%B8%80%E5%BF%97%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-13" data-id="unity.kaitori13@gmail.com" data-search="インテグラル 榎田 聡一 車買取 unity.kaitori13@gmail.com 社用車を複数台所有している法人さんと繋がりたいです、テニスが趣味で小学生の頃からやってます。よろしくお願いします！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">インテグラル</p>
+      <h3>榎田 聡一</h3>
+      <p class="card-category">車買取</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="榎田 聡一と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="榎田 聡一への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-13">榎田 聡一さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-13">文面をコピー</button>
+    <a class="mailto" href="mailto:unity.kaitori13@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E6%A6%8E%E7%94%B0%20%E8%81%A1%E4%B8%80%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-14" data-id="souda@dotslinesolution.com" data-search="edutechエデュテック 左右田幸輝 snsマーケ souda@dotslinesolution.com snsをやりたい方、広告代理店の方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">EduTechエデュテック</p>
+      <h3>左右田幸輝</h3>
+      <p class="card-category">SNSマーケ</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="左右田幸輝と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="左右田幸輝への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-14">左右田幸輝さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-14">文面をコピー</button>
+    <a class="mailto" href="mailto:souda@dotslinesolution.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%B7%A6%E5%8F%B3%E7%94%B0%E5%B9%B8%E8%BC%9D%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-15" data-id="sachidesign@icloud.com" data-search="edutechエデュテック 後藤聡美 楽天市場の商品ページ制作・運用を中心に活動する集客支援デザイナーです。 sachidesign@icloud.com ecで商品を売りたい事業者様、ecコンサル、支援業の方、デザイナーと協業したい方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">EduTechエデュテック</p>
+      <h3>後藤聡美</h3>
+      <p class="card-category">楽天市場の商品ページ制作・運用を中心に活動する集客支援デザイナーです。</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="後藤聡美と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="後藤聡美への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-15">後藤聡美さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-15">文面をコピー</button>
+    <a class="mailto" href="mailto:sachidesign@icloud.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%BE%8C%E8%97%A4%E8%81%A1%E7%BE%8E%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-16" data-id="c.suzuki@arc-office.co.jp" data-search="edutechエデュテック 鈴木知恵 lineマーケティング c.suzuki@arc-office.co.jp 趣味はゴルフ">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">EduTechエデュテック</p>
+      <h3>鈴木知恵</h3>
+      <p class="card-category">LINEマーケティング</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="鈴木知恵と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="鈴木知恵への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-16">鈴木知恵さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-16">文面をコピー</button>
+    <a class="mailto" href="mailto:c.suzuki@arc-office.co.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%88%B4%E6%9C%A8%E7%9F%A5%E6%81%B5%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-17" data-id="yama.sekkotsuin8.5@gmail.com" data-search="クロノス 山本真也 接骨院 yama.sekkotsuin8.5@gmail.com 同業者、弁護士、健康経営に興味あって福利厚生で接骨院を利用してくれる方、と繋がりたい">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">クロノス</p>
+      <h3>山本真也</h3>
+      <p class="card-category">接骨院</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="山本真也と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="山本真也への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-17">山本真也さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-17">文面をコピー</button>
+    <a class="mailto" href="mailto:yama.sekkotsuin8.5@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%B1%B1%E6%9C%AC%E7%9C%9F%E4%B9%9F%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-18" data-id="nomimeiko@gmail.com" data-search="クロノス 能見芽衣子 スキンケア nomimeiko@gmail.com お客様の心と体に寄り添うエステティシャン、ネイリスト、美容師さんと繋がりたいです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">クロノス</p>
+      <h3>能見芽衣子</h3>
+      <p class="card-category">スキンケア</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="能見芽衣子と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="能見芽衣子への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-18">能見芽衣子さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-18">文面をコピー</button>
+    <a class="mailto" href="mailto:nomimeiko@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E8%83%BD%E8%A6%8B%E8%8A%BD%E8%A1%A3%E5%AD%90%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-19" data-id="mauverire22826@gmail.com" data-search="クロノス 齊藤 慶太郎 フォトグラファー 広告撮影 フォトスタジオ経営 mauverire22826@gmail.com 仕事用のお写真や記念日撮影など幅広い撮影に対応しますので、ホームページなど写真が必要な方と繋がりたいです！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">クロノス</p>
+      <h3>齊藤 慶太郎</h3>
+      <p class="card-category">フォトグラファー 広告撮影 フォトスタジオ経営</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="齊藤 慶太郎と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="齊藤 慶太郎への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-19">齊藤 慶太郎さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-19">文面をコピー</button>
+    <a class="mailto" href="mailto:mauverire22826@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%BD%8A%E8%97%A4%20%E6%85%B6%E5%A4%AA%E9%83%8E%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-20" data-id="hiromi-lotuslife.623427coco@softbank.ne.jp" data-search="浜松やらまいか 伊藤ひろみ 介護 hiromi-lotuslife.623427coco@softbank.ne.jp さくら介護グループ・フランチャイズの静岡本部を運営しております。介護事業を新しい事業の柱にしたい経営者様と繋がりたいです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">浜松やらまいか</p>
+      <h3>伊藤ひろみ</h3>
+      <p class="card-category">介護</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="伊藤ひろみと名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="伊藤ひろみへの送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-20">伊藤ひろみさん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-20">文面をコピー</button>
+    <a class="mailto" href="mailto:hiromi-lotuslife.623427coco@softbank.ne.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%BC%8A%E8%97%A4%E3%81%B2%E3%82%8D%E3%81%BF%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-21" data-id="http-kenji-www@docomo.ne.jp" data-search="浜松やらまいか 大石憲司 水道設備 http-kenji-www@docomo.ne.jp 水まわりリフォーム、水まわり修理24時間365日対応しています。家じゅうウルトラファインバブル代理店やってます">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">浜松やらまいか</p>
+      <h3>大石憲司</h3>
+      <p class="card-category">水道設備</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="大石憲司と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="大石憲司への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-21">大石憲司さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-21">文面をコピー</button>
+    <a class="mailto" href="mailto:http-kenji-www@docomo.ne.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%A4%A7%E7%9F%B3%E6%86%B2%E5%8F%B8%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-22" data-id="info@restyle1.com" data-search="浜松やらまいか 松下靖 webデザインシステム info@restyle1.com ホームページ制作を検討している方。ec構築を検討している方。印刷・oa機器会社">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">浜松やらまいか</p>
+      <h3>松下靖</h3>
+      <p class="card-category">WEBデザインシステム</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="松下靖と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="松下靖への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-22">松下靖さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-22">文面をコピー</button>
+    <a class="mailto" href="mailto:info@restyle1.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E6%9D%BE%E4%B8%8B%E9%9D%96%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-23" data-id="holon375510386@gmail.com" data-search="enishi 牧田佐奈子 プロポーションカウンセラー holon375510386@gmail.com 外食が多い方男女ともに！お料理大好きな方 補正下着大好きな方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ENISHI</p>
+      <h3>牧田佐奈子</h3>
+      <p class="card-category">プロポーションカウンセラー</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="牧田佐奈子と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="牧田佐奈子への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-23">牧田佐奈子さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-23">文面をコピー</button>
+    <a class="mailto" href="mailto:holon375510386@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E7%89%A7%E7%94%B0%E4%BD%90%E5%A5%88%E5%AD%90%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-24" data-id="rie.green1025@gmail.com" data-search="enishi 種井利江 損害保険 rie.green1025@gmail.com ハラスメントや労務関係のトラブル対策に関心のある経営者の方やその対策や対応に強い社会保険労務、弁護士の方と繋がりたいです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ENISHI</p>
+      <h3>種井利江</h3>
+      <p class="card-category">損害保険</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="種井利江と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="種井利江への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-24">種井利江さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-24">文面をコピー</button>
+    <a class="mailto" href="mailto:rie.green1025@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E7%A8%AE%E4%BA%95%E5%88%A9%E6%B1%9F%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-25" data-id="blueinmitchell@gmail.com" data-search="zeta ミッチェル メグミ フラワーアレンジ blueinmitchell@gmail.com 静岡の葬祭業、関東、東京の花屋さん">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ZETA</p>
+      <h3>ミッチェル メグミ</h3>
+      <p class="card-category">フラワーアレンジ</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="ミッチェル メグミと名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="ミッチェル メグミへの送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-25">ミッチェル メグミさん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-25">文面をコピー</button>
+    <a class="mailto" href="mailto:blueinmitchell@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E3%83%9F%E3%83%83%E3%83%81%E3%82%A7%E3%83%AB%20%E3%83%A1%E3%82%B0%E3%83%9F%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-26" data-id="hanashiro.kg@gmail.com" data-search="zeta 花城一樹 和牛販売 hanashiro.kg@gmail.com スーパー様や同業種(精肉店)、ギフト販売を行っている方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ZETA</p>
+      <h3>花城一樹</h3>
+      <p class="card-category">和牛販売</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="花城一樹と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="花城一樹への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-26">花城一樹さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-26">文面をコピー</button>
+    <a class="mailto" href="mailto:hanashiro.kg@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E8%8A%B1%E5%9F%8E%E4%B8%80%E6%A8%B9%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-27" data-id="reverelation@gmail.com" data-search="bigbang 石川ゆう子 営業代行 reverelation@gmail.com ご縁を価値に変える、営業支援・pr支援の会社です。新規開拓や認知度アップをしたい企業さま、店舗さまと繋がりたいです。">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">BIGBANG</p>
+      <h3>石川ゆう子</h3>
+      <p class="card-category">営業代行</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="石川ゆう子と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="石川ゆう子への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-27">石川ゆう子さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-27">文面をコピー</button>
+    <a class="mailto" href="mailto:reverelation@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E7%9F%B3%E5%B7%9D%E3%82%86%E3%81%86%E5%AD%90%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-28" data-id="shizuoka.danpat@gmail.com" data-search="etoile 出雲暖子 サービス名専門商標登録弁理士 shizuoka.danpat@gmail.com 私が考案した防撃スキーム（商標権を活用して売上アップ）を知って欲しいです">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ETOILE</p>
+      <h3>出雲暖子</h3>
+      <p class="card-category">サービス名専門商標登録弁理士</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="出雲暖子と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="出雲暖子への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-28">出雲暖子さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-28">文面をコピー</button>
+    <a class="mailto" href="mailto:shizuoka.danpat@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%87%BA%E9%9B%B2%E6%9A%96%E5%AD%90%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-29" data-id="neo@st-shushu.net" data-search="revival 長橋睦 料理写真 neo@st-shushu.net 広告代理店、デザイナー、アートディレクター">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">Revival</p>
+      <h3>長橋睦</h3>
+      <p class="card-category">料理写真</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="長橋睦と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="長橋睦への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-29">長橋睦さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-29">文面をコピー</button>
+    <a class="mailto" href="mailto:neo@st-shushu.net?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%95%B7%E6%A9%8B%E7%9D%A6%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-30" data-id="runrunrunne@gmail.com" data-search="trinity 竹田里美 建築業特化営業マン育成 runrunrunne@gmail.com 静岡での繋がりが欲しいです！わんちゃんイベントも島田でやってます！">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">TRINITY</p>
+      <h3>竹田里美</h3>
+      <p class="card-category">建築業特化営業マン育成</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="竹田里美と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="竹田里美への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-30">竹田里美さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-30">文面をコピー</button>
+    <a class="mailto" href="mailto:runrunrunne@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E7%AB%B9%E7%94%B0%E9%87%8C%E7%BE%8E%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-31" data-id="maruyama@viewhotel.co.jp" data-search="thundervolt 丸山 修 絶景の温泉宿 maruyama@viewhotel.co.jp 別荘をお探しの方、ワンちゃんと旅行する方">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ThunderVolt</p>
+      <h3>丸山 修</h3>
+      <p class="card-category">絶景の温泉宿</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="丸山 修と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="丸山 修への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-31">丸山 修さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-31">文面をコピー</button>
+    <a class="mailto" href="mailto:maruyama@viewhotel.co.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E4%B8%B8%E5%B1%B1%20%E4%BF%AE%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-32" data-id="nobuyuki.iijima1108@gmail.com" data-search="アトラス 飯島伸之 googleビジネスプロフィール運用 nobuyuki.iijima1108@gmail.com meo対策をしています。google口コミが売り上げに影響があるビジネスをしている方と繋がりたいです。趣味はキャンプ、釣り">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">アトラス</p>
+      <h3>飯島伸之</h3>
+      <p class="card-category">Googleビジネスプロフィール運用</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="飯島伸之と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="飯島伸之への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-32">飯島伸之さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-32">文面をコピー</button>
+    <a class="mailto" href="mailto:nobuyuki.iijima1108@gmail.com?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E9%A3%AF%E5%B3%B6%E4%BC%B8%E4%B9%8B%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-33" data-id="ohta@ohdot.jp" data-search="ホルス 太田宏信 デザイン会社 ohta@ohdot.jp 店舗集客、デザイン会社">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">ホルス</p>
+      <h3>太田宏信</h3>
+      <p class="card-category">デザイン会社</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="太田宏信と名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="太田宏信への送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-33">太田宏信さん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-33">文面をコピー</button>
+    <a class="mailto" href="mailto:ohta@ohdot.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E5%A4%AA%E7%94%B0%E5%AE%8F%E4%BF%A1%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article><article class="card" id="target-34" data-id="dogrunboo.x11@i.softbank.jp" data-search="千代田リージョン diamond 權田真知子 ゴンダ 若返りインストラクター dogrunboo.x11@i.softbank.jp 犬大好きな方、ヨガ興味ある方、若返りに興味ある方、社員様１００名以上の企業様">
+  <div class="card-head">
+    <div class="card-identity">
+      <p class="card-chapter">千代田リージョン Diamond</p>
+      <h3>權田真知子 ゴンダ</h3>
+      <p class="card-category">若返りインストラクター</p>
+    </div>
+    <div class="card-checks">
+      <label class="status-check card-check">
+        <input type="checkbox" class="card-toggle" aria-label="權田真知子 ゴンダと名刺交換済み">
+        <span>名刺交換済み</span>
+      </label>
+      <label class="status-check sent-check">
+        <input type="checkbox" class="sent-toggle" aria-label="權田真知子 ゴンダへの送信済み">
+        <span>送信済み</span>
+      </label>
+    </div>
+  </div>
+  <pre class="message" id="msg-34">權田真知子 ゴンダさん
+
+先日の7月9日 静岡合同懇親会ではありがとうございました。
+人数も40名を超える中では、なかなか十分にお話しするお時間をいただけませんでした。
+このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。
+
+改めて簡単に自己紹介させてください。
+
+東京NEリージョン DragonFly、AI業務改善システム構築の次廣です。
+システムエンジニア歴26年。静岡県藤枝市を拠点に、
+Excelや手作業で回っている業務を、現場に合った仕組みに整えています。
+「探す・書き写す・確認する」が減ると、本来の仕事に集中できる時間が増えます。
+
+下記からご都合の良い日時をお選びください（60分・Zoom）。
+
+https://timerex.net/s/tugi_3d63/c6ec5c0e
+
+どうぞよろしくお願いいたします。
+
+BNI 東京NEリージョン DragonFly
+次廣 淳（AI業務改善システム構築）
+tugi@tugilo.com</pre>
+  <div class="actions">
+    <button type="button" class="btn copy-btn" data-target="msg-34">文面をコピー</button>
+    <a class="mailto" href="mailto:dogrunboo.x11@i.softbank.jp?subject=%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%AE%E3%81%8A%E7%A4%BC%E3%81%A8121%E3%81%AE%E3%81%94%E6%A1%88%E5%86%85&body=%E6%AC%8A%E7%94%B0%E7%9C%9F%E7%9F%A5%E5%AD%90%20%E3%82%B4%E3%83%B3%E3%83%80%E3%81%95%E3%82%93%0A%0A%E5%85%88%E6%97%A5%E3%81%AE7%E6%9C%889%E6%97%A5%20%E9%9D%99%E5%B2%A1%E5%90%88%E5%90%8C%E6%87%87%E8%A6%AA%E4%BC%9A%E3%81%A7%E3%81%AF%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A8%E3%81%86%E3%81%94%E3%81%96%E3%81%84%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%0A%E4%BA%BA%E6%95%B0%E3%82%8240%E5%90%8D%E3%82%92%E8%B6%85%E3%81%88%E3%82%8B%E4%B8%AD%E3%81%A7%E3%81%AF%E3%80%81%E3%81%AA%E3%81%8B%E3%81%AA%E3%81%8B%E5%8D%81%E5%88%86%E3%81%AB%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%99%E3%82%8B%E3%81%8A%E6%99%82%E9%96%93%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%91%E3%81%BE%E3%81%9B%E3%82%93%E3%81%A7%E3%81%97%E3%81%9F%E3%80%82%0A%E3%81%93%E3%81%AE%E3%81%94%E7%B8%81%E3%82%92%E5%A4%A7%E5%88%87%E3%81%AB%E3%80%81%E3%81%9C%E3%81%B21to1%EF%BC%88121%EF%BC%89%E3%81%A7%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%8A%E8%A9%B1%E3%81%97%E3%81%A7%E3%81%8D%E3%82%8C%E3%81%B0%E5%B9%B8%E3%81%84%E3%81%A7%E3%81%99%E3%80%82%0A%0A%E6%94%B9%E3%82%81%E3%81%A6%E7%B0%A1%E5%8D%98%E3%81%AB%E8%87%AA%E5%B7%B1%E7%B4%B9%E4%BB%8B%E3%81%95%E3%81%9B%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%E3%80%82%0A%0A%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%E3%80%81AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%E3%81%AE%E6%AC%A1%E5%BB%A3%E3%81%A7%E3%81%99%E3%80%82%0A%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E6%AD%B426%E5%B9%B4%E3%80%82%E9%9D%99%E5%B2%A1%E7%9C%8C%E8%97%A4%E6%9E%9D%E5%B8%82%E3%82%92%E6%8B%A0%E7%82%B9%E3%81%AB%E3%80%81%0AExcel%E3%82%84%E6%89%8B%E4%BD%9C%E6%A5%AD%E3%81%A7%E5%9B%9E%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E6%A5%AD%E5%8B%99%E3%82%92%E3%80%81%E7%8F%BE%E5%A0%B4%E3%81%AB%E5%90%88%E3%81%A3%E3%81%9F%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%AB%E6%95%B4%E3%81%88%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%0A%E3%80%8C%E6%8E%A2%E3%81%99%E3%83%BB%E6%9B%B8%E3%81%8D%E5%86%99%E3%81%99%E3%83%BB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%80%8D%E3%81%8C%E6%B8%9B%E3%82%8B%E3%81%A8%E3%80%81%E6%9C%AC%E6%9D%A5%E3%81%AE%E4%BB%95%E4%BA%8B%E3%81%AB%E9%9B%86%E4%B8%AD%E3%81%A7%E3%81%8D%E3%82%8B%E6%99%82%E9%96%93%E3%81%8C%E5%A2%97%E3%81%88%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E4%B8%8B%E8%A8%98%E3%81%8B%E3%82%89%E3%81%94%E9%83%BD%E5%90%88%E3%81%AE%E8%89%AF%E3%81%84%E6%97%A5%E6%99%82%E3%82%92%E3%81%8A%E9%81%B8%E3%81%B3%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84%EF%BC%8860%E5%88%86%E3%83%BBZoom%EF%BC%89%E3%80%82%0A%0Ahttps%3A//timerex.net/s/tugi_3d63/c6ec5c0e%0A%0A%E3%81%A9%E3%81%86%E3%81%9E%E3%82%88%E3%82%8D%E3%81%97%E3%81%8F%E3%81%8A%E9%A1%98%E3%81%84%E3%81%84%E3%81%9F%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0ABNI%20%E6%9D%B1%E4%BA%ACNE%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%20DragonFly%0A%E6%AC%A1%E5%BB%A3%20%E6%B7%B3%EF%BC%88AI%E6%A5%AD%E5%8B%99%E6%94%B9%E5%96%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E7%AF%89%EF%BC%89%0Atugi%40tugilo.com">メール作成</a>
+  </div>
+</article>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <button id="top-btn" type="button" aria-label="ページトップへ戻る">▲<br>TOP</button>
+  <script>
+    (function () {
+      var SENT_STORAGE_KEY = "bni-shizuoka-joint-social-20260709-outreach-sent-v1";
+      var CARD_STORAGE_KEY = "bni-shizuoka-joint-social-20260709-outreach-card-v1";
+      var total = 35;
+      var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+      var searchInput = document.getElementById("search");
+      var statusEl = document.getElementById("search-status");
+      var progressText = document.getElementById("progress-text");
+      var progressSub = document.getElementById("progress-sub");
+      var progressFill = document.getElementById("progress-fill");
+      var toast = document.getElementById("toast");
+      var activeFilter = "no-card";
+      var toastTimer = null;
+
+      function loadMap(key) {
+        try {
+          return JSON.parse(localStorage.getItem(key) || "{}") || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function saveMap(key, map) {
+        localStorage.setItem(key, JSON.stringify(map));
+      }
+
+      function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
+      }
+
+      function sentCount() {
+        return cards.filter(function (card) {
+          return card.classList.contains("sent");
+        }).length;
+      }
+
+      function cardCount() {
+        return cards.filter(function (card) {
+          return card.classList.contains("card-exchanged");
+        }).length;
+      }
+
+      function readyCount() {
+        return cards.filter(function (card) {
+          return card.classList.contains("card-exchanged") && !card.classList.contains("sent");
+        }).length;
+      }
+
+      function updateProgress() {
+        var sentDone = sentCount();
+        var cardDone = cardCount();
+        var ready = readyCount();
+        progressText.textContent = "送付待ち " + ready + " 名（名刺交換済み・未送信）";
+        progressSub.textContent = "名刺交換済み " + cardDone + " / " + total + "　｜　送信済み " + sentDone + " / " + total;
+        progressFill.style.width = (total ? (sentDone / total) * 100 : 0) + "%";
+      }
+
+      function cardMatchesFilter(card) {
+        var hasCard = card.classList.contains("card-exchanged");
+        var isSent = card.classList.contains("sent");
+        if (activeFilter === "ready") return hasCard && !isSent;
+        if (activeFilter === "no-card") return !hasCard;
+        if (activeFilter === "sent") return isSent;
+        return true;
+      }
+
+      function applyFilters() {
+        var query = searchInput.value.trim().toLowerCase();
+        var visible = 0;
+        cards.forEach(function (card) {
+          var blob = card.getAttribute("data-search") || "";
+          var matchSearch = !query || blob.indexOf(query) !== -1;
+          var matchFilter = cardMatchesFilter(card);
+          var show = matchSearch && matchFilter;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        if (query || activeFilter !== "all") {
+          statusEl.textContent = visible + " 件表示";
+        } else {
+          statusEl.textContent = "";
+        }
+      }
+
+      var sentMap = loadMap(SENT_STORAGE_KEY);
+      var cardMap = loadMap(CARD_STORAGE_KEY);
+      cards.forEach(function (card) {
+        var id = card.getAttribute("data-id") || "";
+        var sentCheckbox = card.querySelector(".sent-toggle");
+        var cardCheckbox = card.querySelector(".card-toggle");
+
+        function refreshCardStyle() {
+          card.classList.toggle("card-exchanged", !!cardCheckbox.checked);
+          card.classList.toggle("no-card", !cardCheckbox.checked);
+          card.classList.toggle("sent", !!sentCheckbox.checked);
+        }
+
+        if (cardMap[id]) {
+          cardCheckbox.checked = true;
+        }
+        if (sentMap[id]) {
+          sentCheckbox.checked = true;
+        }
+        refreshCardStyle();
+
+        cardCheckbox.addEventListener("change", function () {
+          if (cardCheckbox.checked) {
+            cardMap[id] = true;
+          } else {
+            delete cardMap[id];
+          }
+          saveMap(CARD_STORAGE_KEY, cardMap);
+          refreshCardStyle();
+          updateProgress();
+          applyFilters();
+        });
+
+        sentCheckbox.addEventListener("change", function () {
+          if (sentCheckbox.checked) {
+            sentMap[id] = true;
+          } else {
+            delete sentMap[id];
+          }
+          saveMap(SENT_STORAGE_KEY, sentMap);
+          refreshCardStyle();
+          updateProgress();
+          applyFilters();
+        });
+      });
+
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var targetId = btn.getAttribute("data-target");
+          var el = document.getElementById(targetId);
+          if (!el) return;
+          navigator.clipboard.writeText(el.textContent || "").then(function () {
+            btn.classList.add("copied");
+            btn.textContent = "コピーしました";
+            showToast("文面をコピーしました");
+            setTimeout(function () {
+              btn.classList.remove("copied");
+              btn.textContent = "文面をコピー";
+            }, 1500);
+          }).catch(function () {
+            showToast("コピーに失敗しました");
+          });
+        });
+      });
+
+      document.querySelectorAll(".filter-tab").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          document.querySelectorAll(".filter-tab").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          tab.classList.add("active");
+          activeFilter = tab.getAttribute("data-filter") || "all";
+          applyFilters();
+        });
+      });
+
+      searchInput.addEventListener("input", applyFilters);
+      document.getElementById("top-btn").addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      updateProgress();
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>
