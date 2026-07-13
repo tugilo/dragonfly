@@ -120,6 +120,7 @@
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
 | [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。 |
+| [meetings/1to1/1to1_kubota_ryuki_dosen_rise.md](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) | **久保田龍輝（手紙代行パッケージ／ご縁フォロー秘書／ビジター）**。平山真由美さん紹介・**2026-06-30 第213回 V05**。**第1回 2026-07-13 JST 10:30–11:30 実施済み**（Zoom要約反映・ローカルDB `one_to_ones.id=116`）。価格プラン・単発検討・屋号推奨・紹介方針・次回121合意を整理。Religo `members.id=197`。 |
 | [meetings/1to1/1to1_satomi_masatsugu_satomishikoh.md](meetings/1to1/1to1_satomi_masatsugu_satomishikoh.md) | **里見允二（サトミ紙工／顧客ニーズを超えるパッケージ制作）**。**第1回 2026-07-08 JST 15:00–16:00 予定**（Zoom・Religo `one_to_ones.id=111`）。1to1サポート・7/7 MP・名刺配慮・GIVER・47都道府県パワーチーム構想。初回121準備済み。 |
 | [meetings/1to1/1to1_kainuma_isao_financial_intelligence.md](meetings/1to1/1to1_kainuma_isao_financial_intelligence.md) | **海沼功（株式会社Financial Intelligence／BNI DragonFly）**。**第1回 2026-07-08 JST 13:00–14:00 実施済み**（Zoom要約反映・Religo `one_to_ones.id=110`）。ライフプラン支援、企業型DC、補助金・助成金マッチング、Claude Code による補助金申請自動化、ChatGPT / NotebookLM / 資料生成AI 活用、個人情報・ローカルAIの課題、次廣のAI伴走型システム開発、海沼さん顧客への協業可能性、次回121・飲み会調整を整理。 |
 | [meetings/1to1/1to1_morita_yoshiaki_kantaka.md](meetings/1to1/1to1_morita_yoshiaki_kantaka.md) | **森田悦章（合同会社カンタカ／経営者の意思決定力を高めるAI活用コンサルティング／ビジター）**。舩杉牧子さん紹介・**2026-06-23 第212回定例会ビジター**。**第1回 2026-07-09 JST 09:00–10:00 予定**（Religo `one_to_ones.id=112`、DB時刻差分要確認）。脳科学×AI、会議・意思決定・組織行動の再設計、建設・不動産、飲食・製造、運送・産廃など10名以上企業への紹介仮説、初回121アジェンダ・質問を整理。 |
