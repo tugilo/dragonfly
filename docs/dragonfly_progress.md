@@ -8,6 +8,9 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-14 17:47 JST | **第215回定例会・チームMTG 本番DB反映:** `make db-export`（1,549,257 bytes）→ `make db-push TARGET=prod`。remote backup: `backups/prod_20260714_174745.sql`。本番確認: meetings id=27（第215回・参加者66）・id=28（スリーバイス MTG）。テストは 593 passed / 2 failed（`ReferralCorpusSettingsController` 欠落・本データ反映とは無関係）。 |
+| 2026-07-14 17:33 JST | **DragonFly 定例会 第215回 議事録:** Zoom 文字起こし要約を校正し [`meetings/chapter/chapter_weekly_20260714.md`](meetings/chapter/chapter_weekly_20260714.md) に反映。竹村裕司入会・飯田香更新・MP今村/久米・SS西浦・教育「ピックアンドロール」・RF147・累計サンキュー約12億9465万円。`import-chapter-minutes` / `import-participants-csv` でローカルDB反映。`docs/INDEX.md` 同期。 |
+| 2026-07-14 08:51 JST | **スリーバイス チームMTG 2026-07-14 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260714.md`](meetings/team/team_threebiz_20260714.md) に反映。軍司敦哉さんパーソナル軸（気仙沼・震災・税理士→LINE独立・夫婦関係）・Q&A・MT連絡・GBM確認。`import-team-minutes` でローカルDB反映。`docs/INDEX.md` 同期。 |
 | 2026-07-13 15:28 JST | **未登録121履歴 本番DB反映:** ローカル `dragonfly` を本番 `religo_app` へ全置換。事前 `import-1to1-notes --only-ids=116`（久保田龍輝）、`php artisan test` **592 passed**、`make db-export`（1,491,424 bytes）後 `make db-push TARGET=prod`。remote backup: `backups/prod_20260713_152818.sql`。主な反映: `one_to_ones` **#105** 西原海成・**#106** 横山尚武第2回・**#107** 八田玄治・**#108** 岡元智美第2回・**#111** 里見允二（completed＋notes）・**#116** 久保田龍輝（新規 completed）。#110 海沼功・Zoom予定 #109/#112–115 も同期。 |
 | 2026-07-13 12:06 JST | **静岡合同懇親会 お礼・121案内ツール:** 「名刺交換済み」チェックを追加（localStorage 別キー）。フィルタに名刺未交換・送付待ち（名刺あり・未送信）を追加。 |
 | 2026-07-13 11:45 JST | **久保田龍輝 第1回121 ローカルDB反映:** `one_to_ones.id=116` を manual/completed（2026-07-13 10:30–11:30）で作成し、[`1to1_kubota_ryuki_dosen_rise.md`](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) を `import-1to1-notes --only-ids=116` で notes 更新（1889 chars）。Zoom予定行なし・同日重複なし。 |

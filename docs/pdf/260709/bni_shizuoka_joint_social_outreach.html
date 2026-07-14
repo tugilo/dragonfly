@@ -7,15 +7,26 @@
   <title>BNI 静岡合同懇親会 — お礼・121案内</title>
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+    }
     body {
       font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
       margin: 0;
+      height: 100%;
       background: #e2e8f0;
       color: #0f172a;
       font-size: 16px;
       line-height: 1.55;
-      padding-bottom: 5rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .fixed-head {
+      flex-shrink: 0;
+      z-index: 20;
+      background: #e2e8f0;
     }
     header.page-header {
       background: linear-gradient(160deg, #CF2030 0%, #A01825 100%);
@@ -27,9 +38,6 @@
     .meta { font-size: 0.84rem; opacity: 0.95; line-height: 1.5; }
     .notice { margin-top: 8px; font-size: 0.8rem; color: #fef9c3; }
     .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
       background: #fff;
       border-bottom: 1px solid #cbd5e1;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
@@ -108,7 +116,15 @@
       color: #64748b;
       min-height: 1.2em;
     }
-    main { padding: 12px; max-width: 680px; margin: 0 auto; }
+    main {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 12px 5rem;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+    }
     .card {
       background: #fff;
       border: 1px solid #cbd5e1;
@@ -171,6 +187,13 @@
       font-weight: 600;
       color: #334155;
       line-height: 1.4;
+    }
+    .card-note {
+      margin: 6px 0 0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #9a3412;
+      line-height: 1.35;
     }
     .status-check, .sent-check {
       display: flex;
@@ -280,9 +303,10 @@
   </style>
 </head>
 <body>
+  <div class="fixed-head">
   <header class="page-header">
     <h1>BNI 静岡合同懇親会 — お礼・121案内</h1>
-    <div class="meta">送信者: 次廣 淳（BNI 東京NEリージョン DragonFly） / 対象: 35名 / 生成: 2026-07-13 15:58 JST</div>
+    <div class="meta">送信者: 次廣 淳（BNI 東京NEリージョン DragonFly） / 対象: 35名 / 生成: 2026-07-13 16:11 JST</div>
     <div class="notice">個人用ツールです。DragonFlyメンバーは対象外。名刺交換・送信状況はこの端末のブラウザに保存されます。</div>
   </header>
   <div class="toolbar">
@@ -300,6 +324,7 @@
       <input id="search" type="search" inputmode="search" autocomplete="off" placeholder="例: デザイン / ゴルフ / 姓">
       <div id="search-status"></div>
     </div>
+  </div>
   </div>
   <main id="cards">
     <article class="card" id="target-0" data-id="m.ayumi12190214@gmail.com" data-search="インフィニティー 三原あゆみ 食用油ろ過システム m.ayumi12190214@gmail.com 沢山お名刺交換できること楽しみにしております！">
@@ -2015,7 +2040,10 @@ tugi@tugilo.com</pre>
 
       searchInput.addEventListener("input", applyFilters);
       document.getElementById("top-btn").addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        var cardsPane = document.getElementById("cards");
+        if (cardsPane) {
+          cardsPane.scrollTo({ top: 0, behavior: "smooth" });
+        }
       });
 
       updateProgress();
