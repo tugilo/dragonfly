@@ -55,6 +55,10 @@
 | [pdf/260707/dragonfly_214_20260707_all_full.csv](pdf/260707/dragonfly_214_20260707_all_full.csv) | 定例会参加者 CSV（第214回・`www/database/csv/` 同名参照可）。 |
 | [pdf/260707/735354629_1377467980930646_6566305469416172190_n.png](pdf/260707/735354629_1377467980930646_6566305469416172190_n.png) | 第214回定例会 関連画像。 |
 | [pdf/260707/7:7 背景.png](pdf/260707/7:7 背景.png) | 第214回定例会 関連背景画像。 |
+| [pdf/260714/定例会参加者リスト2026_07_14.pdf](pdf/260714/定例会参加者リスト2026_07_14.pdf) | DragonFly 定例会参加者リスト（2026-07-14・第215回）。 |
+| [pdf/260714/religo_215_20260714_full_rev2.csv](pdf/260714/religo_215_20260714_full_rev2.csv) | 定例会参加者 CSV（第215回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260714/dragonfly_215_20260714_members_only.csv](pdf/260714/dragonfly_215_20260714_members_only.csv) | 定例会参加者 CSV（第215回・メンバーのみ）。 |
+| [pdf/260714/742324477_1039566875100997_221637905752636707_n.png](pdf/260714/742324477_1039566875100997_221637905752636707_n.png) | 第215回定例会 関連画像。 |
 | [pdf/260709/bni_shizuoka_joint_social_roster_normalized.csv](pdf/260709/bni_shizuoka_joint_social_roster_normalized.csv) | **BNI 静岡合同懇親会（2026-07-09）参加者名簿** — 正規化 CSV（43名・17チャプター）。 |
 | [pdf/260709/bni_shizuoka_joint_social_roster_print.html](pdf/260709/bni_shizuoka_joint_social_roster_print.html) | 同上 — A4 横向き印刷用 HTML。 |
 | [pdf/260709/bni_shizuoka_joint_social_roster_print.pdf](pdf/260709/bni_shizuoka_joint_social_roster_print.pdf) | 同上 — A4 印刷用 PDF。 |
@@ -89,6 +93,7 @@
 | [meetings/chapter/chapter_weekly_20260623.md](meetings/chapter/chapter_weekly_20260623.md) | **DragonFly 定例会 第212回 2026-06-23**（Zoom）。RF160（内部31・外部129）・岡元智美3年目更新・MP船津麻理子/次廣淳・教育「送りバント」・清原佳彩美SS・横山尚武→小中貴晃推薦の言葉・参加人数/統計差分は要確認として記録。 |
 | [meetings/chapter/chapter_weekly_20260630.md](meetings/chapter/chapter_weekly_20260630.md) | **DragonFly 定例会 第213回 2026-06-30**（Zoom）。RF134（内部26・外部180・算数不整合要確認）・飯田千帆更新・MP軍司敦哉/竹内駿太・教育「パワーチーム」・船津麻理子コアバリュー「承認」・木村健悟SS・増本→木村杏那推薦の言葉・次廣初スライド進行・佐藤→望月RF成約確認。 |
 | [meetings/chapter/chapter_weekly_20260707.md](meetings/chapter/chapter_weekly_20260707.md) | **DragonFly 定例会 第214回 2026-07-07**（Zoom）。参加57・6月度RF531/サンキュー約1億720万円・今週RF135（内訳算数不整合要確認）・ビジター5名全員入会決定・MP里見允二/原田里織・教育「LCDメソッド」・小中貴晃2年更新・6月度表彰。 |
+| [meetings/chapter/chapter_weekly_20260714.md](meetings/chapter/chapter_weekly_20260714.md) | **DragonFly 定例会 第215回 2026-07-14**（Zoom）。参加58（CSVはV8）・今週RF147（内24/外123）・累計サンキュー約12億9465万円・竹村裕司入会・飯田香更新・MP今村千絵/久米加代子・SS西浦雅・教育「ピックアンドロール」・推薦増本→山本葉子・BOD 7/28予告。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_script.md](meetings/chapter/chapter_weekly_20260616_momentum_script.md) | **モメンタムトレーニング進行原稿**（2026-06-16）。BOR 6テーマの冒頭・各室ガイド・締め。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md](meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md) | **モメンタム BOR — 次廣個人原稿**（2026-06-16）。6テーマ各30秒版。メインプレ §4.1 反映。 |
 | [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（月）。**定例会回数外**。半期イベント。プレースホルダー。 |
@@ -104,6 +109,7 @@
 | [meetings/team/team_threebiz_20260623.md](meetings/team/team_threebiz_20260623.md) | **スリーバイス チームMTG 2026-06-23**（火 8:00–8:45 JST・Zoom）。横山尚武さんのパーソナル軸共有回。辻堂・バンコク生活、不動産営業、ベンチャー/Uber Eats 展開、AI教育事業ダッシュキャンプ、家族・価値観、BNIとの親和性、次回次廣回を整理。 |
 | [meetings/team/team_threebiz_20260630.md](meetings/team/team_threebiz_20260630.md) | **スリーバイス チームMTG 2026-06-30 準備稿**（火 8:00–8:45 JST・Zoom予定）。次廣によるReligo共有メインスピーカー回。PDFプレゼン資料14枚に合わせたスライド順の20分話者原稿、Religoの読み方（レリゴ）・発音記号風のつかみ・`ligo` はラテン語で「繋ぐ」という語源、ビジター招待の貢献と週2リファーラル目標、記憶力を記録力で補う思想、Zoom要約コピペ→AI下書き＋人の確認、A/B/C/Dの紹介経路と二段階リファーラル連鎖、他者121秘匿とつながり可視化、Givers Gain整合、開発ドキュメント照合メモ、図解・絵中心のGensparkスライド生成プロンプト・修正プロンプト。 |
 | [meetings/team/team_threebiz_20260707.md](meetings/team/team_threebiz_20260707.md) | **スリーバイス チームMTG 2026-07-07**（火 8:00–8:45 JST・Zoom）。GBM予定入力督促ののち、**山本洸太**さんのプライベート自己紹介回。5LDK一軒家・映画・漫画・恋愛エピソード・画家「みこしばコーター」・幼少期逸話。**7/9** 静岡NEリージョン合同懇親会（約45名）が山本さんの飲食店で開催予定。 |
+| [meetings/team/team_threebiz_20260714.md](meetings/team/team_threebiz_20260714.md) | **スリーバイス チームMTG 2026-07-14**（火 8:00–8:45 JST・Zoom・予定超過）。**軍司敦哉**さんのパーソナル軸共有回。気仙沼限界集落出身・震災・税理士法人→LINE独立・夫婦の鉄則・Q&A。MT連絡（チームラインスコア・イベント回答）・GBM参加確認。 |
 | [meetings/team/team_threebiz_20260602.md](meetings/team/team_threebiz_20260602.md) | **スリーバイス チームMTG 2026-06-02**（火 8:00–8:45 JST・定例会前）。**新メンバー 米澤 侑桂** 加入。**自己紹介・ビジネス紹介**から開始。次廣×米澤 **121 2026-04-08 実施済み**（`one_to_ones.id=12`）。MTG 後追記枠あり。 |
 | [meetings/team/team_threebiz_20260519.md](meetings/team/team_threebiz_20260519.md) | **スリーバイス チームMTG 2026-05-19**（火 8:00–8:45 JST・Zoom）。小中氏 AI/Claude Code 共有、BOD ビジター4名選抜（期限 **6/16**）、パワーチーム連携・セキュリティ議論。次廣×小中 ローカルLM 1to1 予定。 |
 

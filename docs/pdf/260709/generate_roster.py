@@ -627,15 +627,26 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
   <title>{esc(OUTREACH_TITLE)}</title>
   <style>
     * {{ box-sizing: border-box; }}
-    html {{ scroll-behavior: smooth; }}
+    html {{
+      scroll-behavior: smooth;
+      height: 100%;
+    }}
     body {{
       font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
       margin: 0;
+      height: 100%;
       background: #e2e8f0;
       color: #0f172a;
       font-size: 16px;
       line-height: 1.55;
-      padding-bottom: 5rem;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }}
+    .fixed-head {{
+      flex-shrink: 0;
+      z-index: 20;
+      background: #e2e8f0;
     }}
     header.page-header {{
       background: linear-gradient(160deg, {BNI_RED} 0%, {BNI_RED_DARK} 100%);
@@ -647,9 +658,6 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
     .meta {{ font-size: 0.84rem; opacity: 0.95; line-height: 1.5; }}
     .notice {{ margin-top: 8px; font-size: 0.8rem; color: #fef9c3; }}
     .toolbar {{
-      position: sticky;
-      top: 0;
-      z-index: 20;
       background: #fff;
       border-bottom: 1px solid #cbd5e1;
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
@@ -728,7 +736,15 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       color: #64748b;
       min-height: 1.2em;
     }}
-    main {{ padding: 12px; max-width: 680px; margin: 0 auto; }}
+    main {{
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 12px 5rem;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+    }}
     .card {{
       background: #fff;
       border: 1px solid #cbd5e1;
@@ -907,6 +923,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
   </style>
 </head>
 <body>
+  <div class="fixed-head">
   <header class="page-header">
     <h1>{esc(OUTREACH_TITLE)}</h1>
     <div class="meta">送信者: {esc(SENDER_NAME)}（{esc(SENDER_CHAPTER_DISPLAY)}） / 対象: {total}名 / 生成: {esc(generated_at())}</div>
@@ -927,6 +944,7 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
       <input id="search" type="search" inputmode="search" autocomplete="off" placeholder="例: デザイン / ゴルフ / 姓">
       <div id="search-status"></div>
     </div>
+  </div>
   </div>
   <main id="cards">
     {''.join(cards)}
@@ -1101,7 +1119,10 @@ def build_outreach_html(targets: list[dict[str, str]]) -> str:
 
       searchInput.addEventListener("input", applyFilters);
       document.getElementById("top-btn").addEventListener("click", function () {{
-        window.scrollTo({{ top: 0, behavior: "smooth" }});
+        var cardsPane = document.getElementById("cards");
+        if (cardsPane) {{
+          cardsPane.scrollTo({{ top: 0, behavior: "smooth" }});
+        }}
       }});
 
       updateProgress();
