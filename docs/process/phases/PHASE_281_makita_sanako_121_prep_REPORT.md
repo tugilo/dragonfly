@@ -1,10 +1,10 @@
 # Phase 281 REPORT — 牧田佐奈子 初回121事前準備
 
-**更新:** 2026-07-15 12:45 JST  
+**更新:** 2026-07-15 12:48 JST  
 **Phase Type:** implement  
 **Branch:** `feature/phase281-makita-sanako-121-prep`  
 **Related SSOT:** SPEC-006, SPEC-013, SPEC-021, `docs/meetings/1to1/README.md`, `docs/PROJECT_NAMING.md`  
-**Status:** content_complete / commit_merge_pending
+**Status:** completed
 
 ---
 
@@ -60,7 +60,7 @@
 
 | Item | Value |
 |---|---|
-| merge commit id | 未実施（commit / merge 未依頼） |
+| merge commit id | `2794714c1da1e082dfbf3cbd1baf988e03b0bb5c` |
 | source branch | `feature/phase281-makita-sanako-121-prep` |
 | target branch | `develop` |
 | phase id | 281 |
@@ -68,10 +68,10 @@
 | related ssot | SPEC-006, SPEC-013, SPEC-021, `docs/meetings/1to1/README.md`, `docs/PROJECT_NAMING.md` |
 | test command | `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test` |
 | test result | 593 passed / 2 failed (2174 assertions)。失敗は既知の `ReferralCorpusSettingsController` 欠落による2件 |
-| changed files | `docs/meetings/1to1/1to1_makita_sanako_holon.md`, `docs/INDEX.md`, `docs/dragonfly_progress.md`, `docs/process/PHASE_REGISTRY.md`, Phase 281 PLAN / WORKLOG / REPORT |
+| changed files | `docs/INDEX.md`, `docs/dragonfly_progress.md`, `docs/meetings/1to1/1to1_makita_sanako_holon.md`, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_281_makita_sanako_121_prep_PLAN.md`, `docs/process/phases/PHASE_281_makita_sanako_121_prep_REPORT.md`, `docs/process/phases/PHASE_281_makita_sanako_121_prep_WORKLOG.md` |
 | scope check | OK（ファイルは `docs/**`、DBはPLAN記載の牧田さん121関連行のみ） |
 | ssot check | OK |
-| dod check | OK（commit / mergeのみ未依頼） |
+| dod check | OK |
 
 ---
 
@@ -79,4 +79,4 @@
 
 - 作業開始前から存在した合同懇親会HTML・生成スクリプト・公開HTML・画像の未コミット変更には触れていない。
 - ローカルDB確認結果: owner×target×2026-07-15 の121は #117 の1行のみ。notes source は `docs/meetings/1to1/1to1_makita_sanako_holon.md`。
-- Phase Registry は commit / merge 未完了を反映し `in_progress` のままとした。明示依頼後に commit / develop merge、Merge Evidence確定、Registry `completed` 更新が必要。
+- develop へ merge（`2794714`）後、Merge Evidence を本 REPORT に記録してから `origin/develop` へ 1 push する。
