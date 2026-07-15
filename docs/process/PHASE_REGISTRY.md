@@ -279,6 +279,7 @@
 | 278 | 静岡合同懇親会 参加者名簿作成（CSV・A4 PDF/HTML・スマホ HTML） | docs | completed | develop（merge b3d11ff） | 2026-07-08 |
 | 279 | リファーラル提案 — 再生成 force（同一 digest でも新 run・121/定例会） | implement | completed | develop（merge 7093b2a） | 2026-07-08 |
 | 280 | 森田悦章 初回121事前準備（合同会社カンタカ／AI活用コンサルティング） | docs | completed | develop（commit / merge 未実施） | 2026-07-08 |
+| 281 | 牧田佐奈子 初回121事前準備・ローカルDB反映（有限会社 HOLON／ダイアナ浜松／ENISHI） | implement | completed | feature/phase281-makita-sanako-121-prep（merge 2794714） | 2026-07-15 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
