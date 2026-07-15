@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-14 17:50 JST | **develop→main リリース:** `f5f73a1` を `origin/develop` へ push 後、約2分待機して `main` へ `--no-ff` merge（`5f7c557`）し `origin/main` へ push。作業ブランチは `develop` に復帰済み。 |
 | 2026-07-14 17:47 JST | **第215回定例会・チームMTG 本番DB反映:** `make db-export`（1,549,257 bytes）→ `make db-push TARGET=prod`。remote backup: `backups/prod_20260714_174745.sql`。本番確認: meetings id=27（第215回・参加者66）・id=28（スリーバイス MTG）。テストは 593 passed / 2 failed（`ReferralCorpusSettingsController` 欠落・本データ反映とは無関係）。 |
 | 2026-07-14 17:33 JST | **DragonFly 定例会 第215回 議事録:** Zoom 文字起こし要約を校正し [`meetings/chapter/chapter_weekly_20260714.md`](meetings/chapter/chapter_weekly_20260714.md) に反映。竹村裕司入会・飯田香更新・MP今村/久米・SS西浦・教育「ピックアンドロール」・RF147・累計サンキュー約12億9465万円。`import-chapter-minutes` / `import-participants-csv` でローカルDB反映。`docs/INDEX.md` 同期。 |
 | 2026-07-14 08:51 JST | **スリーバイス チームMTG 2026-07-14 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260714.md`](meetings/team/team_threebiz_20260714.md) に反映。軍司敦哉さんパーソナル軸（気仙沼・震災・税理士→LINE独立・夫婦関係）・Q&A・MT連絡・GBM確認。`import-team-minutes` でローカルDB反映。`docs/INDEX.md` 同期。 |
