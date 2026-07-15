@@ -14,17 +14,24 @@ class ShizuokaOutreachToolTest extends TestCase
 
     private string $toolPath;
 
+    private ?string $originalContents = null;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->toolPath = resource_path('private/tools/bni-shizuoka-joint-social-outreach.html');
         File::ensureDirectoryExists(dirname($this->toolPath));
+        if (File::isFile($this->toolPath)) {
+            $this->originalContents = File::get($this->toolPath);
+        }
         File::put($this->toolPath, '<!DOCTYPE html><html><body>outreach</body></html>');
     }
 
     protected function tearDown(): void
     {
-        if (File::isFile($this->toolPath)) {
+        if ($this->originalContents !== null) {
+            File::put($this->toolPath, $this->originalContents);
+        } elseif (File::isFile($this->toolPath)) {
             File::delete($this->toolPath);
         }
 
