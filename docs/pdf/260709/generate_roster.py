@@ -63,10 +63,16 @@ OUTREACH_INTRO_OVERRIDES: dict[str, str] = {
         "二次会にもご一緒いただき、少しお話しできて嬉しかったです。\n"
         "このご縁を大切に、ぜひ1to1（121）でゆっくりお話しできれば幸いです。"
     ),
+    "shizuoka.danpat@gmail.com": (
+        "先日の7月9日 静岡合同懇親会ではありがとうございました。\n"
+        "以前からご縁をいただいている一方で、これまで1to1（121）はまだできておりません。\n"
+        "もしよろしければ、改めて一度ゆっくりお話しする機会をいただけますと嬉しいです。"
+    ),
 }
 
 OUTREACH_CONTACT_NOTES: dict[str, str] = {
     "maruyama@viewhotel.co.jp": "二次会で会話あり",
+    "shizuoka.danpat@gmail.com": "既存のご縁・121未実施",
 }
 
 
