@@ -59,3 +59,23 @@
 
 - 現在の作業ツリーに Phase 282 / 283 ほか未コミット変更があるため、Phase 284 専用ブランチは作成していない。commit / merge を行う場合は変更の分離が必要。
 - 第2回のDB予定行は未確認。Zoom等で予定行が作成された場合はその id を正とし、新規重複行を作らない。
+
+---
+
+## Merge Evidence（2026-07-17）
+
+merge commit id: 576c948955075da64c6d978a36c0a4e0c09624e6  
+source branch: feature/phase283-makita-sanako-121-minutes  
+target branch: develop  
+phase id: 284  
+phase type: docs  
+related ssot: SPEC-013, SPEC-019  
+
+test command: `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`  
+test result: 593 passed / 2 failed（2174 assertions。既知の `ReferralCorpusSettingsController` 欠落）  
+
+changed files: merge commit `576c948955075da64c6d978a36c0a4e0c09624e6` に含まれる Phase 282-289 / DB同期 / 関連docs一式  
+
+scope check: OK  
+ssot check: OK  
+dod check: OK  

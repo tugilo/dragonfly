@@ -67,3 +67,23 @@ Zoom取込済み `#95` を completed（18:00–19:00仮置き）に更新し not
 - 終了時刻を確定できたら文書の TODO と DB `ended_at` を揃える。
 - カーネル・辻さんの正式氏名、広告代理店「ワイヤール」の正式社名は未確認。
 - 本番DB反映は未実施。
+
+---
+
+## Merge Evidence（2026-07-17）
+
+merge commit id: 576c948955075da64c6d978a36c0a4e0c09624e6  
+source branch: feature/phase283-makita-sanako-121-minutes  
+target branch: develop  
+phase id: 289  
+phase type: implement  
+related ssot: SPEC-013, SPEC-019  
+
+test command: `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`  
+test result: 593 passed / 2 failed（2174 assertions。既知の `ReferralCorpusSettingsController` 欠落）  
+
+changed files: merge commit `576c948955075da64c6d978a36c0a4e0c09624e6` に含まれる Phase 282-289 / DB同期 / 関連docs一式  
+
+scope check: OK  
+ssot check: OK  
+dod check: OK  
