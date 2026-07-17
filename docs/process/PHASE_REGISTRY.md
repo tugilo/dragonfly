@@ -280,6 +280,14 @@
 | 279 | リファーラル提案 — 再生成 force（同一 digest でも新 run・121/定例会） | implement | completed | develop（merge 7093b2a） | 2026-07-08 |
 | 280 | 森田悦章 初回121事前準備（合同会社カンタカ／AI活用コンサルティング） | docs | completed | develop（commit / merge 未実施） | 2026-07-08 |
 | 281 | 牧田佐奈子 初回121事前準備・ローカルDB反映（有限会社 HOLON／ダイアナ浜松／ENISHI） | implement | completed | feature/phase281-makita-sanako-121-prep（merge 2794714） | 2026-07-15 |
+| 282 | 今村千絵 初回121事前準備・ローカルDB反映（Latte Hua／ダイエットコーチング） | implement | in_progress | feature/phase282-imamura-chie-121-prep | 2026-07-15 |
+| 283 | 牧田佐奈子 第1回121 Zoom要約反映（HOLON／ダイアナ浜松／ENISHI） | implement | in_progress | feature/phase283-makita-sanako-121-minutes | 2026-07-15 |
+| 284 | 田渕恭平 第2回121事前準備（AI活用・ファイル/音声整理・動画/SNS制作フロー確認） | docs | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 284 branch未分離） | 2026-07-16 |
+| 285 | 西原海成 第2回121 Zoom要約反映（佐藤代表初顔合わせ・AI開発相互外注・見積フロー） | implement | in_progress | feature/phase285-nishihara-kaisei-121-second-prep | 2026-07-16 |
+| 286 | 澤田行助 初回121事前準備（ひかり総合法律事務所／中小企業サポート弁護士／BNI HIVE） | docs | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 286 branch未分離） | 2026-07-17 |
+| 287 | 澤田行助 第1回121 Zoom要約反映（AI法律業務・ローカルAI・建設業相互紹介・予防法務） | docs | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 287 branch未分離） | 2026-07-17 |
+| 288 | 越賀淑恵 初回121事前準備（ケイティ＆アソシエイツ／ブランド戦略プランナー／戦略×業務実装） | implement | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 288 branch未分離） | 2026-07-17 |
+| 289 | 越賀淑恵 第1回121 Zoom要約反映（企業ブランディングシフト・カーネル辻紹介・DX×MVV協業） | implement | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 289 branch未分離） | 2026-07-17 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
