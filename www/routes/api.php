@@ -39,6 +39,7 @@ use App\Http\Controllers\Zoom\ZoomOAuthController;
 use App\Http\Controllers\Zoom\ZoomWebhookController;
 use App\Http\Controllers\Ai\UserAiCredentialController;
 use App\Http\Controllers\Religo\MeetingReferralSuggestionController;
+use App\Http\Controllers\Religo\ReferralCorpusSettingsController;
 use App\Http\Controllers\Religo\OneToOneReferralSuggestionController;
 use App\Http\Controllers\Religo\ShizuokaOutreachToolController;
 use App\Http\Controllers\Religo\OneToOnePrepController;
