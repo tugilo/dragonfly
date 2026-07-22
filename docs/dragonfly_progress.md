@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-21 09:06 JST | **スリーバイス チームMTG 2026-07-21 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260721.md`](meetings/team/team_threebiz_20260721.md) に反映。米澤侑桂さんパーソナル軸（鹿児島・母との死別・パティシエ→ウェブデザイン・反応率・AIビジョン）・Q&A・BOD前入力確認。`import-team-minutes` でローカルDB反映。`docs/INDEX.md` 同期。 |
 | 2026-07-17 19:21 JST | **121ローカル→本番DB反映:** 越賀淑恵 `#95`（completed 18:00–19:00・notes）、澤田行助 `#115`（completed 10:00–11:00・HIVE東京新宿）、今村`#113`／牧田`#117`／西原`#114`、田渕第2回 `#118`（planned・notes更新）を同期。`make db-export`（1,639,361 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260717_192102.sql`。 |
 | 2026-07-17 19:15 JST | **越賀淑恵121 カーネル紹介TODO削除:** 要約の「辻さん」は **下辻さん**（既に121済み）と判断。紹介約束・アクション・お礼文の該当箇所を削除。 |
 | 2026-07-17 19:13 JST | **越賀淑恵 第1回121 終了時刻確定・お礼文案:** ユーザー確認により **2026-07-17 JST 18:00–19:00**。議事録・INDEXのTODOを除去。会後お礼文案を [`1to1_koshiga_toshie_kt_associates.md`](meetings/1to1/1to1_koshiga_toshie_kt_associates.md) に追記。 |
