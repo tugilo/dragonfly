@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-07-24 07:53 JST | **121ローカル→本番DB反映:** 能見 `#120` 準備notes 0→371（planned維持）、竹村第2回 `#128` notes 3259→3640（completed・本番未作成だった行を反映）、舩杉 `#96` 準備notes 309（本番は0）。`make db-export`（1,756,162 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260724_075307.sql`。 |
 | 2026-07-24 07:49 JST | **能見芽衣子 第1回121準備:** [`meetings/1to1/1to1_noumi_meiko_md_cosmetics.md`](meetings/1to1/1to1_noumi_meiko_md_cosmetics.md) を新規。静岡合同懇親会・ゲスト対応履歴・6月退会・7/28 BOD・Religo `#120`（`members.id=234`）・60分台本。INDEX同期。 |
 | 2026-07-23 23:54 JST | **Cheer Print 資料を確定:** | 表現微修正（過熱→無理／傷つける→想定以上の負荷、アリーナ級＝数千人規模併記）。提出用提案・技術別紙・Gensparkプロンプトで説明利用へ。 |
 | 2026-07-23 23:51 JST | **Cheer Print 技術別紙の最終調整:** | 読み方（竹村さんが読む章）を明示。概要からCPUクレジットを除去。§9を原因確認後に対策検討へ。§10.6を最終責任→担当範囲に変更。§2に「数値は技術者が使う目安」注記。 |
