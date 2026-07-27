@@ -130,7 +130,8 @@
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
 | [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。 |
-| [meetings/1to1/1to1_noumi_meiko_md_cosmetics.md](meetings/1to1/1to1_noumi_meiko_md_cosmetics.md) | **能見芽衣子（エムディー化粧品販売／MD化粧品・元クロノス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-24 JST 09:00–10:00 予定**（Zoom・Religo `one_to_ones.id=120`・`members.id=234`）。6月退会・7/28 BOD参加予定。カウンセリング型販路・全国展開・60分台本を整理。旧ゲスト行 `members.id=114` あり。 |
+| [meetings/1to1/1to1_izumo_haruko_dan_patent.md](meetings/1to1/1to1_izumo_haruko_dan_patent.md) | **出雲暖子（静岡だん特許事務所／弁理士・防撃スキーム®／BNI エトワール）**。**第1回 2026-07-27 JST 10:00–11:00 実施済み**（Zoom要約校正・`one_to_ones.id=123` completed／`members.id=236`）。商標の象徴語戦略×Excel脱却・仕組み化の共通ターゲット、予約システム汎用名商標、8/5 RF・7/28 BOD・能見さんエトワール案内を整理。 |
+| [meetings/1to1/1to1_noumi_meiko_md_cosmetics.md](meetings/1to1/1to1_noumi_meiko_md_cosmetics.md) | **能見芽衣子（エムディー化粧品販売／MD化粧品・元クロノス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-24 JST 09:00–10:00 実施済み**（Zoom要約校正・`one_to_ones.id=120` completed／`members.id=234`）。営業未経験・体験ストーリー提案・再BNI章選び・7/28 BODビジター。旧ゲスト行 `members.id=114` あり。 |
 | [meetings/1to1/1to1_funasugi_makiko_fotosintesi.md](meetings/1to1/1to1_funasugi_makiko_fotosintesi.md) | **舩杉牧子（FOTOSINTESI PARK／結婚相談所）**。書記兼会計補佐・1to1サポート。**パスポート以来の本格1to1・第1回 2026-07-23 JST 18:00–19:00 予定**（Zoom・Religo `one_to_ones.id=96`・`members.id=20`）。NCAS・lit.link反映。GAINS（BNI売上1200万／益田国際結婚）、紹介切り出し文句、Contact Circle Top3、60分台本を整理。`#109`（7/9）は planned 残存・実施後整理。 |
 | [meetings/1to1/1to1_kubota_ryuki_dosen_rise.md](meetings/1to1/1to1_kubota_ryuki_dosen_rise.md) | **久保田龍輝（手紙代行パッケージ／ご縁フォロー秘書／ビジター）**。平山真由美さん紹介・**2026-06-30 第213回 V05**。**第1回 2026-07-13 JST 10:30–11:30 実施済み**（Zoom要約反映・ローカルDB `one_to_ones.id=116`）。価格プラン・単発検討・屋号推奨・紹介方針・次回121合意を整理。Religo `members.id=197`。 |
 | [meetings/1to1/1to1_satomi_masatsugu_satomishikoh.md](meetings/1to1/1to1_satomi_masatsugu_satomishikoh.md) | **里見允二（サトミ紙工／顧客ニーズを超えるパッケージ制作）**。**第1回 2026-07-08 JST 15:00–16:00 予定**（Zoom・Religo `one_to_ones.id=111`）。1to1サポート・7/7 MP・名刺配慮・GIVER・47都道府県パワーチーム構想。初回121準備済み。 |
@@ -167,7 +168,8 @@
 | [meetings/1to1/1to1_otake_erika_welfare.md](meetings/1to1/1to1_otake_erika_welfare.md) | **大竹絵理香（個人事業主／家族も使える福利厚生・BNI DragonFly）**。**第1回 2026-06-24 JST 14:00–15:00 実施済み**（Religo id TODO）・Zoom。ネイル（労働収入）＋福利厚生事業（権利収入）の二本柱、BNI活動アドバイス（リファラル蓄積・分割発表、ビジター招待戦略、121積極化）、松倉さんへの121申し込み決意、知人27歳SE接続検討、コナカさんへのつなぎ、ネイル顧客管理（まず紙メモ）を整理。 |
 | [meetings/1to1/1to1_takeuchi_shunta_athlete_insurance.md](meetings/1to1/1to1_takeuchi_shunta_athlete_insurance.md) | **竹内駿太（エグゼクティブランス／アスリート専門生命保険・BNI DragonFly）**。**第1回 2026-04-20 JST 15:53〜**（終了時刻 TODO）・Zoom。キッズマネー教育の静岡展開、サッカーパパコーチ・PTA紹介、法人営業先のDXニーズ紹介、Dリーグ接点 Todo を整理。 |
 | [meetings/1to1/1to1_gunji_lstep_webhook.md](meetings/1to1/1to1_gunji_lstep_webhook.md) | **軍司敦哉（株式会社Conduct／LINE公式アカウント運用代行）**。**第1回 2026-03-30 JST 15:30–16:30 実施済み**、**第2回 2026-04-01 JST 14:00–15:00 実施済み**（実施方法・Religo id TODO）。第2回はリンクアットジャパン向け **Lステップ + AIチャットボット提案**、Genspark提案資料、スタートプラン約100万円、軍司さんLステップ構築 × 次廣Webhook/API/AI構築の役割分担、エンジニアリングパートナー同席、技術論点・価格・横展開・Action Items を整理。 |
-| [meetings/1to1/1to1_yonezawa_yuka_comechan_design.md](meetings/1to1/1to1_yonezawa_yuka_comechan_design.md) | **米澤 侑桂（Comechan Design）**。**§10〜14**＝協業合意・案件・スキル・稼働・成功要因（2026-04-08）。**§15〜18**＝再現用ヒアリング／台本。**求人サイトアプリ化＋古紙回収リッチメニュー** 合意。 |
+| [meetings/1to1/1to1_yonezawa_yuka_comechan_design.md](meetings/1to1/1to1_yonezawa_yuka_comechan_design.md) | **米澤 侑桂（こめちゃんデザイン）**。第1回 2026-04-08（`#12`）。**第2回 2026-07-27 14:00–15:00（`#130` manual）** — みつナビアイコン3万円正式依頼／雷強HPは米澤見積→次廣提案。 |
+| [proposals/tugilo___こめちゃんデザイン_案件共有ミーティング_20260727043716.pdf](proposals/tugilo___こめちゃんデザイン_案件共有ミーティング_20260727043716.pdf) | **tugilo × こめちゃんデザイン 案件共有**（2026-07-27）。雷強ビジネスHP・みつナビアイコン・今後の協業。第2回121資料。 |
 | [meetings/1to1/1to1_yoshida_takuma_yoshida_clinic.md](meetings/1to1/1to1_yoshida_takuma_yoshida_clinic.md) | **吉田拓磨（吉田クリニック御一家・非BNI）**。**第1回 2026-06-11 実施済み**・**Religo `one_to_ones.id=77`**（開始・終了時刻 TODO）。SNSマーケティング／コンテンツビジネス／公式LINE・Lステップ・プロライン収益化動線。次廣との段階的協業、店舗向けSNS×予約/再来店導線、吉田クリニックLINE公式・若年層集客・スポーツ外傷ブランディング提案を整理。Zoom要約の「平野拓馬」は誤記として訂正。 |
 | [meetings/1to1/1to1_kadowaki_yui_omoroo.md](meetings/1to1/1to1_kadowaki_yui_omoroo.md) | **門脇優衣（株式会社オモロー／SNSマーケティング・DragonFly第210回ビジター）**。**第1回 2026-06-11 JST 17:00〜実施済み**（終了時刻 TODO）。`one_to_ones.id=73`（`members.id=150`）。Instagram特化型スクール **バズミーキャンパス**（3,000円/15,000円/50,000円・約800人生徒・学校型プラットフォーム）、AIアバター授業・コイン制度・地域別コミュニティ、熊本廃校ホテル地方創生、営業担当メンバーのBNI参加検討、SNS集客後の予約/LINE/顧客管理導線での tugilo 連携可能性を整理。 |
 | [meetings/1to1/1to1_hirayama_mayumi_lifesupport.md](meetings/1to1/1to1_hirayama_mayumi_lifesupport.md) | **平山 真由美（ライフサポート／シングルマザー専門事業コンシェルジュ）**。**第1回 2026-04-08 JST 11:00〜**（終了時刻 TODO）・Zoom。**議事録体裁**（概要・決定・アクション・協業案・次回 RF 11/9）。 |
@@ -179,7 +181,7 @@
 | [meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md](meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md) | **鈴木健介（合同会社スタジオ鈴・BNI Diana）**。**第1回 2026-04-17 JST 09:55〜**（終了時刻 TODO）・Zoom。スタートアッププレゼン改善、VR×サウナコンテンツ、藤原氏（VR推進協会）紹介、北欧サウナ体験、飲食店向けAIコールセンターの芽を整理。 |
 | [meetings/1to1/1to1_isobe_masayuki_nestle_detective.md](meetings/1to1/1to1_isobe_masayuki_nestle_detective.md) | **礒部昌之（ネスレ探偵事務所・BNI レブリー）**。**第1回 2026-05-16 10:00〜11:00 実施済み**（Zoom 詳細要約反映）。探偵業（レムリ／大宮）・保険営業紹介（紀川・竹内・海沼・山本）・メンバー表相互共有・倫理会ゲスト管理システム化の芽・藤枝/フランス語の接点。 |
 | [meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md](meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md) | **原田里織（RUILED VISION JAPAN株式会社／BNI DragonFly）**。**第1回 2026-06-01 JST 14:00–15:00 実施済み**・**Religo `one_to_ones.id=37`**。店舗・施設集客を高めるLEDデジタルサイネージ、中国深圳工場との直接契約、1台から納品、販売代理店（加盟金55万円・ノルマ/在庫なし）、看板屋・電気工事士との協業、導入実績、次廣の電気工事士紹介確認、ホットペッパー代替予約システム構想、おかわり121合意を整理。 |
-| [meetings/1to1/1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) | **小中貴晃（株式会社BeCheerz／BNI DragonFly）**。**第1回 2026-06-01 JST 15:00–16:00 実施済み**・**Religo `one_to_ones.id=38`**。AIツール情報発信、AI研修、業務効率化・生産性向上支援、システム開発、医療向けAIカルテ生成支援。Zoom要約反映。アルシルブ事業化（補助金・自治体展開・AI研修連携）、予約管理システム、BNI用1to1管理システム商業化、クリニックへのカルテ生成支援紹介、開発案件相談体制（営業フィー20〜30%）を整理。 |
+| [meetings/1to1/1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) | **小中貴晃（株式会社BeCheerz／BNI DragonFly）**。**第1回 `#38`（2026-06-01）**・**第2回 `#129`（2026-07-24 10:00–11:00・manual）実施済み**。第2回: AI実践知（Mac Studio/Tailscale/Obsidian/Stream Deck）、Religoデモ（紹介文自動生成が本命）、DragonFly運営・WM、三者チーム協業、ノーアジェンダ定期121継続。 |
 | [meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md](meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md) | **山本葉子（出光クレジット／BNI DragonFly）**。**第1回 2026-06-03 JST 15:00–16:00 実施済み**・**Religo `one_to_ones.id=41`**（Zoom要約反映）。動物病院×アメックス・獣医師会賛助会員、予約システムチラシ共同配布・6/6 RF対面・藤枝デモ合意。**おかわり121**予定。 |
 | [meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md](meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md) | **動物病院向け LINE予約チラシ（A4・ビジュアル中心）**。yamabuki 実画面キャプチャ5枚接続済み（v4 2026-06-03）。 |
 | [meetings/1to1/materials/screenshot_capture_guide.md](meetings/1to1/materials/screenshot_capture_guide.md) | 上記チラシ用 **yamabuki スクリーンショット取得手順**（LIFF 3枚・管理画面2枚・LINE通知1枚）。 |
@@ -211,6 +213,7 @@
 
 | ファイル | 説明 |
 |----------|------|
+| [2026-07-23_raikyo_business_hp_consultation.md](meetings/2026-07-23_raikyo_business_hp_consultation.md) | **株式会社雷強ビジネス／張強氏 顧客打合せ**（2026-07-23 10:24:42 JST・現地・PLAUD要約）。HP制作＋問い合わせ獲得。加工機／ロボットブース／HVLS優先。MVP・計測・信頼醸成・ToDo。米澤121（第2回）連携。 |
 | [2026-06-11_katana_uchida_ishihara_zoom.md](meetings/2026-06-11_katana_uchida_ishihara_zoom.md) | **KATANA（刀）打田社長・石原氏・次廣 3名Zoom 議事録**（2026-06-11 11:00 JST〜、終了時刻 TODO）。打田康平氏（株式会社J.NOVA / KATANA）は**非BNI会員**。Zoom要約反映済み。経営統合システム「刀」の財務・会計、案件管理、勤怠/業務報告、人事評価、権限管理、AI伴走、社内チャットを整理。次廣の評価・UI/ゲーミフィケーション/疎結合化/データ移行/AI時代の評価制度への提言、BNI東京NEリージョン接続・個別1to1設定の合意を記録。 |
 | [2025-03-12_kimura_system_concept_proposal.md](meetings/2025-03-12_kimura_system_concept_proposal.md) | 木村様向け提案書：業務整理と仕組みづくりの構想メモ（2025/3/12）。クライアント共有用。 |
 | [2026-03-30_gunji_lstep_webhook_ai_proposal.md](meetings/2026-03-30_gunji_lstep_webhook_ai_proposal.md) | 軍司様向け提案書（2026/3/30）：Lステップ Webhook × AI チャットボット構築・協業（START / GROW / SHIFT プラン・展開）。クライアント／パートナー共有用。 |
@@ -698,6 +701,24 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_289_koshiga_toshie_121_minutes_PLAN.md](process/phases/PHASE_289_koshiga_toshie_121_minutes_PLAN.md) | Phase 289: 越賀淑恵 第1回121 Zoom要約反映 PLAN。 |
 | [phases/PHASE_289_koshiga_toshie_121_minutes_WORKLOG.md](process/phases/PHASE_289_koshiga_toshie_121_minutes_WORKLOG.md) | Phase 289: 同 WORKLOG。 |
 | [phases/PHASE_289_koshiga_toshie_121_minutes_REPORT.md](process/phases/PHASE_289_koshiga_toshie_121_minutes_REPORT.md) | Phase 289: 同 REPORT。 |
+| [phases/PHASE_290_tabuchi_kyohei_121_second_minutes_PLAN.md](process/phases/PHASE_290_tabuchi_kyohei_121_second_minutes_PLAN.md) | Phase 290: 田渕恭平 第2回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_290_tabuchi_kyohei_121_second_minutes_WORKLOG.md](process/phases/PHASE_290_tabuchi_kyohei_121_second_minutes_WORKLOG.md) | Phase 290: 同 WORKLOG。 |
+| [phases/PHASE_290_tabuchi_kyohei_121_second_minutes_REPORT.md](process/phases/PHASE_290_tabuchi_kyohei_121_second_minutes_REPORT.md) | Phase 290: 同 REPORT。 |
+| [phases/PHASE_291_konaka_takaaki_121_second_prep_PLAN.md](process/phases/PHASE_291_konaka_takaaki_121_second_prep_PLAN.md) | Phase 291: 小中貴晃 第2回121事前準備（AI使い方の情報交換・tugilo-os）PLAN。 |
+| [phases/PHASE_291_konaka_takaaki_121_second_prep_WORKLOG.md](process/phases/PHASE_291_konaka_takaaki_121_second_prep_WORKLOG.md) | Phase 291: 同 WORKLOG。 |
+| [phases/PHASE_291_konaka_takaaki_121_second_prep_REPORT.md](process/phases/PHASE_291_konaka_takaaki_121_second_prep_REPORT.md) | Phase 291: 同 REPORT。 |
+| [phases/PHASE_292_konaka_takaaki_121_second_minutes_PLAN.md](process/phases/PHASE_292_konaka_takaaki_121_second_minutes_PLAN.md) | Phase 292: 小中貴晃 第2回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_292_konaka_takaaki_121_second_minutes_WORKLOG.md](process/phases/PHASE_292_konaka_takaaki_121_second_minutes_WORKLOG.md) | Phase 292: 同 WORKLOG。 |
+| [phases/PHASE_292_konaka_takaaki_121_second_minutes_REPORT.md](process/phases/PHASE_292_konaka_takaaki_121_second_minutes_REPORT.md) | Phase 292: 同 REPORT。 |
+| [phases/PHASE_293_izumo_haruko_121_minutes_PLAN.md](process/phases/PHASE_293_izumo_haruko_121_minutes_PLAN.md) | Phase 293: 出雲暖子 第1回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_293_izumo_haruko_121_minutes_WORKLOG.md](process/phases/PHASE_293_izumo_haruko_121_minutes_WORKLOG.md) | Phase 293: 同 WORKLOG。 |
+| [phases/PHASE_293_izumo_haruko_121_minutes_REPORT.md](process/phases/PHASE_293_izumo_haruko_121_minutes_REPORT.md) | Phase 293: 同 REPORT。 |
+| [phases/PHASE_294_yonezawa_yuka_121_second_prep_PLAN.md](process/phases/PHASE_294_yonezawa_yuka_121_second_prep_PLAN.md) | Phase 294: 米澤侑桂 第2回121事前準備（雷強／みつナビ／協業）PLAN。 |
+| [phases/PHASE_294_yonezawa_yuka_121_second_prep_WORKLOG.md](process/phases/PHASE_294_yonezawa_yuka_121_second_prep_WORKLOG.md) | Phase 294: 同 WORKLOG。 |
+| [phases/PHASE_294_yonezawa_yuka_121_second_prep_REPORT.md](process/phases/PHASE_294_yonezawa_yuka_121_second_prep_REPORT.md) | Phase 294: 同 REPORT。 |
+| [phases/PHASE_295_yonezawa_yuka_121_second_minutes_PLAN.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_PLAN.md) | Phase 295: 米澤侑桂 第2回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_295_yonezawa_yuka_121_second_minutes_WORKLOG.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_WORKLOG.md) | Phase 295: 同 WORKLOG。 |
+| [phases/PHASE_295_yonezawa_yuka_121_second_minutes_REPORT.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_REPORT.md) | Phase 295: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
