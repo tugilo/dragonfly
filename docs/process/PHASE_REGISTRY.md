@@ -288,6 +288,12 @@
 | 287 | 澤田行助 第1回121 Zoom要約反映（AI法律業務・ローカルAI・建設業相互紹介・予防法務） | docs | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 287 branch未分離） | 2026-07-17 |
 | 288 | 越賀淑恵 初回121事前準備（ケイティ＆アソシエイツ／ブランド戦略プランナー／戦略×業務実装） | implement | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 288 branch未分離） | 2026-07-17 |
 | 289 | 越賀淑恵 第1回121 Zoom要約反映（企業ブランディングシフト・カーネル辻紹介・DX×MVV協業） | implement | in_progress | feature/phase283-makita-sanako-121-minutes（Phase 289 branch未分離） | 2026-07-17 |
+| 290 | 田渕恭平 第2回121 Zoom要約反映（情報の一箇所化・AI検索前提Drive・小中さん橋渡し） | docs | completed | develop（commit / merge 未実施） | 2026-07-18 |
+| 291 | 小中貴晃 第2回121事前準備（AI使い方の情報交換・tugilo-os / Claude Code） | docs | completed | feature/phase291-konaka-takaaki-121-second-prep（commit / merge 未実施） | 2026-07-24 |
+| 292 | 小中貴晃 第2回121 Zoom要約反映（AI実践・Religoデモ・運営・三者チーム） | docs | completed | feature/phase291-konaka-takaaki-121-second-prep（commit / merge 未実施） | 2026-07-24 |
+| 293 | 出雲暖子 第1回121 Zoom要約反映（防撃スキーム®・予約システム商標・エトワール） | docs | completed | feature/phase291-konaka-takaaki-121-second-prep（commit / merge 未実施） | 2026-07-27 |
+| 294 | 米澤侑桂 第2回121事前準備（雷強ビジネスHP・みつナビアイコン・協業） | docs | completed | feature/phase294-yonezawa-yuka-121-second-prep（commit / merge 未実施） | 2026-07-27 |
+| 295 | 米澤侑桂 第2回121 Zoom要約反映（みつナビアイコン3万・雷強HP提案分担） | docs | completed | feature/phase294-yonezawa-yuka-121-second-prep（commit / merge 未実施） | 2026-07-27 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
