@@ -99,7 +99,8 @@
 | [meetings/chapter/chapter_weekly_20260721.md](meetings/chapter/chapter_weekly_20260721.md) | **DragonFly 定例会 第216回 2026-07-21**（Zoom）。参加61（CSVはV11）・小森保人入会・MP横山尚武/山本葉子・SS飯田千帆・教育は西浦雅「パワーチームを見つける」・RFベスト1位次廣10件・加藤隆太退会・BOD 7/28告知。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_script.md](meetings/chapter/chapter_weekly_20260616_momentum_script.md) | **モメンタムトレーニング進行原稿**（2026-06-16）。BOR 6テーマの冒頭・各室ガイド・締め。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md](meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md) | **モメンタム BOR — 次廣個人原稿**（2026-06-16）。6テーマ各30秒版。メインプレ §4.1 反映。 |
-| [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（月）。**定例会回数外**。半期イベント。プレースホルダー。 |
+| [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（火 09:45–12:15・約79名）。**定例会回数外**。司会山崎勇一/藤田磨紀。RM 98%/3%、BOR4回、体験談（藤井恵理子・中村啓吾）、ステージ別課題、ベネフィット5+1、費用324,000円、平山締め、海沼×次廣事後対話。入会意向はオリエン集計待ち。 |
+| [meetings/chapter/chapter_bod_20260728_bor_tsugihiro.md](meetings/chapter/chapter_bod_20260728_bor_tsugihiro.md) | **BOD 2026-07-28 次廣 BOR発言メモ**。BO①〜⑤（現状と目標・欲しい/出せるRF・成功の鍵＝予定固定 等）。招待4名メモ付き。 |
 | [pdf/260616/dragonfly_momentum_20260616_members_only.csv](pdf/260616/dragonfly_momentum_20260616_members_only.csv) | モメンタムトレーニング参加者 CSV（メンバーのみ・八田欠席）。 |
 
 #### チーム MTG（docs/meetings/team/）
@@ -130,6 +131,10 @@
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
 | [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。 |
+| [meetings/1to1/1to1_senda_asami_kazutama.md](meetings/1to1/1to1_senda_asami_kazutama.md) | **千田麻美（やまと式かずたま術鑑定士／DragonFly ビジター）**。船津麻理子紹介・**2026-06-23 第212回 V01**。**第1回 2026-07-29 JST 15:00–16:00 実施済み**（Zoom要約校正・`one_to_ones.id=132` completed／`members.id=171`）。有償鑑定合意（フォーム→読み解き→Zoom）・LINE接続・自分軸共感・飯田千帆へ再連絡・会後お礼（千田／船津）文案。 |
+| [meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md](meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md) | **飯島伸之（GBP／Googleマップ運用代行／BNI アトラス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 14:00–15:00 実施済み**（Zoom要約校正・`one_to_ones.id=125` completed／`members.id=238`）。MEO×今西アプリ×業務システムの三位一体、今西交え飲み会合意、9月商工会議所チラシ同封。校正: 益本／外構→増本（害虫ブロック）。 |
+| [meetings/1to1/1to1_takano_chie_clover.md](meetings/1to1/1to1_takano_chie_clover.md) | **高野ちえ（静岡婚活サロン クローバー／IBJ・BNI アクセル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 13:00–14:00 実施済み**（Zoom要約校正・`one_to_ones.id=124` completed／`members.id=237`）。藤枝地縁・1年以内結婚特化。紹介合意: 舩杉（洸太経由）・神保（10分ネイル）・中島幸樹（公式LINE）。会後お礼＋神保向け紹介文あり。 |
+| [meetings/1to1/1to1_enokida_soichi_unity.md](meetings/1to1/1to1_enokida_soichi_unity.md) | **榎田聡一（出張車買取 ユニティ／BNI インテグラル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-28 JST 14:15〜 実施済み**（終了TODO・Zoom要約校正・`one_to_ones.id=131` completed／`members.id=255`）。セレナ（約19万km）査定＋CX-8中古（250–300万・3月車検前）・カーマッチ紹介・ピタカット登録・顧客管理システム可能性。 |
 | [meetings/1to1/1to1_izumo_haruko_dan_patent.md](meetings/1to1/1to1_izumo_haruko_dan_patent.md) | **出雲暖子（静岡だん特許事務所／弁理士・防撃スキーム®／BNI エトワール）**。**第1回 2026-07-27 JST 10:00–11:00 実施済み**（Zoom要約校正・`one_to_ones.id=123` completed／`members.id=236`）。商標の象徴語戦略×Excel脱却・仕組み化の共通ターゲット、予約システム汎用名商標、8/5 RF・7/28 BOD・能見さんエトワール案内を整理。 |
 | [meetings/1to1/1to1_noumi_meiko_md_cosmetics.md](meetings/1to1/1to1_noumi_meiko_md_cosmetics.md) | **能見芽衣子（エムディー化粧品販売／MD化粧品・元クロノス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-24 JST 09:00–10:00 実施済み**（Zoom要約校正・`one_to_ones.id=120` completed／`members.id=234`）。営業未経験・体験ストーリー提案・再BNI章選び・7/28 BODビジター。旧ゲスト行 `members.id=114` あり。 |
 | [meetings/1to1/1to1_funasugi_makiko_fotosintesi.md](meetings/1to1/1to1_funasugi_makiko_fotosintesi.md) | **舩杉牧子（FOTOSINTESI PARK／結婚相談所）**。書記兼会計補佐・1to1サポート。**パスポート以来の本格1to1・第1回 2026-07-23 JST 18:00–19:00 予定**（Zoom・Religo `one_to_ones.id=96`・`members.id=20`）。NCAS・lit.link反映。GAINS（BNI売上1200万／益田国際結婚）、紹介切り出し文句、Contact Circle Top3、60分台本を整理。`#109`（7/9）は planned 残存・実施後整理。 |
