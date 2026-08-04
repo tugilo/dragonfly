@@ -294,6 +294,9 @@
 | 293 | 出雲暖子 第1回121 Zoom要約反映（防撃スキーム®・予約システム商標・エトワール） | docs | completed | feature/phase291-konaka-takaaki-121-second-prep（commit / merge 未実施） | 2026-07-27 |
 | 294 | 米澤侑桂 第2回121事前準備（雷強ビジネスHP・みつナビアイコン・協業） | docs | completed | feature/phase294-yonezawa-yuka-121-second-prep（commit / merge 未実施） | 2026-07-27 |
 | 295 | 米澤侑桂 第2回121 Zoom要約反映（みつナビアイコン3万・雷強HP提案分担） | docs | completed | feature/phase294-yonezawa-yuka-121-second-prep（commit / merge 未実施） | 2026-07-27 |
+| 296 | 松下靖 第1回121 Zoom要約反映（Web×システム分業・補助金案件意向・お盆明け再1to1） | docs | completed | develop（commit / merge 未実施） | 2026-07-30 |
+| 297 | 長橋睦 初回121事前準備（スタジオシュシュ／料理写真／BNI Revival・横浜セントラル） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
+| 298 | 浦野歓太 第1回121 Zoom要約反映（Anywel／補助金×販促・エトワール×システム相互送客） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

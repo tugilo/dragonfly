@@ -58,6 +58,10 @@
 | [pdf/260714/定例会参加者リスト2026_07_14.pdf](pdf/260714/定例会参加者リスト2026_07_14.pdf) | DragonFly 定例会参加者リスト（2026-07-14・第215回）。 |
 | [pdf/260721/定例会参加者リスト2026_07_21.pdf](pdf/260721/定例会参加者リスト2026_07_21.pdf) | DragonFly 定例会参加者リスト（2026-07-21・第216回）。 |
 | [pdf/260721/religo_216_20260721_full.csv](pdf/260721/religo_216_20260721_full.csv) | 定例会参加者 CSV（第216回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260804/定例会参加者リスト2026_08_04.pdf](pdf/260804/定例会参加者リスト2026_08_04.pdf) | DragonFly 定例会参加者リスト（2026-08-04・第217回）。 |
+| [pdf/260804/religo_217_20260804_full.csv](pdf/260804/religo_217_20260804_full.csv) | 定例会参加者 CSV（第217回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260804/定例会参加者リスト2026_08_04.pdf](pdf/260804/定例会参加者リスト2026_08_04.pdf) | DragonFly 定例会参加者リスト（2026-08-04・第217回）。 |
+| [pdf/260804/religo_217_20260804_full.csv](pdf/260804/religo_217_20260804_full.csv) | 定例会参加者 CSV（第217回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260714/religo_215_20260714_full_rev2.csv](pdf/260714/religo_215_20260714_full_rev2.csv) | 定例会参加者 CSV（第215回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260714/dragonfly_215_20260714_members_only.csv](pdf/260714/dragonfly_215_20260714_members_only.csv) | 定例会参加者 CSV（第215回・メンバーのみ）。 |
 | [pdf/260714/742324477_1039566875100997_221637905752636707_n.png](pdf/260714/742324477_1039566875100997_221637905752636707_n.png) | 第215回定例会 関連画像。 |
@@ -97,6 +101,7 @@
 | [meetings/chapter/chapter_weekly_20260707.md](meetings/chapter/chapter_weekly_20260707.md) | **DragonFly 定例会 第214回 2026-07-07**（Zoom）。参加57・6月度RF531/サンキュー約1億720万円・今週RF135（内訳算数不整合要確認）・ビジター5名全員入会決定・MP里見允二/原田里織・教育「LCDメソッド」・小中貴晃2年更新・6月度表彰。 |
 | [meetings/chapter/chapter_weekly_20260714.md](meetings/chapter/chapter_weekly_20260714.md) | **DragonFly 定例会 第215回 2026-07-14**（Zoom）。参加58（CSVはV8）・今週RF147（内24/外123）・累計サンキュー約12億9465万円・竹村裕司入会・飯田香更新・MP今村千絵/久米加代子・SS西浦雅・教育「ピックアンドロール」・推薦増本→山本葉子・BOD 7/28予告。 |
 | [meetings/chapter/chapter_weekly_20260721.md](meetings/chapter/chapter_weekly_20260721.md) | **DragonFly 定例会 第216回 2026-07-21**（Zoom）。参加61（CSVはV11）・小森保人入会・MP横山尚武/山本葉子・SS飯田千帆・教育は西浦雅「パワーチームを見つける」・RFベスト1位次廣10件・加藤隆太退会・BOD 7/28告知。 |
+| [meetings/chapter/chapter_weekly_20260804.md](meetings/chapter/chapter_weekly_20260804.md) | **DragonFly 定例会 第217回 2026-08-04**（Zoom・英語要約を翻訳校正）。参加約69・新メンバー3名入会（佐藤久/横山大樹/福島和也）・MP藤井恵理子/今西俊明・SS岡元智美・教育GBM 8/21・RF161（次廣同率3位8件）・7月表彰・累計RF28,029。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_script.md](meetings/chapter/chapter_weekly_20260616_momentum_script.md) | **モメンタムトレーニング進行原稿**（2026-06-16）。BOR 6テーマの冒頭・各室ガイド・締め。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md](meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md) | **モメンタム BOR — 次廣個人原稿**（2026-06-16）。6テーマ各30秒版。メインプレ §4.1 反映。 |
 | [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（火 09:45–12:15・約79名）。**定例会回数外**。司会山崎勇一/藤田磨紀。RM 98%/3%、BOR4回、体験談（藤井恵理子・中村啓吾）、ステージ別課題、ベネフィット5+1、費用324,000円、平山締め、海沼×次廣事後対話。入会意向はオリエン集計待ち。 |
@@ -115,6 +120,7 @@
 | [meetings/team/team_threebiz_20260707.md](meetings/team/team_threebiz_20260707.md) | **スリーバイス チームMTG 2026-07-07**（火 8:00–8:45 JST・Zoom）。GBM予定入力督促ののち、**山本洸太**さんのプライベート自己紹介回。5LDK一軒家・映画・漫画・恋愛エピソード・画家「みこしばコーター」・幼少期逸話。**7/9** 静岡NEリージョン合同懇親会（約45名）が山本さんの飲食店で開催予定。 |
 | [meetings/team/team_threebiz_20260714.md](meetings/team/team_threebiz_20260714.md) | **スリーバイス チームMTG 2026-07-14**（火 8:00–8:45 JST・Zoom・予定超過）。**軍司敦哉**さんのパーソナル軸共有回。気仙沼限界集落出身・震災・税理士法人→LINE独立・夫婦の鉄則・Q&A。MT連絡（チームラインスコア・イベント回答）・GBM参加確認。 |
 | [meetings/team/team_threebiz_20260721.md](meetings/team/team_threebiz_20260721.md) | **スリーバイス チームMTG 2026-07-21**（火 8:00–8:45 JST・Zoom）。**米澤侑桂**さんのパーソナル軸共有回。鹿児島・母との死別・パティシエ→ウェブデザイン、「反応率にこだわる」理念・AI時代ビジョン・Q&A。BODゲーム／コネクト入力を7/28 BOD前までに完了。 |
+| [meetings/team/team_threebiz_20260804.md](meetings/team/team_threebiz_20260804.md) | **スリーバイス チームMTG 2026-08-04**（火 8:00–8:45 JST・Zoom）。**小中貴晃**さんのライトニングトーク形式パーソナル共有（京都・工繊大・エンジ→営業→取締役・上場準備・家族）。パワーチーム（業種軸／課題バリューチェーン）・121＝バッターボックス。グロビジ証明8/21・SBOD/POD即時登録・来週休み・再来週WS。 |
 | [meetings/team/team_threebiz_20260602.md](meetings/team/team_threebiz_20260602.md) | **スリーバイス チームMTG 2026-06-02**（火 8:00–8:45 JST・定例会前）。**新メンバー 米澤 侑桂** 加入。**自己紹介・ビジネス紹介**から開始。次廣×米澤 **121 2026-04-08 実施済み**（`one_to_ones.id=12`）。MTG 後追記枠あり。 |
 | [meetings/team/team_threebiz_20260519.md](meetings/team/team_threebiz_20260519.md) | **スリーバイス チームMTG 2026-05-19**（火 8:00–8:45 JST・Zoom）。小中氏 AI/Claude Code 共有、BOD ビジター4名選抜（期限 **6/16**）、パワーチーム連携・セキュリティ議論。次廣×小中 ローカルLM 1to1 予定。 |
 
@@ -133,7 +139,7 @@
 | [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。 |
 | [meetings/1to1/1to1_senda_asami_kazutama.md](meetings/1to1/1to1_senda_asami_kazutama.md) | **千田麻美（やまと式かずたま術鑑定士／DragonFly ビジター）**。船津麻理子紹介・**2026-06-23 第212回 V01**。**第1回 2026-07-29 JST 15:00–16:00 実施済み**（Zoom要約校正・`one_to_ones.id=132` completed／`members.id=171`）。有償鑑定合意（フォーム→読み解き→Zoom）・LINE接続・自分軸共感・飯田千帆へ再連絡・会後お礼（千田／船津）文案。 |
 | [meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md](meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md) | **飯島伸之（GBP／Googleマップ運用代行／BNI アトラス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 14:00–15:00 実施済み**（Zoom要約校正・`one_to_ones.id=125` completed／`members.id=238`）。MEO×今西アプリ×業務システムの三位一体、今西交え飲み会合意、9月商工会議所チラシ同封。校正: 益本／外構→増本（害虫ブロック）。 |
-| [meetings/1to1/1to1_takano_chie_clover.md](meetings/1to1/1to1_takano_chie_clover.md) | **高野ちえ（静岡婚活サロン クローバー／IBJ・BNI アクセル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 13:00–14:00 実施済み**（Zoom要約校正・`one_to_ones.id=124` completed／`members.id=237`）。藤枝地縁・1年以内結婚特化。紹介合意: 舩杉（洸太経由）・神保（10分ネイル）・中島幸樹（公式LINE）。会後お礼＋神保向け紹介文あり。 |
+| [meetings/1to1/1to1_takano_chie_clover.md](meetings/1to1/1to1_takano_chie_clover.md) | **高野ちえ（静岡婚活サロン クローバー／IBJ・BNI アクセル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 13:00–14:00 実施済み**（`one_to_ones.id=124` completed／`members.id=237`）。藤枝地縁・1年以内結婚特化。**神保玲太（10分ネイル）双方OK済・三者グループ** `【おつなぎ】高野さん⇄神保さん`。舩杉（洸太経由）・中島幸樹（公式LINE）も進行。 |
 | [meetings/1to1/1to1_enokida_soichi_unity.md](meetings/1to1/1to1_enokida_soichi_unity.md) | **榎田聡一（出張車買取 ユニティ／BNI インテグラル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-28 JST 14:15〜 実施済み**（終了TODO・Zoom要約校正・`one_to_ones.id=131` completed／`members.id=255`）。セレナ（約19万km）査定＋CX-8中古（250–300万・3月車検前）・カーマッチ紹介・ピタカット登録・顧客管理システム可能性。 |
 | [meetings/1to1/1to1_izumo_haruko_dan_patent.md](meetings/1to1/1to1_izumo_haruko_dan_patent.md) | **出雲暖子（静岡だん特許事務所／弁理士・防撃スキーム®／BNI エトワール）**。**第1回 2026-07-27 JST 10:00–11:00 実施済み**（Zoom要約校正・`one_to_ones.id=123` completed／`members.id=236`）。商標の象徴語戦略×Excel脱却・仕組み化の共通ターゲット、予約システム汎用名商標、8/5 RF・7/28 BOD・能見さんエトワール案内を整理。 |
 | [meetings/1to1/1to1_noumi_meiko_md_cosmetics.md](meetings/1to1/1to1_noumi_meiko_md_cosmetics.md) | **能見芽衣子（エムディー化粧品販売／MD化粧品・元クロノス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-24 JST 09:00–10:00 実施済み**（Zoom要約校正・`one_to_ones.id=120` completed／`members.id=234`）。営業未経験・体験ストーリー提案・再BNI章選び・7/28 BODビジター。旧ゲスト行 `members.id=114` あり。 |
@@ -143,6 +149,9 @@
 | [meetings/1to1/1to1_kainuma_isao_financial_intelligence.md](meetings/1to1/1to1_kainuma_isao_financial_intelligence.md) | **海沼功（株式会社Financial Intelligence／BNI DragonFly）**。**第1回 2026-07-08 JST 13:00–14:00 実施済み**（Zoom要約反映・Religo `one_to_ones.id=110`）。ライフプラン支援、企業型DC、補助金・助成金マッチング、Claude Code による補助金申請自動化、ChatGPT / NotebookLM / 資料生成AI 活用、個人情報・ローカルAIの課題、次廣のAI伴走型システム開発、海沼さん顧客への協業可能性、次回121・飲み会調整を整理。 |
 | [meetings/1to1/1to1_morita_yoshiaki_kantaka.md](meetings/1to1/1to1_morita_yoshiaki_kantaka.md) | **森田悦章（合同会社カンタカ／経営者の意思決定力を高めるAI活用コンサルティング／ビジター）**。舩杉牧子さん紹介・**2026-06-23 第212回定例会ビジター**。**第1回 2026-07-09 JST 09:00–10:00 予定**（Religo `one_to_ones.id=112`、DB時刻差分要確認）。脳科学×AI、会議・意思決定・組織行動の再設計、建設・不動産、飲食・製造、運送・産廃など10名以上企業への紹介仮説、初回121アジェンダ・質問を整理。 |
 | [meetings/1to1/1to1_imamura_chie_latte_hua.md](meetings/1to1/1to1_imamura_chie_latte_hua.md) | **今村千絵（Latte Hua／身体と心を整えるダイエットコーチング／DragonFly）**。**第1回 2026-07-15 JST 14:00–15:00 実施済み**。ダイエットコーチング10回・3.5万円への申し込み意向、健診共有・妻相談・リンパ体験合意。Religo `members.id=47` / `one_to_ones.id=113`（zoom・completed・`86201781999`）。 |
+| [meetings/1to1/1to1_nagahashi_mutsumi_studio_shushu.md](meetings/1to1/1to1_nagahashi_mutsumi_studio_shushu.md) | **長橋睦（スタジオシュシュ／料理写真／BNI Revival・横浜セントラルリージョン）**。2026-07-09 静岡合同懇親会で接点。**第1回 2026-08-03 JST 10:00–11:00 実施済み**（Zoom）。相互紹介合意（次廣→**ショウアン**メニュー撮影／長橋→**鈴木リサ**浜松・研修）、DragonFly移籍前向き検討、Religo/AIエージェントデモ。Religo `members.id=275`／`one_to_ones.id=134`（manual/completed）。 |
+| [meetings/1to1/1to1_urano_kanta_anywel.md](meetings/1to1/1to1_urano_kanta_anywel.md) | **浦野歓太（株式会社Anywel／IT商材販促プロデュース・補助金活用／BNI エトワール）**。**第1回 2026-08-03 JST 11:00–12:00 実施済み**（Zoom要約校正・会後お礼文案あり）。システム×補助金の相互送客合意。校正: NL→Anywel、5/5→8/5 RF。Religo `members.id=256` / `one_to_ones.id=133`（manual・completed）。 |
+| [meetings/1to1/1to1_matsushita_yasushi_restyle.md](meetings/1to1/1to1_matsushita_yasushi_restyle.md) | **松下靖（株式会社 Restyle／浜松やらまいか）**。2026-07-09 静岡合同懇親会で接点。**第1回 2026-07-30 JST 11:00–12:00 実施済み**（Zoom要約校正反映・会後お礼文案あり）。フロントWeb×バックシステム分業合意。お盆明け再1to1。Religo `members.id=239` / `one_to_ones.id=126`（zoom・completed・`87200793481`）。 |
 | [meetings/1to1/1to1_makita_sanako_holon.md](meetings/1to1/1to1_makita_sanako_holon.md) | **牧田佐奈子（有限会社 HOLON／ダイアナ浜松／BNI ENISHI）**。2026-07-09 静岡合同懇親会で接点。**第1回 2026-07-15 JST 13:00–14:00 実施済み**（Zoom要約反映・`one_to_ones.id=117` completed）。相互事業紹介、今村千絵・アイケアラボ・観光特化HP制作者などの紹介候補合意。ローカル Religo `members.id=232`。 |
 | [meetings/1to1/1to1_sawada_kosuke_hikari_law.md](meetings/1to1/1to1_sawada_kosuke_hikari_law.md) | **澤田行助（ひかり総合法律事務所／中小企業サポート弁護士／BNI HIVE・東京新宿リージョン）**。望月雅幸さん紹介。**第1回 2026-07-17 JST 10:00–11:00 実施済み**（Religo `members.id=220` / `one_to_ones.id=115`・Zoom `85158579094`）。弁護士登録26年目・顧問約60社、Claude／NotebookLM／Claude Code活用、受任管理・メール分類、ローカルAI構想、建設業顧客の相互紹介、次廣の契約トラブルと予防法務を整理。 |
 | [meetings/1to1/1to1_koshiga_toshie_kt_associates.md](meetings/1to1/1to1_koshiga_toshie_kt_associates.md) | **越賀淑恵（ケイティ＆アソシエイツ／ブランド戦略プランナー／DragonFly）**。**第1回 2026-07-17 JST 18:00–19:00 実施済み**（Zoom要約反映）。企業ブランディング（MVV）特化へのシフト、戦略／戦術境界、DXクライアント×理念協業。要約のカーネル「辻さん」は下辻さん（既接続）と判断し紹介TODO削除。Religo `members.id=30` / `one_to_ones.id=95`（zoom・completed・`88169264613`）。 |
@@ -724,6 +733,15 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_295_yonezawa_yuka_121_second_minutes_PLAN.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_PLAN.md) | Phase 295: 米澤侑桂 第2回121 Zoom要約反映 PLAN。 |
 | [phases/PHASE_295_yonezawa_yuka_121_second_minutes_WORKLOG.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_WORKLOG.md) | Phase 295: 同 WORKLOG。 |
 | [phases/PHASE_295_yonezawa_yuka_121_second_minutes_REPORT.md](process/phases/PHASE_295_yonezawa_yuka_121_second_minutes_REPORT.md) | Phase 295: 同 REPORT。 |
+| [phases/PHASE_296_matsushita_yasushi_121_minutes_PLAN.md](process/phases/PHASE_296_matsushita_yasushi_121_minutes_PLAN.md) | Phase 296: 松下靖 第1回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_296_matsushita_yasushi_121_minutes_WORKLOG.md](process/phases/PHASE_296_matsushita_yasushi_121_minutes_WORKLOG.md) | Phase 296: 同 WORKLOG。 |
+| [phases/PHASE_296_matsushita_yasushi_121_minutes_REPORT.md](process/phases/PHASE_296_matsushita_yasushi_121_minutes_REPORT.md) | Phase 296: 同 REPORT。 |
+| [phases/PHASE_297_nagahashi_mutsumi_121_prep_PLAN.md](process/phases/PHASE_297_nagahashi_mutsumi_121_prep_PLAN.md) | Phase 297: 長橋睦 初回121事前準備 PLAN。 |
+| [phases/PHASE_297_nagahashi_mutsumi_121_prep_WORKLOG.md](process/phases/PHASE_297_nagahashi_mutsumi_121_prep_WORKLOG.md) | Phase 297: 同 WORKLOG。 |
+| [phases/PHASE_297_nagahashi_mutsumi_121_prep_REPORT.md](process/phases/PHASE_297_nagahashi_mutsumi_121_prep_REPORT.md) | Phase 297: 同 REPORT。 |
+| [phases/PHASE_298_urano_kanta_121_minutes_PLAN.md](process/phases/PHASE_298_urano_kanta_121_minutes_PLAN.md) | Phase 298: 浦野歓太 第1回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_298_urano_kanta_121_minutes_WORKLOG.md](process/phases/PHASE_298_urano_kanta_121_minutes_WORKLOG.md) | Phase 298: 同 WORKLOG。 |
+| [phases/PHASE_298_urano_kanta_121_minutes_REPORT.md](process/phases/PHASE_298_urano_kanta_121_minutes_REPORT.md) | Phase 298: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
