@@ -84,6 +84,9 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/README.md](meetings/README.md) | **直下・`chapter/`・`team/`・`webmaster/`・`1to1/` の役割分担**（定例会・チームMTG・Webマスター・1to1・提案書）。 |
+| [meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md) | **DragonFly チャプター 1toMany（2026-08-07 19:00 JST）** 次廣登壇。**6/23 MP既聴前提の深掘り稿**（効果の具体／tugical・Religo・SONAE・tugilo-os／章内協業／切り出し5型）。 |
+| [meetings/Dragonfly_team_1toMany_Tsugihiro_202604.md](meetings/Dragonfly_team_1toMany_Tsugihiro_202604.md) | **スリーバイス 1toMany（2026-04-21）** チーム内5分原稿・連携パターン・Gensparkプロンプト。 |
+| [pdf/260807/1toMany_session_guide.pdf](pdf/260807/1toMany_session_guide.pdf) | **1toMany セッション資料**（聴・問・話／60分進行：OP5・メイン10・深掘り18・逆質問5・BOR20・CL2）。 |
 
 #### チャプター定例会（docs/meetings/chapter/）
 

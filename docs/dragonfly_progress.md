@@ -8,6 +8,9 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-05 16:40 JST | **1toMany稿に効果具体＋製品地図:** [`Dragonfly_chapter_1toMany_Tsugihiro_20260807.md`](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md)。増本（転記0・確認1/4・推薦の中身）、動物病院（5年・獣医3名・400件超）。**tugical／Religo／SONAE／tugilo-os** を一言地図で追加。 |
+| 2026-08-05 16:34 JST | **1toMany原稿を深掘り版へ改訂:** [`Dragonfly_chapter_1toMany_Tsugihiro_20260807.md`](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md)。**6/23メインプレ既聴前提**で自己紹介なぞりを削除。増本の道具チェーン、防水LINE日報、動物病院LINE予約、紹介後3段階、章内協業（軍司／小中）、切り出し5型を追加。 |
+| 2026-08-05 16:30 JST | **DragonFly チャプター 1toMany（8/7 19:00）準備稿:** [`meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md`](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md) 新規。資料PDFを [`pdf/260807/1toMany_session_guide.pdf`](pdf/260807/1toMany_session_guide.pdf) に保存。60分進行準拠の10分通し原稿・想定Q&A・次廣からの逆質問・BOR一言・Gensparkプロンプト。INDEX同期。 |
 | 2026-08-04 14:05 JST | **スリーバイス チームMTG 2026-08-04 議事録:** Zoom 文字起こし要約を校正し [`meetings/team/team_threebiz_20260804.md`](meetings/team/team_threebiz_20260804.md) に反映。小中貴晃さんパーソナル共有（京都・キャリア・家族）・パワーチーム業種軸/課題軸・121バッターボックス・グロビジ証明8/21・SBOD/POD・再来週WS。`import-team-minutes` でローカルDB反映。`docs/INDEX.md` 同期。 |
 | 2026-08-04 13:42 JST | **DragonFly 定例会 第217回 議事録:** 英語 Zoom 要約を翻訳・校正し [`meetings/chapter/chapter_weekly_20260804.md`](meetings/chapter/chapter_weekly_20260804.md) に反映。新メンバー3名・MP藤井/今西・SS岡元・教育GBM・RF161。`import-chapter-minutes` でローカルDB反映。参加者CSVは前日取込済（88名）。`docs/INDEX.md` 同期。 |
 | 2026-08-03 23:57 JST | **121未反映→ローカル→本番:** dry-runで差分は縮退のみ（木村`#43`/田渕`#118`等はスキップ）。唯一の未登録は長橋 `#134` — guest `members.id=275`＋manual/completed を作成し `import-1to1-notes --only-ids=134`（notes 0→2071）。第217回参加者88名もローカル反映済。595 tests passed → `db-export`（1,894,998 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260803_235715.sql`。 |
