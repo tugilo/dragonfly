@@ -27,12 +27,18 @@ class MeetingTypeApiTest extends TestCase
 
         $data = $res->json();
         $this->assertIsArray($data);
-        $this->assertCount(5, $data);
+        $this->assertCount(6, $data);
         $this->assertSame('chapter_weekly', $data[0]['code']);
         $this->assertSame('定例会', $data[0]['name_ja']);
         $this->assertTrue($data[0]['is_numbered']);
         $this->assertFalse($data[0]['requires_team_id']);
         $this->assertTrue($data[0]['supports_participants']);
+
+        $oneToMany = collect($data)->firstWhere('code', MeetingDisplay::SESSION_CHAPTER_1TOMANY);
+        $this->assertNotNull($oneToMany);
+        $this->assertSame('1toMany', $oneToMany['name_ja']);
+        $this->assertFalse($oneToMany['is_numbered']);
+        $this->assertTrue($oneToMany['supports_referral_suggestions']);
 
         $teamType = collect($data)->firstWhere('code', MeetingDisplay::SESSION_TEAM_MEETING);
         $this->assertNotNull($teamType);
@@ -51,6 +57,6 @@ class MeetingTypeApiTest extends TestCase
 
         $codes = collect($res->json())->pluck('code')->all();
         $this->assertNotContains('webmaster_meeting', $codes);
-        $this->assertCount(4, $codes);
+        $this->assertCount(5, $codes);
     }
 }

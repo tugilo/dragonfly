@@ -168,6 +168,18 @@ class ImportChapterMinutesCommand extends Command
                 ]
             );
         } else {
+            $defaultName = MeetingDisplay::defaultName($sessionType, null);
+            if ($sessionType === MeetingDisplay::SESSION_CHAPTER_1TOMANY) {
+                $speaker = $this->stringOrNull($frontMatter['speaker'] ?? null);
+                if ($speaker !== null) {
+                    // "次廣 淳（tugilo）／…" → 表示用に先頭のみ
+                    $short = preg_split('/[／\/（(]/u', $speaker, 2)[0] ?? $speaker;
+                    $short = trim((string) $short);
+                    if ($short !== '') {
+                        $defaultName = '1toMany — '.$short;
+                    }
+                }
+            }
             $meeting = Meeting::updateOrCreate(
                 [
                     'session_type' => $sessionType,
@@ -177,7 +189,7 @@ class ImportChapterMinutesCommand extends Command
                     'meeting_type_id' => MeetingType::idForCode($sessionType),
                     'number' => null,
                     'team_id' => '',
-                    'name' => MeetingDisplay::defaultName($sessionType, null),
+                    'name' => $defaultName,
                 ]
             );
         }
