@@ -87,6 +87,40 @@ class ImportChapterMinutesCommandTest extends TestCase
         $this->assertDatabaseMissing('meetings', ['number' => 999]);
     }
 
+    public function test_imports_chapter_1tomany_without_meeting_number(): void
+    {
+        $path = $this->writeFixture('chapter_1tomany_20260806.md', <<<'MD'
+---
+doc_type: chapter_1tomany
+session_type: chapter_1tomany
+session_date: "2026-08-06"
+session_time_jst: "19:00-20:00"
+speaker: "次廣 淳（tugilo）／AI業務改善システム構築"
+source: "test fixture"
+---
+
+# 1toMany minutes
+
+Body for 1toMany.
+MD);
+
+        $exitCode = Artisan::call('dragonfly:import-chapter-minutes', ['path' => $path]);
+        $this->assertSame(0, $exitCode);
+
+        $meeting = Meeting::query()
+            ->where('session_type', 'chapter_1tomany')
+            ->whereDate('held_on', '2026-08-06')
+            ->first();
+        $this->assertNotNull($meeting);
+        $this->assertNull($meeting->number);
+        $this->assertSame('1toMany — 次廣 淳', $meeting->name);
+
+        $minute = MeetingMinute::where('meeting_id', $meeting->id)->first();
+        $this->assertNotNull($minute);
+        $this->assertSame('chapter_1tomany', $minute->doc_type);
+        $this->assertStringContainsString('Body for 1toMany', $minute->body_markdown);
+    }
+
     private function writeFixture(string $filename, string $content): string
     {
         $path = $this->fixturesDir.'/'.$filename;

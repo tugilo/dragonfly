@@ -15,6 +15,8 @@ final class MeetingDisplay
 
     public const SESSION_BUSINESS_OPEN_DAY = 'business_open_day';
 
+    public const SESSION_CHAPTER_1TOMANY = 'chapter_1tomany';
+
     public const SESSION_TEAM_MEETING = 'team_meeting';
 
     public const SESSION_WEBMASTER_MEETING = 'webmaster_meeting';
@@ -24,6 +26,7 @@ final class MeetingDisplay
         self::SESSION_CHAPTER_WEEKLY,
         self::SESSION_MOMENTUM_TRAINING,
         self::SESSION_BUSINESS_OPEN_DAY,
+        self::SESSION_CHAPTER_1TOMANY,
         self::SESSION_TEAM_MEETING,
     ];
 
@@ -32,6 +35,8 @@ final class MeetingDisplay
         'chapter_weekly' => self::SESSION_CHAPTER_WEEKLY,
         'chapter_momentum' => self::SESSION_MOMENTUM_TRAINING,
         'chapter_bod' => self::SESSION_BUSINESS_OPEN_DAY,
+        'chapter_1tomany' => self::SESSION_CHAPTER_1TOMANY,
+        'chapter_1tomany_minutes' => self::SESSION_CHAPTER_1TOMANY,
         'team_meeting' => self::SESSION_TEAM_MEETING,
     ];
 
@@ -50,6 +55,7 @@ final class MeetingDisplay
         return match ($sessionType) {
             self::SESSION_MOMENTUM_TRAINING => 'モメンタムトレーニング',
             self::SESSION_BUSINESS_OPEN_DAY => 'ビジネスオープンデイ（BOD）',
+            self::SESSION_CHAPTER_1TOMANY => '1toMany',
             self::SESSION_TEAM_MEETING => ($teamNameJa !== null && trim($teamNameJa) !== '')
                 ? trim($teamNameJa).' チームMTG'
                 : 'チームMTG',

@@ -297,6 +297,7 @@
 | 296 | 松下靖 第1回121 Zoom要約反映（Web×システム分業・補助金案件意向・お盆明け再1to1） | docs | completed | develop（commit / merge 未実施） | 2026-07-30 |
 | 297 | 長橋睦 初回121事前準備（スタジオシュシュ／料理写真／BNI Revival・横浜セントラル） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
 | 298 | 浦野歓太 第1回121 Zoom要約反映（Anywel／補助金×販促・エトワール×システム相互送客） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
+| 299 | 1toMany 議事録 DB 取り込み（chapter_1tomany 型・2026-08-06 次廣・prod push） | implement | completed | feature/phase299-chapter-1tomany-minutes-import → develop | 2026-08-07 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

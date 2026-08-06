@@ -30,6 +30,7 @@ $COMPOSE exec app php artisan dragonfly:import-chapter-minutes docs/meetings/cha
 
 - 定例会: `chapter_weekly_*.md`
 - モメンタム/BOD: front matter の `doc_type` / `session_type` を確認（`meeting_number` なし可）
+- **1toMany:** `doc_type` / `session_type` = `chapter_1tomany`（`meeting_number` なし）。例: `docs/meetings/Dragonfly_chapter_1toMany_*_minutes.md`
 
 ## チーム MTG 議事録（SPEC-018）
 
