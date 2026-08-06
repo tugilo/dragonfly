@@ -26,6 +26,7 @@
 | 週次定例会 | `chapter_weekly` | 必須 | 可（`meetings.number`） |
 | モメンタムトレーニング | `chapter_momentum` | 付けない | 可（`session_type` + `held_on`、number=NULL） |
 | BOD | `chapter_bod` | 付けない | 可（`session_type` + `held_on`、number=NULL） |
+| 1toMany | `chapter_1tomany` | 付けない | 可（`session_type=chapter_1tomany` + `held_on`、number=NULL）。例: `docs/meetings/Dragonfly_chapter_1toMany_*_minutes.md` |
 
 例: DragonFly **2026-06-16** モメンタムは **第212回ではない**。**2026-07-28** BOD も同様。次の定例会 **第212回** は **2026-06-23**（予定）。
 

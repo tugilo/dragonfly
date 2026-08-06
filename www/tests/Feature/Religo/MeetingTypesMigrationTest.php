@@ -13,9 +13,9 @@ class MeetingTypesMigrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_meeting_types_seeded_with_five_codes(): void
+    public function test_meeting_types_seeded_with_six_codes(): void
     {
-        $this->assertSame(5, MeetingType::query()->count());
+        $this->assertSame(6, MeetingType::query()->count());
 
         $teamType = MeetingType::query()->where('code', MeetingDisplay::SESSION_TEAM_MEETING)->first();
         $this->assertNotNull($teamType);
@@ -28,6 +28,11 @@ class MeetingTypesMigrationTest extends TestCase
         $this->assertNotNull($weekly);
         $this->assertTrue($weekly->is_numbered);
         $this->assertTrue($weekly->supports_referral_suggestions);
+
+        $oneToMany = MeetingType::query()->where('code', MeetingDisplay::SESSION_CHAPTER_1TOMANY)->first();
+        $this->assertNotNull($oneToMany);
+        $this->assertFalse($oneToMany->is_numbered);
+        $this->assertTrue($oneToMany->supports_referral_suggestions);
     }
 
     public function test_chapter_weekly_meeting_gets_meeting_type_id_on_create(): void
