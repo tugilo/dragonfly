@@ -15,9 +15,9 @@
 - [x] 本番 push（バックアップ: `backups/prod_20260807_071433.sql`）
 - [x] 関連ドキュメント更新（INDEX / progress / SSOT / 準備稿・実施議事録 / import-religo skill）
 - [x] develop merge + Merge Evidence
-- [ ] main merge（develop 反映の約3分後）
+- [x] main merge（develop push の約3分後）
 
-## Merge Evidence
+## Merge Evidence（develop）
 
 merge commit id: `d0bf04c15e0e2a557f3d7732969b5a7b088899f2`
 source branch: feature/phase299-chapter-1tomany-minutes-import
@@ -29,29 +29,14 @@ related ssot: SPEC-014（CHAPTER_MINUTES_REQUIREMENTS）
 test command: php artisan test
 test result: 596 passed / 2193 assertions
 
-changed files:
-```
-.claude/skills/import-religo/SKILL.md
-docs/INDEX.md
-docs/SSOT/CHAPTER_MINUTES_REQUIREMENTS.md
-docs/dragonfly_progress.md
-docs/meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md
-docs/meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md
-docs/pdf/1to many資料.pdf
-docs/presentation/1toMany_-_次廣淳___tugilo_20260806090810.pdf
-docs/process/PHASE_REGISTRY.md
-docs/process/phases/PHASE_299_chapter_1tomany_minutes_import_PLAN.md
-docs/process/phases/PHASE_299_chapter_1tomany_minutes_import_REPORT.md
-docs/process/phases/PHASE_299_chapter_1tomany_minutes_import_WORKLOG.md
-www/app/Console/Commands/ImportChapterMinutesCommand.php
-www/app/Support/MeetingDisplay.php
-www/database/migrations/2026_08_07_071300_add_chapter_1tomany_meeting_type.php
-www/database/sync/dragonfly.sql
-www/tests/Feature/ImportChapterMinutesCommandTest.php
-www/tests/Feature/Religo/MeetingTypeApiTest.php
-www/tests/Feature/Religo/MeetingTypesMigrationTest.php
-```
-
 scope check: OK
 ssot check: OK（CHAPTER_MINUTES_REQUIREMENTS 更新）
-dod check: OK（main 反映は別途）
+dod check: OK
+
+## Release Evidence（main）
+
+merge commit id: `6ead508c3a10abdca24324b7124bc404131171b3`
+source branch: develop
+target branch: main
+pushed at: 2026-08-07 07:19:58 JST
+test result: 596 passed（main merge 後）

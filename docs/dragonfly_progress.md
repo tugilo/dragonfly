@@ -8,7 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
-| 2026-08-07 07:16 JST | **Phase 299 → develop merge:** merge `d0bf04c`／テスト 596 passed／Merge Evidence 記録後 `git push origin develop`。約3分後に main へ merge 予定。 |
+| 2026-08-07 07:19 JST | **Phase 299 → main release:** develop を main へ merge `6ead508`／テスト 596 passed／`git push origin main`（07:19:58 JST）。 |
+| 2026-08-07 07:16 JST | **Phase 299 → develop merge:** merge `d0bf04c`／テスト 596 passed／Merge Evidence 記録後 `git push origin develop`。 |
 | 2026-08-07 07:14 JST | **Phase 299 1toMany議事録 DB 反映:** `chapter_1tomany` 型追加 → ローカル import（`meetings.id=33`）→ `make db-export` → **`make db-push TARGET=prod`**（backup `backups/prod_20260807_071433.sql`）。 |
 | 2026-08-07 07:10 JST | **1toMany実施時刻確定:** 2026-08-06（木）**19:00–20:00 JST**。[`Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md`](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md)・INDEX同期。 |
 | 2026-08-07 07:08 JST | **1toMany実施議事録:** [`Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md`](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md)。文字起こし要約を校正（レディゴー→Religo、コース→洸太、みやみ→雅、陽子→葉子、岡本→岡元、Taiki→横山太樹等）。INDEX・準備稿の実施後メモ同期。 |
