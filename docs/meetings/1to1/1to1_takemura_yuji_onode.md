@@ -387,7 +387,7 @@ religo_one_to_one_id_session2: 128
 - bit さん接続は、同業・協業・案件 overflow のどれかを確認してから。
 - DYM／ダンス系はメリット付きでチアプリント掲載を打診。
 - **WP 負荷相談:** 情報未揃いのままスペックアップを推さず、まずキャッシュ／CDN／同時接続見積を取る。有償支援にするかは案件規模・責任範囲（本番障害責任）を見て判断する。
-- **負荷対策提案:** 外向け提出は [`takemura_cheer_print_access_load_proposal.md`](../../proposals/takemura_cheer_print_access_load_proposal.md) を正とする。段階: 簡易診断 3〜5万／負荷試験 8〜15万／再試験 3〜5万（税別）。**竹村さん＝調整窓口**、**制作会社＝キャッシュ・CDN・AWS**、**次廣＝診断・試験・報告**。詳細・仮説人数は技術別紙。
+- **負荷対策提案:** 外向け提出は [`takemura_cheer_print_access_load_proposal.md`](../../proposals/takemura_cheer_print_access_load_proposal.md)。**実行計画 SSOT（2026-08-07）:** [`takemura_cheer_print_event_access_plan.md`](../../proposals/takemura_cheer_print_event_access_plan.md)（予算税別 **12万**・約2週間・ぴえんシステム連携）。役割: **竹村さん＝調整窓口**、**制作会社＝キャッシュ・CDN・AWS**、**次廣＝測る・分析・提案**。詳細・仮説人数は技術別紙。
 
 ---
 

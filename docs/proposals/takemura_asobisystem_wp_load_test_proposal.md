@@ -1,6 +1,7 @@
 # Cheer Print 負荷対策・技術別紙（社内／詳細説明用）
 
-**外向け提出用（短い提案書）:** [`takemura_cheer_print_access_load_proposal.md`](takemura_cheer_print_access_load_proposal.md) ← **竹村さん／制作会社への提出はこちらを正とする**  
+**実行用 SSOT（目的・要件・実施計画）:** [`takemura_cheer_print_event_access_plan.md`](takemura_cheer_print_event_access_plan.md) ← **案件進行・予算12万スコープはこちらを正とする**  
+**外向け提出用（短い提案書）:** [`takemura_cheer_print_access_load_proposal.md`](takemura_cheer_print_access_load_proposal.md)  
 **スライド用:** [`takemura_cheer_print_load_test_genspark_slide_prompt.md`](takemura_cheer_print_load_test_genspark_slide_prompt.md)
 
 **対象サイト:** [https://www.cheer-print.com/](https://www.cheer-print.com/)（Cheer Print／チアプリント）  
