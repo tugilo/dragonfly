@@ -298,6 +298,7 @@
 | 297 | 長橋睦 初回121事前準備（スタジオシュシュ／料理写真／BNI Revival・横浜セントラル） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
 | 298 | 浦野歓太 第1回121 Zoom要約反映（Anywel／補助金×販促・エトワール×システム相互送客） | docs | completed | develop（commit / merge 未実施） | 2026-08-03 |
 | 299 | 1toMany 議事録 DB 取り込み（chapter_1tomany 型・2026-08-06 次廣・prod push） | implement | completed | main（release 6ead508／develop d0bf04c） | 2026-08-07 |
+| 300 | Cheer Print 負荷試験プログラム作成（k6・ローカルDocker・静的／WP分離・自動報告書・08-08 22–24 用） | implement | in_progress | feature/phase300-cheer-print-loadtest-program | 2026-08-07 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

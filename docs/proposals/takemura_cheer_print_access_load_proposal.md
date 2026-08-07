@@ -5,6 +5,7 @@
 **提案:** tugilo 次廣 淳  
 **作成:** 2026-07-23 21:10 JST  
 **位置づけ:** 外向け提出用（概算・段階提案）  
+**実行用 SSOT（予算12万・約2週間計画）:** [`takemura_cheer_print_event_access_plan.md`](takemura_cheer_print_event_access_plan.md) ← **案件進行はこちらを正とする**  
 **技術詳細・人数推計・試験手順の別紙:** [`takemura_asobisystem_wp_load_test_proposal.md`](takemura_asobisystem_wp_load_test_proposal.md)
 
 ---

@@ -8,6 +8,12 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-07 23:48 JST | **Phase 300 実装完了（merge前）:** `tools/cheer-print-loadtest` — Docker k6／静的+WP／自動MD・HTML報告。`./run.sh dry` 成功（総合問題なし・低VU）。`php artisan test` 596 passed。ブランチ `feature/phase300-cheer-print-loadtest-program`。 |
+| 2026-08-07 23:26 JST | **Phase 300 PLAN:** Cheer Print 負荷試験プログラム作成。要件 [`takemura_cheer_print_loadtest_program_requirements.md`](proposals/takemura_cheer_print_loadtest_program_requirements.md)／PLAN [`PHASE_300_cheer_print_loadtest_program_PLAN.md`](process/phases/PHASE_300_cheer_print_loadtest_program_PLAN.md)。ブランチ `feature/phase300-cheer-print-loadtest-program`。実装は未着手。 |
+| 2026-08-07 23:14 JST | **Cheer Print 試験枠確定:** 08-08 22:00–24:00 JST＋報告。静的導線 `cheer--print.com/a-expo-fream/` 追加。[`takemura_cheer_print_event_access_plan.md`](proposals/takemura_cheer_print_event_access_plan.md) 更新。 |
+| 2026-08-07 23:00 JST | **Cheer Print 本番日 08-18 判明:** 前倒し販売の可能性あり・残り約10日。計画を圧縮（試験希望 08-09〜11夜）。[`takemura_cheer_print_event_access_plan.md`](proposals/takemura_cheer_print_event_access_plan.md) 更新。 |
+| 2026-08-07 22:54 JST | **Cheer Print 試験項目・日時許可どり:** [`takemura_cheer_print_event_access_plan.md`](proposals/takemura_cheer_print_event_access_plan.md) §H-0 に試験項目・想定時間（約90〜120分）とぴえんシステム送付用文面を追加。 |
+| 2026-08-07 22:45 JST | **Cheer Print 実行計画 SSOT:** [`proposals/takemura_cheer_print_event_access_plan.md`](proposals/takemura_cheer_print_event_access_plan.md) を新規。竹村案件の目的・要件・12万スコープ・Day1–14・負荷試験・制作会社確認文面を確定。INDEX・proposals README 同期。実装・負荷試験は未着手。 |
 | 2026-08-07 07:19 JST | **Phase 299 → main release:** develop を main へ merge `6ead508`／テスト 596 passed／`git push origin main`（07:19:58 JST）。 |
 | 2026-08-07 07:16 JST | **Phase 299 → develop merge:** merge `d0bf04c`／テスト 596 passed／Merge Evidence 記録後 `git push origin develop`。 |
 | 2026-08-07 07:14 JST | **Phase 299 1toMany議事録 DB 反映:** `chapter_1tomany` 型追加 → ローカル import（`meetings.id=33`）→ `make db-export` → **`make db-push TARGET=prod`**（backup `backups/prod_20260807_071433.sql`）。 |
