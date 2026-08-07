@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-07 23:53 JST | **Phase 300 → develop:** merge `4654d5e`／テスト 596 passed／Merge Evidence 記録後 `git push origin develop`。本番試験枠は 08-08 22:00–24:00 JST（`./run.sh full`）。 |
 | 2026-08-07 23:48 JST | **Phase 300 実装完了（merge前）:** `tools/cheer-print-loadtest` — Docker k6／静的+WP／自動MD・HTML報告。`./run.sh dry` 成功（総合問題なし・低VU）。`php artisan test` 596 passed。ブランチ `feature/phase300-cheer-print-loadtest-program`。 |
 | 2026-08-07 23:26 JST | **Phase 300 PLAN:** Cheer Print 負荷試験プログラム作成。要件 [`takemura_cheer_print_loadtest_program_requirements.md`](proposals/takemura_cheer_print_loadtest_program_requirements.md)／PLAN [`PHASE_300_cheer_print_loadtest_program_PLAN.md`](process/phases/PHASE_300_cheer_print_loadtest_program_PLAN.md)。ブランチ `feature/phase300-cheer-print-loadtest-program`。実装は未着手。 |
 | 2026-08-07 23:14 JST | **Cheer Print 試験枠確定:** 08-08 22:00–24:00 JST＋報告。静的導線 `cheer--print.com/a-expo-fream/` 追加。[`takemura_cheer_print_event_access_plan.md`](proposals/takemura_cheer_print_event_access_plan.md) 更新。 |
