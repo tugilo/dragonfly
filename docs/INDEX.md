@@ -39,6 +39,7 @@
 
 | ファイル | 説明 |
 |----------|------|
+| [pdf/2026-07-31_BNI11期チャプター方針レポート_cc.pdf](pdf/2026-07-31_BNI11期チャプター方針レポート_cc.pdf) | **DragonFly 第11期チャプター方針**（小中貴晃・2026-07-31・3ページ）。スローガン／KGI60／KPI更新70%・入会8%。3ページ目は LT・ST限定の裏テーマ。転記: [chapter_term11_policy_20260731.md](meetings/chapter/chapter_term11_policy_20260731.md)。 |
 | [pdf/260414/キッズマネースクール紹介チラシ.pdf](pdf/260414/キッズマネースクール紹介チラシ.pdf) | キッズマネースクール紹介チラシ。 |
 | [pdf/260421/定例会参加者リスト2026_04_21.pdf](pdf/260421/定例会参加者リスト2026_04_21.pdf) | DragonFly 定例会参加者リスト（2026-04-21）。 |
 | [pdf/260421/dragonfly_206_20260421_all_full.csv](pdf/260421/dragonfly_206_20260421_all_full.csv) | メンバー一覧 CSV エクスポート（`www/database/csv/` の同名ファイルと同内容の参照用）。 |
@@ -95,7 +96,9 @@
 
 | ファイル | 説明 |
 |----------|------|
-| [meetings/chapter/README.md](meetings/chapter/README.md) | **定例会議事録の命名**（`chapter_weekly_YYYYMMDD.md`）・YAML・Religo 連携メモ。 |
+| [meetings/chapter/README.md](meetings/chapter/README.md) | **定例会議事録の命名**（`chapter_weekly_YYYYMMDD.md`）・YAML・Religo 連携メモ。LTST 名簿は `chapter_ltst_termNN.md`。 |
+| [meetings/chapter/chapter_ltst_term11.md](meetings/chapter/chapter_ltst_term11.md) | **DragonFly 11期 LTST**（2026-10〜）。プレジ小中・バイス増本・書記船津。ビジホス＝**木村杏那**（健悟ではない）。STに次廣＝Webマスター、Edu＝横山尚武、Training＝大竹絵理香 等。2026-08-14 ユーザー確定。Religo `member_roles` は10期のまま未反映。 |
+| [meetings/chapter/chapter_term11_policy_20260731.md](meetings/chapter/chapter_term11_policy_20260731.md) | **DragonFly 第11期チャプター方針**（小中・2026-07-31）。KGI60／更新70%／入会8%。52名頭打ちの構造と60到達シミュレーション。3ページ目は LT・ST限定の文化リビルド。思想の正本は [運営思想](SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)。 |
 | [meetings/chapter/chapter_weekly_20260512.md](meetings/chapter/chapter_weekly_20260512.md) | **DragonFly 定例会 第207回 2026-05-12**（Zoom）。3週間ぶりの開催。藤井恵理子更新承認、吉田俊之一時退会、清原佳彩美カテゴリー変更、教育「エレベーターピッチ」、MP大竹絵理香（家族も使える福利厚生）/清原佳彩美（サロン向け育毛機器・商材販売）、ビジター6名・ゲスト2名。文字起こし由来の数値不整合は要確認として記録。 |
 | [meetings/chapter/chapter_weekly_20260519.md](meetings/chapter/chapter_weekly_20260519.md) | **DragonFly 定例会 第208回 2026-05-19**（Zoom）。参加65・RF118・西岡MP・教育「紹介しやすい人」・増本SS。決定: グロビジ補助8/21・フォーラム締切 **5/22**・対面ランチ二次会表明 **5/26** まで。 |
 | [meetings/chapter/chapter_weekly_20260526.md](meetings/chapter/chapter_weekly_20260526.md) | **DragonFly 定例会 第209回 2026-05-26**（Zoom）。参加56・RF110・新メンバー2名承認（米沢・森園）・MP木村・中村・教育「紹介の解像度を上げる」・小中SS。次廣招待ビジター石原氏フォロー対象。 |
@@ -203,7 +206,9 @@
 | [meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md](meetings/1to1/1to1_suzuki_kensuke_studio_suzu.md) | **鈴木健介（合同会社スタジオ鈴・BNI Diana）**。**第1回 2026-04-17 JST 09:55〜**（終了時刻 TODO）・Zoom。スタートアッププレゼン改善、VR×サウナコンテンツ、藤原氏（VR推進協会）紹介、北欧サウナ体験、飲食店向けAIコールセンターの芽を整理。 |
 | [meetings/1to1/1to1_isobe_masayuki_nestle_detective.md](meetings/1to1/1to1_isobe_masayuki_nestle_detective.md) | **礒部昌之（ネスレ探偵事務所・BNI レブリー）**。**第1回 2026-05-16 10:00〜11:00 実施済み**（Zoom 詳細要約反映）。探偵業（レムリ／大宮）・保険営業紹介（紀川・竹内・海沼・山本）・メンバー表相互共有・倫理会ゲスト管理システム化の芽・藤枝/フランス語の接点。 |
 | [meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md](meetings/1to1/1to1_harada_saori_ruiled_vision_japan.md) | **原田里織（RUILED VISION JAPAN株式会社／BNI DragonFly）**。**第1回 2026-06-01 JST 14:00–15:00 実施済み**・**Religo `one_to_ones.id=37`**。店舗・施設集客を高めるLEDデジタルサイネージ、中国深圳工場との直接契約、1台から納品、販売代理店（加盟金55万円・ノルマ/在庫なし）、看板屋・電気工事士との協業、導入実績、次廣の電気工事士紹介確認、ホットペッパー代替予約システム構想、おかわり121合意を整理。 |
-| [meetings/1to1/1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) | **小中貴晃（株式会社BeCheerz／BNI DragonFly）**。**第1回 `#38`（2026-06-01）**・**第2回 `#129`（2026-07-24 10:00–11:00・manual）実施済み**。第2回: AI実践知（Mac Studio/Tailscale/Obsidian/Stream Deck）、Religoデモ（紹介文自動生成が本命）、DragonFly運営・WM、三者チーム協業、ノーアジェンダ定期121継続。 |
+| [meetings/1to1/1to1_konaka_takaaki_becheerz.md](meetings/1to1/1to1_konaka_takaaki_becheerz.md) | **小中貴晃（株式会社BeCheerz／BNI DragonFly）**。**第1回 `#38`**・**第2回 `#129`**・**第3回 `#137`（2026-08-14）**。協業メモは [AI時代に企業が必要とするエンジニアとは](meetings/1to1/materials/konaka_junior_ops_lab.md)、スライド化は [Gensparkプロンプト](meetings/1to1/materials/konaka_ai_era_engineer_genspark_slide_prompt.md)。11期 LTST は [chapter_ltst_term11.md](meetings/chapter/chapter_ltst_term11.md)。 |
+| [meetings/1to1/materials/konaka_junior_ops_lab.md](meetings/1to1/materials/konaka_junior_ops_lab.md) | **AI時代に企業が必要とするエンジニアとは**（2026-08-14 21:57・小中さん共有用）。二人で人材定義を検討し、その後に育成・運用支援等の事業を考える。強み、次廣仮説、相談したい6点を整理。 |
+| [meetings/1to1/materials/konaka_ai_era_engineer_genspark_slide_prompt.md](meetings/1to1/materials/konaka_ai_era_engineer_genspark_slide_prompt.md) | **Genspark用スライド生成プロンプト**（2026-08-14 21:59）。上記共有資料を、結論を押しつけない11枚の対話用スライドへ変換。構成・デザイン・禁止事項・最終確認を指定。 |
 | [meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md](meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md) | **山本葉子（出光クレジット／BNI DragonFly）**。**第1回 2026-06-03 JST 15:00–16:00 実施済み**・**Religo `one_to_ones.id=41`**（Zoom要約反映）。動物病院×アメックス・獣医師会賛助会員、予約システムチラシ共同配布・6/6 RF対面・藤枝デモ合意。**おかわり121**予定。 |
 | [meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md](meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md) | **動物病院向け LINE予約チラシ（A4・ビジュアル中心）**。yamabuki 実画面キャプチャ5枚接続済み（v4 2026-06-03）。 |
 | [meetings/1to1/materials/screenshot_capture_guide.md](meetings/1to1/materials/screenshot_capture_guide.md) | 上記チラシ用 **yamabuki スクリーンショット取得手順**（LIFF 3枚・管理画面2枚・LINE通知1枚）。 |
@@ -247,6 +252,8 @@
 | ファイル | 説明 |
 |----------|------|
 | [proposals/README.md](proposals/README.md) | 本ディレクトリの用途（議事録・1to1 との分離）。 |
+| [proposals/takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md](proposals/takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md) | **Cheer Print 負荷試験結果スライド用 Gensparkプロンプト**（2026-08-08）。非技術者＋技術者向け15枚。問題→対策→期限。元: [client報告](proposals/takemura_cheer_print_loadtest_report_20260808_client.md)。 |
+| [proposals/takemura_cheer_print_loadtest_report_20260808_client.md](proposals/takemura_cheer_print_loadtest_report_20260808_client.md) | **Cheer Print 負荷試験結果・ご報告（非技術者向け）**（2026-08-08 22:39 JST）。総合**危険**（本サイト遅延）／静的入口は問題なし。優先対策・期限・制作会社ToDo。HTML: [同 client.html](proposals/takemura_cheer_print_loadtest_report_20260808_client.html)。 |
 | [proposals/takemura_cheer_print_event_access_plan.md](proposals/takemura_cheer_print_event_access_plan.md) | **Cheer Print イベント時アクセス集中対策 — 目的・要件・実施計画（実行 SSOT）**（2026-08-07）。予算税別12万／約2週間／ぴえんシステム連携／FACT・ASSUMPTION・TO CONFIRM／Day1–14／**§H-0 試験項目・想定時間・日時許可どり文面**／Stage A–C。 |
 | [proposals/takemura_cheer_print_loadtest_program_requirements.md](proposals/takemura_cheer_print_loadtest_program_requirements.md) | **Cheer Print 負荷試験プログラム要件**（2026-08-07）。k6／さくらのVPS／Stage A–C／静的とWP分離／**自動日本語報告書（FR-7）**。Phase 300。 |
 | [proposals/takemura_cheer_print_access_load_proposal.md](proposals/takemura_cheer_print_access_load_proposal.md) | **Cheer Print アクセス集中対策・負荷試験のご提案（外向け提出用）**（竹村裕司・2026-07-23）。6章。まず構成確認→簡易診断3〜5万／負荷試験8〜15万／再試験3〜5万（税別）。実行時は [event_access_plan](proposals/takemura_cheer_print_event_access_plan.md) を優先。 |
@@ -344,6 +351,7 @@ BNI アカデミー資料・受講用メモ（KeySkills 等）。教材 PDF と�
 
 | ファイル | 説明 |
 |----------|------|
+| [DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md](SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md) | **DragonFly 第11期 運営思想**（小中所信表明動画・2026-08-14）。成果→誇り→誘う→60。上質な1to1。KPI 更新70%/入会8%。WMは棚卸し先行。Religo/施策の9観点評価。数値は [方針レポート](meetings/chapter/chapter_term11_policy_20260731.md)。 |
 | [DATA_MODEL.md](SSOT/DATA_MODEL.md) | Religo 会の地図（Relationship Map）データモデル。エンティティ・テーブル定義・**Workspace と User（BNI 1 user = 1 workspace）**・`users.religo_role`（SPEC-010）・派生指標・Phase 対応の SSOT。 |
 | [MEMBERS_REQUIREMENTS.md](SSOT/MEMBERS_REQUIREMENTS.md) | Religo Members（メンバー一覧・詳細）要件の SSOT。List/Show/Edit の表示項目・操作・メモ・1to1・役職履歴・権限・非目標・DoD。 |
 | [MEMBERS_REQUIREMENTS_REVIEW.md](SSOT/MEMBERS_REQUIREMENTS_REVIEW.md) | Members 要件整理結果。要件サマリ・現状との差分・不明点・推奨設計。実装前の参照用。 |

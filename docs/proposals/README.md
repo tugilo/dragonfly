@@ -13,6 +13,8 @@
 
 | 資料 | メモ |
 |------|------|
+| [takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md](takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md) | **負荷試験結果スライド用 Gensparkプロンプト**（15枚・非技術者＋技術者）。金額なし。 |
+| [takemura_cheer_print_loadtest_report_20260808_client.md](takemura_cheer_print_loadtest_report_20260808_client.md) | **負荷試験結果・非技術者向けご報告**（2026-08-08実施）。総合危険／具体提案・期限・ToDo。[HTML](takemura_cheer_print_loadtest_report_20260808_client.html)。 |
 | [takemura_cheer_print_loadtest_program_requirements.md](takemura_cheer_print_loadtest_program_requirements.md) | **Cheer Print 負荷試験プログラム要件**（k6・**ローカルDocker推奨**・Stage A/B/C・静的／WP分離・自動報告書）。Phase 300。ツール: `tools/cheer-print-loadtest/`。 |
 | [takemura_cheer_print_event_access_plan.md](takemura_cheer_print_event_access_plan.md) | **Cheer Print イベント時アクセス集中対策 — 目的・要件・実施計画（実行 SSOT）**。予算税別12万・約2週間・役割分担・Day1–14・負荷試験 Stage・制作会社確認文面。 |
 | [takemura_cheer_print_access_load_proposal.md](takemura_cheer_print_access_load_proposal.md) | **Cheer Print アクセス集中対策・負荷試験のご提案（外向け）**。簡易診断3〜5万／負荷試験8〜15万／再試験3〜5万。実行時は上記 plan を優先。 |

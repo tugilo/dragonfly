@@ -39,6 +39,16 @@ AIは仕様を参照する際、必ずこの一覧を起点とする。
 - deprecatedになった仕様は削除せず状態を変更して残す
 - Spec IDは SPEC-### の形式で連番管理する
 
+## チャプター運営思想（Spec ID なし）
+
+Religo 機能・WM・11期施策を検討するときの判断前提。実装 SPEC ではない。
+
+| 文書 | File | Status |
+|------|------|--------|
+| DragonFly 第11期 運営思想 | ../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md | active（所信表明動画・2026-08-14） |
+| 第11期方針レポート（数値） | ../meetings/chapter/chapter_term11_policy_20260731.md | active（小中・2026-07-31） |
+| 11期 LTST 名簿 | ../meetings/chapter/chapter_ltst_term11.md | active（2026-08-14） |
+
 ## 既存 SSOT（docs/SSOT/）との対応
 
 本プロジェクトでは docs/SSOT/ 配下にも仕様が存在する。新規 Phase で参照する際は、必要に応じて本 Registry に Spec ID を追加し、該当ファイルを登録すること。
