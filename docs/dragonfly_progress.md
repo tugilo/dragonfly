@@ -8,6 +8,35 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-14 21:59 JST | **小中協業資料のGensparkプロンプト作成:** [`konaka_ai_era_engineer_genspark_slide_prompt.md`](meetings/1to1/materials/konaka_ai_era_engineer_genspark_slide_prompt.md)。11枚・対話用・未決定事項を断定しない構成。双方を営業／実装だけにしない禁止事項も固定。 |
+| 2026-08-14 21:57 JST | **協業の出発点を人材定義へ変更:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。「AI時代に企業が必要とするエンジニア」を二人で検討し、定義後に事業を考える。運用支援は仮説の一つ。 |
+| 2026-08-14 21:52 JST | **小中さん共有用資料に全面再構成:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。思考過程と内向き表現を外し、目的・背景・双方の強み・事業仮説・役割・相談事項を初見向けに整理。 |
+| 2026-08-14 21:49 JST | **チームバイス履歴から小中の強みを再整理:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。小中も元エンジニア・法人営業・取締役・COO。組織／事業と、次廣の26年の現場運用を掛け合わせる。 |
+| 2026-08-14 21:47 JST | **受託開発を協業の中心から除外:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。小中が案件獲得→次廣が実装、は他社連携と同じ。双方でなければ成立しない別事業を模索。 |
+| 2026-08-14 21:42 JST | **次廣本人の言葉に再構成:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。「私は技術を売っているのではない。システムを動かし続ける力を売っている」「作るのはAI。作った後に責任を持つのは人」。 |
+| 2026-08-14 21:38 JST | **顧客視点を対応力に固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。技術・理解ではなく、要望どおり動くことと、止まったときのすぐ対応。26年はコースでは渡さない。 |
+| 2026-08-14 21:37 JST | **コース案を運用に寄せる:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。バイブコーディングは良し。重点は止まったときの初動と、直してよいかの分け方。まだ売らない。 |
+| 2026-08-14 21:35 JST | **協業メモを平易な日本語に書き直し:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。切れ目・製造・発注者などの比喩をやめた。 |
+| 2026-08-14 21:33 JST | **ジュニアのなり先を発注者に固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。シニア需要は数年増。AIネイティブは製造に戻さない。切れ目を盗む。 |
+| 2026-08-14 21:31 JST | **AI時代に欲しい人材を固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。切れ目＋AIへ製造を渡す。製造ジュニアは不要。中小は業務が分かる一人。 |
+| 2026-08-14 21:30 JST | **一人をシステム会社の分業に置き換え:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。次廣＝会社一式。会社のPMは一段。製造はAI。 |
+| 2026-08-14 21:28 JST | **PMの定義を固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。作る／作らない、切れ目、社長へ戻さない。進捗役・プログラマー上位ではない。 |
+| 2026-08-14 21:27 JST | **残る役をPMに固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。プログラマーはAI。ジュニア現場ラボは消える工程に人を戻すので停止。 |
+| 2026-08-14 21:26 JST | **シニア定義をワンストップに固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。営業・インフラ・要件整理・要件定義・開発・運用。同じ人材は育成対象外。 |
+| 2026-08-14 21:25 JST | **育成協業を差分棚卸しに差し戻し:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。シニア＝判断と境界。社内SEは段4。4週間はよくて段1。2社募集は停止。 |
+| 2026-08-14 21:23 JST | **ラボの目的を社内SEに固定:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。払う＝〜50名の社長、来る＝その社員。個人ジュニアは対象外。第0期は2社。 |
+| 2026-08-14 21:18 JST | **ジュニアラボを小中商品に切り分け:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。次廣は教材2本＋週1h×4のみ。依頼は 9/15有料2名の Yes/No。壁打ち依頼をやめた。 |
+| 2026-08-14 21:15 JST | **ジュニア現場ラボの目的・問題を明確化:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。目的＝切り分けて報告できる人。問題＝修業場消失／運用不足／書き方スクールのずれ。打診文も更新。 |
+| 2026-08-14 21:07 JST | **小中協業をジュニア現場ラボで先行:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。第0期2〜3名・4週・有料モニター。小中へ来週60分打診。INDEX同期。 |
+| 2026-08-14 16:41 JST | **小中第3回121 追記:** 4期（増本プレジ）定例会動画を次廣が確認済み。進行ミスなし・J-POP／知った曲・雰囲気が今と全然違う。BGM方針の実見根拠。`#137` notes 再取込。 |
+| 2026-08-14 16:39 JST | **小中第3回121 校正:** コーターアム＝**山本洸太＋西浦雅**。洸太の後援が西浦のためセット退会の可能性大。`#137` notes 再取込。 |
+| 2026-08-14 16:33 JST | **11期 LTST 訂正:** ビジターホストは **木村杏那**（`members.id=149`）。健悟ではない（ユーザー確認）。[`chapter_ltst_term11.md`](meetings/chapter/chapter_ltst_term11.md)。 |
+| 2026-08-14 16:32 JST | **11期運営思想（所信表明）を SSOT 化:** [`DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md`](SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)。成果→誇り→誘う→60、上質な1to1、裏テーマは滲ませる、WMは棚卸し先行、施策は9観点。Cursor rule `dragonfly-term11-philosophy.mdc`。INDEX / SSOT_REGISTRY / AI_TOOLING 同期。 |
+| 2026-08-14 16:30 JST | **小中第3回121 校正訂正:** ナムちゃんは横山尚武ではなく **アム＝西浦 雅**（ユーザー確認）。退会リスク高リストと校正表を更新。`import-1to1-notes --only-ids=137`。 |
+| 2026-08-14 16:29 JST | **11期チャプター方針レポート転記:** [`chapter_term11_policy_20260731.md`](meetings/chapter/chapter_term11_policy_20260731.md) ← [`2026-07-31_BNI11期チャプター方針レポート_cc.pdf`](pdf/2026-07-31_BNI11期チャプター方針レポート_cc.pdf)。スローガン／KGI60／KPI更新70%・入会8%／52名頭打ち式／裏テーマ（LT・ST限定）。第3回121の一本メッセージと接続。INDEX同期。 |
+| 2026-08-14 16:27 JST | **DragonFly 11期 LTST 名簿:** [`chapter_ltst_term11.md`](meetings/chapter/chapter_ltst_term11.md)。プレジ小中・バイス増本・書記船津。Edu＝横山尚武、Training＝大竹絵理香、WM＝次廣。木村＝健悟（解釈）／OCC＝横山太樹（大樹・8/4入会）。小中第3回の「エリカちゃん＝Edu」を公式役職に校正。`member_roles` は10期のまま未反映。INDEX同期。 |
+| 2026-08-14 16:25 JST | **小中貴晃 第3回121 Zoom要約反映:** [`1to1_konaka_takaaki_becheerz.md`](meetings/1to1/1to1_konaka_takaaki_becheerz.md)。定例会効率化・WM属人化解消・11期「戦略的1to1」一本化・ジュニアエンジニア育成。校正: 冬木→冬期、軍事→軍司、幸太→山本洸太、ナム→横山尚武、ハガ→芳賀、エリカ→大竹絵理香、まきちゃん→藤田磨紀、ともちゃん→岡元智美（仮説）。`#137` manual/completed・`import-1to1-notes --only-ids=137`。次廣は11期（10月〜）WM拝命。INDEX同期。 |
+| 2026-08-08 22:39 JST | **Cheer Print 負荷試験ご報告（非技術者向け）:** 22:00–22:28 実測完了。静的問題なし／WP **危険**（p95約8.5s）。[`takemura_cheer_print_loadtest_report_20260808_client.md`](proposals/takemura_cheer_print_loadtest_report_20260808_client.md)。 |
 | 2026-08-07 23:53 JST | **Phase 300 → develop:** merge `4654d5e`／テスト 596 passed／Merge Evidence 記録後 `git push origin develop`。本番試験枠は 08-08 22:00–24:00 JST（`./run.sh full`）。 |
 | 2026-08-07 23:48 JST | **Phase 300 実装完了（merge前）:** `tools/cheer-print-loadtest` — Docker k6／静的+WP／自動MD・HTML報告。`./run.sh dry` 成功（総合問題なし・低VU）。`php artisan test` 596 passed。ブランチ `feature/phase300-cheer-print-loadtest-program`。 |
 | 2026-08-07 23:26 JST | **Phase 300 PLAN:** Cheer Print 負荷試験プログラム作成。要件 [`takemura_cheer_print_loadtest_program_requirements.md`](proposals/takemura_cheer_print_loadtest_program_requirements.md)／PLAN [`PHASE_300_cheer_print_loadtest_program_PLAN.md`](process/phases/PHASE_300_cheer_print_loadtest_program_PLAN.md)。ブランチ `feature/phase300-cheer-print-loadtest-program`。実装は未着手。 |

@@ -11,6 +11,7 @@
 | 本番枠 | 2026-08-08 22:00〜24:00 JST |
 | **発生元（推奨）** | **ローカル Docker** |
 | 発生元（予備） | `ssh tugilo.com`（回線不足時のみ・常用しない） |
+| 自動開始 | launchd（下記） |
 
 ## 方針
 
@@ -49,6 +50,28 @@ node -v   # 報告生成用（Node 18+）
 ```bash
 ./run.sh full
 ```
+
+### 22:00 自動開始（launchd・推奨）
+
+Mac ローカル時刻で **8月8日 22:00** に `full` を起動する。  
+ラッパーが **日付ガード（既定: 2026-08-08）**・Docker 確認・`caffeinate`・通知を行い、  
+**`./run.sh full`（報告生成まで）が終わったら LaunchAgent を自動解除**する。
+
+```bash
+./bin/install_launchd.sh    # 登録（今夜一回用）
+./bin/uninstall_launchd.sh  # 手動解除（通常は不要・自動で外れる）
+```
+
+| 確認 | コマンド / 場所 |
+|------|-----------------|
+| 登録状態 | `launchctl print gui/$(id -u)/com.tugilo.cheer-print-loadtest-full \| head -40` |
+| 実行ログ | `results/logs/scheduled_full_*.log` |
+| launchd 出力 | `results/logs/launchd_stdout.log` / `launchd_stderr.log` |
+
+**必須**
+
+- Docker Desktop 起動済み（常時起動 Mac ならそのまま可）
+- 成功／失敗どちらでも、本番 `full` 実行後は Agent を外す（枠外の SKIP では外さない）
 
 上限を抑える例:
 
@@ -96,6 +119,8 @@ node report/generate_report.mjs --dir results --stamp 20260807_2346
 
 ```text
 tools/cheer-print-loadtest/
+  bin/         launchd 登録・予約実行ラッパー
+  launchd/     説明（plist は install が生成）
   scenarios/   k6（static_landing / wp_origin / lib）
   report/      報告書生成
   results/     出力（git 管理外）

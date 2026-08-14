@@ -15,6 +15,8 @@
 
 **詳細ルールは本ファイル（`docs/AI_TOOLING.md`）を正とする。** 各入口ファイルは短く保ち、ここを参照する。
 
+**DragonFly 11期:** チャプター施策・WM・Religo 機能の判断前提は [DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md](SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)。WM 棚卸し前に既存運用を推測して改善対象にしない。
+
 ---
 
 ## 2. 命名（必須）
@@ -195,5 +197,6 @@ git push origin develop
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-08-14 16:32 JST | DragonFly 11期運営思想を判断前提として追記（`DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md`）。WM 棚卸し前の推測改善を禁止。 |
 | 2026-06-16 17:39 JST | Claude Code Skills 拡充（ssot-lookup, merge-develop, docs-sync, import-religo, db-sync, react-build, commit-phase, implement-checklist, mock-ui-verify）。 |
 | 2026-06-16 17:36 JST | 初版（Phase 221） |

@@ -51,8 +51,15 @@ echo "Cheer Print loadtest"
 echo "PROFILE=${PROFILE} STAMP=${STAMP} SOURCE=${SOURCE}"
 echo "Results -> ${ROOT}/results"
 
+OVERALL_STATUS=0
+set +e
 run_one "static_landing.js" "static_landing" "$MAX_VU_STATIC"
+s1=$?
 run_one "wp_origin.js" "wp_origin" "$MAX_VU_WP"
+s2=$?
+set -e
+if [[ $s1 -ne 0 ]]; then OVERALL_STATUS=$s1; fi
+if [[ $s2 -ne 0 ]]; then OVERALL_STATUS=$s2; fi
 
 echo ""
 echo "=== generate report ==="
@@ -62,3 +69,4 @@ echo ""
 echo "Done. Open:"
 echo "  ${ROOT}/results/report_${STAMP}.md"
 echo "  ${ROOT}/results/report_${STAMP}.html"
+exit "${OVERALL_STATUS}"
