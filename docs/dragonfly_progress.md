@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-16 23:23 JST | **小中さん共有スライドPDFを追加:** [`AI時代に_企業が必要とするエンジニアとは_20260814132404.pdf`](proposals/AI時代に_企業が必要とするエンジニアとは_20260814132404.pdf)（修正版）と初版PDF。INDEX / proposals README 同期。 |
 | 2026-08-14 21:59 JST | **小中協業資料のGensparkプロンプト作成:** [`konaka_ai_era_engineer_genspark_slide_prompt.md`](meetings/1to1/materials/konaka_ai_era_engineer_genspark_slide_prompt.md)。11枚・対話用・未決定事項を断定しない構成。双方を営業／実装だけにしない禁止事項も固定。 |
 | 2026-08-14 21:57 JST | **協業の出発点を人材定義へ変更:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。「AI時代に企業が必要とするエンジニア」を二人で検討し、定義後に事業を考える。運用支援は仮説の一つ。 |
 | 2026-08-14 21:52 JST | **小中さん共有用資料に全面再構成:** [`konaka_junior_ops_lab.md`](meetings/1to1/materials/konaka_junior_ops_lab.md)。思考過程と内向き表現を外し、目的・背景・双方の強み・事業仮説・役割・相談事項を初見向けに整理。 |
