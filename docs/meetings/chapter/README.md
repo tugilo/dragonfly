@@ -12,6 +12,9 @@ BNI **DragonFly チャプター**の定例会および **定例会回数に含�
 
 - **1to1** → [`../1to1/`](../1to1/)
 - **チーム MTG**（スリーバイス等）→ [`../team/`](../team/)
+- **LTST（期の役職名簿）** → 本ディレクトリの `chapter_ltst_termNN.md`（例: [11期](chapter_ltst_term11.md)）
+- **期の方針** → 本ディレクトリの `chapter_termNN_policy_*.md`（例: [11期方針 2026-07-31](chapter_term11_policy_20260731.md)）
+- **11期運営思想（所信表明）** → [`docs/SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md`](../../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)（WM・Religo の判断前提）
 
 ### 定例会回数に含めないイベント（重要）
 
