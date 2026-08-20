@@ -186,6 +186,29 @@ ChatGPT 等で作成した参加者 CSV を Meeting に紐づけてアップロ�
 
 ---
 
+## 13. 運用: Cursor エージェントによる PDF→CSV（2026-08-17 固定）
+
+Religo 製品に LLM を載せず、**Cursor 上の Grok または Composer** が PDF を 1人1行 CSV に変換する。確定は人が確認し、取込は既存 CLI のみ。
+
+| 段階 | 担当 | 正本 |
+|------|------|------|
+| PDF 原本 | `docs/pdf/YYMMDD/定例会参加者リスト*.pdf` | 例会前日配布 |
+| PDF→CSV | Cursor スキル `/participants-pdf-csv` | `.claude/skills/participants-pdf-csv/SKILL.md` |
+| CSV 確定 | 人（件数・前週混在・入会差分） | `docs/pdf/YYMMDD/religo_{回}_{YYYYMMDD}_full.csv` |
+| CSV→DB | `dragonfly:import-participants-csv` | `www/database/csv/` 同名 |
+
+**棲み分け**
+
+- **PDF 解析 UI（M7-P）:** 候補生成・手動マッチ。CSV 相当精度ではない。
+- **CSV（本節）:** 定例会運用の **正**。Meetings UI の CSV 反映（M7-C）と CLI は同系データ。
+- **前週ビジター混在禁止:** 当日 PDF のビジター/ゲスト/代理のみ CSV に書く（第217回の教訓）。
+
+**取込後（SPEC-007）:** ゲスト→メンバー入会者は `type+name` キーのため **別 member 行**になりうる。取込後に同名二重を確認。マージは SPEC-008。
+
+**記録:** Phase 301 — [PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md](../process/phases/PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md)
+
+---
+
 ## 参照
 
 - [MEETINGS_PARTICIPANTS_PDF_REQUIREMENTS.md](MEETINGS_PARTICIPANTS_PDF_REQUIREMENTS.md)

@@ -27,6 +27,7 @@
 | Skill | コマンド | 用途 |
 |-------|----------|------|
 | import-religo | `/import-religo` | 議事録・1to1・CSV → DB |
+| participants-pdf-csv | `/participants-pdf-csv` | 定例会 PDF → full CSV（Grok/Composer）→ CLI 取込 |
 | db-sync | `/db-sync` | db-export/import/pull/push |
 
 ## 参照
