@@ -44,6 +44,18 @@
 - ssot check: OK（新 SPEC なし・既存 CSV/PDF 要件に運用節追加）
 - dod check: OK
 
-## Merge Evidence
+## 取り込み証跡（develop への merge 後）
 
-（develop merge 後に追記）
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | `f0d4d54f3951b523003b708ebeaa8097ac492430` |
+| **merge 元ブランチ名** | `feature/docs-20260820-121-phase301-sync` |
+| **target branch** | develop |
+| **phase id** | 301 |
+| **phase type** | docs |
+| **変更ファイル一覧** | `.claude/skills/README.md`, `.claude/skills/import-religo/SKILL.md`, `.claude/skills/participants-pdf-csv/SKILL.md`, `AGENTS.md`, `CLAUDE.md`, `docs/INDEX.md`, `docs/SSOT/MEETINGS_PARTICIPANTS_CSV_REQUIREMENTS.md`, `docs/dragonfly_progress.md`, `docs/meetings/1to1/1to1_izumo_haruko_dan_patent.md`, `docs/meetings/1to1/1to1_kainuma_isao_financial_intelligence.md`, `docs/meetings/1to1/1to1_okada_keiichi_arecore.md`, `docs/meetings/1to1/1to1_shibaya_sachiko_sunshine_field.md`, `docs/meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md`, `docs/meetings/1to1/1to1_takemura_yuji_onode.md`, `docs/meetings/1to1/1to1_tsuji_hitoki_bizel.md`, `docs/meetings/1to1/1to1_yashima_kunihiro_beberise.md`, `docs/meetings/1to1/README.md`, `docs/meetings/1to1/_TEMPLATE.md`, `docs/meetings/chapter/chapter_weekly_20260818.md`, `docs/pdf/260817/*`（PDF・CSV・関連画像。Codex 作業スクショは未収録）, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_301_*`, `www/database/csv/religo_218_20260818_full.csv`, `www/database/sync/dragonfly.sql` |
+| **テスト結果** | `docker compose ... exec app php artisan test` — 596 passed（2193 assertions）。docs Phase だが取り込み前に実施。 |
+| **scope check** | OK |
+| **ssot check** | OK |
+| **dod check** | OK |
+| **手動確認** | 特になし |

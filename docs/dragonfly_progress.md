@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-20 15:05 JST | **develop 取り込み:** `feature/docs-20260820-121-phase301-sync` を merge（`f0d4d54`）。第218回・121 `#138`–`#142`・Phase 301 PDF→CSVスキル・本番同期 SQL。596 tests passed。 |
 | 2026-08-20 15:04 JST | **121ローカル→本番DB同期:** dry-runで未登録行なし（`#140` 柴谷・`#141` 杉本・`#142` 八島はローカル済）。notes差分は海沼 `#110` のみ更新（10934→11146・柴谷おつなぎ追記）。縮退候補（木村`#43`・田渕`#118`/`#82`・小中`#38`/`#129`）とプレースホルダ（佐藤第2回・横山尚武第1回 id未記載）はスキップ。596 tests passed → `db-export`（2,047,858 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260820_150420.sql`。 |
 | 2026-08-20 14:38 JST | **八島国博さん 第1回121実施後議事録:** Zoom要約を校正し [`meetings/1to1/1to1_yashima_kunihiro_beberise.md`](meetings/1to1/1to1_yashima_kunihiro_beberise.md) に反映。8/25入会再確認・約5章比較・銀座3日・15店舗・ミース梅田・法人化相談。遅刻・銀行のお詫び付きお礼と岡元さん報告。`one_to_ones.id=142` manual/completed・notes import。`docs/INDEX.md` 同期。 |
 | 2026-08-20 14:35 JST | **杉本さん会後お礼＋毎回ルール:** [`1to1_sugimoto_shunji_hachimenroppi.md`](meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md) に杉本さんお礼案A/Bと舩杉さん実施報告を追加。[`1to1/README.md`](meetings/1to1/README.md)・[`_TEMPLATE.md`](meetings/1to1/_TEMPLATE.md) に「実施後は毎回お礼文まで」を明記。送信待ち。 |
