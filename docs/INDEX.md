@@ -31,7 +31,7 @@
 | [GIT_WORKFLOW.md](GIT_WORKFLOW.md) | Git ブランチ運用ルール（main / develop / feature / hotfix、1push 原則、**PRレス取り込み**）。SSOT。 |
 | [DEPLOYMENT.md](DEPLOYMENT.md) | **GitHub Actions デプロイ**（tugilo_site 同一 VPS。develop→`/var/www/laravel/religo_dev`、main→`religo_app`）。Secrets・`www/public` の指し方。 |
 | [PROJECT_NAMING.md](PROJECT_NAMING.md) | プロジェクト命名（Religo＝プロダクト名、DragonFly＝チャプター名、dragonfly＝リポジトリ名）。 |
-| [AI_TOOLING.md](AI_TOOLING.md) | **AI 開発 SSOT（Cursor / Claude Code 共通）**。DevOS・Docker・Git・命名・禁止事項・ツール使い分け。Claude Code 入口: `CLAUDE.md`、Skills 12 本: `.claude/skills/`（一覧: `.claude/skills/README.md`）。 |
+| [AI_TOOLING.md](AI_TOOLING.md) | **AI 開発 SSOT（Cursor / Claude Code 共通）**。DevOS・Docker・Git・命名・禁止事項・ツール使い分け。Claude Code 入口: `CLAUDE.md`、Skills 13 本: `.claude/skills/`（一覧: `.claude/skills/README.md`）。 |
 
 ### エクスポート・参考資料（docs/pdf/）
 
@@ -61,8 +61,8 @@
 | [pdf/260721/religo_216_20260721_full.csv](pdf/260721/religo_216_20260721_full.csv) | 定例会参加者 CSV（第216回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260804/定例会参加者リスト2026_08_04.pdf](pdf/260804/定例会参加者リスト2026_08_04.pdf) | DragonFly 定例会参加者リスト（2026-08-04・第217回）。 |
 | [pdf/260804/religo_217_20260804_full.csv](pdf/260804/religo_217_20260804_full.csv) | 定例会参加者 CSV（第217回・full・`www/database/csv/` 同名参照可）。 |
-| [pdf/260804/定例会参加者リスト2026_08_04.pdf](pdf/260804/定例会参加者リスト2026_08_04.pdf) | DragonFly 定例会参加者リスト（2026-08-04・第217回）。 |
-| [pdf/260804/religo_217_20260804_full.csv](pdf/260804/religo_217_20260804_full.csv) | 定例会参加者 CSV（第217回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260817/定例会参加者リスト2026_08_18.pdf](pdf/260817/定例会参加者リスト2026_08_18.pdf) | DragonFly 定例会参加者リスト（2026-08-18・第218回）。 |
+| [pdf/260817/religo_218_20260818_full.csv](pdf/260817/religo_218_20260818_full.csv) | 定例会参加者 CSV（第218回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260714/religo_215_20260714_full_rev2.csv](pdf/260714/religo_215_20260714_full_rev2.csv) | 定例会参加者 CSV（第215回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260714/dragonfly_215_20260714_members_only.csv](pdf/260714/dragonfly_215_20260714_members_only.csv) | 定例会参加者 CSV（第215回・メンバーのみ）。 |
 | [pdf/260714/742324477_1039566875100997_221637905752636707_n.png](pdf/260714/742324477_1039566875100997_221637905752636707_n.png) | 第215回定例会 関連画像。 |
@@ -111,6 +111,7 @@
 | [meetings/chapter/chapter_weekly_20260714.md](meetings/chapter/chapter_weekly_20260714.md) | **DragonFly 定例会 第215回 2026-07-14**（Zoom）。参加58（CSVはV8）・今週RF147（内24/外123）・累計サンキュー約12億9465万円・竹村裕司入会・飯田香更新・MP今村千絵/久米加代子・SS西浦雅・教育「ピックアンドロール」・推薦増本→山本葉子・BOD 7/28予告。 |
 | [meetings/chapter/chapter_weekly_20260721.md](meetings/chapter/chapter_weekly_20260721.md) | **DragonFly 定例会 第216回 2026-07-21**（Zoom）。参加61（CSVはV11）・小森保人入会・MP横山尚武/山本葉子・SS飯田千帆・教育は西浦雅「パワーチームを見つける」・RFベスト1位次廣10件・加藤隆太退会・BOD 7/28告知。 |
 | [meetings/chapter/chapter_weekly_20260804.md](meetings/chapter/chapter_weekly_20260804.md) | **DragonFly 定例会 第217回 2026-08-04**（Zoom・英語要約を翻訳校正）。参加約69・新メンバー3名入会（佐藤久/横山大樹/福島和也）・MP藤井恵理子/今西俊明・SS岡元智美・教育GBM 8/21・RF161（次廣同率3位8件）・7月表彰・累計RF28,029。 |
+| [meetings/chapter/chapter_weekly_20260818.md](meetings/chapter/chapter_weekly_20260818.md) | **DragonFly 定例会 第218回 2026-08-18**（Zoom要約を校正）。参加69・RF189（内34/外155）・更新渡邊真大・MP望月雅幸/飯田千帆・SS福上大輝（BNI経由7,000万超）・教育コートサーフェス・SBOD 9/3・7月サンキュー1,416万・累計RF28,029。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_script.md](meetings/chapter/chapter_weekly_20260616_momentum_script.md) | **モメンタムトレーニング進行原稿**（2026-06-16）。BOR 6テーマの冒頭・各室ガイド・締め。 |
 | [meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md](meetings/chapter/chapter_weekly_20260616_momentum_bor_tsugihiro.md) | **モメンタム BOR — 次廣個人原稿**（2026-06-16）。6テーマ各30秒版。メインプレ §4.1 反映。 |
 | [meetings/chapter/chapter_bod_20260728.md](meetings/chapter/chapter_bod_20260728.md) | **DragonFly BOD 2026-07-28**（火 09:45–12:15・約79名）。**定例会回数外**。司会山崎勇一/藤田磨紀。RM 98%/3%、BOR4回、体験談（藤井恵理子・中村啓吾）、ステージ別課題、ベネフィット5+1、費用324,000円、平山締め、海沼×次廣事後対話。入会意向はオリエン集計待ち。 |
@@ -145,7 +146,12 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
-| [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。 |
+| [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。実施後は **会後お礼文案まで必須**。 |
+| [meetings/1to1/1to1_yashima_kunihiro_beberise.md](meetings/1to1/1to1_yashima_kunihiro_beberise.md) | **八島国博（株式会社beberise／レンタルオフィス／DragonFly ゲスト）**。岡元智美紹介（入会前受託）。**第1回 2026-08-20 JST 13:30–14:30 実施済み**（Zoom要約校正・`one_to_ones.id=142` completed／`members.id=273`）。約5章比較で8/25入会、都内15店舗・住所ニーズ半数超、ミース梅田は本線外。校正: 岡本→岡元、増田→増本、朝倉ミクル→朝倉未来。遅刻・銀行のお詫び付きお礼作成済（送信待ち）。 |
+| [meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md](meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md) | **杉本瞬司（ハチメンロッピ／WEBマーケ戦略コンサル／DragonFly ビジター）**。舩杉牧子紹介。**第1回 2026-08-20 JST 10:00–11:00 実施済み**（Zoom要約校正・`one_to_ones.id=141` completed／`members.id=246`）。士業特化・三層支援・中長期投資。東京NE直近入会、静岡対面、米澤パワーチーム。会後お礼（杉本／舩杉）文案あり・送信待ち。 |
+| [meetings/1to1/1to1_shibaya_sachiko_sunshine_field.md](meetings/1to1/1to1_shibaya_sachiko_sunshine_field.md) | **柴谷幸子（株式会社サンシャイン・フィールド／お金の研修講師・独立系FP／BNI 手筒）**。軍司敦哉紹介（笹野さん起点）。**第1回 2026-08-20 JST 09:00–10:00 実施済み**（`one_to_ones.id=140`／`members.id=298`）。海沼功へ **導入 vs 入れたあと** を先出しする確認文作成済（双方了承は未取得）。 |
+| [meetings/1to1/1to1_okada_keiichi_arecore.md](meetings/1to1/1to1_okada_keiichi_arecore.md) | **岡田恵一（合同会社arecore／システム開発・イベント／BNI エトワール）**。出雲暖子紹介。**第1回 2026-08-19 JST 14:00–15:00 実施済み**（`one_to_ones.id=139`／`members.id=297`）。業務整理・AI活用／コミュニティ730／エンタメ。竹村裕司へ **eプリント＝チアプリント競合を先出し**する紹介文作成済（送信待ち）。岡田和弘 `members.id=260` とは別人。 |
+| [meetings/1to1/1to1_tsuji_hitoki_bizel.md](meetings/1to1/1to1_tsuji_hitoki_bizel.md) | **辻仁規（株式会社ビズエル／人材紹介／DragonFly ビジター）**。平岡国彦紹介。**第1回 2026-08-19 JST 13:00–14:00 実施済み**（Zoom要約校正・`one_to_ones.id=138` completed／`members.id=243`）。3事業＋契約企業向け紹介一律50万円、求職者DB伴走（120万〜・今は待ち）、相互RF、ゲスト再訪。校正: 松本→増本、フジ→日テレ系（ネップリーグ）。辻亮（MainC）とは別人。 |
 | [meetings/1to1/1to1_senda_asami_kazutama.md](meetings/1to1/1to1_senda_asami_kazutama.md) | **千田麻美（やまと式かずたま術鑑定士／DragonFly ビジター）**。船津麻理子紹介・**2026-06-23 第212回 V01**。**第1回 2026-07-29 JST 15:00–16:00 実施済み**（Zoom要約校正・`one_to_ones.id=132` completed／`members.id=171`）。有償鑑定合意（フォーム→読み解き→Zoom）・LINE接続・自分軸共感・飯田千帆へ再連絡・会後お礼（千田／船津）文案。 |
 | [meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md](meetings/1to1/1to1_iijima_nobuyuki_atlas_gbp.md) | **飯島伸之（GBP／Googleマップ運用代行／BNI アトラス）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 14:00–15:00 実施済み**（Zoom要約校正・`one_to_ones.id=125` completed／`members.id=238`）。MEO×今西アプリ×業務システムの三位一体、今西交え飲み会合意、9月商工会議所チラシ同封。校正: 益本／外構→増本（害虫ブロック）。 |
 | [meetings/1to1/1to1_takano_chie_clover.md](meetings/1to1/1to1_takano_chie_clover.md) | **高野ちえ（静岡婚活サロン クローバー／IBJ・BNI アクセル）**。2026-07-09 静岡合同懇親会接点。**第1回 2026-07-29 JST 13:00–14:00 実施済み**（`one_to_ones.id=124` completed／`members.id=237`）。藤枝地縁・1年以内結婚特化。**神保玲太（10分ネイル）双方OK済・三者グループ** `【おつなぎ】高野さん⇄神保さん`。舩杉（洸太経由）・中島幸樹（公式LINE）も進行。 |
@@ -767,6 +773,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_300_cheer_print_loadtest_program_PLAN.md](process/phases/PHASE_300_cheer_print_loadtest_program_PLAN.md) | Phase 300: Cheer Print 負荷試験プログラム作成（k6・さくらのVPS）PLAN。 |
 | [phases/PHASE_300_cheer_print_loadtest_program_WORKLOG.md](process/phases/PHASE_300_cheer_print_loadtest_program_WORKLOG.md) | Phase 300: 同 WORKLOG。 |
 | [phases/PHASE_300_cheer_print_loadtest_program_REPORT.md](process/phases/PHASE_300_cheer_print_loadtest_program_REPORT.md) | Phase 300: 同 REPORT。 |
+| [phases/PHASE_301_participants_pdf_csv_cursor_skill_PLAN.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_PLAN.md) | Phase 301: 参加者PDF→CSV→ローカル取込（Cursorスキル）PLAN。 |
+| [phases/PHASE_301_participants_pdf_csv_cursor_skill_WORKLOG.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_WORKLOG.md) | Phase 301: 同 WORKLOG。 |
+| [phases/PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md) | Phase 301: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
