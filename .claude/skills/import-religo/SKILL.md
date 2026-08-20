@@ -77,6 +77,10 @@ $COMPOSE exec app php artisan dragonfly:import-1to1-notes docs/meetings/1to1/ --
 
 ## 参加者 CSV
 
+**PDF から CSV を作る段階**は Religo CLI ではない。先に `/participants-pdf-csv`（Cursor Grok/Composer）で `religo_NNN_*_full.csv` を作成・確認してから、以下を実行する。
+
+## 参加者 CSV 取込
+
 ```bash
 # 定例会（回数指定）
 $COMPOSE exec app php artisan dragonfly:import-participants-csv 212 database/csv/dragonfly_212_20260623_all_full.csv --held_on=2026-06-23

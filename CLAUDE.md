@@ -60,6 +60,7 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec n
 - `/react-build` — React ビルド（JS 変更後必須）
 - `/mock-ui-verify` — 管理画面モック比較
 - `/import-religo` — 議事録・1to1・CSV → DB
+- `/participants-pdf-csv` — 定例会 PDF → full CSV（Grok/Composer）→ CLI 取込
 - `/db-sync` — db-export/import/pull/push
 
 一覧: @.claude/skills/README.md
