@@ -150,7 +150,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
-| [meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) | **今泉彪吾（株式会社ピースケイク／町田特化SNS・採用支援／DragonFly ビジター）**。太田一誠紹介。**第1回 2026-08-24 JST 09:30–10:30 実施済み**（`one_to_ones.id=144` completed／`members.id=195`）。タム約12万→採用支援（SNS→LINE→エントリー）。相互紹介は AI相談／横浜圏。入会なし。校正: 伊勢→太田、はが→芳賀、先読み→SAKIYOMI。お礼文案あり・送信待ち。 |
+| [meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) | **今泉彪吾（株式会社ピースケイク／町田特化SNS・採用支援／DragonFly ビジター）**。太田一誠紹介。**第1回 2026-08-24 JST 09:30–10:30 実施済み**（`one_to_ones.id=144` completed／`members.id=195`）。タム約12万→採用支援（SNS→LINE→エントリー）。相互紹介は AI相談／横浜圏。入会なし。校正: 伊勢→太田、はが→芳賀、先読み→SAKIYOMI。お礼は **LINEグループ送信済（2026-08-24 10:54 JST）**。 |
 | [meetings/1to1/_TEMPLATE.md](meetings/1to1/_TEMPLATE.md) | 新規1to1用テンプレ（任意 YAML front matter）。実施後は **会後お礼文案まで必須**。 |
 | [meetings/1to1/1to1_yashima_kunihiro_beberise.md](meetings/1to1/1to1_yashima_kunihiro_beberise.md) | **八島国博（株式会社beberise／レンタルオフィス／DragonFly ゲスト）**。岡元智美紹介（入会前受託）。**第1回 2026-08-20 JST 13:30–14:30 実施済み**（Zoom要約校正・`one_to_ones.id=142` completed／`members.id=273`）。約5章比較で8/25入会、都内15店舗・住所ニーズ半数超、ミース梅田は本線外。校正: 岡本→岡元、増田→増本、朝倉ミクル→朝倉未来。遅刻・銀行のお詫び付きお礼作成済（送信待ち）。 |
 | [meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md](meetings/1to1/1to1_sugimoto_shunji_hachimenroppi.md) | **杉本瞬司（ハチメンロッピ／WEBマーケ戦略コンサル／DragonFly ビジター）**。舩杉牧子紹介。**第1回 2026-08-20 JST 10:00–11:00 実施済み**（Zoom要約校正・`one_to_ones.id=141` completed／`members.id=246`）。士業特化・三層支援・中長期投資。東京NE直近入会、静岡対面、米澤パワーチーム。会後お礼（杉本／舩杉）文案あり・送信待ち。 |
