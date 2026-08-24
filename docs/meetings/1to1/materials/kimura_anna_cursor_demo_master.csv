@@ -1,0 +1,4 @@
+driver_id,driver_name,vehicle,license_class,note
+D01,デモ太郎,2t-A,中型,架空データ
+D02,デモ花子,4t-B,大型,架空データ
+D03,デモ次郎,2t-A,中型,同じ車両を2人で参照している

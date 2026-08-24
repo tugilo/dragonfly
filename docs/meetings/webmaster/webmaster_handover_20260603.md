@@ -11,6 +11,7 @@ handover_to_ja: "次廣 淳"
 handover_from_ja: "倉持 賢一"
 nextcloud_share_url: "https://ne-dragonfly.site/cloud/index.php/s/E3a37t3pPsAJB8q?path=%2F"
 visitor_slide_tool_url: "https://ne-dragonfly.site/genslide/"
+religo_meeting_id: 35
 ---
 
 # Webマスターチーム — 業務引き継ぎ・運用確認
