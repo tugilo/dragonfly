@@ -1,0 +1,5 @@
+sort_order,date,driver_name,vehicle,from_place,to_place,instruction_no,csv_import_key,status
+1,2026-08-18,デモ太郎,2t-A,静岡営業所,浜松南,SI-0818-01,CSV-1001,完了
+2,2026-08-18,デモ花子,4t-B,浜松南,名古屋,SI-0818-02,CSV-1002,完了
+2,2026-08-18,デモ次郎,2t-A,静岡営業所,藤枝,SI-0818-03,,未完了
+3,2026-08-18,デモ 太郎,2t-A,藤枝,静岡営業所,SI-0818-99,CSV-1001,完了
