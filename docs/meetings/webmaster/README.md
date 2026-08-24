@@ -7,6 +7,7 @@ BNI **DragonFly チャプター**の **Webマスターチーム**（朝礼スラ
 - **1to1（倉持×次廣 等）** → [`../1to1/`](../1to1/)（個別関係の履歴）
 - **定例会** → [`../chapter/`](../chapter/)
 - **Webマスターチーム MTG** → **本ディレクトリ**
+- 元 WM（退会済）からの知見移転も本ディレクトリ（例: [`webmaster_kudo_yuji_20260821.md`](webmaster_kudo_yuji_20260821.md)）
 
 ## ファイル命名
 
@@ -14,7 +15,7 @@ BNI **DragonFly チャプター**の **Webマスターチーム**（朝礼スラ
 webmaster_<topic>_YYYYMMDD.md
 ```
 
-例: `webmaster_handover_20260603.md`（引き継ぎ・業務分担確認）
+例: `webmaster_handover_20260603.md`（一部引き継ぎ）、`webmaster_kudo_yuji_20260821.md`（元 WM 知見移転）、`webmaster_handover_20260822.md`（9・10期倉持→11期次廣の棚卸し）
 
 ## YAML front matter（推奨）
 
@@ -36,6 +37,16 @@ webmaster_<topic>_YYYYMMDD.md
 |------|-----|
 | NextCloud 共有（ST定例会） | https://ne-dragonfly.site/cloud/index.php/s/E3a37t3pPsAJB8q?path=%2F |
 | ビジタースライド自動生成 | https://ne-dragonfly.site/genslide/ |
+
+## タスク棚卸し
+
+倉持さんが抱えている仕事の見える化。所要時間は未記入。判断（残す／やめる等）は操作習得後に切る。区分「個人・良かれ」は役職必須ではなく倉持さんが足したもの。
+
+| ファイル | 用途 |
+|----------|------|
+| [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv) | **正本。** WM-01〜54 |
+| [Sheets](https://docs.google.com/spreadsheets/d/1TWadVczKpOXQTy76-3cij-kYOTfFi2eGl7bHyoKrsh4/edit) | 作業用シート |
+| [webmaster_task_inventory_20260822.md](webmaster_task_inventory_20260822.md) | 列の意味・使い方 |
 
 ## 関連
 
