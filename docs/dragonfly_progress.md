@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-24 10:58 JST | **今泉お礼クローズを本番反映:** `#144` completed 維持。596 tests passed → `db-export`（2,146,593 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260824_105841.sql`。 |
+| 2026-08-24 10:54 JST | **今泉彪吾さん 会後お礼クローズ:** LINEグループへ手動送信済み。[`1to1_imaizumi_hyogo_peace_cake.md`](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) の送信待ちを閉じる。`#144` completed のまま。`docs/INDEX.md` 同期。 |
 | 2026-08-24 10:48 JST | **121・WM ローカル→本番DB同期:** `#144` 今泉 completed（notes 2405）。`#110` 海沼 notes 11146→11175。`#143` `#140` 再取込（差分なし）。`meetings.id=37` 維持。596 tests passed → `db-export`（2,146,593 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260824_104850.sql`。 |
 | 2026-08-24 10:37 JST | **今泉彪吾さん 第1回121実施後議事録:** Zoom要約を校正し [`1to1_imaizumi_hyogo_peace_cake.md`](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) に反映。タム約12万→町田採用支援。相互紹介はAI相談／横浜圏。校正: 伊勢→太田、はが→芳賀、先読み→SAKIYOMI。`#144` completed・notes import。お礼文案作成。`docs/INDEX.md` 同期。 |
 | 2026-08-24 09:23 JST | **今泉彪吾さん 初回121事前原稿:** 太田一誠紹介のビジター（ピースケイク／町田地域SNS）。[`1to1_imaizumi_hyogo_peace_cake.md`](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) に60分台本。アンケート④ NOのため入会クローズしない。`members.id=195`／`one_to_ones.id=144` planned（新規行なし）。`docs/INDEX.md` 同期。 |
