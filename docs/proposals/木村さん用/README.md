@@ -2,7 +2,9 @@
 
 **用途:** 第2回 1to1（2026-05-29）で合意した PDF注文書入力自動化の提案・モック作成用。  
 **受領日:** 2026-07-05 JST（次廣保存）  
-**関連:** [1to1 要望整理](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) · [1to1 履歴](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md) · [提案書（たたき台）](../kimura_kokuhosha_pdf_order_input_proposal.md)
+**関連:** [第2回要望](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) · [第3回追加要件](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) · [1to1 履歴](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md) · [提案書（§16 まで）](../kimura_kokuhosha_pdf_order_input_proposal.md)
+
+> **第3回（2026-08-26）注記:** 追加要件は提案書 §16。本フォルダは7月受領の入口資料。画面モックは未着手。
 
 ## ファイル一覧
 

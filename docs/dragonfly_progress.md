@@ -8,6 +8,8 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-08-27 22:35 JST | **国宝社・第3回追加要件を提案書へ:** [`1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md`](meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) を切り出し、[提案書 §16](proposals/kimura_kokuhosha_pdf_order_input_proposal.md) に追加。7月本文と A/B/C は据え置き。画面モックは未着手。INDEX同期。 |
+| 2026-08-27 22:29 JST | **木村秀継さん 第3回121実施後議事録:** Zoom要約を校正し [`1to1_kimura_hidetsugu_kokuhosha.md`](meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md) に反映。VB+Oracle温存。PDF入力＋**生産予定組み**。Docker／専用PC案。助成金は9/1相談・採択未確定。お礼文案・送信待ち。 |
 | 2026-08-24 10:58 JST | **今泉お礼クローズを本番反映:** `#144` completed 維持。596 tests passed → `db-export`（2,146,593 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260824_105841.sql`。 |
 | 2026-08-24 10:54 JST | **今泉彪吾さん 会後お礼クローズ:** LINEグループへ手動送信済み。[`1to1_imaizumi_hyogo_peace_cake.md`](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) の送信待ちを閉じる。`#144` completed のまま。`docs/INDEX.md` 同期。 |
 | 2026-08-24 10:48 JST | **121・WM ローカル→本番DB同期:** `#144` 今泉 completed（notes 2405）。`#110` 海沼 notes 11146→11175。`#143` `#140` 再取込（差分なし）。`meetings.id=37` 維持。596 tests passed → `db-export`（2,146,593 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260824_104850.sql`。 |
