@@ -13,6 +13,7 @@
 
 | 資料 | メモ |
 |------|------|
+| [takemura_scaffold_rental_aws_hearing_estimate.md](takemura_scaffold_rental_aws_hearing_estimate.md) | **竹村裕司・足場レンタルのインフラ構築（新規）**。1to1とは別管理のプロポーザル案件。概算は構築38万／AWS等月3〜6万／稼働維持保守月1〜2万。システム会社への環境質問を収録。 |
 | [AI時代に_企業が必要とするエンジニアとは_20260814132404.pdf](AI時代に_企業が必要とするエンジニアとは_20260814132404.pdf) | **小中貴晃さん共有用**（2026-08-14 修正版・11枚）。AI時代のエンジニア定義を二人で検討するたたき台。初版: [同名.pdf](AI時代に_企業が必要とするエンジニアとは.pdf)。 |
 | [takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md](takemura_cheer_print_loadtest_report_20260808_genspark_slide_prompt.md) | **負荷試験結果スライド用 Gensparkプロンプト**（15枚・非技術者＋技術者）。金額なし。 |
 | [takemura_cheer_print_loadtest_report_20260808_client.md](takemura_cheer_print_loadtest_report_20260808_client.md) | **負荷試験結果・非技術者向けご報告**（2026-08-08実施）。総合危険／具体提案・期限・ToDo。[HTML](takemura_cheer_print_loadtest_report_20260808_client.html)。 |

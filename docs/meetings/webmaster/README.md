@@ -1,5 +1,7 @@
 # Webマスターチーム 議事録（docs/meetings/webmaster/）
 
+**11期の入口:** [webmaster_term11.md](webmaster_term11.md)（人・URL・現状・Religo。これを見れば辿れる）
+
 ## 役割
 
 BNI **DragonFly チャプター**の **Webマスターチーム**（朝礼スライド・定例会 Zoom 操作・ビジタースライド等）に関する打合せ・引き継ぎ・運用確認の議事録を置く。
@@ -37,6 +39,10 @@ webmaster_<topic>_YYYYMMDD.md
 |------|-----|
 | NextCloud 共有（ST定例会） | https://ne-dragonfly.site/cloud/index.php/s/E3a37t3pPsAJB8q?path=%2F |
 | ビジタースライド自動生成 | https://ne-dragonfly.site/genslide/ |
+| 11期 PC環境アンケート（回答） | https://docs.google.com/forms/d/e/1FAIpQLSfdmk-vyV-EX9f5ysH9xKoOU1_mFmEJIW0QSX087Hrom3kvjA/viewform |
+| 11期 PC環境アンケート（編集） | https://docs.google.com/forms/d/1OwAoEbVkUGTaMkcTKtC8KmUR5yW1YLmfdCjHkh-hDYw/edit |
+| 11期 PC環境アンケート（回答シート） | https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit |
+| 11期 第1回ミーティング（調整さん） | https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb |
 
 ## タスク棚卸し
 
@@ -47,6 +53,12 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv) | **正本。** WM-01〜54 |
 | [Sheets](https://docs.google.com/spreadsheets/d/1TWadVczKpOXQTy76-3cij-kYOTfFi2eGl7bHyoKrsh4/edit) | 作業用シート |
 | [webmaster_task_inventory_20260822.md](webmaster_task_inventory_20260822.md) | 列の意味・使い方 |
+| [webmaster_term11.md](webmaster_term11.md) | **11期の入口**（2026-08-29 10:00 JST）。人・URL・現状・Religo |
+| [webmaster_support_invite_20260826.md](webmaster_support_invite_20260826.md) | 11期サポートお声がけ。5名快諾（2026-08-26 23:57 JST 閉じ） |
+| [webmaster_term11_goals_20260827.md](webmaster_term11_goals_20260827.md) | 11期の目標・課題・チームの約束（2026-08-27 00:36 JST）。役割は未決 |
+| [webmaster_term11_messenger_group_20260828.md](webmaster_term11_messenger_group_20260828.md) | 11期グループ開設メッセージ（2026-08-28 23:56 JST 送信済み） |
+| [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) | PC環境アンケート（2026-08-29 08:59 JST）。公開済み。OS質問追加。Jobなし |
+| [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) | 第1回ミーティング調整さん（2026-08-29 09:59 JST 送信済み）。Jobなし |
 
 ## 関連
 
