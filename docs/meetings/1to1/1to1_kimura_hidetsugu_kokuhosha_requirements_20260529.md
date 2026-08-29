@@ -19,6 +19,8 @@ created_at_jst: "2026-05-31 10:11"
 
 **提案書（たたき台）:** [PDF注文書入力支援システム 提案書](../../proposals/kimura_kokuhosha_pdf_order_input_proposal.md) — As-Is / 裏のお困りごと / 改善案 / To-Be を整理。
 
+> **第3回（2026-08-26）注記:** 本書は第2回時点の **PDF入力** 要望整理。追加分は [第3回追加要件](1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) と提案書 [§16](../../proposals/kimura_kokuhosha_pdf_order_input_proposal.md)。会話の正は [1to1 履歴](1to1_kimura_hidetsugu_kokuhosha.md)。
+
 ## 結論
 
 木村さんからの中心要望は、既存の **VB + Oracle 製本販売管理システム**をすぐに作り替えることではなく、現場で負担が大きい **PDF注文書の手入力を減らすこと**。

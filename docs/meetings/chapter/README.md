@@ -23,7 +23,8 @@ BNI **DragonFly チャプター**の定例会および **定例会回数に含�
 | イベント | 例（DragonFly） | 備考 |
 |----------|-----------------|------|
 | **モメンタムトレーニング** | 2026-06-16 | BOD 向け学び。定例会 **9回目扱い** など期のカウントは別軸 |
-| **BOD** | **2026-07-28（月）** | 半期一度のビジネスオープンデイ。定例会の **回数は進まない** |
+| **BOD** | **2026-07-28（火）** | 半期一度のビジネスオープンデイ。定例会の **回数は進まない** |
+| **オリエン疑似体験会** | **2026-08-28** | メンバー間ロールプレイ。[chapter_orientation_practice_20260828.md](chapter_orientation_practice_20260828.md)。定例会の **回数は進まない** |
 | **その他** | GBM 等 | 公式カレンダーで定例会が休止・代替の場合も **回数を進めない** |
 
 **次の定例会回数** は、直前の **通常定例会** の `meeting_number + 1` でよい（例: 第211回の次は **第212回** = 2026-06-23。その間の 6/16 モメンタムは **212ではない**）。
@@ -38,6 +39,7 @@ front matter では `last_chapter_meeting_number` / `next_chapter_meeting_number
 chapter_weekly_YYYYMMDD.md   … 通常定例会（meeting_number あり）
 chapter_weekly_YYYYMMDD.md   … モメンタムも同パターン可（doc_type で区別）
 chapter_bod_YYYYMMDD.md      … BOD（月曜開催など doc_type: chapter_bod）
+chapter_orientation_practice_YYYYMMDD.md … オリエン疑似体験会（doc_type: chapter_workshop）
 ```
 
 例:
