@@ -66,6 +66,11 @@
 | [pdf/260817/religo_218_20260818_full.csv](pdf/260817/religo_218_20260818_full.csv) | 定例会参加者 CSV（第218回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260825/定例会参加者リスト2026_08_25.pdf](pdf/260825/定例会参加者リスト2026_08_25.pdf) | DragonFly 定例会参加者リスト（2026-08-25・第219回）。 |
 | [pdf/260825/religo_219_20260825_full.csv](pdf/260825/religo_219_20260825_full.csv) | 定例会参加者 CSV（第219回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260901/定例会参加者リスト2026_09_01.pdf](pdf/260901/定例会参加者リスト2026_09_01.pdf) | DragonFly 定例会参加者リスト（2026-09-01・第220回）。 |
+| [pdf/260901/religo_220_20260901_full.csv](pdf/260901/religo_220_20260901_full.csv) | 定例会参加者 CSV（第220回・full・`www/database/csv/` 同名参照可）。 |
+| [pdf/260901/788170150_1558415729395888_6801708766292959387_n.png](pdf/260901/788170150_1558415729395888_6801708766292959387_n.png) | 第220回定例会 関連画像。 |
+| [pdf/260901/役職サポート.pdf](pdf/260901/役職サポート.pdf) | **役職サポート**（2026-09-01 日付フォルダ）。`pdf/役職サポート.pdf` とは別ファイル。 |
+| [pdf/役職サポート.pdf](pdf/役職サポート.pdf) | **役職サポート**（docs/pdf 直下。260901 側とは別ファイル）。 |
 | [pdf/260714/religo_215_20260714_full_rev2.csv](pdf/260714/religo_215_20260714_full_rev2.csv) | 定例会参加者 CSV（第215回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260714/dragonfly_215_20260714_members_only.csv](pdf/260714/dragonfly_215_20260714_members_only.csv) | 定例会参加者 CSV（第215回・メンバーのみ）。 |
 | [pdf/260714/742324477_1039566875100997_221637905752636707_n.png](pdf/260714/742324477_1039566875100997_221637905752636707_n.png) | 第215回定例会 関連画像。 |
@@ -90,6 +95,11 @@
 | [meetings/README.md](meetings/README.md) | **直下・`chapter/`・`team/`・`webmaster/`・`1to1/` の役割分担**（定例会・チームMTG・Webマスター・1to1・提案書）。 |
 | [meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260807.md) | **DragonFly チャプター 1toMany 準備稿**（予定表記 2026-08-07）。**約10分・スライド同期台本**。実施後は議事録へ。 |
 | [meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md](meetings/Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md) | **1toMany 実施議事録（2026-08-06 19:00–20:00 JST）** 次廣登壇。校正済み。**DB:** `meetings.id=33`（`chapter_1tomany`）ローカル＋本番反映済（Phase 299）。 |
+| [meetings/Tsugihiro_121_business_share_other_chapter_non_bni.md](meetings/Tsugihiro_121_business_share_other_chapter_non_bni.md) | **121用事業紹介台本（他チャプター／非BNI）**。1toMany本番を外部向けに再構成（約8〜10分・Gensparkプロンプト付き）。DragonFly内実名協業は出さない。 |
+| [meetings/Dragonfly_chapter_share_story_Tsugihiro.md](meetings/Dragonfly_chapter_share_story_Tsugihiro.md) | **定例会シェアストーリー台本＋Gensparkプロンプト**（次廣・投影8枚）。**通し原稿A（3分版）・B（4分版・増本さん害虫ブロックFC深掘り★3行入り）の完全版2本立て**。当日の進行で登壇直前に使い分け。締めはギバーズゲイン（まず貢献）。短縮版（約2分30秒）の削り方も併記。 |
+| [presentation/BNI_DragonFly_シェアストーリー___次廣_淳_v2.pdf](presentation/BNI_DragonFly_シェアストーリー___次廣_淳_v2.pdf) | **シェアストーリー投影最終版 v2**（2026-09-01 確認・9ページ）。台本と同期。 |
+| [presentation/BNI_DragonFly_シェアストーリー___次廣_淳_20260831133146.pptx](presentation/BNI_DragonFly_シェアストーリー___次廣_淳_20260831133146.pptx) | シェアストーリー投影 PowerPoint（2026-08-31 13:31 生成）。 |
+| [presentation/BNI_DragonFly_シェアストーリー___次廣_淳_20260831081955.pdf](presentation/BNI_DragonFly_シェアストーリー___次廣_淳_20260831081955.pdf) | シェアストーリー投影 PDF 途中稿（2026-08-31 08:19 生成）。v2 を正とする。 |
 | [presentation/1toMany_-_次廣淳___tugilo_20260806090810.pdf](presentation/1toMany_-_次廣淳___tugilo_20260806090810.pdf) | **1toMany 本番スライド**（2026-08-06 生成・13枚）。現場のバラバラを一本に／防水・動物病院／育てているもの／チャプター内／切り出し。 |
 | [meetings/Dragonfly_team_1toMany_Tsugihiro_202604.md](meetings/Dragonfly_team_1toMany_Tsugihiro_202604.md) | **スリーバイス 1toMany（2026-04-21）** チーム内5分原稿・連携パターン・Gensparkプロンプト。 |
 | [pdf/1to many資料.pdf](pdf/1to%20many資料.pdf) | **1toMany コンセプト資料**（一人の事業を全員で深く知る／想いや背景→視点が返る／聴・問・話・60分進行）。`260807/1toMany_session_guide.pdf` と同内容。 |
@@ -144,7 +154,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/webmaster/README.md](meetings/webmaster/README.md) | **Webマスターチーム議事録の命名**（`webmaster_<topic>_YYYYMMDD.md`）・YAML・関連 1to1 リンク。 |
-| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-08-29 10:00 JST）。人・URL・現状・Religo `meetings.id` 35〜37。 |
+| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-08-30 18:19 JST）。第1回は **2026-09-14（月）19:00–20:00**。スライドは朝礼含む4本・各2人1組。Religo `meetings.id` 35〜37。 |
 | [meetings/webmaster/webmaster_handover_20260603.md](meetings/webmaster/webmaster_handover_20260603.md) | **Webマスター業務引き継ぎ 2026-06-03 JST 20:00–21:00**（Zoom）。次廣が倉持から朝礼スライド統合・定例会 Zoom 操作（レコーディング／スポットライト）を引き継ぎ。**初回作業 2026-06-09（月）午前**。AI 協業・リストマーケ・パワーチーム等も議論。 |
 | [meetings/webmaster/webmaster_kudo_yuji_20260821.md](meetings/webmaster/webmaster_kudo_yuji_20260821.md) | **工藤祐司（元WM・退会済）×次廣×小中×増本 2026-08-21 午後**（Zoom・時刻 TODO）。属人化／自動化ミス／提出遅れ。原点回帰（PPT手作業）・月曜正午締切・並行スライド操作。棚卸しは [2026-08-22 倉持](meetings/webmaster/webmaster_handover_20260822.md) で実施。校正: 倉本→倉持、梅沢→梅澤。 |
 | [meetings/webmaster/webmaster_handover_20260822.md](meetings/webmaster/webmaster_handover_20260822.md) | **倉持賢一（9・10期WM）→次廣（11期WM）棚卸し 2026-08-22 JST 20:00–22:00**（Zoom）。`meetings.id=37`。アカウント／NextCloud 500GB／Claude Code Pipeline／旧→新Nキャス／BORアプリ。継続廃止は未決。校正: 軍事→軍司、福祉→福士、持ちづき→望月、佐賀→芳賀。 |
@@ -152,14 +162,17 @@
 | [meetings/webmaster/webmaster_support_invite_20260826.md](meetings/webmaster/webmaster_support_invite_20260826.md) | **11期 WMサポートお声がけ**（2026-08-26 23:57 JST 閉じ）。梅澤・太田・軍司・竹村・米澤の5名快諾。個別快諾時刻は TODO。 |
 | [meetings/webmaster/webmaster_term11_goals_20260827.md](meetings/webmaster/webmaster_term11_goals_20260827.md) | **11期 WM 目標とチームの約束**（2026-08-27 00:36 JST）。問題・課題・ユウジさんのエッセンス。役割と廃止判断は未決。 |
 | [meetings/webmaster/webmaster_term11_messenger_group_20260828.md](meetings/webmaster/webmaster_term11_messenger_group_20260828.md) | **11期 WM グループ開設メッセージ**（2026-08-28 23:56 JST 送信済み）。 |
-| [meetings/webmaster/webmaster_term11_pc_survey_20260828.md](meetings/webmaster/webmaster_term11_pc_survey_20260828.md) | **11期 WM PC環境アンケート**（2026-08-29 09:59 JST）。公開済み。[回答](https://docs.google.com/forms/d/e/1FAIpQLSfdmk-vyV-EX9f5ysH9xKoOU1_mFmEJIW0QSX087Hrom3kvjA/viewform)／[シート](https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit)。 |
-| [meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md](meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md) | **11期 WM 第1回ミーティング調整さん**（2026-08-29 09:59 JST 送信済み）。[調整さん](https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb)。 |
+| [meetings/webmaster/webmaster_term11_pc_survey_20260828.md](meetings/webmaster/webmaster_term11_pc_survey_20260828.md) | **11期 WM PC環境アンケート**（2026-08-30 18:15 JST）。6名回答。米澤さんのみブラウザ版 PPT。[シート](https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit)。 |
+| [meetings/webmaster/webmaster_term11_pc_konaka_20260830.md](meetings/webmaster/webmaster_term11_pc_konaka_20260830.md) | **11期 WM 運営PC・PPT 1ライセンス**（2026-08-30 18:11 JST）。こなっち相談下書き。未送信。 |
+| [meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md](meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md) | **11期 WM 第1回ミーティング**。**2026-09-14（月）19:00–20:00 JST 確定**（2026-08-30 12:39 JST）。[調整さん](https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb)。 |
 
 #### 1to1 専用（docs/meetings/1to1/）
 
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
+| [meetings/1to1/1to1_horikiri_takanori_link.md](meetings/1to1/1to1_horikiri_takanori_link.md) | **堀切孝則（株式会社Link／HP最短24時間・BNI Abundance）**。**第1回 2026-08-31 JST 09:00–10:00 実施済み**（`#149` completed／`members.id=299`）。制作5万・月5千。今西・軍司 **双方OK**。三者グループ2つ送信待ち。お礼文案あり・送信待ち。 |
+| [meetings/1to1/1to1_oguma_michiko_mirect.md](meetings/1to1/1to1_oguma_michiko_mirect.md) | **小熊美智子（合同会社ミレクトオフィス／心を宿すロゴデザイナー・BNI LAPIS）**。2026-08-21 GBM 同BOR。**第1回 2026-08-31 JST 11:00–12:00 実施済み**（`#154` completed／`members.id=319`）。飲食店並走×予約。おつなぎ: 山本洸太（デザインに強いWeb制作／主フックは画家・飲食店経営）・飯田千帆は本人OK、グループ作成待ち。畠山憲之は許可待ち。 |
 | [meetings/1to1/1to1_ouchi_nozomi_nextgroup.md](meetings/1to1/1to1_ouchi_nozomi_nextgroup.md) | **大内望未（ネクストグループ／SNS運用代行／DragonFly ビジター）**。福島和也紹介。**第1回 2026-08-27 JST 10:00–11:00 実施済み**（`one_to_ones.id=148` completed／`members.id=285`）。撮影〜広告の一貫代行・半年前払い全額返金・他己紹介動画コミュニティ。岡元智美おつなぎは福島経由。加入勧奨あり・合意なし。校正: 岡本→岡元、タコ紹介→他己紹介。お礼文案あり・送信待ち。 |
 | [meetings/1to1/1to1_uotani_masaharu_kyokoko.md](meetings/1to1/1to1_uotani_masaharu_kyokoko.md) | **魚谷優治（株式会社今日 ここから／AI人材育成・システムコンサル／DragonFly ビジター）**。太田一誠紹介。**第1回 2026-08-27 JST 09:00–10:00 実施済み**（`#147` completed／`members.id=289`）。6ヶ月育成・士業人材不動産へ寄せ・Cursor。浅草橋来訪時に蔵前とんかつすぎ田。加入はタイミング次第。お礼文案あり・送信待ち。 |
 | [meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md](meetings/1to1/1to1_imaizumi_hyogo_peace_cake.md) | **今泉彪吾（株式会社ピースケイク／町田特化SNS・採用支援／DragonFly ビジター）**。太田一誠紹介。**第1回 2026-08-24 JST 09:30–10:30 実施済み**（`one_to_ones.id=144` completed／`members.id=195`）。タム約12万→採用支援（SNS→LINE→エントリー）。相互紹介は AI相談／横浜圏。入会なし。校正: 伊勢→太田、はが→芳賀、先読み→SAKIYOMI。お礼は **LINEグループ送信済（2026-08-24 10:54 JST）**。 |
@@ -242,7 +255,7 @@
 | [meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md](meetings/1to1/1to1_yamamoto_yoko_idemitsu_credit.md) | **山本葉子（出光クレジット／BNI DragonFly）**。**第1回 2026-06-03 JST 15:00–16:00 実施済み**・**Religo `one_to_ones.id=41`**（Zoom要約反映）。動物病院×アメックス・獣医師会賛助会員、予約システムチラシ共同配布・6/6 RF対面・藤枝デモ合意。**おかわり121**予定。 |
 | [meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md](meetings/1to1/materials/animal_hospital_line_reservation_flyer_202606.md) | **動物病院向け LINE予約チラシ（A4・ビジュアル中心）**。yamabuki 実画面キャプチャ5枚接続済み（v4 2026-06-03）。 |
 | [meetings/1to1/materials/screenshot_capture_guide.md](meetings/1to1/materials/screenshot_capture_guide.md) | 上記チラシ用 **yamabuki スクリーンショット取得手順**（LIFF 3枚・管理画面2枚・LINE通知1枚）。 |
-| [meetings/1to1/1to1_iida_chiho_sui.md](meetings/1to1/1to1_iida_chiho_sui.md) | **飯田千帆（彗 sui／経営者向け開運占い師／BNI DragonFly）**。**第1回 121 2026-06-12 JST 09:00-10:00 実施済み**・**Religo `one_to_ones.id=69`**。**総合鑑定 2026-06-22 10:00-11:00 実施済み**（メインプレ前日）。3年BNIコミット・発信強化・3000万超・法人化来年夏・健康・家族・大井神社参拝等を整理。鑑定質問リスト・事前送付文案あり。OCC・WEBマスター・飯田香との同姓区別。
+| [meetings/1to1/1to1_iida_chiho_sui.md](meetings/1to1/1to1_iida_chiho_sui.md) | **飯田千帆（彗 sui／経営者向け開運占い師／BNI DragonFly）**。**第1回 121 2026-06-12 JST 09:00-10:00 実施済み**・**Religo `one_to_ones.id=69`**。**総合鑑定 2026-06-22 10:00-11:00 実施済み**（メインプレ前日）。**2026-09-01 第220回真正度確認:** 次廣→千帆さん外部RF（顧問税理士＝事務所所長）。業種合わせではなく「意見を聞きすぎて決断がブレる人 × 背中を押す千帆さん」。口頭用・議事録用あり。OCC・WEBマスター・飯田香との同姓区別。
 | [meetings/1to1/1to1_kiyohara_kasami_ui.md](meetings/1to1/1to1_kiyohara_kasami_ui.md) | **清原佳彩美（株式会社u\`i／サロン向け育毛機器・商材販売／BNI DragonFly）**。**第1回 2026-06-12 JST 10:00〜実施済み**・**Religo `one_to_ones.id=70`**（終了時刻 TODO・Zoom要約反映）。まつ毛美容液「伸びるラッシュ」、毛根由来幹細胞50%の育毛美容液、育毛マシン、予防育毛、FC展開構想を整理。Zoom誤記校正（宮城→西浦雅、千葉→飯田千帆、松本→増本）。清原×千帆は旧知・入会きっかけ。次廣の業務改善システム説明、6/15メインプレゼンリハ参加、システム相談の再121合意を記録。 |
 | [meetings/1to1/1to1_masumoto_shigetaka_pestblock.md](meetings/1to1/1to1_masumoto_shigetaka_pestblock.md) | **増本重孝（株式会社プロテクトラボ／害虫ブロックFC・ピタカット）**。**第1回 2026-06-12 JST 16:00–17:00**（`one_to_ones.id=76`）／**第2回 2026-07-23 JST 08:00–09:30**（`one_to_ones.id=127`）。第2回で販売代理店ページ・顧客種別・電子契約・初期3万/更新2万・OEM（ローソン・マクドナルド）・生産10月試作品・HP方針・増本バイス案を確定。 |
 | [meetings/1to1/1to1_iida_kaori_libero.md](meetings/1to1/1to1_iida_kaori_libero.md) | **飯田香（Libero／グラントイーワンズ代理店／BNI DragonFly）**。**第1回 2026-06-17 実施済み**（Religo `one_to_ones.id=67`）・**第2回 2026-06-25 JST 13:00–14:00 実施済み**。第1回は次廣事業紹介・BCPシステム開発相談。第2回は当日朝の地震対応、ティフォーネット（表記要確認）と **SONAE / LINE公式連携** の安否確認比較、来週LT提案、グラントイーワンズの **ながら健康美容法**（着る・寝る・飲む・入浴する）・機能性インナー/水/睡眠/シャワーヘッド・紹介条件を整理。 |
