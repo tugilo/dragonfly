@@ -4,7 +4,7 @@
 
 | 場所 | 用途 |
 |------|------|
-| **`docs/meetings/`**（直下） | **複数参加者**の打合せ、チャプター例会など**1to1以外**が主なメモ。**チャプター横断 1toMany** 原稿（例: [`Dragonfly_chapter_1toMany_Tsugihiro_20260807.md`](./Dragonfly_chapter_1toMany_Tsugihiro_20260807.md)）もここ。歴史的に **提案書 Markdown** もここにあったが、**クライアント向け提案・ブリーフ・PDF** は [`docs/proposals/`](../proposals/README.md) を推奨 |
+| **`docs/meetings/`**（直下） | **複数参加者**の打合せ、チャプター例会など**1to1以外**が主なメモ。**チャプター横断 1toMany** 原稿（例: [`Dragonfly_chapter_1toMany_Tsugihiro_20260807.md`](./Dragonfly_chapter_1toMany_Tsugihiro_20260807.md)）もここ。**他チャプター／非BNI向け121用の事業紹介台本**（例: [`Tsugihiro_121_business_share_other_chapter_non_bni.md`](./Tsugihiro_121_business_share_other_chapter_non_bni.md)）も直下。**定例会シェアストーリー台本**（例: [`Dragonfly_chapter_share_story_Tsugihiro.md`](./Dragonfly_chapter_share_story_Tsugihiro.md)）も直下。歴史的に **提案書 Markdown** もここにあったが、**クライアント向け提案・ブリーフ・PDF** は [`docs/proposals/`](../proposals/README.md) を推奨 |
 | **`docs/meetings/chapter/`** | **DragonFly チャプター定例会**の議事録。**回ごとに日付入り Markdown**（`chapter_weekly_YYYYMMDD.md`）。参加者 CSV・PDF は `docs/pdf/` からリンク |
 | **`docs/meetings/team/`** | **BNI チーム MTG**（例：スリーバイス）の議事録。**回ごとに日付入り Markdown**（`team_<slug>_YYYYMMDD.md`）。PDF 等の添付も同ディレクトリ |
 | **`docs/meetings/webmaster/`** | **DragonFly Webマスターチーム**（朝礼スライド・Zoom 操作・引き継ぎ等）の議事録。**回ごとに日付入り Markdown**（`webmaster_<topic>_YYYYMMDD.md`）。**11期の入口は [`webmaster/webmaster_term11.md`](webmaster/webmaster_term11.md)** |
