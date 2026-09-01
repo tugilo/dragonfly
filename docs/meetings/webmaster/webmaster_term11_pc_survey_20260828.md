@@ -2,9 +2,9 @@
 doc_type: webmaster_survey_draft
 chapter: bni_dragonfly
 created_jst: "2026-08-28 23:24 JST"
-updated_jst: "2026-08-29 09:59 JST"
+updated_jst: "2026-08-30 18:15 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
-status: published
+status: responses_reviewed
 form_edit_url: "https://docs.google.com/forms/d/1OwAoEbVkUGTaMkcTKtC8KmUR5yW1YLmfdCjHkh-hDYw/edit"
 form_url: "https://docs.google.com/forms/d/e/1FAIpQLSfdmk-vyV-EX9f5ysH9xKoOU1_mFmEJIW0QSX087Hrom3kvjA/viewform"
 responses_sheet_url: "https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit"
@@ -108,9 +108,28 @@ PCのこと、不安なこと、何でも。
 
 ---
 
-## 足さない（今はやらない）
+## 回答（サポート5名は 2026-08-29。次廣は 2026-08-30 18:15）
 
-メモリ、Zoomの有無。必要になったら、個別に聞く。
+パスワードは書かない。役割はまだ決めない。6名全員。
+
+| お名前 | PC台数 | OS | PowerPoint | スライド送り | BOR |
+|--------|--------|----|------------|--------------|-----|
+| 梅澤 朗広 | 2台以上 | Windows | デスクトップ | ある | ある |
+| 太田 一誠 | 1台だけ | Mac | デスクトップ | ない | ある |
+| 竹村 | 2台以上 | Mac | デスクトップ | ある | ない |
+| 軍司 敦哉 | 1台だけ | Windows | デスクトップ | ある | ある |
+| 米澤 侑桂 | 1台＋借りられる台 | Mac | **ブラウザ版だけ** | ない | ない |
+| 次廣 淳 | 2台以上 | Mac | デスクトップ | ある | ある |
+
+### 所見（2026-08-30 18:15 JST）
+
+米澤さんだけがデスクトップの PowerPoint を持っていない。次廣は後から回答。2台・デスクトップ・Mac。貸与と1ライセンスの相談内容は変わらない。
+
+定例会スライドは BGM・効果音・動きがあるファイルなので、ブラウザ版だと音や動きが足りないことがある。Zoom の画面共有も、ブラウザのタブ共有になりやすく、再生用としては安心できない。
+
+足りない、ではない。借りられる台にデスクトップ版があるか、自分の Mac に入れられるか、を個別に聞く。グループでは名前を出さない。スライド担当にはしない。
+
+こなっちへの相談案（未送信）: 1台だけの2名には期が変わったら運営用PCを貸与。借用可の1名はブラウザ版だけなので、PowerPoint 1ライセンスをチャプター購入できないか聞く。正: [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md)
 
 ---
 
@@ -122,4 +141,6 @@ PCのこと、不安なこと、何でも。
 | 2026-08-28 23:34 | Googleフォーム下書き作成。タイトル・説明・お名前まで。Q1以降は未完。未公開 |
 | 2026-08-28 23:49 | 人間が公開完了と報告。回答URLと回答シートを記録。Jobは無し |
 | 2026-08-29 08:59 | OS質問を追加。ラジオ必須。Mac / Windows / その他。PC台数の直後 |
+| 2026-08-30 18:15 | 次廣淳を追記。2台以上／デスクトップ／Mac。チーム6名。所見は米澤さんのみブラウザ版のまま |
+| 2026-08-30 18:07 | 回答5件を転記。米澤さんのみブラウザ版。画面共有の支障として所見。役割は未決 |
 | 2026-08-29 09:59 | 回答・編集・シート・調整さんの URL を README 一覧へ集約 |

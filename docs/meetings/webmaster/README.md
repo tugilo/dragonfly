@@ -53,12 +53,13 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv) | **正本。** WM-01〜54 |
 | [Sheets](https://docs.google.com/spreadsheets/d/1TWadVczKpOXQTy76-3cij-kYOTfFi2eGl7bHyoKrsh4/edit) | 作業用シート |
 | [webmaster_task_inventory_20260822.md](webmaster_task_inventory_20260822.md) | 列の意味・使い方 |
-| [webmaster_term11.md](webmaster_term11.md) | **11期の入口**（2026-08-29 10:00 JST）。人・URL・現状・Religo |
+| [webmaster_term11.md](webmaster_term11.md) | **11期の入口**（2026-08-30 12:39 JST）。第1回は 9/14 19:00–20:00 確定 |
 | [webmaster_support_invite_20260826.md](webmaster_support_invite_20260826.md) | 11期サポートお声がけ。5名快諾（2026-08-26 23:57 JST 閉じ） |
 | [webmaster_term11_goals_20260827.md](webmaster_term11_goals_20260827.md) | 11期の目標・課題・チームの約束（2026-08-27 00:36 JST）。役割は未決 |
 | [webmaster_term11_messenger_group_20260828.md](webmaster_term11_messenger_group_20260828.md) | 11期グループ開設メッセージ（2026-08-28 23:56 JST 送信済み） |
-| [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) | PC環境アンケート（2026-08-29 08:59 JST）。公開済み。OS質問追加。Jobなし |
-| [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) | 第1回ミーティング調整さん（2026-08-29 09:59 JST 送信済み）。Jobなし |
+| [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) | PC環境アンケート（2026-08-30 18:07 JST）。5名回答。Jobなし |
+| [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md) | こなっちへ運営用PC貸与と PPT 1ライセンス相談（2026-08-30 18:11 JST）。未送信。Jobなし |
+| [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) | 第1回ミーティング。**2026-09-14（月）19:00–20:00 確定**（2026-08-30 12:39 JST）。Jobなし |
 
 ## 関連
 

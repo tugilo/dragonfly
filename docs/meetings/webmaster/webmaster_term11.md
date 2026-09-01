@@ -3,7 +3,7 @@ doc_type: webmaster_term_hub
 chapter: bni_dragonfly
 term_ja: "11期"
 created_jst: "2026-08-29 10:00 JST"
-updated_jst: "2026-08-29 10:00 JST"
+updated_jst: "2026-08-30 18:19 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
 status: living
 religo_session_type: webmaster_meeting
@@ -24,11 +24,12 @@ religo_import: pending_first_meeting
 | 項目 | 状態 |
 |------|------|
 | メンバー | 次廣 淳（WM）／梅澤 朗広／太田 一誠／軍司 敦哉／竹村 裕司／米澤 侑桂。5名快諾済み |
-| 役割 | **未決。** 第1回では決めない |
+| 役割 | **未決。** 第1回では決めない。送り方の型だけ決めた |
+| スライド送りの型 | 朝礼を含むパワポ **4つ**。各共有は **2人1組**。メインが共有＋送り、バックアップも同じページを送る。障害時はすぐ切り替え |
 | 残す／やめる | **未決。** 棚卸しは出た。操作を覚えてから切る |
 | Messenger グループ | 開設文送信済み（2026-08-28 23:56 JST） |
-| PC環境アンケート | 公開済み。回答待ち |
-| 第1回ミーティング | 調整さん送信済み。日程未確定 |
+| PC環境アンケート | **6名回答。** 2台持ち3／1台2／借用可1。1台2名は運営用PC貸与、借用可1名は PPT 1ライセンスをこなっちへ相談（下書き・未送信） |
+| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。役割は決めない |
 
 ---
 
@@ -64,13 +65,29 @@ religo_import: pending_first_meeting
 
 ## 第1回ミーティング
 
-顔合わせ。向きを揃える。役割は決めない。Zoom 60分。
+**確定: 2026-09-14（月）19:00–20:00 JST。** Zoom 60分。
 
-候補は 9月11日〜18日の平日。土日は外す。14日は日中のみ（夜は10期リハーサル）。
+顔合わせ。向きを揃える。役割は決めない。
 
-案内は 2026-08-29 09:59 JST にグループ送信済み。文面の正: [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md)
+11期 LT・ST ミーティングは 9月2日と9月10日。14日はその場で決まったことと、来期 Webマスチームに課せられた課題の目線合わせ。
 
-日程が決まったら、この節と Religo の行を更新する。
+案内は 2026-08-29 09:59 JST にグループ送信済み。確定は 2026-08-30 12:39 JST。文面の正: [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md)
+
+開催後に `webmaster_term11_meeting1_20260914.md` を切り、Religo へ入れる。
+
+---
+
+## スライド送りの型（誰がやるかは未決）
+
+人間が 2026-08-30 18:19 JST に方向を出した。ペア割はまだしない。
+
+- パワーポイントは **朝礼を含めて 4つ**。
+- それぞれの画面共有は **2人1組**。
+- メインが共有してページを送る。
+- バックアップも同じファイルを開き、同じページを送る。
+- メインに切断や停止が起きたら、バックアップがすぐ共有に切り替える。
+
+4つのファイル名は、ここに書いていない。分かったら足す。
 
 ---
 
@@ -93,6 +110,7 @@ religo_import: pending_first_meeting
 | お声がけ結果 | [webmaster_support_invite_20260826.md](webmaster_support_invite_20260826.md) |
 | グループ開設文 | [webmaster_term11_messenger_group_20260828.md](webmaster_term11_messenger_group_20260828.md) |
 | PCアンケート | [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) |
+| こなっち相談（PC・PPT） | [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md) |
 | 第1回調整さん | [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) |
 | タスク表 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv)／[説明](webmaster_task_inventory_20260822.md) |
 | 倉持棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
@@ -130,6 +148,7 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 ## いま決めないこと
 
 - 誰がスライド、予備、ブレイクアウトか
+- 4つのパワポの、誰がメイン／バックアップか
 - 自動化や毎週の動画を残すか
 - 新しいツールを足すか
 
@@ -139,4 +158,9 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-08-30 18:19 | スライド送りの型。朝礼含む4ファイル、各2人1組、バックアップも同ページ送り。ペアは未決 |
+| 2026-08-30 18:15 | 次廣がアンケート回答。2台持ち3名に更新。相談の中身は同じ |
+| 2026-08-30 18:11 | 運営用PC貸与と PPT 1ライセンスをこなっちへ相談する下書き。未送信 |
+| 2026-08-30 18:07 | PCアンケート所見。米澤さんのみブラウザ版 PPT。画面共有は個別確認。役割は未決 |
+| 2026-08-30 12:39 | 第1回を 9/14（月）19:00–20:00 に確定。LTST 2日・10日のあと目線合わせ |
 | 2026-08-29 10:00 | 初版。11期の入口。URL・人・資料・Religo id 35〜37 |

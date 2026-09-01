@@ -18,6 +18,7 @@
 | **本日割愛（本番）** | **増本さん案件の深掘り**（6/23既出）／**SONAE**／**BCPまわり**。増本はQで聞かれたら短く答える |
 | **tugilo-os 正本** | `/Volumes/SSD1TB/tugilo-os` — README（司令部）／Concept Book（組織の土台・決めるのは人）／ブランド憲法（判断を先に設計）。**DragonFlyチャプター内では横山カテゴリと衝突させない** |
 | **チーム向け先例** | [Dragonfly_team_1toMany_Tsugihiro_202604.md](./Dragonfly_team_1toMany_Tsugihiro_202604.md)（スリーバイス・5分） |
+| **外部121向け派生** | [Tsugihiro_121_business_share_other_chapter_non_bni.md](./Tsugihiro_121_business_share_other_chapter_non_bni.md)（他チャプター／非BNI・約8〜10分・Genspark別） |
 
 **1toMany の狙い（資料より）:**  
 一人の事業を、全員で深く知る時間。その人の想いや背景にまで踏み込むほど、**自分の仕事にも思いがけない視点が返ってくる**。深く知ることが、確かな信頼の土台になる。  
@@ -518,6 +519,7 @@ AI業務改善システム構築の、次廣でした。ご質問、どうぞ。
 
 | 日時 | 内容 |
 |------|------|
+| 2026-08-31 08:18:24 | **外部121向け派生を追加。** [`Tsugihiro_121_business_share_other_chapter_non_bni.md`](./Tsugihiro_121_business_share_other_chapter_non_bni.md) |
 | 2026-08-07 07:08:54 | **実施後:** 文字起こし要約を校正し [`Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md`](./Dragonfly_chapter_1toMany_Tsugihiro_20260806_minutes.md) に保存。実施後メモを更新。 |
 | 2026-08-06 18:09:33 | **通し原稿を本番スライド（13枚）同期版に全面書換。** [`presentation/1toMany_-_次廣淳___tugilo_20260806090810.pdf`](../presentation/1toMany_-_次廣淳___tugilo_20260806090810.pdf) 準拠。芳賀×望月＝ものづくり現場の管理システム。切り出し＝日報が紙／予約が電話だけ／Excelでしんどい。葉子はスライド11へ。 |
 | 2026-08-06 17:54:44 | **米澤②の口頭表記を匿名化。** 固有社名をやめ、**サイト作成を希望されている企業へ提案中**に統一。通し・Q&A・BOR・Genspark同期。 |
