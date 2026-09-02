@@ -138,7 +138,7 @@
 | G9 | workspace `region_id` フィルタ | P1 | WorkspaceController 拡張 |
 | G10 | リージョン・チャプター管理 UI | P2 | admin Settings または専用 Resource |
 | G11 | `region_admin` | P3 | User religo_role 拡張・別 Spec |
-| G12 | 他チャプター 1to1 一覧フィルタ | P3 | SPEC-006 R2 |
+| G12 | 他チャプター 1to1 一覧フィルタ | P3 | SPEC-006 R2 | **Fit（Phase 303）** — `cross_chapter` / `target_workspace_id` / `target_group_name` / `target_category_id` + 常時表示フィルターバー |
 | G13 | 他チャプター **登録済み相手の検索なし**（毎回 リージョン→チャプター→氏名→確定 が必要） | P1 | members API `q_extended` / `exclude_workspace_id` / `limit` + `RegisteredTargetSearch` Autocomplete | **Fit（Phase 302）** — T6 |
 
 ---
@@ -172,3 +172,4 @@
 | 2026-06-27 17:30 JST | Phase 272 実装反映。G1–G3, G5–G6, G8 を Fit に更新。 |
 | 2026-06-27 17:50 JST | 既存 121 再調査結果を反映。EduTech（東京NE・立ち上げ中）を25件目に追加。古屋周治=インフィニティ/静岡セントラル、田辺光=BNI会員外、門松直幸=EduTech/東京NEを反映。 |
 | 2026-09-02 09:45 JST | Phase 302: G13（他チャプター登録済み相手の検索）を追加し Fit に更新。「他のチャプター」モード先頭に氏名・チャプター名・カテゴリのサーバー検索 Autocomplete を配置、見つからない場合のみ従来の①〜③手動登録。 |
+| 2026-09-02 10:05 JST | Phase 303: G12（他チャプター 1to1 一覧フィルタ）を Fit に更新。1to1 一覧に常時表示フィルターバー（検索／自・他チャプター／相手チャプター／大カテゴリ／カテゴリ／状態／期間／キャンセル除外）。従来の react-admin `Filter` が未描画だった問題も解消。 |

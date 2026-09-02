@@ -55,6 +55,18 @@ export const dragonflyDataProvider = {
             }
             const qText = f.q != null ? String(f.q).trim() : '';
             if (qText !== '') q.set('q', qText);
+            if (f.target_workspace_id != null && String(f.target_workspace_id).trim() !== '') {
+                q.set('target_workspace_id', String(f.target_workspace_id).trim());
+            }
+            if (f.target_group_name != null && String(f.target_group_name).trim() !== '') {
+                q.set('target_group_name', String(f.target_group_name).trim());
+            }
+            if (f.target_category_id != null && String(f.target_category_id).trim() !== '') {
+                q.set('target_category_id', String(f.target_category_id).trim());
+            }
+            if (f.cross_chapter === '1' || f.cross_chapter === '0' || f.cross_chapter === 1 || f.cross_chapter === 0) {
+                q.set('cross_chapter', String(f.cross_chapter));
+            }
             const url = `/api/one-to-ones${q.toString() ? `?${q.toString()}` : ''}`;
             const data = await request(url);
             const arr = Array.isArray(data) ? data : [];
