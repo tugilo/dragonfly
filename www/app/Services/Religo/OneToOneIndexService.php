@@ -22,10 +22,11 @@ class OneToOneIndexService
     /**
      * Index / Stats 共通の WHERE。一覧の filter と統計がズレないようにする（ONETOONES-P4）。
      *
-     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string, exclude_canceled?: bool|int|string}  $filters
+     * @param  array{workspace_id?: int, owner_member_id?: int, target_member_id?: int, status?: string, from?: string, to?: string, q?: string, exclude_canceled?: bool|int|string, target_workspace_id?: int, target_group_name?: string, target_category_id?: int, cross_chapter?: bool|int|string}  $filters
      */
     public function applyIndexFilters(Builder $query, array $filters): void
     {
+        $this->applyTargetFilters($query, $filters);
         if (! empty($filters['workspace_id'])) {
             $query->where('workspace_id', $filters['workspace_id']);
         }
@@ -53,7 +54,49 @@ class OneToOneIndexService
                 $query->where(function ($q) use ($like) {
                     $q->where('notes', 'like', $like)
                         ->orWhereHas('targetMember', function ($mq) use ($like) {
-                            $mq->where('name', 'like', $like);
+                            $mq->where('name', 'like', $like)
+                                ->orWhere('name_kana', 'like', $like);
+                        });
+                });
+            }
+        }
+    }
+
+    /**
+     * 相手（target）側の絞り込み（Phase 303・SPEC-006 R2）。
+     * cross_chapter は formatRecord の is_cross_chapter と同じ定義:
+     * 記録 workspace と相手 workspace が両方非 NULL かつ異なる = 他チャプター。
+     */
+    private function applyTargetFilters(Builder $query, array $filters): void
+    {
+        if (! empty($filters['target_workspace_id'])) {
+            $wsId = (int) $filters['target_workspace_id'];
+            $query->whereHas('targetMember', fn (Builder $m) => $m->where('members.workspace_id', $wsId));
+        }
+        if (! empty($filters['target_category_id'])) {
+            $catId = (int) $filters['target_category_id'];
+            $query->whereHas('targetMember', fn (Builder $m) => $m->where('members.category_id', $catId));
+        }
+        if (! empty($filters['target_group_name']) && is_string($filters['target_group_name'])) {
+            $group = trim($filters['target_group_name']);
+            if ($group !== '') {
+                $query->whereHas('targetMember.category', fn (Builder $c) => $c->where('group_name', $group));
+            }
+        }
+        if (array_key_exists('cross_chapter', $filters) && $filters['cross_chapter'] !== null && $filters['cross_chapter'] !== '') {
+            $cross = filter_var($filters['cross_chapter'], FILTER_VALIDATE_BOOLEAN);
+            if ($cross) {
+                $query->whereNotNull('one_to_ones.workspace_id')
+                    ->whereHas('targetMember', function (Builder $m) {
+                        $m->whereNotNull('members.workspace_id')
+                            ->whereColumn('members.workspace_id', '!=', 'one_to_ones.workspace_id');
+                    });
+            } else {
+                $query->where(function (Builder $q) {
+                    $q->whereNull('one_to_ones.workspace_id')
+                        ->orWhereHas('targetMember', function (Builder $m) {
+                            $m->whereNull('members.workspace_id')
+                                ->orWhereColumn('members.workspace_id', 'one_to_ones.workspace_id');
                         });
                 });
             }

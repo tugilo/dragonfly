@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
     FormDataConsumer,
     required,
@@ -8,7 +8,7 @@ import {
 import { useFormContext, useWatch } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box, ToggleButton, ToggleButtonGroup, Button, Alert } from '@mui/material';
+import { Card, CardContent, Chip, Stack, Typography, CircularProgress, Box, ToggleButton, ToggleButtonGroup, Button, Alert, Divider } from '@mui/material';
 import {
     formatMemberPrimaryLine,
     formatMemberSecondaryLine,
@@ -137,6 +137,108 @@ async function postJson(url, body) {
 
 const REGION_MANUAL = '__region_manual__';
 const WORKSPACE_MANUAL = '__workspace_manual__';
+
+const REGISTERED_TARGET_SEARCH_LIMIT = 30;
+const REGISTERED_TARGET_SEARCH_DEBOUNCE_MS = 250;
+
+/**
+ * 他チャプター: 登録済みの相手をチャプター名・氏名・かな・カテゴリでサーバー検索（SPEC-021 T6）。
+ * キーワード未入力時は候補を出さない（他チャプター名簿の一覧表示はしない）。
+ * 自チャプター（excludeWorkspaceId）の相手は除外する。
+ */
+function RegisteredTargetSearch({ excludeWorkspaceId, disabled, onSelect }) {
+    const [inputValue, setInputValue] = useState('');
+    const [options, setOptions] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const debounceRef = useRef(null);
+    const requestSeqRef = useRef(0);
+
+    const keyword = inputValue.trim();
+
+    useEffect(() => {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        if (disabled || keyword === '') {
+            setOptions([]);
+            setLoading(false);
+            return undefined;
+        }
+        setLoading(true);
+        const seq = ++requestSeqRef.current;
+        debounceRef.current = setTimeout(() => {
+            debounceRef.current = null;
+            const params = new URLSearchParams();
+            params.set('q', keyword);
+            params.set('q_extended', '1');
+            params.set('limit', String(REGISTERED_TARGET_SEARCH_LIMIT));
+            if (excludeWorkspaceId != null) {
+                params.set('exclude_workspace_id', String(excludeWorkspaceId));
+            }
+            fetchJson(`/api/dragonfly/members?${params.toString()}`)
+                .then((arr) => {
+                    if (seq !== requestSeqRef.current) return;
+                    setOptions(Array.isArray(arr) ? arr : []);
+                })
+                .catch(() => {
+                    if (seq === requestSeqRef.current) setOptions([]);
+                })
+                .finally(() => {
+                    if (seq === requestSeqRef.current) setLoading(false);
+                });
+        }, REGISTERED_TARGET_SEARCH_DEBOUNCE_MS);
+        return () => {
+            if (debounceRef.current) clearTimeout(debounceRef.current);
+        };
+    }, [keyword, excludeWorkspaceId, disabled]);
+
+    return (
+        <Autocomplete
+            size="small"
+            fullWidth
+            disabled={disabled}
+            loading={loading}
+            options={options}
+            value={null}
+            inputValue={inputValue}
+            onInputChange={(_, v, reason) => {
+                if (reason === 'reset') return;
+                setInputValue(v);
+            }}
+            onChange={(_, v) => {
+                if (!v) return;
+                onSelect(v);
+                setInputValue('');
+                setOptions([]);
+            }}
+            filterOptions={(opts) => opts}
+            getOptionLabel={(o) => formatMemberAutocompleteLabel(o)}
+            isOptionEqualToValue={(a, b) => String(a.id) === String(b.id)}
+            noOptionsText={keyword === '' ? 'キーワードを入力してください' : loading ? '検索中…' : '該当なし'}
+            renderOption={(props, option) => {
+                const { key: optKey, ...optionProps } = props;
+                const sec = formatMemberSecondaryLine(option);
+                return (
+                    <Box key={optKey ?? option.id} component="li" {...optionProps}>
+                        <Box sx={{ py: 0.25 }}>
+                            <Typography sx={{ fontSize: 13, fontWeight: 600 }}>
+                                {formatMemberWithChapterPrimary(option)}
+                            </Typography>
+                            {sec ? (
+                                <Typography sx={{ fontSize: 10, color: 'text.secondary' }}>{sec}</Typography>
+                            ) : null}
+                        </Box>
+                    </Box>
+                );
+            }}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    label="登録済みの相手を検索"
+                    placeholder="氏名・チャプター名・カテゴリ（例: DIANA、税理士）"
+                />
+            )}
+        />
+    );
+}
 
 /**
  * 他チャプター: リージョン → チャプター → 相手名を設定し API で target_member_id を解決（SPEC-021）。
@@ -298,6 +400,12 @@ function OtherChapterTargetFields({ ownerMemberId, ownerContext, disabled }) {
         setResolveError('');
     };
 
+    /** 検索で選んだ登録済み相手を確定。targetId の effect が所属・氏名・サマリを復元する。 */
+    const selectRegisteredTarget = (member) => {
+        setResolveError('');
+        setValue('target_member_id', member.id, { shouldValidate: true, shouldDirty: true });
+    };
+
     const showManualWorkspaceField = regionManual || workspaceManual;
     const targetNameFilled = String(targetName || '').trim() !== '';
 
@@ -338,8 +446,28 @@ function OtherChapterTargetFields({ ownerMemberId, ownerContext, disabled }) {
                 bgcolor: 'action.hover',
             }}
         >
+            <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.75 }}>
+                    登録済みの相手を検索
+                </Typography>
+                <RegisteredTargetSearch
+                    excludeWorkspaceId={ownerContext?.workspace_id ?? null}
+                    disabled={disabled || !!resolvedSummary}
+                    onSelect={selectRegisteredTarget}
+                />
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                    過去に 1 to 1 を記録した相手は、氏名・チャプター名・カテゴリのいずれでも検索できます。
+                </Typography>
+            </Box>
+
+            <Divider sx={{ mb: 2 }}>
+                <Typography variant="caption" color="text.secondary">
+                    見つからない場合は新規に登録
+                </Typography>
+            </Divider>
+
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-                他チャプターの相手は、所属を選んでお名前を入力するだけで登録できます。順番に進めてください。
+                所属を選んでお名前を入力するだけで登録できます。順番に進めてください。
             </Typography>
 
             <Box sx={{ mb: 2 }}>

@@ -30,6 +30,12 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
             'region_id' => ['nullable', 'integer', 'exists:regions,id'],
             'q' => ['nullable', 'string', 'max:255'],
+            /** 1to1 相手検索: q をチャプター名（workspaces.name）・カテゴリ（group_name / name）にも拡張（SPEC-021 T6）。 */
+            'q_extended' => ['nullable', 'boolean'],
+            /** 1to1 相手検索: 当該 workspace 所属を除外（自チャプター除外）。workspace_id NULL は残す。 */
+            'exclude_workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
+            /** Autocomplete 用の件数上限。 */
+            'limit' => ['nullable', 'integer', 'min:1', 'max:200'],
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'group_name' => ['nullable', 'string', 'max:100'],
             'role_id' => ['nullable', 'integer', 'exists:roles,id'],

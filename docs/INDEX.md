@@ -69,6 +69,9 @@
 | [pdf/260901/定例会参加者リスト2026_09_01.pdf](pdf/260901/定例会参加者リスト2026_09_01.pdf) | DragonFly 定例会参加者リスト（2026-09-01・第220回）。 |
 | [pdf/260901/religo_220_20260901_full.csv](pdf/260901/religo_220_20260901_full.csv) | 定例会参加者 CSV（第220回・full・`www/database/csv/` 同名参照可）。 |
 | [pdf/260901/788170150_1558415729395888_6801708766292959387_n.png](pdf/260901/788170150_1558415729395888_6801708766292959387_n.png) | 第220回定例会 関連画像。 |
+| [pdf/260901/9_1背景.png](pdf/260901/9_1背景.png) | 2026-09-01 用 背景画像（1672×941）。元ファイル名 `9:1背景.png` は `:` が Windows 非対応のため改名。 |
+| [pdf/260901/TGX_オンライン体験会_参加者アンケート_20260901_v2.docx](pdf/260901/TGX_オンライン体験会_参加者アンケート_20260901_v2.docx) | TGX オンライン体験会 参加者アンケート（2026-09-01・v2・docx）。 |
+| [pdf/NEDragonFly_新基準MTLR半年_8月.pdf](pdf/NEDragonFly_新基準MTLR半年_8月.pdf) | **PALMS 新基準 MTLR（半年・8月）**。5月版: [pdf/260609/[NE]DragonFly_新基準MTLR(半年)_5月.pdf](pdf/260609/[NE]DragonFly_新基準MTLR(半年)_5月.pdf)。 |
 | [pdf/260901/役職サポート.pdf](pdf/260901/役職サポート.pdf) | **役職サポート**（2026-09-01 日付フォルダ）。`pdf/役職サポート.pdf` とは別ファイル。 |
 | [pdf/役職サポート.pdf](pdf/役職サポート.pdf) | **役職サポート**（docs/pdf 直下。260901 側とは別ファイル）。 |
 | [pdf/260714/religo_215_20260714_full_rev2.csv](pdf/260714/religo_215_20260714_full_rev2.csv) | 定例会参加者 CSV（第215回・full・`www/database/csv/` 同名参照可）。 |
@@ -425,8 +428,8 @@ BNI アカデミー資料・受講用メモ（KeySkills 等）。教材 PDF と�
 | [FIT_AND_GAP_MEMBER_EMAIL_REGISTRATION.md](SSOT/FIT_AND_GAP_MEMBER_EMAIL_REGISTRATION.md) | **メンバー email 登録機能の Fit&Gap**。UI（`MemberEdit`）/DataProvider（PUT members）/API（`DragonFlyMemberController::update`・workspace 内 unique）/テスト（`DragonFlyMemberEmailTest`）の全層を検証。**実装済み（Fit）**、Gap は一覧ドロワーからの直接編集導線のみ（軽微）。2026-06-27。 |
 | [ONETOONE_MULTIUSER_MINUTES_REQUIREMENTS.md](SSOT/ONETOONE_MULTIUSER_MINUTES_REQUIREMENTS.md) | **SPEC-020** — 1to1 **実施後記録のマルチユーザー化**。要約コピペ（MVP）・Zoom API 取得（拡張）・**AI 校正（BYO key 設定者のみ）**・DB プライベート保存。「誰といつ 1to1」は本人のみ。定例会議事録は管理者運用のまま。**§11** に Religo 権限構造 As-Is（`religo_role` 適用範囲・未認証 fallback・Default user risk）、メンバー展開ブロッカー、優先順位（P0-A/B/C・順位1〜15）、フェーズ分割案、他チャプター・東京NE展開条件を記載。**draft**／記録: 2026-06-27 要件整理。 |
 | [FIT_AND_GAP_ONETOONE_MULTIUSER_MINUTES.md](SSOT/FIT_AND_GAP_ONETOONE_MULTIUSER_MINUTES.md) | **SPEC-020** 実装比較。`one_to_ones`・Zoom/AI 基盤は Fit。認可境界・実施後記録 UX・`raw_summary`・`religo_role` 実効範囲が Gap。**§2.2.1 / §6** に権限構造・DragonFly メンバー展開時の横断問題、**§4** に優先順位（P0-A/B/C・順位1〜15）とフェーズ別実装計画案を整理。 |
-| [REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1_REQUIREMENTS.md](SSOT/REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1_REQUIREMENTS.md) | **SPEC-021** — リージョン・チャプターマスタとクロスチャプター 1to1 相手選択。全国は事前登録せず **東京 NE を第一シード**、NE以外は正しいリージョンを確認して登録。EduTech（東京NE・立ち上げ中）、大人なじみ（東京南）、クリエーションズ（千葉セントラル）、インフィニティ（静岡セントラル）を反映。 |
-| [FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md](SSOT/FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md) | **SPEC-021** 実装比較。Phase 272 後は東京NE 25（EduTech含む）+ 既存121由来のNE外3チャプターを正規化。田辺光さんは BNI会員外として workspace/region 未設定。 |
+| [REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1_REQUIREMENTS.md](SSOT/REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1_REQUIREMENTS.md) | **SPEC-021** — リージョン・チャプターマスタとクロスチャプター 1to1 相手選択。全国は事前登録せず **東京 NE を第一シード**、NE以外は正しいリージョンを確認して登録。EduTech（東京NE・立ち上げ中）、大人なじみ（東京南）、クリエーションズ（千葉セントラル）、インフィニティ（静岡セントラル）を反映。**T6（Phase 302）:** 他チャプター登録済み相手を氏名・チャプター名・カテゴリで検索。 |
+| [FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md](SSOT/FIT_AND_GAP_REGION_CHAPTER_MASTER_CROSS_CHAPTER_1TO1.md) | **SPEC-021** 実装比較。Phase 272 後は東京NE 25（EduTech含む）+ 既存121由来のNE外3チャプターを正規化。田辺光さんは BNI会員外として workspace/region 未設定。G13（登録済み相手の検索）は Phase 302 で Fit。 |
 | [MEETING_DOMAIN_IA.md](SSOT/MEETING_DOMAIN_IA.md) | 集会ドメイン IA（種別横断）。Meeting=集約ルート、Connections=BO 編集面（chapter_* のみ）、Meetings=管理ハブ（種別フィルタ・議事録モーダル）。SPEC-014 / SPEC-018 関連。 |
 | [ZOOM_IMPORT_MEMBER_RESOLUTION_FIT_AND_GAP.md](SSOT/ZOOM_IMPORT_MEMBER_RESOLUTION_FIT_AND_GAP.md) | **Zoom 取り込み — 未登録相手の新規メンバー作成 & 過去履歴 Fit&Gap**。実機調査（過去は取得済み・未登録相手で `held`）、新規作成フロー案A/B/C・相手名推定改善・Open Questions。 |
 | [ZOOM_IMPORT_DEDUP_REQUIREMENTS.md](SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md) | **Zoom 取り込みと既存DBの重複解消 要件**。実機調査（セッション重複8組・メンバー重複〔御手洗等〕）、原因（zoom_* 一致のみ・氏名完全一致のみ）、再発防止（owner+target+同日 検知）＋クリーンアップ（member統合・重複1to1整理）・Open Questions。 |
@@ -447,7 +450,7 @@ BNI アカデミー資料・受講用メモ（KeySkills 等）。教材 PDF と�
 | [ONETOONES_EDIT_UI_FIT_AND_GAP.md](SSOT/ONETOONES_EDIT_UI_FIT_AND_GAP.md) | 1 to 1 **Edit** 画面を Create と比較した Fit/Gap。**ONETOONES_EDIT_UX_P2** で主要 Gap を解消（§8）。 |
 | [ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md](SSOT/ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md) | 1 to 1 **一覧 Quick Create Dialog** の Fit/Gap。**ONETOONES_QUICK_CREATE_UX_P3** で Create と同一フォーム・同一 payload に統一。 |
 | [ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md](SSOT/ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md) | 1 to 1 作成時の **`target_member_id` プリフィル**（URL クエリ）。**ONETOONES_DASHBOARD_TARGET_PREFILL_P4**（Create 検証・Tasks・Quick Create）。 |
-| [ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md) | **SPEC-006** — チャプター外 1 to 1 の **解釈A（記録コンテキスト）**・**国/リージョン/チャプター階層**・API/UI。**記録:** [PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md](process/phases/PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md)。 |
+| [ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md) | **SPEC-006** — チャプター外 1 to 1 の **解釈A（記録コンテキスト）**・**国/リージョン/チャプター階層**・API/UI。**R2 一覧フィルタは Phase 303 で実装**（`cross_chapter` 等・常時表示フィルターバー）。**記録:** [PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md](process/phases/PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md)。 |
 | [DASHBOARD_REQUIREMENTS.md](SSOT/DASHBOARD_REQUIREMENTS.md) | ダッシュボード画面をモック（religo-admin-mock2.html）に合わせるための要件。構成・ブロック・データ・チェックリスト。 |
 | [DASHBOARD_DATA_SSOT.md](SSOT/DASHBOARD_DATA_SSOT.md) | Dashboard のデータ定義 SSOT。stats/tasks/activity の定義・owner_member_id（**SPA はクエリで owner を付与**）・**未接触 peer は owner と同一 workspace・guest/visitor 除外**・件数上限・実装紐づけ・**§6 実数検証**。今月1to1実施数は `COALESCE(started_at, scheduled_at, updated_at)`；`last_contact` の 1to1 は `created_at` フォールバック。 |
 | [DASHBOARD_TASK_SOURCE_ANALYSIS.md](SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md) | 「今日やること（Tasks）」の取得元トレース（UI・API・DashboardService・DB・workspace 未適用・SSOT ギャップ）。 |
@@ -815,6 +818,15 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_301_participants_pdf_csv_cursor_skill_PLAN.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_PLAN.md) | Phase 301: 参加者PDF→CSV→ローカル取込（Cursorスキル）PLAN。 |
 | [phases/PHASE_301_participants_pdf_csv_cursor_skill_WORKLOG.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_WORKLOG.md) | Phase 301: 同 WORKLOG。 |
 | [phases/PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md](process/phases/PHASE_301_participants_pdf_csv_cursor_skill_REPORT.md) | Phase 301: 同 REPORT。 |
+| [phases/PHASE_302_one_to_one_target_search_PLAN.md](process/phases/PHASE_302_one_to_one_target_search_PLAN.md) | Phase 302: 1to1 相手検索（他チャプター登録済み相手をチャプター・氏名・カテゴリで検索・members API `q_extended`/`exclude_workspace_id`/`limit`）PLAN。SPEC-021 T6。 |
+| [phases/PHASE_302_one_to_one_target_search_WORKLOG.md](process/phases/PHASE_302_one_to_one_target_search_WORKLOG.md) | Phase 302: 同 WORKLOG（既存 `q` を変えず opt-in 拡張にした判断など）。 |
+| [phases/PHASE_302_one_to_one_target_search_REPORT.md](process/phases/PHASE_302_one_to_one_target_search_REPORT.md) | Phase 302: 同 REPORT。 |
+| [phases/PHASE_303_one_to_one_list_filters_PLAN.md](process/phases/PHASE_303_one_to_one_list_filters_PLAN.md) | Phase 303: 1to1 一覧フィルターバー（常時表示・相手チャプター／カテゴリ／自他チャプター・未描画バグ解消・API `cross_chapter` 等）PLAN。SPEC-006 R2。 |
+| [phases/PHASE_303_one_to_one_list_filters_WORKLOG.md](process/phases/PHASE_303_one_to_one_list_filters_WORKLOG.md) | Phase 303: 同 WORKLOG（未描画原因の切り分け・target 側パラメータ命名・cross_chapter 定義）。 |
+| [phases/PHASE_303_one_to_one_list_filters_REPORT.md](process/phases/PHASE_303_one_to_one_list_filters_REPORT.md) | Phase 303: 同 REPORT。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md) | Phase 304: 1to1 一覧フィルターの相手チャプター・カテゴリをワード検索 Autocomplete に（大カテゴリ／カテゴリ 1 欄統合）PLAN。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md) | Phase 304: 同 WORKLOG（2 欄統合の判断・「大カテゴリすべて」の出し方・MUI Autocomplete 入力消失の回避）。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md) | Phase 304: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |

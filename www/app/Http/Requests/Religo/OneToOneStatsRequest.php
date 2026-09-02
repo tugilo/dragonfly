@@ -30,6 +30,11 @@ class OneToOneStatsRequest extends FormRequest
             'q' => ['nullable', 'string', 'max:200'],
             /** 一覧と同一（ONETOONES-DELETE-POLICY-P1） */
             'exclude_canceled' => ['nullable', 'boolean'],
+            /** 一覧と同一（Phase 303・相手側絞り込み） */
+            'target_workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
+            'target_group_name' => ['nullable', 'string', 'max:100'],
+            'target_category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'cross_chapter' => ['nullable', 'boolean'],
         ];
     }
 }

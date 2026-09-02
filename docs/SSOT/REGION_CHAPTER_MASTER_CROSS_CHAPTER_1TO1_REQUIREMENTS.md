@@ -128,10 +128,11 @@ Religo は DragonFly チャプター内の PoC から、**東京 NE リージョ
 | ID | 要件 | 優先 | 備考 |
 |----|------|------|------|
 | T1 | デフォルト: **自チャプター**のメンバーのみ候補 | P1 | owner の `workspace_id` でフィルタ |
-| T2 | **他チャプター**: リージョン選択（手動入力可）→ チャプター選択（手動登録可）→ **相手の名前**入力 | P1 | 他チャプター名簿は一覧表示しない |
+| T2 | **他チャプター**: リージョン選択（手動入力可）→ チャプター選択（手動登録可）→ **相手の名前**入力 | P1 | 他チャプター名簿は**一覧表示（ブラウズ）しない**。キーワード検索（T6）で見つからない場合の新規登録フロー |
 | T3 | 自チャプター候補ラベルに **チャプター名**を表示 | P1 | 既存 `MemberWorkspaceAttributes` 活用 |
 | T4 | **手動追加**: `POST /api/dragonfly/cross-chapter-targets/resolve` で region/workspace/member を解決 | P1 | Phase 272 追記で実装 |
 | T5 | 作成後サマリに **所属チャプター / リージョン**表示 | P1 | 実装済み（`TargetMemberSummaryById`）— 維持 |
+| T6 | **他チャプター 登録済み相手の検索**: 氏名・かな・No・**チャプター名**・**カテゴリ**（大/実）でサーバー検索し選択で確定 | P1 | **Phase 302**。キーワード未入力時は候補を出さない（T2 の「名簿を一覧しない」を維持）。自チャプター（owner の `workspace_id`）は除外。上限 30 件・debounce 250ms |
 
 ### 6.3 API
 
@@ -141,6 +142,7 @@ Religo は DragonFly チャプター内の PoC から、**東京 NE リージョ
 | A2 | `GET /api/regions` 一覧（country 含む） | P2 | 現状 route なし |
 | A3 | `GET /api/dragonfly/members?workspace_id=` または `region_id=` | P1 | 1to1 相手候補用。owner スコープと併用 |
 | A4 | クロスチャプター識別フィールド維持 | — | SPEC-006 実装済み（`is_cross_chapter` 等） |
+| A5 | `GET /api/dragonfly/members?q=&q_extended=1&exclude_workspace_id=&limit=` | P1 | **Phase 302**（T6 用）。`q_extended=1` で `q` を `workspaces.name` / `categories.group_name` / `categories.name` にも拡張（opt-in・既存 `q` の挙動は不変）。`exclude_workspace_id` は当該 workspace を除外し `workspace_id` NULL は残す。`limit` は 1–200 |
 
 ### 6.4 権限（将来）
 
@@ -180,3 +182,4 @@ Religo は DragonFly チャプター内の PoC から、**東京 NE リージョ
 | 日付 | 内容 |
 |------|------|
 | 2026-06-27 17:11 JST | 初版。リージョン・チャプターマスタ方針、東京 NE 25 シード、1to1 相手選択、フェーズ案を記載。 |
+| 2026-09-02 09:45 JST | Phase 302: T6（他チャプター登録済み相手の検索: 氏名・チャプター名・カテゴリ）と A5（members API `q_extended` / `exclude_workspace_id` / `limit`）を追加。T2 備考を「一覧表示（ブラウズ）しない」に補正。 |

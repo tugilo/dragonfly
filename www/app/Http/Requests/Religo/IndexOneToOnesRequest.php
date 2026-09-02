@@ -28,6 +28,12 @@ class IndexOneToOnesRequest extends FormRequest
             'q' => ['nullable', 'string', 'max:200'],
             /** 一覧既定: `status` 未指定時に `canceled` を除く（ONETOONES-DELETE-POLICY-P1） */
             'exclude_canceled' => ['nullable', 'boolean'],
+            /** 相手（target）側の絞り込み（Phase 303・SPEC-006 R2） */
+            'target_workspace_id' => ['nullable', 'integer', 'exists:workspaces,id'],
+            'target_group_name' => ['nullable', 'string', 'max:100'],
+            'target_category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            /** 1: 他チャプター相手のみ（is_cross_chapter と同定義）／0: 自チャプター相手のみ */
+            'cross_chapter' => ['nullable', 'boolean'],
         ];
     }
 }

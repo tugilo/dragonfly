@@ -1,17 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
     List,
     Datagrid,
     FunctionField,
-    TextInput,
-    SelectInput,
-    BooleanInput,
-    Filter,
     TopToolbar,
     Button,
     useListContext,
     useRefresh,
     useNotify,
+    useGetList,
     Form,
     SaveButton,
 } from 'react-admin';
@@ -38,6 +35,14 @@ import {
     Radio,
     TextField,
     Alert,
+    Autocomplete,
+    Checkbox,
+    InputLabel,
+    MenuItem,
+    Select,
+    ToggleButton,
+    ToggleButtonGroup,
+    Button as MuiButton,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -49,7 +54,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { OneToOneFormFields } from './OneToOneFormFields';
 import { buildOneToOnePayload } from '../utils/oneToOnesTransform';
-import { formatMemberWithChapterPrimary } from '../utils/memberDisplay';
 import { useReligoOwner } from '../ReligoOwnerContext';
 import { religoFetch } from '../religoApiFetch';
 import { cancelReasonLabel, ONE_TO_ONE_CANCEL_REASONS } from '../utils/oneToOneCancel';
@@ -174,6 +178,16 @@ function buildOneToOneStatsQuery(filterValues) {
     const qText = filterValues?.q != null ? String(filterValues.q).trim() : '';
     if (qText !== '') {
         q.set('q', qText);
+    }
+    for (const key of ['target_workspace_id', 'target_group_name', 'target_category_id']) {
+        const v = filterValues?.[key];
+        if (v != null && String(v).trim() !== '') {
+            q.set(key, String(v).trim());
+        }
+    }
+    const cross = filterValues?.cross_chapter;
+    if (cross === '1' || cross === '0' || cross === 1 || cross === 0) {
+        q.set('cross_chapter', String(cross));
     }
     return q.toString();
 }
@@ -373,66 +387,334 @@ function EffectiveDateField({ record }) {
     }
 }
 
-function TargetMemberFilterSelect() {
-    const { ownerMemberId } = useReligoOwner();
-    const raw = ownerMemberId;
-    const ownerId =
-        raw != null && String(raw).trim() !== '' ? Number(String(raw).trim()) : null;
-    const [choices, setChoices] = useState([{ id: '', name: '相手: すべて' }]);
+const ONETOONES_FILTER_DEFAULTS = { exclude_canceled: true };
+
+const CROSS_CHAPTER_CHOICES = [
+    { id: '', label: 'すべて' },
+    { id: '0', label: '自チャプター' },
+    { id: '1', label: '他チャプター' },
+];
+
+/**
+ * 一覧検索。IME 変換中は確定せず、300ms デバウンス（Members の MemberSearchField と同方式）。
+ */
+function OneToOneSearchField({ value, onCommit }) {
+    const [text, setText] = useState(value ?? '');
+    const composingRef = useRef(false);
+    const debounceRef = useRef(null);
+    const lastCommittedRef = useRef(value ?? '');
 
     useEffect(() => {
-        let cancelled = false;
-        if (ownerId == null || Number.isNaN(ownerId)) {
-            setChoices([{ id: '', name: '相手: すべて' }]);
-            return () => {
-                cancelled = true;
-            };
+        const ext = value ?? '';
+        if (ext !== lastCommittedRef.current) {
+            lastCommittedRef.current = ext;
+            setText(ext);
         }
-        const id = String(ownerId);
-        religoFetch(`/api/dragonfly/members?owner_member_id=${encodeURIComponent(id)}`, {
-            headers: { Accept: 'application/json' },
-        })
-            .then((r) => r.json())
-            .then((arr) => {
-                if (cancelled || !Array.isArray(arr)) return;
-                setChoices([
-                    { id: '', name: '相手: すべて' },
-                    ...arr.map((m) => ({
-                        id: m.id,
-                        name: formatMemberWithChapterPrimary(m) || `#${m.id}`,
-                    })),
-                ]);
-            })
-            .catch(() => {
-                if (!cancelled) setChoices([{ id: '', name: '相手: すべて' }]);
-            });
-        return () => {
-            cancelled = true;
-        };
-    }, [ownerId]);
+    }, [value]);
+
+    const scheduleCommit = useCallback(
+        (v) => {
+            if (debounceRef.current) clearTimeout(debounceRef.current);
+            debounceRef.current = setTimeout(() => {
+                lastCommittedRef.current = v ?? '';
+                onCommit(v || undefined);
+            }, 300);
+        },
+        [onCommit]
+    );
+
+    useEffect(
+        () => () => {
+            if (debounceRef.current) clearTimeout(debounceRef.current);
+        },
+        []
+    );
 
     return (
-        <SelectInput
-            source="target_member_id"
-            label="相手"
-            choices={choices}
-            emptyText="すべて"
-            format={(v) => (v == null || v === '' ? '' : v)}
-            parse={(v) => (v === '' || v == null ? undefined : v)}
+        <TextField
+            size="small"
+            label="検索"
+            placeholder="相手名・かな・メモ"
+            value={text}
+            onChange={(e) => {
+                const v = e.target.value;
+                setText(v);
+                if (!composingRef.current) scheduleCommit(v);
+            }}
+            onCompositionStart={() => {
+                composingRef.current = true;
+            }}
+            onCompositionEnd={(e) => {
+                composingRef.current = false;
+                scheduleCommit(e.target.value);
+            }}
+            sx={{ minWidth: 200 }}
         />
     );
 }
 
-export function OneToOnesListFilters() {
+function isSetFilterValue(v) {
+    return v != null && String(v).trim() !== '';
+}
+
+// Autocomplete に渡す関数は毎レンダーで identity が変わると MUI 内部の resetInputValue が再実行され
+// 入力途中の文字が消えることがあるため、モジュールレベルで固定する。
+const autocompleteNameLabel = (o) => o?.name ?? '';
+const autocompleteOptionLabel = (o) => o?.label ?? '';
+const autocompleteEqualById = (o, v) => o?.id === v?.id;
+const autocompleteGroupBy = (o) => o.group;
+const categoryFilterOptions = (opts, { inputValue }) => {
+    const q = inputValue.trim().toLowerCase();
+    if (q === '') return opts;
+    return opts.filter((o) => o.search.toLowerCase().includes(q));
+};
+const renderCategoryOption = (props, o) => {
+    const { key: _k, ...liProps } = props;
     return (
-        <Filter>
-            <BooleanInput source="exclude_canceled" label="キャンセルを一覧から除く" alwaysOn />
-            <TextInput source="q" label="検索（相手名・メモ）" resettable />
-            <TargetMemberFilterSelect />
-            <SelectInput source="status" choices={STATUS_CHOICES} label="状態" emptyText="すべて" />
-            <TextInput source="from" label="日付 from（YYYY-MM-DD）" />
-            <TextInput source="to" label="日付 to（YYYY-MM-DD）" />
-        </Filter>
+        <li {...liProps} key={o.id} style={{ fontWeight: o.kind === 'group' ? 700 : 400 }}>
+            {o.kind === 'group' ? o.label : o.name}
+        </li>
+    );
+};
+const renderWorkspaceInput = (params) => <TextField {...params} label="相手チャプター" placeholder="チャプター名で検索" />;
+const renderCategoryInput = (params) => <TextField {...params} label="カテゴリ" placeholder="大カテゴリ・カテゴリ名で検索" />;
+
+/**
+ * 1to1 一覧の常時表示フィルターバー（Phase 303・SPEC-006 R2）。
+ * react-admin の filterValues を更新し、一覧・統計カード・件数が同じ filter で連動する。
+ */
+function OneToOnesFilterBar() {
+    const { filterValues, setFilters } = useListContext();
+    const { data: categories = [] } = useGetList('categories', {
+        pagination: { page: 1, perPage: 500 },
+        sort: { field: 'id', order: 'ASC' },
+    });
+    const [workspaces, setWorkspaces] = useState([]);
+
+    useEffect(() => {
+        let cancelled = false;
+        fetchJson('/api/workspaces')
+            .then((arr) => {
+                if (!cancelled && Array.isArray(arr)) setWorkspaces(arr);
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    const fv = filterValues || {};
+    const categoriesArray = Array.isArray(categories) ? categories : [];
+    /**
+     * カテゴリはワード検索用に 1 つの Autocomplete にまとめる。
+     * 大カテゴリ単位の選択肢（kind: 'group' → target_group_name）と個別カテゴリ（kind: 'category' → target_category_id）を
+     * 大カテゴリごとにグループ表示し、どちらのワードでも絞り込める。
+     */
+    const categoryOptions = useMemo(() => {
+        const groups = new Map();
+        for (const c of categoriesArray) {
+            const g = c?.group_name || 'その他';
+            if (!groups.has(g)) groups.set(g, []);
+            groups.get(g).push(c);
+        }
+        const byName = (a, b) => String(a?.name ?? '').localeCompare(String(b?.name ?? ''), 'ja');
+        const toOption = (c, g) => {
+            const name = c?.name ?? String(c?.id ?? '');
+            const realGroup = c?.group_name ?? '';
+            const label = realGroup && realGroup !== name ? `${realGroup} / ${name}` : name;
+            return { kind: 'category', id: String(c.id), group: g, name, label, search: `${realGroup} ${name}` };
+        };
+        // 複数カテゴリを持つ大カテゴリだけ「大カテゴリすべて」を出し、1 件だけの大カテゴリ（多くは名称が同一）は「その他」にまとめる
+        const multi = [...groups.entries()].filter(([, list]) => list.length >= 2).sort(([a], [b]) => a.localeCompare(b, 'ja'));
+        const singles = [...groups.entries()].filter(([, list]) => list.length < 2).flatMap(([, list]) => list).sort(byName);
+        const out = [];
+        for (const [g, list] of multi) {
+            out.push({ kind: 'group', id: `g:${g}`, group: g, label: `${g}（大カテゴリすべて）`, search: g });
+            for (const c of list.sort(byName)) out.push(toOption(c, g));
+        }
+        for (const c of singles) out.push(toOption(c, 'その他'));
+        return out;
+    }, [categoriesArray]);
+    const workspaceOptions = useMemo(
+        () =>
+            [...workspaces]
+                .sort((a, b) => String(a?.name ?? '').localeCompare(String(b?.name ?? ''), 'ja'))
+                .map((w) => ({ id: String(w.id), name: w.name ?? `#${w.id}` })),
+        [workspaces]
+    );
+    const selectedWorkspace = isSetFilterValue(fv.target_workspace_id)
+        ? (workspaceOptions.find((w) => w.id === String(fv.target_workspace_id)) ?? null)
+        : null;
+    const selectedCategory = isSetFilterValue(fv.target_category_id)
+        ? (categoryOptions.find((o) => o.kind === 'category' && o.id === String(fv.target_category_id)) ?? null)
+        : isSetFilterValue(fv.target_group_name)
+            ? (categoryOptions.find((o) => o.kind === 'group' && o.group === fv.target_group_name) ?? null)
+            : null;
+
+    const handleFilter = (key, value) => {
+        const next = { ...fv, [key]: value };
+        if (value === undefined || value === null || value === '') delete next[key];
+        setFilters(next);
+    };
+    const handleCategoryChange = (opt) => {
+        const next = { ...fv };
+        delete next.target_group_name;
+        delete next.target_category_id;
+        if (opt?.kind === 'group') next.target_group_name = opt.group;
+        if (opt?.kind === 'category') next.target_category_id = opt.id;
+        setFilters(next);
+    };
+    const handleClear = () => setFilters({ ...ONETOONES_FILTER_DEFAULTS });
+
+    const crossValue = fv.cross_chapter === '1' || fv.cross_chapter === 1 ? '1' : fv.cross_chapter === '0' || fv.cross_chapter === 0 ? '0' : '';
+    const excludeCanceled = fv.exclude_canceled === undefined ? true : Boolean(fv.exclude_canceled);
+
+    const activeChips = [];
+    if (isSetFilterValue(fv.q)) activeChips.push({ key: 'q', label: `検索: ${String(fv.q).trim()}` });
+    if (crossValue !== '') {
+        activeChips.push({ key: 'cross_chapter', label: CROSS_CHAPTER_CHOICES.find((c) => c.id === crossValue)?.label ?? '' });
+    }
+    if (isSetFilterValue(fv.target_workspace_id)) {
+        const name = workspaceOptions.find((w) => w.id === String(fv.target_workspace_id))?.name ?? String(fv.target_workspace_id);
+        activeChips.push({ key: 'target_workspace_id', label: `チャプター: ${name}` });
+    }
+    if (isSetFilterValue(fv.target_group_name)) activeChips.push({ key: 'target_group_name', label: `大カテゴリ: ${fv.target_group_name}` });
+    if (isSetFilterValue(fv.target_category_id)) {
+        const name =
+            categoryOptions.find((o) => o.kind === 'category' && o.id === String(fv.target_category_id))?.label
+            ?? String(fv.target_category_id);
+        activeChips.push({ key: 'target_category_id', label: `カテゴリ: ${name}` });
+    }
+    if (isSetFilterValue(fv.status)) {
+        activeChips.push({ key: 'status', label: `状態: ${STATUS_CHOICES.find((s) => s.id === fv.status)?.name ?? fv.status}` });
+    }
+    if (isSetFilterValue(fv.from) || isSetFilterValue(fv.to)) {
+        activeChips.push({ key: '__period', label: `期間: ${fv.from ?? ''} 〜 ${fv.to ?? ''}` });
+    }
+    if (isSetFilterValue(fv.target_member_id)) activeChips.push({ key: 'target_member_id', label: `相手ID: ${fv.target_member_id}` });
+    if (!excludeCanceled) activeChips.push({ key: 'exclude_canceled', label: 'キャンセルを含む' });
+
+    const removeChip = (key) => {
+        if (key === '__period') {
+            const next = { ...fv };
+            delete next.from;
+            delete next.to;
+            setFilters(next);
+            return;
+        }
+        if (key === 'exclude_canceled') {
+            handleFilter('exclude_canceled', true);
+            return;
+        }
+        handleFilter(key, undefined);
+    };
+
+    return (
+        <Box sx={{ px: 2, pt: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
+                <OneToOneSearchField value={fv.q ?? ''} onCommit={(v) => handleFilter('q', v)} />
+                <ToggleButtonGroup
+                    size="small"
+                    exclusive
+                    value={crossValue}
+                    onChange={(_, v) => {
+                        if (v == null) return;
+                        handleFilter('cross_chapter', v === '' ? undefined : v);
+                    }}
+                >
+                    {CROSS_CHAPTER_CHOICES.map((c) => (
+                        <ToggleButton key={c.id || 'all'} value={c.id} sx={{ px: 1.5, whiteSpace: 'nowrap' }}>
+                            {c.label}
+                        </ToggleButton>
+                    ))}
+                </ToggleButtonGroup>
+                <Autocomplete
+                    size="small"
+                    options={workspaceOptions}
+                    value={selectedWorkspace}
+                    getOptionLabel={autocompleteNameLabel}
+                    isOptionEqualToValue={autocompleteEqualById}
+                    onChange={(_, opt) => handleFilter('target_workspace_id', opt?.id)}
+                    noOptionsText="該当するチャプターがありません"
+                    sx={{ minWidth: 200 }}
+                    renderInput={renderWorkspaceInput}
+                />
+                <Autocomplete
+                    size="small"
+                    options={categoryOptions}
+                    value={selectedCategory}
+                    groupBy={autocompleteGroupBy}
+                    getOptionLabel={autocompleteOptionLabel}
+                    isOptionEqualToValue={autocompleteEqualById}
+                    filterOptions={categoryFilterOptions}
+                    onChange={(_, opt) => handleCategoryChange(opt)}
+                    noOptionsText="該当するカテゴリがありません"
+                    sx={{ minWidth: 320 }}
+                    renderOption={renderCategoryOption}
+                    renderInput={renderCategoryInput}
+                />
+            </Box>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
+                <FormControl size="small" sx={{ minWidth: 130 }}>
+                    <InputLabel>状態</InputLabel>
+                    <Select
+                        label="状態"
+                        value={isSetFilterValue(fv.status) ? fv.status : ''}
+                        onChange={(e) => handleFilter('status', e.target.value === '' ? undefined : e.target.value)}
+                    >
+                        <MenuItem value="">すべて</MenuItem>
+                        {STATUS_CHOICES.map((s) => (
+                            <MenuItem key={s.id} value={s.id}>
+                                {s.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <TextField
+                    size="small"
+                    type="date"
+                    label="期間 from"
+                    InputLabelProps={{ shrink: true }}
+                    value={fv.from ?? ''}
+                    onChange={(e) => handleFilter('from', e.target.value || undefined)}
+                    sx={{ width: 170 }}
+                />
+                <TextField
+                    size="small"
+                    type="date"
+                    label="期間 to"
+                    InputLabelProps={{ shrink: true }}
+                    value={fv.to ?? ''}
+                    onChange={(e) => handleFilter('to', e.target.value || undefined)}
+                    sx={{ width: 170 }}
+                />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            size="small"
+                            checked={excludeCanceled}
+                            onChange={(e) => handleFilter('exclude_canceled', e.target.checked)}
+                        />
+                    }
+                    label={<Typography variant="body2">キャンセルを除く</Typography>}
+                />
+                {activeChips.length > 0 ? (
+                    <MuiButton size="small" variant="text" onClick={handleClear}>
+                        フィルターをクリア
+                    </MuiButton>
+                ) : null}
+            </Box>
+            {activeChips.length > 0 ? (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, alignItems: 'center' }}>
+                    <Typography variant="caption" color="text.secondary">
+                        適用中:
+                    </Typography>
+                    {activeChips.map((c) => (
+                        <Chip key={c.key} size="small" label={c.label} onDelete={() => removeChip(c.key)} />
+                    ))}
+                </Box>
+            ) : null}
+        </Box>
     );
 }
 
@@ -833,6 +1115,7 @@ function OneToOnesListBody({ onMemoOpen, onCancelOpen, onReferralOpen }) {
             <Typography variant="caption" color="text.secondary" sx={{ px: 2, pt: 0.5, pb: 0, display: 'block', maxWidth: 860 }}>
                 「相手」列は氏名の下にカテゴリー・所属チャプターを表示します。他チャプター BNI メンバーは「他チャプター」、ビジター・ゲストなど BNI 会員以外は「BNI会員以外」Chip で区別します。メモ列の「メモあり」を押すと、相手との共通ファイル（1to1 シリーズ全文）を Markdown モーダルで表示します。
             </Typography>
+            <OneToOnesFilterBar />
             <OneToOnesStatsCards />
             {!isLoading && (
                 <Typography variant="body2" color="text.secondary" sx={{ px: 2, pt: 0.5, pb: 0 }}>
@@ -1044,8 +1327,6 @@ function OneToOnesListInner({
     );
 }
 
-const ONETOONES_FILTER_DEFAULTS = { exclude_canceled: true };
-
 export function OneToOnesList() {
     const { loading: ownerLoading } = useReligoOwner();
     const [memoRecord, setMemoRecord] = useState(null);
@@ -1072,7 +1353,6 @@ export function OneToOnesList() {
 
     return (
         <List
-            filters={[<OneToOnesListFilters key="filters" />]}
             title="1 to 1"
             actions={<OneToOnesListActions onQuickCreate={() => setCreateOpen(true)} />}
             perPage={25}
