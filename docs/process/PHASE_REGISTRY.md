@@ -300,6 +300,7 @@
 | 299 | 1toMany 議事録 DB 取り込み（chapter_1tomany 型・2026-08-06 次廣・prod push） | implement | completed | main（release 6ead508／develop d0bf04c） | 2026-08-07 |
 | 300 | Cheer Print 負荷試験プログラム作成（k6・ローカルDocker・静的／WP分離・自動報告書・08-08 22–24 用） | implement | completed | feature/phase300-cheer-print-loadtest-program | 2026-08-07 |
 | 301 | 参加者PDF→CSV→ローカル取込（Cursorスキル・Grok/Composer・CLI取込のみ） | docs | completed | develop（merge `f0d4d54`／feature/docs-20260820-121-phase301-sync） | 2026-08-17 |
+| 302 | 1to1 相手検索（他チャプター登録済み相手をチャプター・氏名・カテゴリで検索・members API q_extended/exclude_workspace_id/limit） | implement | completed | feature/phase302-one-to-one-target-search | 2026-09-02 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
