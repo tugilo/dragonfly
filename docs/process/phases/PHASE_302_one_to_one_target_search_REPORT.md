@@ -50,7 +50,10 @@ www/tests/Feature/Api/DragonFlyMembersExtendedSearchTest.php
 
 ## Merge Evidence
 
-merge commit id: （merge 後に記載）  
+merge commit id: 44a78d8b2703827b753aa943ccc36f4add129323  
+feature commit id: b80a486  
+merged at: 2026-09-02 09:58 JST  
+test on develop after merge: 605 passed (2218 assertions)  
 source branch: feature/phase302-one-to-one-target-search  
 target branch: develop  
 phase id: 302  
