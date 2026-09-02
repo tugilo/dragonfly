@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-02 09:50 JST | **Phase 302 — 1to1 相手検索（他チャプター）:** 「他のチャプター」モード先頭に **登録済みの相手を検索**（氏名・かな・チャプター名・カテゴリ／サーバー検索・30件・debounce 250ms）を追加。見つからない場合のみ従来の①リージョン→②チャプター→③氏名。`GET /api/dragonfly/members` に `q_extended` / `exclude_workspace_id` / `limit` を opt-in 追加（既存 `q` は不変）。Feature テスト 9 件追加、605 tests passed、React build 成功。SPEC-021 T6/A5・Fit&Gap G13 追記。[PLAN](process/phases/PHASE_302_one_to_one_target_search_PLAN.md) |
 | 2026-09-01 19:58 JST | **未コミット分を develop へ取り込み:** 第220回 PDF/CSV、シェアストーリー原稿・投影資料、堀切・小熊121、11期WM（PC・こなっち）、本番同期 SQL。INDEX に投影PDF・役職サポート・関連画像を追記。 |
 | 2026-09-01 13:43 JST | **第220回定例会参加者を本番反映:** [`religo_220_20260901_full.csv`](pdf/260901/religo_220_20260901_full.csv) をローカル取込（meeting id=39・80名：メンバー57／ビジター19／代理1／ゲスト3）。596 tests passed → `db-export`（2,232,620 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260901_134252.sql`。 |
 | 2026-09-01 08:53 JST | **千帆さん外部RFの真正度確認を整理:** 第220回定例会で次廣→飯田千帆（顧問税理士＝事務所所長）がスポットライト。業種合わせではなく「意見を聞きすぎて決断がブレる人 × 背中を押す千帆さん」。口頭40秒／20秒と議事録用を [`1to1_iida_chiho_sui.md`](meetings/1to1/1to1_iida_chiho_sui.md) に記録。氏名・着地は TODO。 |

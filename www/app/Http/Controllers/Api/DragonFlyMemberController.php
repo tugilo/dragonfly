@@ -40,6 +40,7 @@ class DragonFlyMemberController extends Controller
      * summary_lite には last_contact_at に加え last_bo_contact_at / last_one_to_one_contact_at / last_memo_contact_at（Phase125・派生）を含む。
      * M-3c: q, category_id, group_name, role_id, interested, want_1on1, sort, order で検索・フィルタ・ソート対応。
      * meeting_id: 当該例会の参加者に限定（participants.type が absent の行は除外）。各要素に participant_type / bo_assignable（proxy は false）を付与。SPEC-007。
+     * q_extended=1: q をチャプター名・カテゴリにも拡張。exclude_workspace_id: 自チャプター除外。limit: 件数上限（1to1 他チャプター相手検索・SPEC-021 T6）。
      */
     public function index(IndexDragonFlyMembersRequest $request): JsonResponse
     {
@@ -64,10 +65,27 @@ class DragonFlyMemberController extends Controller
 
         if ($request->filled('q')) {
             $q = '%' . addcslashes($request->input('q'), '%_\\') . '%';
-            $query->where(function ($qb) use ($q) {
+            $extended = $request->boolean('q_extended');
+            $query->where(function ($qb) use ($q, $extended) {
                 $qb->where('name', 'like', $q)
                     ->orWhere('name_kana', 'like', $q)
                     ->orWhere('display_no', 'like', $q);
+                if ($extended) {
+                    $qb->orWhereHas('workspace', function ($w) use ($q) {
+                        $w->where('name', 'like', $q);
+                    })->orWhereHas('category', function ($c) use ($q) {
+                        $c->where('group_name', 'like', $q)
+                            ->orWhere('name', 'like', $q);
+                    });
+                }
+            });
+        }
+
+        if ($request->filled('exclude_workspace_id')) {
+            $excludeWorkspaceId = (int) $request->input('exclude_workspace_id');
+            $query->where(function ($qb) use ($excludeWorkspaceId) {
+                $qb->whereNull('workspace_id')
+                    ->orWhere('workspace_id', '!=', $excludeWorkspaceId);
             });
         }
 
@@ -134,6 +152,10 @@ class DragonFlyMemberController extends Controller
             $query->orderByDisplayNoNumeric($order);
         } else {
             $query->orderBy($sort, $order);
+        }
+
+        if ($request->filled('limit')) {
+            $query->limit((int) $request->input('limit'));
         }
 
         $members = $query->get();
