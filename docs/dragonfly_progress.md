@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-02 10:40 JST | **Phase 304 — 1to1 一覧フィルター: カテゴリ・チャプターをワード検索に:** 相手チャプターと、大カテゴリ／カテゴリを統合した 1 欄を MUI Autocomplete 化。大カテゴリ名・カテゴリ名どちらでも部分一致し、大カテゴリごとにグループ表示、2 件以上の大カテゴリには「（大カテゴリすべて）」→ `target_group_name`、個別選択 → `target_category_id`。Autocomplete コールバックを固定関数化して入力消失を回避。API 変更なし、615 passed、build 成功。[PLAN](process/phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md) |
 | 2026-09-02 10:05 JST | **Phase 303 — 1to1 一覧フィルターバー:** 従来の react-admin `Filter` が**一切描画されていなかった**問題を解消し、Members と同系の**常時表示フィルターバー**へ置換。検索（相手名・かな・メモ）／すべて・自チャプター・他チャプター／相手チャプター／大カテゴリ／カテゴリ／状態／期間／キャンセルを除く。適用中 Chip・個別解除・クリア。`GET /api/one-to-ones` / `stats` に `cross_chapter` / `target_workspace_id` / `target_group_name` / `target_category_id` を追加（index と stats は同一 WHERE）。Feature テスト 10 件追加、615 tests passed、React build 成功。SPEC-006 R2 実装済み・Fit&Gap G12 Fit。[PLAN](process/phases/PHASE_303_one_to_one_list_filters_PLAN.md) |
 | 2026-09-02 09:50 JST | **Phase 302 — 1to1 相手検索（他チャプター）:** 「他のチャプター」モード先頭に **登録済みの相手を検索**（氏名・かな・チャプター名・カテゴリ／サーバー検索・30件・debounce 250ms）を追加。見つからない場合のみ従来の①リージョン→②チャプター→③氏名。`GET /api/dragonfly/members` に `q_extended` / `exclude_workspace_id` / `limit` を opt-in 追加（既存 `q` は不変）。Feature テスト 9 件追加、605 tests passed、React build 成功。SPEC-021 T6/A5・Fit&Gap G13 追記。[PLAN](process/phases/PHASE_302_one_to_one_target_search_PLAN.md) |
 | 2026-09-01 19:58 JST | **未コミット分を develop へ取り込み:** 第220回 PDF/CSV、シェアストーリー原稿・投影資料、堀切・小熊121、11期WM（PC・こなっち）、本番同期 SQL。INDEX に投影PDF・役職サポート・関連画像を追記。 |

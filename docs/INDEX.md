@@ -821,6 +821,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_303_one_to_one_list_filters_PLAN.md](process/phases/PHASE_303_one_to_one_list_filters_PLAN.md) | Phase 303: 1to1 一覧フィルターバー（常時表示・相手チャプター／カテゴリ／自他チャプター・未描画バグ解消・API `cross_chapter` 等）PLAN。SPEC-006 R2。 |
 | [phases/PHASE_303_one_to_one_list_filters_WORKLOG.md](process/phases/PHASE_303_one_to_one_list_filters_WORKLOG.md) | Phase 303: 同 WORKLOG（未描画原因の切り分け・target 側パラメータ命名・cross_chapter 定義）。 |
 | [phases/PHASE_303_one_to_one_list_filters_REPORT.md](process/phases/PHASE_303_one_to_one_list_filters_REPORT.md) | Phase 303: 同 REPORT。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md) | Phase 304: 1to1 一覧フィルターの相手チャプター・カテゴリをワード検索 Autocomplete に（大カテゴリ／カテゴリ 1 欄統合）PLAN。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md) | Phase 304: 同 WORKLOG（2 欄統合の判断・「大カテゴリすべて」の出し方・MUI Autocomplete 入力消失の回避）。 |
+| [phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md) | Phase 304: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |

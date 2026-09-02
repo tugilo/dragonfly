@@ -302,6 +302,7 @@
 | 301 | 参加者PDF→CSV→ローカル取込（Cursorスキル・Grok/Composer・CLI取込のみ） | docs | completed | develop（merge `f0d4d54`／feature/docs-20260820-121-phase301-sync） | 2026-08-17 |
 | 302 | 1to1 相手検索（他チャプター登録済み相手をチャプター・氏名・カテゴリで検索・members API q_extended/exclude_workspace_id/limit） | implement | completed | develop（merge `44a78d8`／feature/phase302-one-to-one-target-search） | 2026-09-02 |
 | 303 | 1to1 一覧フィルターバー（常時表示・相手チャプター／カテゴリ／自他チャプター・未描画バグ解消） | implement | completed | feature/phase303-one-to-one-list-filters | 2026-09-02 |
+| 304 | 1to1 一覧フィルター: 相手チャプター・カテゴリをワード検索（Autocomplete・大カテゴリ／カテゴリ統合） | implement | completed | feature/phase304-one-to-one-filter-autocomplete | 2026-09-02 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
