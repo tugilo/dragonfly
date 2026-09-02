@@ -35,6 +35,7 @@ import {
     Radio,
     TextField,
     Alert,
+    Autocomplete,
     Checkbox,
     InputLabel,
     MenuItem,
@@ -456,6 +457,28 @@ function isSetFilterValue(v) {
     return v != null && String(v).trim() !== '';
 }
 
+// Autocomplete に渡す関数は毎レンダーで identity が変わると MUI 内部の resetInputValue が再実行され
+// 入力途中の文字が消えることがあるため、モジュールレベルで固定する。
+const autocompleteNameLabel = (o) => o?.name ?? '';
+const autocompleteOptionLabel = (o) => o?.label ?? '';
+const autocompleteEqualById = (o, v) => o?.id === v?.id;
+const autocompleteGroupBy = (o) => o.group;
+const categoryFilterOptions = (opts, { inputValue }) => {
+    const q = inputValue.trim().toLowerCase();
+    if (q === '') return opts;
+    return opts.filter((o) => o.search.toLowerCase().includes(q));
+};
+const renderCategoryOption = (props, o) => {
+    const { key: _k, ...liProps } = props;
+    return (
+        <li {...liProps} key={o.id} style={{ fontWeight: o.kind === 'group' ? 700 : 400 }}>
+            {o.kind === 'group' ? o.label : o.name}
+        </li>
+    );
+};
+const renderWorkspaceInput = (params) => <TextField {...params} label="相手チャプター" placeholder="チャプター名で検索" />;
+const renderCategoryInput = (params) => <TextField {...params} label="カテゴリ" placeholder="大カテゴリ・カテゴリ名で検索" />;
+
 /**
  * 1to1 一覧の常時表示フィルターバー（Phase 303・SPEC-006 R2）。
  * react-admin の filterValues を更新し、一覧・統計カード・件数が同じ filter で連動する。
@@ -482,21 +505,36 @@ function OneToOnesFilterBar() {
 
     const fv = filterValues || {};
     const categoriesArray = Array.isArray(categories) ? categories : [];
-    const groupNames = useMemo(
-        () => [...new Set(categoriesArray.map((c) => c?.group_name).filter(Boolean))].sort(),
-        [categoriesArray]
-    );
-    const selectedGroup = fv.target_group_name ?? '';
-    const categoryOptions = useMemo(
-        () =>
-            (selectedGroup ? categoriesArray.filter((c) => c?.group_name === selectedGroup) : categoriesArray).map(
-                (c) => ({
-                    id: String(c.id),
-                    name: c?.group_name && c?.name ? `${c.group_name} / ${c.name}` : (c?.name ?? String(c?.id ?? '')),
-                })
-            ),
-        [categoriesArray, selectedGroup]
-    );
+    /**
+     * カテゴリはワード検索用に 1 つの Autocomplete にまとめる。
+     * 大カテゴリ単位の選択肢（kind: 'group' → target_group_name）と個別カテゴリ（kind: 'category' → target_category_id）を
+     * 大カテゴリごとにグループ表示し、どちらのワードでも絞り込める。
+     */
+    const categoryOptions = useMemo(() => {
+        const groups = new Map();
+        for (const c of categoriesArray) {
+            const g = c?.group_name || 'その他';
+            if (!groups.has(g)) groups.set(g, []);
+            groups.get(g).push(c);
+        }
+        const byName = (a, b) => String(a?.name ?? '').localeCompare(String(b?.name ?? ''), 'ja');
+        const toOption = (c, g) => {
+            const name = c?.name ?? String(c?.id ?? '');
+            const realGroup = c?.group_name ?? '';
+            const label = realGroup && realGroup !== name ? `${realGroup} / ${name}` : name;
+            return { kind: 'category', id: String(c.id), group: g, name, label, search: `${realGroup} ${name}` };
+        };
+        // 複数カテゴリを持つ大カテゴリだけ「大カテゴリすべて」を出し、1 件だけの大カテゴリ（多くは名称が同一）は「その他」にまとめる
+        const multi = [...groups.entries()].filter(([, list]) => list.length >= 2).sort(([a], [b]) => a.localeCompare(b, 'ja'));
+        const singles = [...groups.entries()].filter(([, list]) => list.length < 2).flatMap(([, list]) => list).sort(byName);
+        const out = [];
+        for (const [g, list] of multi) {
+            out.push({ kind: 'group', id: `g:${g}`, group: g, label: `${g}（大カテゴリすべて）`, search: g });
+            for (const c of list.sort(byName)) out.push(toOption(c, g));
+        }
+        for (const c of singles) out.push(toOption(c, 'その他'));
+        return out;
+    }, [categoriesArray]);
     const workspaceOptions = useMemo(
         () =>
             [...workspaces]
@@ -504,14 +542,26 @@ function OneToOnesFilterBar() {
                 .map((w) => ({ id: String(w.id), name: w.name ?? `#${w.id}` })),
         [workspaces]
     );
+    const selectedWorkspace = isSetFilterValue(fv.target_workspace_id)
+        ? (workspaceOptions.find((w) => w.id === String(fv.target_workspace_id)) ?? null)
+        : null;
+    const selectedCategory = isSetFilterValue(fv.target_category_id)
+        ? (categoryOptions.find((o) => o.kind === 'category' && o.id === String(fv.target_category_id)) ?? null)
+        : isSetFilterValue(fv.target_group_name)
+            ? (categoryOptions.find((o) => o.kind === 'group' && o.group === fv.target_group_name) ?? null)
+            : null;
 
     const handleFilter = (key, value) => {
         const next = { ...fv, [key]: value };
         if (value === undefined || value === null || value === '') delete next[key];
-        if (key === 'target_group_name' && next.target_category_id != null) {
-            const cat = categoriesArray.find((c) => String(c.id) === String(next.target_category_id));
-            if (cat && cat.group_name !== (value || '')) delete next.target_category_id;
-        }
+        setFilters(next);
+    };
+    const handleCategoryChange = (opt) => {
+        const next = { ...fv };
+        delete next.target_group_name;
+        delete next.target_category_id;
+        if (opt?.kind === 'group') next.target_group_name = opt.group;
+        if (opt?.kind === 'category') next.target_category_id = opt.id;
         setFilters(next);
     };
     const handleClear = () => setFilters({ ...ONETOONES_FILTER_DEFAULTS });
@@ -530,7 +580,9 @@ function OneToOnesFilterBar() {
     }
     if (isSetFilterValue(fv.target_group_name)) activeChips.push({ key: 'target_group_name', label: `大カテゴリ: ${fv.target_group_name}` });
     if (isSetFilterValue(fv.target_category_id)) {
-        const name = categoryOptions.find((c) => c.id === String(fv.target_category_id))?.name ?? String(fv.target_category_id);
+        const name =
+            categoryOptions.find((o) => o.kind === 'category' && o.id === String(fv.target_category_id))?.label
+            ?? String(fv.target_category_id);
         activeChips.push({ key: 'target_category_id', label: `カテゴリ: ${name}` });
     }
     if (isSetFilterValue(fv.status)) {
@@ -557,8 +609,6 @@ function OneToOnesFilterBar() {
         handleFilter(key, undefined);
     };
 
-    const selectSx = { minWidth: 150 };
-
     return (
         <Box sx={{ px: 2, pt: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
@@ -578,51 +628,31 @@ function OneToOnesFilterBar() {
                         </ToggleButton>
                     ))}
                 </ToggleButtonGroup>
-                <FormControl size="small" sx={{ minWidth: 170 }}>
-                    <InputLabel>相手チャプター</InputLabel>
-                    <Select
-                        label="相手チャプター"
-                        value={isSetFilterValue(fv.target_workspace_id) ? String(fv.target_workspace_id) : ''}
-                        onChange={(e) => handleFilter('target_workspace_id', e.target.value === '' ? undefined : e.target.value)}
-                    >
-                        <MenuItem value="">すべて</MenuItem>
-                        {workspaceOptions.map((w) => (
-                            <MenuItem key={w.id} value={w.id}>
-                                {w.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl size="small" sx={selectSx}>
-                    <InputLabel>大カテゴリ</InputLabel>
-                    <Select
-                        label="大カテゴリ"
-                        value={selectedGroup}
-                        onChange={(e) => handleFilter('target_group_name', e.target.value === '' ? undefined : e.target.value)}
-                    >
-                        <MenuItem value="">すべて</MenuItem>
-                        {groupNames.map((g) => (
-                            <MenuItem key={g} value={g}>
-                                {g}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl size="small" sx={{ minWidth: 200 }}>
-                    <InputLabel>カテゴリ</InputLabel>
-                    <Select
-                        label="カテゴリ"
-                        value={isSetFilterValue(fv.target_category_id) ? String(fv.target_category_id) : ''}
-                        onChange={(e) => handleFilter('target_category_id', e.target.value === '' ? undefined : e.target.value)}
-                    >
-                        <MenuItem value="">すべて</MenuItem>
-                        {categoryOptions.map((c) => (
-                            <MenuItem key={c.id} value={c.id}>
-                                {c.name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                <Autocomplete
+                    size="small"
+                    options={workspaceOptions}
+                    value={selectedWorkspace}
+                    getOptionLabel={autocompleteNameLabel}
+                    isOptionEqualToValue={autocompleteEqualById}
+                    onChange={(_, opt) => handleFilter('target_workspace_id', opt?.id)}
+                    noOptionsText="該当するチャプターがありません"
+                    sx={{ minWidth: 200 }}
+                    renderInput={renderWorkspaceInput}
+                />
+                <Autocomplete
+                    size="small"
+                    options={categoryOptions}
+                    value={selectedCategory}
+                    groupBy={autocompleteGroupBy}
+                    getOptionLabel={autocompleteOptionLabel}
+                    isOptionEqualToValue={autocompleteEqualById}
+                    filterOptions={categoryFilterOptions}
+                    onChange={(_, opt) => handleCategoryChange(opt)}
+                    noOptionsText="該当するカテゴリがありません"
+                    sx={{ minWidth: 320 }}
+                    renderOption={renderCategoryOption}
+                    renderInput={renderCategoryInput}
+                />
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'center' }}>
                 <FormControl size="small" sx={{ minWidth: 130 }}>
