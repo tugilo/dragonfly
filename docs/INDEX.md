@@ -447,7 +447,7 @@ BNI アカデミー資料・受講用メモ（KeySkills 等）。教材 PDF と�
 | [ONETOONES_EDIT_UI_FIT_AND_GAP.md](SSOT/ONETOONES_EDIT_UI_FIT_AND_GAP.md) | 1 to 1 **Edit** 画面を Create と比較した Fit/Gap。**ONETOONES_EDIT_UX_P2** で主要 Gap を解消（§8）。 |
 | [ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md](SSOT/ONETOONES_QUICK_CREATE_UI_FIT_AND_GAP.md) | 1 to 1 **一覧 Quick Create Dialog** の Fit/Gap。**ONETOONES_QUICK_CREATE_UX_P3** で Create と同一フォーム・同一 payload に統一。 |
 | [ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md](SSOT/ONETOONES_TARGET_PREFILL_FIT_AND_GAP.md) | 1 to 1 作成時の **`target_member_id` プリフィル**（URL クエリ）。**ONETOONES_DASHBOARD_TARGET_PREFILL_P4**（Create 検証・Tasks・Quick Create）。 |
-| [ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md) | **SPEC-006** — チャプター外 1 to 1 の **解釈A（記録コンテキスト）**・**国/リージョン/チャプター階層**・API/UI。**記録:** [PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md](process/phases/PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md)。 |
+| [ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md](SSOT/ONETOONES_CROSS_CHAPTER_REQUIREMENTS.md) | **SPEC-006** — チャプター外 1 to 1 の **解釈A（記録コンテキスト）**・**国/リージョン/チャプター階層**・API/UI。**R2 一覧フィルタは Phase 303 で実装**（`cross_chapter` 等・常時表示フィルターバー）。**記録:** [PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md](process/phases/PHASE_ONETOONES_CROSS_CHAPTER_WS_HIERARCHY_P1_REPORT.md)。 |
 | [DASHBOARD_REQUIREMENTS.md](SSOT/DASHBOARD_REQUIREMENTS.md) | ダッシュボード画面をモック（religo-admin-mock2.html）に合わせるための要件。構成・ブロック・データ・チェックリスト。 |
 | [DASHBOARD_DATA_SSOT.md](SSOT/DASHBOARD_DATA_SSOT.md) | Dashboard のデータ定義 SSOT。stats/tasks/activity の定義・owner_member_id（**SPA はクエリで owner を付与**）・**未接触 peer は owner と同一 workspace・guest/visitor 除外**・件数上限・実装紐づけ・**§6 実数検証**。今月1to1実施数は `COALESCE(started_at, scheduled_at, updated_at)`；`last_contact` の 1to1 は `created_at` フォールバック。 |
 | [DASHBOARD_TASK_SOURCE_ANALYSIS.md](SSOT/DASHBOARD_TASK_SOURCE_ANALYSIS.md) | 「今日やること（Tasks）」の取得元トレース（UI・API・DashboardService・DB・workspace 未適用・SSOT ギャップ）。 |
@@ -818,6 +818,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_302_one_to_one_target_search_PLAN.md](process/phases/PHASE_302_one_to_one_target_search_PLAN.md) | Phase 302: 1to1 相手検索（他チャプター登録済み相手をチャプター・氏名・カテゴリで検索・members API `q_extended`/`exclude_workspace_id`/`limit`）PLAN。SPEC-021 T6。 |
 | [phases/PHASE_302_one_to_one_target_search_WORKLOG.md](process/phases/PHASE_302_one_to_one_target_search_WORKLOG.md) | Phase 302: 同 WORKLOG（既存 `q` を変えず opt-in 拡張にした判断など）。 |
 | [phases/PHASE_302_one_to_one_target_search_REPORT.md](process/phases/PHASE_302_one_to_one_target_search_REPORT.md) | Phase 302: 同 REPORT。 |
+| [phases/PHASE_303_one_to_one_list_filters_PLAN.md](process/phases/PHASE_303_one_to_one_list_filters_PLAN.md) | Phase 303: 1to1 一覧フィルターバー（常時表示・相手チャプター／カテゴリ／自他チャプター・未描画バグ解消・API `cross_chapter` 等）PLAN。SPEC-006 R2。 |
+| [phases/PHASE_303_one_to_one_list_filters_WORKLOG.md](process/phases/PHASE_303_one_to_one_list_filters_WORKLOG.md) | Phase 303: 同 WORKLOG（未描画原因の切り分け・target 側パラメータ命名・cross_chapter 定義）。 |
+| [phases/PHASE_303_one_to_one_list_filters_REPORT.md](process/phases/PHASE_303_one_to_one_list_filters_REPORT.md) | Phase 303: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
