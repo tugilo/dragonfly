@@ -58,7 +58,8 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_term11_goals_20260827.md](webmaster_term11_goals_20260827.md) | 11期の目標・課題・チームの約束（2026-08-27 00:36 JST）。役割は未決 |
 | [webmaster_term11_messenger_group_20260828.md](webmaster_term11_messenger_group_20260828.md) | 11期グループ開設メッセージ（2026-08-28 23:56 JST 送信済み） |
 | [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) | PC環境アンケート（2026-08-30 18:07 JST）。5名回答。Jobなし |
-| [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md) | こなっちへ運営用PC貸与と PPT 1ライセンス相談（2026-08-30 18:11 JST）。未送信。Jobなし |
+| [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md) | こなっちへ運営用PC貸与と PPT 1ライセンス相談（2026-08-30 18:11 JST）。個別送信せず LTST 全体協議事項へ切替（2026-09-02） |
+| [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md) | **11期 第1回 LTST（2026-09-02 20:00 JST）Webマス準備メモ**。シートの写し・30秒進捗・PPT ライセンスの物差し・他行との接点・持ち帰り確認。会後欄あり |
 | [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) | 第1回ミーティング。**2026-09-14（月）19:00–20:00 確定**（2026-08-30 12:39 JST）。Jobなし |
 
 ## 関連

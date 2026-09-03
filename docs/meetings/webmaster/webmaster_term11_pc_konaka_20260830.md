@@ -2,9 +2,10 @@
 doc_type: webmaster_president_ask_draft
 chapter: bni_dragonfly
 created_jst: "2026-08-30 18:11 JST"
-updated_jst: "2026-08-30 18:22 JST"
+updated_jst: "2026-09-02 14:27 JST"
 audience: "11期プレジデント・小中貴晃（こなっち）向け下書き"
-status: draft_unsent
+status: superseded_by_ltst_agenda
+superseded_note: "個別送信はせず、2026-09-02 第1回 LTST のアジェンダシート『全体協議事項』に『MicrosoftOffice365(サブスク）１ライセンス購入希望』として記入。準備メモ: webmaster_term11_ltst1_prep_20260902.md"
 related_survey: "webmaster_term11_pc_survey_20260828.md"
 related_hub: "webmaster_term11.md"
 ---
@@ -13,7 +14,7 @@ related_hub: "webmaster_term11.md"
 
 **目的:** 定例会を一つのミスも無く回す。人員も含めて備える。誰か一人に寄せない。  
 **相手:** 小中貴晃（こなっち）。11期プレジ。  
-**金額:** 購入可否は人間。品目候補は Microsoft 365 Personal（1人用）。Amazon 表示 年17,400円（自動更新後 21,300円）。自動更新なしの方が経費として扱いやすい。Family（6人）は今回のお願いを超える。  
+**金額:** 購入可否は人間。品目候補は Microsoft 365 Personal（1人用）。年 21,300円（通常価格。Amazon セール表示 17,400円は使わない。2026-09-02 18:13 JST 修正）。自動更新なしの方が経費として扱いやすい。Family（6人）は今回のお願いを超える。  
 **送信しない。** 役割は決めない。名前で責めない。  
 **回答シート:** 本文にリンク共有。https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit
 
@@ -83,6 +84,7 @@ PowerPoint を1ライセンス、チャプターで購入させてもらえな�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-09-02 14:27 | 個別送信は行わず、第1回 LTST（9/2 20:00）の全体協議事項として提出する形に切替。本文は LTST での説明の元として残す |
 | 2026-08-30 18:22 | 品目候補を 365 Personal 1人用にメモ。本文には金額を入れない |
 | 2026-08-30 18:19 | 朝礼含む4ファイル、2人1組、バックアップ同ページ送りを本文へ |
 | 2026-08-30 18:15 | 次廣回答後。2台持ちを3名に直す。お願いの中身は同じ |
