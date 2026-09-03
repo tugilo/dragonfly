@@ -157,7 +157,8 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/webmaster/README.md](meetings/webmaster/README.md) | **Webマスターチーム議事録の命名**（`webmaster_<topic>_YYYYMMDD.md`）・YAML・関連 1to1 リンク。 |
-| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-08-30 18:19 JST）。第1回は **2026-09-14（月）19:00–20:00**。スライドは朝礼含む4本・各2人1組。Religo `meetings.id` 35〜37。 |
+| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-09-02 14:27 JST）。第1回 LTST **2026-09-02 20:00**、第1回 WM は **2026-09-14（月）19:00–20:00**。スライドは朝礼含む4本・各2人1組。Religo `meetings.id` 35〜37。 |
+| [meetings/webmaster/webmaster_term11_ltst1_prep_20260902.md](meetings/webmaster/webmaster_term11_ltst1_prep_20260902.md) | **11期 第1回 LTST（2026-09-02 20:00 JST）Webマス準備メモ**。[LTST情報まとめ](https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit) の Webマス行の写し、30秒進捗、Microsoft 365 1ライセンスの §10 物差しと代替案、他行との接点、持ち帰り確認6点。会後欄は空。 |
 | [meetings/webmaster/webmaster_handover_20260603.md](meetings/webmaster/webmaster_handover_20260603.md) | **Webマスター業務引き継ぎ 2026-06-03 JST 20:00–21:00**（Zoom）。次廣が倉持から朝礼スライド統合・定例会 Zoom 操作（レコーディング／スポットライト）を引き継ぎ。**初回作業 2026-06-09（月）午前**。AI 協業・リストマーケ・パワーチーム等も議論。 |
 | [meetings/webmaster/webmaster_kudo_yuji_20260821.md](meetings/webmaster/webmaster_kudo_yuji_20260821.md) | **工藤祐司（元WM・退会済）×次廣×小中×増本 2026-08-21 午後**（Zoom・時刻 TODO）。属人化／自動化ミス／提出遅れ。原点回帰（PPT手作業）・月曜正午締切・並行スライド操作。棚卸しは [2026-08-22 倉持](meetings/webmaster/webmaster_handover_20260822.md) で実施。校正: 倉本→倉持、梅沢→梅澤。 |
 | [meetings/webmaster/webmaster_handover_20260822.md](meetings/webmaster/webmaster_handover_20260822.md) | **倉持賢一（9・10期WM）→次廣（11期WM）棚卸し 2026-08-22 JST 20:00–22:00**（Zoom）。`meetings.id=37`。アカウント／NextCloud 500GB／Claude Code Pipeline／旧→新Nキャス／BORアプリ。継続廃止は未決。校正: 軍事→軍司、福祉→福士、持ちづき→望月、佐賀→芳賀。 |
@@ -166,7 +167,7 @@
 | [meetings/webmaster/webmaster_term11_goals_20260827.md](meetings/webmaster/webmaster_term11_goals_20260827.md) | **11期 WM 目標とチームの約束**（2026-08-27 00:36 JST）。問題・課題・ユウジさんのエッセンス。役割と廃止判断は未決。 |
 | [meetings/webmaster/webmaster_term11_messenger_group_20260828.md](meetings/webmaster/webmaster_term11_messenger_group_20260828.md) | **11期 WM グループ開設メッセージ**（2026-08-28 23:56 JST 送信済み）。 |
 | [meetings/webmaster/webmaster_term11_pc_survey_20260828.md](meetings/webmaster/webmaster_term11_pc_survey_20260828.md) | **11期 WM PC環境アンケート**（2026-08-30 18:15 JST）。6名回答。米澤さんのみブラウザ版 PPT。[シート](https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit)。 |
-| [meetings/webmaster/webmaster_term11_pc_konaka_20260830.md](meetings/webmaster/webmaster_term11_pc_konaka_20260830.md) | **11期 WM 運営PC・PPT 1ライセンス**（2026-08-30 18:11 JST）。こなっち相談下書き。未送信。 |
+| [meetings/webmaster/webmaster_term11_pc_konaka_20260830.md](meetings/webmaster/webmaster_term11_pc_konaka_20260830.md) | **11期 WM 運営PC・PPT 1ライセンス**（2026-08-30 18:11 JST）。こなっち相談下書き。個別送信せず **2026-09-02 LTST 全体協議事項へ切替**。 |
 | [meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md](meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md) | **11期 WM 第1回ミーティング**。**2026-09-14（月）19:00–20:00 JST 確定**（2026-08-30 12:39 JST）。[調整さん](https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb)。 |
 
 #### 1to1 専用（docs/meetings/1to1/）
@@ -174,6 +175,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
+| [meetings/1to1/1to1_muramatsu_yuki_eees.md](meetings/1to1/1to1_muramatsu_yuki_eees.md) | **村松裕基（合同会社eees／IT・AIのよろず相談／BNI KerNel）**。久米加代子おつなぎ。**第1回 2026-09-02（水）JST 14:30開始・Zoom実施済み**（終了時刻 TODO）。ITフロント支援（20〜30名以下・相談窓口）と次廣の業務整理・システム構築が補完関係にあり、静岡県内案件の相互紹介へ合意。価格・年間件数・経歴・BNI状況・アクション・会後文案を反映。`one_to_ones.id` は Zoom 取込待ち。同日 `#151` 佐久間健寿は別人。 |
 | [meetings/1to1/1to1_horikiri_takanori_link.md](meetings/1to1/1to1_horikiri_takanori_link.md) | **堀切孝則（株式会社Link／HP最短24時間・BNI Abundance）**。**第1回 2026-08-31 JST 09:00–10:00 実施済み**（`#149` completed／`members.id=299`）。制作5万・月5千。今西・軍司 **双方OK**。三者グループ2つ送信待ち。お礼文案あり・送信待ち。 |
 | [meetings/1to1/1to1_oguma_michiko_mirect.md](meetings/1to1/1to1_oguma_michiko_mirect.md) | **小熊美智子（合同会社ミレクトオフィス／心を宿すロゴデザイナー・BNI LAPIS）**。2026-08-21 GBM 同BOR。**第1回 2026-08-31 JST 11:00–12:00 実施済み**（`#154` completed／`members.id=319`）。飲食店並走×予約。おつなぎ: 山本洸太（デザインに強いWeb制作／主フックは画家・飲食店経営）・飯田千帆は本人OK、グループ作成待ち。畠山憲之は許可待ち。 |
 | [meetings/1to1/1to1_ouchi_nozomi_nextgroup.md](meetings/1to1/1to1_ouchi_nozomi_nextgroup.md) | **大内望未（ネクストグループ／SNS運用代行／DragonFly ビジター）**。福島和也紹介。**第1回 2026-08-27 JST 10:00–11:00 実施済み**（`one_to_ones.id=148` completed／`members.id=285`）。撮影〜広告の一貫代行・半年前払い全額返金・他己紹介動画コミュニティ。岡元智美おつなぎは福島経由。加入勧奨あり・合意なし。校正: 岡本→岡元、タコ紹介→他己紹介。お礼文案あり・送信待ち。 |
