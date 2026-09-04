@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-04 14:16 JST | **Phase 305/306 を develop へ取り込み:** `16907720`。熊谷貴之 `#152` 議事録と本番同期 SQL。 |
 | 2026-09-04 14:15 JST | **121ローカル→本番DB同期:** 熊谷貴之 `#152` completed（notes あり・`members.id=286` は1行）。615 tests passed → `db-export`（2,240,584 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260904_141522.sql`。 |
 | 2026-09-04 14:05 JST | **Phase 306 熊谷貴之 第1回121 Zoom要約反映:** [`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) に実施後議事録。2026年6月末起業・富士通19年・伴走／ビジコン／ドローン。協業合意。入会は前向き検討。校正: 2024→2026、伴奏→伴走、小永→小中、羽賀→芳賀（要確認）。`#152` completed・`import-1to1-notes --only-ids=152`。お礼文案あり・送信待ち。 |
 | 2026-09-04 10:55 JST | **Phase 305 熊谷貴之 初回121事前準備:** 飯田千帆紹介のビジター（ENFUSIA／AI伴走支援）。第1回 **2026-09-04 JST 11:00–12:00**（Calendar 確定）。聞き役台本。票④ NO は同業回避で、次廣がその当事者のため棲み分け講義・入会クローズは置かない。既存 Zoom `#152` / `members.id=286`。熊谷龍笙とは別人。[`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md)。 |

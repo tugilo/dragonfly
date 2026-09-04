@@ -2,7 +2,7 @@
 
 **完了日:** 2026-09-04 10:55 JST  
 **Phase Type:** docs  
-**Status:** in_progress（文書作成済み。commit / merge は未実施）
+**Status:** completed（develop merge `16907720`）
 
 ---
 
@@ -47,20 +47,38 @@ docs フェーズのため `php artisan test` はスキップ。
 
 ## Merge Evidence
 
-（develop へ merge したあと追記）
-
-merge commit id:
+merge commit id: `16907720cc14cdb2ddb184d23eeedeb57e8ce24e`
 source branch: feature/phase305-kumagai-takayuki-121-prep
 target branch: develop
 phase id: 305
 phase type: docs
 related ssot: SPEC-012, SPEC-013, SPEC-019
 
-test command: スキップ（docsフェーズ）
-test result: スキップ（docsフェーズ）
+test command: `docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test`
+test result: 615 passed / 2253 assertions（db-push 前。docs 本体）
 
-changed files: （merge 後に `git diff --name-only` を貼る）
+changed files:
+- docs/INDEX.md
+- docs/dragonfly_progress.md
+- docs/meetings/1to1/1to1_kumagai_takayuki_enfusia.md
+- docs/process/PHASE_REGISTRY.md
+- docs/process/phases/PHASE_305_kumagai_takayuki_121_prep_PLAN.md
+- docs/process/phases/PHASE_305_kumagai_takayuki_121_prep_REPORT.md
+- docs/process/phases/PHASE_305_kumagai_takayuki_121_prep_WORKLOG.md
+- docs/process/phases/PHASE_306_kumagai_takayuki_121_minutes_PLAN.md
+- docs/process/phases/PHASE_306_kumagai_takayuki_121_minutes_REPORT.md
+- docs/process/phases/PHASE_306_kumagai_takayuki_121_minutes_WORKLOG.md
+- www/database/sync/dragonfly.sql
 
 scope check: OK
 ssot check: OK
 dod check: OK
+
+## 取り込み証跡（develop への merge 後）
+
+| 項目 | 内容 |
+|------|------|
+| **merge commit id** | `16907720cc14cdb2ddb184d23eeedeb57e8ce24e` |
+| **merge 元ブランチ名** | `feature/phase305-kumagai-takayuki-121-prep` |
+| **テスト結果** | 615 passed |
+| **手動確認** | 本番 `db-push` 済み（backup `backups/prod_20260904_141522.sql`） |
