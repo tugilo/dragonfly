@@ -8,6 +8,10 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-04 14:16 JST | **Phase 305/306 を develop へ取り込み:** `16907720`。熊谷貴之 `#152` 議事録と本番同期 SQL。 |
+| 2026-09-04 14:15 JST | **121ローカル→本番DB同期:** 熊谷貴之 `#152` completed（notes あり・`members.id=286` は1行）。615 tests passed → `db-export`（2,240,584 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260904_141522.sql`。 |
+| 2026-09-04 14:05 JST | **Phase 306 熊谷貴之 第1回121 Zoom要約反映:** [`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) に実施後議事録。2026年6月末起業・富士通19年・伴走／ビジコン／ドローン。協業合意。入会は前向き検討。校正: 2024→2026、伴奏→伴走、小永→小中、羽賀→芳賀（要確認）。`#152` completed・`import-1to1-notes --only-ids=152`。お礼文案あり・送信待ち。 |
+| 2026-09-04 10:55 JST | **Phase 305 熊谷貴之 初回121事前準備:** 飯田千帆紹介のビジター（ENFUSIA／AI伴走支援）。第1回 **2026-09-04 JST 11:00–12:00**（Calendar 確定）。聞き役台本。票④ NO は同業回避で、次廣がその当事者のため棲み分け講義・入会クローズは置かない。既存 Zoom `#152` / `members.id=286`。熊谷龍笙とは別人。[`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md)。 |
 | 2026-09-02 15:27 JST | **村松裕基121 人名校正:** ユーザー確認により「船田さん」→**船津さん**、「市川美さん」→**市川亜美さん**へ確定し、[`meetings/1to1/1to1_muramatsu_yuki_eees.md`](meetings/1to1/1to1_muramatsu_yuki_eees.md) のBNI活動・共通知人・校正メモを更新。 |
 | 2026-09-02 15:17 JST | **村松裕基 第1回1to1 Zoom要約反映:** [`meetings/1to1/1to1_muramatsu_yuki_eees.md`](meetings/1to1/1to1_muramatsu_yuki_eees.md) に、ITフロント支援・価格・経歴・BNI状況、次廣の事例、静岡県内での相互紹介合意、アクション、会後お礼文案を校正して反映。誤変換「村松裕→裕基」「引佐間→曳馬」「新津町→ニーズマッチ」「利子財団→立志財団」「外注ブロック→害虫ブロック」「2024年入会→2026年3月」を補正。実終了時刻・Zoom取込 `one_to_ones.id` は TODO。INDEX 同期。 |
 | 2026-09-02 18:23 JST | **Webマスの裏の目標:** 「ゲストに『DragonFly の定例会、やべえ』と思わせる」。スローガン「誇れるチャプターへ」の因果（成果 → 誇り → 誘いたくなる → 入会）の誇りを Webマスが受け持つ宣言として、[`webmaster_term11_ltst1_prep_20260902.md`](meetings/webmaster/webmaster_term11_ltst1_prep_20260902.md) の挨拶40秒・10秒・何のため・ライセンス理由の骨・物差し Pride に追加。 |

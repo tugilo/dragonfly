@@ -175,6 +175,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
+| [meetings/1to1/1to1_kumagai_takayuki_enfusia.md](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) | **熊谷貴之（株式会社ENFUSIA／AI伴走支援／DragonFly ビジター）**。飯田千帆紹介。**第1回 2026-09-04（金）JST 11:00–12:00 実施済み**（Zoom要約校正・`#152` completed／`members.id=286`）。2026年6月末起業・富士通19年。伴走／地域／ビジコン／ドローン／ワーケーション。協業合意。入会は前向き検討（クローズなし）。校正: 2024→2026、伴奏→伴走、小永→小中、羽賀→芳賀（要確認）。熊谷龍笙とは別人。お礼文案あり・送信待ち。 |
 | [meetings/1to1/1to1_muramatsu_yuki_eees.md](meetings/1to1/1to1_muramatsu_yuki_eees.md) | **村松裕基（合同会社eees／IT・AIのよろず相談／BNI KerNel）**。久米加代子おつなぎ。**第1回 2026-09-02（水）JST 14:30開始・Zoom実施済み**（終了時刻 TODO）。ITフロント支援（20〜30名以下・相談窓口）と次廣の業務整理・システム構築が補完関係にあり、静岡県内案件の相互紹介へ合意。価格・年間件数・経歴・BNI状況・アクション・会後文案を反映。`one_to_ones.id` は Zoom 取込待ち。同日 `#151` 佐久間健寿は別人。 |
 | [meetings/1to1/1to1_horikiri_takanori_link.md](meetings/1to1/1to1_horikiri_takanori_link.md) | **堀切孝則（株式会社Link／HP最短24時間・BNI Abundance）**。**第1回 2026-08-31 JST 09:00–10:00 実施済み**（`#149` completed／`members.id=299`）。制作5万・月5千。今西・軍司 **双方OK**。三者グループ2つ送信待ち。お礼文案あり・送信待ち。 |
 | [meetings/1to1/1to1_oguma_michiko_mirect.md](meetings/1to1/1to1_oguma_michiko_mirect.md) | **小熊美智子（合同会社ミレクトオフィス／心を宿すロゴデザイナー・BNI LAPIS）**。2026-08-21 GBM 同BOR。**第1回 2026-08-31 JST 11:00–12:00 実施済み**（`#154` completed／`members.id=319`）。飲食店並走×予約。おつなぎ: 山本洸太（デザインに強いWeb制作／主フックは画家・飲食店経営）・飯田千帆は本人OK、グループ作成待ち。畠山憲之は許可待ち。 |
@@ -829,6 +830,12 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_PLAN.md) | Phase 304: 1to1 一覧フィルターの相手チャプター・カテゴリをワード検索 Autocomplete に（大カテゴリ／カテゴリ 1 欄統合）PLAN。 |
 | [phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_WORKLOG.md) | Phase 304: 同 WORKLOG（2 欄統合の判断・「大カテゴリすべて」の出し方・MUI Autocomplete 入力消失の回避）。 |
 | [phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md](process/phases/PHASE_304_one_to_one_filter_autocomplete_REPORT.md) | Phase 304: 同 REPORT。 |
+| [phases/PHASE_305_kumagai_takayuki_121_prep_PLAN.md](process/phases/PHASE_305_kumagai_takayuki_121_prep_PLAN.md) | Phase 305: 熊谷貴之 初回121事前準備（ENFUSIA／AI伴走支援）PLAN。 |
+| [phases/PHASE_305_kumagai_takayuki_121_prep_WORKLOG.md](process/phases/PHASE_305_kumagai_takayuki_121_prep_WORKLOG.md) | Phase 305: 同 WORKLOG（聞き役固定・既存 `#152`・龍笙と区別）。 |
+| [phases/PHASE_305_kumagai_takayuki_121_prep_REPORT.md](process/phases/PHASE_305_kumagai_takayuki_121_prep_REPORT.md) | Phase 305: 同 REPORT。 |
+| [phases/PHASE_306_kumagai_takayuki_121_minutes_PLAN.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_PLAN.md) | Phase 306: 熊谷貴之 第1回121 Zoom要約反映 PLAN。 |
+| [phases/PHASE_306_kumagai_takayuki_121_minutes_WORKLOG.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_WORKLOG.md) | Phase 306: 同 WORKLOG（年号・小中・芳賀・堀切の校正判断）。 |
+| [phases/PHASE_306_kumagai_takayuki_121_minutes_REPORT.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_REPORT.md) | Phase 306: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
