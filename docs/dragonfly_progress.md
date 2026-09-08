@@ -8,6 +8,17 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-08 20:47 JST | **第220・221回議事録を本番DB反映:** 615 tests passed → `db-export`（2,301,281 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260908_204724.sql`。meeting 220/221 の minutes を含むローカル状態を本番へ全置換。 |
+| 2026-09-08 20:43 JST | **DragonFly 定例会 第220回 議事録:** 英語 Zoom 要約を翻訳・校正し [`meetings/chapter/chapter_weekly_20260901.md`](meetings/chapter/chapter_weekly_20260901.md) に反映。中村啓吾更新・MP飯田香/梅澤朗広・SS次廣・教育ゴルフ×誠実さ・RFベスト平岡9件。`import-chapter-minutes` でローカルDB反映。参加者CSVは9/1取込済（80名）。INDEX・第221回リンク同期。 |
+| 2026-09-08 20:39 JST | **DragonFly 定例会 第221回 議事録:** Zoom要約を校正し [`meetings/chapter/chapter_weekly_20260908.md`](meetings/chapter/chapter_weekly_20260908.md) に反映。田村鈴夏/宮脇トニー入会・MP木村/森園・SS飯田香・教育バトンパス・RF162（梅澤朗広25件）・推薦小中→飯田千帆。`import-chapter-minutes` でローカルDB反映。参加者CSVは午前取込済（75名）。INDEX同期。 |
+| 2026-09-08 16:30 JST | **吉田拓磨121 お礼文を上からにしない稿へ:** 収益化設計×初速は「診断」ではなく「聞いてて思った／一緒に考えたい」。プロデュース・かなさん助言・仕事を渡す言い回しを外した。[`1to1_yoshida_takuma_yoshida_clinic.md`](meetings/1to1/1to1_yoshida_takuma_yoshida_clinic.md) 案A/B。 |
+| 2026-09-08 16:28 JST | **吉田拓磨121 会後視点:** たくまさんの得意（収益化設計と初速の速さ）を起点に事業を組むと面白いかもしれない、を [`1to1_yoshida_takuma_yoshida_clinic.md`](meetings/1to1/1to1_yoshida_takuma_yoshida_clinic.md) の累積インサイト・戦略・お礼案に追記。MEO横展開は手段、商品の芯は「誰の何をどれだけ速く収益化するか」。 |
+| 2026-09-08 16:26 JST | **吉田拓磨 第2回121 Zoom要約反映:** 約3ヶ月ぶり。**2026-09-08（火）JST 15:00–16:20**（ユーザー確定・カレンダー予定なし）。個人コンサル＋MEO（フローデザイン）、次廣案件参画・AI講座共同・プロデュース合意。年内BNI入会は妻（かなさん）の理解待ち。校正: 次廣氏→次廣、Astraは名称要確認、岡本さん（プレゼンシア）は岡元智美と別人。[`1to1_yoshida_takuma_yoshida_clinic.md`](meetings/1to1/1to1_yoshida_takuma_yoshida_clinic.md)。`#155` manual/completed（`members.id=170`）。お礼文案あり・送信待ち。 |
+| 2026-09-08 08:13 JST | **第221回定例会参加者をローカル取込:** [`religo_221_20260908_full.csv`](pdf/260908/religo_221_20260908_full.csv) を `import-participants-csv 221 --held_on=2026-09-08`。meeting id=40・75名（メンバー59／ビジター12／代理2／ゲスト2）。入会: 宮脇トニー（visitor #337 残・member #343）、田村鈴夏（visitor #180 残・member #344）。紹介者未解決 0。本番 push 未実施。 |
+| 2026-09-07 20:07 JST | **ワーカーブロス初回ヒアリング議事録:** Zoom要約を校正し [`printing_worker_bros_hearing_20260907.md`](proposals/printing_worker_bros_hearing_20260907.md) に反映（カスヤ→粕谷）。ログイン付きWeb移行合意、ボディ自動／加工手動、Excel共有済み、機能別提案・デモ・見積を数日以内に作成。見積案件進捗も更新。 |
+| 2026-09-07 17:47 JST | **ワーカーブロス初回ヒアリング台本:** [`printing_worker_bros_hearing_20260907.md`](proposals/printing_worker_bros_hearing_20260907.md) に約60分の大まかな台本（あいさつ→業務フロー→困りごと→優先順位→助成金→次アクション）を追加。 |
+| 2026-09-07 17:08 JST | **印刷業（ワーカーブロス）初回ヒアリング準備:** クライアントを粕谷竜／ワーカーブロス株式会社と確定。提案提出済み・LINE自己紹介（2026-07-17）反映。本日 **18:30** は提案再説明より現状課題ヒアリング優先。[`printing_worker_bros_hearing_20260907.md`](proposals/printing_worker_bros_hearing_20260907.md)・見積案件進捗を更新。 |
+| 2026-09-04 15:53 JST | **熊谷貴之121のお礼クローズ:** Messenger で熊谷さんへのお礼と千帆さんへの実施報告を送信済み。[`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) の送信待ちを閉じる。`#152` completed のまま。INDEX 同期。 |
 | 2026-09-04 14:16 JST | **Phase 305/306 を develop へ取り込み:** `16907720`。熊谷貴之 `#152` 議事録と本番同期 SQL。 |
 | 2026-09-04 14:15 JST | **121ローカル→本番DB同期:** 熊谷貴之 `#152` completed（notes あり・`members.id=286` は1行）。615 tests passed → `db-export`（2,240,584 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260904_141522.sql`。 |
 | 2026-09-04 14:05 JST | **Phase 306 熊谷貴之 第1回121 Zoom要約反映:** [`1to1_kumagai_takayuki_enfusia.md`](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) に実施後議事録。2026年6月末起業・富士通19年・伴走／ビジコン／ドローン。協業合意。入会は前向き検討。校正: 2024→2026、伴奏→伴走、小永→小中、羽賀→芳賀（要確認）。`#152` completed・`import-1to1-notes --only-ids=152`。お礼文案あり・送信待ち。 |

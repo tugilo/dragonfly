@@ -30,7 +30,9 @@ religo_one_to_one_id_session1: 152
 session1_status: completed
 session1_external_source: zoom
 session1_zoom_meeting_id: "82498978503"
-thank_you_status: draft
+thank_you_status: sent
+thank_you_channel: messenger
+thank_you_sent_at: "2026-09-04 15:53 JST"
 ---
 
 # 1to1_熊谷貴之_ENFUSIA（飯田千帆紹介・ビジター）
@@ -89,7 +91,7 @@ thank_you_status: draft
 | **熊谷** | BNI 東京NE（DragonFly 含む）への入会を検討 | 本人側 |
 | **次廣** | 紹介できそうなメンバー・案件を探してつなぐ | TODO |
 | **両者** | AI 最新情報・ツール動向を共有し、案件協業の機会を探す | 継続 |
-| **次廣** | 会後お礼（熊谷さん）＋千帆さんへ実施報告 | **文案作成済（2026-09-04 13:58 JST）・送信待ち** |
+| **次廣** | 会後お礼（熊谷さん）＋千帆さんへ実施報告 | **Messenger 送信済み（2026-09-04 15:53 JST 記録）** |
 
 ### 確認待ち・未確定
 
@@ -248,7 +250,8 @@ thank_you_status: draft
 
 ## ■ 会後お礼文案（第1回・必須）
 
-売らない。入会クローズを書かない。当日の言葉だけ入れる。
+売らない。入会クローズを書かない。当日の言葉だけ入れる。  
+**送信:** Messenger **送信済み**（2026-09-04 15:53 JST 記録。熊谷さんへのお礼と千帆さんへの実施報告）。
 
 ### 熊谷さんへ（案A・メール／Messenger）
 
