@@ -18,7 +18,8 @@ religo_member_roles_note: "10期の current member_roles は未変更。11期開
 **情報源:** ユーザー提供 **2026-08-14**（小中貴晃さん第3回121同日）。  
 **関連:** [1to1_konaka_takaaki_becheerz.md](../1to1/1to1_konaka_takaaki_becheerz.md) 第3回。次廣は Webマスター拝命。  
 **方針:** [第11期チャプター方針レポート](chapter_term11_policy_20260731.md)（数値・2026-07-31）。  
-**運営思想:** [所信表明](../../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)（動画要約・2026-08-14）。WM・Religo の判断前提。
+**運営思想:** [所信表明](../../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)（動画要約・2026-08-14）。WM・Religo の判断前提。  
+**LTST MTG:** [第2回 2026-09-10](chapter_ltst_term11_20260910.md)（施策素案。フィックスは 9/17）。公式シートは [LTST情報まとめ](https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit)。
 
 **LT** = リーダーシップチーム（プレジ・バイス・書記）。**ST** = サポートチーム（それ以外）。
 
@@ -90,3 +91,5 @@ Religo の `member_roles`（現在役職）は **10期のまま**。11期開始�
 - 11期終了月の確定
 - 横山太樹／大樹の `members.type` を member に揃える（166 / 253 の名寄せ含む）
 - 11期開始時に `roles` / `member_roles` へ反映（10期行の `term_end` を閉じる）
+- 第2回 LTST（2026-09-10）の開始・終了時刻を Zoom メタで確定
+- 第2回で出た「わし」（ロールモデル候補）の正式氏名

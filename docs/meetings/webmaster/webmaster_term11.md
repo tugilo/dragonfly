@@ -3,7 +3,7 @@ doc_type: webmaster_term_hub
 chapter: bni_dragonfly
 term_ja: "11期"
 created_jst: "2026-08-29 10:00 JST"
-updated_jst: "2026-09-02 14:27 JST"
+updated_jst: "2026-09-12 18:42 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
 status: living
 religo_session_type: webmaster_meeting
@@ -24,13 +24,15 @@ religo_import: pending_first_meeting
 | 項目 | 状態 |
 |------|------|
 | メンバー | 次廣 淳（WM）／梅澤 朗広／太田 一誠／軍司 敦哉／竹村 裕司／米澤 侑桂。5名快諾済み |
-| 役割 | **未決。** 第1回では決めない。送り方の型だけ決めた |
-| スライド送りの型 | 朝礼を含むパワポ **4つ**。各共有は **2人1組**。メインが共有＋送り、バックアップも同じページを送る。障害時はすぐ切り替え |
+| 役割 | **固定しない。ローテーション。** 誰かが休んでも定例会が回るよう、6人全員ができるようにする。第1回では今週の担当表は作らない。仕事の地図: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
+| スライド送りの型 | 朝礼を含むパワポ **4つ**。各共有は **2人1組**。狙い: **切れても止まらない**／**Webマス自身がウィークリーとメインプレを聞く**。メインが共有＋送り、バックアップも同じページ。障害時はすぐ切替 |
 | 残す／やめる | **未決。** 棚卸しは出た。操作を覚えてから切る |
 | Messenger グループ | 開設文送信済み（2026-08-28 23:56 JST） |
 | PC環境アンケート | **6名回答。** 2台持ち3／1台2／借用可1。1台2名は運営用PC貸与。借用可1名向けの **Microsoft 365 1ライセンス**は、こなっちへの個別送信ではなく **LTST アジェンダシートの全体協議事項に記入**（3分の2賛同が要る） |
-| 11期 第1回 LTST | **2026-09-02（水）20:00 JST。** Webマス行に目標・施策・進捗・協議・報告を記入済み。手元メモ: [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md)。次回 LTST は 9/10 |
-| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。役割は決めない |
+| 11期 第1回 LTST | **2026-09-02（水）20:00 JST。** 手元メモ: [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md) |
+| 11期 第2回 LTST | **2026-09-10（木）。** 議事録: [chapter_ltst_term11_20260910.md](../chapter/chapter_ltst_term11_20260910.md)。6人・2人1組、月曜正午締切、月曜 MTG 短縮、運営 PC 37,800円を船津申請→LTST 決裁。次回は **9/17 全員参加**（フィックス） |
+| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。事前配布（チーム用）: [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md)。進行用: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。20:00〜10期リハ見学（任意） |
+| サポートチームWS | **受講対象。** オンライン2時間。10/1 13:00–15:00 または 10/9 15:30–17:30。受ければTLTオンデマンドは不要。すでにTLT視聴済みでもWSを受ける（LT確認）。告知文: [webmaster_term11_tlt_workshop_20260912.md](webmaster_term11_tlt_workshop_20260912.md)。**未送信** |
 
 ---
 
@@ -41,7 +43,7 @@ religo_import: pending_first_meeting
 | 次廣 | 11期 Webマスター。音頭は取る。全部の正解は持たない |
 | 梅澤さん | Webマス経験者 |
 | 一誠くん | サポート |
-| 軍司さん | すでにブレイクアウトを支えている |
+| 軍司さん | BOR のエキスパート。教える人。係の固定先ではない |
 | 竹村さん | サポート |
 | 米澤さん | サポート |
 
@@ -57,6 +59,7 @@ religo_import: pending_first_meeting
 | PC環境アンケート（編集） | https://docs.google.com/forms/d/1OwAoEbVkUGTaMkcTKtC8KmUR5yW1YLmfdCjHkh-hDYw/edit |
 | PC環境アンケート（回答シート） | https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit |
 | 第1回ミーティング（調整さん） | https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb |
+| 第1回ミーティング Zoom | https://us06web.zoom.us/j/88575634360?pwd=Q6Q2fOCS905WWaDiTcq2iL1PrZSN0I.1 |
 | 11期 LTST 情報まとめ（プレジ作成・アジェンダ／議事録） | https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit |
 | タスク棚卸し（作業用シート） | https://docs.google.com/spreadsheets/d/1TWadVczKpOXQTy76-3cij-kYOTfFi2eGl7bHyoKrsh4/edit |
 | NextCloud（ST定例会） | https://ne-dragonfly.site/cloud/index.php/s/E3a37t3pPsAJB8q?path=%2F |
@@ -69,19 +72,23 @@ religo_import: pending_first_meeting
 
 **確定: 2026-09-14（月）19:00–20:00 JST。** Zoom 60分。
 
-顔合わせ。向きを揃える。役割は決めない。
+顔合わせ。向きを揃える。**休んでも回る＝ローテーション。** 今週の担当表は作らない。
 
 11期 LT・ST ミーティングは 9月2日と9月10日。14日はその場で決まったことと、来期 Webマスチームに課せられた課題の目線合わせ。
 
 案内は 2026-08-29 09:59 JST にグループ送信済み。確定は 2026-08-30 12:39 JST。文面の正: [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md)
 
-開催後に `webmaster_term11_meeting1_20260914.md` を切り、Religo へ入れる。
+アジェンダの正: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。開催後に `webmaster_term11_meeting1_20260914.md` を切り、Religo へ入れる。
 
 ---
 
-## スライド送りの型（誰がやるかは未決）
+## スライド送りの型（ローテーション。週のペアは未決）
 
-人間が 2026-08-30 18:19 JST に方向を出した。ペア割はまだしない。
+人間が 2026-08-30 18:19 JST に方向を出した。誰が何週やるかはまだしない。ペアは固定係ではなく、回す単位。
+
+**狙い**
+1. 切れても止まらない（リカバリ）。
+2. Webマス自身がウィークリーとメインプレを聞き、リファーラルの機会を失わない。
 
 - パワーポイントは **朝礼を含めて 4つ**。
 - それぞれの画面共有は **2人1組**。
@@ -90,6 +97,18 @@ religo_import: pending_first_meeting
 - メインに切断や停止が起きたら、バックアップがすぐ共有に切り替える。
 
 4つのファイル名は、ここに書いていない。分かったら足す。
+
+---
+
+## 仕事の中身（10期の型。11期は回して覚える）
+
+2026-09-12 人間整理。**狙い: 誰かが休んでも回る。係を固定せず、全員が触る。** 詳細は [第1回アジェンダ](webmaster_term11_meeting1_20260914_agenda.md)。
+
+| いつ | 仕事 |
+|------|------|
+| **前日** | 朝礼スライドのがっちゃんこ。定例会スライド（LT素材・欠席反映）。20時リハ。ビジター背景。ビジホスの部屋割りと Zoom URL を DragonFly スレッドへ |
+| **当日** | Zoom／BOR 準備（軍司が教える）。朝礼送り。定例会送り（**Edu・シェアストーリー・メインプレは除く**）。録画。スポット（Edu・SS・MP・真正度確認） |
+| **普段** | 新入会へウィークリー用スライド依頼と Zoom 背景。PCまわりはいま倉持さんに寄っている |
 
 ---
 
@@ -114,7 +133,13 @@ religo_import: pending_first_meeting
 | PCアンケート | [webmaster_term11_pc_survey_20260828.md](webmaster_term11_pc_survey_20260828.md) |
 | こなっち相談（PC・PPT） | [webmaster_term11_pc_konaka_20260830.md](webmaster_term11_pc_konaka_20260830.md) |
 | 第1回 LTST 準備メモ（9/2） | [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md) |
+| 第2回 LTST 本体（9/10） | [chapter_ltst_term11_20260910.md](../chapter/chapter_ltst_term11_20260910.md) |
 | 第1回調整さん | [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) |
+| サポートチームWS案内（9/12） | [webmaster_term11_tlt_workshop_20260912.md](webmaster_term11_tlt_workshop_20260912.md) |
+| 第1回事前資料（9/14・チーム配布） | [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md) |
+| 第1回事前資料 A4横PDF | [materials/webmaster_term11_meeting1_20260914_preread.pdf](materials/webmaster_term11_meeting1_20260914_preread.pdf) |
+| 第1回事前資料 A4図版 | [materials/webmaster_term11_meeting1_20260914_preread.html](materials/webmaster_term11_meeting1_20260914_preread.html) |
+| 第1回アジェンダ（9/14・進行用） | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) |
 | タスク表 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv)／[説明](webmaster_task_inventory_20260822.md) |
 | 倉持棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
 | ユウジさん4者 | [webmaster_kudo_yuji_20260821.md](webmaster_kudo_yuji_20260821.md) |
@@ -161,6 +186,21 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-09-12 18:42 | 第1回事前資料の配布面から作業用の語を外した |
+| 2026-09-12 17:58 | 第1回事前資料の文言照合。自動化と60分の注 |
+| 2026-09-12 17:54 | 第1回事前資料の図版を見やすく組み直し。PDF 再作成 |
+| 2026-09-12 17:50 | 第1回事前資料の A4横2枚 PDF |
+| 2026-09-12 17:46 | 第1回事前資料の図版を A4横2枚へ |
+| 2026-09-12 17:43 | 第1回事前資料の A4縦2枚図版 |
+| 2026-09-12 17:41 | 第1回の事前資料（Webマスチームのみ）。他チームは載せない |
+| 2026-09-12 17:35 | 第1回 Zoom は確定案内の会合。再発行しない |
+| 2026-09-12 17:32 | 第1回アジェンダに、来期の指針と目標の地図を追加 |
+| 2026-09-12 17:31 | ペアの狙い。切れても止まらない／自分もウィークリーとメインプレを聞く |
+| 2026-09-12 17:28 | 役割は固定しない。ローテーション。休んでも回る／全員ができる |
+| 2026-09-12 17:25 | 仕事の中身（前日・当日・普段）。Edu／SS／MP送りは対象外。軍司＝BOR |
+| 2026-09-12 17:10 | 第1回（9/14 19:00–20:00）アジェンダ。20時リハ見学。共有文は未送信 |
+| 2026-09-12 16:48 | サポートチームWS（10/1・10/9）。サポートも対象。TLT視聴済みでもWS。告知文は未送信 |
+| 2026-09-10 22:15 | 第2回 LTST の結果を「いま」に反映。PC 37,800円・ペア制・月曜正午。本体議事録は chapter 側 |
 | 2026-09-02 14:27 | 11期 第1回 LTST（本日 20:00）の準備メモを追加。PPT ライセンスは LTST 全体協議事項へ。LTST 情報まとめシートを URL に追加 |
 | 2026-08-30 18:19 | スライド送りの型。朝礼含む4ファイル、各2人1組、バックアップも同ページ送り。ペアは未決 |
 | 2026-08-30 18:15 | 次廣がアンケート回答。2台持ち3名に更新。相談の中身は同じ |

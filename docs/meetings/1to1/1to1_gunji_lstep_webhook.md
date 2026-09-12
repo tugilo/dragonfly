@@ -7,9 +7,13 @@ chapter_primary: bni_dragonfly
 owner_side: tugilo
 first_session_date: "2026-03-30"
 first_session_time_jst: "15:30-16:30"
-latest_session_date: "2026-04-01"
+latest_session_date: "2026-09-11"
 latest_session_time_jst: "14:00-15:00"
-source_zoom_summary_latest: "軍司敦哉さんとの第2回121要約（ユーザー提供 2026-06-26）"
+source_zoom_summary_latest: "渡邊真大さんとの3者121要約（ユーザー提供 2026-09-11）。本文の正は 1to1_watanabe_mao_prismile.md"
+session3_status: completed
+session3_external_source: pending_zoom_import
+session3_third_party_ja: "渡邊 真大"
+session3_related_1to1: "docs/meetings/1to1/1to1_watanabe_mao_prismile.md"
 source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JRXFTTktaUy9BYmFlcTRHQT09&chapter=TkM4c04xamJieDYrOXd4YUFDTjlHdz09"
 ---
 
@@ -17,8 +21,8 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 
 **文書の位置づけ:** 軍司敦哉さんとの 1to1 を時系列で管理し、プロフィール、協業テーマ、LINE / Lステップ / AI連携案件、紹介戦略を同居させる。  
 **整理:** tugilo（次廣 淳）  
-**データソース:** ① 2026-03-30 初回121要約（ユーザー提供） ② 2026-04-01 第2回121要約（ユーザー提供） ③ NCASプロフィール（2026-06-26 参照） ④ 旧 `1to1_gunji_lstep_webhook` アジェンダ。  
-**Religo 1to1 レコード:** 第1回 `one_to_ones.id` = **99** ／ 第2回 `one_to_ones.id` = **100**。
+**データソース:** ① 2026-03-30 初回121要約（ユーザー提供） ② 2026-04-01 第2回121要約（ユーザー提供） ③ NCASプロフィール（2026-06-26 参照） ④ 旧 `1to1_gunji_lstep_webhook` アジェンダ ⑤ 2026-09-11 渡邊真大さん3者要約（本文の正は渡邊ファイル）。  
+**Religo 1to1 レコード:** 第1回 `one_to_ones.id` = **99** ／ 第2回 `one_to_ones.id` = **100** ／ 第3回（3者）は本日行なし。渡邊側 Zoom `89755713223` の取込待ち。**`#99` `#100` を流用しない。**
 
 ---
 
@@ -62,6 +66,8 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 
 ## ■ サマリー（最新状況）
 
+- **最新は第3回 2026-09-11 JST 14:00–15:00。** 渡邊真大さん（プライスマイル）の出張買取デジタル契約システムの相談に、軍司さん・次廣が同席した3者。本文の正は [`1to1_watanabe_mao_prismile.md`](1to1_watanabe_mao_prismile.md)。
+- 渡邊さんの仕組みは契約書を LINE 送付し、**登録率100%**。公式アカウント構築は軍司さんの領域。改善後の再デモで、LINE登録顧客を軍司さん側へ流すコラボを続ける。
 - 2026-03-30 JST 15:30-16:30 に初回121を実施し、軍司さんのLINE公式アカウント運用代行と、次廣のAI活用業務改善システム構築の親和性を確認した。
 - 2026-04-01 JST 14:00-15:00 に第2回121を実施し、**リンクアットジャパン向け Lステップ + AIチャットボット提案**について、提案資料・見積もり・役割分担・商談同席方針を協議した。
 - 次廣がGensparkで作成した提案資料をベースに、**スタートプラン1パターン**を軸に提示し、軍司さんのLステップ構築・運用費用を加えて、総額約100万円程度で提案する方向性が固まった。
@@ -351,6 +357,29 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 - 今月末頃、リンクアットジャパンとのオンライン商談に、次廣がエンジニアリングパートナーとして同席予定。
 - 日程は見積もり提出後に調整する。
 
+### 【第3回】2026-09-11（金）JST 14:00–15:00 — 実施済み（3者）
+
+#### 基本情報
+
+- **日時:** **2026-09-11（金）JST 14:00–15:00**（ユーザー確定。カレンダーは 14:15–15:00）
+- **実施方法:** Zoom（meeting id **89755713223**／pwd **729227**）
+- **参加者:** 渡邊 真大、軍司 敦哉、次廣 淳
+- **本文の正:** [`1to1_watanabe_mao_prismile.md`](1to1_watanabe_mao_prismile.md)。本ファイルは軍司さん側の履歴用。
+- **Religo:** 渡邊さん `members.id=21`。本日の `one_to_ones` 行なし。`#99` `#100` は流用しない。
+
+#### 主要成果（軍司さん視点）
+
+- 渡邊さんの出張買取デジタル契約は、契約書を LINE 送付し **登録率100%**。
+- 公式アカウントの構築・運用は軍司さんの領域。システム導入後の顧客を軍司さん側へ流すコラボの可能性。
+- 改善後に、渡邊さんから次廣・軍司さんへ再デモする。
+
+#### アクション（軍司さん）
+
+| 担当 | 内容 | 状態 |
+|------|------|------|
+| **軍司** | 渡邊さんの改善後デモに同席する | 渡邊さん発信待ち |
+| **次廣** | 会後お礼 | 文案は渡邊ファイル。送信待ち |
+
 ---
 
 ## ■ 累積インサイト（超重要）
@@ -363,6 +392,7 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 - 第2回で、リンクアットジャパン案件を具体的な先行事例として、**軍司さんのLステップ導線 + 次廣のWebhook / AI / API連携**の役割分担が実務レベルまで進んだ。
 - 軍司さんの商談上は、次廣を「再委託先」ではなく**エンジニアリングパートナー企業**として見せる方が、契約面・信頼面の両方で動きやすい。
 - 初期価格は市場基準になりやすいため、安易に下げるより、ROI・時間短縮・問い合わせ対応削減・データ可視化を価値として説明する必要がある。
+- 第3回（渡邊真大3者）で、**現場が既に LINE 登録率100%を取っている案件** が軍司さんの前に出た。Lステップ提案の前に、契約・台帳のデジタル化が乗っている形。受け皿は軍司、裏側は次廣、現場は渡邊、と役割が分かれる。
 
 ---
 
@@ -706,3 +736,4 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 | 2026-04-03 | tugilo式に統合・`1to1_gunji_lstep_webhook.md` へ。付録にアジェンダ全文保持 |
 | 2026-06-26 11:53 JST | 2026-03-30 JST 15:30-16:30 の初回121要約とNCASプロフィールを反映し、正式な1to1シリーズ文書へ更新 |
 | 2026-06-26 11:58 JST | 2026-04-01 JST 14:00-15:00 の第2回121要約を反映。リンクアットジャパン向け Lステップ + AIチャットボット提案、役割分担、価格、技術検討、横展開、Action Items を整理 |
+| 2026-09-11 15:04 JST | 第3回（渡邊真大3者・14:00–15:00）を追記。本文の正は [`1to1_watanabe_mao_prismile.md`](1to1_watanabe_mao_prismile.md)。本日行なし。`#99` `#100` 流用禁止 |

@@ -173,6 +173,11 @@
 | [meetings/webmaster/webmaster_term11_pc_survey_20260828.md](meetings/webmaster/webmaster_term11_pc_survey_20260828.md) | **11期 WM PC環境アンケート**（2026-08-30 18:15 JST）。6名回答。米澤さんのみブラウザ版 PPT。[シート](https://docs.google.com/spreadsheets/d/1IZN1u1OjXMvDVZTrnQHEYG05YqsxcejqkB-D5GHQVTg/edit)。 |
 | [meetings/webmaster/webmaster_term11_pc_konaka_20260830.md](meetings/webmaster/webmaster_term11_pc_konaka_20260830.md) | **11期 WM 運営PC・PPT 1ライセンス**（2026-08-30 18:11 JST）。こなっち相談下書き。個別送信せず **2026-09-02 LTST 全体協議事項へ切替**。 |
 | [meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md](meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md) | **11期 WM 第1回ミーティング**。**2026-09-14（月）19:00–20:00 JST 確定**（2026-08-30 12:39 JST）。[調整さん](https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb)。 |
+| [meetings/webmaster/webmaster_term11_tlt_workshop_20260912.md](meetings/webmaster/webmaster_term11_tlt_workshop_20260912.md) | **11期 WM サポートチームWS案内**（2026-09-12 16:52 JST・未送信）。10/1 または 10/9。NCAS「サポートチーム」検索。WS後は脱出スレ離脱可。視聴済みでもWS。 |
+| [meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md) | **11期 WM 第1回事前資料**（チーム配布・未送信）。Webマスだけ。目標3つ・ローテーション・タスク。他チーム・章の管理数字は載せない。 |
+| [meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html) | **同・A4横2枚図版**（印刷用 HTML）。CDNなし。 |
+| [meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf) | **同・A4横2枚 PDF**（チーム配布用）。作業用の語は載せない。 |
+| [meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md) | **11期 WM 第1回アジェンダ**（2026-09-14 19:00–20:00・進行用・共有文未送信）。Zoom は確定案内の会合。 |
 
 #### 1to1 専用（docs/meetings/1to1/）
 
