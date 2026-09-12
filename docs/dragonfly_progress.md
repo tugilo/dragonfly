@@ -8,6 +8,20 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-12 18:42 JST | **11期WM事前資料の配布面:** 未送信など作業用の語を外した。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-12 17:58 JST | **11期WM事前資料の文言照合:** 図へ自動化と60分の注を戻した。共有文は未送信。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-12 17:54 JST | **11期WM事前資料を見やすく組み直し:** 1枚1メッセージ、字を大きく、円図をやめた。文言はそのまま。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-12 17:50 JST | **11期WM事前資料のA4横PDF:** 2枚。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-12 17:46 JST | **11期WM事前資料をA4横へ:** 流れ図と2人1組が横に並ぶ。[`webmaster_term11_meeting1_20260914_preread.html`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html)。 |
+| 2026-09-12 17:43 JST | **11期WM事前資料のA4図版:** 縦2枚。回し方の円と2人1組を図に。[`webmaster_term11_meeting1_20260914_preread.html`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html)。 |
+| 2026-09-12 17:41 JST | **11期WM第1回の事前資料:** Webマスチームだけ。目標3つ・回し方・タスク。他チームと章の管理数字は入れない。[`webmaster_term11_meeting1_20260914_preread.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md)。未送信。 |
+| 2026-09-12 17:35 JST | **11期WM第1回 Zoom は確定案内の会合:** 再発行しない。参加 URL とミーティングIDをアジェンダへ。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 17:32 JST | **11期WM第1回アジェンダに指針と目標を1枚化:** 10月スタートだが引き継ぎとLTSTは進行中。章の向き（1to1一本・ST指針WEB・月曜正午）／チーム目標3つ／9/10までのやり方。新規施策は足さない。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 17:31 JST | **11期WMペアの狙いをアジェンダへ:** 2人1組は①切れても止まらない ②Webマス自身がウィークリー／メインプレを聞き紹介を逃さない。ローテーションとセット。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 17:28 JST | **11期WMの回し方:** 固定係ではなくローテーション。誰かが休んでも定例会が回るよう、6人全員ができるようにする。第1回は地図の共有。今週の担当表は作らない。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 17:25 JST | **11期WM仕事の中身をアジェンダへ:** 前日（がっちゃんこ・リハ・背景・部屋割り）／当日（Zoom・BOR・送り・録画・スポット）／普段（入会者案内・PC）。Edu・SS・MP送りは対象外。郡司→軍司。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 17:10 JST | **11期WM第1回アジェンダ:** 9/14 19:00–20:00。顔合わせ。LTST 9/10 のペア／正午／短縮／PC。20時10期リハ見学（任意）。共有文あり・未送信。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-12 16:48 JST | **11期WMサポートへTLT／WS案内の下書き:** LT確認どおり、オンライン2時間WS（10/1または10/9）を受ければTLT不要。サポートも対象。TLT視聴済みでもWS。[`webmaster_term11_tlt_workshop_20260912.md`](meetings/webmaster/webmaster_term11_tlt_workshop_20260912.md)。未送信。申込URLはTODO。 |
 | 2026-09-12 16:26 JST | **Phase 307 取り込み準備:** チップは表示切替。利用記録は例会後の「この週に使った」。1to1 / webmaster / dragonfly.sql は含めない。 |
 | 2026-09-12 11:04 JST | **Phase 307 修正:** チップは表示切替だけ。利用記録は例会後の「この週に使った」。 |
 | 2026-09-12 11:00 JST | **implement Phase 307 実装:** Dashboard で A〜E 切替。test 620 passed。`npm run build` 成功。 |

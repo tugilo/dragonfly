@@ -13,6 +13,7 @@ BNI **DragonFly チャプター**の定例会および **定例会回数に含�
 - **1to1** → [`../1to1/`](../1to1/)
 - **チーム MTG**（スリーバイス等）→ [`../team/`](../team/)
 - **LTST（期の役職名簿）** → 本ディレクトリの `chapter_ltst_termNN.md`（例: [11期](chapter_ltst_term11.md)）
+- **LTST ミーティング議事録** → `chapter_ltst_termNN_YYYYMMDD.md`（例: [11期 第2回 2026-09-10](chapter_ltst_term11_20260910.md)）。公式の進捗はプレジの [LTST情報まとめ](https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit)（タブ LTSTMTG議事録）。Religo の `meetings` には入れない
 - **期の方針** → 本ディレクトリの `chapter_termNN_policy_*.md`（例: [11期方針 2026-07-31](chapter_term11_policy_20260731.md)）
 - **11期運営思想（所信表明）** → [`docs/SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md`](../../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)（WM・Religo の判断前提）
 

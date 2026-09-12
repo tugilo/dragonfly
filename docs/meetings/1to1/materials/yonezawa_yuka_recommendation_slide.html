@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>推薦の言葉 — 米澤侑桂 様（次廣 淳）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #2b2b2b;
+      --muted: #454545;
+      --page-w: 297mm;
+      --page-h: 210mm;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: #ece8e2;
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: .6rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 12px 16px 4px;
+    }
+
+    .toolbar button {
+      border: 1px solid #c4b8aa;
+      background: #fff;
+      color: #3d342c;
+      border-radius: 999px;
+      padding: .45rem 1rem;
+      font: inherit;
+      font-size: .88rem;
+      cursor: pointer;
+    }
+
+    .toolbar button[aria-pressed="true"] {
+      background: #3d342c;
+      color: #fff;
+      border-color: #3d342c;
+    }
+
+    .hint {
+      width: min(var(--page-w), calc(100vw - 24px));
+      margin: 0 auto 10px;
+      text-align: center;
+      color: #6b6258;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .stage {
+      width: min(var(--page-w), calc(100vw - 24px));
+      aspect-ratio: 297 / 210;
+      height: auto;
+      margin: 0 auto 24px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(50, 40, 30, .12);
+    }
+
+    .frame,
+    .watercolor {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .watercolor { opacity: 0; }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .sparkle {
+      position: absolute;
+      color: #f7e38a;
+      font-size: 14px;
+      text-shadow: 0 0 8px #fff3a8;
+    }
+
+    body[data-style="watercolor"] .floral { opacity: 0; }
+    body[data-style="watercolor"] .watercolor { opacity: 1; }
+    body[data-style="floral"] .name-rule { background: linear-gradient(90deg, #8b5a3c, #d7b48a 55%, transparent); }
+    body[data-style="watercolor"] .name-rule { background: linear-gradient(90deg, #8b6bb5, #e7a8c3 55%, transparent); }
+
+    .sheet {
+      position: absolute;
+      inset: 14% 10% 12% 10%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .to {
+      font-size: clamp(20px, 3.4vw, 28px);
+      font-weight: 700;
+      letter-spacing: .08em;
+      line-height: 1.35;
+    }
+
+    .name-rule {
+      width: 38%;
+      max-width: 280px;
+      height: 1.5px;
+      margin: 8px 0 18px;
+      opacity: .75;
+    }
+
+    .body {
+      flex: 1;
+      font-size: clamp(14px, 2.15vw, 18px);
+      font-weight: 500;
+      line-height: 1.95;
+      letter-spacing: .04em;
+      color: var(--muted);
+    }
+
+    .body p {
+      margin: 0 0 .85em;
+    }
+
+    .body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .from {
+      align-self: flex-end;
+      text-align: right;
+      font-size: clamp(14px, 2vw, 17px);
+      font-weight: 500;
+      letter-spacing: .1em;
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      html, body {
+        width: 297mm;
+        height: 210mm;
+        background: #fff;
+        overflow: hidden;
+      }
+
+      .toolbar,
+      .hint {
+        display: none !important;
+      }
+
+      .stage {
+        width: 297mm;
+        height: 210mm;
+        aspect-ratio: auto;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      .sheet {
+        inset: 28mm 26mm 22mm 26mm;
+      }
+
+      .to { font-size: 22pt; }
+      .name-rule { margin: 4mm 0 7mm; }
+      .body { font-size: 13.5pt; line-height: 1.9; }
+      .from { font-size: 13pt; }
+
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body data-style="floral">
+  <div class="toolbar">
+    <button type="button" data-style="floral" aria-pressed="true">増本さん型（花枠）</button>
+    <button type="button" data-style="watercolor" aria-pressed="false">小中さん型（水彩）</button>
+    <button type="button" id="print-btn">A4横でPDF</button>
+  </div>
+  <p class="hint">A4横（297×210mm）1枚。印刷ダイアログは「A4 / 横向き / 余白なし」。</p>
+
+  <section class="stage" aria-label="推薦の言葉">
+    <svg class="frame floral" viewBox="0 0 2970 2100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <style>
+          .vine { fill: none; stroke: #6f4630; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+          .fill-leaf { fill: #fff8e8; stroke: #6f4630; stroke-width: 2.6; }
+          .petal { fill: #f4e09a; stroke: #6f4630; stroke-width: 2.4; }
+          .bird { fill: none; stroke: #5e3b27; stroke-width: 3.2; }
+        </style>
+        <g id="flower">
+          <ellipse class="petal" cx="0" cy="-16" rx="9" ry="16"/>
+          <ellipse class="petal" cx="15.2" cy="-5" rx="9" ry="16" transform="rotate(72)"/>
+          <ellipse class="petal" cx="9.4" cy="13" rx="9" ry="16" transform="rotate(144)"/>
+          <ellipse class="petal" cx="-9.4" cy="13" rx="9" ry="16" transform="rotate(-144)"/>
+          <ellipse class="petal" cx="-15.2" cy="-5" rx="9" ry="16" transform="rotate(-72)"/>
+          <circle cx="0" cy="0" r="6" fill="#e4bc4d" stroke="#6f4630" stroke-width="2.2"/>
+        </g>
+        <g id="leaf-l">
+          <path class="fill-leaf" d="M0 0c18-24 42-14 32 10-18 4-28-4-32-10z"/>
+        </g>
+        <g id="swirl">
+          <path class="vine" d="M0 0c22-18 40-8 32 14-8 18-28 14-32 0 14 4 24-4 22-14"/>
+        </g>
+      </defs>
+
+      <rect x="70" y="60" width="2830" height="1980" rx="18" fill="none" stroke="#d3c0a8" stroke-width="2"/>
+      <path class="vine" d="M150 130
+        C 420 80 700 170 980 115 C 1180 75 1320 150 1400 125
+        M 1570 125 C 1650 150 1790 75 1990 115 C 2270 170 2550 80 2820 130
+        M 2855 180 C 2895 420 2830 720 2865 1020 C 2900 1280 2840 1580 2855 1920
+        M 2820 1970 C 2550 2020 2270 1930 1990 1985 C 1790 2025 1650 1950 1570 1975
+        M 1400 1975 C 1320 1950 1180 2025 980 1985 C 700 1930 420 2020 150 1970
+        M 115 1920 C 130 1580 70 1280 105 1020 C 140 720 75 420 115 180"/>
+
+      <g transform="translate(1485 155)">
+        <path class="bird" d="M-170 48c14-40 40-66 72-50 22 10 36 32 44 58"/>
+        <path class="bird" d="M-128 28c-28-14-50 4-62 28"/>
+        <path class="bird" d="M-88 14c-8-26 10-40 28-28"/>
+        <path class="bird" d="M170 48c-14-40-40-66-72-50-22 10-36 32-44 58"/>
+        <path class="bird" d="M128 28c28-14 50 4 62 28"/>
+        <path class="bird" d="M88 14c8-26-10-40-28-28"/>
+        <path class="petal" d="M0 10c14 18 28 26 0 54C-28 36-14 28 0 10z"/>
+        <use href="#flower" transform="translate(-32 -4) scale(.75)"/>
+        <use href="#flower" transform="translate(32 -4) scale(.75)"/>
+      </g>
+
+      <g transform="translate(1485 1955)">
+        <path class="petal" d="M-64 0c-28-24-60 18-14 32 18 6 32 0 40-14 8 14 22 20 40 14 46-14 14-56-14-32-14 8-28 18-52 0z"/>
+        <circle cx="0" cy="10" r="13" class="petal"/>
+        <path class="vine" d="M-82 14c-32 14-50 4-64-18"/>
+        <path class="vine" d="M82 14c32 14 50 4 64-18"/>
+      </g>
+
+      <use href="#flower" transform="translate(165 165)"/>
+      <use href="#flower" transform="translate(2805 165)"/>
+      <use href="#flower" transform="translate(165 1935)"/>
+      <use href="#flower" transform="translate(2805 1935)"/>
+      <use href="#flower" transform="translate(400 115)"/>
+      <use href="#flower" transform="translate(720 145)"/>
+      <use href="#flower" transform="translate(2250 145)"/>
+      <use href="#flower" transform="translate(2570 115)"/>
+      <use href="#flower" transform="translate(400 1985)"/>
+      <use href="#flower" transform="translate(720 1955)"/>
+      <use href="#flower" transform="translate(2250 1955)"/>
+      <use href="#flower" transform="translate(2570 1985)"/>
+      <use href="#flower" transform="translate(120 480)"/>
+      <use href="#flower" transform="translate(145 850)"/>
+      <use href="#flower" transform="translate(120 1220)"/>
+      <use href="#flower" transform="translate(145 1590)"/>
+      <use href="#flower" transform="translate(2850 480)"/>
+      <use href="#flower" transform="translate(2825 850)"/>
+      <use href="#flower" transform="translate(2850 1220)"/>
+      <use href="#flower" transform="translate(2825 1590)"/>
+      <use href="#flower" transform="translate(1050 105) scale(.8)"/>
+      <use href="#flower" transform="translate(1920 105) scale(.8)"/>
+      <use href="#flower" transform="translate(1050 1995) scale(.8)"/>
+      <use href="#flower" transform="translate(1920 1995) scale(.8)"/>
+
+      <use href="#leaf-l" transform="translate(280 145) rotate(-18)"/>
+      <use href="#leaf-l" transform="translate(560 100) rotate(12)"/>
+      <use href="#leaf-l" transform="translate(2690 145) rotate(198)"/>
+      <use href="#leaf-l" transform="translate(2410 100) rotate(168)"/>
+      <use href="#leaf-l" transform="translate(135 320) rotate(70)"/>
+      <use href="#leaf-l" transform="translate(2835 320) rotate(110)"/>
+      <use href="#leaf-l" transform="translate(135 1780) rotate(-70)"/>
+      <use href="#leaf-l" transform="translate(2835 1780) rotate(-110)"/>
+      <use href="#leaf-l" transform="translate(280 1960) rotate(18)"/>
+      <use href="#leaf-l" transform="translate(2690 1960) rotate(-18)"/>
+
+      <use href="#swirl" transform="translate(500 155)"/>
+      <use href="#swirl" transform="translate(2470 155) scale(-1,1)"/>
+      <use href="#swirl" transform="translate(500 1945) scale(1,-1)"/>
+      <use href="#swirl" transform="translate(2470 1945) scale(-1,-1)"/>
+      <use href="#swirl" transform="translate(140 650) rotate(90)"/>
+      <use href="#swirl" transform="translate(2830 650) rotate(-90)"/>
+      <use href="#swirl" transform="translate(140 1450) rotate(90)"/>
+      <use href="#swirl" transform="translate(2830 1450) rotate(-90)"/>
+    </svg>
+
+    <div class="watercolor" aria-hidden="true">
+      <span class="blob" style="width:240px;height:240px;left:-50px;top:-60px;background:rgba(168,196,230,.55)"></span>
+      <span class="blob" style="width:200px;height:200px;left:80px;top:-80px;background:rgba(247,226,150,.62)"></span>
+      <span class="blob" style="width:180px;height:180px;left:-24px;top:80px;background:rgba(244,186,205,.5)"></span>
+      <span class="blob" style="width:160px;height:160px;left:48px;top:24px;background:rgba(72,58,120,.72)"></span>
+      <span class="sparkle" style="left:86px;top:70px">✦</span>
+      <span class="sparkle" style="left:126px;top:98px">✦</span>
+      <span class="sparkle" style="left:100px;top:118px">✧</span>
+
+      <span class="blob" style="width:260px;height:260px;right:-60px;top:-50px;background:rgba(168,222,196,.55)"></span>
+      <span class="blob" style="width:190px;height:190px;right:50px;top:50px;background:rgba(164,206,236,.5)"></span>
+      <span class="blob" style="width:160px;height:160px;right:140px;top:-36px;background:rgba(247,214,168,.45)"></span>
+
+      <span class="blob" style="width:280px;height:210px;left:16%;bottom:-80px;background:rgba(168,222,196,.5)"></span>
+      <span class="blob" style="width:230px;height:190px;left:38%;bottom:-70px;background:rgba(164,206,236,.48)"></span>
+      <span class="blob" style="width:220px;height:200px;right:8%;bottom:-80px;background:rgba(244,186,205,.5)"></span>
+      <span class="blob" style="width:170px;height:170px;right:-36px;bottom:24px;background:rgba(72,58,120,.55)"></span>
+      <span class="sparkle" style="right:52px;bottom:86px">✦</span>
+      <span class="sparkle" style="right:86px;bottom:60px">✧</span>
+    </div>
+
+    <div class="sheet">
+      <div class="to">こめちゃんデザイン　米澤侑桂　様</div>
+      <div class="name-rule"></div>
+      <div class="body">
+        <p>税理士事務所のサイトに、求人ページを追加する仕事をお願いしました。もともと別のデザイナーさんが担当されていた案件で、その方と連絡が取れなくなってしまった、途中からの引き継ぎです。</p>
+        <p>米澤さんは、既存サイトの雰囲気に合わせて丁寧に対応してくれました。ただ合わせるだけでなく、情報の整理や見せ方に、米澤さんらしいアイデアを入れてくれています。見た目を崩さず、伝わりやすさまで考えてくれる。そこに、米澤さんの仕事の姿勢が出ていると感じます。</p>
+        <p>実際、クライアントからは一発でOKをいただきました。途中参加で既存に合わせる仕事で、初回提案がそのまま通るのは簡単ではありません。</p>
+        <p>新規のサイトはもちろんですが、そういった途中で止まってしまっている案件も、柔軟に、そして丁寧に対応してくださる米澤さんを、胸を張って推薦いたします。</p>
+      </div>
+      <div class="from">
+        tugilo<br>
+        次廣　淳
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll(".toolbar button[data-style]");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.dataset.style = button.dataset.style;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      });
+    });
+    document.getElementById("print-btn").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>

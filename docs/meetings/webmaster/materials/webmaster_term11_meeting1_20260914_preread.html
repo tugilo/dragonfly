@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja" data-style="internal-explain">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>11期 Webマスチーム 事前資料 — 2026-09-14</title>
+  <style>
+    :root {
+      --bg: #e6e1d6;
+      --bg2: #ebe5da;
+      --panel: #f3efe6;
+      --ink: #1c241f;
+      --muted: #6b756e;
+      --line: #cfc6b6;
+      --accent: #2f5d50;
+      --accent2: #8a7344;
+      --warn: #a1543f;
+      --soft: #dfe8e3;
+      --soft2: #efe6d6;
+      --softw: #f3e4dc;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: #cfc8ba;
+      color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", sans-serif;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 12px 16px 4px;
+    }
+    .toolbar button {
+      border: 1px solid #b9b0a0;
+      background: #fff;
+      color: #3d342c;
+      border-radius: 999px;
+      padding: .4rem 1rem;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .hint {
+      text-align: center;
+      color: #6b6258;
+      font-size: 12px;
+      margin: 0 16px 12px;
+    }
+    .page {
+      width: 297mm;
+      height: 210mm;
+      margin: 0 auto 16px;
+      background: linear-gradient(180deg, var(--bg), var(--bg2));
+      padding: 7.5mm 9mm 8mm;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 14px 36px rgba(40, 32, 24, .14);
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 8px;
+      background: var(--accent);
+    }
+    h1, h2, p, ul { margin: 0; }
+    .kicker {
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .title {
+      font-size: 26px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin: 2px 0 6px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 36px 1fr;
+      align-items: stretch;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .hero .box {
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .hero .old {
+      background: var(--softw);
+      border: 1px solid #e0c8bb;
+    }
+    .hero .new {
+      background: var(--soft);
+      border: 1.5px solid var(--accent);
+    }
+    .hero .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .hero .old .label { color: var(--warn); }
+    .hero .new .label { color: var(--accent); }
+    .hero .msg {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-top: 4px;
+    }
+    .arrow-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--warn);
+      font-weight: 800;
+    }
+    .sec {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin: 0 0 6px;
+    }
+    .goals {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .goal {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px 10px;
+    }
+    .goal .top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .goal b { font-size: 16px; }
+    .goal span { display: block; font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .num {
+      width: 22px; height: 22px; flex: 0 0 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      line-height: 22px;
+      text-align: center;
+      font-weight: 800;
+    }
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 8px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px 10px;
+    }
+    .panel h2 { font-size: 14px; color: var(--accent); margin-bottom: 6px; }
+    .note { font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .people {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin: 4px 0 8px;
+    }
+    .people span {
+      display: block;
+      text-align: center;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 0;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .people span.me { background: #1f463c; }
+    .axis {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr 72px 1fr;
+      gap: 6px;
+      align-items: stretch;
+    }
+    .screen {
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      background: var(--soft);
+    }
+    .screen.sub { border-color: #4a6a7a; background: #e4ebf0; }
+    .screen .who { font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .screen .do { font-size: 16px; font-weight: 800; margin: 4px 0 2px; }
+    .screen .subdo { font-size: 12px; color: var(--muted); }
+    .swap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--warn);
+      line-height: 1.35;
+    }
+    .why2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .why2 div {
+      border-radius: 8px;
+      padding: 7px 8px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .why2 .a { background: var(--softw); }
+    .why2 .b { background: #e4ebf0; }
+    .foot {
+      position: absolute;
+      left: 9mm; right: 9mm; bottom: 5mm;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .week {
+      display: grid;
+      grid-template-columns: 1fr 16px 1fr 16px 1fr 16px 1fr;
+      align-items: stretch;
+      margin-bottom: 8px;
+    }
+    .wbox {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 8px 9px;
+    }
+    .wbox .n {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .wbox .when { font-size: 13px; font-weight: 800; }
+    .wbox .what { font-size: 16px; font-weight: 800; margin: 2px 0 3px; }
+    .wbox .how { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .warr {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--warn);
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .cols3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .col {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px 10px 9px;
+    }
+    .col h2 { font-size: 14px; margin-bottom: 4px; color: var(--ink); }
+    .col ul { padding-left: 16px; font-size: 12px; line-height: 1.5; }
+    .col .out {
+      color: var(--warn);
+      font-weight: 800;
+      list-style: none;
+      margin-left: -16px;
+      padding: 4px 6px;
+      background: var(--softw);
+      border-radius: 6px;
+    }
+    .dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .dont div {
+      background: var(--softw);
+      border: 1px solid #e0c8bb;
+      border-radius: 10px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--warn);
+    }
+    .dont div small {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      margin-bottom: 2px;
+    }
+    .ask {
+      display: grid;
+      grid-template-columns: .95fr 1.2fr;
+      gap: 8px;
+    }
+    .dates { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .date {
+      background: var(--soft);
+      border: 1px solid #b7cec3;
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+    }
+    .date b { display: block; font-size: 16px; }
+    .date span { font-size: 12px; color: var(--muted); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      margin: 4px 0 6px;
+    }
+    .steps div {
+      border-radius: 8px;
+      padding: 8px 4px 7px;
+      text-align: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+    .steps .a { background: var(--accent); }
+    .steps .b { background: #3d5a73; }
+    .steps .c { background: var(--warn); }
+    .steps .d { background: #7a4a3a; }
+    .range {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .zoom { font-size: 12px; line-height: 1.45; }
+    .zoom a { color: #3d5a73; }
+    @media print {
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-of-type { page-break-after: auto; break-after: auto; }
+      @page { size: A4 landscape; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" onclick="window.print()">印刷 / PDF</button>
+  </div>
+  <p class="hint">A4横・2枚。ブラウザの印刷で「用紙：A4 横／余白：なし」。</p>
+
+  <article class="page">
+        <p class="kicker">BNI DRAGONFLY ／ WEBマスターチーム</p>
+    <h1 class="title">11期 Webマスチーム 事前資料</h1>
+    <div class="meta">
+      <span class="chip">2026-09-14（月）19:00–20:00</span>
+      <span class="chip">Zoom 60分</span>
+      <span class="chip">顔合わせ</span>
+      <span class="chip">役割は決めない</span>
+    </div>
+
+    <div class="hero">
+      <div class="box old">
+        <div class="label">しない</div>
+        <div class="msg">次廣がいるから回る</div>
+      </div>
+      <div class="arrow-big" aria-hidden="true">→</div>
+      <div class="box new">
+        <div class="label">11期はこれ</div>
+        <div class="msg">チームがいるから回る</div>
+      </div>
+    </div>
+
+    <p class="sec">大事にしたいこと</p>
+    <div class="goals">
+      <div class="goal">
+        <div class="top"><div class="num">1</div><b>止めない</b></div>
+        <span>ミスは起きる。起きたときの対応力を6人で持つ。</span>
+      </div>
+      <div class="goal">
+        <div class="top"><div class="num">2</div><b>人が伝わる</b></div>
+        <span>進行も発表も、裏側を気にせず役に集中できる。</span>
+      </div>
+      <div class="goal">
+        <div class="top"><div class="num">3</div><b>次へ渡す</b></div>
+        <span>誰もができる Webマス。11期で終わらせない。</span>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="panel">
+        <h2>回し方 — 係は固定しない</h2>
+        <p class="axis">6人ローテーション</p>
+        <div class="people">
+          <span class="me">次廣</span>
+          <span>梅澤</span>
+          <span>太田</span>
+          <span>軍司</span>
+          <span>竹村</span>
+          <span>米澤</span>
+        </div>
+        <p class="note">誰かが休んでも定例会が回る。全員がメインもサブもやる。</p>
+      </div>
+      <div class="panel">
+        <h2>スライド送りは 2人1組</h2>
+        <div class="pair">
+          <div class="screen">
+            <div class="who">メイン</div>
+            <div class="do">共有して送る</div>
+            <div class="subdo">画面を出す役</div>
+          </div>
+          <div class="swap">切れたら<br>すぐ切替</div>
+          <div class="screen sub">
+            <div class="who">サブ</div>
+            <div class="do">同じページ</div>
+            <div class="subdo">開いて待っている</div>
+          </div>
+        </div>
+        <div class="why2">
+          <div class="a"><b>① 切れても止まらない</b><br>リカバリのため。予備は無駄ではない。</div>
+          <div class="b"><b>② 自分も聞く</b><br>ウィークリーとメインプレ。紹介の機会を逃さない。</div>
+        </div>
+        <p class="note" style="margin-top:7px">朝礼を含むパワポは4つ。各共有が2人1組。週のペアはまだ決めない。軍司さんは BOR を教える人。係の固定先ではない。</p>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>11期 Webマスチーム</span>
+      <span>1 / 2</span>
+    </div>
+  </article>
+
+  <article class="page">
+    <p class="kicker">10期の型を、11期は回して覚える</p>
+    <h1 class="title">週の流れと、14日にすること</h1>
+
+    <p class="sec">1週間</p>
+    <div class="week">
+      <div class="wbox">
+        <div class="n">1</div>
+        <div class="when">月曜 12:00</div>
+        <div class="what">素材の締切</div>
+        <div class="how">朝礼スライドを揃える。リハで初めて直さない。</div>
+      </div>
+      <div class="warr">→</div>
+      <div class="wbox">
+        <div class="n">2</div>
+        <div class="when">月曜 夜</div>
+        <div class="what">リハ</div>
+        <div class="how">確認の場。20時〜（今期の型）。</div>
+      </div>
+      <div class="warr">→</div>
+      <div class="wbox">
+        <div class="n">3</div>
+        <div class="when">火曜</div>
+        <div class="what">定例会</div>
+        <div class="how">Zoom・BOR・送り・録画・スポット。</div>
+      </div>
+      <div class="warr">→</div>
+      <div class="wbox">
+        <div class="n">4</div>
+        <div class="when">普段</div>
+        <div class="what">入会と PC</div>
+        <div class="how">背景・スライド依頼。PCはチームで持つ。</div>
+      </div>
+    </div>
+
+    <p class="sec">タスク</p>
+    <div class="cols3">
+      <div class="col">
+        <h2>前日（月曜）</h2>
+        <ul>
+          <li>朝礼スライドのがっちゃんこ</li>
+          <li>定例会スライド（欠席反映）</li>
+          <li>20時〜リハ</li>
+          <li>ビジター用背景</li>
+          <li>部屋割りと Zoom URL をスレッドへ</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h2>当日（火曜）</h2>
+        <ul>
+          <li>Zoom 準備・BOR 作成</li>
+          <li>朝礼のスライド送り</li>
+          <li>BOR（軍司さんが教える）</li>
+          <li>定例会のスライド送り</li>
+          <li class="out">Edu / シェアストーリー / メインプレの送りは外</li>
+          <li>録画・スポット</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h2>普段</h2>
+        <ul>
+          <li>新入会へウィークリー用スライド依頼</li>
+          <li>Zoom 背景を渡す</li>
+          <li>PCまわり（いまは倉持さんに寄っている。責める話ではない）</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="sec">14日にしないこと</p>
+    <div class="dont">
+      <div><small>しない</small>固定の係</div>
+      <div><small>しない</small>今週の担当表</div>
+      <div><small>しない</small>残す／やめる判断</div>
+      <div><small>しない</small>新しい道具／自動化</div>
+    </div>
+
+    <div class="ask">
+      <div class="panel">
+        <h2>お願い — サポートチーム WS</h2>
+        <p class="note" style="margin-bottom:6px">サポートも含む。受ければ TLT オンデマンドは不要。見終わっていても受ける。</p>
+        <div class="dates">
+          <div class="date"><b>10/1（木）</b><span>13:00–15:00</span></div>
+          <div class="date"><b>10/9（金）</b><span>15:30–17:30</span></div>
+        </div>
+        <p class="note" style="margin-top:6px">NCAS のトレーニングで「サポートチーム」を検索。両方無理なら次廣へ。</p>
+      </div>
+      <div class="panel">
+        <h2>14日の流れ（60分）</h2>
+        <div class="steps" aria-label="60分の流れ">
+          <div class="a">顔合わせ</div>
+          <div class="b">目標</div>
+          <div class="b">ペア・正午</div>
+          <div class="a">タスク</div>
+          <div class="c">リハ</div>
+          <div class="d">WS・質問</div>
+        </div>
+        <div class="range"><span>19:00</span><span>20:00</span></div>
+        <p class="note">3はペア・正午・会の短縮・PC。6と7は WS と質問。</p>
+        <p class="note">このあと 20:00〜 は今期の翌日定例会リハ。残れる人は見てほしい。必須ではない。</p>
+        <p class="zoom" style="margin-top:5px">
+          Zoom（以前の会合） ID 885 7563 4360 ／
+          <a href="https://us06web.zoom.us/j/88575634360?pwd=Q6Q2fOCS905WWaDiTcq2iL1PrZSN0I.1">参加リンク</a>
+           ／ パスコードは確定案内と同じ。
+        </p>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>2026-09-14（月）19:00–20:00</span>
+      <span>2 / 2</span>
+    </div>
+  </article>
+</body>
+</html>
