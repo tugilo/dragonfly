@@ -228,6 +228,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/tasks', [DashboardController::class, 'tasks']);
     Route::get('/dashboard/activity', [DashboardController::class, 'activity']);
     Route::get('/dashboard/weekly-presentation', [DashboardController::class, 'weeklyPresentation']);
+    Route::post('/dashboard/weekly-presentation/select', [DashboardController::class, 'selectWeeklyPresentation']);
+    Route::post('/dashboard/weekly-presentation/use', [DashboardController::class, 'recordWeeklyPresentationUsage']);
 
     if (app()->environment('local')) {
         Route::get('/debug/dashboard-summary', [DashboardDebugController::class, 'verifySummary']);
