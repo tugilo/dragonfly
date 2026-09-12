@@ -305,7 +305,7 @@
 | 304 | 1to1 一覧フィルター: 相手チャプター・カテゴリをワード検索（Autocomplete・大カテゴリ／カテゴリ統合） | implement | completed | feature/phase304-one-to-one-filter-autocomplete | 2026-09-02 |
 | 305 | 熊谷貴之 初回121事前準備（株式会社ENFUSIA／AI伴走支援／飯田千帆紹介ビジター） | docs | completed | develop（merge `16907720`） | 2026-09-04 |
 | 306 | 熊谷貴之 第1回121 Zoom要約反映（ENFUSIA／伴走・ビジコン・ドローン・入会検討） | docs | completed | develop（merge `16907720`） | 2026-09-04 |
-| 307 | ウィークリー稿のパターン切替と利用履歴（SPEC-004・A〜E・usages） | implement | in_progress | feature/phase307-weekly-presentation-patterns | 2026-09-12 |
+| 307 | ウィークリー稿のパターン切替と利用履歴（SPEC-004・A〜E・usages） | implement | completed | develop（merge `2e43ebeed2786e1a1ab00724ca5cdb4b4316ddff`） | 2026-09-12 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

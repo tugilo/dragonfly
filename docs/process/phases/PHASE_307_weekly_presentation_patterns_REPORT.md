@@ -43,18 +43,19 @@ Dashboard のウィークリータブで A〜E を切替できるようにした
 
 | Item | Value |
 |------|-------|
-| merge commit id | 未実施（この Phase では commit / merge / push しない） |
+| merge commit id | `2e43ebeed2786e1a1ab00724ca5cdb4b4316ddff` |
 | source branch | feature/phase307-weekly-presentation-patterns |
 | target branch | develop |
 | phase id | 307 |
 | phase type | implement |
 | related ssot | SPEC-004 |
-| test command | php artisan test |
+| test command | docker compose -f infra/compose/docker-compose.yml --env-file project.env exec app php artisan test |
 | test result | 620 passed / 2282 assertions |
 | changed files | 下記（Phase 307 分。develop dirty の 1to1 / webmaster / dragonfly.sql は含めない） |
 | scope check | OK |
 | ssot check | OK |
 | dod check | OK |
+| recorded at | 2026-09-12 16:28 JST |
 
 ### changed files（Phase 307）
 
