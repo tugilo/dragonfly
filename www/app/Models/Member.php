@@ -23,10 +23,24 @@ class Member extends Model
         'display_no',
         'ncast_profile_url',
         'weekly_presentation_body',
+        'weekly_presentation_patterns',
+        'weekly_presentation_active_id',
         'start_dash_presentation_body',
         'introducer_member_id',
         'attendant_member_id',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'weekly_presentation_patterns' => 'array',
+        ];
+    }
+
+    public function weeklyPresentationUsages(): HasMany
+    {
+        return $this->hasMany(MemberWeeklyPresentationUsage::class);
+    }
 
     public function category(): BelongsTo
     {

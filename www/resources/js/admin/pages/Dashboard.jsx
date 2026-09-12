@@ -41,11 +41,51 @@ export default function Dashboard() {
         loaded: false,
         body: null,
         startDashBody: null,
+        patterns: [],
+        activeId: null,
+        usages: [],
         error: false,
     });
 
+    const applyWeeklyPayload = useCallback((w) => {
+        if (!w || typeof w !== 'object' || !('weekly_presentation_body' in w)) {
+            return false;
+        }
+        const raw = w.weekly_presentation_body;
+        const body = raw === null || raw === undefined || String(raw).trim() === '' ? null : String(raw);
+        const rawStartDash = w.start_dash_presentation_body;
+        const startDashBody =
+            rawStartDash === null || rawStartDash === undefined || String(rawStartDash).trim() === ''
+                ? null
+                : String(rawStartDash);
+        const patterns = Array.isArray(w.weekly_presentation_patterns) ? w.weekly_presentation_patterns : [];
+        const usages = Array.isArray(w.weekly_presentation_usages) ? w.weekly_presentation_usages : [];
+        const activeId =
+            typeof w.weekly_presentation_active_id === 'string' && w.weekly_presentation_active_id !== ''
+                ? w.weekly_presentation_active_id
+                : null;
+        setWeeklyPresentation({
+            loaded: true,
+            body,
+            startDashBody,
+            patterns,
+            activeId,
+            usages,
+            error: false,
+        });
+        return true;
+    }, []);
+
     const loadDashboard = useCallback(async (ownerId) => {
-        setWeeklyPresentation({ loaded: false, body: null, startDashBody: null, error: false });
+        setWeeklyPresentation({
+            loaded: false,
+            body: null,
+            startDashBody: null,
+            patterns: [],
+            activeId: null,
+            usages: [],
+            error: false,
+        });
         const ownerParam = ownerId != null ? { owner_member_id: ownerId } : {};
         try {
             const [s, a, w] = await Promise.all([
@@ -59,25 +99,31 @@ export default function Dashboard() {
                 setStats(null);
             }
             setActivity(Array.isArray(a) ? a : []);
-            if (w && typeof w === 'object' && 'weekly_presentation_body' in w) {
-                const raw = w.weekly_presentation_body;
-                const body =
-                    raw === null || raw === undefined || String(raw).trim() === '' ? null : String(raw);
-                const rawStartDash = w.start_dash_presentation_body;
-                const startDashBody =
-                    rawStartDash === null || rawStartDash === undefined || String(rawStartDash).trim() === ''
-                        ? null
-                        : String(rawStartDash);
-                setWeeklyPresentation({ loaded: true, body, startDashBody, error: false });
-            } else {
-                setWeeklyPresentation({ loaded: true, body: null, startDashBody: null, error: true });
+            if (!applyWeeklyPayload(w)) {
+                setWeeklyPresentation({
+                    loaded: true,
+                    body: null,
+                    startDashBody: null,
+                    patterns: [],
+                    activeId: null,
+                    usages: [],
+                    error: true,
+                });
             }
         } catch {
             setStats(null);
             setActivity([]);
-            setWeeklyPresentation({ loaded: true, body: null, startDashBody: null, error: true });
+            setWeeklyPresentation({
+                loaded: true,
+                body: null,
+                startDashBody: null,
+                patterns: [],
+                activeId: null,
+                usages: [],
+                error: true,
+            });
         }
-    }, []);
+    }, [applyWeeklyPayload]);
 
     const loadOneToOneLeads = useCallback(async (ownerId) => {
         if (ownerId == null) {
@@ -115,6 +161,38 @@ export default function Dashboard() {
         return () => window.removeEventListener('religo-workspace-changed', onWs);
     }, [ownerMemberId, loadDashboard]);
 
+    const postWeeklyPresentation = useCallback(
+        async (path, patternId, failMessage) => {
+            if (ownerMemberId == null || !patternId) {
+                return;
+            }
+            const q = new URLSearchParams({ owner_member_id: String(ownerMemberId) });
+            const res = await religoFetch(`/api/dashboard/weekly-presentation/${path}?${q.toString()}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({ pattern_id: patternId }),
+            });
+            const w = await res.json().catch(() => null);
+            if (!res.ok) {
+                throw new Error((w && w.message) || failMessage);
+            }
+            if (!applyWeeklyPayload(w)) {
+                throw new Error(failMessage);
+            }
+        },
+        [ownerMemberId, applyWeeklyPayload]
+    );
+
+    const selectWeeklyPattern = useCallback(
+        (patternId) => postWeeklyPresentation('select', patternId, 'パターンの切替に失敗しました'),
+        [postWeeklyPresentation]
+    );
+
+    const recordWeeklyUsage = useCallback(
+        (patternId) => postWeeklyPresentation('use', patternId, '利用記録に失敗しました'),
+        [postWeeklyPresentation]
+    );
+
     const ownerConfigured = ownerMemberId != null;
     const leadsReady = ownerConfigured;
 
@@ -130,6 +208,11 @@ export default function Dashboard() {
                     loading={panelsBusy}
                     body={weeklyPresentation.body}
                     startDashBody={weeklyPresentation.startDashBody}
+                    patterns={weeklyPresentation.patterns}
+                    activeId={weeklyPresentation.activeId}
+                    usages={weeklyPresentation.usages}
+                    onSelectPattern={selectWeeklyPattern}
+                    onRecordUsage={recordWeeklyUsage}
                     loadError={weeklyPresentation.error}
                     prominent
                 />

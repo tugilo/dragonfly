@@ -567,8 +567,14 @@ class DashboardApiTest extends TestCase
         $data = $res->json();
         $this->assertArrayHasKey('weekly_presentation_body', $data);
         $this->assertArrayHasKey('start_dash_presentation_body', $data);
+        $this->assertArrayHasKey('weekly_presentation_patterns', $data);
+        $this->assertArrayHasKey('weekly_presentation_active_id', $data);
+        $this->assertArrayHasKey('weekly_presentation_usages', $data);
         $this->assertNull($data['weekly_presentation_body']);
         $this->assertNull($data['start_dash_presentation_body']);
+        $this->assertSame([], $data['weekly_presentation_patterns']);
+        $this->assertNull($data['weekly_presentation_active_id']);
+        $this->assertSame([], $data['weekly_presentation_usages']);
     }
 
     public function test_weekly_presentation_returns_body_when_set(): void
@@ -605,5 +611,102 @@ class DashboardApiTest extends TestCase
         $this->actingAsReligoUser($this->ownerId, 'dash-admin-weekly@example.com', User::RELIGO_ROLE_CHAPTER_ADMIN);
         $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id=99999');
         $res->assertStatus(404);
+    }
+
+    public function test_weekly_presentation_returns_patterns_and_active_body(): void
+    {
+        $patterns = [
+            ['id' => 'A', 'label' => '定番', 'body' => "定番本文\nA"],
+            ['id' => 'B', 'label' => '26年', 'body' => "26年本文\nB"],
+        ];
+        DB::table('members')->where('id', $this->ownerId)->update([
+            'weekly_presentation_body' => '旧本文',
+            'weekly_presentation_patterns' => json_encode($patterns, JSON_UNESCAPED_UNICODE),
+            'weekly_presentation_active_id' => 'B',
+        ]);
+
+        $res = $this->getJson('/api/dashboard/weekly-presentation?owner_member_id='.$this->ownerId);
+        $res->assertOk();
+        $this->assertSame("26年本文\nB", $res->json('weekly_presentation_body'));
+        $this->assertSame('B', $res->json('weekly_presentation_active_id'));
+        $this->assertCount(2, $res->json('weekly_presentation_patterns'));
+        $this->assertSame('26年', $res->json('weekly_presentation_patterns.1.label'));
+    }
+
+    public function test_weekly_presentation_select_does_not_record_usage(): void
+    {
+        $patterns = [
+            ['id' => 'A', 'label' => '定番', 'body' => '定番本文'],
+            ['id' => 'B', 'label' => '26年', 'body' => '26年本文'],
+        ];
+        DB::table('members')->where('id', $this->ownerId)->update([
+            'weekly_presentation_patterns' => json_encode($patterns, JSON_UNESCAPED_UNICODE),
+            'weekly_presentation_active_id' => 'A',
+            'weekly_presentation_body' => '定番本文',
+        ]);
+
+        $res = $this->postJson('/api/dashboard/weekly-presentation/select?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'B',
+        ]);
+        $res->assertOk();
+        $this->assertSame('B', $res->json('weekly_presentation_active_id'));
+        $this->assertSame('26年本文', $res->json('weekly_presentation_body'));
+        $this->assertSame([], $res->json('weekly_presentation_usages'));
+        $this->assertSame(0, DB::table('member_weekly_presentation_usages')->count());
+    }
+
+    public function test_weekly_presentation_use_records_usage_once_per_day(): void
+    {
+        $patterns = [
+            ['id' => 'A', 'label' => '定番', 'body' => '定番本文'],
+            ['id' => 'B', 'label' => '26年', 'body' => '26年本文'],
+        ];
+        DB::table('members')->where('id', $this->ownerId)->update([
+            'weekly_presentation_patterns' => json_encode($patterns, JSON_UNESCAPED_UNICODE),
+            'weekly_presentation_active_id' => 'A',
+            'weekly_presentation_body' => '定番本文',
+        ]);
+
+        $this->postJson('/api/dashboard/weekly-presentation/select?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'B',
+        ])->assertOk();
+        $this->assertSame(0, DB::table('member_weekly_presentation_usages')->count());
+
+        $first = $this->postJson('/api/dashboard/weekly-presentation/use?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'B',
+        ]);
+        $first->assertOk();
+        $this->assertSame('B', $first->json('weekly_presentation_active_id'));
+        $this->assertCount(1, $first->json('weekly_presentation_usages'));
+        $this->assertSame('B', $first->json('weekly_presentation_usages.0.pattern_id'));
+
+        $again = $this->postJson('/api/dashboard/weekly-presentation/use?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'B',
+        ]);
+        $again->assertOk();
+        $this->assertCount(1, $again->json('weekly_presentation_usages'));
+        $this->assertSame(1, DB::table('member_weekly_presentation_usages')->count());
+
+        $other = $this->postJson('/api/dashboard/weekly-presentation/use?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'A',
+        ]);
+        $other->assertOk();
+        $this->assertCount(2, $other->json('weekly_presentation_usages'));
+    }
+
+    public function test_weekly_presentation_select_rejects_unknown_pattern(): void
+    {
+        $res = $this->postJson('/api/dashboard/weekly-presentation/select?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'Z',
+        ]);
+        $res->assertStatus(422);
+    }
+
+    public function test_weekly_presentation_use_rejects_unknown_pattern(): void
+    {
+        $res = $this->postJson('/api/dashboard/weekly-presentation/use?owner_member_id='.$this->ownerId, [
+            'pattern_id' => 'Z',
+        ]);
+        $res->assertStatus(422);
     }
 }

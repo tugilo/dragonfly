@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Religo\Concerns\ResolvesReligoOwner;
 use App\Models\Member;
 use App\Services\Religo\DashboardService;
+use App\Services\Religo\WeeklyPresentationPatternService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,8 @@ class DashboardController extends Controller
     use ResolvesReligoOwner;
 
     public function __construct(
-        private DashboardService $dashboardService
+        private DashboardService $dashboardService,
+        private WeeklyPresentationPatternService $weeklyPresentationPatternService
     ) {}
 
     /**
@@ -85,8 +87,54 @@ class DashboardController extends Controller
             return response()->json(['message' => 'Owner member not found.'], 404);
         }
         return response()->json([
-            'weekly_presentation_body' => $this->normalizePresentationBody($member->weekly_presentation_body),
+            ...$this->weeklyPresentationPatternService->payload($member),
             'start_dash_presentation_body' => $this->normalizePresentationBody($member->start_dash_presentation_body),
+        ]);
+    }
+
+    /**
+     * POST /api/dashboard/weekly-presentation/select — 表示する稿を切り替える。利用日は書かない。
+     */
+    public function selectWeeklyPresentation(Request $request): JsonResponse
+    {
+        return $this->respondWeeklyMutation($request, function (Member $member, string $patternId) {
+            return $this->weeklyPresentationPatternService->select($member, $patternId);
+        });
+    }
+
+    /**
+     * POST /api/dashboard/weekly-presentation/use — 例会で使ったあと、その週の利用を残す。
+     */
+    public function recordWeeklyPresentationUsage(Request $request): JsonResponse
+    {
+        return $this->respondWeeklyMutation($request, function (Member $member, string $patternId) {
+            return $this->weeklyPresentationPatternService->recordUsage($member, $patternId);
+        });
+    }
+
+    /**
+     * @param  callable(Member, string): array  $mutate
+     */
+    private function respondWeeklyMutation(Request $request, callable $mutate): JsonResponse
+    {
+        $ownerMemberId = $this->resolveOwnerMemberId($request);
+        if ($ownerMemberId === false) {
+            return response()->json(['message' => 'オーナーが未設定です。ダッシュボード上でオーナーを選択してください。'], 422);
+        }
+        $member = Member::query()->find($ownerMemberId);
+        if (! $member) {
+            return response()->json(['message' => 'Owner member not found.'], 404);
+        }
+
+        $validated = $request->validate([
+            'pattern_id' => ['required', 'string', 'max:32'],
+        ]);
+
+        $payload = $mutate($member, $validated['pattern_id']);
+
+        return response()->json([
+            ...$payload,
+            'start_dash_presentation_body' => $this->normalizePresentationBody($member->fresh()?->start_dash_presentation_body),
         ]);
     }
 

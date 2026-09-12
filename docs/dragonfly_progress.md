@@ -8,6 +8,12 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-12 16:26 JST | **Phase 307 取り込み準備:** チップは表示切替。利用記録は例会後の「この週に使った」。1to1 / webmaster / dragonfly.sql は含めない。 |
+| 2026-09-12 11:04 JST | **Phase 307 修正:** チップは表示切替だけ。利用記録は例会後の「この週に使った」。 |
+| 2026-09-12 11:00 JST | **implement Phase 307 実装:** Dashboard で A〜E 切替。test 620 passed。`npm run build` 成功。 |
+| 2026-09-12 10:53 JST | **implement Phase 307 着手:** ウィークリー A〜E 切替と利用履歴。SPEC-004。db-export なし。 |
+| 2026-09-12 06:40 JST | **ウィークリー週替わりパターン:** 定番 §2.5.7 は残す。§2.5.8 に A定番／B 26年／C属人化／D士業／E多店舗。 |
+| 2026-09-12 06:36 JST | **ウィークリー25秒を尺短縮版へ:** 本文を短くし、締めはBNIどおりカテゴリ＋氏名。[`BNI_Tsugihiro_Atsushi_Intro_Living_Document.md`](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) §2.5.7。 |
 | 2026-09-08 20:47 JST | **第220・221回議事録を本番DB反映:** 615 tests passed → `db-export`（2,301,281 bytes）→ `db-push TARGET=prod`。remote backup: `backups/prod_20260908_204724.sql`。meeting 220/221 の minutes を含むローカル状態を本番へ全置換。 |
 | 2026-09-08 20:43 JST | **DragonFly 定例会 第220回 議事録:** 英語 Zoom 要約を翻訳・校正し [`meetings/chapter/chapter_weekly_20260901.md`](meetings/chapter/chapter_weekly_20260901.md) に反映。中村啓吾更新・MP飯田香/梅澤朗広・SS次廣・教育ゴルフ×誠実さ・RFベスト平岡9件。`import-chapter-minutes` でローカルDB反映。参加者CSVは9/1取込済（80名）。INDEX・第221回リンク同期。 |
 | 2026-09-08 20:39 JST | **DragonFly 定例会 第221回 議事録:** Zoom要約を校正し [`meetings/chapter/chapter_weekly_20260908.md`](meetings/chapter/chapter_weekly_20260908.md) に反映。田村鈴夏/宮脇トニー入会・MP木村/森園・SS飯田香・教育バトンパス・RF162（梅澤朗広25件）・推薦小中→飯田千帆。`import-chapter-minutes` でローカルDB反映。参加者CSVは午前取込済（75名）。INDEX同期。 |
