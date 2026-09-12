@@ -2,7 +2,7 @@
 
 **Spec ID:** SPEC-004（[SSOT_REGISTRY.md](../02_specifications/SSOT_REGISTRY.md) 登録）  
 **ステータス:** active（**DASHBOARD-WEEKLY-P1** で主要実装：表示・API・DB カラム）  
-**最終更新:** 2026-04-07 JST（実装反映）  
+**最終更新:** 2026-09-12 11:04 JST（Phase 307 利用記録は例会後ボタン）  
 
 **目的:** Religo 管理画面の **Dashboard（`/`）** に、BNI チャプターにおける **ウィークリープレゼン（例: 25秒）の原稿** を表示し、例会前に **ログイン直後・ホームで確認・コピー**できるようにするための要件を一本化する。
 
@@ -66,7 +66,7 @@ Dashboard の役割は [DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md) に�
 | 項目 | 要件 |
 |------|------|
 | **本文** | 複数行のテキスト（改行を保持して表示）。 |
-| **バリアント** | **標準稿**と**別稿**など **複数バージョン**を保持したい場合、**切替**または**折りたたみ**で両方見られること（データモデルは §5）。**Phase 119 では「ウィークリープレゼン」と「スタートダッシュ」をタブ切替で表示する。** |
+| **バリアント** | **標準稿**と**別稿**など **複数バージョン**を保持したい場合、**切替**または**折りたたみ**で両方見られること（データモデルは §5）。**Phase 119** は「ウィークリー」と「スタートダッシュ」のタブ。**Phase 307** はウィークリー内の **パターン切替**（A〜E 等）と、例会後の **利用記録ボタン**。 |
 | **メタ情報（任意）** | 最終更新日・文字数目安・参照元（例: 社内ライブドキュメントへのリンク）は **あればよい**。 |
 
 **参考（コンテンツの例）:** オフラインでは `docs/strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md` の **§2 ウィークリープレゼン**のように、標準稿・別稿を分けて管理している。**製品データの正**は DB またはアプリ内設定に置く想定（§5）。
@@ -78,6 +78,9 @@ Dashboard の役割は [DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md) に�
 | 原稿の **閲覧** | 必須 |
 | **コピー**（全文または選択範囲） | 任意（Phase1 では「全文コピー」ボタンで十分な場合あり） |
 | **編集** | 任意（初回リリースでは不要可） |
+| **パターン切替** | パターンがあるメンバーのみ。選んだ稿を表示する。利用日は書かない（Phase 307） |
+| **利用記録** | 例会で話したあと、明示ボタンでその週に使った記録を残す（Phase 307） |
+| **利用履歴の閲覧** | 任意。最近使った日付とパターン名があればよい |
 
 ### 3.4 権限・プライバシー
 
@@ -116,6 +119,8 @@ Dashboard の役割は [DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md) に�
 | **C. 設定 / ファイル** | 初回のみ静的・または workspace 単位テンプレ | 速いたたき台 | ユーザーごとの差分が弱い |
 
 **Phase 119 採用:** 既存 `members.weekly_presentation_body` を標準稿として維持し、`members.start_dash_presentation_body`（nullable text）を追加する。API は既存互換の `weekly_presentation_body` に加え、`start_dash_presentation_body` を返す。
+
+**Phase 307 採用:** `members.weekly_presentation_patterns`（JSON、`[{id,label,body}]`）と `members.weekly_presentation_active_id` を追加する。選んだ本文は `weekly_presentation_body` にも同期する。切替は `POST /api/dashboard/weekly-presentation/select`（表示だけ。利用日は書かない）。利用記録は例会後の `POST /api/dashboard/weekly-presentation/use`。履歴は `member_weekly_presentation_usages`（member_id / pattern_id / used_on JST / used_at）。同一日・同一パターンは1行。パターンが空のメンバーは従来の1本文表示。GET は `weekly_presentation_patterns` / `weekly_presentation_active_id` / `weekly_presentation_usages` を返す。
 
 **API:** Dashboard 既存の `GET /api/dashboard/*` に **統合**するか、**`GET /api/members/{id}/weekly-presentation`** のように **読み取り専用**を分けるかは実装時に決定。  
 **原則:** 表示は **GET のみ**で足りる。編集を載せる場合は **別エンドポイント**と CSRF・権限チェックを明記する Phase を切る。
@@ -159,6 +164,7 @@ Dashboard の役割は [DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md) に�
 
 - [x] Dashboard に **ウィークリープレゼン原稿**カード（または同等ブロック）があり、**Owner に紐づくメンバー**の原稿が表示される。（**DASHBOARD-WEEKLY-P1**）
 - [x] Dashboard の原稿カードで **ウィークリープレゼン / スタートダッシュ** をタブ切替できる。（**Phase 119**）
+- [x] パターンがあるメンバーはウィークリー内で稿を切替でき、例会後のボタンで利用日が残る。（**Phase 307**）
 - [x] Owner 未設定時は **誤表示がなく**、既存の Owner 設定フローと矛盾しない。（カード非表示）
 - [x] `npm run build` 成功、`php artisan test` 既存テスト退行なし（**Feature テスト追加済み**）。
 - [x] [FIT_AND_GAP_MOCK_VS_UI.md](FIT_AND_GAP_MOCK_VS_UI.md) §2 Dashboard に **本ブロックの Gap（意図的）** を記録。
@@ -172,3 +178,5 @@ Dashboard の役割は [DASHBOARD_DATA_SSOT.md §0](DASHBOARD_DATA_SSOT.md) に�
 | 2026-04-07 10:57 | 初版作成（要件整理・SPEC-004 登録用） |
 | 2026-04-07 | **DASHBOARD-WEEKLY-P1:** `members.weekly_presentation_body`・`GET /api/dashboard/weekly-presentation`・Dashboard カード・テスト・FIT_AND_GAP 追記。 |
 | 2026-05-17 22:07 | **Phase 119:** `members.start_dash_presentation_body`・Dashboard 原稿カードのタブ切替・スタートダッシュ60秒稿を追加。 |
+| 2026-09-12 11:04 | **Phase 307:** 切替は表示のみ。利用記録は POST use（例会後のボタン）。 |
+| 2026-09-12 10:53 | **Phase 307:** ウィークリーパターン切替（JSON）と利用履歴テーブル。POST select。次廣 A〜E シード。 |

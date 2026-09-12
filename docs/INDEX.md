@@ -841,6 +841,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_306_kumagai_takayuki_121_minutes_PLAN.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_PLAN.md) | Phase 306: 熊谷貴之 第1回121 Zoom要約反映 PLAN。 |
 | [phases/PHASE_306_kumagai_takayuki_121_minutes_WORKLOG.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_WORKLOG.md) | Phase 306: 同 WORKLOG（年号・小中・芳賀・堀切の校正判断）。 |
 | [phases/PHASE_306_kumagai_takayuki_121_minutes_REPORT.md](process/phases/PHASE_306_kumagai_takayuki_121_minutes_REPORT.md) | Phase 306: 同 REPORT。 |
+| [phases/PHASE_307_weekly_presentation_patterns_PLAN.md](process/phases/PHASE_307_weekly_presentation_patterns_PLAN.md) | Phase 307: ウィークリー稿のパターン切替と利用履歴 PLAN。 |
+| [phases/PHASE_307_weekly_presentation_patterns_WORKLOG.md](process/phases/PHASE_307_weekly_presentation_patterns_WORKLOG.md) | Phase 307: 同 WORKLOG（切替は表示のみ。利用記録は例会後ボタン）。 |
+| [phases/PHASE_307_weekly_presentation_patterns_REPORT.md](process/phases/PHASE_307_weekly_presentation_patterns_REPORT.md) | Phase 307: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
@@ -1306,7 +1309,7 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 || [BNI_DragonFly_Guest_Strategy_202603.md](strategy/networking/BNI_DragonFly_Guest_Strategy_202603.md) | BNI DragonFly ゲスト招待戦略（2026/03）。 |
 || [BNI_DragonFly_Joining_Speeches_202603.md](strategy/networking/BNI_DragonFly_Joining_Speeches_202603.md) | BNI 入会スピーチ集（25秒プレゼン・朝礼・例会・選んだ理由・tugilo思想）。2026/03 入会時確定版。 |
 || [BNI_Tugilo_Usage_Strategy.md](strategy/networking/BNI_Tugilo_Usage_Strategy.md) | **tugilo 今後のBNI活用方針:** BNIを困りごと・入口・商品導線のPDCAラボとして使う運用方針。Track C（診断→PoC→伴走）/ Track P（月額クラウド）・**CAL/tugical予約はBNIフロントカテゴリ候補**（自社導線・再来店・失客防止・集客パワーチームの予約基盤）・小中さんカテゴリ棲み分け・週次運用・121確認事項。Track P 商品SSOTは [tugilo Cloud モジュールカタログ](../../tugilo_site/www/tugilo_site/docs/business/tugilo_cloud_module_catalog.md)（tugilo_site）。 |
-|| [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) | **次廣淳（tugilo）常設:** 冒頭 **提示用サマリー**・**§12 DragonFly Instagramアンケート回答案**・**§11 BNI特化BM（小中モデル参照・Track P/C・予約管理思想・フロントカテゴリ候補）**・BO・25秒WP（**§2.0 採用履歴と磨きの系譜**・現行 **§2.5.6 リテラシ配慮版（ダッシュボード採用稿）**・前版 §2.1・**§2.5 症状型**）・**§10 BNI活用**（入口設計・実験サイクル・1本化モデル）・**§8 121**・**§9 人間×AI**・変更ログ。 |
+|| [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) | **次廣淳（tugilo）常設:** 冒頭 **提示用サマリー**・**§12 DragonFly Instagramアンケート回答案**・**§11 BNI特化BM（小中モデル参照・Track P/C・予約管理思想・フロントカテゴリ候補）**・BO・25秒WP（**§2.0 採用履歴と磨きの系譜**・定番 **§2.5.7**・週替わり **§2.5.8**（26年／属人化／士業／多店舗・Dashboard切替 Phase 307）・前版 §2.5.6・前版 §2.1・**§2.5 症状型**）・**§10 BNI活用**（入口設計・実験サイクル・1本化モデル）・**§8 121**・**§9 人間×AI**・変更ログ。 |
 
 ### BNI DragonFly（docs/networking/bni/dragonfly/）
 

@@ -185,7 +185,7 @@ Religo は **BNI（Business Network International）運用**を前提として�
 | **主キー** | id (bigIncrements) |
 | **外部キー** | **category_id → categories.id (nullable)**。introducer_member_id → members.id (nullable), attendant_member_id → members.id (nullable)。**workspace_id → workspaces.id（nullable）** — 所属チャプター。 |
 | **ユニーク制約** | なし |
-| **主要カラム** | id, name, name_kana (nullable), **category_id (nullable)**, **workspace_id (nullable)** — 所属チャプター, type, display_no (nullable), **ncast_profile_url (nullable, string 2048)** — Nキャスの自己紹介ページ URL, **weekly_presentation_body (nullable, text)** — ウィークリープレゼン原稿（SPEC-004・Dashboard 表示用）, **start_dash_presentation_body (nullable, text)** — スタートダッシュプレゼン原稿（SPEC-004・Dashboard 表示用）, introducer_member_id, attendant_member_id, timestamps |
+| **主要カラム** | id, name, name_kana (nullable), **category_id (nullable)**, **workspace_id (nullable)** — 所属チャプター, type, display_no (nullable), **ncast_profile_url (nullable, string 2048)** — Nキャスの自己紹介ページ URL, **weekly_presentation_body (nullable, text)** — ウィークリープレゼン原稿（SPEC-004・Dashboard 表示用）, **weekly_presentation_patterns (nullable, json)** — 週替わり稿 `[{id,label,body}]`（SPEC-004 / Phase 307）, **weekly_presentation_active_id (nullable, string 32)** — 選択中パターン ID, **start_dash_presentation_body (nullable, text)** — スタートダッシュプレゼン原稿（SPEC-004・Dashboard 表示用）, introducer_member_id, attendant_member_id, timestamps |
 | **インデックス** | type, category_id, introducer_member_id, attendant_member_id |
 
 **廃止済みカラム（Phase14 で正規化・削除）:**  
@@ -193,6 +193,16 @@ Religo は **BNI（Business Network International）運用**を前提として�
 - **members.role_notes（文字列）** → 廃止。役職は **roles**（マスタ）と **member_roles**（履歴）で管理する。
 
 **members.type の値域（SSOT 確定・実装で迷わない最小セット）:** active（在籍）, inactive（休会・退会等）, guest（ゲスト参加者）。BNI 運用では member / visitor / guest 等も用いる場合がある。一覧・指標で「除外する type」を決める場合はこの値域を参照する。
+
+### 4.2.1 member_weekly_presentation_usages（Phase 307）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | ウィークリー稿をいつ・どのパターンで使ったか。 |
+| **主キー** | id (bigIncrements) |
+| **外部キー** | member_id → members.id（cascade） |
+| **ユニーク** | (member_id, used_on, pattern_id) |
+| **主要カラム** | member_id, pattern_id (string 32), used_on (date, JST), used_at, timestamps |
 
 ---
 
