@@ -139,11 +139,21 @@
       color: var(--accent);
       margin: 0 0 6px;
     }
+    .whybar {
+      background: var(--soft);
+      border: 1.5px solid var(--accent);
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .whybar b { color: var(--accent); }
     .goals {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .goal {
       background: var(--panel);
@@ -404,6 +414,7 @@
       <span class="chip">顔合わせ</span>
       <span class="chip">役割は決めない</span>
     </div>
+    <p class="whybar" style="margin-bottom:8px">顔合わせです。大事にしたいことと、いま上がっているやり方を、一緒に確認します。役割と今週の担当は、今夜は決めません。</p>
 
     <div class="hero">
       <div class="box old">
@@ -421,7 +432,7 @@
     <div class="goals">
       <div class="goal">
         <div class="top"><div class="num">1</div><b>止めない</b></div>
-        <span>ミスは起きる。起きたときの対応力を6人で持つ。</span>
+        <span>ミスは起きる。早くリカバリする力を6人で持つ。</span>
       </div>
       <div class="goal">
         <div class="top"><div class="num">2</div><b>人が伝わる</b></div>
@@ -432,6 +443,7 @@
         <span>誰もができる Webマス。11期で終わらせない。</span>
       </div>
     </div>
+    <p class="whybar"><b>なぜやるかを揃えてから回す。</b> チェックは抜け漏れ防止。表だけ渡すと、いつの間にか抜ける。</p>
 
     <div class="row2">
       <div class="panel">
@@ -445,7 +457,7 @@
           <span>竹村</span>
           <span>米澤</span>
         </div>
-        <p class="note">誰かが休んでも定例会が回る。全員がメインもサブもやる。</p>
+        <p class="note">誰かが休んでも定例会が回る。全員がメインもサブもやる。チェックもペア。専任は置かない。</p>
       </div>
       <div class="panel">
         <h2>スライド送りは 2人1組</h2>
@@ -477,7 +489,7 @@
   </article>
 
   <article class="page">
-    <p class="kicker">10期の型を、11期は回して覚える</p>
+    <p class="kicker">10期の型を土台に、11期は回しながら覚える</p>
     <h1 class="title">週の流れと、14日にすること</h1>
 
     <p class="sec">1週間</p>
@@ -486,21 +498,21 @@
         <div class="n">1</div>
         <div class="when">月曜 12:00</div>
         <div class="what">素材の締切</div>
-        <div class="how">朝礼スライドを揃える。リハで初めて直さない。</div>
+        <div class="how">揃えてからリハへ。遅いと作りながら確認になり、上げ忘れが出る。</div>
       </div>
       <div class="warr">→</div>
       <div class="wbox">
         <div class="n">2</div>
         <div class="when">月曜 夜</div>
         <div class="what">リハ</div>
-        <div class="how">確認の場。20時〜（今期の型）。</div>
+        <div class="how">本番のマシンで確認する。練習と本番を分けない。</div>
       </div>
       <div class="warr">→</div>
       <div class="wbox">
         <div class="n">3</div>
         <div class="when">火曜</div>
         <div class="what">定例会</div>
-        <div class="how">Zoom・BOR・送り・録画・スポット。</div>
+        <div class="how">止めない。録画は章の資産。もう一度聞きたい人へ。</div>
       </div>
       <div class="warr">→</div>
       <div class="wbox">
@@ -516,9 +528,9 @@
       <div class="col">
         <h2>前日（月曜）</h2>
         <ul>
-          <li>朝礼スライドのがっちゃんこ</li>
+          <li>朝礼スライドのがっちゃんこ（なぜ: リハで初めて直さない）</li>
           <li>定例会スライド（欠席反映）</li>
-          <li>20時〜リハ</li>
+          <li>20時〜リハ（本番のマシン）</li>
           <li>ビジター用背景</li>
           <li>部屋割りと Zoom URL をスレッドへ</li>
         </ul>
@@ -531,7 +543,7 @@
           <li>BOR（軍司さんが教える）</li>
           <li>定例会のスライド送り</li>
           <li class="out">Edu / シェアストーリー / メインプレの送りは外</li>
-          <li>録画・スポット</li>
+          <li>録画（章の資産／もう一度聞きたい人）・スポット</li>
         </ul>
       </div>
       <div class="col">
@@ -566,7 +578,7 @@
         <h2>14日の流れ（60分）</h2>
         <div class="steps" aria-label="60分の流れ">
           <div class="a">顔合わせ</div>
-          <div class="b">目標</div>
+          <div class="b">大事にしたいこと</div>
           <div class="b">ペア・正午</div>
           <div class="a">タスク</div>
           <div class="c">リハ</div>
