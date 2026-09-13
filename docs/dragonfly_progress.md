@@ -8,6 +8,16 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-09-13 22:04 JST | **11期WM事前資料の共有文:** 人間の文面に差し替えた。未送信。[`webmaster_term11_meeting1_20260914_preread.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md)。 |
+| 2026-09-13 22:03 JST | **11期WM第1回台本:** 冒頭にBORは軍司さんに教えてもらうこと、今夜は60分なのでざっくり、を足した。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-13 21:58 JST | **11期WM第1回台本:** 19:00に冒頭挨拶を追加。文面は人間が書いたものを正とする。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-13 21:57 JST | **11期WM事前資料のレビュー反映:** 10期の型を土台に、11期は回しながら覚える。流れの「目標」を「大事にしたいこと」へ。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-13 21:52 JST | **11期WM第1回の目的を言い直した:** 「地図」をやめ、顔合わせ・大事にしたいことを一緒に確認する、に戻した。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-13 21:41 JST | **11期WM第1回の目的を整理:** 顔合わせ。担当は決めない。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)／[事前資料](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md)。 |
+| 2026-09-13 21:38 JST | **11期WM第1回台本:** 梅澤さんのチェックリストを来期施策の事前提案として入れた。採否は切らない。[`webmaster_term11_meeting1_20260914_agenda.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md)。 |
+| 2026-09-13 21:33 JST | **11期WM事前資料の「しない」を修正:** 動画の編集を外し、新しい道具／自動化に戻した。編集しない決定に見えないようにする。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
+| 2026-09-13 20:54 JST | **定例会動画の目的と効果を調査:** 編集しないとは未決。録る／切る／整える／出すを分離。視聴数と所要分は正本に無い。[`webmaster_term11_video_purpose_effect_20260913.md`](meetings/webmaster/webmaster_term11_video_purpose_effect_20260913.md)。 |
+| 2026-09-13 20:49 JST | **11期WM事前資料になぜやるかを足した:** 梅澤さん反応のうち、チェックの目的・ペアでチェック・録画の目的・本番マシンでリハ。Geminiと採否は載せない。[`webmaster_term11_meeting1_20260914_preread.md`](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md)／[反応](meetings/webmaster/webmaster_term11_umezawa_reaction_20260913.md)。 |
 | 2026-09-12 18:42 JST | **11期WM事前資料の配布面:** 未送信など作業用の語を外した。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
 | 2026-09-12 17:58 JST | **11期WM事前資料の文言照合:** 図へ自動化と60分の注を戻した。共有文は未送信。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |
 | 2026-09-12 17:54 JST | **11期WM事前資料を見やすく組み直し:** 1枚1メッセージ、字を大きく、円図をやめた。文言はそのまま。[`webmaster_term11_meeting1_20260914_preread.pdf`](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf)。 |

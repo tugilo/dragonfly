@@ -161,7 +161,7 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/webmaster/README.md](meetings/webmaster/README.md) | **Webマスターチーム議事録の命名**（`webmaster_<topic>_YYYYMMDD.md`）・YAML・関連 1to1 リンク。 |
-| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-09-02 14:27 JST）。第1回 LTST **2026-09-02 20:00**、第1回 WM は **2026-09-14（月）19:00–20:00**。スライドは朝礼含む4本・各2人1組。Religo `meetings.id` 35〜37。 |
+| [meetings/webmaster/webmaster_term11.md](meetings/webmaster/webmaster_term11.md) | **11期 WM 入口**（2026-09-13 20:49 JST）。第1回は **2026-09-14（月）19:00–20:00**。梅澤さん反応は資料へ「なぜやるか」だけ反映。Religo `meetings.id` 35〜37。 |
 | [meetings/webmaster/webmaster_term11_ltst1_prep_20260902.md](meetings/webmaster/webmaster_term11_ltst1_prep_20260902.md) | **11期 第1回 LTST（2026-09-02 20:00 JST）Webマス準備メモ**。[LTST情報まとめ](https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit) の Webマス行の写し、30秒進捗、Microsoft 365 1ライセンスの §10 物差しと代替案、他行との接点、持ち帰り確認6点。会後欄は空。 |
 | [meetings/webmaster/webmaster_handover_20260603.md](meetings/webmaster/webmaster_handover_20260603.md) | **Webマスター業務引き継ぎ 2026-06-03 JST 20:00–21:00**（Zoom）。次廣が倉持から朝礼スライド統合・定例会 Zoom 操作（レコーディング／スポットライト）を引き継ぎ。**初回作業 2026-06-09（月）午前**。AI 協業・リストマーケ・パワーチーム等も議論。 |
 | [meetings/webmaster/webmaster_kudo_yuji_20260821.md](meetings/webmaster/webmaster_kudo_yuji_20260821.md) | **工藤祐司（元WM・退会済）×次廣×小中×増本 2026-08-21 午後**（Zoom・時刻 TODO）。属人化／自動化ミス／提出遅れ。原点回帰（PPT手作業）・月曜正午締切・並行スライド操作。棚卸しは [2026-08-22 倉持](meetings/webmaster/webmaster_handover_20260822.md) で実施。校正: 倉本→倉持、梅沢→梅澤。 |
@@ -174,10 +174,12 @@
 | [meetings/webmaster/webmaster_term11_pc_konaka_20260830.md](meetings/webmaster/webmaster_term11_pc_konaka_20260830.md) | **11期 WM 運営PC・PPT 1ライセンス**（2026-08-30 18:11 JST）。こなっち相談下書き。個別送信せず **2026-09-02 LTST 全体協議事項へ切替**。 |
 | [meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md](meetings/webmaster/webmaster_term11_meeting1_chouseisan_20260829.md) | **11期 WM 第1回ミーティング**。**2026-09-14（月）19:00–20:00 JST 確定**（2026-08-30 12:39 JST）。[調整さん](https://chouseisan.com/s?h=b220119717c94e9bb43606c0f29973bb)。 |
 | [meetings/webmaster/webmaster_term11_tlt_workshop_20260912.md](meetings/webmaster/webmaster_term11_tlt_workshop_20260912.md) | **11期 WM サポートチームWS案内**（2026-09-12 16:52 JST・未送信）。10/1 または 10/9。NCAS「サポートチーム」検索。WS後は脱出スレ離脱可。視聴済みでもWS。 |
-| [meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md) | **11期 WM 第1回事前資料**（チーム配布・未送信）。Webマスだけ。目標3つ・ローテーション・タスク。他チーム・章の管理数字は載せない。 |
+| [meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md](meetings/webmaster/webmaster_term11_meeting1_20260914_preread.md) | **11期 WM 第1回事前資料**（チーム配布・未送信）。顔合わせ。大事にしたいことを一緒に確認する。担当は決めない。 |
 | [meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.html) | **同・A4横2枚図版**（印刷用 HTML）。CDNなし。 |
 | [meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf](meetings/webmaster/materials/webmaster_term11_meeting1_20260914_preread.pdf) | **同・A4横2枚 PDF**（チーム配布用）。作業用の語は載せない。 |
-| [meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md) | **11期 WM 第1回アジェンダ**（2026-09-14 19:00–20:00・進行用・共有文未送信）。Zoom は確定案内の会合。 |
+| [meetings/webmaster/webmaster_term11_umezawa_reaction_20260913.md](meetings/webmaster/webmaster_term11_umezawa_reaction_20260913.md) | **梅澤さん 事前資料への反応**（2026-09-13 10:04 / 10:25 / 16:06）。なぜやるか。動画は LTST。アカウントは写さない。14日は切らない。 |
+| [meetings/webmaster/webmaster_term11_video_purpose_effect_20260913.md](meetings/webmaster/webmaster_term11_video_purpose_effect_20260913.md) | **定例会動画の目的と効果**（2026-09-13 20:54 JST・調査・未決）。録る／切る／整える／出す。視聴と所要は未測。14日は切らない。 |
+| [meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md](meetings/webmaster/webmaster_term11_meeting1_20260914_agenda.md) | **11期 WM 第1回アジェンダ**（2026-09-14 19:00–20:00・進行用）。顔合わせ。大事にしたいことを一緒に確認する。 |
 
 #### 1to1 専用（docs/meetings/1to1/）
 

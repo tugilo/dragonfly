@@ -3,7 +3,7 @@ doc_type: webmaster_term_hub
 chapter: bni_dragonfly
 term_ja: "11期"
 created_jst: "2026-08-29 10:00 JST"
-updated_jst: "2026-09-12 18:42 JST"
+updated_jst: "2026-09-13 21:57 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
 status: living
 religo_session_type: webmaster_meeting
@@ -24,14 +24,16 @@ religo_import: pending_first_meeting
 | 項目 | 状態 |
 |------|------|
 | メンバー | 次廣 淳（WM）／梅澤 朗広／太田 一誠／軍司 敦哉／竹村 裕司／米澤 侑桂。5名快諾済み |
-| 役割 | **固定しない。ローテーション。** 誰かが休んでも定例会が回るよう、6人全員ができるようにする。第1回では今週の担当表は作らない。仕事の地図: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
+| 役割 | **固定しない。ローテーション。** 誰かが休んでも定例会が回るよう、6人全員ができるようにする。第1回では今週の担当表は作らない。仕事の中身: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
 | スライド送りの型 | 朝礼を含むパワポ **4つ**。各共有は **2人1組**。狙い: **切れても止まらない**／**Webマス自身がウィークリーとメインプレを聞く**。メインが共有＋送り、バックアップも同じページ。障害時はすぐ切替 |
 | 残す／やめる | **未決。** 棚卸しは出た。操作を覚えてから切る |
 | Messenger グループ | 開設文送信済み（2026-08-28 23:56 JST） |
 | PC環境アンケート | **6名回答。** 2台持ち3／1台2／借用可1。1台2名は運営用PC貸与。借用可1名向けの **Microsoft 365 1ライセンス**は、こなっちへの個別送信ではなく **LTST アジェンダシートの全体協議事項に記入**（3分の2賛同が要る） |
 | 11期 第1回 LTST | **2026-09-02（水）20:00 JST。** 手元メモ: [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md) |
 | 11期 第2回 LTST | **2026-09-10（木）。** 議事録: [chapter_ltst_term11_20260910.md](../chapter/chapter_ltst_term11_20260910.md)。6人・2人1組、月曜正午締切、月曜 MTG 短縮、運営 PC 37,800円を船津申請→LTST 決裁。次回は **9/17 全員参加**（フィックス） |
-| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。事前配布（チーム用）: [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md)。進行用: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。20:00〜10期リハ見学（任意） |
+| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。大事にしたいことを一緒に確認する。担当は決めない。事前配布: [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md)。台本: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。20:00〜10期リハ見学（任意） |
+| 梅澤さんの反応（9/13） | 事前資料を見た。チェックリストは来期施策の **事前提案**。目的は抜け漏れ防止。14日は採否を切らない。[記録](webmaster_term11_umezawa_reaction_20260913.md)。台本: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
+| 動画の目的と効果 | 調査中。編集しないとは未決。録る／切る／整える／出すは別。[調査](webmaster_term11_video_purpose_effect_20260913.md) |
 | サポートチームWS | **受講対象。** オンライン2時間。10/1 13:00–15:00 または 10/9 15:30–17:30。受ければTLTオンデマンドは不要。すでにTLT視聴済みでもWSを受ける（LT確認）。告知文: [webmaster_term11_tlt_workshop_20260912.md](webmaster_term11_tlt_workshop_20260912.md)。**未送信** |
 
 ---
@@ -72,9 +74,9 @@ religo_import: pending_first_meeting
 
 **確定: 2026-09-14（月）19:00–20:00 JST。** Zoom 60分。
 
-顔合わせ。向きを揃える。**休んでも回る＝ローテーション。** 今週の担当表は作らない。
+顔合わせ。大事にしたいことと、いま上がっているやり方を、一緒に確認する。係・担当表・残す／やめるは、今夜決めない。
 
-11期 LT・ST ミーティングは 9月2日と9月10日。14日はその場で決まったことと、来期 Webマスチームに課せられた課題の目線合わせ。
+11期 LT・ST ミーティングは 9月2日と9月10日。14日は、そこで Webマスに出ていることと、チームの目標を揃える。
 
 案内は 2026-08-29 09:59 JST にグループ送信済み。確定は 2026-08-30 12:39 JST。文面の正: [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md)
 
@@ -100,7 +102,7 @@ religo_import: pending_first_meeting
 
 ---
 
-## 仕事の中身（10期の型。11期は回して覚える）
+## 仕事の中身（10期の型を土台に、11期は回しながら覚える）
 
 2026-09-12 人間整理。**狙い: 誰かが休んでも回る。係を固定せず、全員が触る。** 詳細は [第1回アジェンダ](webmaster_term11_meeting1_20260914_agenda.md)。
 
@@ -139,6 +141,8 @@ religo_import: pending_first_meeting
 | 第1回事前資料（9/14・チーム配布） | [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md) |
 | 第1回事前資料 A4横PDF | [materials/webmaster_term11_meeting1_20260914_preread.pdf](materials/webmaster_term11_meeting1_20260914_preread.pdf) |
 | 第1回事前資料 A4図版 | [materials/webmaster_term11_meeting1_20260914_preread.html](materials/webmaster_term11_meeting1_20260914_preread.html) |
+| 梅澤さん反応（9/13） | [webmaster_term11_umezawa_reaction_20260913.md](webmaster_term11_umezawa_reaction_20260913.md) |
+| 動画の目的と効果（調査） | [webmaster_term11_video_purpose_effect_20260913.md](webmaster_term11_video_purpose_effect_20260913.md) |
 | 第1回アジェンダ（9/14・進行用） | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) |
 | タスク表 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv)／[説明](webmaster_task_inventory_20260822.md) |
 | 倉持棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
@@ -177,8 +181,9 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 - 誰がスライド、予備、ブレイクアウトか
 - 4つのパワポの、誰がメイン／バックアップか
-- 自動化や毎週の動画を残すか
-- 新しいツールを足すか
+- 自動化や毎週の動画を残すか（録る／切る／整える／出すは別。編集しないとは未決。[調査](webmaster_term11_video_purpose_effect_20260913.md)）
+- チェックリストの採否（目的が共有されず抜けた、という話だけ先にある）
+- 新しいツールを足すか（Gemini 文字起こしも含む）
 
 ---
 
@@ -186,6 +191,17 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-09-13 22:04 | 事前資料のメンバー共有文を人間の文面に差し替えた。未送信 |
+| 2026-09-13 22:03 | 第1回台本。BORは軍司さんに教えてもらう。今夜は手順まで入らない |
+| 2026-09-13 21:58 | 第1回台本の19:00に冒頭挨拶を追加 |
+| 2026-09-13 21:57 | 10期は土台。流れの「目標」を「大事にしたいこと」へ |
+| 2026-09-13 21:52 | 第1回の目的から「地図」を外した。顔合わせ。大事にしたいことを確認する |
+| 2026-09-13 21:41 | 第1回の目的を整理 |
+| 2026-09-13 21:38 | 第1回台本へ。梅澤さんのチェックリストは来期施策の事前提案 |
+| 2026-09-13 21:33 | 事前資料の「しない」から動画の編集を外した |
+| 2026-09-13 20:54 | 定例会動画の目的と効果を調査。編集しないとは切らない |
+| 2026-09-13 20:49 | 事前資料へなぜやるかを足した。Gemini・採否・動画編集は切らない |
+| 2026-09-13 20:47 | 梅澤さんの事前資料反応。チェックリストの目的／動画はLTST。14日は切らない |
 | 2026-09-12 18:42 | 第1回事前資料の配布面から作業用の語を外した |
 | 2026-09-12 17:58 | 第1回事前資料の文言照合。自動化と60分の注 |
 | 2026-09-12 17:54 | 第1回事前資料の図版を見やすく組み直し。PDF 再作成 |
