@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ワーカーブロス 受注・見積・請求システム 画面イメージ</title>
+<style>
+  :root {
+    --ink: #1f2937; --sub: #6b7280; --line: #e5e7eb; --bg: #f5f6f8;
+    --main: #2f4f7f; --main-soft: #e8eef7; --accent: #d9822b; --ok: #1f8a4c; --line-green: #06c755;
+    --warn-soft: #fff4e5; --err: #b42318; --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif; color: var(--ink); background: var(--bg); font-size: 14px; line-height: 1.6; }
+  header.top { background: #fff; border-bottom: 1px solid var(--line); padding: 12px 24px; display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; position: sticky; top: 0; z-index: 10; }
+  header.top h1 { font-size: 16px; margin: 0; }
+  header.top .demo { font-size: 12px; color: var(--accent); background: var(--warn-soft); padding: 2px 8px; border-radius: 99px; }
+  header.top .user { font-size: 12px; color: var(--sub); }
+  header.top .user a { color: var(--main); cursor: pointer; margin-left: 6px; }
+  nav.steps { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+  nav.steps button { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 6px 12px; font-size: 13px; cursor: pointer; color: var(--sub); }
+  nav.steps button .who { font-size: 11px; margin-right: 4px; padding: 1px 6px; border-radius: 99px; background: var(--bg); }
+  nav.steps button.active { background: var(--main); color: #fff; border-color: var(--main); }
+  nav.steps button.active .who { background: rgba(255,255,255,.2); }
+  nav.steps .badge { background: var(--err); color: #fff; border-radius: 99px; font-size: 10px; padding: 0 6px; margin-left: 4px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 24px; }
+  section.screen { display: none; }
+  section.screen.active { display: block; }
+  .screen-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 12px; flex-wrap: wrap; }
+  .screen-title h2 { font-size: 20px; margin: 0; }
+  .screen-title .who { font-size: 12px; padding: 2px 8px; border-radius: 99px; background: var(--main-soft); color: var(--main); }
+  .change { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .change div { border-radius: var(--radius); padding: 10px 14px; font-size: 13px; }
+  .change .now { background: #fff; border: 1px dashed #c7cdd6; color: var(--sub); }
+  .change .next { background: var(--main-soft); border: 1px solid #c9d6ea; }
+  .change b { display: block; font-size: 12px; margin-bottom: 2px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; }
+  .card h3 { font-size: 15px; margin: 0 0 12px; }
+  .grid2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  .grid2.wide { grid-template-columns: 2.2fr 1fr; }
+  .compact select, .compact input { padding: 6px 4px; font-size: 13px; }
+  .compact td { padding: 6px 4px; }
+  label.f { display: block; font-size: 12px; color: var(--sub); margin-bottom: 4px; }
+  input, select { font: inherit; padding: 7px 9px; border: 1px solid #cfd4dc; border-radius: 6px; background: #fff; width: 100%; }
+  input[type=number] { text-align: right; }
+  input[type=checkbox] { width: auto; }
+  input.invalid { border-color: var(--err); background: #fff5f5; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 8px; padding: 9px 16px; font: inherit; cursor: pointer; background: var(--main); color: #fff; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.sub { background: #fff; color: var(--main); border: 1px solid var(--main); }
+  .btn.line { background: var(--line-green); }
+  .btn.ok { background: var(--ok); }
+  .btn.ghost { background: transparent; color: var(--sub); border: 1px solid var(--line); }
+  .btn.sm { padding: 4px 10px; font-size: 12px; }
+  .x { border: 0; background: none; color: var(--sub); cursor: pointer; font-size: 16px; padding: 0 4px; }
+  .x:hover { color: var(--err); }
+  .opt { font-size: 11px; background: var(--warn-soft); color: var(--accent); padding: 1px 6px; border-radius: 4px; margin-left: 6px; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+  th { font-size: 12px; color: var(--sub); font-weight: 600; background: #fafbfc; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.click { cursor: pointer; }
+  tr.click:hover { background: var(--main-soft); }
+  tr.hl { background: #fff8f0; }
+  .auto { background: #eef7f1; color: var(--ok); border-radius: 4px; padding: 1px 6px; font-size: 11px; }
+  .pill { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 99px; background: var(--bg); white-space: nowrap; }
+  .pill.s0 { background: #fde8e8; color: var(--err); }
+  .pill.s1 { background: var(--warn-soft); color: var(--accent); }
+  .pill.s2 { background: var(--main-soft); color: var(--main); }
+  .pill.s3 { background: #efe9fb; color: #6941c6; }
+  .pill.s4 { background: #e6f4ff; color: #175cd3; }
+  .pill.s5 { background: #eef7f1; color: var(--ok); }
+  .muted { color: var(--sub); font-size: 12px; }
+  .err { color: var(--err); font-size: 12px; margin-top: 6px; }
+  .note { font-size: 12px; color: var(--sub); margin-top: 8px; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .search-results { border: 1px solid var(--line); border-radius: 8px; max-height: 220px; overflow: auto; margin-top: 8px; }
+  .search-results div { padding: 8px 10px; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+  .search-results div:hover, .search-results div.sel { background: var(--main-soft); }
+  .size-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 8px; }
+  .size-grid div { text-align: center; font-size: 12px; }
+  .size-grid input { text-align: center; margin-top: 2px; }
+  .drop { border: 2px dashed #c7cdd6; border-radius: 8px; padding: 16px; text-align: center; color: var(--sub); cursor: pointer; }
+  .drop.over { border-color: var(--main); background: var(--main-soft); }
+  .thumb { width: 44px; height: 44px; object-fit: contain; border: 1px solid var(--line); border-radius: 4px; background: #fafafa; vertical-align: middle; }
+  .thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .thumbs figure { margin: 0; font-size: 11px; color: var(--sub); text-align: center; }
+  .thumbs img { width: 90px; height: 90px; object-fit: contain; border: 1px solid var(--line); border-radius: 6px; background: #fafafa; display: block; }
+  .login-wrap { max-width: 420px; margin: 20px auto; }
+  .divider { text-align: center; color: var(--sub); font-size: 12px; margin: 14px 0; }
+  .totals td { border: 0; padding: 4px 0; }
+  .totals tr.big td { font-size: 18px; font-weight: 700; padding-top: 8px; border-top: 2px solid var(--ink); }
+  .profit { background: #fafbfc; border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 13px; }
+  .req { background: var(--warn-soft); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-bottom: 12px; }
+  .doc { background: #fff; border: 1px solid var(--line); box-shadow: 0 4px 16px rgba(0,0,0,.06); max-width: 760px; margin: 0 auto; padding: 36px 40px; }
+  .doc h4 { text-align: center; font-size: 22px; letter-spacing: .4em; margin: 0 0 20px; }
+  .doc .hd { display: flex; justify-content: space-between; gap: 20px; font-size: 12px; margin-bottom: 16px; }
+  .doc .amount { font-size: 20px; font-weight: 700; border-bottom: 2px solid var(--ink); display: inline-block; padding: 0 8px 2px; margin: 6px 0 14px; }
+  .doc table th { background: #f1f3f6; }
+  .doc td:nth-child(2), .doc td:nth-child(3) { white-space: nowrap; font-size: 12px; }
+  .tabs { display: flex; gap: 6px; justify-content: center; margin-bottom: 14px; }
+  .tabs button { border: 1px solid var(--line); background: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font: inherit; }
+  .tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .flow { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; font-size: 12px; }
+  .flow span { padding: 3px 10px; border-radius: 99px; background: var(--bg); color: var(--sub); }
+  .flow span.on { background: var(--main); color: #fff; }
+  .flow span.past { background: var(--main-soft); color: var(--main); }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpis div { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
+  .kpis b { display: block; font-size: 20px; }
+  .empty { text-align: center; color: var(--sub); padding: 24px; }
+  #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 8px; opacity: 0; transition: .25s; z-index: 50; font-size: 13px; pointer-events: none; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #modal { position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: flex-start; justify-content: center; z-index: 40; overflow: auto; padding: 40px 16px; }
+  #modal.show { display: flex; }
+  #modal .box { background: #fff; border-radius: 12px; padding: 22px; width: min(820px, 100%); }
+  #modal .box h3 { margin: 0 0 12px; font-size: 16px; }
+  /* お客様画面 */
+  .cust { --c: #e4572e; --c-soft: #fdeee9; font-size: 15px; }
+  .cust .btn { background: var(--c); }
+  .cust .btn.ghost { background: #fff; color: var(--ink); border: 1px solid #d0d5dd; }
+  .cust .btn.line { background: var(--line-green); }
+  .cust .btn.big { width: 100%; justify-content: center; padding: 14px 18px; font-size: 16px; font-weight: 700; border-radius: 10px; }
+  .cust .link { color: var(--main); cursor: pointer; text-decoration: underline; }
+  .cust .hero { text-align: center; margin: 4px auto 18px; max-width: 560px; }
+  .cust .hero .brand { letter-spacing: .3em; font-weight: 800; color: var(--c); font-size: 13px; }
+  .cust .hero h2 { font-size: 24px; margin: 6px 0; }
+  .cust .hero p { color: var(--sub); margin: 0 0 14px; }
+  .cust .how { list-style: none; padding: 0; margin: 0; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .cust .how li { background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 6px 14px 6px 6px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+  .cust .how b { background: var(--c); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 12px; }
+  .cust .login-wrap h3 { font-size: 18px; }
+  .demo-box { margin-top: 18px; background: var(--bg); border-radius: 8px; padding: 10px; font-size: 12px; display: grid; gap: 6px; }
+  .stepper { display: flex; margin: 0 0 18px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .stepper div { flex: 1; padding: 12px 8px; text-align: center; font-size: 13px; color: var(--sub); border-right: 1px solid var(--line); cursor: default; }
+  .stepper div:last-child { border-right: 0; }
+  .stepper div b { display: block; font-size: 11px; }
+  .stepper div.done { color: var(--ok); cursor: pointer; }
+  .stepper div.done b::after { content: ' ✓'; }
+  .stepper div.on { background: var(--c-soft); color: var(--c); font-weight: 700; box-shadow: inset 0 -3px 0 var(--c); }
+  .olay { display: grid; grid-template-columns: 1fr 320px; gap: 18px; align-items: start; }
+  .side { position: sticky; top: 118px; }
+  .qhead { font-size: 20px; font-weight: 800; margin: 0 0 4px; }
+  .qsub { color: var(--sub); margin: 0 0 14px; font-size: 14px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { border: 1px solid #d0d5dd; background: #fff; border-radius: 99px; padding: 7px 14px; cursor: pointer; font: inherit; font-size: 14px; }
+  .chip:hover { border-color: var(--c); }
+  .chip.on { border-color: var(--c); background: var(--c-soft); color: var(--c); font-weight: 700; }
+  .pgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+  .pcard { border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; background: #fff; position: relative; }
+  .pcard:hover { border-color: #f3b3a0; }
+  .pcard.on { border-color: var(--c); background: var(--c-soft); }
+  .pcard.on::after { content: '✓ 選択中'; position: absolute; top: 8px; right: 10px; font-size: 11px; color: #fff; background: var(--c); padding: 1px 8px; border-radius: 99px; }
+  .pcard .nm { font-weight: 700; padding-right: 64px; }
+  .pcard .mk { font-size: 12px; color: var(--sub); }
+  .pcard .pr { margin-top: 4px; font-size: 13px; }
+  .pcard .pr b { font-size: 17px; }
+  .sizes { display: grid; gap: 8px; margin-top: 10px; }
+  .srow { display: grid; grid-template-columns: 70px 1fr 150px 90px; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+  .srow.has { border-color: var(--c); background: #fffaf8; }
+  .srow .sz { font-weight: 800; font-size: 16px; }
+  .stepq { display: flex; align-items: center; border: 1px solid #d0d5dd; border-radius: 8px; overflow: hidden; }
+  .stepq button { width: 40px; height: 38px; border: 0; background: var(--bg); font-size: 18px; cursor: pointer; }
+  .stepq input { border: 0; border-radius: 0; text-align: center; width: 100%; height: 38px; font-size: 16px; }
+  .ibox { border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 14px; background: #fff; }
+  .ihead { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; margin-bottom: 10px; font-size: 15px; }
+  .ino { background: var(--c); color: #fff; border-radius: 6px; padding: 1px 8px; font-size: 12px; font-weight: 700; }
+  .itot { margin-left: auto; font-weight: 800; color: var(--c); font-size: 16px; }
+  .picked { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 0 0 12px; padding: 8px 10px; background: var(--c-soft); border-radius: 10px; min-height: 22px; }
+  .ptag { background: #fff; border: 1px solid var(--c); color: var(--c); border-radius: 99px; padding: 2px 4px 2px 10px; font-size: 13px; font-weight: 700; }
+  .ptag button { border: 0; background: none; color: var(--c); cursor: pointer; font-size: 14px; }
+  .pcard .pact { margin-top: 6px; font-size: 12px; color: var(--c); font-weight: 700; }
+  .pcard.on .pact { color: var(--sub); font-weight: 400; }
+  .cbox { border: 1px solid var(--c); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; background: #fffaf8; }
+  .cbox h4 { display: flex; gap: 10px; align-items: baseline; margin: 0 0 10px; font-size: 15px; }
+  .cbox h4 .link { margin-left: auto; font-size: 12px; font-weight: 400; }
+  .sgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stile { border: 1px solid var(--line); border-radius: 10px; padding: 8px; background: #fff; text-align: center; }
+  .stile.has { border-color: var(--c); box-shadow: inset 0 0 0 1px var(--c); }
+  .stile .sz { font-weight: 800; font-size: 16px; }
+  .stile .stepq { margin-top: 4px; }
+  .stepq.sm button { width: 30px; height: 32px; font-size: 16px; }
+  .stepq.sm input { height: 32px; font-size: 15px; padding: 0; }
+  .loc { border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; background: #fff; }
+  .loc h4 { margin: 0 0 10px; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+  .loc .lbl { font-size: 13px; font-weight: 700; margin: 12px 0 6px; }
+  .loc .lbl span { font-weight: 400; color: var(--sub); }
+  .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .mcard { border: 2px solid var(--line); border-radius: 10px; padding: 8px 10px; cursor: pointer; font-size: 12px; color: var(--sub); background: #fff; }
+  .mcard b { display: block; font-size: 14px; color: var(--ink); }
+  .mcard.on { border-color: var(--c); background: var(--c-soft); }
+  .mcard .rec { font-size: 10px; background: var(--c); color: #fff; border-radius: 4px; padding: 0 5px; margin-left: 4px; }
+  .up { border: 2px dashed #c7cdd6; border-radius: 10px; padding: 14px; text-align: center; color: var(--sub); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .up.over { border-color: var(--c); background: var(--c-soft); }
+  .up.ok { border-style: solid; border-color: var(--ok); background: #f3faf6; color: var(--ok); }
+  .up img { width: 64px; height: 64px; object-fit: contain; background: #fff; border-radius: 6px; border: 1px solid var(--line); }
+  .navbar { display: flex; gap: 10px; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .navbar .hint { color: var(--c); font-size: 13px; margin-left: auto; text-align: right; }
+  .navbar .btn.next { min-width: 220px; justify-content: center; padding: 12px 18px; font-size: 15px; font-weight: 700; }
+  .check { list-style: none; padding: 0; margin: 0 0 12px; }
+  .check li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 13px; }
+  .check li i { font-style: normal; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #d0d5dd; display: inline-grid; place-items: center; font-size: 11px; flex: none; }
+  .check li.ok i { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .check li.now i { border-color: var(--c); color: var(--c); }
+  .check li > span:not(.v) { white-space: nowrap; }
+  .check li .v { margin-left: auto; color: var(--sub); text-align: right; }
+  .rv { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; background: #fff; }
+  .rv h5 { margin: 0 0 6px; font-size: 14px; display: flex; justify-content: space-between; }
+  .rv h5 a { font-weight: 400; font-size: 12px; }
+  .free { background: #f3faf6; color: var(--ok); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin: 10px 0; }
+  .done-box { text-align: center; padding: 28px 20px; }
+  .done-box .big-check { width: 64px; height: 64px; border-radius: 50%; background: var(--ok); color: #fff; font-size: 34px; display: inline-grid; place-items: center; }
+  .timeline { list-style: none; padding: 0; margin: 18px auto; max-width: 440px; text-align: left; }
+  .timeline li { display: flex; gap: 12px; padding: 8px 0; color: var(--sub); }
+  .timeline li b { width: 26px; height: 26px; border-radius: 50%; background: var(--bg); display: inline-grid; place-items: center; flex: none; font-size: 12px; }
+  .timeline li.now { color: var(--ink); font-weight: 700; }
+  .timeline li.now b { background: var(--ok); color: #fff; }
+  .todo { background: var(--c-soft); border: 2px solid var(--c); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+  .todo h3 { margin: 0 0 4px; color: var(--c); font-size: 16px; }
+  .ocard { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .ocard.act { border: 2px solid var(--c); }
+  .ocard .top { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .ocard .ttl { font-weight: 800; font-size: 16px; }
+  .prog { display: flex; margin: 12px 0 8px; }
+  .prog span { flex: 1; text-align: center; font-size: 11px; color: var(--sub); position: relative; padding-top: 16px; }
+  .prog span::before { content: ''; position: absolute; top: 4px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #d0d5dd; z-index: 1; }
+  .prog span::after { content: ''; position: absolute; top: 8px; left: -50%; width: 100%; height: 2px; background: #d0d5dd; }
+  .prog span:first-child::after { display: none; }
+  .prog span.past::before, .prog span.past::after, .prog span.on::after { background: var(--ok); }
+  .prog span.on { color: var(--ink); font-weight: 700; }
+  .prog span.on::before { background: var(--c); box-shadow: 0 0 0 4px var(--c-soft); }
+  .nextact { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .ocard.act .nextact { background: var(--c-soft); }
+  .nextact .btns { margin-left: auto; display: flex; gap: 8px; }
+  @media (max-width: 860px) { .olay { grid-template-columns: 1fr; } .side { position: static; } .pgrid { grid-template-columns: 1fr; } .srow { grid-template-columns: 50px 1fr 130px; } .srow .sub { display: none; } }
+  footer { text-align: center; color: var(--sub); font-size: 12px; padding: 24px; }
+  @media (max-width: 860px) { .grid2, .grid2.wide, .change, .kpis { grid-template-columns: 1fr; } .size-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media print {
+    body * { visibility: hidden; }
+    .print-target, .print-target * { visibility: visible; }
+    .print-target { position: absolute; left: 0; top: 0; width: 100%; max-width: none; border: 0; box-shadow: none; }
+    #modal { background: none; }
+  }
+  body.locked > :not(#gate) { display: none !important; }
+  #gate { display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; }
+  body.locked #gate { display: flex; }
+  #gate .box { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px 28px; width: 100%; max-width: 380px; box-shadow: 0 8px 24px rgba(0,0,0,.06); }
+  #gate h1 { font-size: 17px; margin: 0 0 6px; }
+  #gate p { color: var(--sub); font-size: 13px; margin: 0 0 18px; }
+  #gate input { width: 100%; font-size: 16px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; }
+  #gate button { width: 100%; margin-top: 14px; font-size: 15px; padding: 11px; border: 0; border-radius: 8px; background: var(--main); color: #fff; cursor: pointer; }
+  #gate .err { color: var(--err); font-size: 13px; min-height: 20px; margin-top: 8px; }
+</style>
+</head>
+<body class="locked">
+<div id="gate">
+  <form class="box" onsubmit="unlockDemo(event)">
+    <h1>ワーカーブロス様 打合せ用デモ</h1>
+    <p>閲覧用のパスワードを入力してください。</p>
+    <input type="password" id="gatePass" autocomplete="off" autofocus aria-label="パスワード">
+    <div class="err" id="gateErr"></div>
+    <button type="submit">表示する</button>
+  </form>
+</div>
+<script>
+  if (sessionStorage.getItem('wbDemoUnlocked') === '1') document.body.classList.remove('locked');
+  function unlockDemo(e) {
+    e.preventDefault();
+    if (document.getElementById('gatePass').value !== 'demo1234') {
+      document.getElementById('gateErr').textContent = 'パスワードが違います。';
+      return;
+    }
+    sessionStorage.setItem('wbDemoUnlocked', '1');
+    document.body.classList.remove('locked');
+  }
+</script>
+<header class="top">
+  <h1>ワーカーブロス 受注・見積・請求システム（画面イメージ）</h1>
+  <span class="demo">打合せ用デモ｜金額は現行の料金表・ボディーマスタで計算</span>
+  <span class="user" id="userBox"></span>
+  <nav class="steps" id="steps"></nav>
+</header>
+
+<main>
+
+<!-- 1. ログイン -->
+<section class="screen" data-id="login" data-title="ログイン" data-who="お客様">
+  <div class="screen-title"><h2>① お客様ログイン</h2><span class="who">お客様</span></div>
+  <div class="change">
+    <div class="now"><b>今</b>専用URL（order.php?id=…）を知っていれば誰でも開ける。URLが漏れると他人がそのお客様として注文できる。</div>
+    <div class="next"><b>これから</b>IDとパスワード（またはLINE）で本人確認してから注文。お客様情報・過去の注文は自動で入る。</div>
+  </div>
+  <div class="cust">
+    <div class="hero">
+      <div class="brand">WORKER BROS</div>
+      <h2>オリジナルウェアのご注文</h2>
+      <p>ログインすると、3ステップで見積を依頼できます。見積の確認・承認までWebで完結します。</p>
+      <ol class="how">
+        <li><b>1</b>商品と枚数を選ぶ</li>
+        <li><b>2</b>デザインを送る</li>
+        <li><b>3</b>見積を確認して承認</li>
+      </ol>
+    </div>
+    <div class="card login-wrap">
+      <h3>ログイン</h3>
+      <label class="f">メールアドレス</label>
+      <input id="loginEmail" autocomplete="username">
+      <label class="f" style="margin-top:12px">パスワード</label>
+      <input type="password" id="loginPass" value="demo1234" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+      <div class="err" id="loginErr"></div>
+      <button class="btn big" style="margin-top:16px" onclick="login()">ログインする</button>
+      <div class="divider">または</div>
+      <button class="btn big line" onclick="login(true)">LINEでログイン<span class="opt">オプションA</span></button>
+      <div class="row" style="justify-content:space-between;margin-top:14px;font-size:12px">
+        <a class="link" onclick="toast('登録メールアドレスに再設定用のリンクを送りました（デモ）')">パスワードを忘れた方</a>
+        <a class="link" onclick="toast('初めての方は、ワーカーブロスから届く招待メールで登録できます')">はじめての方</a>
+      </div>
+      <div class="demo-box">
+        <b>デモ用：ログインするお客様を切り替え</b>
+        <select id="loginCustomer" onchange="fillLogin()"></select>
+        <span class="muted">パスワードは demo1234。間違えるとエラーになる。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. マイページ -->
+<section class="screen" data-id="mypage" data-title="マイページ" data-who="お客様">
+  <div class="screen-title"><h2>② マイページ（ご注文状況）</h2><span class="who">お客様</span></div>
+  <div class="change">
+    <div class="now"><b>今</b>見積はLINEやメールで届き、承認の返事もバラバラ。注文がいまどこまで進んでいるか、お客様からは見えない。</div>
+    <div class="next"><b>これから</b>ログインするとまず「やること」が表示される。見積の確認・承認もここでできる。進み具合がひと目で分かる。</div>
+  </div>
+  <div id="myNeedLogin" class="card empty">ご注文状況を見るにはログインしてください。<div style="margin-top:10px"><button class="btn" onclick="go('login')">ログインへ</button></div></div>
+  <div class="cust" id="myMain"></div>
+</section>
+
+<!-- 3. 注文（見積依頼） -->
+<section class="screen" data-id="order" data-title="注文する" data-who="お客様">
+  <div class="screen-title"><h2>③ 注文する（見積依頼）</h2><span class="who">お客様</span></div>
+  <div class="change">
+    <div class="now"><b>今</b>1枚のフォームに品番・カラーを自由入力。存在しない品番や書き間違いが届き、確認の往復が発生する。</div>
+    <div class="next"><b>これから</b>4つのステップで1つずつ選ぶだけ。商品はマスタから選ぶので間違いが起きない。次に何をすればよいか常に表示される。</div>
+  </div>
+  <div id="needLogin" class="card empty" style="display:none">ご注文にはログインが必要です。<div style="margin-top:10px"><button class="btn" onclick="go('login')">ログインへ</button></div></div>
+  <div id="orderWrap" class="cust"></div>
+</section>
+
+<!-- 4. 受注一覧 -->
+<section class="screen" data-id="list" data-title="受注一覧" data-who="社内">
+  <div class="screen-title"><h2>④ 受注一覧</h2><span class="who">社内</span></div>
+  <div class="change">
+    <div class="now"><b>今</b>フォームのメール・LINE・Excelファイルに情報が散らばり、どの案件がどこまで進んだか一覧で見えない。</div>
+    <div class="next"><b>これから</b>注文が入ると自動で一覧に載り、状態（受付→見積→承認・製作→発送→請求）で管理。</div>
+  </div>
+  <div class="card">
+    <div class="row" style="margin-bottom:12px">
+      <input id="lq" style="max-width:260px" placeholder="顧客名・品番・受注番号で検索" oninput="renderList()">
+      <select id="ls" style="max-width:170px" onchange="renderList()"></select>
+      <select id="lc" style="max-width:170px" onchange="renderList()"><option value="">すべての請求区分</option><option>都度</option><option>月次</option></select>
+      <span class="muted" id="lcount" style="margin-left:auto"></span>
+    </div>
+    <table>
+      <thead><tr><th>受注番号</th><th>受付日</th><th>お客様</th><th>内容</th><th class="num">枚数</th><th>希望納期</th><th>状態</th><th class="num">金額（税込）</th></tr></thead>
+      <tbody id="listBody"></tbody>
+    </table>
+    <p class="note">行をクリックすると、その受注の見積作成画面を開く。</p>
+  </div>
+</section>
+
+<!-- 4. 見積作成 -->
+<section class="screen" data-id="estimate" data-title="見積作成" data-who="社内">
+  <div class="screen-title"><h2>⑤ 見積作成（加工は選ぶだけで単価が出る）</h2><span class="who">社内</span><span id="estNo" class="muted"></span></div>
+  <div class="change">
+    <div class="now"><b>今</b>フォームの内容をExcelの入力用シートへ手で打ち直す。料金表の自動計算はExcelの中だけにある。</div>
+    <div class="next"><b>これから</b>ボディは注文から自動で入る。加工は方法・サイズ・版数・枚数を選ぶと、今と同じ料金表で単価・版代・粗利まで自動計算。</div>
+  </div>
+  <div id="estEmpty" class="card empty" style="display:none">受注一覧から受注を選んでください。<div style="margin-top:10px"><button class="btn" onclick="go('list')">受注一覧へ</button></div></div>
+  <div class="grid2 wide" id="estMain">
+    <div>
+      <div class="card">
+        <h3>ボディ <span class="auto">注文から自動</span></h3>
+        <table id="bodyTable" class="compact"></table>
+      </div>
+      <div class="card">
+        <h3>加工 <span class="auto">料金表から自動計算</span></h3>
+        <div class="req" id="reqBox"></div>
+        <table class="compact">
+          <thead><tr><th>加工方法</th><th>サイズ</th><th>位置</th><th>版数</th><th>色変え</th><th class="num">枚数</th><th class="num">版代</th><th class="num">単価</th><th class="num">金額</th><th></th></tr></thead>
+          <tbody id="procBody"></tbody>
+        </table>
+        <div style="margin-top:8px"><button class="btn ghost sm" onclick="addProc()">＋ 加工を追加</button></div>
+        <p class="note">シルクは「1色目の単価＋（版数−1）×2色目以降の単価」、枚数帯は「その枚数以上」。現行Excelの数式をそのまま移植。料金表は管理画面で改定できる。</p>
+      </div>
+      <div class="card">
+        <h3>オプション</h3>
+        <table class="compact">
+          <thead><tr><th>内容</th><th class="num">単価</th><th class="num">数量</th><th class="num">金額</th><th></th></tr></thead>
+          <tbody id="optBody"></tbody>
+        </table>
+        <div class="row" style="margin-top:8px">
+          <select id="optAdd" style="max-width:320px"></select>
+          <button class="btn ghost sm" onclick="addOpt()">＋ 追加</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>お客様</h3>
+        <div id="estCustomer"></div>
+        <div class="row" style="margin-top:10px">
+          <div style="flex:1"><label class="f">送料</label><input type="number" id="ship" oninput="setOrderNum('ship',this.value)"></div>
+          <div style="flex:1"><label class="f">代引手数料</label><input type="number" id="cod" oninput="setOrderNum('cod',this.value)"></div>
+          <div style="flex:1"><label class="f">WEB割（%）</label><input type="number" id="web" oninput="setOrderNum('web',this.value)"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>合計</h3>
+        <table class="totals" id="totals"></table>
+        <div class="profit" id="profit"></div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn" onclick="issueQuote()">見積書を発行</button>
+          <button class="btn ghost" onclick="saveDraft()">下書き保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 帳票 -->
+<section class="screen" data-id="doc" data-title="帳票・進行" data-who="社内">
+  <div class="screen-title"><h2>⑥ 帳票と進行管理</h2><span class="who">社内</span><span id="docNo" class="muted"></span></div>
+  <div class="change">
+    <div class="now"><b>今</b>見積書シートの表記を切り替えてPDFを出し、ファイル名とフォルダで管理。</div>
+    <div class="next"><b>これから</b>1つの受注から4帳票を発行。発行・送付の履歴が残り、いつでも再発行できる。状態もここで進める。</div>
+  </div>
+  <div id="docEmpty" class="card empty" style="display:none">受注一覧から受注を選んでください。<div style="margin-top:10px"><button class="btn" onclick="go('list')">受注一覧へ</button></div></div>
+  <div id="docMain">
+    <div class="card">
+      <div class="row"><b>進行状況</b><div class="flow" id="flow"></div><div style="margin-left:auto" class="row" id="flowActions"></div></div>
+    </div>
+    <div class="tabs" id="docTabs"></div>
+    <div class="doc" id="doc"></div>
+    <div class="row" style="justify-content:center;margin-top:16px">
+      <button class="btn" onclick="printDoc('doc')">PDFで保存・印刷</button>
+      <button class="btn sub" onclick="openSend('メール')">メールで送る</button>
+      <button class="btn line" onclick="openSend('LINE')">LINEで送る<span class="opt">オプションD</span></button>
+      <button class="btn ghost" onclick="go('estimate')">← 見積を修正</button>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>発行・送付履歴</h3>
+      <table id="history"></table>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 月次締め -->
+<section class="screen" data-id="monthly" data-title="月次締め・売上" data-who="社内">
+  <div class="screen-title"><h2>⑦ 月次締め・売上台帳</h2><span class="who">社内</span></div>
+  <div class="change">
+    <div class="now"><b>今</b>顧客ごとに1か月分の見積ファイルをフォルダへ集めてマクロで集計。対象月では絞り込まないため、別の月のファイルが混ざるとそのまま入る。売上台帳は帳票のセル番地から読む。</div>
+    <div class="next"><b>これから</b>発送した受注に「締め対象月」「請求済み」を持つ。未請求だけが一覧に出るので、二重請求・漏れがない。売上・粗利は元データから集計。</div>
+  </div>
+  <div class="row" style="margin-bottom:12px"><b>締め対象月</b><select id="month" style="max-width:180px" onchange="renderMonthly()"></select><span class="muted">発送済みにした月で自動的に振り分け</span></div>
+  <div class="kpis" id="kpis"></div>
+  <div class="card">
+    <h3>月次請求（法人・月次払いのお客様）</h3>
+    <table>
+      <thead><tr><th><input type="checkbox" id="chkAll" onchange="toggleAll(this.checked)"></th><th>お客様</th><th class="num">対象件数</th><th class="num">お買上額</th><th class="num">WEB割</th><th class="num">送料</th><th class="num">消費税</th><th class="num">請求額</th><th>状態</th><th></th></tr></thead>
+      <tbody id="monthlyBody"></tbody>
+    </table>
+    <div class="row" style="margin-top:12px"><button class="btn" id="issueBtn" onclick="issueMonthly()">請求書を発行</button></div>
+  </div>
+  <div class="card">
+    <div class="row" style="margin-bottom:8px"><h3 style="margin:0">売上台帳</h3><button class="btn ghost sm" style="margin-left:auto" onclick="exportCsv()">CSV出力</button></div>
+    <table id="ledger" class="compact"></table>
+    <p class="note">項目は現行の売上台帳ツールと同じ（取引先・支払方法・売上金額・お買上額・WEB割引額・送料・代引手数料・消費税額・粗利）。</p>
+  </div>
+</section>
+
+</main>
+<footer>画面イメージ（打合せ用）。データはブラウザ内だけで動き、再読み込みで初期状態に戻ります。実際の画面デザイン・項目は要件定義で確定します。<br>金額は料金表マスタ（2026-04-30版）とボディーマスタ（販売価格＝下代×1.2）で計算しています。<button class="btn ghost sm" onclick="location.reload()">初期状態に戻す</button></footer>
+
+<div id="modal" onclick="if(event.target===this)closeModal()"><div class="box" id="modalBox"></div></div>
+<div id="toast"></div>
+
+<script>
+const DEMO_TODAY = '2026-09-28';
+const yen = n => Math.round(n).toLocaleString('ja-JP');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const nowStr = () => { const d = new Date(); return `${DEMO_TODAY} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+const ym = m => `${m.slice(0, 4)}年${+m.slice(5, 7)}月`;
+const jpDate = s => { const [y, m, d] = s.split('-'); return `${y}年${+m}月${+d}日`; };
+
+// ボディーマスタ抜粋（販売価格＝下代×1.2）
+const BODIES = [
+  { maker: 'ユナイテッドアスレ', code: '5001-01', name: '5.6oz ハイクオリティーTシャツ', colors: ['ホワイト','ブラック','ネイビー','レッド','グレー'], sizes: { S: 498, M: 498, L: 498, XL: 498, XXL: 672, XXXL: 774 } },
+  { maker: 'ユナイテッドアスレ', code: '5942-01', name: '6.2oz プレミアムTシャツ', colors: ['ホワイト','ブラック','ナチュラル','モスグリーン'], sizes: { XS: 780, S: 780, M: 780, L: 780, XL: 780, XXL: 1062 } },
+  { maker: 'ユナイテッドアスレ', code: '5010-01', name: '5.6oz ロングスリーブTシャツ（ロンT）', colors: ['ホワイト','ネイビー','チャコール'], sizes: { S: 720, M: 720, L: 720, XL: 720, XXL: 864 } },
+  { maker: 'ユナイテッドアスレ', code: '1100-01', name: '6.5oz ファインジャージーTシャツ', colors: ['ホワイト','ブラック'], sizes: { S: 780, M: 780, L: 780, XL: 780, XXL: 1062 } },
+  { maker: 'ユナイテッドアスレ', code: '1460-01', name: 'レギュラーキャンバストートバッグ', colors: ['ナチュラル','ブラック'], sizes: { S: 292, M: 355, L: 485 } },
+  { maker: 'GILDAN', code: 'T2300', name: '6oz ウルトラコットン ポケットTシャツ', colors: ['ホワイト','ブラック'], sizes: { S: 714, M: 714, L: 714, XL: 714, XXL: 714 } },
+  { maker: 'COMFORT COLORS', code: 'CC6014', name: '6.1oz ガーメントダイ長袖Tシャツ', colors: ['ホワイト','ペッパー'], sizes: { S: 1416, M: 1416, L: 1416, XL: 1416 } },
+  { maker: 'OTTO', code: 'H0468', name: 'メッシュキャップ', colors: ['ブラック','ネイビー'], sizes: { F: 648 } },
+];
+const bodyOf = code => BODIES.find(b => b.code === code);
+
+// 料金表マスタ（2026-04-30版）
+const PRICE = {
+  'シルクスクリーン': {
+    bands: [1, 5, 15, 30, 50, 80, 120, 200],
+    sizes: {
+      '15×15cm以内': { plate: 1480, first: [500,250,200,180,170,150,130,110], next: [250,190,150,130,110,100,90,80] },
+      '20×30cm以内': { plate: 1980, first: [650,350,270,250,220,200,180,170], next: [300,250,200,170,150,130,110,100] },
+      '30×30cm以内': { plate: 2480, first: [650,400,300,280,260,240,220,200], next: [330,330,220,190,170,150,140,130] },
+      '30×40cm以内': { plate: 2780, first: [730,430,350,320,300,280,260,240], next: [380,350,250,230,210,180,160,150] },
+      '35×50cm以内': { plate: 3780, first: [780,480,400,360,340,320,280,260], next: [420,380,340,300,260,220,200,180] },
+    },
+  },
+  'DTF': {
+    bands: [1, 5, 15, 30, 50, 80, 100],
+    sizes: {
+      '12×12cm以内': { unit: [800,600,500,450,400,380,350] },
+      '20×30cm以内': { unit: [1200,950,850,780,700,650,600] },
+      '28×40cm以内': { unit: [1800,1200,1050,980,930,900,880] },
+      '32×45cm以内': { unit: [2200,1800,1600,1380,1300,1280,1200] },
+    },
+  },
+  '刺繍': {
+    sizes: {
+      '4×6cm以内': { plate: 1480, fixed: 500 },
+      '10×10cm以内': { plate: 1980, fixed: 700 },
+      '13×18cm以内': { plate: 2980, fixed: 1400 },
+      '20×30cm以内': { plate: 3980, fixed: 2500 },
+    },
+  },
+  'インクジェット': {
+    bands: [1, 11, 21, 51, 81],
+    sizes: {
+      '15×15cm以内': { unit: [550,580,520,500,470] },
+      '20×30cm以内': { unit: [1080,1050,990,970,890] },
+      '35×40cm以内': { unit: [1080,1070,1030,1000,950] },
+      '38×45cm以内': { unit: [1280,1220,1130,1110,1080] },
+      '40×50cm以内': { unit: [1480,1350,1280,1220,1180] },
+    },
+  },
+};
+const COLOR_CHANGE = 400;
+const POSITIONS = ['フロント : 左胸','フロント : 右胸','フロント : 胸中央','フロント : 前裾','袖 : 右袖','袖 : 左袖','バック : 首下','バック : 背中','バック : 後裾'];
+const OPTIONS = [
+  ['タグカットのみ',20],['タグカット&1辺縫い',90],['タグカット&2辺縫い',110],['タグカット&4辺縫い',130],['ピスネーム縫い',90],
+  ['スウェット素材プリント箇所',50],['ポリエステル素材プリント箇所',50],['ナイロン素材プリント箇所',150],
+  ['蛍光インク箇所',80],['メタリックインク箇所',80],['蓄光インク箇所',200],['発泡インク箇所',150],['リフレクターインク箇所',400],
+  ['OPP袋詰め(Tシャツ)',50],['OPP袋詰め(スウェット)',80],['OPP袋詰め(ジャケット)',80],
+  ['袋出し料金',10],['持ち込み料金(Tシャツ)',100],['持ち込み料金(ロンT)',200],['持ち込み料金(スウェット系)',400],
+];
+const STATUSES = ['新規受付','見積中','見積送付済','製作中','発送済','請求済'];
+
+const CUSTOMERS = [
+  { id: 'c1', name: '〇〇高校 野球部', email: 'baseball@example.jp', zip: '997-0011', addr: '山形県鶴岡市宝田1-1-1', tel: '0235-00-0001', billing: '都度', pay: '銀行振込' },
+  { id: 'c2', name: '株式会社△△', email: 'order@sankaku.example.jp', zip: '997-0034', addr: '山形県鶴岡市本町2-2-2', tel: '0235-00-0002', billing: '月次', pay: '月末締め翌月末振込' },
+  { id: 'c3', name: '□□ダンススクール', email: 'dance@example.jp', zip: '998-0044', addr: '山形県酒田市中町3-3-3', tel: '0234-00-0003', billing: '都度', pay: '代引き' },
+  { id: 'c4', name: '有限会社☆☆工務店', email: 'info@hoshi.example.jp', zip: '997-0015', addr: '山形県鶴岡市末広町4-4', tel: '0235-00-0004', billing: '月次', pay: '月末締め翌月末振込' },
+  { id: 'c5', name: '◇◇商店', email: 'shop@hishi.example.jp', zip: '997-1117', addr: '山形県鶴岡市湯野浜5-5', tel: '0235-00-0005', billing: '都度', pay: '銀行振込' },
+  { id: 'c6', name: '◎◎運輸株式会社', email: 'soumu@maru.example.jp', zip: '998-0102', addr: '山形県酒田市京田6-6', tel: '0234-00-0006', billing: '月次', pay: '月末締め翌月末振込' },
+];
+const custOf = id => CUSTOMERS.find(c => c.id === id);
+
+const P = (method, size, pos, plates = 1, cc = 0) => ({ method, size, pos, plates, cc, it: -1 });
+const O = (name, qty) => ({ name, unit: OPTIONS.find(o => o[0] === name)[1], qty });
+const H = (at, text) => ({ at, text });
+let orders = [
+  { no: 'WB-2026-0210', date: '2026-05-12', cid: 'c1', title: '春季大会Tシャツ', due: '2026-05-30', code: '5001-01', color: 'ネイビー', qty: { S: 5, M: 10, L: 10, XL: 5 }, procs: [P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), P('シルクスクリーン','30×40cm以内','バック : 背中',1)], opts: [O('タグカットのみ',30)], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-05', history: [H('2026-05-12 10:02','見積書 発行'), H('2026-05-28 17:30','請求書 発行')] },
+  { no: 'WB-2026-0371', date: '2026-08-20', cid: 'c2', title: '夏季作業Tシャツ', due: '2026-08-31', code: '5942-01', color: 'ブラック', qty: { M: 10, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-08', history: [H('2026-08-31 18:00','月次請求書（2026年8月分）に計上')] },
+  { no: 'WB-2026-0398', date: '2026-09-16', cid: 'c5', title: 'ノベルティトート', due: '2026-09-30', code: '1460-01', color: 'ナチュラル', qty: { M: 50 }, procs: [P('インクジェット','20×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',50)], ship: 1200, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-16 11:20','見積書 発行'), H('2026-09-26 15:00','発送済み')] },
+  { no: 'WB-2026-0401', date: '2026-09-18', cid: 'c2', title: '秋冬スタッフT', due: '2026-09-26', code: '5942-01', color: 'ブラック', qty: { S: 5, M: 15, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1), P('シルクスクリーン','30×40cm以内','バック : 背中',2)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-18 09:40','見積書 発行'), H('2026-09-25 16:10','発送済み')] },
+  { no: 'WB-2026-0403', date: '2026-09-19', cid: 'c4', title: '現場用ポケットT', due: '2026-09-27', code: 'T2300', color: 'ホワイト', qty: { M: 8, L: 8, XL: 4 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-19 13:05','見積書 発行'), H('2026-09-26 11:00','発送済み')] },
+  { no: 'WB-2026-0404', date: '2026-09-20', cid: 'c6', title: 'ドライバー用ロンT', due: '2026-09-27', code: '5010-01', color: 'ネイビー', qty: { M: 8, L: 10, XL: 6 }, procs: [P('DTF','28×40cm以内','バック : 背中',1)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-20 10:30','見積書 発行'), H('2026-09-26 17:20','発送済み')] },
+  { no: 'WB-2026-0405', date: '2026-09-22', cid: 'c2', title: 'イベントT', due: '2026-10-01', code: '5001-01', color: 'ホワイト', qty: { S: 10, M: 15, L: 10, XL: 5 }, procs: [P('シルクスクリーン','30×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',40)], ship: 800, cod: 0, web: 3, status: '製作中', closeMonth: '', history: [H('2026-09-22 14:00','見積書 発行'), H('2026-09-23 09:00','お客様承認 → 製作中')] },
+  { no: 'WB-2026-0407', date: '2026-09-24', cid: 'c1', title: '練習用ロンT', due: '2026-10-15', code: '5010-01', color: 'ネイビー', qty: { S: 4, M: 8, L: 6, XL: 2 }, procs: [P('DTF','12×12cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積送付済', closeMonth: '', request: [{ pos: 'フロント : 左胸', method: 'おまかせ', colors: 0 }], history: [H('2026-09-24 20:15','Webの注文フォームから見積依頼を受付'), H('2026-09-25 10:30','見積書 発行'), H('2026-09-25 10:31','見積書をメールで送付')] },
+  { no: 'WB-2026-0409', date: '2026-09-25', cid: 'c3', title: '発表会T', due: '2026-10-05', code: '1100-01', color: 'ブラック', qty: { S: 5, M: 7, L: 3 }, procs: [P('DTF','20×30cm以内','フロント : 胸中央',1)], opts: [], ship: 800, cod: 330, web: 3, status: '見積送付済', closeMonth: '', history: [H('2026-09-25 18:10','見積書 発行'), H('2026-09-25 18:12','見積書をメールで送付')] },
+  { no: 'WB-2026-0411', date: '2026-09-27', cid: 'c2', title: '役員用刺繍ロンT', due: '2026-10-10', code: 'CC6014', color: 'ペッパー', qty: { M: 6, L: 8, XL: 6 }, procs: [P('刺繍','10×10cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積中', closeMonth: '', history: [] },
+  { no: 'WB-2026-0412', date: '2026-09-28', cid: 'c1', title: '秋季大会用Tシャツ', due: '2026-10-20', items: [{ code: '5001-01', qty: { 'ホワイト': { S: 5, M: 10, L: 5 }, 'ネイビー': { M: 5, L: 5 } } }, { code: '1460-01', qty: { 'ナチュラル': { M: 30 } } }], procs: [{ ...P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), it: 0 }, { ...P('シルクスクリーン','30×40cm以内','バック : 背中',1,1), it: 0 }, { ...P('インクジェット','20×30cm以内','フロント : 胸中央',1), it: 1 }], opts: [O('タグカットのみ',30), O('OPP袋詰め(Tシャツ)',30)], ship: 800, cod: 0, web: 3, status: '新規受付', closeMonth: '', request: [{ pos: 'フロント : 胸中央', method: 'シルクスクリーン', colors: 2, it: 0 }, { pos: 'バック : 背中', method: 'シルクスクリーン', colors: 1, it: 0 }, { pos: 'フロント : 胸中央', method: 'おまかせ', colors: 1, it: 1 }], note: '背番号は後日送ります', history: [H('2026-09-28 08:45','注文フォームから受付')] },
+];
+orders.forEach(o => {
+  if (o.color) { o.qty = { [o.color]: o.qty }; delete o.color; }
+  if (!o.items) { o.items = [{ code: o.code, qty: o.qty }]; delete o.code; delete o.qty; }
+});
+const orderOf = no => orders.find(o => o.no === no);
+
+const state = { user: null, currentNo: null, doc: '見積書', form: null };
+
+// ---------- 共通 ----------
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 2400); }
+function openModal(html) { document.getElementById('modalBox').innerHTML = html; document.getElementById('modal').classList.add('show'); }
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+function printDoc(id) {
+  const el = document.getElementById(id);
+  el.classList.add('print-target');
+  window.print();
+  el.classList.remove('print-target');
+}
+const pill = s => `<span class="pill s${STATUSES.indexOf(s)}">${s}</span>`;
+function nextNo() { const n = Math.max(...orders.map(o => +o.no.slice(-4))) + 1; return `WB-2026-${String(n).padStart(4, '0')}`; }
+
+// ---------- 計算 ----------
+const norm = s => s.normalize('NFKC').toLowerCase()
+  .replace(/[\u3041-\u3096]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60))
+  .replace(/-/g, 'ー').replace(/白/g, 'ホワイト').replace(/黒/g, 'ブラック').replace(/紺/g, 'ネイビー');
+const bandIndex = (bands, q) => { let i = 0; bands.forEach((t, k) => { if (q >= t) i = k; }); return i; };
+const colorTotal = (qty, c) => Object.values(qty[c] || {}).reduce((a, n) => a + (+n || 0), 0);
+const sumQty = qty => Object.keys(qty).reduce((a, c) => a + colorTotal(qty, c), 0);
+const qtyOf = o => o.items.reduce((a, it) => a + sumQty(it.qty), 0);
+const shortName = code => bodyOf(code).name.replace(/^[\d.]+oz\s*/, '');
+const itemsText = o => o.items.map(it => `${shortName(it.code)}（${Object.keys(it.qty).filter(c => colorTotal(it.qty, c)).join('・')}）${sumQty(it.qty)}枚`).join('／');
+const itemsShort = o => `${shortName(o.items[0].code)}${o.items.length > 1 ? ` 他${o.items.length - 1}点` : ''}`;
+const procQty = (o, p) => p.it >= 0 && o.items[p.it] ? sumQty(o.items[p.it].qty) : qtyOf(o);
+const procTarget = (o, p) => o.items.length < 2 ? '' : p.it >= 0 && o.items[p.it] ? shortName(o.items[p.it].code) : '全商品';
+const qtyLines = qty => Object.entries(qty).flatMap(([color, m]) => Object.entries(m).filter(([, n]) => n > 0).map(([s, n]) => ({ color, s, n: +n })));
+
+function procCalc(p, q) {
+  const m = PRICE[p.method], s = m && m.sizes[p.size];
+  if (!s || q <= 0) return { plate: 0, unit: 0, cc: 0, amount: 0, profit: 0 };
+  let plate = 0, unit = 0, printProfit = 0;
+  if (p.method === 'シルクスクリーン') {
+    const i = bandIndex(m.bands, q);
+    plate = s.plate * p.plates;
+    unit = s.first[i] + (p.plates - 1) * s.next[i];
+    printProfit = unit * q * 0.9;
+  } else if (p.method === 'DTF') {
+    unit = s.unit[bandIndex(m.bands, q)];
+    printProfit = 300 * q;
+  } else if (p.method === '刺繍') {
+    plate = s.plate; unit = s.fixed;
+    printProfit = unit * q;
+  } else {
+    unit = s.unit[bandIndex(m.bands, q)];
+    printProfit = unit * q * 0.1;
+  }
+  const cc = COLOR_CHANGE * p.cc;
+  return { plate, unit, cc, amount: plate + unit * q + cc, profit: plate + printProfit + cc };
+}
+
+function calc(o) {
+  const q = qtyOf(o);
+  const bodyLines = o.items.flatMap((it, ii) => {
+    const body = bodyOf(it.code), cols = Object.keys(it.qty), szs = Object.keys(body.sizes);
+    return qtyLines(it.qty)
+      .sort((x, y) => cols.indexOf(x.color) - cols.indexOf(y.color) || szs.indexOf(x.s) - szs.indexOf(y.s))
+      .map(({ color, s, n }) => ({ ii, body, color, s, n, p: body.sizes[s], a: body.sizes[s] * n }));
+  });
+  const bodyAmt = bodyLines.reduce((a, l) => a + l.a, 0);
+  const procs = o.procs.map(p => { const pq = procQty(o, p); return { p, q: pq, r: procCalc(p, pq) }; });
+  const procAmt = procs.reduce((a, x) => a + x.r.amount, 0);
+  const procProfit = procs.reduce((a, x) => a + x.r.profit, 0);
+  const optAmt = o.opts.reduce((a, x) => a + x.unit * x.qty, 0);
+  const sub = bodyAmt + procAmt + optAmt;
+  const web = -Math.round(sub * o.web / 100);
+  const tax = Math.round((sub + o.ship + o.cod + web) * 0.1);
+  const total = sub + o.ship + o.cod + web + tax;
+  const profit = (bodyAmt - bodyAmt / 1.2) + procProfit + optAmt + web;
+  return { q, bodyLines, bodyAmt, procs, procAmt, optAmt, sub, web, tax, total, profit };
+}
+
+function defaultSize(method, pos) {
+  const sizes = Object.keys(PRICE[method].sizes);
+  if (/左胸|右胸|袖|首下/.test(pos)) return sizes[0];
+  if (/背中/.test(pos)) return sizes[Math.min(3, sizes.length - 1)];
+  return sizes[1];
+}
+
+// ---------- ① ログイン ----------
+function fillLogin() { const c = custOf(document.getElementById('loginCustomer').value); document.getElementById('loginEmail').value = c.email; document.getElementById('loginErr').textContent = ''; }
+function login(viaLine) {
+  const c = custOf(document.getElementById('loginCustomer').value);
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginErr');
+  if (!viaLine) {
+    if (!email || !pass) { err.textContent = 'メールアドレスとパスワードを入力してください。'; return; }
+    if (email !== c.email) { err.textContent = 'このメールアドレスは登録されていません。'; return; }
+    if (pass !== 'demo1234') { err.textContent = 'パスワードが違います（デモ用: demo1234）。'; return; }
+  }
+  err.textContent = '';
+  state.user = c;
+  state.form = newForm();
+  renderUser(); renderMyPage(); renderForm();
+  toast(`ようこそ、${c.name} 様`);
+  go('mypage');
+}
+function logout() { state.user = null; state.form = null; renderUser(); renderMyPage(); renderForm(); go('login'); }
+function renderUser() {
+  document.getElementById('userBox').innerHTML = state.user
+    ? `ログイン中：${esc(state.user.name)} 様<a onclick="go('mypage')">マイページ</a><a onclick="logout()">ログアウト</a>` : 'お客様：未ログイン';
+}
+
+// ---------- ② マイページ ----------
+const CUST_STAGES = ['ご依頼受付', '見積作成中', '見積のご確認', '製作中', '発送済み'];
+const custStage = o => ({ '新規受付': 1, '見積中': 1, '見積送付済': 2, '製作中': 3, '発送済': 4, '請求済': 4 })[o.status];
+function nextAction(o) {
+  const cu = custOf(o.cid);
+  const re = `<button class="btn ghost sm" onclick="reorder('${o.no}')">同じ内容で注文</button>`;
+  switch (o.status) {
+    case '新規受付':
+    case '見積中': return { act: false, text: 'ワーカーブロスで見積を作成しています。通常1営業日以内にお知らせします。お客様の操作は必要ありません。', btns: '' };
+    case '見積送付済': return { act: true, text: `<b>見積が届いています。</b>内容をご確認のうえ、よろしければ承認してください。承認後に製作を始めます。`, btns: `<button class="btn ghost sm" onclick="showQuote('${o.no}')">見積を見る</button><button class="btn sm" onclick="approve('${o.no}')">承認して注文を確定</button>` };
+    case '製作中': return { act: false, text: `製作中です。お届け予定：${jpDate(o.due)}ごろ`, btns: '' };
+    case '発送済': return { act: false, text: '発送しました。到着まで今しばらくお待ちください。', btns: `<button class="btn ghost sm" onclick="showDoc('${o.no}','納品書')">納品書</button>${re}` };
+    default: return { act: false, text: cu.billing === '月次' ? '月次のご請求に含まれています。' : 'ご請求書を発行しました。', btns: `${cu.billing === '都度' ? `<button class="btn ghost sm" onclick="showDoc('${o.no}','請求書')">請求書</button>` : ''}${re}` };
+  }
+}
+function renderMyPage() {
+  const logged = !!state.user;
+  document.getElementById('myNeedLogin').style.display = logged ? 'none' : 'block';
+  const main = document.getElementById('myMain');
+  main.style.display = logged ? 'block' : 'none';
+  if (!logged) return;
+  const mine = orders.filter(o => o.cid === state.user.id).slice().reverse();
+  const acts = mine.filter(o => nextAction(o).act);
+  main.innerHTML = `
+    <div class="row" style="margin-bottom:14px">
+      <div><div class="qhead">こんにちは、${esc(state.user.name)} 様</div><div class="qsub" style="margin:0">ご注文の状況と、お客様にお願いしたいことをまとめています。</div></div>
+      <button class="btn" style="margin-left:auto;padding:12px 20px;font-weight:700" onclick="startOrder()">＋ 新しく注文する（見積依頼）</button>
+    </div>
+    ${acts.length ? `<div class="todo"><h3>お客様の対応をお待ちしています（${acts.length}件）</h3>
+      ${acts.map(o => `<div class="row" style="margin-top:6px"><span>${esc(o.title)}（${o.no}）の見積をご確認ください</span><button class="btn sm" style="margin-left:auto" onclick="showQuote('${o.no}')">見積を確認する →</button></div>`).join('')}</div>`
+      : `<div class="free">いま、お客様に対応していただくことはありません。</div>`}
+    <h3 style="margin:18px 0 10px">ご注文一覧</h3>
+    ${mine.map(o => {
+      const na = nextAction(o), st = custStage(o), c = calc(o);
+      return `<div class="ocard ${na.act ? 'act' : ''}">
+        <div class="top"><div><div class="ttl">${esc(o.title)}</div><div class="muted">${o.no}｜ご依頼日 ${jpDate(o.date)}｜${esc(itemsText(o))}</div></div>
+          <div style="text-align:right">${st >= 2 ? `<div class="muted">お見積額（税込）</div><b style="font-size:18px">${yen(c.total)}円</b>` : '<span class="muted">見積作成中</span>'}</div></div>
+        <div class="prog">${CUST_STAGES.map((s, i) => `<span class="${i === st ? 'on' : i < st ? 'past' : ''}">${s}</span>`).join('')}</div>
+        <div class="nextact"><span>${na.text}</span><div class="btns">${na.btns}</div></div>
+      </div>`;
+    }).join('') || '<div class="card empty">まだご注文はありません。「新しく注文する」から見積を依頼できます。</div>'}`;
+}
+function showQuote(no) {
+  const o = orderOf(no), can = o.status === '見積送付済';
+  openModal(`<div id="custDoc">${docHtml(o, '見積書')}</div>
+    <div class="cust"><div class="row" style="margin-top:14px">
+      <button class="btn ghost" onclick="printDoc('custDoc')">PDFで保存</button>
+      <button class="btn ghost" onclick="closeModal();toast('ワーカーブロスへ質問を送りました（デモ）')">質問・修正を依頼する</button>
+      ${can ? `<button class="btn" style="margin-left:auto;font-weight:700" onclick="approve('${no}')">この内容で承認する</button>` : ''}
+    </div></div>`);
+}
+function showDoc(no, type) {
+  const o = orderOf(no);
+  openModal(`<div id="custDoc">${docHtml(o, type)}</div><div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="closeModal()">閉じる</button><button class="btn" onclick="printDoc('custDoc')">PDFで保存</button></div>`);
+}
+function approve(no) {
+  const o = orderOf(no);
+  o.status = '製作中';
+  o.history.push(H(nowStr(), 'お客様がWebで見積を承認 → 製作中'));
+  closeModal(); renderAll();
+  toast('ご注文を確定しました。製作を始めます');
+}
+
+// ---------- ③ 注文（4ステップ） ----------
+const FORM_STEPS = ['商品を選ぶ', 'カラー・枚数', 'プリント・デザイン', '確認して依頼'];
+const CATS = [['すべて', ''], ['Tシャツ', 'tシャツ'], ['ロンT', 'ロンt'], ['バッグ', 'バッグ'], ['キャップ', 'キャップ']];
+const METHODS = [
+  ['おまかせ', 'デザインを見て最適な方法をご提案'],
+  ['シルクスクリーン', '枚数が多いほど割安。色数が少ないデザイン向け'],
+  ['DTF', 'フルカラーOK。少ない枚数向け'],
+  ['刺繍', 'ロゴやワンポイントに。高級感'],
+  ['インクジェット', '写真・グラデーション向け'],
+];
+const POS_GROUPS = [['前', ['フロント : 左胸', 'フロント : 右胸', 'フロント : 胸中央', 'フロント : 前裾']], ['袖', ['袖 : 右袖', '袖 : 左袖']], ['後ろ', ['バック : 首下', 'バック : 背中', 'バック : 後裾']]];
+const newLoc = (pos = 'フロント : 胸中央') => ({ pos, method: 'おまかせ', colors: 1, file: '', img: '', it: -1, split: false, designs: {} });
+const isSplit = (f, p) => p.split && p.it === -1 && f.items.length > 1;
+const designSlots = (f, p) => isSplit(f, p) ? f.items.map((it, ii) => ({ ii, label: shortName(it.code), d: p.designs[ii] || {} })) : [{ ii: -1, label: '', d: p }];
+const allSlots = f => f.procs.flatMap(p => designSlots(f, p));
+function newForm() { return { step: 1, q: '', items: [], procs: [newLoc()], title: '', due: '', note: '', lastNo: null }; }
+function startOrder() { state.form = newForm(); renderForm(); go('order'); }
+const formQty = f => f.items.reduce((a, it) => a + sumQty(it.qty), 0);
+const itemAmt = it => { const b = bodyOf(it.code); return qtyLines(it.qty).reduce((a, l) => a + b.sizes[l.s] * l.n, 0); };
+const emptyColors = it => it.colors.filter(c => !colorTotal(it.qty, c));
+const targetName = (items, v) => v >= 0 && items[v] ? shortName(items[v].code) : 'すべての商品';
+function stepHint(step) {
+  const f = state.form;
+  if (step === 1 && !f.items.length) return '商品を1つ以上選んでください';
+  if (step === 2) {
+    const noColor = f.items.find(it => !it.colors.length);
+    if (noColor) return `「${shortName(noColor.code)}」のカラーを選んでください`;
+    const noQty = f.items.find(it => !sumQty(it.qty));
+    if (noQty) return `「${shortName(noQty.code)}」の枚数を入れてください`;
+  }
+  if (step === 4) {
+    if (!f.due) return '希望納期を選んでください';
+    if (f.due < DEMO_TODAY) return '希望納期は今日以降の日付にしてください';
+  }
+  return '';
+}
+function goStep(n) {
+  const f = state.form;
+  if (n > f.step) { const h = stepHint(f.step); if (h) { toast(h); return; } }
+  if (f.step === 2 && n > 2) f.items.forEach(it => emptyColors(it).forEach(c => { it.colors = it.colors.filter(x => x !== c); delete it.qty[c]; }));
+  f.step = n; renderForm(); window.scrollTo({ top: 0 });
+}
+function renderForm() {
+  const logged = !!state.user;
+  document.getElementById('needLogin').style.display = logged ? 'none' : 'block';
+  const wrap = document.getElementById('orderWrap');
+  wrap.style.display = logged ? 'block' : 'none';
+  if (!logged) return;
+  const f = state.form;
+  if (f.step === 5) { wrap.innerHTML = doneHtml(); return; }
+  wrap.innerHTML = `
+    <div class="stepper">${FORM_STEPS.map((s, i) => `<div class="${i + 1 === f.step ? 'on' : i + 1 < f.step ? 'done' : ''}" ${i + 1 < f.step ? `onclick="goStep(${i + 1})"` : ''}><b>STEP ${i + 1}</b>${s}</div>`).join('')}</div>
+    <div class="olay">
+      <div class="card">${[step1, step2, step3, step4][f.step - 1]()}<div id="fnav"></div></div>
+      <div class="side" id="fside"></div>
+    </div>`;
+  if (f.step === 1) renderResults();
+  refreshForm();
+}
+function refreshForm() {
+  const f = state.form; if (!f || f.step === 5) return;
+  const hint = stepHint(f.step);
+  const labels = ['次へ：カラーと枚数を選ぶ', '次へ：プリントとデザイン', '次へ：内容を確認する', '見積を依頼する（無料）'];
+  const missing = allSlots(f).filter(x => !x.d.img && !x.d.file).length;
+  const empties = f.step === 2 ? f.items.flatMap(it => sumQty(it.qty) ? emptyColors(it).map(c => `${shortName(it.code)}の${c}`) : []) : [];
+  const soft = f.step === 3 && missing ? `未添付のデザインが${missing}件あります（あとから送ることもできます）`
+    : empties.length ? `${empties.join('・')}は0枚です（次へ進むと外れます）` : '';
+  document.getElementById('fnav').innerHTML = `<div class="navbar">
+    ${f.step > 1 ? `<button class="btn ghost" onclick="goStep(${f.step - 1})">← 戻る</button>` : ''}
+    <span class="hint" style="${soft && !hint ? 'color:var(--sub)' : ''}">${hint || soft}</span>
+    <button class="btn next" ${hint ? 'disabled' : ''} onclick="${f.step === 4 ? 'submitOrder()' : `goStep(${f.step + 1})`}">${labels[f.step - 1]} →</button></div>`;
+  const cnt = formQty(f), amt = f.items.reduce((a, it) => a + itemAmt(it), 0);
+  const qtyOk = f.items.length > 0 && f.items.every(it => sumQty(it.qty) > 0);
+  const slots = allSlots(f), imgs = slots.filter(x => x.d.img || x.d.file).length;
+  const item = (i, label, val, ok) => `<li class="${ok ? 'ok' : f.step === i ? 'now' : ''}"><i>${ok ? '✓' : i}</i><span>${label}</span><span class="v">${val}</span></li>`;
+  document.getElementById('fside').innerHTML = `<div class="card">
+    <h3>ご注文内容</h3>
+    <ul class="check">
+      ${item(1, '商品', f.items.length ? `${f.items.length}点` : '未選択', f.items.length > 0)}
+      ${item(2, '枚数', cnt ? `${f.items.map(it => `${esc(shortName(it.code))} ${sumQty(it.qty)}枚`).join('<br>')}<br><b>計 ${cnt}枚</b>` : '未入力', qtyOk)}
+      ${item(3, 'プリント', `${f.procs.length}か所（デザイン${imgs}/${slots.length}）`, f.step > 3)}
+      ${item(4, '確認して依頼', '', false)}
+    </ul>
+    <div class="row"><span>商品代（税抜）</span><b style="margin-left:auto;font-size:18px">${yen(amt)}円</b></div>
+    <div class="muted">プリント代は、デザインを確認してから見積でお知らせします。</div>
+    <div class="muted" style="margin-top:10px">わからないことがあれば <a class="link" onclick="toast('LINEでワーカーブロスに相談できます（デモ）')">LINEで相談</a></div>
+  </div>`;
+}
+function step1() {
+  const f = state.form;
+  return `<div class="qhead">どの商品にプリントしますか？</div>
+    <p class="qsub">種類を選ぶか、商品名・品番で探してください。<b>複数の商品を選べます</b>（例：Tシャツとトートバッグ）。</p>
+    <div class="picked">${f.items.length
+      ? `<span class="muted">選択中 ${f.items.length}点：</span>${f.items.map(it => `<span class="ptag">${esc(shortName(it.code))}<button onclick="toggleBody('${it.code}')" title="外す">×</button></span>`).join('')}`
+      : '<span class="muted">まだ選ばれていません。下の一覧から商品をクリックしてください。</span>'}</div>
+    <div class="chips" style="margin-bottom:10px">${CATS.map(([l, v]) => `<button class="chip ${norm(f.q) === norm(v) ? 'on' : ''}" onclick="state.form.q='${v}';renderForm()">${l}</button>`).join('')}</div>
+    <input id="fq" value="${esc(f.q)}" placeholder="例：5001、ロンT、白 Tシャツ" oninput="state.form.q=this.value;renderResults()" style="font-size:16px;padding:10px 12px">
+    <div class="pgrid" id="pres"></div>`;
+}
+function renderResults() {
+  const f = state.form, el = document.getElementById('pres'); if (!el) return;
+  const words = norm(f.q).split(/\s+/).filter(Boolean);
+  const hits = BODIES.filter(b => { const hay = norm([b.maker, b.code, b.name, ...b.colors].join(' ')); return words.every(w => hay.includes(w)); });
+  el.innerHTML = hits.map(b => {
+    const ps = Object.values(b.sizes), lo = Math.min(...ps), on = f.items.some(it => it.code === b.code);
+    return `<div class="pcard ${on ? 'on' : ''}" onclick="toggleBody('${b.code}')">
+      <div class="nm">${b.name}</div><div class="mk">${b.maker}｜品番 ${b.code}</div>
+      <div class="pr"><b>${yen(lo)}円</b>〜／枚　<span class="muted">${b.colors.length}色・${Object.keys(b.sizes).join('/')}</span></div>
+      <div class="pact">${on ? 'クリックで外す' : '＋ 選ぶ'}</div></div>`;
+  }).join('') || `<div class="muted" style="grid-column:1/-1;padding:16px">見つかりませんでした。別の言葉で探すか、<a class="link" onclick="toast('LINEで取り扱い商品を相談できます（デモ）')">LINEで相談</a>してください。</div>`;
+}
+function toggleBody(code) {
+  const f = state.form, i = f.items.findIndex(it => it.code === code);
+  if (i >= 0) {
+    const had = sumQty(f.items[i].qty);
+    f.items.splice(i, 1);
+    f.procs.forEach(p => {
+      if (p.it === i) p.it = -1; else if (p.it > i) p.it--;
+      p.designs = Object.fromEntries(Object.entries(p.designs).filter(([k]) => +k !== i).map(([k, v]) => [+k > i ? +k - 1 : +k, v]));
+    });
+    toast(`${shortName(code)}を外しました${had ? `（入力済みの${had}枚も削除）` : ''}`);
+  } else {
+    f.items.push({ code, colors: [], qty: {} });
+  }
+  renderForm();
+}
+function step2() {
+  const f = state.form, multi = f.items.length > 1;
+  return `<div class="qhead">カラーと枚数を選んでください</div>
+    <p class="qsub">${multi ? `選んだ${f.items.length}つの商品それぞれに、カラーとサイズ別の枚数を入れてください。` : 'カラーは複数選べます。'} <a class="link" onclick="goStep(1)">商品を追加・変更する</a></p>
+    ${f.items.map((it, ii) => itemBox(it, ii, multi)).join('')}
+    <p class="note">プリント代の単価は、そのプリントをする商品の合計枚数で決まります（目安：30枚・50枚・80枚で段階的に割安）。</p>`;
+}
+function itemBox(it, ii, multi) {
+  const b = bodyOf(it.code), sizes = Object.entries(b.sizes);
+  return `<div class="ibox">
+    <div class="ihead">${multi ? `<span class="ino">商品${ii + 1}</span>` : ''}<b>${b.name}</b><span class="muted">${b.maker}・${b.code}</span><span class="itot" id="it-${ii}">${sumQty(it.qty)}枚</span></div>
+    <div class="lbl" style="margin-top:0;font-weight:700">① カラーを選ぶ <span>（複数選べます）</span></div>
+    <div class="chips" style="margin-bottom:10px">${b.colors.map(c => `<button class="chip ${it.colors.includes(c) ? 'on' : ''}" onclick="toggleColor(${ii},'${c}')">${it.colors.includes(c) ? '✓ ' : '＋ '}${c}</button>`).join('')}</div>
+    ${it.colors.length ? `<div class="lbl" style="font-weight:700;margin:6px 0 8px">② サイズ別の枚数 <span>（必要なサイズだけでOK）</span></div>
+      ${it.colors.map((c, ci) => `<div class="cbox">
+        <h4><span>${c}</span><span class="muted" id="ct-${ii}-${ci}">${colorTotal(it.qty, c)}枚</span><a class="link" onclick="toggleColor(${ii},'${c}')">このカラーを外す</a></h4>
+        <div class="sgrid">${sizes.map(([s, p]) => { const n = it.qty[c][s] || 0; return `<div class="stile ${n ? 'has' : ''}" id="st-${ii}-${ci}-${s}">
+          <div class="sz">${s}</div><div class="muted">1枚 ${yen(p)}円</div>
+          <div class="stepq sm"><button onclick="bump(${ii},${ci},'${s}',-1)">−</button><input type="number" min="0" value="${n}" oninput="setFormQty(${ii},${ci},'${s}',this.value)"><button onclick="bump(${ii},${ci},'${s}',1)">＋</button></div></div>`; }).join('')}</div>
+      </div>`).join('')}`
+    : `<div class="empty" style="border:1px dashed #d0d5dd;border-radius:10px;padding:14px">上でカラーを選ぶと、サイズ別の枚数を入れる欄が出ます。</div>`}
+  </div>`;
+}
+function toggleColor(ii, c) {
+  const it = state.form.items[ii], b = bodyOf(it.code);
+  if (it.colors.includes(c)) {
+    const had = colorTotal(it.qty, c);
+    it.colors = it.colors.filter(x => x !== c); delete it.qty[c];
+    if (had) toast(`${c}（${had}枚）を外しました`);
+  } else {
+    it.colors.push(c); it.qty[c] = Object.fromEntries(Object.keys(b.sizes).map(s => [s, 0]));
+  }
+  renderForm();
+}
+function bump(ii, ci, s, d) { const it = state.form.items[ii], q = it.qty[it.colors[ci]]; q[s] = Math.max(0, (q[s] || 0) + d); renderForm(); }
+function setFormQty(ii, ci, s, v) {
+  const it = state.form.items[ii], c = it.colors[ci];
+  it.qty[c][s] = Math.max(0, parseInt(v, 10) || 0);
+  document.getElementById(`st-${ii}-${ci}-${s}`).classList.toggle('has', it.qty[c][s] > 0);
+  document.getElementById(`ct-${ii}-${ci}`).textContent = `${colorTotal(it.qty, c)}枚`;
+  document.getElementById(`it-${ii}`).textContent = `${sumQty(it.qty)}枚`;
+  refreshForm();
+}
+function step3() {
+  const f = state.form, multi = f.items.length > 1;
+  return `<div class="qhead">どこに、どんなプリントをしますか？</div>
+    <p class="qsub">わからないところは「おまかせ」で大丈夫です。デザインを見て、ワーカーブロスが最適な方法をご提案します。</p>
+    ${f.procs.map((p, i) => `<div class="loc">
+      <h4>プリント ${i + 1}${multi ? `<span class="muted" style="font-weight:400;margin-left:8px;margin-right:auto">→ ${esc(targetName(f.items, p.it))}${isSplit(f, p) ? '（商品ごとに別デザイン）' : ''}</span>` : ''}${f.procs.length > 1 ? `<a class="link" style="font-size:12px;font-weight:400" onclick="state.form.procs.splice(${i},1);renderForm()">この場所を削除</a>` : ''}</h4>
+      ${multi ? `<div class="lbl" style="margin-top:0">どの商品に</div>
+      <div class="chips" style="margin-bottom:6px">${[[-1, 'すべての商品'], ...f.items.map((it, ii) => [ii, shortName(it.code)])].map(([v, l]) => `<button class="chip ${p.it === v ? 'on' : ''}" onclick="setLoc(${i},'it',${v})">${esc(l)}</button>`).join('')}</div>` : ''}
+      <div class="lbl" ${multi ? '' : 'style="margin-top:0"'}>場所</div>
+      ${POS_GROUPS.map(([g, list]) => `<div class="row" style="gap:6px;margin-bottom:6px"><span class="muted" style="width:32px">${g}</span>${list.map(x => `<button class="chip ${x === p.pos ? 'on' : ''}" onclick="setLoc(${i},'pos','${x}')">${x.split(' : ')[1]}</button>`).join('')}</div>`).join('')}
+      <div class="lbl">加工方法 <span>（迷ったら「おまかせ」）</span></div>
+      <div class="mgrid">${METHODS.map(([m, d]) => `<div class="mcard ${m === p.method ? 'on' : ''}" onclick="setLoc(${i},'method','${m}')"><b>${m}${m === 'おまかせ' ? '<span class="rec">おすすめ</span>' : ''}</b>${d}</div>`).join('')}</div>
+      <div class="lbl">デザインの色数 <span>（プリント代の目安になります）</span></div>
+      <div class="chips">${[[1, '1色'], [2, '2色'], [3, '3色'], [4, '4色以上'], [0, 'わからない']].map(([n, l]) => `<button class="chip ${n === p.colors ? 'on' : ''}" onclick="setLoc(${i},'colors',${n})">${l}</button>`).join('')}</div>
+      <div class="lbl">デザイン画像 <span>（あとから送ることもできます）</span></div>
+      ${multi && p.it === -1 ? `<div class="chips" style="margin-bottom:6px">
+        <button class="chip ${!p.split ? 'on' : ''}" onclick="setLoc(${i},'split',false)">全商品で同じデザイン</button>
+        <button class="chip ${p.split ? 'on' : ''}" onclick="setLoc(${i},'split',true)">商品ごとに違うデザイン</button></div>
+        ${p.split ? '<div class="muted" style="margin-bottom:4px">デザインが違うと版も別になります（シルクスクリーンは商品ごとに版代がかかります）。</div>' : ''}` : ''}
+      ${designSlots(f, p).map(x => upBox(i, x.ii, x.d, x.label)).join('')}
+    </div>`).join('')}
+    <button class="btn ghost" style="width:100%;justify-content:center" onclick="state.form.procs.push(newLoc('バック : 背中'));renderForm()">＋ プリントする場所を追加（例：背中${multi ? '、別の商品' : ''}）</button>`;
+}
+function setLoc(i, k, v) { state.form.procs[i][k] = v; renderForm(); }
+function upBox(i, ii, d, label) {
+  const id = `up${i}_${ii}`;
+  return `${label ? `<div style="margin:8px 0 4px;font-weight:700;font-size:13px">${esc(label)} 用</div>` : ''}
+    <div class="up ${d.img || d.file ? 'ok' : ''}" onclick="document.getElementById('${id}').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="event.preventDefault();this.classList.remove('over');attachFile(${i},${ii},event.dataTransfer.files[0])">
+      ${d.img ? `<img src="${d.img}"><span>✓ ${esc(d.file)}<br><span class="muted">クリックで差し替え</span></span>` : d.file ? `✓ ${esc(d.file)}` : 'ここに画像をドラッグ、またはクリックして選ぶ（PNG・JPG）'}
+    </div>
+    <input type="file" id="${id}" accept="image/*" style="display:none" onchange="attachFile(${i},${ii},this.files[0])">`;
+}
+function attachFile(i, ii, file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { toast('画像ファイル（PNG・JPG）を選んでください'); return; }
+  const p = state.form.procs[i], r = new FileReader();
+  r.onload = () => { Object.assign(ii >= 0 ? (p.designs[ii] ||= {}) : p, { file: file.name, img: r.result }); renderForm(); toast('デザインを添付しました'); };
+  r.readAsDataURL(file);
+}
+function step4() {
+  const f = state.form, multi = f.items.length > 1;
+  const amt = f.items.reduce((a, it) => a + itemAmt(it), 0);
+  return `<div class="qhead">内容を確認して、見積を依頼してください</div>
+    <p class="qsub">まだ注文は確定しません。見積をご確認・承認いただいてから製作を始めます。</p>
+    <div class="rv"><h5>商品・カラー・枚数 <span><a class="link" onclick="goStep(1)">商品を変更</a>　<a class="link" onclick="goStep(2)">枚数を変更</a></span></h5>
+      ${f.items.map((it, ii) => { const b = bodyOf(it.code); return `<div style="margin-bottom:8px"><b>${multi ? `${ii + 1}. ` : ''}${b.name}</b> <span class="muted">${b.maker}・${b.code}</span>
+        ${it.colors.map(c => `<div>${c}：${Object.entries(it.qty[c]).filter(([, n]) => n > 0).map(([s, n]) => `${s}×${n}`).join('　')}（${colorTotal(it.qty, c)}枚）</div>`).join('')}</div>`; }).join('')}
+      <div style="border-top:1px dashed var(--line);padding-top:6px">合計 <b>${formQty(f)}枚</b>（商品代 ${yen(amt)}円・税抜）</div></div>
+    <div class="rv"><h5>プリント <a class="link" onclick="goStep(3)">変更</a></h5>
+      ${f.procs.map((p, i) => `<div class="row" style="margin:4px 0">${designSlots(f, p).map(x => `<span title="${esc(x.label)}">${x.d.img ? `<img class="thumb" src="${x.d.img}">` : '<span class="thumb" style="display:inline-grid;place-items:center;font-size:10px;color:var(--sub)">未添付</span>'}</span>`).join('')}<span>${i + 1}. ${multi ? `【${esc(targetName(f.items, p.it))}${isSplit(f, p) ? '・商品ごとに別デザイン' : ''}】` : ''}${p.pos.split(' : ')[1]}／${p.method}／${p.colors ? (p.colors >= 4 ? '4色以上' : p.colors + '色') : '色数おまかせ'}</span></div>`).join('')}</div>
+    <div class="rv"><h5>お届けについて</h5>
+      <label class="f">希望納期 <span style="color:var(--c)">必須</span></label>
+      <input type="date" min="${DEMO_TODAY}" value="${f.due}" onchange="state.form.due=this.value;refreshForm()" style="max-width:220px">
+      <div class="muted">目安：見積の承認から約2週間でお届けします。</div>
+      <label class="f" style="margin-top:10px">件名（任意）</label>
+      <input value="${esc(f.title)}" placeholder="例：秋季大会用Tシャツ" oninput="state.form.title=this.value">
+      <label class="f" style="margin-top:10px">お届け先</label>
+      <select><option>登録住所：〒${state.user.zip} ${esc(state.user.addr)}</option><option>別の住所に届ける（次回以降に対応）</option></select>
+      <label class="f" style="margin-top:10px">ご要望・備考（任意）</label>
+      <textarea oninput="state.form.note=this.value" placeholder="例：背番号は後日送ります" style="width:100%;height:70px;font:inherit;padding:8px;border:1px solid #cfd4dc;border-radius:6px">${esc(f.note)}</textarea>
+    </div>
+    <div class="free">見積の依頼は無料です。料金は、見積をご確認・承認いただいた時点で確定します。</div>`;
+}
+function doneHtml() {
+  const o = orderOf(state.form.lastNo);
+  return `<div class="card done-box">
+    <div class="big-check">✓</div>
+    <h2 style="margin:12px 0 4px">見積のご依頼を受け付けました</h2>
+    <div class="muted">受付番号 <b>${o.no}</b>｜${esc(o.title)}｜${o.items.length}商品・${qtyOf(o)}枚</div>
+    <ol class="timeline">
+      <li class="now"><b>✓</b>ご依頼受付（完了）</li>
+      <li><b>2</b>ワーカーブロスが見積を作成します（通常1営業日以内）</li>
+      <li><b>3</b>見積ができたらお知らせします。マイページで確認・承認してください</li>
+      <li><b>4</b>製作・発送</li>
+    </ol>
+    <div class="row" style="justify-content:center">
+      <button class="btn" style="font-weight:700;padding:12px 22px" onclick="go('mypage')">マイページで状況を見る</button>
+      <button class="btn ghost" onclick="startOrder()">続けて別の注文をする</button>
+    </div>
+    <p class="muted" style="margin-top:16px"><a class="link" onclick="openOrder('${o.no}')">（デモ）社内の見積作成画面でこの注文を開く →</a></p>
+  </div>`;
+}
+function reorder(no) {
+  const o = orderOf(no);
+  state.form = {
+    ...newForm(), step: 2,
+    items: o.items.map(it => {
+      const b = bodyOf(it.code), cols = Object.keys(it.qty).filter(c => colorTotal(it.qty, c));
+      return { code: it.code, colors: cols, qty: Object.fromEntries(cols.map(c => [c, Object.fromEntries(Object.keys(b.sizes).map(s => [s, it.qty[c][s] || 0]))])) };
+    }),
+    procs: (o.request || o.procs.map(p => ({ pos: p.pos, method: p.method, colors: p.plates, it: p.it }))).map(p => ({ ...newLoc(p.pos), method: p.method, colors: p.colors, it: p.it ?? -1, file: p.img ? p.file : '前回と同じデザイン', img: p.img || '' })),
+    title: `${o.title}（再注文）`,
+  };
+  closeModal(); renderForm(); go('order');
+  toast('前回の内容を読み込みました。枚数を確認してください');
+}
+function submitOrder() {
+  const f = state.form, h = stepHint(4);
+  if (h) { toast(h); return; }
+  const flat = f.procs.flatMap(p => isSplit(f, p) ? f.items.map((it, ii) => ({ ...p, it: ii, file: p.designs[ii]?.file || '', img: p.designs[ii]?.img || '' })) : [p]);
+  const o = {
+    no: nextNo(), date: DEMO_TODAY, cid: state.user.id, due: f.due,
+    title: f.title.trim() || `${shortName(f.items[0].code)}${f.items.length > 1 ? ` 他${f.items.length - 1}点` : ''} ${formQty(f)}枚`,
+    items: f.items.map(it => ({ code: it.code, qty: Object.fromEntries(it.colors.filter(c => colorTotal(it.qty, c)).map(c => [c, Object.fromEntries(Object.entries(it.qty[c]).filter(([, n]) => n > 0))])) })),
+    request: flat.map(p => ({ pos: p.pos, method: p.method, colors: p.colors, file: p.file, img: p.img, it: p.it })),
+    procs: flat.map(p => {
+      const method = p.method === 'おまかせ' ? 'シルクスクリーン' : p.method;
+      return { ...P(method, defaultSize(method, p.pos), p.pos, method === 'シルクスクリーン' ? Math.min(Math.max(p.colors, 1), 4) : 1), it: p.it };
+    }),
+    opts: [], ship: 800, cod: state.user.pay === '代引き' ? 330 : 0, web: 3, status: '新規受付', closeMonth: '',
+    note: f.note.trim(), history: [H(nowStr(), 'Webの注文フォームから見積依頼を受付')],
+  };
+  orders.push(o);
+  state.currentNo = o.no;
+  f.lastNo = o.no; f.step = 5;
+  renderAll(); renderForm(); window.scrollTo({ top: 0 });
+}
+
+// ---------- ③ 受注一覧 ----------
+function renderList() {
+  const q = norm(document.getElementById('lq').value.trim());
+  const s = document.getElementById('ls').value, c = document.getElementById('lc').value;
+  const rows = orders.filter(o => {
+    const cu = custOf(o.cid);
+    if (s && o.status !== s) return false;
+    if (c && cu.billing !== c) return false;
+    return !q || norm([o.no, cu.name, o.title, ...o.items.flatMap(it => [it.code, bodyOf(it.code).name, ...Object.keys(it.qty)])].join(' ')).includes(q);
+  }).slice().reverse();
+  document.getElementById('lcount').textContent = `${rows.length}件`;
+  document.getElementById('listBody').innerHTML = rows.map(o => {
+    const cu = custOf(o.cid), c = calc(o);
+    const methods = [...new Set(o.procs.map(p => p.method))].join('・');
+    return `<tr class="click ${o.no === state.currentNo ? 'hl' : ''}" onclick="openOrder('${o.no}')">
+      <td>${o.no}</td><td>${o.date.slice(5).replace('-', '/')}</td>
+      <td>${esc(cu.name)} <span class="muted">${cu.billing}</span></td>
+      <td>${esc(o.title)}<br><span class="muted">${esc(itemsShort(o))}／${methods} ${o.procs.length}か所</span></td>
+      <td class="num">${c.q}</td><td>${o.due.slice(5).replace('-', '/')}</td><td>${pill(o.status)}</td>
+      <td class="num">${o.status === '新規受付' ? '<span class="muted">見積前</span>' : yen(c.total)}</td></tr>`;
+  }).join('') || '<tr><td colspan="8" class="empty">該当する受注はありません</td></tr>';
+  const n = orders.filter(o => o.status === '新規受付').length;
+  const btn = document.querySelector('#steps button[data-id="list"]');
+  if (btn) btn.innerHTML = `<span class="who">社内</span>${screens.findIndex(s => s.dataset.id === 'list') + 1}. 受注一覧${n ? `<span class="badge">${n}</span>` : ''}`;
+}
+function openOrder(no) { state.currentNo = no; state.doc = '見積書'; renderAll(); go('estimate'); }
+
+// ---------- ④ 見積作成 ----------
+function cur() { return orderOf(state.currentNo); }
+function renderEstimate() {
+  const o = cur();
+  document.getElementById('estEmpty').style.display = o ? 'none' : 'block';
+  document.getElementById('estMain').style.display = o ? 'grid' : 'none';
+  document.getElementById('estNo').innerHTML = o ? `${o.no}｜${pill(o.status)}` : '';
+  if (!o) return;
+  const cu = custOf(o.cid), c = calc(o);
+  const locked = ['製作中','発送済','請求済'].includes(o.status);
+  document.getElementById('bodyTable').innerHTML =
+    `<thead><tr><th>商品</th><th>カラー</th><th>サイズ</th><th class="num">単価</th><th class="num">枚数</th><th class="num">金額</th></tr></thead><tbody>` +
+    o.items.flatMap((it, ii) => { const b = bodyOf(it.code); return Object.keys(it.qty).flatMap((col, ci) => Object.keys(b.sizes).map(s => `<tr><td>【${b.maker}】${b.name}</td><td>${col}</td><td>${s}</td><td class="num">${yen(b.sizes[s])}</td>
+      <td class="num"><input type="number" min="0" value="${it.qty[col][s] || 0}" style="width:64px" ${locked ? 'disabled' : ''} oninput="setQty(${ii},${ci},'${s}',this.value)" onchange="renderAll()"></td><td class="num">${yen(b.sizes[s] * (it.qty[col][s] || 0))}</td></tr>`)); }).join('') +
+    `<tr><td colspan="4" class="muted">ボディ計（単価はボディーマスタの販売価格）</td><td class="num"><b>${c.q}</b></td><td class="num"><b>${yen(c.bodyAmt)}</b></td></tr></tbody>`;
+  document.getElementById('reqBox').innerHTML = o.request
+    ? `<b>お客様の指定</b>：${o.request.map(r => `${o.items.length > 1 ? `【${esc(procTarget(o, { it: r.it ?? -1 }))}】` : ''}${r.pos}／${r.method}／${!r.colors ? '色数おまかせ' : r.colors >= 4 ? '4色以上' : r.colors + '色'}${r.file ? `／${esc(r.file)}` : ''}`).join('　')}
+       ${o.request.some(r => r.img) ? `<div class="thumbs">${o.request.filter(r => r.img).map(r => `<figure><img src="${r.img}">${o.items.length > 1 ? `${esc(procTarget(o, { it: r.it ?? -1 }))}<br>` : ''}${esc(r.pos)}</figure>`).join('')}</div>` : ''}
+       ${o.note ? `<div class="muted">備考：${esc(o.note)}</div>` : ''}
+       <div class="muted">「おまかせ」はシルクスクリーン、サイズは位置から仮置き。デザインを見て担当者が確定する。</div>`
+    : '<span class="muted">社内で作成した受注（お客様の指定なし）</span>';
+  document.getElementById('procBody').innerHTML = c.procs.map(({ p, q, r }, i) => `
+    <tr>
+      <td><select ${locked ? 'disabled' : ''} onchange="setProc(${i},'method',this.value)">${Object.keys(PRICE).map(m => `<option ${m === p.method ? 'selected' : ''}>${m}</option>`).join('')}</select></td>
+      <td><select ${locked ? 'disabled' : ''} onchange="setProc(${i},'size',this.value)">${Object.keys(PRICE[p.method].sizes).map(s => `<option ${s === p.size ? 'selected' : ''}>${s}</option>`).join('')}</select></td>
+      <td><select ${locked ? 'disabled' : ''} onchange="setProc(${i},'pos',this.value)">${POSITIONS.map(s => `<option ${s === p.pos ? 'selected' : ''}>${s}</option>`).join('')}</select>${o.items.length > 1 ? `<select ${locked ? 'disabled' : ''} onchange="setProc(${i},'it',+this.value)" style="margin-top:4px" title="対象商品">${[[-1, '対象：全商品'], ...o.items.map((it, ii) => [ii, '対象：' + shortName(it.code)])].map(([v, l]) => `<option value="${v}" ${v === p.it ? 'selected' : ''}>${l}</option>`).join('')}</select>` : ''}</td>
+      <td><input type="number" min="1" value="${p.plates}" style="width:52px" ${p.method === 'シルクスクリーン' && !locked ? '' : 'disabled'} onchange="setProc(${i},'plates',Math.max(1,+this.value||1))"></td>
+      <td><input type="number" min="0" value="${p.cc}" style="width:52px" ${locked ? 'disabled' : ''} onchange="setProc(${i},'cc',Math.max(0,+this.value||0))"></td>
+      <td class="num">${q}</td>
+      <td class="num">${r.plate ? yen(r.plate) : '—'}</td>
+      <td class="num">${yen(r.unit)}</td>
+      <td class="num">${yen(r.amount)}</td>
+      <td>${locked ? '' : `<button class="x" title="削除" onclick="cur().procs.splice(${i},1);renderAll()">×</button>`}</td>
+    </tr>`).join('') || '<tr><td colspan="10" class="muted">加工なし（ボディのみ）</td></tr>';
+  document.getElementById('optBody').innerHTML = o.opts.map((x, i) => `
+    <tr><td>${x.name}</td><td class="num">${yen(x.unit)}</td><td class="num"><input type="number" min="0" value="${x.qty}" style="width:70px" ${locked ? 'disabled' : ''} oninput="cur().opts[${i}].qty=Math.max(0,+this.value||0);renderEstimateTotals()"></td><td class="num">${yen(x.unit * x.qty)}</td>
+    <td>${locked ? '' : `<button class="x" onclick="cur().opts.splice(${i},1);renderAll()">×</button>`}</td></tr>`).join('') || '<tr><td colspan="5" class="muted">オプションなし</td></tr>';
+  document.getElementById('optAdd').innerHTML = OPTIONS.map(([n, u]) => `<option value="${n}">${n}（${u}円）</option>`).join('');
+  document.getElementById('estCustomer').innerHTML = `<div><b>${esc(cu.name)} 様</b>　${esc(o.title)}</div>
+    <div class="muted">〒${cu.zip} ${esc(cu.addr)}<br>請求区分：${cu.billing}｜支払方法：${cu.pay}｜希望納期：${o.due}</div>
+    ${locked ? '<div class="err">製作に入った受注のため、見積は変更できません（デモ）。</div>' : ''}`;
+  ['ship', 'cod', 'web'].forEach(k => { const el = document.getElementById(k); el.value = o[k]; el.disabled = locked; });
+  renderEstimateTotals();
+}
+function renderEstimateTotals() {
+  const o = cur(); if (!o) return;
+  const c = calc(o);
+  document.querySelectorAll('#optBody tr').forEach((tr, i) => { const x = o.opts[i]; if (x && tr.cells[3]) tr.cells[3].textContent = yen(x.unit * x.qty); });
+  document.getElementById('totals').innerHTML = `
+    <tr><td>ボディ</td><td class="num">${yen(c.bodyAmt)}</td></tr>
+    <tr><td>加工（版代・プリント・色変え）</td><td class="num">${yen(c.procAmt)}</td></tr>
+    <tr><td>オプション</td><td class="num">${yen(c.optAmt)}</td></tr>
+    <tr><td><b>お買上額（税抜）</b></td><td class="num"><b>${yen(c.sub)}</b></td></tr>
+    <tr><td>WEB割（${o.web}%）</td><td class="num">${yen(c.web)}</td></tr>
+    <tr><td>送料</td><td class="num">${yen(o.ship)}</td></tr>
+    <tr><td>代引手数料</td><td class="num">${yen(o.cod)}</td></tr>
+    <tr><td>消費税（10%）</td><td class="num">${yen(c.tax)}</td></tr>
+    <tr class="big"><td>御見積額（税込）</td><td class="num">${yen(c.total)}円</td></tr>`;
+  const rate = c.sub + c.web ? c.profit / (c.sub + c.web) * 100 : 0;
+  document.getElementById('profit').innerHTML =
+    `粗利 <b>${yen(c.profit)}円</b>（粗利率 ${rate.toFixed(1)}%）
+     <div class="muted">粗利ルールは現行どおり：シルクのプリント代90%／DTF 1枚300円／インクジェット10%／版代・オプション100%／ボディは販売価格の1/1.2が原価。社内画面のみに表示し、帳票には出さない。</div>`;
+}
+function setQty(ii, ci, s, v) { const it = cur().items[ii]; it.qty[Object.keys(it.qty)[ci]][s] = Math.max(0, +v || 0); renderEstimateTotals(); }
+function setOrderNum(k, v) { cur()[k] = Math.max(0, +v || 0); renderEstimateTotals(); renderList(); }
+function setProc(i, k, v) {
+  const p = cur().procs[i]; p[k] = v;
+  if (k === 'method') { p.size = defaultSize(v, p.pos); if (v !== 'シルクスクリーン') p.plates = 1; }
+  renderAll();
+}
+function addProc() { cur().procs.push(P('DTF', '12×12cm以内', 'フロント : 左胸')); renderAll(); }
+function addOpt() {
+  const o = cur(), name = document.getElementById('optAdd').value;
+  if (o.opts.some(x => x.name === name)) { toast('すでに追加されています'); return; }
+  o.opts.push(O(name, qtyOf(o))); renderAll();
+}
+function saveDraft() {
+  const o = cur();
+  if (o.status === '新規受付') o.status = '見積中';
+  o.history.push(H(nowStr(), '見積を下書き保存'));
+  renderAll(); toast(`${o.no} を下書き保存しました（状態：${o.status}）`);
+}
+function issueQuote() {
+  const o = cur();
+  if (!qtyOf(o)) { toast('枚数が0のため発行できません'); return; }
+  if (['新規受付','見積中'].includes(o.status)) o.status = '見積中';
+  o.history.push(H(nowStr(), `見積書 発行（${yen(calc(o).total)}円）`));
+  state.doc = '見積書';
+  renderAll(); go('doc'); toast('見積書を発行しました。メールかLINEで送付できます');
+}
+
+// ---------- ⑤ 帳票・進行 ----------
+function renderDocScreen() {
+  const o = cur();
+  document.getElementById('docEmpty').style.display = o ? 'none' : 'block';
+  document.getElementById('docMain').style.display = o ? 'block' : 'none';
+  document.getElementById('docNo').innerHTML = o ? `${o.no}｜${esc(custOf(o.cid).name)}｜${pill(o.status)}` : '';
+  if (!o) return;
+  const cu = custOf(o.cid), si = STATUSES.indexOf(o.status);
+  document.getElementById('flow').innerHTML = STATUSES.map((s, i) => `<span class="${i === si ? 'on' : i < si ? 'past' : ''}">${s}</span>`).join('→');
+  const acts = [];
+  if (si <= 1) acts.push(`<span class="muted">見積書を送付すると「見積送付済」になる</span>`);
+  if (o.status === '見積送付済') acts.push(`<button class="btn ok sm" onclick="advance('製作中','お客様承認 → 製作中')">お客様が承認 → 製作開始</button>`);
+  if (o.status === '製作中') acts.push(`<button class="btn ok sm" onclick="ship()">発送済みにする</button>`);
+  if (o.status === '発送済' && cu.billing === '都度') acts.push(`<button class="btn ok sm" onclick="billSingle()">請求書を発行（都度）</button>`);
+  if (o.status === '発送済' && cu.billing === '月次') acts.push(`<span class="muted">月次のお客様：${ym(o.closeMonth)}の月次締めで請求</span><button class="btn ghost sm" onclick="document.getElementById('month').value='${o.closeMonth}';renderMonthly();go('monthly')">月次締めへ</button>`);
+  if (o.status === '請求済') acts.push('<span class="muted">請求まで完了</span>');
+  document.getElementById('flowActions').innerHTML = acts.join('');
+  document.getElementById('docTabs').innerHTML = ['見積書','納品書','請求書','領収書'].map(t =>
+    `<button class="${t === state.doc ? 'active' : ''}" onclick="state.doc='${t}';renderDocScreen()">${t}</button>`).join('');
+  document.getElementById('doc').innerHTML = docHtml(o, state.doc);
+  document.getElementById('history').innerHTML = o.history.length
+    ? o.history.slice().reverse().map(h => `<tr><td style="width:150px">${h.at}</td><td>${esc(h.text)}</td></tr>`).join('')
+    : '<tr><td class="muted">まだ履歴はありません</td></tr>';
+}
+function docHtml(o, d) {
+  const cu = custOf(o.cid), c = calc(o);
+  const label = { '見積書': '御見積額', '納品書': '納品額', '請求書': '御請求額', '領収書': '領収金額' }[d];
+  const company = `ワーカーブロス株式会社<br>〒999-7464 山形県鶴岡市由良2-11-25<br>TEL 090-5764-8116<br>登録番号 T8390001017245`;
+  if (d === '領収書') {
+    return `<h4>領収書</h4>
+      <div class="hd"><div style="font-size:16px">${esc(cu.name)} 様</div><div>${jpDate(DEMO_TODAY)}<br>No. ${o.no}</div></div>
+      <div style="text-align:center"><div class="amount">¥${yen(c.total)}-</div></div>
+      <p style="text-align:center">但し 商品代金として<br>上記正に領収いたしました</p>
+      <div style="text-align:right;font-size:12px;margin-top:30px">${company}</div>`;
+  }
+  const rows = [
+    ...c.bodyLines.map(l => [`【${l.body.maker}】${l.body.name}（${l.color}）`, l.body.code, l.s, l.n, l.p, l.a]),
+    ...c.procs.flatMap(({ p, q, r }) => {
+      const t = procTarget(o, p), where = t ? `${p.pos}／${t}` : p.pos;
+      return [
+        ...(r.plate ? [[`${p.method === '刺繍' ? '刺繍データ代' : '版代'}（${where}）`, p.method, p.size, p.method === '刺繍' ? 1 : p.plates, p.method === '刺繍' ? r.plate : r.plate / p.plates, r.plate]] : []),
+        [`${p.method === '刺繍' ? '刺繍代' : 'プリント代'}（${where}）`, p.method, p.size, q, r.unit, r.unit * q],
+        ...(p.cc ? [['色変え代', p.method, '', p.cc, COLOR_CHANGE, r.cc]] : []),
+      ];
+    }),
+    ...o.opts.filter(x => x.qty).map(x => [x.name, 'オプション', '', x.qty, x.unit, x.unit * x.qty]),
+  ];
+  return `<h4>${d}</h4>
+    <div class="hd">
+      <div><div style="font-size:16px;border-bottom:1px solid var(--ink);padding-bottom:2px">${esc(cu.name)} 様</div>
+        <div style="margin-top:6px">件名：${esc(o.title)}<br>支払方法：${cu.pay}</div>
+        <div class="amount">${label}（税込） ¥${yen(c.total)}-</div></div>
+      <div style="text-align:right">${jpDate(DEMO_TODAY)}<br>No. ${o.no}<br><br>${company}</div>
+    </div>
+    <table>
+      <thead><tr><th>商品名</th><th>型番</th><th>サイズ</th><th class="num">数量</th><th class="num">単価</th><th class="num">金額</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td><td class="num">${yen(r[4])}</td><td class="num">${yen(r[5])}</td></tr>`).join('')}</tbody>
+    </table>
+    <table class="totals" style="width:300px;margin:14px 0 0 auto">
+      <tr><td>お買上額（税抜）</td><td class="num">${yen(c.sub)}</td></tr>
+      <tr><td>WEB割（${o.web}%）</td><td class="num">${yen(c.web)}</td></tr>
+      <tr><td>送料</td><td class="num">${yen(o.ship)}</td></tr>
+      ${o.cod ? `<tr><td>代引手数料</td><td class="num">${yen(o.cod)}</td></tr>` : ''}
+      <tr><td>消費税（10%）</td><td class="num">${yen(c.tax)}</td></tr>
+      <tr class="big"><td>合計</td><td class="num">${yen(c.total)}</td></tr>
+    </table>
+    ${d === '見積書' ? '<p class="muted" style="margin-top:14px">有効期限：発行日より30日</p>' : ''}
+    ${d === '請求書' ? '<p class="muted" style="margin-top:14px">お振込先：〇〇銀行 鶴岡支店 普通 1234567 ワーカーブロス（カ</p>' : ''}`;
+}
+function openSend(via) {
+  const o = cur(), cu = custOf(o.cid);
+  openModal(`<h3>${state.doc}を${via}で送る</h3>
+    <label class="f">宛先</label><input value="${via === 'メール' ? cu.email : cu.name + '（LINE連携済み）'}" disabled>
+    <label class="f" style="margin-top:10px">本文</label>
+    <textarea id="sendBody" style="width:100%;height:120px;font:inherit;padding:8px;border:1px solid #cfd4dc;border-radius:6px">${esc(cu.name)} 様
+
+いつもありがとうございます。ワーカーブロスの粕谷です。
+${o.title}の${state.doc}をお送りします（${o.no}／${yen(calc(o).total)}円・税込）。
+ご確認のほど、よろしくお願いいたします。</textarea>
+    <p class="muted">${state.doc}のPDF（${o.no}_${state.doc}.pdf）を添付して送信します（デモのため実際には送信されません）。</p>
+    <div class="row" style="justify-content:flex-end"><button class="btn ghost" onclick="closeModal()">キャンセル</button><button class="btn ${via === 'LINE' ? 'line' : ''}" onclick="doSend('${via}')">送信する</button></div>`);
+}
+function doSend(via) {
+  const o = cur();
+  o.history.push(H(nowStr(), `${state.doc}を${via}で送付`));
+  if (state.doc === '見積書' && ['新規受付','見積中'].includes(o.status)) o.status = '見積送付済';
+  closeModal(); renderAll(); toast(`${state.doc}を${via}で送付しました（状態：${o.status}）`);
+}
+function advance(status, text) { const o = cur(); o.status = status; o.history.push(H(nowStr(), text)); renderAll(); toast(`${o.no}：${text}`); }
+function ship() {
+  const o = cur(); o.status = '発送済'; o.closeMonth = DEMO_TODAY.slice(0, 7);
+  o.history.push(H(nowStr(), `発送済み（締め対象月：${ym(o.closeMonth)}）`));
+  renderAll(); toast(`${o.no} を発送済みにしました`);
+}
+function billSingle() {
+  const o = cur(); o.status = '請求済'; state.doc = '請求書';
+  o.history.push(H(nowStr(), `請求書 発行（都度・${yen(calc(o).total)}円）`));
+  renderAll(); toast('請求書を発行しました');
+}
+
+// ---------- ⑥ 月次締め ----------
+function renderMonthly() {
+  const sel = document.getElementById('month');
+  const months = [...new Set(orders.filter(o => o.closeMonth).map(o => o.closeMonth))].sort().reverse();
+  const keep = sel.value || DEMO_TODAY.slice(0, 7);
+  sel.innerHTML = months.map(m => `<option value="${m}" ${m === keep ? 'selected' : ''}>${ym(m)}</option>`).join('');
+  const m = sel.value;
+  const inMonth = orders.filter(o => o.closeMonth === m);
+  const sales = inMonth.reduce((a, o) => a + calc(o).total, 0);
+  const profit = inMonth.reduce((a, o) => a + calc(o).profit, 0);
+  const base = inMonth.reduce((a, o) => { const c = calc(o); return a + c.sub + c.web; }, 0);
+  const groups = {};
+  inMonth.filter(o => custOf(o.cid).billing === '月次').forEach(o => { (groups[o.cid] ||= []).push(o); });
+  const unbilled = Object.values(groups).filter(g => g.some(o => o.status === '発送済'));
+  document.getElementById('kpis').innerHTML = `
+    <div><span class="muted">売上（税込）</span><b>${yen(sales)}</b></div>
+    <div><span class="muted">粗利</span><b>${yen(profit)}</b></div>
+    <div><span class="muted">粗利率</span><b>${base ? (profit / base * 100).toFixed(1) : '0.0'}%</b></div>
+    <div><span class="muted">未請求（月次）</span><b>${unbilled.length}社 / ${unbilled.flat().filter(o => o.status === '発送済').length}件</b></div>`;
+  document.getElementById('monthlyBody').innerHTML = Object.entries(groups).map(([cid, g]) => {
+    const target = g.filter(o => o.status === '発送済');
+    const list = target.length ? target : g;
+    const sum = k => list.reduce((a, o) => { const c = calc(o); return a + ({ sub: c.sub, web: c.web, ship: o.ship, tax: c.tax, total: c.total })[k]; }, 0);
+    const open = target.length > 0;
+    return `<tr>
+      <td>${open ? `<input type="checkbox" class="mchk" value="${cid}" checked onchange="syncIssueBtn()">` : ''}</td>
+      <td>${esc(custOf(cid).name)}</td><td class="num">${list.length}</td>
+      <td class="num">${yen(sum('sub'))}</td><td class="num">${yen(sum('web'))}</td><td class="num">${yen(sum('ship'))}</td><td class="num">${yen(sum('tax'))}</td><td class="num"><b>${yen(sum('total'))}</b></td>
+      <td>${open ? pill('発送済').replace('発送済', '未請求') : pill('請求済')}</td>
+      <td><button class="btn ghost sm" onclick="previewMonthly('${cid}')">明細</button></td></tr>`;
+  }).join('') || '<tr><td colspan="10" class="empty">この月の月次請求対象はありません</td></tr>';
+  document.getElementById('ledger').innerHTML =
+    `<thead><tr><th>日付</th><th>受注番号</th><th>取引先</th><th>支払方法</th><th class="num">売上金額</th><th class="num">お買上額</th><th class="num">WEB割引額</th><th class="num">送料</th><th class="num">代引手数料</th><th class="num">消費税額</th><th class="num">粗利</th></tr></thead><tbody>` +
+    (inMonth.map(o => { const c = calc(o), cu = custOf(o.cid); return `<tr><td>${o.date}</td><td>${o.no}</td><td>${esc(cu.name)}</td><td>${cu.pay}</td><td class="num">${yen(c.total)}</td><td class="num">${yen(c.sub)}</td><td class="num">${yen(c.web)}</td><td class="num">${yen(o.ship)}</td><td class="num">${yen(o.cod)}</td><td class="num">${yen(c.tax)}</td><td class="num">${yen(c.profit)}</td></tr>`; }).join('')
+      || '<tr><td colspan="11" class="empty">この月の売上はありません</td></tr>') + '</tbody>';
+  syncIssueBtn();
+}
+function syncIssueBtn() {
+  const n = document.querySelectorAll('.mchk:checked').length, all = document.querySelectorAll('.mchk').length;
+  const btn = document.getElementById('issueBtn');
+  btn.disabled = !n; btn.textContent = n ? `選択した${n}社の請求書を発行` : '請求書を発行';
+  const ca = document.getElementById('chkAll'); ca.checked = all > 0 && n === all; ca.disabled = !all;
+}
+function toggleAll(v) { document.querySelectorAll('.mchk').forEach(c => c.checked = v); syncIssueBtn(); }
+function monthlyDoc(cid, m, list) {
+  const cu = custOf(cid);
+  const t = k => list.reduce((a, o) => { const c = calc(o); return a + ({ sub: c.sub, web: c.web, ship: o.ship, tax: c.tax, total: c.total })[k]; }, 0);
+  return `<div class="doc" id="monthlyDoc" style="box-shadow:none;border:0;padding:10px 0">
+    <h4>請求書</h4>
+    <div class="hd"><div><div style="font-size:16px;border-bottom:1px solid var(--ink)">${esc(cu.name)} 様</div>
+      <div style="margin-top:6px">${ym(m)}分（月次まとめ）｜支払方法：${cu.pay}</div>
+      <div class="amount">御請求額（税込） ¥${yen(t('total'))}-</div></div>
+      <div style="text-align:right">${jpDate(DEMO_TODAY)}<br><br>ワーカーブロス株式会社<br>登録番号 T8390001017245</div></div>
+    <table><thead><tr><th>日付</th><th>受注番号</th><th>名称</th><th class="num">お買上額</th><th class="num">WEB割</th><th class="num">送料</th><th class="num">消費税</th><th class="num">金額</th></tr></thead>
+    <tbody>${list.map(o => { const c = calc(o); return `<tr><td>${o.date.slice(5).replace('-', '/')}</td><td>${o.no}</td><td>${esc(o.title)}</td><td class="num">${yen(c.sub)}</td><td class="num">${yen(c.web)}</td><td class="num">${yen(o.ship)}</td><td class="num">${yen(c.tax)}</td><td class="num">${yen(c.total)}</td></tr>`; }).join('')}
+    <tr><td colspan="3"><b>合計</b></td><td class="num">${yen(t('sub'))}</td><td class="num">${yen(t('web'))}</td><td class="num">${yen(t('ship'))}</td><td class="num">${yen(t('tax'))}</td><td class="num"><b>${yen(t('total'))}</b></td></tr></tbody></table></div>`;
+}
+function previewMonthly(cid) {
+  const m = document.getElementById('month').value;
+  const g = orders.filter(o => o.cid === cid && o.closeMonth === m);
+  const open = g.filter(o => o.status === '発送済');
+  openModal(`${monthlyDoc(cid, m, open.length ? open : g)}
+    <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn ghost" onclick="closeModal()">閉じる</button><button class="btn" onclick="printDoc('monthlyDoc')">PDFで保存・印刷</button></div>`);
+}
+function issueMonthly() {
+  const m = document.getElementById('month').value;
+  const cids = [...document.querySelectorAll('.mchk:checked')].map(c => c.value);
+  if (!cids.length) return;
+  let cnt = 0;
+  cids.forEach(cid => orders.filter(o => o.cid === cid && o.closeMonth === m && o.status === '発送済').forEach(o => {
+    o.status = '請求済'; o.history.push(H(nowStr(), `月次請求書（${ym(m)}分）に計上`)); cnt++;
+  }));
+  renderAll();
+  toast(`${cids.length}社・${cnt}件の月次請求書を発行しました。同じ受注が二重に請求されることはありません`);
+}
+function exportCsv() {
+  const m = document.getElementById('month').value;
+  const head = ['日付','受注番号','取引先','支払方法','売上金額','お買上額','WEB割引額','送料','代引手数料','消費税額','粗利'];
+  const rows = orders.filter(o => o.closeMonth === m).map(o => { const c = calc(o), cu = custOf(o.cid); return [o.date, o.no, cu.name, cu.pay, c.total, c.sub, c.web, o.ship, o.cod, c.tax, Math.round(c.profit)]; });
+  const csv = '\uFEFF' + [head, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `売上台帳_${m.replace('-', '')}.csv`;
+  a.click();
+  toast(`売上台帳（${rows.length}件）をCSVで出力しました`);
+}
+
+// ---------- 画面切替 ----------
+const screens = [...document.querySelectorAll('section.screen')];
+function go(id) {
+  const i = typeof id === 'number' ? id : screens.findIndex(s => s.dataset.id === id);
+  screens.forEach((s, k) => s.classList.toggle('active', k === i));
+  document.querySelectorAll('#steps button').forEach((b, k) => b.classList.toggle('active', k === i));
+  window.scrollTo({ top: 0 });
+}
+function renderAll() {
+  renderList(); renderMonthly(); renderDocScreen(); renderEstimate();
+  if (state.user) renderMyPage();
+}
+
+document.getElementById('steps').innerHTML = screens.map((s, i) =>
+  `<button data-id="${s.dataset.id}" onclick="go('${s.dataset.id}')"><span class="who">${s.dataset.who}</span>${i + 1}. ${s.dataset.title}</button>`).join('');
+document.getElementById('loginCustomer').innerHTML = CUSTOMERS.map(c => `<option value="${c.id}">${c.name}（${c.billing}）</option>`).join('');
+document.getElementById('ls').innerHTML = `<option value="">すべての状態</option>` + STATUSES.map(s => `<option>${s}</option>`).join('');
+fillLogin();
+
+state.currentNo = 'WB-2026-0412';
+renderUser(); renderMyPage(); renderForm(); renderAll(); go('login');
+</script>
+</body>
+</html>

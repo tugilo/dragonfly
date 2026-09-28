@@ -306,6 +306,12 @@
 | 305 | 熊谷貴之 初回121事前準備（株式会社ENFUSIA／AI伴走支援／飯田千帆紹介ビジター） | docs | completed | develop（merge `16907720`） | 2026-09-04 |
 | 306 | 熊谷貴之 第1回121 Zoom要約反映（ENFUSIA／伴走・ビジコン・ドローン・入会検討） | docs | completed | develop（merge `16907720`） | 2026-09-04 |
 | 307 | ウィークリー稿のパターン切替と利用履歴（SPEC-004・A〜E・usages） | implement | completed | develop（merge `2e43ebeed2786e1a1ab00724ca5cdb4b4316ddff`） | 2026-09-12 |
+| 308 | 竹内駿太 第2回121事前準備（インタビュー協力） | docs | in_progress | feature/phase308-takeuchi-shunta-121-second-prep | 2026-09-14 |
+| 309 | 山本葉子 第2回121事前準備（聞き役・事業深掘り） | docs | in_progress | feature/phase309-yamamoto-yoko-121-second-prep | 2026-09-16 |
+| 310 | 山本葉子 第2回121 Zoom要約反映（紹介フック・カード強み・WP改善） | docs | in_progress | feature/phase309-yamamoto-yoko-121-second-prep | 2026-09-16 |
+| 311 | 栗林千代子 初回121事前準備（Webデザイン／平岡国彦紹介ビジター） | docs | in_progress | feature/phase311-kuribayashi-chiyoko-121-prep | 2026-09-17 |
+| 312 | 栗林千代子 第1回121 Zoom要約反映（下請け協業・Messenger・米澤／今西） | docs | in_progress | feature/phase311-kuribayashi-chiyoko-121-prep | 2026-09-17 |
+| 313 | 木村杏那 第4回121 Zoom要約反映（Web優先・必須とオプション・予算300万円） | docs | in_progress | feature/phase308-takeuchi-shunta-121-second-prep（作業ツリー未分離） | 2026-09-28 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
