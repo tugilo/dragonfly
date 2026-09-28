@@ -63,6 +63,8 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md) | 第1回ミーティング。**2026-09-14（月）19:00–20:00 確定**（2026-08-30 12:39 JST）。Jobなし |
 | [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md) | **第1回事前資料**（2026-09-12 17:41 JST・未送信）。Webマスチームのみ |
 | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) | 第1回進行用アジェンダ |
+| [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) | **第1回議事録**（2026-09-14 19:00–20:00 実施）。Religo `meetings.id` 41 |
+| [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) | **LT×WM 議事録**（2026-09-16 21:00〜）。台本・朝礼・9/27通しリハ |
 
 ## 関連
 

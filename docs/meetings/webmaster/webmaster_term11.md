@@ -3,11 +3,11 @@ doc_type: webmaster_term_hub
 chapter: bni_dragonfly
 term_ja: "11期"
 created_jst: "2026-08-29 10:00 JST"
-updated_jst: "2026-09-13 21:57 JST"
+updated_jst: "2026-09-17 09:18 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
 status: living
 religo_session_type: webmaster_meeting
-religo_import: pending_first_meeting
+religo_import: first_meeting_imported
 ---
 
 # 11期 Webマスチーム
@@ -31,7 +31,8 @@ religo_import: pending_first_meeting
 | PC環境アンケート | **6名回答。** 2台持ち3／1台2／借用可1。1台2名は運営用PC貸与。借用可1名向けの **Microsoft 365 1ライセンス**は、こなっちへの個別送信ではなく **LTST アジェンダシートの全体協議事項に記入**（3分の2賛同が要る） |
 | 11期 第1回 LTST | **2026-09-02（水）20:00 JST。** 手元メモ: [webmaster_term11_ltst1_prep_20260902.md](webmaster_term11_ltst1_prep_20260902.md) |
 | 11期 第2回 LTST | **2026-09-10（木）。** 議事録: [chapter_ltst_term11_20260910.md](../chapter/chapter_ltst_term11_20260910.md)。6人・2人1組、月曜正午締切、月曜 MTG 短縮、運営 PC 37,800円を船津申請→LTST 決裁。次回は **9/17 全員参加**（フィックス） |
-| 第1回ミーティング | **確定。2026-09-14（月）19:00–20:00 JST。** Zoom 60分。顔合わせ。大事にしたいことを一緒に確認する。担当は決めない。事前配布: [webmaster_term11_meeting1_20260914_preread.md](webmaster_term11_meeting1_20260914_preread.md)。台本: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。20:00〜10期リハ見学（任意） |
+| 第1回ミーティング | **実施済。2026-09-14（月）19:00–20:00 JST。** 出席5（竹村欠席）。3目標・ペア・ローテーションで合意。担当表は未作成。議事録: [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md)。Religo `meetings.id` **41** |
+| LT × WM（リハ） | **実施済。2026-09-16（水）21:00〜。** 台本は縦一列。朝礼は称賛とビジター紹介。通しリハ 9/27 11:00–12:00。議事録: [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
 | 梅澤さんの反応（9/13） | 事前資料を見た。チェックリストは来期施策の **事前提案**。目的は抜け漏れ防止。14日は採否を切らない。[記録](webmaster_term11_umezawa_reaction_20260913.md)。台本: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
 | 動画の目的と効果 | 調査中。編集しないとは未決。録る／切る／整える／出すは別。[調査](webmaster_term11_video_purpose_effect_20260913.md) |
 | サポートチームWS | **受講対象。** オンライン2時間。10/1 13:00–15:00 または 10/9 15:30–17:30。受ければTLTオンデマンドは不要。すでにTLT視聴済みでもWSを受ける（LT確認）。告知文: [webmaster_term11_tlt_workshop_20260912.md](webmaster_term11_tlt_workshop_20260912.md)。**未送信** |
@@ -72,15 +73,15 @@ religo_import: pending_first_meeting
 
 ## 第1回ミーティング
 
-**確定: 2026-09-14（月）19:00–20:00 JST。** Zoom 60分。
+**実施済: 2026-09-14（月）19:00–20:00 JST。** Zoom。竹村さん欠席。
 
-顔合わせ。大事にしたいことと、いま上がっているやり方を、一緒に確認する。係・担当表・残す／やめるは、今夜決めない。
+議事録の正: [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md)。Religo `meetings.id` **41**。
 
-11期 LT・ST ミーティングは 9月2日と9月10日。14日は、そこで Webマスに出ていることと、チームの目標を揃える。
+顔合わせ。3つの目標・2人1組・ローテーションで合意。係・担当表・残す／やめるは切っていない。
 
 案内は 2026-08-29 09:59 JST にグループ送信済み。確定は 2026-08-30 12:39 JST。文面の正: [webmaster_term11_meeting1_chouseisan_20260829.md](webmaster_term11_meeting1_chouseisan_20260829.md)
 
-アジェンダの正: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。開催後に `webmaster_term11_meeting1_20260914.md` を切り、Religo へ入れる。
+進行用: [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md)。
 
 ---
 
@@ -143,6 +144,8 @@ religo_import: pending_first_meeting
 | 第1回事前資料 A4図版 | [materials/webmaster_term11_meeting1_20260914_preread.html](materials/webmaster_term11_meeting1_20260914_preread.html) |
 | 梅澤さん反応（9/13） | [webmaster_term11_umezawa_reaction_20260913.md](webmaster_term11_umezawa_reaction_20260913.md) |
 | 動画の目的と効果（調査） | [webmaster_term11_video_purpose_effect_20260913.md](webmaster_term11_video_purpose_effect_20260913.md) |
+| 第1回議事録（9/14・実施） | [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) |
+| LT×WM 議事録（9/16） | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
 | 第1回アジェンダ（9/14・進行用） | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) |
 | タスク表 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv)／[説明](webmaster_task_inventory_20260822.md) |
 | 倉持棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
@@ -163,13 +166,14 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 | 35 | 2026-06-03 | 倉持→次廣 一部引き継ぎ | [webmaster_handover_20260603.md](webmaster_handover_20260603.md) |
 | 36 | 2026-08-21 | 工藤祐司さん4者 | [webmaster_kudo_yuji_20260821.md](webmaster_kudo_yuji_20260821.md) |
 | 37 | 2026-08-22 | 倉持さん棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
+| 41 | 2026-09-14 | 11期 Webマス 第1回 | [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) |
+| 43 | 2026-09-16 | LT × Webマス（リハ・台本） | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
 
 種別は `webmaster_meeting`。画面は Religo の [Meetings](http://localhost/meetings)。
 
 ### これから
 
-- 第1回のあと、`webmaster_term11_meeting1_YYYYMMDD.md` を切る。`doc_type: webmaster_meeting`。決まった日時を YAML に書く。
-- 同じ変更単位で Religo の `meetings` / `meeting_minutes` へ入れる。入れたら上の表に `id` を足す。
+- 第1回は切った。[webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md)／`meetings.id` 41。
 - 公式の `import-webmaster-minutes` は **まだ無い**（SPEC-018 は seed のみ先行）。当面は既存の `webmaster_meeting` 投入と同じ経路。
 - **この入口ファイル自体は議事録ではない。** Religo の1回の Meeting にはしない。
 
@@ -191,6 +195,9 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-09-17 09:18 | LT×WM 実施。台本縦一列・朝礼は称賛とビジター・9/27通しリハ |
+| 2026-09-16 20:53 | LT×WM 21時。11期リハ打ち合わせの手元 |
+| 2026-09-14 23:03 | 第1回実施。議事録と Religo `meetings.id` 41 |
 | 2026-09-13 22:04 | 事前資料のメンバー共有文を人間の文面に差し替えた。未送信 |
 | 2026-09-13 22:03 | 第1回台本。BORは軍司さんに教えてもらう。今夜は手順まで入らない |
 | 2026-09-13 21:58 | 第1回台本の19:00に冒頭挨拶を追加 |
