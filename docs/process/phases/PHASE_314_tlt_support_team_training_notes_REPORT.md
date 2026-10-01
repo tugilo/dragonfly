@@ -4,7 +4,7 @@
 **資料ベース議事録完成:** 2026-10-01 13:05 JST  
 **Zoom要約反映:** 2026-10-01 15:18 JST  
 **Phase Type:** docs  
-**Status:** in_progress（develop merge未実施）
+**Status:** completed（develop merge済み。main反映は別途）
 
 ---
 
@@ -50,7 +50,7 @@ docsフェーズのため `php artisan test` とReactビルドはスキップ。
 
 ## Merge Evidence
 
-merge commit id: TODO（develop取り込み後）  
+merge commit id: 6049839535e84959e176d8552e3d031b2955c5b0  
 source branch: feature/phase314-tlt-support-team-training-notes  
 target branch: develop  
 phase id: 314  
@@ -60,8 +60,8 @@ related ssot: Spec IDなし（BNI Academy研修記録）
 test command: スキップ（docsフェーズ）  
 test result: スキップ
 
-changed files: `docs/academy/TLT/2026.09TLT.pdf`, `docs/academy/TLT/BNI_TLT_support_team_training_notes_20261001.md`, `docs/INDEX.md`, `docs/dragonfly_progress.md`, `docs/process/PHASE_REGISTRY.md`, `docs/process/phases/PHASE_314_tlt_support_team_training_notes_{PLAN,WORKLOG,REPORT}.md`
+changed files: docs/INDEX.md, docs/academy/TLT/2026.09TLT.pdf, docs/academy/TLT/BNI_TLT_support_team_training_notes_20261001.md, docs/academy/TLT/チャプター運営マニュアル-202604.pdf, docs/academy/TLT/チャプター運営マニュアル2026年3月版 (1).pdf, docs/dragonfly_progress.md, docs/meetings/1to1/1to1_nagasaka_atsushi_chonozaka.md, docs/meetings/1to1/1to1_omizu_takashi_kotoba_design.md, docs/meetings/1to1/1to1_terao_kouta_wayway.md, docs/process/PHASE_REGISTRY.md, docs/process/phases/PHASE_314_tlt_support_team_training_notes_PLAN.md, docs/process/phases/PHASE_314_tlt_support_team_training_notes_REPORT.md, docs/process/phases/PHASE_314_tlt_support_team_training_notes_WORKLOG.md, docs/strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md, www/database/seeders/TsugihiroWeeklyPresentationPatternsSeeder.php
 
 scope check: OK  
 ssot check: OK  
-dod check: OK（merge evidenceのみ未記録）
+dod check: OK

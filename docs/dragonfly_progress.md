@@ -8,6 +8,7 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-10-01 16:01 JST | **Phase 314 — develop 取り込み:** feature/phase314-tlt-support-team-training-notes を merge `6049839535e84959e176d8552e3d031b2955c5b0` で develop へ取り込んだ。TLT議事録、9月末の121、ウィークリーBを含む。docsフェーズのためテストはスキップ。 |
 | 2026-10-01 15:18 JST | **Phase 314 — TLT Zoom要約を当日議事録へ反映:** 初年度定着率46%・研修目標52%（DragonFly 11期KPI 70%とは別）、審査面談、カテゴリー決定、7か月レビュー、重点募集、管理書簡、Webマス等の役割、参加者共有とアクションを校正して記録。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
 | 2026-10-01 13:10 JST | **Phase 314 — TLT最初の自己紹介:** DragonFly、AI業務改善システム構築、次廣淳、2026年3月入会・BNI歴約半年、今期ウェブマスターとして「定例会を止めない／人が伝わる／次の期に渡す／誰が担当しても同じ品質」を読み上げ用に整理。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
 | 2026-10-01 13:05 JST | **Phase 314 — TLTサポートチーム オンライントレーニング議事録:** 2026-10-01 13:00–15:00 JSTの研修用に、配布PDF全23ページへ対応する教材要点・当日メモ・DragonFlyへの持ち帰り欄を作成。図中心ページは推測せず記入欄として残した。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
