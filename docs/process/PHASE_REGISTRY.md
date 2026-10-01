@@ -312,6 +312,7 @@
 | 311 | 栗林千代子 初回121事前準備（Webデザイン／平岡国彦紹介ビジター） | docs | in_progress | feature/phase311-kuribayashi-chiyoko-121-prep | 2026-09-17 |
 | 312 | 栗林千代子 第1回121 Zoom要約反映（下請け協業・Messenger・米澤／今西） | docs | in_progress | feature/phase311-kuribayashi-chiyoko-121-prep | 2026-09-17 |
 | 313 | 木村杏那 第4回121 Zoom要約反映（Web優先・必須とオプション・予算300万円） | docs | in_progress | feature/phase308-takeuchi-shunta-121-second-prep（作業ツリー未分離） | 2026-09-28 |
+| 314 | TLTサポートチーム オンライントレーニング議事録（PDF全23ページ対応） | docs | in_progress | feature/phase314-tlt-support-team-training-notes | 2026-10-01 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

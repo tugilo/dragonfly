@@ -195,6 +195,9 @@
 | ファイル | 説明 |
 |----------|------|
 | [meetings/1to1/README.md](meetings/1to1/README.md) | **ファイル命名・スラッグ・DB取り込み想定**（`1to1_id` 等）。チャプターを跨ぐ1to1もここに集約。 |
+| [meetings/1to1/1to1_omizu_takashi_kotoba_design.md](meetings/1to1/1to1_omizu_takashi_kotoba_design.md) | **大水崇史（大水ことば・デザイン制作事務所／中小企業のFANづくりデザイナー／Abundance）**。堀切孝則紹介（大水→次廣）。**第1回 2026-09-30（水）JST 13:00–14:00 実施済み**（予定枠）。Zoom要約を校正。次は経理代行（大水）、**紹介文を大水確認→里見允二・米澤侑桂へ個別確認→双方OKで別グループ**（次廣）、10/13 フォーラムで名刺。お礼文案は未送信。`members` 未登録。`one_to_ones` 未作成。 |
+| [meetings/1to1/1to1_terao_kouta_wayway.md](meetings/1to1/1to1_terao_kouta_wayway.md) | **寺尾幸太（戦略デザイナー／BNI GRIT 8期VP）**。今西俊明紹介。**第1回 2026-09-30（水）JST 15:00–16:00 予定**。9割聞く台本（紹介文を1つ。お客様か協業先か）。waywayの代表は向井一馬。入会・章移籍なし。`members` 未登録。`one_to_ones` 未作成。 |
+| [meetings/1to1/1to1_nagasaka_atsushi_chonozaka.md](meetings/1to1/1to1_nagasaka_atsushi_chonozaka.md) | **長坂篤（長乃坂珈琲／コーヒー・バリスタ・豆の卸／DragonFly ビジター）**。佐藤久紹介（Gコンセプト仲間）。第221回 V12。**第1回 2026-09-29（火）JST 19:00–TODO 予定**。9割聞く台本（協業を1種類に。第一候補は畠山）。入会クローズなし。`members.id=355`。`one_to_ones` 未作成。 |
 | [meetings/1to1/1to1_kuribayashi_chiyoko_web_design.md](meetings/1to1/1to1_kuribayashi_chiyoko_web_design.md) | **栗林千代子（個人事業主／Webデザイン／DragonFly ビジター）**。平岡国彦紹介。第221回 V02。**第1回 2026-09-17（木）JST 14:15–15:15 実施済み**（予定枠。実時刻 TODO）。下請け協業・Messenger・米澤10月121・今西は平岡経由。入会見送り。校正: メンバー表記→ビジター、米沢→米澤、パボローネ→ファボローネ、木村アンナ→杏那。`members.id=346`。`one_to_ones` 未作成。お礼文案・送信待ち。 |
 | [meetings/1to1/1to1_muramatsu_masano_yurikago.md](meetings/1to1/1to1_muramatsu_masano_yurikago.md) | **村松方乃（Yurikago／マヤ暦カウンセリング／第222回ビジター）**。次廣紹介。公開は PTA役員で一緒に運営した仲間（校名は出さない）。世にバラしたくてビジター招待。**第1回121 2026-09-11（金）JST 15:30–TODO**。会中お繋ぎ6件の LINE 文案（2026-09-16 10:00 JST 差し替え）・送信待ち。`members.id=366`（visitor／V2）。`one_to_ones` 未作成・新規行禁止。村松裕基（eees／KerNel）は **別人**。 |
 | [meetings/1to1/1to1_kumagai_takayuki_enfusia.md](meetings/1to1/1to1_kumagai_takayuki_enfusia.md) | **熊谷貴之（株式会社ENFUSIA／AI伴走支援／DragonFly ビジター）**。飯田千帆紹介。**第1回 2026-09-04（金）JST 11:00–12:00 実施済み**（Zoom要約校正・`#152` completed／`members.id=286`）。2026年6月末起業・富士通19年。伴走／地域／ビジコン／ドローン／ワーケーション。協業合意。入会は前向き検討（クローズなし）。校正: 2024→2026、伴奏→伴走、小永→小中、羽賀→芳賀（要確認）。熊谷龍笙とは別人。お礼は **Messenger 送信済み（2026-09-04 15:53 JST）**。 |
@@ -398,6 +401,7 @@ BNI アカデミー資料・受講用メモ（KeySkills 等）。教材 PDF と�
 | [academy/キースキルズ/ベーシック/BNI_BasicTraining_workshop_notes_20260427.md](academy/キースキルズ/ベーシック/BNI_BasicTraining_workshop_notes_20260427.md) | **BNI ベーシックトレーニング受講メモ**（2026-04-27）。スライドPDF（202405）のスライド番号1〜86ごとにメモ欄を用意し、ハンドブック10項目・5年後ビジョン・研修後アクションまで記録できる当日用テンプレート。 |
 | [academy/005_パワーチームワークショップ/BNI_PowerTeam_workshop_notes_20260610.md](academy/005_パワーチームワークショップ/BNI_PowerTeam_workshop_notes_20260610.md) | **パワーチーム WS 受講メモ・議事録**（2026-06-10 **15:00–17:30 JST**、講師: 山崎勇一 ARD）。**ver3.1（27枚）** SSOT: [配布用 PDF](academy/005_パワーチームワークショップ/%E9%85%8D%E5%B8%83%E7%94%A8_Power%20Team%20Workshop%20ver3.1%EF%BC%88%E5%8F%97%E8%AC%9B%E8%80%85%E7%94%A8%EF%BC%89.pdf)。ThreeBiz TM・PALMS MTLR候補・初回1to1・BNI外招待ルール・9ステップ面談・目標2/6/7採用・Zoom文字起こし要約。チャプター外候補に石原氏・打田康平氏（KATANA・非BNI）を記録。教材: ターゲットマーケットWS・Referral Hub・スクリプト・プランニング・目標設定シート。 |
 | [academy/006_パスポートプログラム/BNI_Passport_workshop_notes_20260629.md](academy/006_パスポートプログラム/BNI_Passport_workshop_notes_20260629.md) | **パスポートプログラム WS 受講メモ・議事録**（2026-06-29 **14:00–16:30 JST**、CEU3）。配布資料 **Ver.013-NE（全27ページ／スライド通番〜98）** に沿ったスライド単位メモ。Zoom文字起こし要約を反映し、更新率データ・早期介入・**メンター＝次期リーダー育成**・トラフィックライト活用・ビジター招待・ケアコール・研修後アクションを記録。教材: [配布資料 PDF](academy/006_パスポートプログラム/NEBNI-Passport-WS-%E9%85%8D%E5%B8%83%E8%B3%87%E6%96%99.pdf)。 |
+| [academy/TLT/BNI_TLT_support_team_training_notes_20261001.md](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md) | **チームリーダーズ・トレーニング サポートチーム受講議事録**（2026-10-01 **13:00–15:00 JST**・オンライン）。自己紹介、教材PDF全23ページ、Zoom要約を収録。初年度定着率46%・研修目標52%、加入審査、カテゴリー決定、7か月レビュー、重点募集、管理書簡、Webマス等の役割とアクションを整理。教材: [2026.09TLT.pdf](academy/TLT/2026.09TLT.pdf)。 |
 | [academy/トレーニングのおすすめ順番.docx](academy/トレーニングのおすすめ順番.docx) | BNI トレーニングのおすすめ順番（Word）。 |
 
 ### tugilo AI DevOS v4.3
@@ -890,6 +894,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_313_kimura_anna_121_fourth_minutes_PLAN.md](process/phases/PHASE_313_kimura_anna_121_fourth_minutes_PLAN.md) | Phase 313: 木村杏那 第4回121 Zoom要約反映 PLAN。 |
 | [phases/PHASE_313_kimura_anna_121_fourth_minutes_WORKLOG.md](process/phases/PHASE_313_kimura_anna_121_fourth_minutes_WORKLOG.md) | Phase 313: 同 WORKLOG（Web優先・300万円は制約・第4回 id 未採番）。 |
 | [phases/PHASE_313_kimura_anna_121_fourth_minutes_REPORT.md](process/phases/PHASE_313_kimura_anna_121_fourth_minutes_REPORT.md) | Phase 313: 同 REPORT。 |
+| [phases/PHASE_314_tlt_support_team_training_notes_PLAN.md](process/phases/PHASE_314_tlt_support_team_training_notes_PLAN.md) | Phase 314: TLTサポートチーム オンライントレーニング議事録 PLAN。 |
+| [phases/PHASE_314_tlt_support_team_training_notes_WORKLOG.md](process/phases/PHASE_314_tlt_support_team_training_notes_WORKLOG.md) | Phase 314: 同 WORKLOG（PDF全23ページ・資料要約と当日発言を分離）。 |
+| [phases/PHASE_314_tlt_support_team_training_notes_REPORT.md](process/phases/PHASE_314_tlt_support_team_training_notes_REPORT.md) | Phase 314: 同 REPORT。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
@@ -1355,7 +1362,7 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 || [BNI_DragonFly_Guest_Strategy_202603.md](strategy/networking/BNI_DragonFly_Guest_Strategy_202603.md) | BNI DragonFly ゲスト招待戦略（2026/03）。 |
 || [BNI_DragonFly_Joining_Speeches_202603.md](strategy/networking/BNI_DragonFly_Joining_Speeches_202603.md) | BNI 入会スピーチ集（25秒プレゼン・朝礼・例会・選んだ理由・tugilo思想）。2026/03 入会時確定版。 |
 || [BNI_Tugilo_Usage_Strategy.md](strategy/networking/BNI_Tugilo_Usage_Strategy.md) | **tugilo 今後のBNI活用方針:** BNIを困りごと・入口・商品導線のPDCAラボとして使う運用方針。Track C（診断→PoC→伴走）/ Track P（月額クラウド）・**CAL/tugical予約はBNIフロントカテゴリ候補**（自社導線・再来店・失客防止・集客パワーチームの予約基盤）・小中さんカテゴリ棲み分け・週次運用・121確認事項。Track P 商品SSOTは [tugilo Cloud モジュールカタログ](../../tugilo_site/www/tugilo_site/docs/business/tugilo_cloud_module_catalog.md)（tugilo_site）。 |
-|| [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) | **次廣淳（tugilo）常設:** 冒頭 **提示用サマリー**・**§12 DragonFly Instagramアンケート回答案**・**§11 BNI特化BM（小中モデル参照・Track P/C・予約管理思想・フロントカテゴリ候補）**・BO・25秒WP（**§2.0 採用履歴と磨きの系譜**・定番 **§2.5.7**・週替わり **§2.5.8**（26年／属人化／士業／多店舗・Dashboard切替 Phase 307）・前版 §2.5.6・前版 §2.1・**§2.5 症状型**）・**§10 BNI活用**（入口設計・実験サイクル・1本化モデル）・**§8 121**・**§9 人間×AI**・変更ログ。 |
+|| [BNI_Tsugihiro_Atsushi_Intro_Living_Document.md](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md) | **次廣淳（tugilo）常設:** 冒頭 **提示用サマリー**・**§12 DragonFly Instagramアンケート回答案**・**§11 BNI特化BM（小中モデル参照・Track P/C・予約管理思想・フロントカテゴリ候補）**・BO・25秒WP（**§2.0 採用履歴と磨きの系譜**・定番 **§2.5.7**・週替わり **§2.5.8**（26年／属人化／士業／多店舗・Dashboard切替 Phase 307。**2026-09-29** Bはパソコンの中のファイル）・前版 §2.5.6・前版 §2.1・**§2.5 症状型**）・**§10 BNI活用**（入口設計・実験サイクル・1本化モデル）・**§8 121**・**§9 人間×AI**・変更ログ。 |
 
 ### BNI DragonFly（docs/networking/bni/dragonfly/）
 
