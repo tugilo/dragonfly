@@ -8,6 +8,19 @@
 
 | 日付 | Phase / 内容 |
 |------|----------------|
+| 2026-10-01 16:01 JST | **Phase 314 — develop 取り込み:** feature/phase314-tlt-support-team-training-notes を merge `6049839535e84959e176d8552e3d031b2955c5b0` で develop へ取り込んだ。TLT議事録、9月末の121、ウィークリーBを含む。docsフェーズのためテストはスキップ。 |
+| 2026-10-01 15:18 JST | **Phase 314 — TLT Zoom要約を当日議事録へ反映:** 初年度定着率46%・研修目標52%（DragonFly 11期KPI 70%とは別）、審査面談、カテゴリー決定、7か月レビュー、重点募集、管理書簡、Webマス等の役割、参加者共有とアクションを校正して記録。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
+| 2026-10-01 13:10 JST | **Phase 314 — TLT最初の自己紹介:** DragonFly、AI業務改善システム構築、次廣淳、2026年3月入会・BNI歴約半年、今期ウェブマスターとして「定例会を止めない／人が伝わる／次の期に渡す／誰が担当しても同じ品質」を読み上げ用に整理。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
+| 2026-10-01 13:05 JST | **Phase 314 — TLTサポートチーム オンライントレーニング議事録:** 2026-10-01 13:00–15:00 JSTの研修用に、配布PDF全23ページへ対応する教材要点・当日メモ・DragonFlyへの持ち帰り欄を作成。図中心ページは推測せず記入欄として残した。[`BNI_TLT_support_team_training_notes_20261001.md`](academy/TLT/BNI_TLT_support_team_training_notes_20261001.md)。 |
+| 2026-09-30 14:55 JST | **大水崇史さんのおつなぎを通常フローへ:** 本人確認用の紹介文を作成。大水さんOK → 里見允二さん・米澤侑桂さんへ個別確認 → 双方OKの組だけ別々のMessengerグループを作る。お礼文案へ確認文を反映・未送信。[`1to1_omizu_takashi_kotoba_design.md`](meetings/1to1/1to1_omizu_takashi_kotoba_design.md)。 |
+| 2026-09-30 14:49 JST | **大水崇史さんへの紹介候補を確定:** 里見允二さん（全国クリエイターのパワーチーム）と米澤侑桂さん（反応率にこだわるWEBデザイン）。まず両名へ確認し、よければ大水さんへつなぐ。お礼文案へ反映・未送信。[`1to1_omizu_takashi_kotoba_design.md`](meetings/1to1/1to1_omizu_takashi_kotoba_design.md)。 |
+| 2026-09-30 14:38 JST | **大水崇史さんへのお礼文を会話ベースに改稿:** 作ることは手段、AIへの距離感、統合報告書、Excel管理、ファミコン・コピーバンド・DTM、10/13の約束を反映。事務的な依頼列挙を外し、Messenger推奨文・短文・堀切さん報告を更新。未送信。[`1to1_omizu_takashi_kotoba_design.md`](meetings/1to1/1to1_omizu_takashi_kotoba_design.md)。 |
+| 2026-09-30 14:30 JST | **大水崇史さん 第1回121の議事録:** Zoom要約を校正して反映。紹介の向きは堀切→次廣。害虫ブロックは増本、岡山の梱包は里見。お礼文案は未送信。[`1to1_omizu_takashi_kotoba_design.md`](meetings/1to1/1to1_omizu_takashi_kotoba_design.md)。`one_to_ones` 未作成。 |
+| 2026-09-30 14:10 JST | **寺尾幸太さん 第1回121の事前台本:** 今西俊明紹介。15:00–16:00 Zoom。紹介文を本人の言葉で1つ。お客様か協業先か。180万円と社数は条件が言えるまで出さない。[`1to1_terao_kouta_wayway.md`](meetings/1to1/1to1_terao_kouta_wayway.md)。`members` 未登録。`one_to_ones` 未作成。 |
+| 2026-09-30 12:53 JST | **大水崇史さん 第1回121の事前台本:** 堀切紹介。13:00–14:00 Zoom。紹介文を本人の言葉で1つ。名前は出さない。[`1to1_omizu_takashi_kotoba_design.md`](meetings/1to1/1to1_omizu_takashi_kotoba_design.md)。`members` 未登録。`one_to_ones` 未作成。 |
+| 2026-09-29 18:57 JST | **長坂篤さん 121を9割聞く台本に:** 竹山・松井型。本丸と協業を本人の言葉で1つに。次廣は聞かれたときだけ。[`1to1_nagasaka_atsushi_chonozaka.md`](meetings/1to1/1to1_nagasaka_atsushi_chonozaka.md)。 |
+| 2026-09-29 18:55 JST | **長坂篤さん 第1回121の事前ドキュメント:** 佐藤久紹介のビジター。19:00開始（終了 TODO）。協業は畠山を第一候補。[`1to1_nagasaka_atsushi_chonozaka.md`](meetings/1to1/1to1_nagasaka_atsushi_chonozaka.md)。`members.id=355`。`one_to_ones` 未作成。 |
+| 2026-09-29 09:22 JST | **ウィークリー B をローカル反映:** §2.5.8 B を「パソコンの中のファイルを探して、書き写して、確認する」へ更新（125字・約25秒）。`members.id=37` のパターン B と表示稿を同文にし、Dashboard の選択は B。[ライブドキュメント](strategy/networking/BNI_Tsugihiro_Atsushi_Intro_Living_Document.md)。 |
 | 2026-09-28 11:25 JST | **木村杏那さん 日報の入力者を確定:** 作業員全員が自分の日報を入れる。代理記入はしない。[要件](meetings/1to1/1to1_kimura_anna_andirich_requirements_20260928.md)。 |
 | 2026-09-28 11:14 JST | **木村杏那さん 第4回の要件を整理:** 依頼PDFを [`1to1_kimura_anna_andirich_requirements_20260928.md`](meetings/1to1/1to1_kimura_anna_andirich_requirements_20260928.md) にまとめた。AI自動振り分けは施工写真の部位分類。幹は登録・工事・日報給与・現場トーク・予定表。 |
 | 2026-09-28 10:08 JST | **木村杏那さん 第4回121の実施方法を訂正:** Zoom ではなく **Google Meet**。[`1to1_kimura_anna_andirich.md`](meetings/1to1/1to1_kimura_anna_andirich.md)。第1〜3回は Zoom のまま。Meet のため Zoom 取込行はなく、第4回 `one_to_ones` は未採番のまま。 |
