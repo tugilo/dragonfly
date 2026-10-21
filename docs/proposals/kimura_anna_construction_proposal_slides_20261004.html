@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>建設業向け 日報・給与・予定の仕組み ご提案 — 木村杏那さん向け（tugilo 次廣）</title>
+  <style>
+    :root {
+      --ink: #1d2430;
+      --muted: #5d6673;
+      --line: #d6d9de;
+      --accent: #1f4e79;
+      --accent-soft: #e6eef6;
+      --warm: #b5652a;
+      --warm-soft: #f7ebe0;
+      --ok: #2f6b4f;
+      --ok-soft: #e4efe8;
+      --bg: #ffffff;
+      --slide-w: 1280px;
+      --slide-h: 720px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: #d9d6d0;
+      color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-feature-settings: "palt";
+      line-height: 1.5;
+    }
+    .toolbar {
+      display: flex; gap: 10px; justify-content: center; align-items: center;
+      padding: 14px 16px 6px; flex-wrap: wrap;
+    }
+    .toolbar button {
+      border: 1px solid #9aa3ad; background: #fff; color: var(--ink);
+      border-radius: 999px; padding: .45rem 1.1rem; font: inherit; font-size: 13px; cursor: pointer;
+    }
+    .hint { text-align: center; color: #555; font-size: 12px; margin: 0 16px 14px; }
+
+    .slide {
+      width: var(--slide-w); height: var(--slide-h);
+      margin: 0 auto 18px; background: var(--bg); position: relative; overflow: hidden;
+      padding: 48px 64px 56px; box-shadow: 0 12px 30px rgba(30, 30, 30, .14);
+      display: flex; flex-direction: column;
+    }
+    .slide::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--accent);
+    }
+    .slide.cover::before { width: 0; }
+    .foot {
+      position: absolute; left: 64px; right: 64px; bottom: 22px;
+      display: flex; justify-content: space-between; font-size: 11px; color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .kicker { font-size: 12px; letter-spacing: .16em; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 40px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    h2 { font-size: 30px; line-height: 1.25; margin: 0 0 18px; letter-spacing: -.01em; }
+    h3 { font-size: 17px; margin: 0 0 8px; color: var(--accent); }
+    p { margin: 0 0 10px; font-size: 16px; }
+    .lead { font-size: 19px; color: var(--ink); }
+    .small { font-size: 13px; color: var(--muted); }
+    .cols { display: grid; gap: 28px; }
+    .cols.two { grid-template-columns: 1fr 1fr; }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .cols.wide-left { grid-template-columns: 1.4fr 1fr; }
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; background: #fff; }
+    .box.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .box.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .box.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .num { font-size: 44px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--accent); }
+    .num small { font-size: 16px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+    .num.warm { color: var(--warm); }
+    ul, ol { margin: 0; padding-left: 1.3em; font-size: 16px; }
+    li { margin: 0 0 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2f4f7; font-weight: 700; font-size: 13px; color: #333; }
+    td.r, th.r { text-align: right; white-space: nowrap; }
+    tr.hl td { background: var(--accent-soft); font-weight: 700; }
+    tr.dim td { color: var(--muted); }
+    .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef0f3; color: #333; margin-right: 6px; vertical-align: middle; }
+    .tag.must { background: var(--accent); color: #fff; }
+    .tag.nice { background: var(--warm); color: #fff; }
+    .tag.hold { background: #777; color: #fff; }
+    .bar { display: flex; align-items: flex-end; gap: 14px; height: 200px; margin-top: 8px; position: relative; }
+    .bar i.limit { position: absolute; left: -6px; right: -6px; border-top: 2px dashed var(--warm); font-style: normal; font-size: 11px; color: var(--warm); font-weight: 700; text-align: left; padding-top: 0; pointer-events: none; z-index: 2; }
+    .bar i.limit::after { content: attr(data-label); position: absolute; left: 0; bottom: 4px; background: #fff; padding: 0 4px; }
+    .bar div { flex: 1; background: var(--accent); border-radius: 6px 6px 0 0; position: relative; color: #fff; font-size: 13px; font-weight: 700; text-align: center; padding-top: 6px; }
+    .bar div span { position: absolute; left: 0; right: 0; bottom: -40px; color: var(--ink); font-size: 12px; font-weight: 500; line-height: 1.3; }
+    .bar div.limit { background: transparent; border-top: 2px dashed var(--warm); color: var(--warm); border-radius: 0; }
+    .cover { justify-content: center; background: linear-gradient(135deg, #15375a 0%, #1f4e79 60%, #2b6a9b 100%); color: #fff; }
+    .cover .kicker { color: #cfe0f2; }
+    .cover h1 { font-size: 50px; color: #fff; }
+    .cover p { color: #e6eef6; }
+    .cover .meta { margin-top: 36px; font-size: 15px; color: #cfe0f2; line-height: 1.8; }
+    .flow { display: flex; gap: 10px; align-items: stretch; }
+    .flow .step { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 14px; font-size: 14px; position: relative; background: #fff; }
+    .flow .step b { display: block; font-size: 16px; color: var(--accent); margin-bottom: 6px; }
+    .flow .step.dim { color: var(--muted); border-style: dashed; }
+    .stamp { position: absolute; right: 64px; top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .grid-cards .box { padding: 14px; }
+    .grid-cards .box h3 { font-size: 15px; }
+    .grid-cards .box p { font-size: 13.5px; margin: 0; }
+
+    /* 画面イメージ（ラフ） */
+    .mockrow { display: flex; gap: 28px; align-items: flex-start; justify-content: center; }
+    .mocknote { font-size: 13px; color: var(--muted); margin-top: 10px; }
+    .phone {
+      width: 262px; height: 520px; border: 10px solid #1d2430; border-radius: 34px; background: #f6f7f9;
+      position: relative; overflow: hidden; flex: none; box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    .phone::before { content: ""; position: absolute; top: 8px; left: 50%; width: 90px; height: 16px; margin-left: -45px; background: #1d2430; border-radius: 0 0 12px 12px; z-index: 2; }
+    .phone .app { position: absolute; inset: 0; display: flex; flex-direction: column; font-size: 11.5px; }
+    .phone .top { background: var(--accent); color: #fff; padding: 30px 14px 10px; font-weight: 700; font-size: 13px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .phone .top small { font-weight: 500; font-size: 10px; opacity: .85; }
+    .phone .body { padding: 10px 12px; flex: 1; overflow: hidden; }
+    .phone .nav { display: flex; border-top: 1px solid var(--line); background: #fff; }
+    .phone .nav div { flex: 1; text-align: center; padding: 8px 0 10px; font-size: 10px; color: var(--muted); }
+    .phone .nav div.on { color: var(--accent); font-weight: 700; border-top: 2px solid var(--accent); margin-top: -1px; }
+    .f { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px 9px; margin-bottom: 7px; }
+    .f label { display: block; font-size: 9.5px; color: var(--muted); margin-bottom: 2px; }
+    .f .v { font-size: 12px; color: var(--ink); }
+    .f .v.ph { color: #9aa3ad; }
+    .f.row { display: flex; gap: 8px; }
+    .f.row > div { flex: 1; }
+    .seg { display: flex; gap: 4px; }
+    .seg span { flex: 1; text-align: center; border: 1px solid var(--line); border-radius: 6px; padding: 4px 0; font-size: 10.5px; background: #fff; }
+    .seg span.on { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .btn { display: block; text-align: center; background: var(--accent); color: #fff; border-radius: 10px; padding: 10px; font-weight: 700; font-size: 13px; margin-top: 4px; }
+    .btn.ghost { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; }
+    .card b { display: block; font-size: 12.5px; }
+    .card { position: relative; }
+    .card b { padding-right: 46px; }
+    .card b .pill { position: absolute; top: 9px; right: 10px; margin: 0; }
+    .card .meta { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .pill { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 999px; background: #eef0f3; color: #333; margin-left: 4px; vertical-align: middle; }
+    .pill.ok { background: var(--ok-soft); color: var(--ok); }
+    .pill.ng { background: #f6e3e0; color: #a1372a; }
+    .pill.lock { background: #fff3d6; color: #8a6400; }
+    .day { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; font-size: 10.5px; }
+    .day .d { width: 34px; color: var(--muted); font-weight: 700; }
+    .day .site { flex: 1; background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 4px; padding: 4px 6px; }
+    .day .site.alt { background: var(--ok-soft); border-left-color: var(--ok); }
+    .day .site.off { background: #f1f1f1; border-left-color: #bbb; color: var(--muted); }
+    .laptop { width: 640px; border: 10px solid #1d2430; border-bottom-width: 22px; border-radius: 14px; background: #fff; overflow: hidden; flex: none; box-shadow: 0 10px 24px rgba(0,0,0,.15); font-size: 11px; }
+    .laptop .bar2 { background: #eef0f3; padding: 6px 10px; display: flex; gap: 6px; align-items: center; font-size: 10px; color: var(--muted); border-bottom: 1px solid var(--line); }
+    .laptop .bar2 i { width: 9px; height: 9px; border-radius: 50%; background: #d4d7dc; display: inline-block; }
+    .laptop .url { flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; }
+    .laptop .wrap { display: flex; min-height: 300px; }
+    .laptop .side { width: 120px; background: #1d2430; color: #cfd6df; padding: 10px 8px; font-size: 10.5px; }
+    .laptop .side div { padding: 6px 8px; border-radius: 6px; margin-bottom: 2px; }
+    .laptop .side div.on { background: var(--accent); color: #fff; font-weight: 700; }
+    .laptop .main { flex: 1; padding: 10px 12px; }
+    .laptop h4 { margin: 0 0 8px; font-size: 13px; }
+    .filters { display: flex; gap: 6px; margin-bottom: 8px; }
+    .filters span { border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 10px; background: #fff; }
+    .filters span.on { background: var(--accent-soft); border-color: #b9cde3; font-weight: 700; }
+    table.mt { font-size: 10px; }
+    table.mt th, table.mt td { padding: 4px 6px; }
+    table.mt tr.sum td { background: var(--accent-soft); font-weight: 700; }
+    table.mt tr.fix td { background: #fff8e6; }
+    .check { font-size: 10.5px; margin-bottom: 4px; display: flex; gap: 6px; align-items: center; }
+    .check i { width: 12px; height: 12px; border: 1.5px solid var(--line); border-radius: 3px; display: inline-block; flex: none; }
+    .check i.on { background: var(--ok); border-color: var(--ok); }
+    .check i.ng { background: #fff; border-color: #a1372a; }
+
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .slide { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">PDFとして保存（印刷ダイアログ）</button>
+  </div>
+  <p class="hint">印刷ダイアログで「送信先: PDFに保存」「用紙サイズ: 既定（CSS指定 1280×720）」「余白: なし」「背景のグラフィック: オン」にすると、1スライド1ページで書き出せます。</p>
+
+  <!-- 1 表紙 -->
+  <section class="slide cover">
+    <p class="kicker">ご提案</p>
+    <h1>建設業向け<br>日報・給与・予定の仕組み</h1>
+    <p class="lead" style="color:#e6eef6">LINE の日報を Excel に貼る仕事をなくし、25日締めの集計と、今日・今週・今月の予定を一つにする</p>
+    <div class="meta">
+      木村 杏那 様（株式会社Andirich）<br>
+      tugilo 次廣 淳　｜　2026年10月4日<br>
+      金額はすべて税別・tugilo の開発費。正式な契約額ではありません。
+    </div>
+  </section>
+
+  <!-- 2 前提 -->
+  <section class="slide">
+    <p class="kicker">はじめに</p>
+    <h2>この資料の前提</h2>
+    <div class="cols two">
+      <div class="box">
+        <h3>経営者の方が判断するための資料です</h3>
+        <ul>
+          <li>目的 → 困りごと → 何がどう変わるか → いくらか → 元が取れるか、の順に並べています。</li>
+          <li>9月28日の打合せで決めた「必須を幹にし、あったらいいなはオプション」に沿って、<b>マスト</b> と <b>あったらいいな</b> を分けています。</li>
+          <li>見積書そのものは、いまお使いの見積ソフト（資料の表記では「みつもろう」）をそのまま使います。作り直しません。</li>
+        </ul>
+      </div>
+      <div class="box warm">
+        <h3>数字の読み方</h3>
+        <ul>
+          <li>金額は <b>税別</b>、<b>tugilo の開発費</b> です。杏那さん側（株式会社Andirich）の <b>元請手数料</b> は乗せていません。何の費用かは15ページで定義し、乗せた場合の金額は別に示します。</li>
+          <li><b>300万円は打合せで出た金額の目安</b> です。上限でも、見積額でも、契約額でもありません。</li>
+          <li>サーバーと写真保管の月額、保守（たたき台 月3万円）は開発費に含みません。</li>
+          <li>お客様の正式社名は未記入です。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>2 / 21</span></div>
+  </section>
+
+  <!-- 3 目的 -->
+  <section class="slide">
+    <p class="kicker">1. 目的</p>
+    <h2>作るものの中心は、この4つ</h2>
+    <div class="grid-cards">
+      <div class="box accent"><h3>① 本人が日報を入れる</h3><p>作業した本人が、その日の日報をスマホで入れる。事務所が LINE の文章を Excel に貼り直さない。親方がまとめて入力する運用はなくす。</p></div>
+      <div class="box accent"><h3>② 日報から給与集計が出る</h3><p>社員・契約社員は時間、外注は人工で集計する。時間外・深夜・出張も出す。25日締め・5日払い。社会保険や税の計算はやらない。</p></div>
+      <div class="box accent"><h3>③ 予定が今日・今週・今月で見える</h3><p>職人が Excel の大きな表を追わない。日報の「次回作業」から下書きが出て、必要なところだけ入れ替える。</p></div>
+      <div class="box accent"><h3>④ 書類が揃った人だけ現場に入れる</h3><p>資格証・契約書・一人親方労災などが揃うまで登録できない。登録できた人だけ現場に入る。</p></div>
+    </div>
+    <p class="lead" style="margin-top:26px">要望を全部入れると、目安の300万円には収まりません。何を最初に残し、何をあと回しにするかを、この資料で選んでいただきます。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>3 / 21</span></div>
+  </section>
+
+  <!-- 4 困りごと -->
+  <section class="slide">
+    <p class="kicker">2. いま困っていること</p>
+    <h2>事務所4人・管理4人・契約社員約10人・外注約40人・現場 約15か所</h2>
+    <table>
+      <thead><tr><th style="width:18%">困っていること</th><th style="width:34%">いまのやり方</th><th>何が起きているか</th></tr></thead>
+      <tbody>
+        <tr><td>日報が散らばる</td><td>LINE で報告し、誰か（親方・事務所）が Excel に貼る</td><td>貼り忘れ、貼り間違い、あとから探せない</td></tr>
+        <tr><td>給与が手計算</td><td>給与ソフトは使っていない。イレギュラーが多い</td><td>25日締めの集計が、人に依存する</td></tr>
+        <tr><td>予定が Excel</td><td>表を見て、人を入れ替える</td><td>職人は「今日どこへ行くか」がすぐ分からない</td></tr>
+        <tr><td>写真と資料が LINE とフォルダ</td><td>もらったものを共有フォルダへ移す</td><td>どの現場の、どの部位の写真か、目で分けている</td></tr>
+        <tr><td>誰が現場に入れるか</td><td>書類はフォルダと Excel</td><td>書類が揃う前に現場へ入ってしまう余地がある</td></tr>
+        <tr><td>連絡が LINE</td><td>現場ごとにトーク</td><td>やめるには、LINE と同じ水準の連絡手段が要る</td></tr>
+      </tbody>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>4 / 21</span></div>
+  </section>
+
+  <!-- 5 マストとあったらいいな 区分 -->
+  <section class="slide">
+    <p class="kicker">3. マストと、あったらいいな</p>
+    <h2>打合せで決めた分け方を、依頼資料の章立てに当てはめる</h2>
+    <div class="cols two">
+      <div class="box accent">
+        <h3><span class="tag must">マスト</span>依頼資料の「必要な機能 1〜4」と「職人さん用アプリ」</h3>
+        <ul>
+          <li>職人・社員の情報登録（書類が揃うまで入場不可）</li>
+          <li>工事情報・資料の登録・管理（職人は閲覧。黄色の項目は除く）</li>
+          <li>日報入力・給与計算（職人は自分の日報だけ）</li>
+          <li>現場共有（写真・トーク）。LINE は廃止</li>
+          <li>予定表の閲覧（画面案にあり）</li>
+          <li>これらを動かす土台（ログイン・権限・ファイル保管）と、作る前の要件定義・設計</li>
+        </ul>
+      </div>
+      <div class="box warm">
+        <h3><span class="tag nice">あったらいいな</span>「必要な機能 5」と「その他やりたいこと」</h3>
+        <ul>
+          <li>施工写真の AI 自動振り分け（打合せで「あったらいいな」側に）</li>
+          <li>利益率（社長だけ）</li>
+          <li>着工日が近づいたら通知</li>
+          <li>カレンダー（いまはタイムツリー）</li>
+          <li>元請のマスタ</li>
+          <li>工事情報の「詳細」項目、予定表の現場名から工事へ飛ぶ</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:18px">「AI 自動振り分け」は人の配置ではなく、施工写真を見積の部位や工程（外壁・屋根・完了写真など）へ分類する機能です。登録の申請・承認は、誰が承認するかが未決のため、どちらにも入れずに保留しています。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>5 / 21</span></div>
+  </section>
+
+  <!-- 6 マスト 9項目 -->
+  <section class="slide">
+    <p class="kicker">3. マストと、あったらいいな</p>
+    <h2>マスト 9項目のうち、最初のリリースに入るのは 8項目</h2>
+    <table>
+      <thead><tr><th>機能</th><th>資料での位置</th><th class="r">開発費</th><th>最初のリリース</th></tr></thead>
+      <tbody>
+        <tr><td>要件定義・設計（職人のスマホで触れる試作を含む）</td><td>作る前に必要</td><td class="r">50万円</td><td>入る</td></tr>
+        <tr><td>ログイン、権限、ファイル保管</td><td>全機能の土台</td><td class="r">40万円</td><td>入る</td></tr>
+        <tr><td>職人・社員の登録（書類が揃うまで入場不可、画面上のサイン）</td><td>必要な機能 1</td><td class="r">60万円</td><td>入る</td></tr>
+        <tr><td>工事情報の登録・管理（詳細項目を含む）</td><td>必要な機能 2、職人は閲覧</td><td class="r">28万円</td><td>入る</td></tr>
+        <tr><td>日報入力（本人だけ。自分の分だけ見える）</td><td>必要な機能 3</td><td class="r">36万円</td><td>入る</td></tr>
+        <tr><td>給与集計（25日締め、時間と人工、手修正1行）</td><td>必要な機能 3</td><td class="r">42万円</td><td>入る</td></tr>
+        <tr><td>予定表（今日・今週・今月。現場名から工事へ）</td><td>画面案、職人は閲覧</td><td class="r">38万円</td><td>入る</td></tr>
+        <tr><td>ホーム画面のアイコン（ストアは使わない）</td><td>職人さん用アプリの入口</td><td class="r">10万円</td><td>入る</td></tr>
+        <tr class="hl"><td colspan="2">最初のリリース 合計</td><td class="r">304万円</td><td>300万円を4万円超える</td></tr>
+        <tr class="dim"><td>現場共有（写真・トーク）。LINE は廃止</td><td>必要な機能 4</td><td class="r">記録だけ 48万円<br>LINE をやめるなら 300万円〜</td><td><b>入らない。後回し</b></td></tr>
+      </tbody>
+    </table>
+    <p class="small" style="margin-top:12px">現場共有を外す理由は金額です。LINE をやめられる水準のトークは下限300万円で、入れるとマストだけで604万円。48万円の「記録」は LINE をやめられないので、資料の「LINE は廃止する」を満たしません。中途半端に入れず、最初は LINE を残します。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>6 / 21</span></div>
+  </section>
+
+  <!-- 7 あったらいいな -->
+  <section class="slide">
+    <p class="kicker">3. マストと、あったらいいな</p>
+    <h2>「あったらいいな」は、日報が回り始めてから足す</h2>
+    <table>
+      <thead><tr><th>機能</th><th>資料での位置</th><th class="r">開発費</th><th>扱い</th></tr></thead>
+      <tbody>
+        <tr><td>施工写真の AI 仕分け（見積の部位へ分類）</td><td>必要な機能 5 → 打合せで「あったらいいな」</td><td class="r">28万円</td><td>目視の時間を測ってから。効果が開発費を下回るなら入れない</td></tr>
+        <tr><td>利益率（社長だけ。請負金額と人件費の差）</td><td>その他やりたいこと</td><td class="r">16万円</td><td>2回目以降</td></tr>
+        <tr><td>着工日が近いときの通知</td><td>その他やりたいこと</td><td class="r">8万円</td><td>2回目以降。金額が小さいので、最初から入れてもよい</td></tr>
+        <tr><td>カレンダー（月表示）</td><td>その他やりたいこと</td><td class="r">14万円</td><td>2回目以降。タイムツリーの置き換えではない</td></tr>
+        <tr><td>元請マスタ</td><td>その他やりたいこと</td><td class="r">8万円</td><td>2回目以降。金額が小さいので、最初から入れてもよい</td></tr>
+        <tr><td>工事情報の「詳細」項目（施主名、住所、仕様、フリー項目）</td><td>その他やりたいこと</td><td class="r">0円</td><td>工事情報28万円に含めた</td></tr>
+        <tr><td>予定表の現場名から工事情報へ飛ぶ</td><td>その他やりたいこと</td><td class="r">0円</td><td>予定表38万円に含めた</td></tr>
+        <tr class="dim"><td>登録の申請と承認</td><td>打合せで未決</td><td class="r">10万円</td><td>誰が承認するかが決まってから</td></tr>
+        <tr class="hl"><td colspan="2">あったらいいな 合計（申請承認を含む）</td><td class="r">84万円</td><td>マスト（記録）と合わせて 436万円</td></tr>
+      </tbody>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>7 / 21</span></div>
+  </section>
+
+  <!-- 8 どう変わるか -->
+  <section class="slide">
+    <p class="kicker">4. どう変わるか</p>
+    <h2>最初のリリース（304万円）で変わるのは、日報・給与・予定・現場入場</h2>
+    <table>
+      <thead><tr><th style="width:14%">場面</th><th style="width:22%">いま</th><th>304万円でこうなる</th><th style="width:28%">まだ変わらないこと</th></tr></thead>
+      <tbody>
+        <tr><td>日報</td><td>LINE → Excel へ貼る</td><td>作業員本人がスマホで入れる。事務所は貼らない</td><td>親方がまとめて入れる仕組みは作らない</td></tr>
+        <tr><td>給与</td><td>日報を見ながら手で集計</td><td>期間を選ぶと、時間・人工・時間外・深夜・出張が出る。特定の人だけが見る</td><td>税金・社会保険・振込データ・法定の給与明細</td></tr>
+        <tr><td>予定</td><td>Excel の大きな表</td><td>今日・今週・今月。次回作業から下書きが出て、必要なところだけ入れ替える</td><td>タイムツリーそのものの置き換え</td></tr>
+        <tr><td>現場入場</td><td>書類を人が確認</td><td>必要書類が揃うまで登録できない。登録できた人だけ入場</td><td>クラウドサインなどの電子契約</td></tr>
+        <tr class="dim"><td>写真の仕分け</td><td>目で見てフォルダへ分ける</td><td>この金額には入らない</td><td>あとから足せる（28万円。効果が出るときだけ）</td></tr>
+        <tr class="dim"><td>現場の LINE</td><td>トークで連絡</td><td>この金額ではやめない</td><td>LINE をやめるには、別に下限300万円</td></tr>
+        <tr class="dim"><td>ストアのアプリ</td><td>なし</td><td>作らない。スマホのブラウザとホーム画面のアイコン</td><td>通知つきのアプリの入れ物は、別に300万円</td></tr>
+      </tbody>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>8 / 21</span></div>
+  </section>
+
+  <!-- 画面イメージ 1: 職人のスマホ 日報 -->
+  <section class="slide">
+    <p class="kicker">4. どう変わるか — 画面イメージ</p>
+    <h2>職人のスマホ①：日報は、現場を選んで、変わったところだけ直す</h2>
+    <div class="cols wide-left">
+      <div class="mockrow" style="justify-content:flex-start">
+        <div class="phone"><div class="app">
+          <div class="top"><span>日報を入れる</span><small>10/6（火）</small></div>
+          <div class="body">
+            <div class="f"><label>現場</label><div class="v">〇〇邸 外壁塗装 ▾</div></div>
+            <div class="f row"><div><label>時間</label><div class="v">8:00 – 17:00</div></div><div><label>休憩</label><div class="v">12:00 – 13:00</div></div></div>
+            <div class="f"><label>宿泊</label><div class="seg"><span>あり</span><span class="on">なし</span></div></div>
+            <div class="f"><label>現場の状況</label><div class="seg"><span class="on">次回作業あり</span><span>検査</span><span>完了</span></div></div>
+            <div class="f"><label>今日の作業</label><div class="v">下塗り 2面、養生</div></div>
+            <div class="f"><label>次回の作業（予定表の下書きになる）</label><div class="v ph">中塗り 北面・西面</div></div>
+            <div class="btn">送信する</div>
+          </div>
+          <div class="nav"><div class="on">日報</div><div>予定</div><div>工事</div><div>自分</div></div>
+        </div></div>
+        <div class="phone"><div class="app">
+          <div class="top"><span>自分の日報</span><small>田中（〇〇組）</small></div>
+          <div class="body">
+            <div class="card"><b>10/6（火） 〇〇邸 外壁塗装<span class="pill ok">送信済</span></b><div class="meta">8:00–17:00 休憩1h ／ 下塗り 2面、養生</div></div>
+            <div class="card"><b>10/5（月） △△マンション 屋根<span class="pill ok">送信済</span></b><div class="meta">8:00–17:30 休憩1h ／ 高圧洗浄</div></div>
+            <div class="card"><b>10/3（土） △△マンション 屋根<span class="pill ok">送信済</span></b><div class="meta">8:00–17:00 休憩1h ／ 足場確認、下地補修</div></div>
+            <div class="card" style="border-style:dashed; color:var(--muted)"><b style="color:var(--muted)">10/4（日）</b><div class="meta">休み</div></div>
+            <div class="btn ghost">今月の自分の日報を PDF で出す</div>
+          </div>
+          <div class="nav"><div>日報</div><div>予定</div><div>工事</div><div class="on">自分</div></div>
+        </div></div>
+      </div>
+      <div class="box">
+        <h3>この画面で変わること</h3>
+        <ul style="font-size:14.5px">
+          <li>日付は今日、時間は8–17、休憩は12–13が最初から入っている。<b>変わった日だけ直す</b>。</li>
+          <li>現場は登録済みの工事から選ぶ。入力は本人だけ。<b>自分の日報だけ</b>が見える。</li>
+          <li>「次回の作業」が、翌日の予定表の下書きになる。</li>
+          <li>送信した時点で、事務所側の集計に入る。<b>Excel への貼り直しはない</b>。</li>
+        </ul>
+        <p class="mocknote">画面イメージは試作前のラフです。項目名・並び・自由入力2枠の扱いは、要件定義・設計で確定します。</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>9 / 21</span></div>
+  </section>
+
+  <!-- 画面イメージ 2: 職人のスマホ 予定・工事 -->
+  <section class="slide">
+    <p class="kicker">4. どう変わるか — 画面イメージ</p>
+    <h2>職人のスマホ②：予定は今日・今週・今月。工事情報は見せる列だけ</h2>
+    <div class="cols wide-left">
+      <div class="mockrow" style="justify-content:flex-start">
+        <div class="phone"><div class="app">
+          <div class="top"><span>予定</span><small>10/6 週</small></div>
+          <div class="body">
+            <div class="seg" style="margin-bottom:10px"><span>今日</span><span class="on">今週</span><span>今月</span></div>
+            <div class="day"><div class="d">月 5</div><div class="site alt">△△マンション 屋根　8:00</div></div>
+            <div class="day"><div class="d">火 6</div><div class="site">〇〇邸 外壁　8:00　<span class="pill">3人</span></div></div>
+            <div class="day"><div class="d">水 7</div><div class="site">〇〇邸 外壁　8:00</div></div>
+            <div class="day"><div class="d">木 8</div><div class="site">〇〇邸 外壁　8:00　<span class="pill">出張</span></div></div>
+            <div class="day"><div class="d">金 9</div><div class="site alt">□□工場 塗装　7:30</div></div>
+            <div class="day"><div class="d">土 10</div><div class="site off">未定</div></div>
+            <div class="card" style="margin-top:12px"><b>今日の現場数 6 ／ 稼働 38人</b><div class="meta">前日の予定を引き継ぎ、入れ替えたところだけ変わる</div></div>
+            <p style="font-size:10px; color:var(--muted); margin:6px 0 0">現場名をタップすると工事情報へ</p>
+          </div>
+          <div class="nav"><div>日報</div><div class="on">予定</div><div>工事</div><div>自分</div></div>
+        </div></div>
+        <div class="phone"><div class="app">
+          <div class="top"><span>工事情報</span><small>職人向けの表示</small></div>
+          <div class="body">
+            <div class="card"><b>〇〇邸 外壁塗装</b><div class="meta">短縮: 〇〇邸 ／ 元請: 株式会社〇〇 ／ 工期 10/1–10/20</div></div>
+            <div class="f"><label>住所</label><div class="v">〇〇市〇〇町 1-2-3</div></div>
+            <div class="f"><label>仕様（色）</label><div class="v">外壁 N-85 ／ 付帯 N-20</div></div>
+            <div class="f"><label>現場資料</label><div class="v">図面.pdf ／ 仕様書.pdf</div></div>
+            <div class="f"><label>現場の状況</label><div class="v">次回検査 10/14</div></div>
+            <div class="f" style="background:#fff8e6; border-color:#e8d9a8"><label>金額・請求情報・見積書・注文書</label><div class="v" style="color:#8a6400">管理者のみ <span class="pill lock">非公開</span></div></div>
+            <p style="font-size:10px; color:var(--muted); margin:4px 0 0">資料で黄色になっている列は、職人の画面に出ません。</p>
+          </div>
+          <div class="nav"><div>日報</div><div>予定</div><div class="on">工事</div><div>自分</div></div>
+        </div></div>
+      </div>
+      <div class="box">
+        <h3>この画面で変わること</h3>
+        <ul style="font-size:14.5px">
+          <li>Excel の格子を追わず、<b>自分の今日・今週・今月</b>だけが見える。</li>
+          <li>現場名から工事情報へ飛べる。住所・色・図面が現場で見られる。</li>
+          <li>金額・請求・見積書・注文書は <b>職人の画面に出ない</b>（資料の黄色の列）。</li>
+          <li>管理者側は、職人名を現場へ動かして入れ替える。人数と現場数は自動で集計。</li>
+        </ul>
+        <p class="mocknote">どの列を隠すか（黄色の範囲）は、依頼資料の色がテキスト化できていないため、要件定義で確認します。</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>10 / 21</span></div>
+  </section>
+
+  <!-- 画面イメージ 3: 事務所のPC -->
+  <section class="slide">
+    <p class="kicker">4. どう変わるか — 画面イメージ</p>
+    <h2>事務所の PC：給与集計は期間を選ぶだけ。登録は書類が揃うまで通さない</h2>
+    <div class="mockrow" style="gap:20px">
+      <div class="laptop">
+        <div class="bar2"><i></i><i></i><i></i><span class="url">…/payroll?from=2026-09-26&amp;to=2026-10-25</span></div>
+        <div class="wrap">
+          <div class="side"><div>工事</div><div>日報</div><div class="on">給与集計</div><div>予定表</div><div>利用者</div><div>設定</div></div>
+          <div class="main">
+            <h4>給与集計　9/26 – 10/25（25日締め）<span class="pill lock">閲覧: 社長・経理のみ</span></h4>
+            <div class="filters"><span class="on">期間: 9/26–10/25</span><span>所属: すべて</span><span>名前</span><span>現場</span><span style="margin-left:auto">Excel 出力</span></div>
+            <table class="mt">
+              <thead><tr><th>名前</th><th>区分</th><th class="r">日数</th><th class="r">時間</th><th class="r">人工</th><th class="r">時間外</th><th class="r">深夜</th><th class="r">出張</th><th class="r">金額</th></tr></thead>
+              <tbody>
+                <tr><td>佐藤</td><td>社員</td><td class="r">22</td><td class="r">176.0</td><td class="r">–</td><td class="r">6.5</td><td class="r">0</td><td class="r">2</td><td class="r">¥—</td></tr>
+                <tr><td>鈴木</td><td>契約社員</td><td class="r">20</td><td class="r">160.0</td><td class="r">–</td><td class="r">0</td><td class="r">0</td><td class="r">0</td><td class="r">¥—</td></tr>
+                <tr><td>田中（〇〇組）</td><td>外注</td><td class="r">21</td><td class="r">–</td><td class="r">21.0</td><td class="r">2.0</td><td class="r">0</td><td class="r">3</td><td class="r">¥—</td></tr>
+                <tr><td>高橋（〇〇組）</td><td>外注</td><td class="r">18</td><td class="r">–</td><td class="r">18.5</td><td class="r">0</td><td class="r">1.0</td><td class="r">0</td><td class="r">¥—</td></tr>
+                <tr class="fix"><td colspan="8">手修正: 田中 10/12 雨天半日 → 人工 0.5 に変更（理由を記録）</td><td class="r">−¥—</td></tr>
+                <tr class="sum"><td colspan="8">合計（外注 40人・社員 8人・契約 10人）</td><td class="r">¥—</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:9.5px; color:var(--muted); margin:6px 0 0">単価は利用者登録から。金額は日報 × 単価。税・社会保険・振込は、この画面ではやらない。</p>
+          </div>
+        </div>
+      </div>
+      <div class="laptop" style="width:430px">
+        <div class="bar2"><i></i><i></i><i></i><span class="url">…/members/new</span></div>
+        <div class="wrap" style="min-height:300px">
+          <div class="main">
+            <h4>利用者登録　外注（個人）<span class="pill ng">現場入場 不可</span></h4>
+            <div class="f row"><div><label>所属</label><div class="v">〇〇組</div></div><div><label>氏名</label><div class="v">田中 〇〇</div></div></div>
+            <div class="f row"><div><label>日当単価</label><div class="v">¥—</div></div><div><label>持込車両</label><div class="v">あり（軽トラ）</div></div></div>
+            <div class="f">
+              <label>必要書類（揃うまで登録を完了できない）</label>
+              <div class="check"><i class="on"></i>契約書（画面上でサイン済み）</div>
+              <div class="check"><i class="on"></i>資格証（有機溶剤作業主任者）</div>
+              <div class="check"><i class="on"></i>車両保険の写し</div>
+              <div class="check"><i class="ng"></i>一人親方労災 加入証 <span class="pill ng">未提出</span></div>
+            </div>
+            <div class="btn" style="background:#c9ced6; color:#555">登録を完了する（書類が揃うと押せる）</div>
+            <p style="font-size:9.5px; color:var(--muted); margin:6px 0 0">登録が完了した人だけ、日報の現場選択と予定表に出ます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mocknote" style="margin-top:14px">画面イメージは試作前のラフです。金額欄は伏せています。誰が登録し、承認を置くかは要件定義で確定します。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>11 / 21</span></div>
+  </section>
+
+  <!-- 9 いくらでどこまで -->
+  <section class="slide">
+    <p class="kicker">5. いくらで、どこまでできるか</p>
+    <h2>機能を足して作る。一式の「松竹梅」にはしない</h2>
+    <div class="cols wide-left">
+      <div>
+        <table>
+          <thead><tr><th>呼び方</th><th class="r">開発費</th><th>できないこと</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>最初のリリース（推奨）: マストから現場共有を除く</td><td class="r">304万円</td><td>LINE をやめること、写真の AI、ストアのアプリ</td></tr>
+            <tr><td>マストから予定表も外す</td><td class="r">266万円</td><td>予定表は Excel のまま</td></tr>
+            <tr><td>マスト全部（現場共有は記録）</td><td class="r">352万円</td><td>既読・通知・アルバム。LINE はやめられない</td></tr>
+            <tr><td>マスト（記録）＋あったらいいな全部</td><td class="r">436万円</td><td>LINE をやめること、ストアのアプリ</td></tr>
+            <tr class="dim"><td>マスト全部（現場共有は LINE 級）</td><td class="r">604万円</td><td>目安の300万円から大きく離れる</td></tr>
+            <tr class="dim"><td>最初のリリース＋通知つきアプリの入れ物</td><td class="r">604万円</td><td>目安の300万円から大きく離れる</td></tr>
+            <tr class="dim"><td>LINE 級も、アプリの入れ物も</td><td class="r">904万円</td><td>目安の300万円から大きく離れる</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box">
+        <h3>300万円との関係</h3>
+        <div class="bar">
+          <i class="limit" style="bottom:68.8%" data-label="目安 300万円"></i>
+          <div style="height:61%">266<span>予定表なし</span></div>
+          <div style="height:69.7%">304<span>最初のリリース</span></div>
+          <div style="height:80.7%">352<span>記録まで</span></div>
+          <div style="height:100%">436<span>あったらいいな全部</span></div>
+        </div>
+        <p class="small" style="margin-top:48px">点線が目安の300万円。最初のリリースは4万円だけ超えます。予定表を外せば収まりますが、職人が「今日どこへ行くか」を見る画面がなくなります。</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>12 / 21</span></div>
+  </section>
+
+  <!-- 10 現場共有の三択 -->
+  <section class="slide">
+    <p class="kicker">5. いくらで、どこまでできるか</p>
+    <h2>マストの「現場共有」は三択。ここで金額が大きく変わる</h2>
+    <div class="cols three">
+      <div class="box ok">
+        <h3>A. LINE を残して後回し</h3>
+        <div class="num">0<small>円</small></div>
+        <p style="margin-top:10px">日報・給与・予定を先に動かす。現場の連絡はいまの LINE のまま。日報は本人がシステムに入れるので、LINE に日報を書く必要はなくなる。</p>
+        <p class="small">推奨。最初のリリース 304万円。</p>
+      </div>
+      <div class="box">
+        <h3>B. 現場の記録だけ</h3>
+        <div class="num">48<small>万円</small></div>
+        <p style="margin-top:10px">現場ごとに文章と写真を残す掲示板。既読・通知・アルバム・過去の検索はない。</p>
+        <p class="small">LINE はやめられない。352万円。資料の「LINE は廃止」は満たさない。</p>
+      </div>
+      <div class="box warm">
+        <h3>C. LINE をやめる</h3>
+        <div class="num warm">300<small>万円〜</small></div>
+        <p style="margin-top:10px">現場ごとの部屋、写真アルバム、既読・未読、過去ログ、未読を知らせる通知の仕組み。LINE と同じ水準の連絡手段を作る。</p>
+        <p class="small">下限。604万円。スタンプ・通話・友達追加は含まない。通知を端末へ届けるアプリの入れ物（300万円）は別。</p>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:22px">48万円の掲示を「LINE の代わり」と呼んで安く見せることはしません。やめるなら300万円から、やめないなら0円。中間はありません。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>13 / 21</span></div>
+  </section>
+
+  <!-- 11 費用の置き方と市場 -->
+  <section class="slide">
+    <p class="kicker">6. tugilo の費用の置き方</p>
+    <h2>機能ごとの金額と、公開相場との位置</h2>
+    <div class="cols two">
+      <div>
+        <table>
+          <thead><tr><th>機能</th><th class="r">税別</th></tr></thead>
+          <tbody>
+            <tr><td>要件定義・設計（試作を含む）</td><td class="r">50万円</td></tr>
+            <tr><td>ログイン、権限、ファイル保管</td><td class="r">40万円</td></tr>
+            <tr><td>利用者登録（書類ゲート）</td><td class="r">60万円</td></tr>
+            <tr><td>工事台帳</td><td class="r">28万円</td></tr>
+            <tr><td>日報（本人入力）</td><td class="r">36万円</td></tr>
+            <tr><td>給与集計</td><td class="r">42万円</td></tr>
+            <tr><td>予定表（今日・今週・今月）</td><td class="r">38万円</td></tr>
+            <tr><td>ホーム画面のアイコン</td><td class="r">10万円</td></tr>
+            <tr><td>現場の記録 ／ LINE 級トーク</td><td class="r">48万円 ／ 300万円〜</td></tr>
+            <tr><td>写真 AI ／ 利益率 ／ 着工通知 ／ 月表示 ／ 元請 ／ 申請承認</td><td class="r">28 ／ 16 ／ 8 ／ 14 ／ 8 ／ 10万円</td></tr>
+            <tr><td>通知＋WebView のアプリ入れ物</td><td class="r">300万円</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>公開されている目安（2026年）</th><th>この提案との関係</th></tr></thead>
+          <tbody>
+            <tr><td>小規模な業務システム一式 100〜300万円</td><td>土台100万円は、この下限に合わせた</td></tr>
+            <tr><td>項目が多く権限のある画面 1画面20万円〜、試験で＋2割</td><td>登録画面4つで約96万円 ≒ 土台100万円</td></tr>
+            <tr><td>要件定義は開発費の約2割を別枠</td><td>254万円の2割 ≒ 50万円</td></tr>
+            <tr><td>建設業の日報システム一式 200〜500万円</td><td>304万円は帯の下寄り</td></tr>
+            <tr><td>承認・権限・PDF・集計を含む業務アプリ 300〜600万円</td><td>304万円は下限付近</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:10px">304万円を人月に直すと 4〜5人月 × 65〜75万円。受託開発会社の中心単価（100〜250万円/人月）ではなく、フリーランスの単価帯。要件定義・設計・試験・保守まで、一人で一貫して持ちます。</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>14 / 21</span></div>
+  </section>
+
+  <!-- 12 30%の手数料とは -->
+  <section class="slide">
+    <p class="kicker">6. tugilo の費用の置き方</p>
+    <h2>「30%の手数料」とは何か。tugilo の取り分ではありません</h2>
+    <div class="cols wide-left">
+      <div>
+        <table>
+          <tbody>
+            <tr><th style="width:26%">誰が受け取るか</th><td>杏那さん（株式会社Andirich）。tugilo ではない</td></tr>
+            <tr><th>何に対する率か</th><td>tugilo の開発費（税別）に対して30%。お客様への提示は開発費の <b>1.3倍</b></td></tr>
+            <tr><th>何の対価か</th><td>杏那さんが <b>元請</b> として持つ役割の分。お客様との窓口と契約、現場ヒアリング、要望の整理、職人・事務所への使い方の説明、使い始めの定着支援。tugilo は <b>下請</b> として設計・開発・保守を持つ</td></tr>
+            <tr><th>どこで決まった話か</th><td>2026年6月15日の第1回1to1で、別案件のたたき台として「30%程度」と話したもの。この建設業のお客様向けに合意したものではない</td></tr>
+            <tr><th>保守にも乗せるか</th><td>未決。月3万円は tugilo の保守費で、手数料は乗せていない</td></tr>
+            <tr><th>要件定義・設計にも乗せるか</th><td>開発費の一部として乗せる前提で計算。外すなら254万円だけが対象で、提示は約380万円</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="box warm">
+          <h3>乗せた場合の金額</h3>
+          <table style="font-size:13px">
+            <tbody>
+              <tr><td>最初のリリース 304万円</td><td class="r">約395万円</td></tr>
+              <tr><td>予定表を外した 266万円</td><td class="r">約346万円</td></tr>
+              <tr><td>記録まで 352万円</td><td class="r">約458万円</td></tr>
+            </tbody>
+          </table>
+          <p class="small" style="margin-top:8px">お客様の300万円が「手数料込みの総額」なら、開発費に使えるのは約231万円。要件定義と土台（150万円）に日報と給与を足した266万円でも入りません。300万円が開発費の目安か、支払う総額かを最初に確認します。</p>
+        </div>
+        <div class="box ok" style="margin-top:12px">
+          <h3>tugilo からの提案は一つ</h3>
+          <p style="font-size:14px; margin:0">乗せるなら、開発費に含めず <b>「導入支援・窓口（Andirich）」として別の行</b> にする。相見積もりで内訳を揃えやすく、杏那さんの役割も伝わります。乗せるか、率、名目は杏那さんが決めることです。</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>15 / 21</span></div>
+  </section>
+
+  <!-- 13 他の選び方 -->
+  <section class="slide">
+    <p class="kicker">6. tugilo の費用の置き方</p>
+    <h2>他の選び方と比べる。既製で足りるなら、既製を勧めます</h2>
+    <table>
+      <thead><tr><th style="width:18%">選び方</th><th style="width:22%">初期 ／ 3年の目安</th><th>できること</th><th>この案件で足りないこと</th></tr></thead>
+      <tbody>
+        <tr><td>既製クラウド（例: サクミル）</td><td>0円 ／ 約180万円<br><span class="small">20人9,800円/月＋1人1,000円/月。60人で約5万円/月。21人以上は別途見積の案内あり</span></td><td>日報、出面（人工）集計、案件、予定、写真。すぐ使える</td><td>25日締めとイレギュラーの給与集計、書類が揃うまで登録不可、職人に隠す列、本人だけの日報。杏那さんが他社へ広げる形にならない</td></tr>
+        <tr><td>既製クラウド（例: 現場Plus）</td><td>1万円 ／ 約37万円<br><span class="small">60IDで1万円/月</span></td><td>工程、写真、連絡。協力会社へ配りやすい</td><td>給与集計がない。日報と予定の自動下書きは対象外</td></tr>
+        <tr><td>受託開発会社</td><td>400〜600万円 ／ ＋保守 年15〜25%</td><td>要望どおりに作る。チーム体制</td><td>300万円の中には入らない</td></tr>
+        <tr><td>フリーランスへ直接</td><td>200〜340万円 ／ 保守は個別<br><span class="small">65〜85万円/人月 × 3〜4か月</span></td><td>単価は抑えられる</td><td>要件整理、進行管理、試験、引き継ぎはお客様側が持つ</td></tr>
+        <tr class="hl"><td>tugilo</td><td>304万円 ／ ＋保守 月3万円（年36万円）</td><td>要件定義から保守まで一貫して持つ。次ページ</td><td>LINE をやめる連絡、ストアのアプリ</td></tr>
+      </tbody>
+    </table>
+    <div class="box ok" style="margin-top:14px">
+      <p style="margin:0"><b>既製では届かない4点だけが、作る理由です。</b> 25日締めの給与集計、書類が揃うまで入場させない登録、職人に見せる列の制御、杏那さんが他の建設会社へ同じ仕組みを広げること。この4点が要らないなら、サクミルの方が安く済みます。</p>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>16 / 21</span></div>
+  </section>
+
+  <!-- 13 金額以外の違い -->
+  <section class="slide">
+    <p class="kicker">6. tugilo の費用の置き方</p>
+    <h2>金額で競う提案ではありません。違いは進め方にあります</h2>
+    <div class="grid-cards">
+      <div class="box accent"><h3>作る前に、動く試作を触ってもらう</h3><p>要件定義・設計50万円の中で、職人のスマホで触れる画面の試作を作ります。社長と親方が触ってから、作るかを決められます。</p></div>
+      <div class="box accent"><h3>作らないものを先に言う</h3><p>LINE は残す、見積ソフトは残す、法定の給与計算はやらない、ストアのアプリは作らない。見積を膨らませる機能を入れません。</p></div>
+      <div class="box accent"><h3>減る時間で決める</h3><p>転記・給与集計・予定の3つを測ってから回収年数を出します。効果が開発費を下回るもの（写真 AI など）は勧めません。</p></div>
+      <div class="box accent"><h3>毎週、画面を見せて直す</h3><p>スマホ対応の Web なので、直した翌日に全員の端末へ届きます。ストアの審査を待ちません。</p></div>
+      <div class="box accent"><h3>打合せで業務を聞いてから金額を置く</h3><p>現状メモと依頼資料から、親方のまとめ入力の置き換え、25日締めのイレギュラー、書類ゲートを先に読み取りました。</p></div>
+      <div class="box accent"><h3>杏那さんと組んで、2社目へ広げる</h3><p>会社・締め日・日報の欄・権限を設定で変えられる作りにします。この仕組みは杏那さんのパッケージにできます。既製クラウドでは、杏那さんの商品になりません。</p></div>
+      <div class="box accent"><h3>データは、お客様のもの</h3><p>ID課金がないので、職人が60人でも80人でも開発費は変わりません。やめてもデータは手元に残ります。</p></div>
+      <div class="box"><h3>相見積もりのときは、ここを揃える</h3><p>要件定義・試験の有無、本人入力か、給与集計の中身、書類ゲート、黄色列の制御、保守月額と反映の速さ、データの持ち主、他社へ広げられる作りか。</p></div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>17 / 21</span></div>
+  </section>
+
+  <!-- 14 ROI -->
+  <section class="slide">
+    <p class="kicker">7. 費用に見合うか（ROI）</p>
+    <h2>事務所の人件費で見る。削減時間はまだ測っていないので、仮の2例</h2>
+    <div class="cols wide-left">
+      <div>
+        <table>
+          <thead><tr><th>仮の置き方</th><th class="r">月に減る時間</th><th class="r">月額</th><th class="r">年額</th><th class="r">304万円の回収</th></tr></thead>
+          <tbody>
+            <tr><td>控えめ。転記は1人1日2分。給与と予定の手作業が各4時間減る</td><td class="r">約35時間</td><td class="r">約5.5万円</td><td class="r">約66万円</td><td class="r">約4.6年</td></tr>
+            <tr><td>転記が1人1日5分。給与と予定の手作業が各8時間消える</td><td class="r">約83時間</td><td class="r">約13万円</td><td class="r">約156万円</td><td class="r">約2年</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:10px">時給は、事務の月給25万円 ÷ 月160時間 ＝ 1,563円。外注40人 × 月20日 × 2分 ＝ 約27時間、5分なら約67時間。職人の入力時間は、いま LINE に書いている時間の置き換えとみなし、削減には数えません。書類が揃う前の入場を止める効果は、時間に換算していません。</p>
+        <p class="small">写真 AI（28万円）は、目視が月10時間なら年約19万円でおよそ1年半、月2時間なら年約4万円で7年以上。時間が短いなら最初には入れません。LINE 級（300万円〜）とアプリの入れ物（300万円）は、転記の削減では回収できません。</p>
+      </div>
+      <div class="box warm">
+        <h3>社長に確認したいこと 3つ</h3>
+        <ol>
+          <li>LINE から Excel への転記は、1件あたり何分か。</li>
+          <li>25日締めの給与集計は、月に何時間か。</li>
+          <li>予定表の入れ替えは、月に何時間か。</li>
+        </ol>
+        <p class="small" style="margin-top:10px">この3つの実測で、仮の回収年数を置き換えます。転記がほぼ無いなら、給与と予定だけでは回収は遅くなります。</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>18 / 21</span></div>
+  </section>
+
+  <!-- 15 アプリ化 -->
+  <section class="slide">
+    <p class="kicker">補足</p>
+    <h2>ストアのアプリは、最初のリリースでは作らない</h2>
+    <div class="cols two">
+      <div class="box">
+        <h3>最初はスマホ対応の Web。ホーム画面にアイコン（10万円）</h3>
+        <ul>
+          <li>外注が約40人入れ替わる現場でも、リンクを渡せば始められる。</li>
+          <li>文言や入力項目の修正が、ストア審査を待たずに全員へ届く。</li>
+          <li>事務所の PC と職人のスマホが、同じ仕組みのままつながる。</li>
+          <li>弱点: LINE の代わりにするときの通知が iPhone で弱い。圏外ではその場で保存できない。</li>
+        </ul>
+      </div>
+      <div class="box warm">
+        <h3>アプリ化で最も安いのは「通知＋WebView の入れ物」で300万円</h3>
+        <ul>
+          <li>画面は Web のまま包み、通知を足す形（tugilo の過去案件と同じ作り）。それだけで300万円。中身の機能費とは別。</li>
+          <li>最初のリリースに足すと 604万円。LINE 級も入れると 904万円。</li>
+          <li>Flutter で職人画面を作り直し、他社へ売れる形にするなら、さらに高くなります。</li>
+          <li>アプリにするなら、中身の Web を最初から汎用（会社ごとの設定で変える）に設計しておく。1社専用を包んでも、2社目で作り直しになる。</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:22px">通知が欲しいことだけを理由に、最初のリリースでアプリ化はしません。アプリは、杏那さんと他社へ広げる製品として、別の予算で判断します。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>19 / 21</span></div>
+  </section>
+
+  <!-- 16 おすすめ -->
+  <section class="slide">
+    <p class="kicker">8. おすすめ</p>
+    <h2>マストから現場共有だけを後回しにした 304万円から始める</h2>
+    <div class="cols wide-left">
+      <div>
+        <div class="flow">
+          <div class="step"><b>要件定義・設計 50万円</b>項目・権限・画面の流れを確定。職人のスマホで触れる試作。ここで止めることもできる。</div>
+          <div class="step"><b>土台 100万円</b>ログイン・権限・ファイル保管。社員・契約・外注の登録と書類ゲート。</div>
+          <div class="step"><b>本体 154万円</b>工事台帳、本人の日報、給与集計、今日・今週・今月の予定、ホーム画面のアイコン。</div>
+          <div class="step dim"><b>2回目以降</b>現場共有の三択、あったらいいな（効果の出るものだけ）、アプリ化は別の予算で。</div>
+        </div>
+        <ul style="margin-top:22px">
+          <li>日報は、作業した本人が入れる。給与の集計は、その日報から出る。</li>
+          <li>予定は、今日・今週・今月で見える。書類が揃った人だけ、現場に入れる。</li>
+          <li>LINE はやめない。ストアのアプリも作らない。見積ソフトもそのまま。</li>
+        </ul>
+      </div>
+      <div class="box accent">
+        <h3>金額のまとめ（税別・開発費）</h3>
+        <div class="num">304<small>万円</small></div>
+        <p class="small" style="margin-top:8px">目安の300万円を4万円だけ超えます。予定表を外せば266万円に収まりますが、職人が「今日どこへ行くか」を見られない問題は残ります。</p>
+        <table style="margin-top:8px; font-size:13px">
+          <tbody>
+            <tr><td>着工通知＋元請マスタを足す</td><td class="r">320万円</td></tr>
+            <tr><td>現場の記録まで</td><td class="r">352万円</td></tr>
+            <tr><td>杏那さん側の元請手数料30%を乗せた提示（304万円。15ページ）</td><td class="r">約395万円</td></tr>
+            <tr><td>保守（たたき台）</td><td class="r">月3万円</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>20 / 21</span></div>
+  </section>
+
+  <!-- 17 決めていただくこと -->
+  <section class="slide">
+    <p class="kicker">9. 決めていただくこと／入っていないもの</p>
+    <h2>次に進むために、決めていただきたいこと</h2>
+    <div class="cols two">
+      <div>
+        <ol>
+          <li>最初の範囲は、マストから現場共有を後回しにした <b>304万円</b> でよいか。予定表を外すと266万円。</li>
+          <li>マストの <b>現場共有</b> をどう扱うか。後回し（0円）／記録だけ（48万円。LINE は残る）／LINE をやめる（300万円〜）。</li>
+          <li>あったらいいなのうち、最初に足すものがあるか。着工通知と元請マスタは各8万円。写真 AI は目視の時間を測ってから。</li>
+          <li>杏那さん側の <b>元請手数料</b>（たたき台は開発費の30%）をこの案件で乗せるか。率と名目（開発費に含めるか、「導入支援・窓口」の行にするか）。乗せると304万円は約395万円。お客様の300万円が開発費の目安か総額かも確認。</li>
+          <li><b>転記・給与集計・予定</b> の月あたりの時間。回収年数の仮の数字を実測に置き換える。</li>
+          <li>ストアのアプリが最初から必要か。入れ物だけで300万円。</li>
+        </ol>
+        <p class="small" style="margin-top:12px">確認したいこと: 工事情報で職人に隠す列（黄色）、新規登録を誰が行い承認するか、日報画面の自由入力2枠の項目名、現場社員の人数、見積ソフトの正式な製品名。</p>
+      </div>
+      <div class="box">
+        <h3>この金額に入っていないもの</h3>
+        <ul class="small" style="font-size:14px; color:var(--ink)">
+          <li>見積ソフト（みつもろう）の改修</li>
+          <li>所得税・社会保険・雇用保険・振込データ・法定の給与明細</li>
+          <li>電子契約サービス（画面上のサインは含む）</li>
+          <li>材料費から利益を自動で出すこと</li>
+          <li>タイムツリーと同じ予定の共有</li>
+          <li>ANDPAD にある機能を一通り揃えること</li>
+          <li>スタンプ・通話・友達追加のある連絡アプリ</li>
+          <li>サーバーと写真保管の月額、保守費</li>
+          <li>職人画面を Web と Flutter の両方で作ること。Swift / Kotlin で別々に作ること</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 建設業向け 日報・給与・予定の仕組み ご提案</span><span>21 / 21</span></div>
+  </section>
+</body>
+</html>

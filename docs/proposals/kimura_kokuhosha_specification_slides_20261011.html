@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>仕様書（v3・案） — 国宝社 木村秀継様向け（tugilo 次廣）</title>
+  <style>
+    :root {
+      --ink: #1d2430; --muted: #5d6673; --line: #d6d9de;
+      --accent: #1f4e79; --accent-soft: #e6eef6;
+      --warm: #b5652a; --warm-soft: #f7ebe0;
+      --ok: #2f6b4f; --ok-soft: #e4efe8;
+      --ng: #a1372a; --ng-soft: #f6e4e1;
+      --bg: #ffffff; --slide-w: 1280px; --slide-h: 720px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #d9d6d0; color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-feature-settings: "palt"; line-height: 1.5; }
+    .toolbar { display: flex; gap: 10px; justify-content: center; align-items: center; padding: 14px 16px 6px; flex-wrap: wrap; }
+    .toolbar button, .toolbar a { border: 1px solid #9aa3ad; background: #fff; color: var(--ink); border-radius: 999px; padding: .45rem 1.1rem; font: inherit; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .hint { text-align: center; color: #555; font-size: 12px; margin: 0 16px 14px; }
+    .slide { width: var(--slide-w); height: var(--slide-h); margin: 0 auto 18px; background: var(--bg); position: relative; overflow: hidden;
+      padding: 44px 64px 56px; box-shadow: 0 12px 30px rgba(30,30,30,.14); display: flex; flex-direction: column; }
+    .slide::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--accent); }
+    .slide.cover::before { width: 0; }
+    .foot { position: absolute; left: 64px; right: 64px; bottom: 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+    .kicker { font-size: 12px; letter-spacing: .16em; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 40px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    h2 { font-size: 28px; line-height: 1.25; margin: 0 0 16px; letter-spacing: -.01em; }
+    h3 { font-size: 16px; margin: 0 0 8px; color: var(--accent); }
+    p { margin: 0 0 8px; font-size: 15px; }
+    .lead { font-size: 18px; }
+    .small { font-size: 12.5px; color: var(--muted); }
+    .cols { display: grid; gap: 22px; }
+    .cols.two { grid-template-columns: 1fr 1fr; }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .cols.wide-left { grid-template-columns: 1.4fr 1fr; }
+    .cols.wide-right { grid-template-columns: 1fr 1.4fr; }
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+    .box.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .box.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .box.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .box.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .box.dim { border-style: dashed; color: var(--muted); }
+    .num { font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--accent); }
+    .num small { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+    .num.warm { color: var(--warm); }
+    ul, ol { margin: 0; padding-left: 1.3em; font-size: 15px; }
+    li { margin: 0 0 5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { padding: 6px 9px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2f4f7; font-weight: 700; font-size: 12.5px; color: #333; }
+    td.r, th.r { text-align: right; white-space: nowrap; }
+    tr.hl td { background: var(--accent-soft); font-weight: 700; }
+    tr.dim td { color: var(--muted); }
+    table.tight th, table.tight td { padding: 4px 7px; font-size: 12.5px; }
+    .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef0f3; color: #333; margin-right: 6px; vertical-align: middle; white-space: nowrap; }
+    .tag.must { background: var(--accent); color: #fff; }
+    .tag.nice { background: var(--warm); color: #fff; }
+    .tag.hold { background: #777; color: #fff; }
+    .tag.ok { background: var(--ok); color: #fff; }
+    .tag.ng { background: var(--ng); color: #fff; }
+    .cover { justify-content: center; background: linear-gradient(135deg, #15375a 0%, #1f4e79 60%, #2b6a9b 100%); color: #fff; }
+    .cover .kicker { color: #cfe0f2; }
+    .cover h1 { font-size: 46px; color: #fff; }
+    .cover p { color: #e6eef6; }
+    .cover .meta { margin-top: 32px; font-size: 14.5px; color: #cfe0f2; line-height: 1.8; }
+    .flow { display: flex; gap: 8px; align-items: stretch; }
+    .flow .step { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; position: relative; background: #fff; }
+    .flow .step b { display: block; font-size: 14.5px; color: var(--accent); margin-bottom: 4px; }
+    .flow .step.dim { color: var(--muted); border-style: dashed; }
+    .flow .step.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .flow .step.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .flow .step.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .flow .arrow { align-self: center; font-size: 22px; color: var(--muted); flex: none; }
+    .stamp { position: absolute; right: 64px; top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-cards.three { grid-template-columns: repeat(3, 1fr); }
+    .grid-cards .box { padding: 12px 14px; }
+    .grid-cards .box h3 { font-size: 14.5px; }
+    .grid-cards .box p { font-size: 13px; margin: 0; }
+    /* 構成図 */
+    .diag { display: flex; gap: 14px; align-items: stretch; }
+    .diag .zone { flex: 1; border: 1.5px dashed #b7bec8; border-radius: 12px; padding: 12px; background: #fafbfc; }
+    .diag .zone > b { display: block; font-size: 12px; color: var(--muted); letter-spacing: .1em; margin-bottom: 8px; }
+    .diag .zone.t { border-color: var(--accent); background: #f3f7fb; }
+    .diag .zone.k { border-color: var(--warm); background: #fcf6f0; }
+    .node { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; font-size: 13px; margin-bottom: 8px; }
+    .node b { display: block; font-size: 13.5px; }
+    .node.db { border-radius: 20px / 10px; background: #eef4ea; border-color: #bfd3b5; }
+    .node.file { background: #fff8e8; border-color: #e5d3a3; }
+    .node.ppl { background: #f1eefb; border-color: #cfc5ea; }
+    .varrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; margin: 2px 0 8px; }
+    .harrow { align-self: center; color: var(--muted); font-size: 24px; flex: none; }
+    .harrow.dash { color: #9aa3ad; }
+    /* 状態遷移 */
+    .states { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .states span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: #fff; }
+    .states span.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .states span.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .states i { font-style: normal; color: var(--muted); }
+    /* ガント */
+    .gantt { font-size: 12px; }
+    .gantt .row { display: grid; grid-template-columns: 230px 1fr; align-items: center; gap: 8px; min-height: 18px; }
+    .gantt .row.head { min-height: 20px; }
+    .gantt .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11.5px; line-height: 1.2; }
+    .gantt .track { position: relative; height: 12px; background: #f2f4f7; border-radius: 3px; }
+    .gantt .track .bar { position: absolute; top: 1px; bottom: 1px; background: var(--accent); border-radius: 2px; }
+    .gantt .track .bar.k { background: var(--warm); }
+    .gantt .track .bar.t { background: var(--ok); }
+    .gantt .track .bar.p { background: #7a8694; }
+    .gantt .track .ms { position: absolute; top: -1px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 12px solid var(--ng); transform: translateX(-7px); }
+    .gantt .months { display: grid; grid-template-columns: repeat(5, 1fr); font-size: 11px; color: var(--muted); border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+    .gantt .months div { border-left: 1px solid var(--line); padding: 0 4px 2px; }
+    .gantt .track .vline { position: absolute; top: 0; bottom: 0; border-left: 1px solid #dfe3e8; }
+    .gantt .sec { font-weight: 700; color: var(--accent); margin: 5px 0 1px; font-size: 11.5px; line-height: 1.2; }
+    /* 画面ワイヤー */
+    .wire { border: 1px solid var(--line); border-radius: 10px; background: #f6f7f9; padding: 10px; font-size: 11.5px; }
+    .wire .bar { background: var(--accent); color: #fff; padding: 5px 10px; border-radius: 6px 6px 0 0; font-weight: 700; font-size: 12px; margin: -10px -10px 8px; }
+    .wire .f { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; margin-bottom: 5px; }
+    .wire .f label { display: block; font-size: 9.5px; color: var(--muted); }
+    .wire .f .v { font-size: 11.5px; }
+    .wire .f .v.ph { color: #9aa3ad; }
+    .wire .row { display: flex; gap: 6px; }
+    .wire .row > div { flex: 1; }
+    .wire .btn { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 11px; margin-right: 4px; }
+    .wire .btn.ghost { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+    .wire .btn.warm { background: var(--warm); }
+    .sched { display: grid; grid-template-columns: 70px repeat(6, 1fr); gap: 3px; font-size: 10.5px; }
+    .sched .h { background: #f2f4f7; text-align: center; font-weight: 700; padding: 4px 2px; border-radius: 4px; }
+    .sched .d { background: #f2f4f7; padding: 4px; border-radius: 4px; font-weight: 700; }
+    .sched .c { background: #fff; border: 1px solid var(--line); border-radius: 4px; min-height: 42px; padding: 3px; }
+    .sched .c.spare { background: #fafafa; border-style: dashed; }
+    .sched .c.blocked { background: repeating-linear-gradient(45deg, #eee, #eee 4px, #f8f8f8 4px, #f8f8f8 8px); }
+    .sched .k { border-radius: 4px; padding: 2px 4px; margin-bottom: 2px; font-size: 10px; line-height: 1.25; }
+    .sched .k.o { background: var(--warm-soft); border-left: 3px solid var(--warm); }
+    .sched .k.g { background: var(--ok-soft); border-left: 3px solid var(--ok); }
+    .sched .k.n { background: #eef0f3; border-left: 3px solid #777; }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .slide { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">PDFとして保存（印刷ダイアログ）</button>
+    <a href="kimura_kokuhosha_proposal_v3_slides_20261011.html">① 提案書</a>
+    <a href="kimura_kokuhosha_estimate_v3_slides_20261011.html">② 見積</a>
+    <a href="kimura_kokuhosha_system_architecture_slides_20261011.html">③ 構成図</a>
+    <a href="kimura_kokuhosha_basic_design_slides_20261011.html">④ 基本設計</a>
+    <a href="kimura_kokuhosha_specification_slides_20261011.html" style="background:var(--accent);color:#fff;border-color:var(--accent)">⑤ 仕様</a>
+    <a href="kimura_kokuhosha_schedule_slides_20261011.html">⑥ スケジュール</a>
+  </div>
+  <p class="hint">印刷ダイアログで「送信先: PDFに保存」「用紙サイズ: 既定（CSS指定 1280×720）」「余白: なし」「背景のグラフィック: オン」にすると、1スライド1ページで書き出せます。</p>
+  <!-- 1 表紙 -->
+  <section class="slide cover">
+    <p class="kicker">仕様書（v3・案）</p>
+    <h1>注文PDF入力・製本作業予定表<br>システム　仕様</h1>
+    <p class="lead" style="color:#e6eef6">どう動くか。画面の項目・操作・状態、CSV レイアウトのたたき台、自動配置のルール、マスタ。</p>
+    <div class="meta">
+      株式会社国宝社　木村 秀継 様<br>
+      tugilo 次廣 淳　｜　2026年10月11日<br>
+      CSV レイアウトは開発会社の設計提示待ちのため「たたき台」。要件定義（M0）で確定・更新する。
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <p class="kicker">1. 共通</p>
+    <h2>画面・日付・保存・権限・ログの決めごと</h2>
+
+    <table>
+      <tr><th style="width:130px">項目</th><th>内容</th></tr>
+      <tr><td>画面</td><td>PC ブラウザ（Chrome／Edge）。1366×768 以上</td></tr>
+      <tr><td>日付</td><td>YYYY/MM/DD（曜）。入力はカレンダー＋手打ち。年省略は当年（10/20 → 2026/10/20）</td></tr>
+      <tr><td>数値</td><td>部数は整数・3桁区切り表示。作業時間は 0.5 刻み</td></tr>
+      <tr><td>保存</td><td>明示の保存／承認ボタン。下書きは自動保存（30秒）</td></tr>
+      <tr><td>文字コード</td><td>画面 UTF-8。CSV は開発会社提示に合わせる</td></tr>
+      <tr><td>権限</td><td>事務／予定組み／管理者（基本設計 §8）</td></tr>
+      <tr><td>ログ</td><td>承認・差し戻し・出力・配置確定・設定変更を記録</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>2 / 11</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <p class="kicker">2. 注文入力　一括アップロード（S-02）</p>
+    <h2>複数 PDF を上げる。先頭1件を自動解析、以降は「次へ」</h2>
+
+    <div class="cols wide-left">
+      <table class="tight">
+        <tr><th style="width:90px">項目</th><th>内容</th></tr>
+        <tr><td>操作</td><td>複数 PDF をドラッグ＆ドロップ、またはファイル選択</td></tr>
+        <tr><td>制限</td><td>1ファイル 20MB、1回 50ファイルまで（目安）。PDF 以外は弾く</td></tr>
+        <tr><td>保存</td><td>原本をサーバーに保存。pdf_files に登録。status = uploaded</td></tr>
+        <tr><td>解析開始</td><td>一覧の先頭1件を自動で parsing。以降は「次へ」で順に</td></tr>
+        <tr><td>一覧の列</td><td>ファイル名／ページ数／受付日時／状態／担当／仮番号／得意先／書名</td></tr>
+        <tr><td>絞り込み</td><td>状態、受付日、担当</td></tr>
+      </table>
+      <div class="wire">
+        <div class="bar">注文入力　一覧</div>
+        <div class="f" style="text-align:center;padding:14px;border-style:dashed;color:#9aa3ad">ここに PDF をまとめてドロップ</div>
+        <table class="tight" style="font-size:10.5px">
+          <tr><th>ファイル</th><th>状態</th><th>仮番号</th><th>得意先</th></tr>
+          <tr><td>order_1012_01.pdf</td><td><span class="tag ok" style="font-size:9px">承認済み</span></td><td>DRAFT-20261012-001</td><td>日新印刷</td></tr>
+          <tr><td>order_1012_02.pdf</td><td><span class="tag must" style="font-size:9px">確認待ち</span></td><td>DRAFT-20261012-002</td><td>（候補）</td></tr>
+          <tr><td>order_1012_03.pdf</td><td><span class="tag" style="font-size:9px">解析中</span></td><td>—</td><td>—</td></tr>
+          <tr><td>order_1012_04.pdf</td><td><span class="tag" style="font-size:9px">処理待ち</span></td><td>—</td><td>—</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="states" style="margin-top:14px">
+      <span>uploaded</span><i>→</i><span>parsing</span><i>→</i><span>review</span><i>→</i><span class="ok">approved</span><i>→</i><span class="ok">exported</span><i>→</i><span class="ok">imported</span><i>／</i><span class="ng">import_error</span><i>／</i><span class="ng">rejected</span>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>3 / 11</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <p class="kicker">3. 注文確認・修正（S-03）　項目</p>
+    <h2>生産依頼表の並びに合わせた20項目。信頼度を色で</h2>
+
+    <div class="cols two">
+      <table class="tight">
+        <tr><th>#</th><th>項目</th><th>型</th><th>必須</th><th>解析</th><th>備考</th></tr>
+        <tr><td>1</td><td>仮番号</td><td>自動</td><td>—</td><td>—</td><td>DRAFT-YYYYMMDD-NNN</td></tr>
+        <tr><td>2</td><td>得意先</td><td>選択</td><td>○</td><td>○</td><td>写しから選ぶ。コード未確定なら承認不可</td></tr>
+        <tr><td>3</td><td>新刊／重版</td><td>選択</td><td>○</td><td>△</td><td>既定 新刊</td></tr>
+        <tr><td>4</td><td>書名</td><td>文字</td><td>○</td><td>○</td><td>全角 100</td></tr>
+        <tr><td>5</td><td>部数</td><td>整数</td><td>○</td><td>○</td><td>単位「部」</td></tr>
+        <tr><td>6</td><td>判型</td><td>選択</td><td>○</td><td>○</td><td>判型マスタ 25種</td></tr>
+        <tr><td>7</td><td>仕様：アジロ</td><td>選択</td><td>—</td><td>○</td><td>有／無／記載なし</td></tr>
+        <tr><td>8</td><td>仕様：見返</td><td>選択</td><td>—</td><td>○</td><td>有／無</td></tr>
+        <tr><td>9</td><td>仕様：トライオート</td><td>選択</td><td>—</td><td>○</td><td>有／無</td></tr>
+        <tr><td>10</td><td>台割：16P 台数</td><td>整数</td><td>—</td><td>○</td><td></td></tr>
+      </table>
+      <table class="tight">
+        <tr><th>#</th><th>項目</th><th>型</th><th>必須</th><th>解析</th><th>備考</th></tr>
+        <tr><td>11</td><td>台割：8P 台数</td><td>整数</td><td>—</td><td>○</td><td></td></tr>
+        <tr><td>12</td><td>台割：（仮）</td><td>チェック</td><td>—</td><td>—</td><td>テンプレートの「（仮）」</td></tr>
+        <tr><td>13</td><td>見本（日）</td><td>日付</td><td>—</td><td>○</td><td></td></tr>
+        <tr><td>14</td><td>配本（日）</td><td>日付</td><td>—</td><td>○</td><td></td></tr>
+        <tr><td>15</td><td>希望日</td><td>日付</td><td>○</td><td>○</td><td></td></tr>
+        <tr><td>16</td><td>決定日</td><td>日付</td><td>—</td><td>—</td><td>工場側で決める。空で承認可</td></tr>
+        <tr><td>17</td><td>決定工場</td><td>選択</td><td>—</td><td>—</td><td>板橋／ふじみ野</td></tr>
+        <tr><td>18</td><td>備考</td><td>文字</td><td>—</td><td>○</td><td>「10/15（木）入荷」等</td></tr>
+        <tr><td>19</td><td>優先度</td><td>選択</td><td>—</td><td>—</td><td>既定 通常</td></tr>
+        <tr><td>20</td><td>作業時間（見込）</td><td>数値</td><td>—</td><td>—</td><td>任意。予定表で入れる前提</td></tr>
+      </table>
+    </div>
+    <p class="small" style="margin-top:10px">解析値に 高／中／低 の信頼度を色で表示。低は必ず目視。人が直した欄は印をつける。項目をクリックすると PDF 上の元位置をハイライト。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>4 / 11</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <p class="kicker">4. 注文確認・修正（S-03）　画面とボタン</p>
+    <h2>左 PDF、右 項目欄。承認で登録し「次へ」</h2>
+
+    <div class="cols wide-left">
+      <div class="wire">
+        <div class="bar">注文確認・修正　DRAFT-20261012-002　<span style="font-weight:400;opacity:.85">order_1012_02.pdf（1/1）</span></div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;background:#fff;border:1px solid var(--line);border-radius:6px;min-height:200px;display:flex;align-items:center;justify-content:center;color:#9aa3ad">PDF プレビュー<br>（クリックで元位置をハイライト）</div>
+          <div style="flex:1.1">
+            <div class="row"><div class="f"><label>得意先 <span class="tag ok" style="font-size:8px">高</span></label><div class="v">日新印刷（0123）</div></div><div class="f"><label>新刊／重版</label><div class="v">新刊</div></div></div>
+            <div class="f"><label>書名 <span class="tag ok" style="font-size:8px">高</span></label><div class="v">第142回「明祭」パンフレット</div></div>
+            <div class="row"><div class="f"><label>部数 <span class="tag ok" style="font-size:8px">高</span></label><div class="v">19,000</div></div><div class="f"><label>判型 <span class="tag nice" style="font-size:8px">中</span></label><div class="v">B5判</div></div></div>
+            <div class="row"><div class="f"><label>アジロ</label><div class="v">有</div></div><div class="f"><label>見返</label><div class="v">無</div></div><div class="f"><label>トライオート</label><div class="v">無</div></div></div>
+            <div class="row"><div class="f"><label>16P 台</label><div class="v">7</div></div><div class="f"><label>8P 台</label><div class="v">1</div></div><div class="f"><label>（仮）</label><div class="v">—</div></div></div>
+            <div class="row"><div class="f"><label>見本</label><div class="v">10/20（火）</div></div><div class="f"><label>配本</label><div class="v">10/21（水）</div></div><div class="f"><label>希望日 <span class="tag ng" style="font-size:8px">低</span></label><div class="v" style="background:var(--ng-soft)">10/20（火）</div></div></div>
+            <div class="f"><label>備考</label><div class="v">10/15（木）入荷</div></div>
+          </div>
+        </div>
+        <div style="margin-top:8px"><span class="btn">承認 → 次へ</span><span class="btn ghost">保存（下書き）</span><span class="btn ghost">差し戻し</span><span class="btn ghost">一覧</span></div>
+      </div>
+      <div>
+        <table class="tight">
+          <tr><th>ボタン</th><th>動き</th></tr>
+          <tr><td>承認</td><td>必須チェック → approved、承認者・日時を記録 → 自動で「次へ」</td></tr>
+          <tr><td>保存（下書き）</td><td>review のまま保存</td></tr>
+          <tr><td>差し戻し</td><td>rejected、理由必須。原本は残す</td></tr>
+          <tr><td>次へ</td><td>一覧の次の uploaded を parsing にし、この画面を開く</td></tr>
+        </table>
+        <div class="box warm" style="margin-top:12px"><h3>承認後</h3><p style="margin:0">項目は編集不可。間違いに気づいたら「差し戻し → 修正 → 再承認」（出力前のみ）。出力後は VB 側で修正。</p></div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>5 / 11</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <p class="kicker">5. 生産依頼表 手動入力（S-04）／CSV 出力（S-05）</p>
+    <h2>メールの Excel を見ながら打つ。承認済みを CSV に</h2>
+
+    <div class="cols two">
+      <div class="box">
+        <h3>手動入力（S-04）</h3>
+        <ul>
+          <li>項目は S-03 の 2〜18 と同じ。並びも生産依頼表テンプレートに合わせる（得意先／新刊／書名／部数／判型／仕様／台割／見本／配本／希望日／決定日／備考）</li>
+          <li>PDF プレビューの代わりに、同じ得意先の直近3件を右に出す（コピペ用）</li>
+          <li>保存で source = manual、status = review。そのまま承認も可</li>
+          <li>「同じ内容で複数件」: 4票ある生産依頼表を続けて入れるとき、得意先・仕様を引き継ぐ</li>
+        </ul>
+        <p class="small" style="margin:8px 0 0"><span class="tag nice">O1</span>Excel 読込: 一覧シートの列（お客様／書名／刷数／仕様／トライ／判型／16P／部数／見本日／配本日／希望日／備考）を項目に対応させて取り込む。1行＝1 draft。</p>
+      </div>
+      <div class="box accent">
+        <h3>CSV 出力（S-05）</h3>
+        <table class="tight">
+          <tr><td>対象</td><td>approved かつ未出力。チェックで選ぶ。既定は全選択</td></tr>
+          <tr><td>出力</td><td>件数確認 → 既定フォルダに書く → 履歴記録 → draft を exported</td></tr>
+          <tr><td>ファイル名</td><td>ORDER_YYYYMMDD_HHMMSS_NNN.csv。常に新規</td></tr>
+          <tr><td>控え</td><td>サーバー内 exports/ に保存</td></tr>
+          <tr><td>書けない時</td><td>エラー表示。approved のまま。控え＋手動ダウンロード</td></tr>
+          <tr><td>履歴</td><td>日時／ファイル名／件数／出力者／取込結果。行を開くと含まれる draft</td></tr>
+          <tr><td>再出力</td><td>新しいファイル名で再作成。理由必須</td></tr>
+          <tr><td>結果反映（案）</td><td>同名_result.csv があれば読み、行ごとに OK／NG を反映。NG は import_error</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>6 / 11</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <p class="kicker">6. CSV レイアウト（たたき台）</p>
+    <h2>開発会社提示で置き換える。tugilo が出せる項目の一覧</h2>
+
+    <div class="cols two">
+      <table class="tight">
+        <tr><th>#</th><th>列（仮）</th><th>元</th><th>型（仮）</th></tr>
+        <tr><td>1</td><td>draft_no</td><td>仮番号</td><td>文字（戻り照合用）</td></tr>
+        <tr><td>2</td><td>customer_code</td><td>得意先コード</td><td>文字（Oracle のコード）</td></tr>
+        <tr><td>3</td><td>customer_name</td><td>得意先名</td><td>文字（照合用）</td></tr>
+        <tr><td>4</td><td>order_kind</td><td>新刊／重版</td><td>コード 1／2（仮）</td></tr>
+        <tr><td>5</td><td>title</td><td>書名</td><td>文字</td></tr>
+        <tr><td>6</td><td>copies</td><td>部数</td><td>整数</td></tr>
+        <tr><td>7</td><td>format_code</td><td>判型</td><td>コード（VB 側コードがあれば変換）</td></tr>
+        <tr><td>8</td><td>spec_ajiro</td><td>アジロ</td><td>0／1／空</td></tr>
+        <tr><td>9</td><td>spec_mikaeshi</td><td>見返</td><td>0／1</td></tr>
+        <tr><td>10</td><td>spec_tryauto</td><td>トライオート</td><td>0／1</td></tr>
+        <tr><td>11</td><td>sig16</td><td>16P 台数</td><td>整数</td></tr>
+      </table>
+      <table class="tight">
+        <tr><th>#</th><th>列（仮）</th><th>元</th><th>型（仮）</th></tr>
+        <tr><td>12</td><td>sig8</td><td>8P 台数</td><td>整数</td></tr>
+        <tr><td>13</td><td>sig_tentative</td><td>（仮）</td><td>0／1</td></tr>
+        <tr><td>14</td><td>sample_date</td><td>見本</td><td>YYYYMMDD</td></tr>
+        <tr><td>15</td><td>delivery_date</td><td>配本</td><td>YYYYMMDD</td></tr>
+        <tr><td>16</td><td>requested_date</td><td>希望日</td><td>YYYYMMDD</td></tr>
+        <tr><td>17</td><td>decided_date</td><td>決定日</td><td>YYYYMMDD（空可）</td></tr>
+        <tr><td>18</td><td>factory_code</td><td>決定工場</td><td>コード</td></tr>
+        <tr><td>19</td><td>note</td><td>備考</td><td>文字</td></tr>
+        <tr><td>20</td><td>approved_at</td><td>承認日時</td><td>YYYYMMDDHHMMSS</td></tr>
+        <tr><td>21</td><td>approved_by</td><td>承認者</td><td>文字</td></tr>
+      </table>
+    </div>
+    <div class="box warm" style="margin-top:12px">
+      <p style="margin:0"><b>前提:</b> 開発会社が設計・提示するレイアウトを正とする。ヘッダー行の有無、区切り、引用符、文字コード（Shift_JIS 想定）、改行（CRLF 想定）は提示に従う。明細が複数行になる場合は、ヘッダー／明細の2ファイルまたは行の繰り返し。受注ヘッダー／明細（TTJUCUHD／TTJUCUDT）の列名への対応は提示後に書く。<b>結果ファイル（案）:</b> ORDER_..._result.csv — draft_no／result（OK／NG）／oracle_order_no／message</p>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>7 / 11</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <p class="kicker">7. 製本作業予定表（S-06）</p>
+    <h2>画面の要素と操作</h2>
+
+    <div class="cols two">
+      <table class="tight">
+        <tr><th style="width:70px">要素</th><th>内容</th></tr>
+        <tr><td>週切替</td><td>先週／今週／来週／日付指定。既定は今週（月〜土）</td></tr>
+        <tr><td>列</td><td>作業場所 6列: 板橋1F／1F予備／2F／2F予備／ふじみ野／ふじみ野予備（設定で増減）</td></tr>
+        <tr><td>行</td><td>日付。1日1行。高さはカード数で伸びる</td></tr>
+        <tr><td>未配置</td><td>左ペイン。approved 以降で、この週にカードが無いもの。希望日・納期順。検索</td></tr>
+        <tr><td>カード</td><td>仮番号／得意先略／書名／判型・P数／部数／希望日・配本日／作業時間。0 は橙、入力済みは緑</td></tr>
+        <tr><td>合計</td><td>マス・日・週ごとの作業時間。稼働枠を超えたら赤</td></tr>
+        <tr><td>手追加</td><td>印刷に無い案件をカードとして追加（draft 無し）</td></tr>
+        <tr><td>塞ぎ</td><td>マスを「使えない」に。理由メモ</td></tr>
+      </table>
+      <table class="tight">
+        <tr><th style="width:80px">操作</th><th>動き</th></tr>
+        <tr><td>ドラッグ</td><td>未配置 → マス、マス → マス。先頭／間／末尾の差し込み位置を点線で</td></tr>
+        <tr><td>入れ替え</td><td>同じマス内の並び替え。別マスへ移動。記録に残す</td></tr>
+        <tr><td>作業時間</td><td>カード上で直接入力。0.5 刻み。合計に即反映</td></tr>
+        <tr><td>戻す</td><td>カードを未配置へ</td></tr>
+        <tr><td>取消／やり直し</td><td>直近 20 操作</td></tr>
+        <tr><td>保存</td><td>操作ごとに自動。週の「確定」で fixed。fixed 後の変更は理由付き</td></tr>
+        <tr><td>印刷・CSV</td><td><b>作らない</b>（第4回決定）。ブラウザの印刷は妨げない</td></tr>
+      </table>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>8 / 11</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <p class="kicker">8. 自動配置 v1（S-07）</p>
+    <h2>入力 → 6つのルール → 提案 → 人が確定</h2>
+
+    <div class="cols three">
+      <div class="box">
+        <h3>入力</h3>
+        <ul style="font-size:13.5px">
+          <li>対象週、未配置、配置済み（「固定」は動かさない）</li>
+          <li>作業場所の稼働枠（場所×曜日。既定 8h。塞ぎは 0h）</li>
+          <li>納期: 決定日 ＞ 配本日 ＞ 希望日 の順で採用</li>
+          <li>作業時間（未入力は「要入力」）</li>
+          <li>優先度（高／通常／低。重み設定）</li>
+          <li>場所の適性（判型・仕様ごと。任意）</li>
+        </ul>
+      </div>
+      <div class="box accent">
+        <h3>ルール（順に適用）</h3>
+        <ol style="font-size:13.5px">
+          <li>納期の早い順（同じなら優先度、同じなら部数の多い順）</li>
+          <li>納期の前営業日までに終わる日を後ろから探す。空きがあれば前倒し（上限 既定 3営業日）</li>
+          <li>その日の、適性のある本列で、残り稼働枠に収まる場所へ。複数なら残り枠の多い場所</li>
+          <li>本列に入らなければ予備列</li>
+          <li>どこにも入らなければ「入らない」として理由付きで一覧へ（人が判断）</li>
+          <li>作業時間未入力は配置せず「要入力」に</li>
+        </ol>
+      </div>
+      <div class="box">
+        <h3>出力・確定・記録</h3>
+        <ul style="font-size:13.5px">
+          <li>提案一覧: カード／日付・場所・位置／理由</li>
+          <li>見比べ: 現在と提案を左右に。新規 緑、移動 黄、入らない 赤</li>
+          <li>ボタン: 確定／取消／カード単位で採用・不採用</li>
+          <li>提案 JSON、確定の有無、確定後1週間の人の入れ替えを記録</li>
+          <li>月1回「提案どおり」「人が直した」の割合を出す</li>
+        </ul>
+        <p class="small" style="margin:6px 0 0"><span class="tag nice">O3</span>v2: 生産性指標（場所×判型×仕様の実績 h／1000部）、理由の詳細、重みの調整画面</p>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>9 / 11</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <p class="kicker">9. マスタ</p>
+    <h2>判型 25種（受領リスト）・作業場所・優先度・得意先</h2>
+
+    <div class="cols wide-left">
+      <div>
+        <h3>判型（受領リストの順。code は仮）</h3>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px 10px;font-size:12.5px">
+          <div>A6判</div><div>A6判変型</div><div>A6横長判</div><div>新書判</div><div>新書判変型</div>
+          <div>新書横長判</div><div>B6判</div><div>B6判変型</div><div>B6横長判</div><div>四六判</div>
+          <div>四六判変型</div><div>A5判</div><div>A5判変型</div><div>A5横長判</div><div>B5判</div>
+          <div>B5判変型</div><div>B5横長判</div><div>AB判</div><div>AB変判</div><div>A4判</div>
+          <div>A4判変型</div><div>A4横長判</div><div>B4判</div><div>ワイド判</div><div>菊判変型</div>
+        </div>
+        <p class="small" style="margin-top:6px">VB 側に判型コードがあればそれに置き換える。</p>
+        <h3 style="margin-top:12px">作業場所</h3>
+        <table class="tight">
+          <tr><th>name</th><th>工場</th><th>予備</th><th>既定稼働枠</th></tr>
+          <tr><td>板橋1F</td><td>板橋</td><td>—</td><td>8h</td></tr>
+          <tr><td>1F予備</td><td>板橋</td><td>○</td><td>8h</td></tr>
+          <tr><td>2F</td><td>板橋</td><td>—</td><td>8h</td></tr>
+          <tr><td>2F予備</td><td>板橋</td><td>○</td><td>8h</td></tr>
+          <tr><td>ふじみ野</td><td>ふじみ野</td><td>—</td><td>8h</td></tr>
+          <tr><td>ふじみ野予備</td><td>ふじみ野</td><td>○</td><td>8h</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>優先度</h3>
+        <table class="tight">
+          <tr><th>code</th><th>名称</th><th>重み（仮）</th></tr>
+          <tr><td>H</td><td>高</td><td>3</td></tr>
+          <tr><td>N</td><td>通常</td><td>2</td></tr>
+          <tr><td>L</td><td>低</td><td>1</td></tr>
+        </table>
+        <div class="box" style="margin-top:12px">
+          <h3>得意先（写し）</h3>
+          <ul style="font-size:13.5px">
+            <li>Oracle の得意先コード・名称・略称。同期は日次（読み取り接続が使える場合）</li>
+            <li>使えない場合は開発会社提供の CSV を管理者が取り込む</li>
+            <li>補助DB で新規作成はしない。無い得意先は VB で登録してから</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>10 / 11</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <p class="kicker">10. 管理・エラー・未確定</p>
+    <h2>S-08／S-09 と例外の動き</h2>
+
+    <div class="cols two">
+      <div>
+        <h3>管理（S-08／S-09）</h3>
+        <table class="tight">
+          <tr><td>ユーザー</td><td>追加・停止・役割・パスワード再設定</td></tr>
+          <tr><td>作業場所</td><td>名称・工場・予備・稼働枠（曜日別）・並び</td></tr>
+          <tr><td>判型・優先度</td><td>名称・コード・並び</td></tr>
+          <tr><td>自動配置</td><td>前倒し上限、重み、場所の適性</td></tr>
+          <tr><td>CSV</td><td>既定フォルダのパス、レイアウト版、文字コード、結果ファイル読み取り ON／OFF</td></tr>
+          <tr><td>得意先同期</td><td>手動実行、最終同期日時</td></tr>
+          <tr><td>操作ログ</td><td>期間・ユーザー・操作で検索</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>エラーと例外</h3>
+        <table class="tight">
+          <tr><td>PDF 解析失敗</td><td>review のまま全欄空＋メッセージ。人が手入力して承認可</td></tr>
+          <tr><td>得意先コード未確定</td><td>承認不可。候補表示</td></tr>
+          <tr><td>取込 NG</td><td>import_error。修正 → 再承認 → 再出力（新ファイル名）</td></tr>
+          <tr><td>稼働枠超過</td><td>赤表示。保存は可（人の判断）</td></tr>
+          <tr><td>同時編集</td><td>予定表は最後の保存が勝つ。他者の移動は次回表示で通知</td></tr>
+        </table>
+        <div class="box warm" style="margin-top:10px">
+          <h3>未確定（要件定義で埋める）</h3>
+          <p style="margin:0;font-size:13.5px">CSV レイアウト・結果ファイルの有無（開発会社提示）／主要1社の PDF 項目配置／稼働枠・優先度・場所の適性の実値（10月 Zoom）／得意先参照の方式／保存期間・バックアップ先</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 仕様書（v3・案）</span><span>11 / 11</span></div>
+  </section>
+</body>
+</html>

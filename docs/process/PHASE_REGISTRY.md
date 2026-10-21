@@ -313,6 +313,10 @@
 | 312 | 栗林千代子 第1回121 Zoom要約反映（下請け協業・Messenger・米澤／今西） | docs | in_progress | feature/phase311-kuribayashi-chiyoko-121-prep | 2026-09-17 |
 | 313 | 木村杏那 第4回121 Zoom要約反映（Web優先・必須とオプション・予算300万円） | docs | in_progress | feature/phase308-takeuchi-shunta-121-second-prep（作業ツリー未分離） | 2026-09-28 |
 | 314 | TLTサポートチーム オンライントレーニング議事録（PDF全23ページ対応） | docs | completed | develop（merge `6049839535e84959e176d8552e3d031b2955c5b0`） | 2026-10-01 |
+| 315 | 岡元智美 第3回121・生活記憶サービスコンセプト壁打ち準備 | docs | in_progress | feature/phase315-okamoto-sorosoro-concept-prep | 2026-10-02 |
+| 316 | 木村杏那 建設業向け 機能選択の概算見積（土台56万・例2は210万・Web全部342万） | docs | in_progress | 作業ツリー未分離 | 2026-10-04 |
+| 317 | 国宝社 第4回121反映 改訂提案 v3・機能別見積・構成図・基本設計・仕様・スケジュール | docs | in_progress | 作業ツリー未分離 | 2026-10-10 |
+| 318 | 竹村裕司 第3回121 Zoom要約反映（足場レンタルのサーバー・決済・BNI） | docs | in_progress | 作業ツリー未分離 | 2026-10-12 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手

@@ -14,12 +14,12 @@ related_hub: "meetings/webmaster/webmaster_term11.md"
 related_briefing: "meetings/webmaster/webmaster_term11_lt_rehearsal_20260916.md"
 related_wm1: "meetings/webmaster/webmaster_term11_meeting1_20260914.md"
 related_ltst2: "docs/meetings/chapter/chapter_ltst_term11_20260910.md"
-religo_meeting_id: 43
+religo_meeting_id: 44
 ---
 
 # LT × Webマス（2026-09-16）— 11期リハ・台本
 
-**Religo:** `meetings.id` = **43**（`session_type=webmaster_meeting`）／`meeting_minutes` 取込済  
+**Religo:** `meetings.id` = **44**（`session_type=webmaster_meeting`）／`meeting_minutes` 取込済（2026-10-08 再取込。旧 id 43 は 9/18 の本番 pull で消失）  
 **日時:** **2026-09-16**（水）JST **21:00〜**（終了 TODO）  
 **形式:** Zoom  
 **要約に出た人:** **次廣 淳**／**船津 麻理子**／**小中 貴晃**。増本さんの出席は **TODO**  

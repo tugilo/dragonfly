@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スケジュール表（v3・案） — 国宝社 木村秀継様向け（tugilo 次廣）</title>
+  <style>
+    :root {
+      --ink: #1d2430; --muted: #5d6673; --line: #d6d9de;
+      --accent: #1f4e79; --accent-soft: #e6eef6;
+      --warm: #b5652a; --warm-soft: #f7ebe0;
+      --ok: #2f6b4f; --ok-soft: #e4efe8;
+      --ng: #a1372a; --ng-soft: #f6e4e1;
+      --bg: #ffffff; --slide-w: 1280px; --slide-h: 720px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #d9d6d0; color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-feature-settings: "palt"; line-height: 1.5; }
+    .toolbar { display: flex; gap: 10px; justify-content: center; align-items: center; padding: 14px 16px 6px; flex-wrap: wrap; }
+    .toolbar button, .toolbar a { border: 1px solid #9aa3ad; background: #fff; color: var(--ink); border-radius: 999px; padding: .45rem 1.1rem; font: inherit; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .hint { text-align: center; color: #555; font-size: 12px; margin: 0 16px 14px; }
+    .slide { width: var(--slide-w); height: var(--slide-h); margin: 0 auto 18px; background: var(--bg); position: relative; overflow: hidden;
+      padding: 44px 64px 56px; box-shadow: 0 12px 30px rgba(30,30,30,.14); display: flex; flex-direction: column; }
+    .slide::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--accent); }
+    .slide.cover::before { width: 0; }
+    .foot { position: absolute; left: 64px; right: 64px; bottom: 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+    .kicker { font-size: 12px; letter-spacing: .16em; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 40px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    h2 { font-size: 28px; line-height: 1.25; margin: 0 0 16px; letter-spacing: -.01em; }
+    h3 { font-size: 16px; margin: 0 0 8px; color: var(--accent); }
+    p { margin: 0 0 8px; font-size: 15px; }
+    .lead { font-size: 18px; }
+    .small { font-size: 12.5px; color: var(--muted); }
+    .cols { display: grid; gap: 22px; }
+    .cols.two { grid-template-columns: 1fr 1fr; }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .cols.wide-left { grid-template-columns: 1.4fr 1fr; }
+    .cols.wide-right { grid-template-columns: 1fr 1.4fr; }
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+    .box.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .box.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .box.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .box.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .box.dim { border-style: dashed; color: var(--muted); }
+    .num { font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--accent); }
+    .num small { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+    .num.warm { color: var(--warm); }
+    ul, ol { margin: 0; padding-left: 1.3em; font-size: 15px; }
+    li { margin: 0 0 5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { padding: 6px 9px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2f4f7; font-weight: 700; font-size: 12.5px; color: #333; }
+    td.r, th.r { text-align: right; white-space: nowrap; }
+    tr.hl td { background: var(--accent-soft); font-weight: 700; }
+    tr.dim td { color: var(--muted); }
+    table.tight th, table.tight td { padding: 4px 7px; font-size: 12.5px; }
+    .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef0f3; color: #333; margin-right: 6px; vertical-align: middle; white-space: nowrap; }
+    .tag.must { background: var(--accent); color: #fff; }
+    .tag.nice { background: var(--warm); color: #fff; }
+    .tag.hold { background: #777; color: #fff; }
+    .tag.ok { background: var(--ok); color: #fff; }
+    .tag.ng { background: var(--ng); color: #fff; }
+    .cover { justify-content: center; background: linear-gradient(135deg, #15375a 0%, #1f4e79 60%, #2b6a9b 100%); color: #fff; }
+    .cover .kicker { color: #cfe0f2; }
+    .cover h1 { font-size: 46px; color: #fff; }
+    .cover p { color: #e6eef6; }
+    .cover .meta { margin-top: 32px; font-size: 14.5px; color: #cfe0f2; line-height: 1.8; }
+    .flow { display: flex; gap: 8px; align-items: stretch; }
+    .flow .step { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; position: relative; background: #fff; }
+    .flow .step b { display: block; font-size: 14.5px; color: var(--accent); margin-bottom: 4px; }
+    .flow .step.dim { color: var(--muted); border-style: dashed; }
+    .flow .step.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .flow .step.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .flow .step.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .flow .arrow { align-self: center; font-size: 22px; color: var(--muted); flex: none; }
+    .stamp { position: absolute; right: 64px; top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-cards.three { grid-template-columns: repeat(3, 1fr); }
+    .grid-cards .box { padding: 12px 14px; }
+    .grid-cards .box h3 { font-size: 14.5px; }
+    .grid-cards .box p { font-size: 13px; margin: 0; }
+    /* 構成図 */
+    .diag { display: flex; gap: 14px; align-items: stretch; }
+    .diag .zone { flex: 1; border: 1.5px dashed #b7bec8; border-radius: 12px; padding: 12px; background: #fafbfc; }
+    .diag .zone > b { display: block; font-size: 12px; color: var(--muted); letter-spacing: .1em; margin-bottom: 8px; }
+    .diag .zone.t { border-color: var(--accent); background: #f3f7fb; }
+    .diag .zone.k { border-color: var(--warm); background: #fcf6f0; }
+    .node { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; font-size: 13px; margin-bottom: 8px; }
+    .node b { display: block; font-size: 13.5px; }
+    .node.db { border-radius: 20px / 10px; background: #eef4ea; border-color: #bfd3b5; }
+    .node.file { background: #fff8e8; border-color: #e5d3a3; }
+    .node.ppl { background: #f1eefb; border-color: #cfc5ea; }
+    .varrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; margin: 2px 0 8px; }
+    .harrow { align-self: center; color: var(--muted); font-size: 24px; flex: none; }
+    .harrow.dash { color: #9aa3ad; }
+    /* 状態遷移 */
+    .states { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .states span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: #fff; }
+    .states span.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .states span.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .states i { font-style: normal; color: var(--muted); }
+    /* ガント */
+    .gantt { font-size: 12px; }
+    .gantt .row { display: grid; grid-template-columns: 230px 1fr; align-items: center; gap: 8px; min-height: 18px; }
+    .gantt .row.head { min-height: 20px; }
+    .gantt .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11.5px; line-height: 1.2; }
+    .gantt .track { position: relative; height: 12px; background: #f2f4f7; border-radius: 3px; }
+    .gantt .track .bar { position: absolute; top: 1px; bottom: 1px; background: var(--accent); border-radius: 2px; }
+    .gantt .track .bar.k { background: var(--warm); }
+    .gantt .track .bar.t { background: var(--ok); }
+    .gantt .track .bar.p { background: #7a8694; }
+    .gantt .track .ms { position: absolute; top: -1px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 12px solid var(--ng); transform: translateX(-7px); }
+    .gantt .months { display: grid; grid-template-columns: repeat(5, 1fr); font-size: 11px; color: var(--muted); border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+    .gantt .months div { border-left: 1px solid var(--line); padding: 0 4px 2px; }
+    .gantt .track .vline { position: absolute; top: 0; bottom: 0; border-left: 1px solid #dfe3e8; }
+    .gantt .sec { font-weight: 700; color: var(--accent); margin: 5px 0 1px; font-size: 11.5px; line-height: 1.2; }
+    /* 画面ワイヤー */
+    .wire { border: 1px solid var(--line); border-radius: 10px; background: #f6f7f9; padding: 10px; font-size: 11.5px; }
+    .wire .bar { background: var(--accent); color: #fff; padding: 5px 10px; border-radius: 6px 6px 0 0; font-weight: 700; font-size: 12px; margin: -10px -10px 8px; }
+    .wire .f { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; margin-bottom: 5px; }
+    .wire .f label { display: block; font-size: 9.5px; color: var(--muted); }
+    .wire .f .v { font-size: 11.5px; }
+    .wire .f .v.ph { color: #9aa3ad; }
+    .wire .row { display: flex; gap: 6px; }
+    .wire .row > div { flex: 1; }
+    .wire .btn { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 11px; margin-right: 4px; }
+    .wire .btn.ghost { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+    .wire .btn.warm { background: var(--warm); }
+    .sched { display: grid; grid-template-columns: 70px repeat(6, 1fr); gap: 3px; font-size: 10.5px; }
+    .sched .h { background: #f2f4f7; text-align: center; font-weight: 700; padding: 4px 2px; border-radius: 4px; }
+    .sched .d { background: #f2f4f7; padding: 4px; border-radius: 4px; font-weight: 700; }
+    .sched .c { background: #fff; border: 1px solid var(--line); border-radius: 4px; min-height: 42px; padding: 3px; }
+    .sched .c.spare { background: #fafafa; border-style: dashed; }
+    .sched .c.blocked { background: repeating-linear-gradient(45deg, #eee, #eee 4px, #f8f8f8 4px, #f8f8f8 8px); }
+    .sched .k { border-radius: 4px; padding: 2px 4px; margin-bottom: 2px; font-size: 10px; line-height: 1.25; }
+    .sched .k.o { background: var(--warm-soft); border-left: 3px solid var(--warm); }
+    .sched .k.g { background: var(--ok-soft); border-left: 3px solid var(--ok); }
+    .sched .k.n { background: #eef0f3; border-left: 3px solid #777; }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .slide { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">PDFとして保存（印刷ダイアログ）</button>
+    <a href="kimura_kokuhosha_proposal_v3_slides_20261011.html">① 提案書</a>
+    <a href="kimura_kokuhosha_estimate_v3_slides_20261011.html">② 見積</a>
+    <a href="kimura_kokuhosha_system_architecture_slides_20261011.html">③ 構成図</a>
+    <a href="kimura_kokuhosha_basic_design_slides_20261011.html">④ 基本設計</a>
+    <a href="kimura_kokuhosha_specification_slides_20261011.html">⑤ 仕様</a>
+    <a href="kimura_kokuhosha_schedule_slides_20261011.html" style="background:var(--accent);color:#fff;border-color:var(--accent)">⑥ スケジュール</a>
+  </div>
+  <p class="hint">印刷ダイアログで「送信先: PDFに保存」「用紙サイズ: 既定（CSS指定 1280×720）」「余白: なし」「背景のグラフィック: オン」にすると、1スライド1ページで書き出せます。</p>
+  <!-- 1 表紙 -->
+  <section class="slide cover">
+    <p class="kicker">スケジュール表（v3・案）</p>
+    <h1>2026年10月 〜 2027年2月<br>進め方</h1>
+    <p class="lead" style="color:#e6eef6">10〜12月開発 → 12月末テスト準備完了 → 1月並行テスト → 2月検収。<br>計画であり契約ではない。</p>
+    <div class="meta">
+      株式会社国宝社　木村 秀継 様<br>
+      tugilo 次廣 淳　｜　2026年10月11日<br>
+      助成金（板橋区 デジタル化・データ利活用推進助成金 業務管理システムコース。採択未確定）の採択・契約の時期で前後する。
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <p class="kicker">1. 全体</p>
+    <h2>2026-10-12 〜 2027-02-28</h2>
+<div class="gantt"><div class="row head"><div class="label"></div><div class="months" style="grid-template-columns:20fr 30fr 31fr 31fr 28fr"><div>10月</div><div>11月</div><div>12月</div><div>1月</div><div>2月</div></div></div><div class="sec">準備</div><div class="row"><div class="label">提案・見積・設計書 提出</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar p" style="left:0.00%;width:3.57%"></div></div></div>
+<div class="row"><div class="label">担当者 Zoom（自動配置の条件）</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar p" style="left:5.00%;width:3.57%"></div></div></div>
+<div class="row"><div class="label">契約手続き・助成金書類</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar p" style="left:0.00%;width:13.57%"></div></div></div>
+<div class="row"><div class="label">◆ CSV レイアウト受領（開発会社）10/30</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="ms" style="left:12.86%"></div></div></div>
+<div class="sec">開発（tugilo）</div><div class="row"><div class="label">M0 要件定義・基本設計 確定</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:5.00%;width:8.57%"></div></div></div>
+<div class="row"><div class="label">M1 共通基盤・S サーバー</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:15.00%;width:8.57%"></div></div></div>
+<div class="row"><div class="label">M2 注文入力 PDF</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:15.00%;width:18.57%"></div></div></div>
+<div class="row"><div class="label">M3 生産依頼表 手動入力</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:25.00%;width:3.57%"></div></div></div>
+<div class="row"><div class="label">M4 CSV 出力</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:25.00%;width:13.57%"></div></div></div>
+<div class="row"><div class="label">M5 製本作業予定表</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:30.00%;width:18.57%"></div></div></div>
+<div class="row"><div class="label">M6 自動配置 v1</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:40.00%;width:13.57%"></div></div></div>
+<div class="row"><div class="label">M7 結合テスト・テスト準備</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar " style="left:45.00%;width:10.71%"></div></div></div>
+<div class="row"><div class="label">◆ テスト準備完了 12/28</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="ms" style="left:55.00%"></div></div></div>
+<div class="sec">開発会社</div><div class="row"><div class="label">取込プログラム 設計・開発</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar k" style="left:15.00%;width:33.57%"></div></div></div>
+<div class="row"><div class="label">CSV 結合テスト①</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar k" style="left:40.00%;width:3.57%"></div></div></div>
+<div class="row"><div class="label">◆ 取込口 完成 12/25</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="ms" style="left:52.86%"></div></div></div>
+<div class="sec">並行テスト・検収</div><div class="row"><div class="label">並行テスト（手組み・手入力と並走）</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar t" style="left:60.71%;width:17.86%"></div></div></div>
+<div class="row"><div class="label">修正・ルール調整</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar t" style="left:65.71%;width:17.86%"></div></div></div>
+<div class="row"><div class="label">検収</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="bar t" style="left:85.00%;width:8.57%"></div></div></div>
+<div class="row"><div class="label">◆ 運用開始 2/22 ／ 助成金 完了期限 2/28</div><div class="track"><i class="vline" style="left:14.29%"></i><i class="vline" style="left:35.71%"></i><i class="vline" style="left:57.86%"></i><i class="vline" style="left:80.00%"></i><div class="ms" style="left:95.00%"></div></div></div>
+</div><p class="small" style="margin-top:6px">青＝tugilo／橙＝開発会社／緑＝並行テスト・検収／灰＝準備／◆＝マイルストーン</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>2 / 8</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <p class="kicker">2. 10月</p>
+    <h2>文書提出 → 担当者 Zoom → 要件定義 → CSV レイアウト受領</h2>
+
+    <table class="tight">
+      <tr><th style="width:90px">週</th><th>tugilo</th><th>国宝社様</th><th>開発会社</th><th style="width:150px">成果・確認</th></tr>
+      <tr><td>10/12（月）〜</td><td>提案書 v3・見積・構成図・基本設計・仕様・本表を提出。質問を受ける</td><td>内容確認。助成金の必要書類の粒度を役所に確認</td><td>—</td><td>文書一式</td></tr>
+      <tr><td>10/19〜</td><td><b>担当者 Zoom</b>（予定組み・事務）。自動配置の条件、稼働枠、優先度、主要1社の PDF を聞く。M0 着手</td><td>Zoom 参加。予定表 Excel 実ファイル・PDF サンプル追加</td><td>CSV レイアウト設計</td><td>ヒアリング記録</td></tr>
+      <tr><td>10/26〜</td><td>M0: 基本設計・仕様の確定版。置き場所（案A／B）を決める</td><td>契約手続き。既定フォルダの場所決め</td><td><b>CSV レイアウト提示（10/30 目標）</b></td><td>確定版 設計書・レイアウト</td></tr>
+    </table>
+    <div class="box warm" style="margin-top:16px">
+      <p style="margin:0">契約手続きは10月中の目標。開発着手を 11/2 に置き、10月後半は M0（要件定義）だけ先行する。採択が遅れる場合、11/2 以降が同じ日数だけ後ろへ。</p>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>3 / 8</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <p class="kicker">3. 11月</p>
+    <h2>基盤・サーバー → 注文入力 → 手動入力 → CSV 出力</h2>
+
+    <table class="tight">
+      <tr><th style="width:90px">週</th><th>tugilo</th><th>国宝社様</th><th>開発会社</th><th style="width:170px">成果・確認</th></tr>
+      <tr><td>11/2（月）〜</td><td>M1 共通基盤。S サーバー構築着手。M2 PDF 解析着手</td><td>サーバー（Hyper-V または専用PC）の用意</td><td>取込プログラム 設計</td><td>開発環境・ログイン</td></tr>
+      <tr><td>11/9〜</td><td>M1・S 完了。M2 解析・項目欄</td><td>Oracle 読み取りアカウント（使う場合）</td><td>取込プログラム 開発</td><td>社内 URL で画面が開く</td></tr>
+      <tr><td>11/16〜</td><td>M2 承認・次へ。M3 手動入力。M4 CSV 出力着手</td><td>得意先の照合方法を開発会社と確認</td><td>取込プログラム 開発</td><td>PDF 1件が承認まで通る</td></tr>
+      <tr><td>11/23〜</td><td>M2 完了。M4 継続。M5 予定表着手</td><td>通知方法・UPDATE／DELETE を開発会社と確認</td><td>取込プログラム 開発</td><td>承認 → CSV ファイルが出る</td></tr>
+      <tr><td>11/30〜</td><td>M4 完了（結果ファイル対応は方式確定後）。M5 予定表</td><td>—</td><td>取込プログラム 開発</td><td>CSV を開発会社に送る</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>4 / 8</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <p class="kicker">4. 12月</p>
+    <h2>予定表 → 自動配置 → 結合テスト → テスト準備完了</h2>
+
+    <table class="tight">
+      <tr><th style="width:90px">週</th><th>tugilo</th><th>国宝社様</th><th>開発会社</th><th style="width:170px">成果・確認</th></tr>
+      <tr><td>12/7（月）〜</td><td>M5 予定表（差し込み・作業時間・合計）。M6 自動配置着手。<b>結合テスト①</b></td><td>結合テスト立会</td><td><b>結合テスト①</b>（CSV → Oracle）</td><td>1件が Oracle に入る</td></tr>
+      <tr><td>12/14〜</td><td>M5 完了。M6 ルール実装。M7 結合テスト</td><td>予定表の試し触り</td><td>修正</td><td>予定表で週が組める</td></tr>
+      <tr><td>12/21〜</td><td>M6 完了。M7 テスト・操作メモ</td><td>並行テストの体制（誰が・いつ比べるか）</td><td><b>取込口 完成（12/25 目標）</b></td><td>自動配置ボタンが提案を出す</td></tr>
+      <tr class="hl"><td>12/28（月）</td><td><b>テスト準備完了</b></td><td>年末</td><td>年末</td><td>テスト環境・操作メモ</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>5 / 8</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <p class="kicker">5. 1月〜2月</p>
+    <h2>並行テスト → 実測 → 検収 → 運用開始 → 完了報告</h2>
+
+    <table class="tight">
+      <tr><th style="width:90px">週</th><th>tugilo</th><th>国宝社様</th><th>開発会社</th><th style="width:170px">成果・確認</th></tr>
+      <tr><td>1/5（火）〜</td><td><b>並行テスト開始。</b>週1回の見直し（火曜 1h・Zoom）</td><td>現行の手入力・手組みと <b>並走</b>。PDF を Web にも通す。予定表を Web でも組む</td><td>取込を実運用手順で実行</td><td>差分一覧</td></tr>
+      <tr><td>1/12〜</td><td>並行テスト。解析の直し、ルールの重み調整</td><td>並走。差の理由を拾う</td><td>取込結果の確認</td><td>週次 差分</td></tr>
+      <tr><td>1/18〜</td><td>並行テスト。修正</td><td>並走</td><td>—</td><td>週次 差分</td></tr>
+      <tr><td>1/25〜</td><td>並行テスト 締め。時間の実測（手入力・予定組み）</td><td>並走。実測に協力</td><td>—</td><td><b>実測値</b>（ROI 置き換え）</td></tr>
+      <tr><td>2/1〜</td><td>修正の最終。検収項目表</td><td>検収項目の確認</td><td>—</td><td>検収項目表</td></tr>
+      <tr><td>2/8〜</td><td><b>検収</b>。引き渡し手順・バックアップ手順</td><td>検収</td><td>取込口の引き渡し</td><td>検収書</td></tr>
+      <tr><td>2/15〜</td><td>検収 修正。運用開始準備</td><td>運用体制</td><td>—</td><td>—</td></tr>
+      <tr class="hl"><td>2/22（月）</td><td><b>運用開始</b>。立会</td><td>運用開始</td><td>—</td><td>—</td></tr>
+      <tr><td>2/26（金）</td><td>—</td><td><b>助成金 完了報告（期限 2/28）</b></td><td>—</td><td>完了報告</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>6 / 8</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <p class="kicker">6. マイルストーン</p>
+    <h2>日付と条件</h2>
+
+    <table>
+      <tr><th style="width:120px">日</th><th>内容</th><th style="width:260px">条件</th></tr>
+      <tr><td>10/16（金）</td><td>文書一式 提出</td><td>—</td></tr>
+      <tr><td>10/23（金）</td><td>担当者 Zoom 完了</td><td>日程調整</td></tr>
+      <tr><td>10/30（金）</td><td>CSV レイアウト受領、契約手続き、置き場所決定</td><td>開発会社・助成金</td></tr>
+      <tr><td>12/11（金）</td><td>結合テスト①（CSV → Oracle 1件）</td><td>開発会社の取込口 試作</td></tr>
+      <tr><td>12/25（金）</td><td>取込口 完成</td><td>開発会社</td></tr>
+      <tr class="hl"><td>12/28（月）</td><td>テスト準備完了</td><td>tugilo</td></tr>
+      <tr><td>1/5（火）</td><td>並行テスト開始</td><td>体制</td></tr>
+      <tr><td>1/29（金）</td><td>並行テスト 締め・実測</td><td>—</td></tr>
+      <tr class="hl"><td>2/19（金）</td><td>検収</td><td>—</td></tr>
+      <tr><td>2/22（月）</td><td>運用開始</td><td>—</td></tr>
+      <tr><td>2/28（日）</td><td>助成金 完了期限</td><td>国宝社様</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>7 / 8</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <p class="kicker">7. 前提と遅れ要因／会議体</p>
+    <h2>ずれたらどうするか</h2>
+
+    <div class="cols wide-left">
+      <table class="tight">
+        <tr><th>前提</th><th>遅れると</th></tr>
+        <tr><td>10/30 までに CSV レイアウト受領</td><td>M4 の確定が遅れる。tugilo は「たたき台」で先に作り、提示後に合わせる</td></tr>
+        <tr><td>10月中に契約手続き（採択の確約ではない）</td><td>11/2 着手がずれ、同じ日数だけ後ろへ。2/28 を越える場合は範囲（あれば便利）で調整</td></tr>
+        <tr><td>11月中にサーバー（Hyper-V の空き or 専用PC）</td><td>M1・S が後ろへ。開発はローカルで進め、配置だけ後ろにできる</td></tr>
+        <tr><td>12/25 に取込口完成</td><td>1月に Oracle まで通せない。CSV まで並走し、取込だけ後追い</td></tr>
+        <tr><td>1月に並走の体制（事務・予定組み担当）</td><td>実測が取れない。検収は機能ベースで行い、実測は運用開始後</td></tr>
+        <tr><td>予定表 Excel 実ファイル・PDF サンプル追加（10月）</td><td>解析・予定表のカード項目の確定が遅れる</td></tr>
+      </table>
+      <div class="box accent">
+        <h3>会議体</h3>
+        <table class="tight">
+          <tr><td>木村さん 1to1（Zoom）</td><td>2週に1回・40分</td></tr>
+          <tr><td>担当者ヒアリング</td><td>10月に1回</td></tr>
+          <tr><td>開発会社 連携確認</td><td>10月末・11月中・12月結合時</td></tr>
+          <tr><td>並行テスト見直し</td><td>1月 週1回・1時間</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 スケジュール表（v3・案）</span><span>8 / 8</span></div>
+  </section>
+</body>
+</html>

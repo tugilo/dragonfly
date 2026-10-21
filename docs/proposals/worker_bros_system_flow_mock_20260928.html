@@ -242,6 +242,38 @@
     .print-target { position: absolute; left: 0; top: 0; width: 100%; max-width: none; border: 0; box-shadow: none; }
     #modal { background: none; }
   }
+  .seg { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 0 0 14px; }
+  .seg button { border: 1px solid #d0d5dd; background: #fff; border-radius: 8px; padding: 8px 14px; font: inherit; font-size: 14px; cursor: pointer; }
+  .seg button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .sec { border-top: 1px solid var(--line); padding: 16px 0 8px; scroll-margin-top: 130px; }
+  .sec h3 { margin: 0 0 10px; font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .sec h3 i { font-style: normal; background: var(--c); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 13px; }
+  .sec h3 span { font-size: 12px; font-weight: 400; color: var(--sub); }
+  .sec .lbl { font-size: 13px; font-weight: 700; margin: 14px 0 6px; }
+  .kind { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kcard { border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; cursor: pointer; font-size: 13px; color: var(--sub); background: #fff; }
+  .kcard b { display: block; font-size: 16px; color: var(--ink); margin-bottom: 2px; }
+  .kcard.on { border-color: var(--c); background: var(--c-soft); }
+  .tipbox { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-bottom: 10px; }
+  .imgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .islot { border: 2px dashed #c7cdd6; border-radius: 10px; min-height: 116px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; text-align: center; padding: 8px; font-size: 12px; color: var(--sub); background: #fff; }
+  .islot b { color: var(--ink); font-size: 14px; }
+  .islot.ok { border-style: solid; border-color: var(--ok); background: #f3faf6; }
+  .islot img { width: 72px; height: 72px; object-fit: contain; background: #fff; border-radius: 6px; }
+  .islot span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .chk { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; font-size: 14px; }
+  .chk input { width: auto; }
+  .addbox { border: 2px dashed var(--c); border-radius: 12px; padding: 12px 14px; background: #fffaf8; }
+  .addbox .lbl { margin-top: 0; }
+  .srch { display: grid; gap: 6px; margin-top: 8px; }
+  .srow2 { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; cursor: pointer; font-size: 13px; flex-wrap: wrap; }
+  .srow2:hover { border-color: var(--c); }
+  .srow2.on { cursor: default; opacity: .55; }
+  .srow2 .add { margin-left: auto; color: var(--c); font-weight: 700; }
+  .me { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 13px; }
+  .req-m { color: var(--c); font-weight: 400; font-size: 12px; }
+  .cust textarea { width: 100%; height: 70px; font: inherit; padding: 8px; border: 1px solid #cfd4dc; border-radius: 6px; }
+  @media (max-width: 860px) { .imgs { grid-template-columns: repeat(2, 1fr); } .kind { grid-template-columns: 1fr; } }
   body.locked > :not(#gate) { display: none !important; }
   #gate { display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 24px; }
   body.locked #gate { display: flex; }
@@ -295,11 +327,11 @@
     <div class="hero">
       <div class="brand">WORKER BROS</div>
       <h2>オリジナルウェアのご注文</h2>
-      <p>ログインすると、3ステップで見積を依頼できます。見積の確認・承認までWebで完結します。</p>
+      <p>ログインすると、いつもの注文フォームでご注文・見積依頼ができます。お客様情報や前回の注文は自動で入ります。</p>
       <ol class="how">
-        <li><b>1</b>商品と枚数を選ぶ</li>
-        <li><b>2</b>デザインを送る</li>
-        <li><b>3</b>見積を確認して承認</li>
+        <li><b>1</b>いつもの順番で入力</li>
+        <li><b>2</b>確認して送信</li>
+        <li><b>3</b>進み具合をマイページで確認</li>
       </ol>
     </div>
     <div class="card login-wrap">
@@ -338,10 +370,10 @@
 
 <!-- 3. 注文（見積依頼） -->
 <section class="screen" data-id="order" data-title="注文する" data-who="お客様">
-  <div class="screen-title"><h2>③ 注文する（見積依頼）</h2><span class="who">お客様</span></div>
+  <div class="screen-title"><h2>③ 注文する（注文・見積依頼）</h2><span class="who">お客様</span></div>
   <div class="change">
     <div class="now"><b>今</b>1枚のフォームに品番・カラーを自由入力。存在しない品番や書き間違いが届き、確認の往復が発生する。</div>
-    <div class="next"><b>これから</b>4つのステップで1つずつ選ぶだけ。商品はマスタから選ぶので間違いが起きない。次に何をすればよいか常に表示される。</div>
+    <div class="next"><b>これから</b>入力の順番は今のフォームのまま（既存のお客様が迷わない）。品番は検索して選ぶので間違いが起きず、リピートは前回の注文を選ぶだけ。「注文／見積依頼」を最初に選べる。はじめての方向けのステップ案内にも切り替えられる。</div>
   </div>
   <div id="needLogin" class="card empty" style="display:none">ご注文にはログインが必要です。<div style="margin-top:10px"><button class="btn" onclick="go('login')">ログインへ</button></div></div>
   <div id="orderWrap" class="cust"></div>
@@ -558,12 +590,12 @@ const OPTIONS = [
 const STATUSES = ['新規受付','見積中','見積送付済','製作中','発送済','請求済'];
 
 const CUSTOMERS = [
-  { id: 'c1', name: '〇〇高校 野球部', email: 'baseball@example.jp', zip: '997-0011', addr: '山形県鶴岡市宝田1-1-1', tel: '0235-00-0001', billing: '都度', pay: '銀行振込' },
-  { id: 'c2', name: '株式会社△△', email: 'order@sankaku.example.jp', zip: '997-0034', addr: '山形県鶴岡市本町2-2-2', tel: '0235-00-0002', billing: '月次', pay: '月末締め翌月末振込' },
-  { id: 'c3', name: '□□ダンススクール', email: 'dance@example.jp', zip: '998-0044', addr: '山形県酒田市中町3-3-3', tel: '0234-00-0003', billing: '都度', pay: '代引き' },
-  { id: 'c4', name: '有限会社☆☆工務店', email: 'info@hoshi.example.jp', zip: '997-0015', addr: '山形県鶴岡市末広町4-4', tel: '0235-00-0004', billing: '月次', pay: '月末締め翌月末振込' },
-  { id: 'c5', name: '◇◇商店', email: 'shop@hishi.example.jp', zip: '997-1117', addr: '山形県鶴岡市湯野浜5-5', tel: '0235-00-0005', billing: '都度', pay: '銀行振込' },
-  { id: 'c6', name: '◎◎運輸株式会社', email: 'soumu@maru.example.jp', zip: '998-0102', addr: '山形県酒田市京田6-6', tel: '0234-00-0006', billing: '月次', pay: '月末締め翌月末振込' },
+  { id: 'c1', type: 'アパレルブランド', name: 'BLUE HOUR', email: 'order@bluehour.example.jp', zip: '997-0011', addr: '山形県鶴岡市宝田1-1-1', tel: '0235-00-0001', billing: '都度', pay: '銀行振込' },
+  { id: 'c2', type: 'アパレル企業', name: '株式会社△△アパレル', email: 'order@sankaku.example.jp', zip: '997-0034', addr: '山形県鶴岡市本町2-2-2', tel: '0235-00-0002', billing: '月次', pay: '月末締め翌月末振込' },
+  { id: 'c3', type: 'デザイナー', name: 'デザイン事務所 □□', email: 'studio@shikaku.example.jp', zip: '998-0044', addr: '山形県酒田市中町3-3-3', tel: '0234-00-0003', billing: '都度', pay: '代引き' },
+  { id: 'c4', type: 'ショップ', name: 'セレクトショップ ☆☆', email: 'info@hoshi.example.jp', zip: '997-0015', addr: '山形県鶴岡市末広町4-4', tel: '0235-00-0004', billing: '月次', pay: '月末締め翌月末振込' },
+  { id: 'c5', type: 'EC', name: '◇◇ストア', email: 'shop@hishi.example.jp', zip: '997-1117', addr: '山形県鶴岡市湯野浜5-5', tel: '0235-00-0005', billing: '都度', pay: '銀行振込' },
+  { id: 'c6', type: '法人ユニフォーム', name: '◎◎運輸株式会社', email: 'soumu@maru.example.jp', zip: '998-0102', addr: '山形県酒田市京田6-6', tel: '0234-00-0006', billing: '月次', pay: '月末締め翌月末振込' },
 ];
 const custOf = id => CUSTOMERS.find(c => c.id === id);
 
@@ -571,17 +603,17 @@ const P = (method, size, pos, plates = 1, cc = 0) => ({ method, size, pos, plate
 const O = (name, qty) => ({ name, unit: OPTIONS.find(o => o[0] === name)[1], qty });
 const H = (at, text) => ({ at, text });
 let orders = [
-  { no: 'WB-2026-0210', date: '2026-05-12', cid: 'c1', title: '春季大会Tシャツ', due: '2026-05-30', code: '5001-01', color: 'ネイビー', qty: { S: 5, M: 10, L: 10, XL: 5 }, procs: [P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), P('シルクスクリーン','30×40cm以内','バック : 背中',1)], opts: [O('タグカットのみ',30)], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-05', history: [H('2026-05-12 10:02','見積書 発行'), H('2026-05-28 17:30','請求書 発行')] },
-  { no: 'WB-2026-0371', date: '2026-08-20', cid: 'c2', title: '夏季作業Tシャツ', due: '2026-08-31', code: '5942-01', color: 'ブラック', qty: { M: 10, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-08', history: [H('2026-08-31 18:00','月次請求書（2026年8月分）に計上')] },
-  { no: 'WB-2026-0398', date: '2026-09-16', cid: 'c5', title: 'ノベルティトート', due: '2026-09-30', code: '1460-01', color: 'ナチュラル', qty: { M: 50 }, procs: [P('インクジェット','20×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',50)], ship: 1200, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-16 11:20','見積書 発行'), H('2026-09-26 15:00','発送済み')] },
-  { no: 'WB-2026-0401', date: '2026-09-18', cid: 'c2', title: '秋冬スタッフT', due: '2026-09-26', code: '5942-01', color: 'ブラック', qty: { S: 5, M: 15, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1), P('シルクスクリーン','30×40cm以内','バック : 背中',2)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-18 09:40','見積書 発行'), H('2026-09-25 16:10','発送済み')] },
-  { no: 'WB-2026-0403', date: '2026-09-19', cid: 'c4', title: '現場用ポケットT', due: '2026-09-27', code: 'T2300', color: 'ホワイト', qty: { M: 8, L: 8, XL: 4 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-19 13:05','見積書 発行'), H('2026-09-26 11:00','発送済み')] },
+  { no: 'WB-2026-0210', date: '2026-05-12', cid: 'c1', title: '26SS ロゴTシャツ', due: '2026-05-30', code: '5001-01', color: 'ネイビー', qty: { S: 5, M: 10, L: 10, XL: 5 }, procs: [P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), P('シルクスクリーン','30×40cm以内','バック : 背中',1)], opts: [O('タグカット&1辺縫い',30), O('OPP袋詰め(Tシャツ)',30)], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-05', history: [H('2026-05-12 10:02','見積書 発行'), H('2026-05-28 17:30','請求書 発行')] },
+  { no: 'WB-2026-0371', date: '2026-08-20', cid: 'c2', title: 'ショップスタッフT', due: '2026-08-31', code: '5942-01', color: 'ブラック', qty: { M: 10, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '請求済', closeMonth: '2026-08', history: [H('2026-08-31 18:00','月次請求書（2026年8月分）に計上')] },
+  { no: 'WB-2026-0398', date: '2026-09-16', cid: 'c5', title: '購入特典ノベルティトート', due: '2026-09-30', code: '1460-01', color: 'ナチュラル', qty: { M: 50 }, procs: [P('インクジェット','20×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',50)], ship: 1200, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-16 11:20','見積書 発行'), H('2026-09-26 15:00','発送済み')] },
+  { no: 'WB-2026-0401', date: '2026-09-18', cid: 'c2', title: '26AW バックプリントT', due: '2026-09-26', code: '5942-01', color: 'ブラック', qty: { S: 5, M: 15, L: 15, XL: 5 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1), P('シルクスクリーン','30×40cm以内','バック : 背中',2)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-18 09:40','見積書 発行'), H('2026-09-25 16:10','発送済み')] },
+  { no: 'WB-2026-0403', date: '2026-09-19', cid: 'c4', title: '別注ポケットT', due: '2026-09-27', code: 'T2300', color: 'ホワイト', qty: { M: 8, L: 8, XL: 4 }, procs: [P('シルクスクリーン','15×15cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-19 13:05','見積書 発行'), H('2026-09-26 11:00','発送済み')] },
   { no: 'WB-2026-0404', date: '2026-09-20', cid: 'c6', title: 'ドライバー用ロンT', due: '2026-09-27', code: '5010-01', color: 'ネイビー', qty: { M: 8, L: 10, XL: 6 }, procs: [P('DTF','28×40cm以内','バック : 背中',1)], opts: [], ship: 800, cod: 0, web: 3, status: '発送済', closeMonth: '2026-09', history: [H('2026-09-20 10:30','見積書 発行'), H('2026-09-26 17:20','発送済み')] },
-  { no: 'WB-2026-0405', date: '2026-09-22', cid: 'c2', title: 'イベントT', due: '2026-10-01', code: '5001-01', color: 'ホワイト', qty: { S: 10, M: 15, L: 10, XL: 5 }, procs: [P('シルクスクリーン','30×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',40)], ship: 800, cod: 0, web: 3, status: '製作中', closeMonth: '', history: [H('2026-09-22 14:00','見積書 発行'), H('2026-09-23 09:00','お客様承認 → 製作中')] },
-  { no: 'WB-2026-0407', date: '2026-09-24', cid: 'c1', title: '練習用ロンT', due: '2026-10-15', code: '5010-01', color: 'ネイビー', qty: { S: 4, M: 8, L: 6, XL: 2 }, procs: [P('DTF','12×12cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積送付済', closeMonth: '', request: [{ pos: 'フロント : 左胸', method: 'おまかせ', colors: 0 }], history: [H('2026-09-24 20:15','Webの注文フォームから見積依頼を受付'), H('2026-09-25 10:30','見積書 発行'), H('2026-09-25 10:31','見積書をメールで送付')] },
-  { no: 'WB-2026-0409', date: '2026-09-25', cid: 'c3', title: '発表会T', due: '2026-10-05', code: '1100-01', color: 'ブラック', qty: { S: 5, M: 7, L: 3 }, procs: [P('DTF','20×30cm以内','フロント : 胸中央',1)], opts: [], ship: 800, cod: 330, web: 3, status: '見積送付済', closeMonth: '', history: [H('2026-09-25 18:10','見積書 発行'), H('2026-09-25 18:12','見積書をメールで送付')] },
-  { no: 'WB-2026-0411', date: '2026-09-27', cid: 'c2', title: '役員用刺繍ロンT', due: '2026-10-10', code: 'CC6014', color: 'ペッパー', qty: { M: 6, L: 8, XL: 6 }, procs: [P('刺繍','10×10cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積中', closeMonth: '', history: [] },
-  { no: 'WB-2026-0412', date: '2026-09-28', cid: 'c1', title: '秋季大会用Tシャツ', due: '2026-10-20', items: [{ code: '5001-01', qty: { 'ホワイト': { S: 5, M: 10, L: 5 }, 'ネイビー': { M: 5, L: 5 } } }, { code: '1460-01', qty: { 'ナチュラル': { M: 30 } } }], procs: [{ ...P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), it: 0 }, { ...P('シルクスクリーン','30×40cm以内','バック : 背中',1,1), it: 0 }, { ...P('インクジェット','20×30cm以内','フロント : 胸中央',1), it: 1 }], opts: [O('タグカットのみ',30), O('OPP袋詰め(Tシャツ)',30)], ship: 800, cod: 0, web: 3, status: '新規受付', closeMonth: '', request: [{ pos: 'フロント : 胸中央', method: 'シルクスクリーン', colors: 2, it: 0 }, { pos: 'バック : 背中', method: 'シルクスクリーン', colors: 1, it: 0 }, { pos: 'フロント : 胸中央', method: 'おまかせ', colors: 1, it: 1 }], note: '背番号は後日送ります', history: [H('2026-09-28 08:45','注文フォームから受付')] },
+  { no: 'WB-2026-0405', date: '2026-09-22', cid: 'c2', title: 'POP UP 限定T', due: '2026-10-01', code: '5001-01', color: 'ホワイト', qty: { S: 10, M: 15, L: 10, XL: 5 }, procs: [P('シルクスクリーン','30×30cm以内','フロント : 胸中央',1)], opts: [O('OPP袋詰め(Tシャツ)',40)], ship: 800, cod: 0, web: 3, status: '製作中', closeMonth: '', history: [H('2026-09-22 14:00','見積書 発行'), H('2026-09-23 09:00','お客様承認 → 製作中')] },
+  { no: 'WB-2026-0407', date: '2026-09-24', cid: 'c1', title: '26AW ワンポイントロンT', due: '2026-10-15', code: '5010-01', color: 'ネイビー', qty: { S: 4, M: 8, L: 6, XL: 2 }, procs: [P('DTF','12×12cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積送付済', closeMonth: '', request: [{ pos: 'フロント : 左胸', method: 'おまかせ', colors: 0 }], history: [H('2026-09-24 20:15','Webの注文フォームから見積依頼を受付'), H('2026-09-25 10:30','見積書 発行'), H('2026-09-25 10:31','見積書をメールで送付')] },
+  { no: 'WB-2026-0409', date: '2026-09-25', cid: 'c3', title: 'クライアント様 周年記念T', due: '2026-10-05', code: '1100-01', color: 'ブラック', qty: { S: 5, M: 7, L: 3 }, procs: [P('DTF','20×30cm以内','フロント : 胸中央',1)], opts: [], ship: 800, cod: 330, web: 3, status: '見積送付済', closeMonth: '', history: [H('2026-09-25 18:10','見積書 発行'), H('2026-09-25 18:12','見積書をメールで送付')] },
+  { no: 'WB-2026-0411', date: '2026-09-27', cid: 'c2', title: '刺繍ロゴ ロンT', due: '2026-10-10', code: 'CC6014', color: 'ペッパー', qty: { M: 6, L: 8, XL: 6 }, procs: [P('刺繍','10×10cm以内','フロント : 左胸',1)], opts: [], ship: 800, cod: 0, web: 3, status: '見積中', closeMonth: '', history: [] },
+  { no: 'WB-2026-0412', date: '2026-09-28', cid: 'c1', title: '26AW 新作Tシャツ＋トート', due: '2026-10-20', items: [{ code: '5001-01', qty: { 'ホワイト': { S: 5, M: 10, L: 5 }, 'ネイビー': { M: 5, L: 5 } } }, { code: '1460-01', qty: { 'ナチュラル': { M: 30 } } }], procs: [{ ...P('シルクスクリーン','20×30cm以内','フロント : 胸中央',2), it: 0 }, { ...P('シルクスクリーン','30×40cm以内','バック : 背中',1,1), it: 0 }, { ...P('インクジェット','20×30cm以内','フロント : 胸中央',1), it: 1 }], opts: [O('タグカット&1辺縫い',30), O('ピスネーム縫い',30), O('OPP袋詰め(Tシャツ)',30)], ship: 800, cod: 0, web: 3, status: '新規受付', closeMonth: '', request: [{ pos: 'フロント : 胸中央', method: 'シルクスクリーン', colors: 2, it: 0 }, { pos: 'バック : 背中', method: 'シルクスクリーン', colors: 1, it: 0 }, { pos: 'フロント : 胸中央', method: 'おまかせ', colors: 1, it: 1 }], note: 'ブランドタグに付け替え希望。ピスネームは後日発送します', history: [H('2026-09-28 08:45','注文フォームから受付')] },
 ];
 orders.forEach(o => {
   if (o.color) { o.qty = { [o.color]: o.qty }; delete o.color; }
@@ -684,7 +716,7 @@ function login(viaLine) {
   }
   err.textContent = '';
   state.user = c;
-  state.form = newForm();
+  state.form = freshForm();
   renderUser(); renderMyPage(); renderForm();
   toast(`ようこそ、${c.name} 様`);
   go('mypage');
@@ -697,13 +729,14 @@ function renderUser() {
 
 // ---------- ② マイページ ----------
 const CUST_STAGES = ['ご依頼受付', '見積作成中', '見積のご確認', '製作中', '発送済み'];
+const DIRECT_STAGES = ['ご注文受付', '内容確認中', '金額のご連絡', '製作中', '発送済み'];
 const custStage = o => ({ '新規受付': 1, '見積中': 1, '見積送付済': 2, '製作中': 3, '発送済': 4, '請求済': 4 })[o.status];
 function nextAction(o) {
   const cu = custOf(o.cid);
   const re = `<button class="btn ghost sm" onclick="reorder('${o.no}')">同じ内容で注文</button>`;
   switch (o.status) {
     case '新規受付':
-    case '見積中': return { act: false, text: 'ワーカーブロスで見積を作成しています。通常1営業日以内にお知らせします。お客様の操作は必要ありません。', btns: '' };
+    case '見積中': return { act: false, text: o.kind === '注文' ? 'ご注文を受け付けました。内容を確認して、金額と納期をご連絡します（当日〜2営業日以内）。' : 'ワーカーブロスで見積を作成しています。通常1営業日以内にお知らせします。お客様の操作は必要ありません。', btns: '' };
     case '見積送付済': return { act: true, text: `<b>見積が届いています。</b>内容をご確認のうえ、よろしければ承認してください。承認後に製作を始めます。`, btns: `<button class="btn ghost sm" onclick="showQuote('${o.no}')">見積を見る</button><button class="btn sm" onclick="approve('${o.no}')">承認して注文を確定</button>` };
     case '製作中': return { act: false, text: `製作中です。お届け予定：${jpDate(o.due)}ごろ`, btns: '' };
     case '発送済': return { act: false, text: '発送しました。到着まで今しばらくお待ちください。', btns: `<button class="btn ghost sm" onclick="showDoc('${o.no}','納品書')">納品書</button>${re}` };
@@ -721,7 +754,7 @@ function renderMyPage() {
   main.innerHTML = `
     <div class="row" style="margin-bottom:14px">
       <div><div class="qhead">こんにちは、${esc(state.user.name)} 様</div><div class="qsub" style="margin:0">ご注文の状況と、お客様にお願いしたいことをまとめています。</div></div>
-      <button class="btn" style="margin-left:auto;padding:12px 20px;font-weight:700" onclick="startOrder()">＋ 新しく注文する（見積依頼）</button>
+      <button class="btn" style="margin-left:auto;padding:12px 20px;font-weight:700" onclick="startOrder()">＋ 新しく注文する</button>
     </div>
     ${acts.length ? `<div class="todo"><h3>お客様の対応をお待ちしています（${acts.length}件）</h3>
       ${acts.map(o => `<div class="row" style="margin-top:6px"><span>${esc(o.title)}（${o.no}）の見積をご確認ください</span><button class="btn sm" style="margin-left:auto" onclick="showQuote('${o.no}')">見積を確認する →</button></div>`).join('')}</div>`
@@ -731,8 +764,8 @@ function renderMyPage() {
       const na = nextAction(o), st = custStage(o), c = calc(o);
       return `<div class="ocard ${na.act ? 'act' : ''}">
         <div class="top"><div><div class="ttl">${esc(o.title)}</div><div class="muted">${o.no}｜ご依頼日 ${jpDate(o.date)}｜${esc(itemsText(o))}</div></div>
-          <div style="text-align:right">${st >= 2 ? `<div class="muted">お見積額（税込）</div><b style="font-size:18px">${yen(c.total)}円</b>` : '<span class="muted">見積作成中</span>'}</div></div>
-        <div class="prog">${CUST_STAGES.map((s, i) => `<span class="${i === st ? 'on' : i < st ? 'past' : ''}">${s}</span>`).join('')}</div>
+          <div style="text-align:right">${st >= 2 ? `<div class="muted">${o.kind === '注文' ? 'ご注文金額' : 'お見積額'}（税込）</div><b style="font-size:18px">${yen(c.total)}円</b>` : `<span class="muted">${o.kind === '注文' ? '内容確認中' : '見積作成中'}</span>`}</div></div>
+        <div class="prog">${(o.kind === '注文' ? DIRECT_STAGES : CUST_STAGES).map((s, i) => `<span class="${i === st ? 'on' : i < st ? 'past' : ''}">${s}</span>`).join('')}</div>
         <div class="nextact"><span>${na.text}</span><div class="btns">${na.btns}</div></div>
       </div>`;
     }).join('') || '<div class="card empty">まだご注文はありません。「新しく注文する」から見積を依頼できます。</div>'}`;
@@ -774,7 +807,11 @@ const isSplit = (f, p) => p.split && p.it === -1 && f.items.length > 1;
 const designSlots = (f, p) => isSplit(f, p) ? f.items.map((it, ii) => ({ ii, label: shortName(it.code), d: p.designs[ii] || {} })) : [{ ii: -1, label: '', d: p }];
 const allSlots = f => f.procs.flatMap(p => designSlots(f, p));
 function newForm() { return { step: 1, q: '', items: [], procs: [newLoc()], title: '', due: '', note: '', lastNo: null }; }
-function startOrder() { state.form = newForm(); renderForm(); go('order'); }
+state.formMode = 'classic';
+const freshForm = () => state.formMode === 'step' ? newForm() : newClassic();
+function startOrder() { state.form = freshForm(); renderForm(); go('order'); }
+function setMode(m) { state.formMode = m; state.form = freshForm(); renderForm(); }
+const modeBar = () => `<div class="seg"><span class="muted">画面の案：</span>${[['classic', 'いつもの注文フォーム（今の順番）'], ['step', 'ステップで案内（はじめての方向け）']].map(([m, l]) => `<button class="${state.formMode === m ? 'on' : ''}" onclick="setMode('${m}')">${l}</button>`).join('')}</div>`;
 const formQty = f => f.items.reduce((a, it) => a + sumQty(it.qty), 0);
 const itemAmt = it => { const b = bodyOf(it.code); return qtyLines(it.qty).reduce((a, l) => a + b.sizes[l.s] * l.n, 0); };
 const emptyColors = it => it.colors.filter(c => !colorTotal(it.qty, c));
@@ -807,8 +844,9 @@ function renderForm() {
   wrap.style.display = logged ? 'block' : 'none';
   if (!logged) return;
   const f = state.form;
-  if (f.step === 5) { wrap.innerHTML = doneHtml(); return; }
-  wrap.innerHTML = `
+  if (f.mode === 'classic') { renderClassic(); return; }
+  if (f.step === 5) { wrap.innerHTML = modeBar() + doneHtml(); return; }
+  wrap.innerHTML = modeBar() + `
     <div class="stepper">${FORM_STEPS.map((s, i) => `<div class="${i + 1 === f.step ? 'on' : i + 1 < f.step ? 'done' : ''}" ${i + 1 < f.step ? `onclick="goStep(${i + 1})"` : ''}><b>STEP ${i + 1}</b>${s}</div>`).join('')}</div>
     <div class="olay">
       <div class="card">${[step1, step2, step3, step4][f.step - 1]()}<div id="fnav"></div></div>
@@ -818,7 +856,9 @@ function renderForm() {
   refreshForm();
 }
 function refreshForm() {
-  const f = state.form; if (!f || f.step === 5) return;
+  const f = state.form; if (!f) return;
+  if (f.mode === 'classic') { refreshClassic(); return; }
+  if (f.step === 5) return;
   const hint = stepHint(f.step);
   const labels = ['次へ：カラーと枚数を選ぶ', '次へ：プリントとデザイン', '次へ：内容を確認する', '見積を依頼する（無料）'];
   const missing = allSlots(f).filter(x => !x.d.img && !x.d.file).length;
@@ -982,25 +1022,27 @@ function step4() {
       <input type="date" min="${DEMO_TODAY}" value="${f.due}" onchange="state.form.due=this.value;refreshForm()" style="max-width:220px">
       <div class="muted">目安：見積の承認から約2週間でお届けします。</div>
       <label class="f" style="margin-top:10px">件名（任意）</label>
-      <input value="${esc(f.title)}" placeholder="例：秋季大会用Tシャツ" oninput="state.form.title=this.value">
+      <input value="${esc(f.title)}" placeholder="例：26AW ロゴTシャツ" oninput="state.form.title=this.value">
       <label class="f" style="margin-top:10px">お届け先</label>
       <select><option>登録住所：〒${state.user.zip} ${esc(state.user.addr)}</option><option>別の住所に届ける（次回以降に対応）</option></select>
       <label class="f" style="margin-top:10px">ご要望・備考（任意）</label>
-      <textarea oninput="state.form.note=this.value" placeholder="例：背番号は後日送ります" style="width:100%;height:70px;font:inherit;padding:8px;border:1px solid #cfd4dc;border-radius:6px">${esc(f.note)}</textarea>
+      <textarea oninput="state.form.note=this.value" placeholder="例：ブランドタグに付け替え希望（タグは後日発送）" style="width:100%;height:70px;font:inherit;padding:8px;border:1px solid #cfd4dc;border-radius:6px">${esc(f.note)}</textarea>
     </div>
     <div class="free">見積の依頼は無料です。料金は、見積をご確認・承認いただいた時点で確定します。</div>`;
 }
 function doneHtml() {
-  const o = orderOf(state.form.lastNo);
+  const o = orderOf(state.form.lastNo), direct = o.kind === '注文', how = o.classic ? o.classic.contact : 'メール';
   return `<div class="card done-box">
     <div class="big-check">✓</div>
-    <h2 style="margin:12px 0 4px">見積のご依頼を受け付けました</h2>
+    <h2 style="margin:12px 0 4px">${direct ? 'ご注文を受け付けました' : '見積のご依頼を受け付けました'}</h2>
     <div class="muted">受付番号 <b>${o.no}</b>｜${esc(o.title)}｜${o.items.length}商品・${qtyOf(o)}枚</div>
     <ol class="timeline">
-      <li class="now"><b>✓</b>ご依頼受付（完了）</li>
-      <li><b>2</b>ワーカーブロスが見積を作成します（通常1営業日以内）</li>
+      <li class="now"><b>✓</b>${direct ? 'ご注文受付' : 'ご依頼受付'}（完了）</li>
+      ${direct ? `<li><b>2</b>内容を確認して、金額と納期を${esc(how)}でご連絡します（当日〜2営業日以内）</li>
+      <li><b>3</b>製作</li>
+      <li><b>4</b>発送（進み具合はマイページで確認できます）</li>` : `<li><b>2</b>ワーカーブロスが見積を作成します（通常1営業日以内）</li>
       <li><b>3</b>見積ができたらお知らせします。マイページで確認・承認してください</li>
-      <li><b>4</b>製作・発送</li>
+      <li><b>4</b>製作・発送</li>`}
     </ol>
     <div class="row" style="justify-content:center">
       <button class="btn" style="font-weight:700;padding:12px 22px" onclick="go('mypage')">マイページで状況を見る</button>
@@ -1009,8 +1051,21 @@ function doneHtml() {
     <p class="muted" style="margin-top:16px"><a class="link" onclick="openOrder('${o.no}')">（デモ）社内の見積作成画面でこの注文を開く →</a></p>
   </div>`;
 }
+function itemsFrom(o) {
+  return o.items.map(it => {
+    const b = bodyOf(it.code), cols = Object.keys(it.qty).filter(c => colorTotal(it.qty, c));
+    return { code: it.code, colors: cols, qty: Object.fromEntries(cols.map(c => [c, Object.fromEntries(Object.keys(b.sizes).map(s => [s, it.qty[c][s] || 0]))])) };
+  });
+}
 function reorder(no) {
   const o = orderOf(no);
+  if (state.formMode === 'classic') {
+    state.form = classicFrom(o);
+    state.form.title = `${o.title}（再注文）`;
+    closeModal(); renderForm(); go('order');
+    toast('前回の内容を読み込みました。枚数を確認してください');
+    return;
+  }
   state.form = {
     ...newForm(), step: 2,
     items: o.items.map(it => {
@@ -1043,6 +1098,191 @@ function submitOrder() {
   state.currentNo = o.no;
   f.lastNo = o.no; f.step = 5;
   renderAll(); renderForm(); window.scrollTo({ top: 0 });
+}
+
+// ---------- ③' 注文：いつもの注文フォーム（今の順番 × 新しい入力） ----------
+const PAYS = ['銀行振込', '代金引換（クロネコヤマト）', '店頭にて現金支払い'];
+const CONTACTS = ['メール', 'LINE', '電話'];
+const POPULAR = ['5001-01', '5942-01', '5010-01', '1460-01'];
+const pad2 = n => String(n).padStart(2, '0');
+const addDays = (s, n) => { const d = new Date(`${s}T00:00:00`); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
+function newClassic() {
+  const u = state.user;
+  return { mode: 'classic', kind: '注文', title: '', repeat: '', fromNo: '', dueMode: '最短', due: '', images: [{}, {}, {}, {}], imgNote: '', methods: [], bring: false, q: '', items: [], procs: [], note: '', nameProc: false, opp: false, shipTo: 'home', shipAddr: '', pay: u && u.pay === '代引き' ? PAYS[1] : PAYS[0], contact: '', confirm: false, done: false, lastNo: null };
+}
+function classicFrom(o) {
+  const f = newClassic();
+  f.title = o.title; f.repeat = 'リピート'; f.fromNo = o.no;
+  f.items = itemsFrom(o);
+  const imgs = ((o.classic && o.classic.images) || o.request || []).filter(r => r.img).slice(0, 4);
+  f.images = [0, 1, 2, 3].map(i => imgs[i] ? { file: imgs[i].file, img: imgs[i].img } : {});
+  f.methods = [...new Set(o.procs.map(p => p.method))];
+  if (o.classic) Object.assign(f, { nameProc: o.classic.nameProc, opp: o.classic.opp, bring: o.classic.bring, contact: o.classic.contact });
+  return f;
+}
+function setC(k, v) {
+  const f = state.form; f[k] = v;
+  if (k === 'repeat' && v !== 'リピート') f.fromNo = '';
+  renderForm();
+}
+function toggleMethod(m) { const f = state.form; f.methods = f.methods.includes(m) ? f.methods.filter(x => x !== m) : [...f.methods, m]; renderForm(); }
+function addC(code) { state.form.q = ''; toggleBody(code); toast(`${shortName(code)}を追加しました。カラーと枚数を入れてください`); }
+function loadRepeat(no) { const keep = state.form; state.form = classicFrom(orderOf(no)); Object.assign(state.form, { kind: keep.kind, title: keep.title.trim() || state.form.title, contact: keep.contact || state.form.contact }); renderForm(); toast('前回の内容を読み込みました。枚数を確認してください'); }
+function attachC(i, file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { toast('画像ファイル（PNG・JPG）を選んでください'); return; }
+  const r = new FileReader();
+  r.onload = () => { state.form.images[i] = { file: file.name, img: r.result }; renderForm(); toast(`画像${i + 1}を登録しました`); };
+  r.readAsDataURL(file);
+}
+function classicChecks(f) {
+  const plain = f.repeat === '無地', imgs = f.images.filter(d => d.img).length;
+  const qtyOk = f.items.length > 0 && f.items.every(it => sumQty(it.qty) > 0);
+  const noQty = f.items.find(it => !sumQty(it.qty));
+  return [
+    { id: 'c-kind', label: 'ご注文の種類', v: f.kind === '注文' ? '注文' : '見積依頼', ok: true },
+    { id: 'c-item', label: 'アイテム名・新規／リピート', v: f.title.trim() && f.repeat ? f.repeat : '', ok: !!(f.title.trim() && f.repeat), msg: !f.title.trim() ? 'アイテム名を入れてください' : '新規デザイン・リピート・無地のどれかを選んでください' },
+    { id: 'c-due', label: '納品希望日', v: f.dueMode === '最短' ? '最短' : f.due ? jpDate(f.due) : '', ok: f.dueMode === '最短' || (!!f.due && f.due >= DEMO_TODAY), msg: '納品指定日を選んでください（今日以降）' },
+    { id: 'c-img', label: '完成イメージ画像', v: plain ? '不要（無地）' : f.fromNo && !imgs ? '前回と同じ' : imgs ? `${imgs}枚` : '', ok: plain || imgs > 0 || !!f.fromNo, msg: 'イメージ画像を1枚以上登録してください' },
+    { id: 'c-method', label: '加工方法', v: plain ? '不要（無地）' : f.methods.join('・'), ok: plain || f.methods.length > 0, msg: '加工方法を1つ以上選んでください' },
+    { id: 'c-body', label: '商品・カラー・枚数', v: qtyOk ? `${f.items.length}商品・計${formQty(f)}枚` : '', ok: qtyOk, msg: !f.items.length ? '商品を1つ以上選んでください' : noQty ? `「${shortName(noQty.code)}」のカラーと枚数を入れてください` : '' },
+    { id: 'c-ship', label: 'お届け・連絡方法', v: f.contact ? `連絡：${f.contact}` : '', ok: !!f.contact && (f.shipTo === 'home' || !!f.shipAddr.trim()), msg: f.shipTo !== 'home' && !f.shipAddr.trim() ? '納品先の住所を入れてください' : '優先連絡方法を選んでください' },
+  ];
+}
+const yn = k => `<span class="chips">${[[false, '無し'], [true, '有り']].map(([v, l]) => `<button class="chip ${state.form[k] === v ? 'on' : ''}" onclick="setC('${k}',${v})">${l}</button>`).join('')}</span>`;
+function imgSlot(i, d) {
+  const id = `cimg${i}`;
+  return `<div class="islot ${d.img ? 'ok' : ''}" onclick="document.getElementById('${id}').click()" ondragover="event.preventDefault()" ondrop="event.preventDefault();attachC(${i},event.dataTransfer.files[0])">
+    ${d.img ? `<img src="${d.img}"><span>${esc(d.file)}</span><a class="link" onclick="event.stopPropagation();state.form.images[${i}]={};renderForm()">外す</a>` : `<b>画像${i + 1}</b><span>クリックまたはドラッグ</span>`}
+  </div><input type="file" id="${id}" accept="image/*" style="display:none" onchange="attachC(${i},this.files[0])">`;
+}
+function repeatPicker() {
+  const f = state.form, mine = orders.filter(o => o.cid === state.user.id).slice().reverse().slice(0, 4);
+  return `<div class="tipbox" style="margin:10px 0 0">${f.fromNo ? `<b>前回の注文 ${f.fromNo} を読み込みました。</b>デザイン・加工方法・商品が入っています。枚数を確認してください。<br>` : '<b>前回の注文を選ぶと、デザイン・加工方法・商品・枚数を読み込みます。</b>「前回と同じ」と書かなくても、確実に同じ内容で承れます。<br>'}
+    <div class="row" style="gap:6px;margin-top:6px">${mine.map(o => `<button class="chip ${f.fromNo === o.no ? 'on' : ''}" onclick="loadRepeat('${o.no}')">${esc(o.title)}（${o.date.slice(5).replace('-', '/')}）</button>`).join('') || '<span class="muted">過去のご注文はありません</span>'}</div></div>`;
+}
+function renderClassic() {
+  const f = state.form, wrap = document.getElementById('orderWrap');
+  if (f.done) { wrap.innerHTML = modeBar() + doneHtml(); return; }
+  if (f.confirm) { wrap.innerHTML = modeBar() + `<div class="olay"><div class="card">${classicReview()}<div id="fnav"></div></div><div class="side" id="fside"></div></div>`; refreshClassic(); return; }
+  const plain = f.repeat === '無地', multi = f.items.length > 1, u = state.user;
+  let n = 0;
+  const sec = (id, title, sub, body) => `<div class="sec" id="${id}"><h3><i>${++n}</i>${title}${sub ? `<span>${sub}</span>` : ''}</h3>${body}</div>`;
+  wrap.innerHTML = modeBar() + `<div class="olay"><div class="card">
+    <div class="qhead">ご注文フォーム</div>
+    <p class="qsub">いつものフォームと同じ順番です。上から順に入力して、最後に「確認画面へ」を押してください。お客様情報はログイン情報から自動で入ります。</p>
+    ${sec('c-kind', 'ご注文の種類', '', `<div class="kind">${[['注文', 'このまま注文する', '見積は不要。内容を確認して製作に入ります（金額・納期は確認後にご連絡）'], ['見積依頼', 'まず見積を依頼する', '見積をご確認・承認いただいてから注文が確定します']].map(([v, t, d]) => `<div class="kcard ${f.kind === v ? 'on' : ''}" onclick="setC('kind','${v}')"><b>${f.kind === v ? '● ' : '○ '}${t}</b>${d}</div>`).join('')}</div>`)}
+    ${sec('c-item', 'アイテム名・新規／リピート', '必須', `
+      <input value="${esc(f.title)}" placeholder="例：26AW ロゴTシャツ（ブラック）" oninput="state.form.title=this.value;refreshClassic()">
+      <div class="chips" style="margin-top:10px">${['新規デザイン', 'リピート', '無地'].map(v => `<button class="chip ${f.repeat === v ? 'on' : ''}" onclick="setC('repeat','${v}')">${v}</button>`).join('')}</div>
+      ${f.repeat === 'リピート' ? repeatPicker() : ''}`)}
+    ${sec('c-due', '納品希望日', '', `<div class="chips">${[['最短', `最短（目安：${jpDate(addDays(DEMO_TODAY, 9))}ごろ）`], ['指定', '納品指定日あり']].map(([v, l]) => `<button class="chip ${f.dueMode === v ? 'on' : ''}" onclick="setC('dueMode','${v}')">${l}</button>`).join('')}</div>
+      ${f.dueMode === '指定' ? `<input type="date" min="${DEMO_TODAY}" value="${f.due}" onchange="state.form.due=this.value;refreshClassic()" style="max-width:220px;margin-top:8px">` : ''}`)}
+    ${plain ? '' : sec('c-img', '完成イメージ画像', '1枚以上必須・最大4枚', `
+      <div class="tipbox">加工位置は<b>画像の中に書き込んで</b>ください（例：「左胸 8cm」）。位置の指定がない場合は当社の標準位置で加工します。数量などの指示は画像に書かず、下の欄に入力してください。</div>
+      ${f.fromNo && !f.images.some(d => d.img) ? '<div class="free" style="margin-top:0">前回の注文と同じデザインで承ります。変更がある場合だけ画像を登録してください。</div>' : ''}
+      <div class="imgs">${f.images.map((d, i) => imgSlot(i, d)).join('')}</div>
+      <label class="f" style="margin-top:10px">イメージ画像についての連絡事項（任意）</label>
+      <textarea oninput="state.form.imgNote=this.value" placeholder="例：画像1はTシャツ用、画像2はトートバッグ用です">${esc(f.imgNote)}</textarea>`)}
+    ${plain ? '' : sec('c-method', '加工方法', '箇所によって違う場合は複数選んでください', `<div class="mgrid">${METHODS.filter(([m]) => m !== 'おまかせ').map(([m, d]) => `<div class="mcard ${f.methods.includes(m) ? 'on' : ''}" onclick="toggleMethod('${m}')"><b>${f.methods.includes(m) ? '✓ ' : ''}${m}</b>${d}</div>`).join('')}</div>
+      <div class="muted" style="margin-top:6px">料金の目安は <a class="link" onclick="toast('価格表を開きます（デモ）')">価格表</a> をご覧ください。迷う場合は、連絡事項に「おまかせ」とご記入ください。</div>`)}
+    ${sec('c-body', '商品・カラー・枚数', '必須', `
+      <label class="chk"><input type="checkbox" ${f.bring ? 'checked' : ''} onchange="setC('bring',this.checked)"> 持ち込みボディー（ボディーをお持ち込みの場合はチェック）</label>
+      ${f.items.length ? `<div class="picked"><span class="muted">選択中 ${f.items.length}点：</span>${f.items.map(it => `<span class="ptag">${esc(shortName(it.code))}<button onclick="toggleBody('${it.code}')" title="外す">×</button></span>`).join('')}</div>` : ''}
+      ${f.items.map((it, ii) => itemBox(it, ii, multi)).join('')}
+      <div class="addbox">
+        <div class="lbl"><b>${f.items.length ? '＋ 別の商品を追加する（何点でも追加できます）' : '商品を選ぶ'}</b> <span class="muted">メーカー・品番・商品名で検索</span></div>
+        <input id="cq" value="${esc(f.q)}" placeholder="例：5001、ロンT、トート" oninput="state.form.q=this.value;renderClassicResults()">
+        <div id="cres" class="srch"></div>
+      </div>`)}
+    ${sec('c-opt', 'ネーム加工・個包装・備考', '', `
+      <div class="row" style="gap:12px"><span>ネーム加工</span>${yn('nameProc')}<span style="margin-left:12px">OPP個包装</span>${yn('opp')}</div>
+      <label class="f" style="margin-top:10px">備考（任意）</label>
+      <textarea oninput="state.form.note=this.value" placeholder="例：ブランドタグに付け替え希望（タグは後日発送）">${esc(f.note)}</textarea>`)}
+    ${sec('c-ship', 'お客様情報・お届け・お支払い・連絡方法', '', `
+      <div class="me"><b>${esc(u.name)} 様</b>　${esc(u.tel)}　${esc(u.email)}<br>〒${u.zip} ${esc(u.addr)}　<a class="link" onclick="toast('登録情報の変更はマイページから行えます（デモ）')">変更</a></div>
+      <div class="lbl">納品先</div>
+      <div class="chips">${[['home', 'お客様情報のご住所にお届け'], ['other', '納品先を指定']].map(([v, l]) => `<button class="chip ${f.shipTo === v ? 'on' : ''}" onclick="setC('shipTo','${v}')">${l}</button>`).join('')}</div>
+      ${f.shipTo === 'other' ? `<textarea style="margin-top:8px" oninput="state.form.shipAddr=this.value;refreshClassic()" placeholder="〒・住所・お届け先名・電話番号">${esc(f.shipAddr)}</textarea>` : ''}
+      <div class="lbl">お支払い方法</div>
+      ${u.billing === '月次' ? `<div class="muted">${esc(u.pay)}（月次でまとめてご請求）</div>` : `<div class="chips">${PAYS.map(v => `<button class="chip ${f.pay === v ? 'on' : ''}" onclick="setC('pay','${v}')">${v}</button>`).join('')}</div>`}
+      <div class="lbl">弊社からの優先連絡方法 <span class="req-m">必須</span></div>
+      <div class="muted" style="margin-bottom:6px">送信後、当日〜2営業日以内にご連絡します。</div>
+      <div class="chips">${CONTACTS.map(v => `<button class="chip ${f.contact === v ? 'on' : ''}" onclick="setC('contact','${v}')">${v}</button>`).join('')}</div>`)}
+    <div id="fnav"></div>
+  </div><div class="side" id="fside"></div></div>`;
+  renderClassicResults();
+  refreshClassic();
+}
+function renderClassicResults() {
+  const f = state.form, el = document.getElementById('cres'); if (!el) return;
+  const words = norm(f.q).split(/\s+/).filter(Boolean);
+  const pool = words.length ? BODIES.filter(b => { const hay = norm([b.maker, b.code, b.name, ...b.colors].join(' ')); return words.every(w => hay.includes(w)); }) : POPULAR.map(bodyOf);
+  el.innerHTML = (words.length ? '' : '<div class="muted">よく選ばれている商品</div>') + (pool.slice(0, 6).map(b => {
+    const on = f.items.some(it => it.code === b.code);
+    return `<div class="srow2 ${on ? 'on' : ''}" ${on ? '' : `onclick="addC('${b.code}')"`}><b>${b.maker}</b><span>${b.code}</span><span>${b.name}</span><span class="muted">${b.colors.length}色・${yen(Math.min(...Object.values(b.sizes)))}円〜</span><span class="add">${on ? '追加済み' : '＋ 追加'}</span></div>`;
+  }).join('') || `<div class="muted">見つかりませんでした。品番をご確認いただくか、<a class="link" onclick="toast('LINEで取り扱い商品を相談できます（デモ）')">LINEで相談</a>してください。</div>`);
+}
+function refreshClassic() {
+  const f = state.form; if (!f || f.mode !== 'classic' || f.done) return;
+  const checks = classicChecks(f), bad = checks.find(c => !c.ok);
+  const amt = f.bring ? 0 : f.items.reduce((a, it) => a + itemAmt(it), 0);
+  const label = f.confirm ? (f.kind === '注文' ? 'この内容で注文する' : '見積を依頼する（無料）') : '確認画面へ';
+  const nav = document.getElementById('fnav');
+  if (nav) nav.innerHTML = `<div class="navbar">${f.confirm ? `<button class="btn ghost" onclick="setC('confirm',false)">← 修正する</button>` : ''}
+    <span class="hint">${bad ? bad.msg : ''}</span>
+    <button class="btn next" ${bad ? 'disabled' : ''} onclick="${f.confirm ? 'submitClassic()' : `setC('confirm',true);window.scrollTo({top:0})`}">${label} →</button></div>`;
+  document.getElementById('fside').innerHTML = `<div class="card"><h3>入力の状況</h3><ul class="check">
+    ${checks.filter(c => !(f.repeat === '無地' && (c.id === 'c-img' || c.id === 'c-method'))).map((c, i) => `<li class="${c.ok ? 'ok' : c === bad ? 'now' : ''}" ${f.confirm ? '' : `onclick="document.getElementById('${c.id}').scrollIntoView({behavior:'smooth'})" style="cursor:pointer"`}><i>${c.ok ? '✓' : i + 1}</i><span>${c.label}</span><span class="v">${c.v || '未入力'}</span></li>`).join('')}
+  </ul>
+  <div class="row"><span>商品代（税抜）</span><b style="margin-left:auto;font-size:18px">${yen(amt)}円</b></div>
+  <div class="muted">${f.bring ? '持ち込みボディーのため商品代はかかりません。' : ''}加工代は、デザインを確認してからお知らせします。</div>
+  <div class="muted" style="margin-top:10px">わからないことがあれば <a class="link" onclick="toast('LINEでワーカーブロスに相談できます（デモ）')">LINEで相談</a></div></div>`;
+}
+function classicReview() {
+  const f = state.form, plain = f.repeat === '無地', multi = f.items.length > 1, u = state.user;
+  const rv = (t, body) => `<div class="rv"><h5>${t}</h5>${body}</div>`;
+  return `<div class="qhead">入力内容の確認</div>
+    <p class="qsub">${f.kind === '注文' ? 'この内容で注文します。金額と納期は、内容を確認してからご連絡します。' : 'この内容で見積を依頼します。見積をご確認・承認いただいてから注文が確定します。'}</p>
+    ${rv('ご注文の種類', f.kind === '注文' ? 'このまま注文する（見積不要）' : 'まず見積を依頼する')}
+    ${rv('アイテム名', `${esc(f.title)}（${f.repeat}）${f.fromNo ? `　<span class="muted">前回の注文 ${f.fromNo} をもとに作成</span>` : ''}`)}
+    ${rv('納品希望日', f.dueMode === '最短' ? `最短（目安：${jpDate(addDays(DEMO_TODAY, 9))}ごろ）` : jpDate(f.due))}
+    ${plain ? '' : rv('完成イメージ画像・加工方法', `<div class="row" style="gap:6px">${f.images.filter(d => d.img).map(d => `<img class="thumb" src="${d.img}">`).join('') || '<span class="muted">前回と同じデザイン</span>'}</div>
+      <div style="margin-top:6px">加工方法：${f.methods.join('・')}</div>${f.imgNote.trim() ? `<div class="muted">連絡事項：${esc(f.imgNote)}</div>` : ''}`)}
+    ${rv('商品・カラー・枚数', `${f.bring ? '<div class="muted">持ち込みボディー</div>' : ''}${f.items.map((it, ii) => { const b = bodyOf(it.code); return `<div style="margin-bottom:8px"><b>${multi ? `${ii + 1}. ` : ''}${b.name}</b> <span class="muted">${b.maker}・${b.code}</span>
+      ${it.colors.filter(c => colorTotal(it.qty, c)).map(c => `<div>${c}：${Object.entries(it.qty[c]).filter(([, n]) => n > 0).map(([s, n]) => `${s}×${n}`).join('　')}（${colorTotal(it.qty, c)}枚）</div>`).join('')}</div>`; }).join('')}
+      <div style="border-top:1px dashed var(--line);padding-top:6px">合計 <b>${formQty(f)}枚</b></div>`)}
+    ${rv('ネーム加工・個包装・備考', `ネーム加工：${f.nameProc ? '有り' : '無し'}／OPP個包装：${f.opp ? '有り' : '無し'}${f.note.trim() ? `<div class="muted">備考：${esc(f.note)}</div>` : ''}`)}
+    ${rv('お届け・お支払い・連絡方法', `納品先：${f.shipTo === 'home' ? `お客様情報のご住所（〒${u.zip} ${esc(u.addr)}）` : esc(f.shipAddr)}<br>お支払い：${u.billing === '月次' ? esc(u.pay) : esc(f.pay)}<br>優先連絡方法：${esc(f.contact)}`)}`;
+}
+function submitClassic() {
+  const f = state.form, bad = classicChecks(f).find(c => !c.ok);
+  if (bad) { toast(bad.msg); return; }
+  const plain = f.repeat === '無地', q = formQty(f), u = state.user, src = f.fromNo ? orderOf(f.fromNo) : null;
+  const o = {
+    no: nextNo(), date: DEMO_TODAY, cid: u.id, kind: f.kind,
+    due: f.dueMode === '最短' ? addDays(DEMO_TODAY, 9) : f.due,
+    title: f.title.trim(),
+    items: f.items.map(it => ({ code: it.code, qty: Object.fromEntries(it.colors.filter(c => colorTotal(it.qty, c)).map(c => [c, Object.fromEntries(Object.entries(it.qty[c]).filter(([, n]) => n > 0))])) })),
+    classic: { repeat: f.repeat, fromNo: f.fromNo, dueMode: f.dueMode, images: f.images.filter(d => d.img).map(d => ({ file: d.file, img: d.img })), imgNote: f.imgNote.trim(), methods: plain ? [] : f.methods.slice(), bring: f.bring, nameProc: f.nameProc, opp: f.opp, shipTo: f.shipTo === 'home' ? 'お客様情報のご住所' : f.shipAddr.trim(), pay: u.billing === '月次' ? u.pay : f.pay, contact: f.contact },
+    procs: plain ? [] : src ? src.procs.filter(p => f.methods.includes(p.method)).map(p => ({ ...p, it: f.items.map(it => it.code).join() === src.items.map(it => it.code).join() ? p.it : -1 })) : f.methods.map(m => P(m, defaultSize(m, 'フロント : 胸中央'), 'フロント : 胸中央')),
+    opts: [...(f.opp ? [O('OPP袋詰め(Tシャツ)', q)] : []), ...(f.bring ? [O('持ち込み料金(Tシャツ)', q)] : [])],
+    ship: 800, cod: u.billing !== '月次' && f.pay === PAYS[1] ? 330 : 0, web: 3, status: '新規受付', closeMonth: '',
+    note: f.note.trim(), history: [H(nowStr(), f.kind === '注文' ? 'Webの注文フォームから注文を受付（見積不要）' : 'Webの注文フォームから見積依頼を受付')],
+  };
+  if (!plain && !o.procs.length) o.procs = f.methods.map(m => P(m, defaultSize(m, 'フロント : 胸中央'), 'フロント : 胸中央'));
+  orders.push(o);
+  state.currentNo = o.no; f.lastNo = o.no; f.done = true;
+  renderAll(); renderForm(); window.scrollTo({ top: 0 });
+}
+function classicReq(o) {
+  const c = o.classic;
+  return `<b>お客様の指定（${o.kind === '注文' ? '注文・見積不要' : '見積依頼'}／いつもの注文フォーム）</b>：${esc(c.repeat)}${c.fromNo ? `（前回 ${c.fromNo} をもとに）` : ''}／加工方法 ${c.methods.join('・') || 'なし（無地）'}／納期 ${c.dueMode === '最短' ? '最短' : jpDate(o.due)}${c.bring ? '／<b>持ち込みボディー</b>（ボディー代は見積で除外する）' : ''}${c.nameProc ? '／ネーム加工あり' : ''}${c.opp ? '／OPP個包装' : ''}
+    ${c.images.length ? `<div class="thumbs">${c.images.map((d, i) => `<figure><img src="${d.img}">画像${i + 1}</figure>`).join('')}</div>` : ''}
+    ${c.imgNote ? `<div class="muted">画像の連絡事項：${esc(c.imgNote)}</div>` : ''}
+    ${o.note ? `<div class="muted">備考：${esc(o.note)}</div>` : ''}
+    <div class="muted">お届け：${esc(c.shipTo)}｜お支払い：${esc(c.pay)}｜優先連絡：${esc(c.contact)}</div>
+    <div class="muted">加工の位置・サイズは、画像への書き込みを見て担当者が確定する（加工方法ごとに1行を仮置き）。</div>`;
 }
 
 // ---------- ③ 受注一覧 ----------
@@ -1087,7 +1327,7 @@ function renderEstimate() {
     o.items.flatMap((it, ii) => { const b = bodyOf(it.code); return Object.keys(it.qty).flatMap((col, ci) => Object.keys(b.sizes).map(s => `<tr><td>【${b.maker}】${b.name}</td><td>${col}</td><td>${s}</td><td class="num">${yen(b.sizes[s])}</td>
       <td class="num"><input type="number" min="0" value="${it.qty[col][s] || 0}" style="width:64px" ${locked ? 'disabled' : ''} oninput="setQty(${ii},${ci},'${s}',this.value)" onchange="renderAll()"></td><td class="num">${yen(b.sizes[s] * (it.qty[col][s] || 0))}</td></tr>`)); }).join('') +
     `<tr><td colspan="4" class="muted">ボディ計（単価はボディーマスタの販売価格）</td><td class="num"><b>${c.q}</b></td><td class="num"><b>${yen(c.bodyAmt)}</b></td></tr></tbody>`;
-  document.getElementById('reqBox').innerHTML = o.request
+  document.getElementById('reqBox').innerHTML = o.classic ? classicReq(o) : o.request
     ? `<b>お客様の指定</b>：${o.request.map(r => `${o.items.length > 1 ? `【${esc(procTarget(o, { it: r.it ?? -1 }))}】` : ''}${r.pos}／${r.method}／${!r.colors ? '色数おまかせ' : r.colors >= 4 ? '4色以上' : r.colors + '色'}${r.file ? `／${esc(r.file)}` : ''}`).join('　')}
        ${o.request.some(r => r.img) ? `<div class="thumbs">${o.request.filter(r => r.img).map(r => `<figure><img src="${r.img}">${o.items.length > 1 ? `${esc(procTarget(o, { it: r.it ?? -1 }))}<br>` : ''}${esc(r.pos)}</figure>`).join('')}</div>` : ''}
        ${o.note ? `<div class="muted">備考：${esc(o.note)}</div>` : ''}
@@ -1365,7 +1605,7 @@ function renderAll() {
 
 document.getElementById('steps').innerHTML = screens.map((s, i) =>
   `<button data-id="${s.dataset.id}" onclick="go('${s.dataset.id}')"><span class="who">${s.dataset.who}</span>${i + 1}. ${s.dataset.title}</button>`).join('');
-document.getElementById('loginCustomer').innerHTML = CUSTOMERS.map(c => `<option value="${c.id}">${c.name}（${c.billing}）</option>`).join('');
+document.getElementById('loginCustomer').innerHTML = CUSTOMERS.map(c => `<option value="${c.id}">${c.name}（${c.type}・${c.billing}）</option>`).join('');
 document.getElementById('ls').innerHTML = `<option value="">すべての状態</option>` + STATUSES.map(s => `<option>${s}</option>`).join('');
 fillLogin();
 
