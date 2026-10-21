@@ -3,7 +3,7 @@ doc_type: webmaster_term_hub
 chapter: bni_dragonfly
 term_ja: "11期"
 created_jst: "2026-08-29 10:00 JST"
-updated_jst: "2026-09-17 09:18 JST"
+updated_jst: "2026-10-20 22:25 JST"
 audience: "11期 Webマスターチーム（次廣・梅澤・太田・軍司・竹村・米澤）"
 status: living
 religo_session_type: webmaster_meeting
@@ -36,6 +36,10 @@ religo_import: first_meeting_imported
 | 梅澤さんの反応（9/13） | 事前資料を見た。チェックリストは来期施策の **事前提案**。目的は抜け漏れ防止。14日は採否を切らない。[記録](webmaster_term11_umezawa_reaction_20260913.md)。台本: [アジェンダ](webmaster_term11_meeting1_20260914_agenda.md) |
 | 動画の目的と効果 | 調査中。編集しないとは未決。録る／切る／整える／出すは別。[調査](webmaster_term11_video_purpose_effect_20260913.md) |
 | サポートチームWS | **受講対象。** オンライン2時間。10/1 13:00–15:00 または 10/9 15:30–17:30。受ければTLTオンデマンドは不要。すでにTLT視聴済みでもWSを受ける（LT確認）。告知文: [webmaster_term11_tlt_workshop_20260912.md](webmaster_term11_tlt_workshop_20260912.md)。**未送信** |
+| 11期 Zoom背景 | **全員分完成（米澤さん）。** 初回定例会は **2026-10-06**。リマインド未送信。[案内](webmaster_term11_zoom_bg_20261004.md)。[NextCloud](https://ne-dragonfly.site/cloud/index.php/s/dHKLM7nBq5cQJsA) |
+| 10/6 前日ToDo | **未送信。** STは月曜12時。バイスは18時。スライドは18–21時に手分け。[ToDo](webmaster_term11_todo_20261005.md) |
+| Zoom アップデート案内 | **未送信。** Mac 7.2.2／Win 7.2.1。手順と変化。セキュリティ強化。[案内](webmaster_term11_zoom_update_20261020.md) |
+| LTST 報告・相談（10/20週） | **未送信。** 報告: スクショ確認／軍司さん BOR 講座（10/20 夜）／横串 MTG（広報・公式ページ）。相談: 2回目 BOR 前の各部屋感想を 2人固定。[報告](webmaster_term11_ltst_report_20261020.md) |
 
 ---
 
@@ -66,6 +70,7 @@ religo_import: first_meeting_imported
 | 11期 LTST 情報まとめ（プレジ作成・アジェンダ／議事録） | https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit |
 | タスク棚卸し（作業用シート） | https://docs.google.com/spreadsheets/d/1TWadVczKpOXQTy76-3cij-kYOTfFi2eGl7bHyoKrsh4/edit |
 | NextCloud（ST定例会） | https://ne-dragonfly.site/cloud/index.php/s/E3a37t3pPsAJB8q?path=%2F |
+| NextCloud（11期 Zoom背景） | https://ne-dragonfly.site/cloud/index.php/s/dHKLM7nBq5cQJsA |
 | ビジタースライド | https://ne-dragonfly.site/genslide/ |
 | Religo Meetings | http://localhost/meetings |
 
@@ -146,6 +151,11 @@ religo_import: first_meeting_imported
 | 動画の目的と効果（調査） | [webmaster_term11_video_purpose_effect_20260913.md](webmaster_term11_video_purpose_effect_20260913.md) |
 | 第1回議事録（9/14・実施） | [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) |
 | LT×WM 議事録（9/16） | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
+| 11期 Zoom背景 配布案内 | [webmaster_term11_zoom_bg_20261004.md](webmaster_term11_zoom_bg_20261004.md) |
+| 10/6 前日ToDo（10/5） | [webmaster_term11_todo_20261005.md](webmaster_term11_todo_20261005.md) |
+| 10/6 初回 挨拶（1分） | [webmaster_term11_kickoff_speech_20261006.md](webmaster_term11_kickoff_speech_20261006.md) |
+| Zoom アップデート案内（10/20） | [webmaster_term11_zoom_update_20261020.md](webmaster_term11_zoom_update_20261020.md) |
+| LTST 報告・相談（10/20週） | [webmaster_term11_ltst_report_20261020.md](webmaster_term11_ltst_report_20261020.md) |
 | 第1回アジェンダ（9/14・進行用） | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) |
 | タスク表 | [webmaster_task_inventory_20260822.csv](webmaster_task_inventory_20260822.csv)／[説明](webmaster_task_inventory_20260822.md) |
 | 倉持棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
@@ -167,7 +177,7 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 | 36 | 2026-08-21 | 工藤祐司さん4者 | [webmaster_kudo_yuji_20260821.md](webmaster_kudo_yuji_20260821.md) |
 | 37 | 2026-08-22 | 倉持さん棚卸し | [webmaster_handover_20260822.md](webmaster_handover_20260822.md) |
 | 41 | 2026-09-14 | 11期 Webマス 第1回 | [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) |
-| 43 | 2026-09-16 | LT × Webマス（リハ・台本） | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
+| 44 | 2026-09-16 | LT × Webマス（リハ・台本） | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) |
 
 種別は `webmaster_meeting`。画面は Religo の [Meetings](http://localhost/meetings)。
 
@@ -195,6 +205,17 @@ Markdown が正。Religo の DB は写し。パスワードは Religo にも載�
 
 | 日時 (JST) | 内容 |
 |------------|------|
+| 2026-10-20 22:25 | LTST 報告・相談（10/20週）。BOR 講座実施、2回目 BOR 前の感想 2人固定を相談。未送信 |
+| 2026-10-20 14:27 | Zoom アップデート案内。Mac 7.2.2／Win 7.2.1。未送信 |
+| 2026-10-06 08:44 | 11期初回の挨拶1分。意気込みとサポート5名の称賛 |
+| 2026-10-05 14:03 | 前日ToDoをグループ投稿用に組み直した |
+| 2026-10-05 14:02 | 前日ToDo。初回は挙手制 |
+| 2026-10-05 14:01 | 上げ方の言葉を「最新のファイル」へ |
+| 2026-10-05 14:00 | 前日ToDoに上げ方。元を落とし ver1.00→1.01 で各フォルダへ |
+| 2026-10-05 13:59 | 前日ToDoに締切。ST 12時、バイス 18時、スライドは18–21時に手分け |
+| 2026-10-05 13:58 | 10/6 前日ToDo。朝礼がっちゃんこ、定例会1・2・3。未送信 |
+| 2026-10-05 07:51 | 11期 Zoom背景リマインド。10/6初回の前に今日設定 |
+| 2026-10-04 14:53 | 11期 Zoom背景（米澤さん）。配布案内未送信 |
 | 2026-09-17 09:18 | LT×WM 実施。台本縦一列・朝礼は称賛とビジター・9/27通しリハ |
 | 2026-09-16 20:53 | LT×WM 21時。11期リハ打ち合わせの手元 |
 | 2026-09-14 23:03 | 第1回実施。議事録と Religo `meetings.id` 41 |

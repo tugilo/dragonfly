@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>国宝社様 ご提案 v3 からの変更点メモ（予定表への AI 組み込み）</title>
+<style>
+  @page { size: A4; margin: 8mm 11mm 7mm 11mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; color: #1f2933; font-size: 9.4pt; line-height: 1.38; background: #fff; }
+  .page { max-width: 188mm; margin: 0 auto; }
+  @media screen { body { background: #e9edf1; } .page { background: #fff; padding: 12mm; margin: 10mm auto; box-shadow: 0 2px 10px rgba(0,0,0,.12); } }
+  header { border-bottom: 3px solid #0f4c81; padding-bottom: 3pt; margin-bottom: 6pt; }
+  header h1 { font-size: 13.5pt; margin: 0 0 2pt; color: #0f4c81; letter-spacing: .02em; }
+  header .meta { font-size: 8.6pt; color: #52606d; display: flex; justify-content: space-between; gap: 12pt; flex-wrap: wrap; }
+  .lead { background: #eef4fa; border-left: 4px solid #0f4c81; padding: 4pt 7pt; font-size: 8.8pt; margin: 0 0 6pt; }
+  h2 { font-size: 10.3pt; color: #0f4c81; margin: 6pt 0 3pt; padding-left: 6pt; border-left: 4px solid #e0a13b; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.2pt; margin: 0 0 3pt; }
+  th, td { border: 1px solid #cbd2d9; padding: 2pt 4pt; vertical-align: top; text-align: left; }
+  th { background: #f2f5f8; font-weight: 600; white-space: nowrap; }
+  td.v3 { color: #52606d; }
+  td.new { background: #fff8ea; }
+  b { color: #0f4c81; }
+  .note { font-size: 8.4pt; color: #3e4c59; margin: 1pt 0 0; }
+  ol { margin: 1pt 0 0 16pt; padding: 0; font-size: 8.8pt; }
+  ol li { margin-bottom: 1pt; }
+  footer { margin-top: 4pt; font-size: 7.8pt; color: #7b8794; border-top: 1px solid #cbd2d9; padding-top: 3pt; display: flex; justify-content: space-between; }
+  .toolbar { position: fixed; right: 12px; top: 12px; }
+  .toolbar button { font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #0f4c81; background: #0f4c81; color: #fff; cursor: pointer; }
+  @media print { .toolbar { display: none; } .page { padding: 0; margin: 0; box-shadow: none; max-width: none; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">PDF に保存 / 印刷</button></div>
+<div class="page">
+<header>
+  <h1>ご提案 v3 からの変更点メモ — 製本作業予定表への AI 組み込み</h1>
+  <div class="meta">
+    <span>株式会社国宝社 木村様／専門家 花村様</span>
+    <span>tugilo 次廣 淳 ｜ 2026年10月14日</span>
+  </div>
+</header>
+
+<p class="lead">10月12日にお渡しした資料一式（提案書 v3・機能別見積 v3・システム構成図・基本設計書・仕様書・スケジュール表）のうち、<b>自動配置の方式に関わる箇所を本メモで上書き</b>します。10月5日の打合せでは「まずルールで組み、AI は将来」としましたが、木村様より<b>予定表で AI を活用したい</b>とのご意向を伺い、見直しました。助成金申請時のご説明（生成 AI の活用）とも整合します。資料本体は打合せで AI の使いどころを確認したのち、v4 として一括で改訂してお渡しします。</p>
+
+<h2>1. 何が変わるか</h2>
+<table>
+  <tr><th style="width:22%"></th><th style="width:33%">v3（10/12 お渡し）</th><th>変更後（v4 で反映）</th></tr>
+  <tr><th>自動配置の方式</th><td class="v3"><b>ルールのみ</b>で順番を提案。AI は「あれば便利 O4」（将来の選択肢）</td><td class="new"><b>ルール＋AI</b>。ルールが納期・稼働枠などの制約を守り、<b>AI が順番の案と理由</b>を出す。言葉での指示（「A社を来週に前倒し」）でも組み直せる</td></tr>
+  <tr><th>確定するのは</th><td class="v3">人</td><td class="new">人（変わらず）</td></tr>
+  <tr><th>AI が止まったとき</th><td class="v3">—</td><td class="new">ルールだけの提案に自動で切り替わる。従来の手組みにも戻れる</td></tr>
+  <tr><th>外部への通信</th><td class="v3">なし（社内 LAN のみ）</td><td class="new"><b>AI API への外向き通信のみ</b>追加。渡すのは注文ID・判型・数量・納期・所要時間・優先度・空き状況。<b>得意先名・担当者名・金額・PDF 原本は渡さない</b>（ID に置換）</td></tr>
+  <tr><th>AI サービス</th><td class="v3">—</td><td class="new">OpenAI API または Anthropic API（Gemini も可）。<b>契約名義は国宝社様</b>。API 経由の入力は学習に使われない設定</td></tr>
+</table>
+
+<h2>2. 金額（税別・案）</h2>
+<table>
+  <tr><th style="width:22%"></th><th style="width:33%">v3</th><th>変更後</th></tr>
+  <tr><th>必須合計</th><td class="v3">¥2,650,000</td><td class="new"><b>¥2,900,000</b>（旧 O4「AI API による配置提案」¥250,000 を必須へ繰り入れ）</td></tr>
+  <tr><th>あれば便利 合計</th><td class="v3">¥1,350,000〜¥1,410,000</td><td class="new">¥1,100,000〜¥1,160,000（O4 が抜ける）</td></tr>
+  <tr><th>納品後の月額</th><td class="v3">保守（任意）のみ</td><td class="new">保守（任意）＋ <b>AI API 利用料 月 ¥500〜¥3,000 程度</b>（国宝社様名義・従量。並行テストで実測して確定）</td></tr>
+</table>
+<p class="note">助成金との関係（公社ご説明に沿う）: <b>AI 連携の構築・検証は構築費・検証費</b>として対象。<b>API 利用料（月額）は対象外</b>。正式見積は 作業項目×人日×単価 の形式で v4 と同時にお出しします。</p>
+
+<h2>3. v3 資料のどこが置き換わるか</h2>
+<table>
+  <tr><th style="width:12%">資料</th><th style="width:30%">箇所</th><th style="width:26%">v3 の記載</th><th>変更後</th></tr>
+  <tr><td>提案書</td><td>§1 機能2／§2 変更点②／§4.2</td><td class="v3">「AI ではなくルールで提案」</td><td class="new">「ルール＋AI で提案。人が確定」</td></tr>
+  <tr><td>提案書</td><td>§4.2 作らないもの／§8 費用</td><td class="v3">「AI による配置（将来の選択肢）」／保守の月額のみ</td><td class="new">削除（作るものへ）／AI 利用料の月額を追記</td></tr>
+  <tr><td>見積</td><td>§1 前提／§2 M6／§3 O4／§4 組み合わせ例／§5 月額／§6 回収</td><td class="v3">必須 ¥2,650,000、O4 は便利</td><td class="new">必須 ¥2,900,000、AI 連携を必須の行に、月額に API 利用料、回収年数を再計算</td></tr>
+  <tr><td>構成図</td><td>§3 配置／§4 構成要素</td><td class="v3">外部通信なし</td><td class="new">AI API への外向き通信（1 宛先・HTTPS）を追加</td></tr>
+  <tr><td>基本設計</td><td>F-09／F-15／§7 自動配置／§10 非機能</td><td class="v3">F-15 は便利 O4。社内 LAN のみ</td><td class="new">F-15 を必須に統合。AI 層・検証・切替・送信ログを追記</td></tr>
+  <tr><td>仕様書</td><td>§6.3 自動配置／§8 管理</td><td class="v3">6 ルールのみ</td><td class="new">AI の入出力・言葉での指示欄・AI への指示文の編集を追記</td></tr>
+  <tr><td>スケジュール</td><td>11月・12月・1月</td><td class="v3">ルール実装・ルール調整</td><td class="new">11月 モデル選定と API アカウント作成（国宝社様）、12月 AI 連携実装、1月 AI 案とルール案の比較。<b>日程は動かさない</b></td></tr>
+</table>
+
+<h2>4. 変わらないもの</h2>
+<p class="note">補助DB → CSV → 既存会社の取込プログラム → Oracle という連携方式、注文入力（PDF 解析 → 人が1件ずつ承認）、画面構成、判型・作業場所のマスタ、権限、2月検収・2/22 運用開始の日程、支払いの考え方。</p>
+
+<h2>5. 打合せで決めたいこと</h2>
+<ol>
+  <li>AI にどこまでさせるか: ①順番の案と理由 ／ ②言葉での指示で組み直し ／ ③生産依頼表（Excel・PDF）の読み取り補助（③は別見積）</li>
+  <li>助成金の上限額と ¥2,900,000 の関係</li>
+  <li>AI サービスの選定（申請時のご説明との整合）と、国宝社様名義のアカウント作成の段取り</li>
+</ol>
+
+<footer><span>tugilo（次廣 淳） https://tugilo.com</span><span>本メモは 2026-10-12 お渡しの資料一式に対する補足です</span></footer>
+</div>
+</body>
+</html>
