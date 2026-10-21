@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>注文PDF入力・製本作業予定表 ご提案（改訂版 v3） — 国宝社 木村秀継様向け（tugilo 次廣）</title>
+  <style>
+    :root {
+      --ink: #1d2430; --muted: #5d6673; --line: #d6d9de;
+      --accent: #1f4e79; --accent-soft: #e6eef6;
+      --warm: #b5652a; --warm-soft: #f7ebe0;
+      --ok: #2f6b4f; --ok-soft: #e4efe8;
+      --ng: #a1372a; --ng-soft: #f6e4e1;
+      --bg: #ffffff; --slide-w: 1280px; --slide-h: 720px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #d9d6d0; color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-feature-settings: "palt"; line-height: 1.5; }
+    .toolbar { display: flex; gap: 10px; justify-content: center; align-items: center; padding: 14px 16px 6px; flex-wrap: wrap; }
+    .toolbar button, .toolbar a { border: 1px solid #9aa3ad; background: #fff; color: var(--ink); border-radius: 999px; padding: .45rem 1.1rem; font: inherit; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .hint { text-align: center; color: #555; font-size: 12px; margin: 0 16px 14px; }
+    .slide { width: var(--slide-w); height: var(--slide-h); margin: 0 auto 18px; background: var(--bg); position: relative; overflow: hidden;
+      padding: 44px 64px 56px; box-shadow: 0 12px 30px rgba(30,30,30,.14); display: flex; flex-direction: column; }
+    .slide::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--accent); }
+    .slide.cover::before { width: 0; }
+    .foot { position: absolute; left: 64px; right: 64px; bottom: 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+    .kicker { font-size: 12px; letter-spacing: .16em; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 40px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    h2 { font-size: 28px; line-height: 1.25; margin: 0 0 16px; letter-spacing: -.01em; }
+    h3 { font-size: 16px; margin: 0 0 8px; color: var(--accent); }
+    p { margin: 0 0 8px; font-size: 15px; }
+    .lead { font-size: 18px; }
+    .small { font-size: 12.5px; color: var(--muted); }
+    .cols { display: grid; gap: 22px; }
+    .cols.two { grid-template-columns: 1fr 1fr; }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .cols.wide-left { grid-template-columns: 1.4fr 1fr; }
+    .cols.wide-right { grid-template-columns: 1fr 1.4fr; }
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+    .box.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .box.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .box.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .box.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .box.dim { border-style: dashed; color: var(--muted); }
+    .num { font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--accent); }
+    .num small { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+    .num.warm { color: var(--warm); }
+    ul, ol { margin: 0; padding-left: 1.3em; font-size: 15px; }
+    li { margin: 0 0 5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { padding: 6px 9px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2f4f7; font-weight: 700; font-size: 12.5px; color: #333; }
+    td.r, th.r { text-align: right; white-space: nowrap; }
+    tr.hl td { background: var(--accent-soft); font-weight: 700; }
+    tr.dim td { color: var(--muted); }
+    table.tight th, table.tight td { padding: 4px 7px; font-size: 12.5px; }
+    .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef0f3; color: #333; margin-right: 6px; vertical-align: middle; white-space: nowrap; }
+    .tag.must { background: var(--accent); color: #fff; }
+    .tag.nice { background: var(--warm); color: #fff; }
+    .tag.hold { background: #777; color: #fff; }
+    .tag.ok { background: var(--ok); color: #fff; }
+    .tag.ng { background: var(--ng); color: #fff; }
+    .cover { justify-content: center; background: linear-gradient(135deg, #15375a 0%, #1f4e79 60%, #2b6a9b 100%); color: #fff; }
+    .cover .kicker { color: #cfe0f2; }
+    .cover h1 { font-size: 46px; color: #fff; }
+    .cover p { color: #e6eef6; }
+    .cover .meta { margin-top: 32px; font-size: 14.5px; color: #cfe0f2; line-height: 1.8; }
+    .flow { display: flex; gap: 8px; align-items: stretch; }
+    .flow .step { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; position: relative; background: #fff; }
+    .flow .step b { display: block; font-size: 14.5px; color: var(--accent); margin-bottom: 4px; }
+    .flow .step.dim { color: var(--muted); border-style: dashed; }
+    .flow .step.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .flow .step.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .flow .step.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .flow .arrow { align-self: center; font-size: 22px; color: var(--muted); flex: none; }
+    .stamp { position: absolute; right: 64px; top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-cards.three { grid-template-columns: repeat(3, 1fr); }
+    .grid-cards .box { padding: 12px 14px; }
+    .grid-cards .box h3 { font-size: 14.5px; }
+    .grid-cards .box p { font-size: 13px; margin: 0; }
+    /* 構成図 */
+    .diag { display: flex; gap: 14px; align-items: stretch; }
+    .diag .zone { flex: 1; border: 1.5px dashed #b7bec8; border-radius: 12px; padding: 12px; background: #fafbfc; }
+    .diag .zone > b { display: block; font-size: 12px; color: var(--muted); letter-spacing: .1em; margin-bottom: 8px; }
+    .diag .zone.t { border-color: var(--accent); background: #f3f7fb; }
+    .diag .zone.k { border-color: var(--warm); background: #fcf6f0; }
+    .node { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; font-size: 13px; margin-bottom: 8px; }
+    .node b { display: block; font-size: 13.5px; }
+    .node.db { border-radius: 20px / 10px; background: #eef4ea; border-color: #bfd3b5; }
+    .node.file { background: #fff8e8; border-color: #e5d3a3; }
+    .node.ppl { background: #f1eefb; border-color: #cfc5ea; }
+    .varrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; margin: 2px 0 8px; }
+    .harrow { align-self: center; color: var(--muted); font-size: 24px; flex: none; }
+    .harrow.dash { color: #9aa3ad; }
+    /* 状態遷移 */
+    .states { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .states span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: #fff; }
+    .states span.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .states span.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .states i { font-style: normal; color: var(--muted); }
+    /* ガント */
+    .gantt { font-size: 12px; }
+    .gantt .row { display: grid; grid-template-columns: 230px 1fr; align-items: center; gap: 8px; min-height: 18px; }
+    .gantt .row.head { min-height: 20px; }
+    .gantt .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11.5px; line-height: 1.2; }
+    .gantt .track { position: relative; height: 12px; background: #f2f4f7; border-radius: 3px; }
+    .gantt .track .bar { position: absolute; top: 1px; bottom: 1px; background: var(--accent); border-radius: 2px; }
+    .gantt .track .bar.k { background: var(--warm); }
+    .gantt .track .bar.t { background: var(--ok); }
+    .gantt .track .bar.p { background: #7a8694; }
+    .gantt .track .ms { position: absolute; top: -1px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 12px solid var(--ng); transform: translateX(-7px); }
+    .gantt .months { display: grid; grid-template-columns: repeat(5, 1fr); font-size: 11px; color: var(--muted); border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+    .gantt .months div { border-left: 1px solid var(--line); padding: 0 4px 2px; }
+    .gantt .track .vline { position: absolute; top: 0; bottom: 0; border-left: 1px solid #dfe3e8; }
+    .gantt .sec { font-weight: 700; color: var(--accent); margin: 5px 0 1px; font-size: 11.5px; line-height: 1.2; }
+    /* 画面ワイヤー */
+    .wire { border: 1px solid var(--line); border-radius: 10px; background: #f6f7f9; padding: 10px; font-size: 11.5px; }
+    .wire .bar { background: var(--accent); color: #fff; padding: 5px 10px; border-radius: 6px 6px 0 0; font-weight: 700; font-size: 12px; margin: -10px -10px 8px; }
+    .wire .f { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; margin-bottom: 5px; }
+    .wire .f label { display: block; font-size: 9.5px; color: var(--muted); }
+    .wire .f .v { font-size: 11.5px; }
+    .wire .f .v.ph { color: #9aa3ad; }
+    .wire .row { display: flex; gap: 6px; }
+    .wire .row > div { flex: 1; }
+    .wire .btn { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 11px; margin-right: 4px; }
+    .wire .btn.ghost { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+    .wire .btn.warm { background: var(--warm); }
+    .sched { display: grid; grid-template-columns: 70px repeat(6, 1fr); gap: 3px; font-size: 10.5px; }
+    .sched .h { background: #f2f4f7; text-align: center; font-weight: 700; padding: 4px 2px; border-radius: 4px; }
+    .sched .d { background: #f2f4f7; padding: 4px; border-radius: 4px; font-weight: 700; }
+    .sched .c { background: #fff; border: 1px solid var(--line); border-radius: 4px; min-height: 42px; padding: 3px; }
+    .sched .c.spare { background: #fafafa; border-style: dashed; }
+    .sched .c.blocked { background: repeating-linear-gradient(45deg, #eee, #eee 4px, #f8f8f8 4px, #f8f8f8 8px); }
+    .sched .k { border-radius: 4px; padding: 2px 4px; margin-bottom: 2px; font-size: 10px; line-height: 1.25; }
+    .sched .k.o { background: var(--warm-soft); border-left: 3px solid var(--warm); }
+    .sched .k.g { background: var(--ok-soft); border-left: 3px solid var(--ok); }
+    .sched .k.n { background: #eef0f3; border-left: 3px solid #777; }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .slide { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">PDFとして保存（印刷ダイアログ）</button>
+    <a href="kimura_kokuhosha_proposal_v3_slides_20261011.html" style="background:var(--accent);color:#fff;border-color:var(--accent)">① 提案書</a>
+    <a href="kimura_kokuhosha_estimate_v3_slides_20261011.html">② 見積</a>
+    <a href="kimura_kokuhosha_system_architecture_slides_20261011.html">③ 構成図</a>
+    <a href="kimura_kokuhosha_basic_design_slides_20261011.html">④ 基本設計</a>
+    <a href="kimura_kokuhosha_specification_slides_20261011.html">⑤ 仕様</a>
+    <a href="kimura_kokuhosha_schedule_slides_20261011.html">⑥ スケジュール</a>
+  </div>
+  <p class="hint">印刷ダイアログで「送信先: PDFに保存」「用紙サイズ: 既定（CSS指定 1280×720）」「余白: なし」「背景のグラフィック: オン」にすると、1スライド1ページで書き出せます。</p>
+  <!-- 1 表紙 -->
+  <section class="slide cover">
+    <p class="kicker">ご提案（改訂版 v3）</p>
+    <h1>注文PDF入力・製本作業予定表<br>システム</h1>
+    <p class="lead" style="color:#e6eef6">基幹（VB＋Oracle）は守り、入口と予定表だけを軽くする。<br>第4回打合せ（2026年10月5日）の合意を反映。</p>
+    <div class="meta">
+      株式会社国宝社　木村 秀継 様<br>
+      tugilo 次廣 淳　｜　2026年10月11日<br>
+      契約書・正式見積書ではありません。金額は別紙「機能別見積」（税別・案）。
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <p class="kicker">1. 結論</p>
+    <h2>作る Web は1つ。人が使う機能は2つ。基幹には手を入れない</h2>
+
+    <div class="cols two">
+      <div class="box accent">
+        <h3>機能1　注文入力</h3>
+        <p>注文書PDF をまとめて上げる → 項目ごとの欄に抜き出す → <b>人が1件ずつ直して承認</b> → <b>CSV に出す</b> → 既存システム側の取込プログラムが Oracle に入れる。</p>
+      </div>
+      <div class="box accent">
+        <h3>機能2　製本作業予定表</h3>
+        <p>いま Excel を印刷してペンで組んでいる週次の予定表を、同じ並びの画面に。手で置く操作に加えて <b>自動配置ボタン</b>（ルールで組む。人が確定）。</p>
+      </div>
+    </div>
+    <h3 style="margin-top:18px">第4回で変わった点（3つ）</h3>
+    <div class="grid-cards three">
+      <div class="box warm"><h3>① Oracle へ直接書き込まない</h3><p>こちらの DB に仮登録 → CSV 出力 → 既存システムの取込プログラムで Oracle へ。取込プログラムは開発会社が作る（2026-09-29 資料）。</p></div>
+      <div class="box warm"><h3>② 自動配置を入れる</h3><p>AI ではなくルール（納期・作業時間・優先度・場所の空き）で順番を提案し、人が確定する。</p></div>
+      <div class="box warm"><h3>③ Excel 生産依頼表は手入力から</h3><p>メール添付の生産依頼表は、まず手で入力する画面。自動取り込みは段階的に。</p></div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>2 / 11</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <p class="kicker">2. いま詰まっているところ</p>
+    <h2>入口だけ直しても、予定表で紙に戻る</h2>
+
+    <table>
+      <tr><th style="width:120px">場所</th><th>いま</th><th style="width:170px">時間（木村さん申告）</th></tr>
+      <tr><td><b>入口</b></td><td>出版社の PDF 注文書を見ながら、事務が VB に手入力。大口だけで月300〜400件</td><td class="r"><span class="num" style="font-size:26px">1.5<small>時間/日</small></span></td></tr>
+      <tr><td><b>生産依頼表</b></td><td>発注者から Excel テンプレートがメール添付で届く。これも手で転記</td><td class="r">—</td></tr>
+      <tr><td><b>予定表</b></td><td>Excel を一度印刷し、ペンで差し込み・入れ替え・工数を書く。紙だけが最新になる</td><td class="r"><span class="num" style="font-size:26px">2<small>時間/日</small></span></td></tr>
+    </table>
+    <div class="box ok" style="margin-top:20px">
+      <p style="margin:0"><b>今回の範囲は、入口と予定表をつなぐこと。</b>どちらか片方では、転記と紙が残る。</p>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>3 / 11</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <p class="kicker">3. 機能1　注文入力</p>
+    <h2>PDF → 人が確認 → 承認 → CSV。Oracle へは取込プログラムが入れる</h2>
+
+    <div class="flow">
+      <div class="step"><b>① まとめて上げる</b>注文書PDF をドラッグ＆ドロップ。原本を保存</div><div class="arrow">→</div>
+      <div class="step"><b>② 解析</b>1件ずつ、項目ごとの欄に抜き出す。信頼度を色で</div><div class="arrow">→</div>
+      <div class="step accent"><b>③ 人が直す</b>必ず人が見る。得意先・部数・判型・日付</div><div class="arrow">→</div>
+      <div class="step accent"><b>④ 承認</b>こちらの DB に仮番号で登録。「次へ」で次の PDF</div><div class="arrow">→</div>
+      <div class="step warm"><b>⑤ CSV 出力</b>承認済みを既定フォルダへ。ファイル名は一意</div><div class="arrow">→</div>
+      <div class="step dim"><b>⑥ 取込（既存側）</b>開発会社の取込プログラムが Oracle へ。手動実行</div>
+    </div>
+    <div class="cols two" style="margin-top:22px">
+      <div class="box">
+        <h3>対象</h3>
+        <ul>
+          <li>最初は <b>型の揃った主要1社</b> の PDF。他社フォーマットは後から足す</li>
+          <li>メール添付の生産依頼表 Excel は <b>手動入力画面</b> で同じ DB へ → 同じ CSV へ</li>
+        </ul>
+      </div>
+      <div class="box ng">
+        <h3>やらないこと</h3>
+        <ul>
+          <li>100%自動登録。人が1件ずつ承認する</li>
+          <li>Oracle への直接書き込み。Oracle にテーブルも足さない</li>
+          <li>手書き注文書の OCR</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>4 / 11</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <p class="kicker">4. 機能2　製本作業予定表</p>
+    <h2>紙と同じ並びの画面。手で置く＋自動配置ボタン</h2>
+
+    <div class="cols wide-left">
+      <div>
+        <div class="sched">
+          <div class="h"></div><div class="h">板橋1F</div><div class="h">1F予備</div><div class="h">2F</div><div class="h">2F予備</div><div class="h">ふじみ野</div><div class="h">ふじみ野予備</div>
+          <div class="d">10/19（月）</div>
+          <div class="c"><div class="k g">明祭パンフ 19,000 ＜3.0h＞</div><div class="k g">○○文庫 5,000 ＜1.5h＞</div></div>
+          <div class="c spare"></div>
+          <div class="c"><div class="k g">△△新書 8,000 ＜2.0h＞</div></div>
+          <div class="c spare"><div class="k o">□□A5 3,000 ＜0h＞</div></div>
+          <div class="c"><div class="k g">××B6 12,000 ＜4.0h＞</div></div>
+          <div class="c spare"></div>
+          <div class="d">10/20（火）</div>
+          <div class="c"><div class="k g">○○文庫 続 ＜2.5h＞</div></div>
+          <div class="c spare"><div class="k n">手追加：見本のみ</div></div>
+          <div class="c"><div class="k o">◇◇B5 6,000 ＜0h＞</div></div>
+          <div class="c spare"></div>
+          <div class="c blocked"></div>
+          <div class="c spare"></div>
+        </div>
+        <p class="small" style="margin-top:8px">橙＝作業時間 未入力／緑＝入力済み／灰＝手追加／斜線＝塞ぎ。左に「未配置」、マス・日・週の合計を表示。</p>
+      </div>
+      <div>
+        <div class="box">
+          <h3>できること</h3>
+          <ul>
+            <li>未配置からマスへドラッグ。先頭・間・末尾の差し込み</li>
+            <li>カードに作業時間。合計を自動で</li>
+            <li>印刷に無い注文の手追加、枠の塞ぎ、入れ替え</li>
+          </ul>
+        </div>
+        <div class="box accent" style="margin-top:12px">
+          <h3>自動配置（ルール）</h3>
+          <ul>
+            <li>納期・作業時間・優先度・場所の空きで並べ直し、<b>提案</b>する</li>
+            <li>人が <b>確定</b> を押すまで反映しない。手直しは記録してルールの見直しに使う</li>
+            <li>1月の並行テストで現行の手組みと比べ、合うまで直す</li>
+          </ul>
+        </div>
+        <div class="box ng" style="margin-top:12px">
+          <h3>作らない（第4回決定）</h3>
+          <p style="margin:0">予定表の CSV 出力・印刷機能／順番の自動確定／AI による配置（API 拡張は将来の選択肢）</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>5 / 11</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <p class="kicker">5. つながりと置き場所</p>
+    <h2>補助DB は正にしない。受注の正は Oracle のまま</h2>
+
+    <div class="diag">
+      <div class="zone t"><b>新 Web（tugilo・社内）</b>
+        <div class="node ppl"><b>ブラウザ（社内PC）</b>事務・予定組み担当</div>
+        <div class="varrow">↓</div>
+        <div class="node"><b>Web アプリ（Docker）</b>機能1・機能2・ユーザー・ログ</div>
+        <div class="varrow">↓</div>
+        <div class="node db"><b>補助DB（MariaDB）</b>仮登録・解析証跡・予定表・出力履歴</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone"><b>受け渡し</b>
+        <div class="node file"><b>既定フォルダ</b>ORDER_日時_連番.csv<br>同一ファイル名は取込側でエラー → 常に新しい名前</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone k"><b>既存（開発会社・国宝社様）</b>
+        <div class="node"><b>取込プログラム</b>開発会社が新規作成。手動実行</div>
+        <div class="varrow">↓</div>
+        <div class="node db"><b>Oracle</b>受注の正（既存）</div>
+        <div class="varrow">↕</div>
+        <div class="node"><b>VB 製本販売管理</b>これまでどおり</div>
+      </div>
+    </div>
+    <div class="cols two" style="margin-top:16px">
+      <div class="box"><h3>置き場所は社内</h3><p style="margin:0">既存 Windows の Hyper-V 上 Ubuntu（案A）、または専用PC 16GB・SSD（案B）。外には出さない。Google Workspace／GAS は使わない。</p></div>
+      <div class="box"><h3>Oracle は読むだけ（要確認）</h3><p style="margin:0">得意先の参照と、VB で直接入力された注文を予定表に出すため、読み取り専用で参照したい。難しければ開発会社から一覧 CSV を受ける案。</p></div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>6 / 11</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <p class="kicker">6. 既存システム開発会社との分担</p>
+    <h2>2026-09-29 の打合せ資料の範囲分けに合わせる</h2>
+
+    <table>
+      <tr><th style="width:55%">範囲</th><th>担当</th></tr>
+      <tr><td>注文書PDF → 注文データ CSV、補助DB、注文情報修正画面、予定表</td><td><span class="tag must">tugilo</span></td></tr>
+      <tr><td>CSV の連携レイアウト設計・提示</td><td><span class="tag nice">開発会社</span></td></tr>
+      <tr><td>CSV → 製本管理システム DB への取込プログラム</td><td><span class="tag nice">開発会社</span></td></tr>
+      <tr><td>取込の実行（既定フォルダに置いて起動。手動・任意のタイミング）</td><td><span class="tag">国宝社様</span></td></tr>
+    </table>
+    <div class="cols two" style="margin-top:20px">
+      <div class="box warm">
+        <h3>開発会社の資料にある確認事項</h3>
+        <ul>
+          <li>取込結果の通知方法</li>
+          <li>既存データの UPDATE／DELETE の有無</li>
+        </ul>
+      </div>
+      <div class="box ok">
+        <h3>tugilo の案（基本設計書 §6）</h3>
+        <ul>
+          <li>結果ファイル（同名＋_result.csv）を既定フォルダに置いてもらい、Web が読んで状態を更新</li>
+          <li>初回は <b>INSERT のみ</b>。承認後の修正・取消は VB 側で行う運用</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">境界は「既定フォルダの CSV」。ここが決まれば両側は独立に進められる。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>7 / 11</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <p class="kicker">7. 進め方</p>
+    <h2>10〜12月開発 → 1月並行テスト → 2月検収（計画。契約ではない）</h2>
+
+    <div class="flow">
+      <div class="step"><b>10月</b>予定組みご担当者を交えた Zoom（自動配置の条件）。契約手続き。CSV レイアウト受領</div><div class="arrow">→</div>
+      <div class="step accent"><b>10〜12月</b>開発。機能1 → CSV → 機能2 → 自動配置の順</div><div class="arrow">→</div>
+      <div class="step"><b>12月末</b>テスト準備完了。開発会社側の取込口も完成</div><div class="arrow">→</div>
+      <div class="step ok"><b>1月</b>並行テスト。現行の手組み・手入力と並べて比べる</div><div class="arrow">→</div>
+      <div class="step ok"><b>2月</b>検収・運用開始</div>
+    </div>
+    <div class="box warm" style="margin-top:22px">
+      <h3>助成金について</h3>
+      <p style="margin:0">板橋区「令和8年度 デジタル化・データ利活用推進助成金」業務管理システムコース（上限200〜300万円と伺っている・完了 2027-02-28 の計画）は木村さん側で手続き中。採択は未確定。<b>採択前に契約・発注した扱いにはしません。</b>必要書類（仕様書・設計書の粒度）は、役所確認後にこちらで合わせます。</p>
+    </div>
+    <p class="small" style="margin-top:12px">週単位は別紙「スケジュール表」。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>8 / 11</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <p class="kicker">8. 費用の考え方と判断の目安</p>
+    <h2>必須だけで2機能が動く。回収は試算であって保証ではない</h2>
+
+    <div class="cols two">
+      <div>
+        <div class="box">
+          <h3>費用の分け方</h3>
+          <ul>
+            <li>機能ごとに <span class="tag must">必須</span> と <span class="tag nice">あれば便利</span> を分けた</li>
+            <li>必須だけで、注文入力・CSV・予定表・自動配置 v1 が動く</li>
+            <li>サーバー構築は別枠。保守は月額の目安</li>
+            <li>金額・内訳は別紙「機能別見積」（税別・案）</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="box accent">
+          <h3>ROI の目安（木村さん申告の時間から試算）</h3>
+          <p>手入力 1.5時間 ＋ 予定組み 2時間 ＝ <b>1日3.5時間</b>。月20日で 70時間/月、<b>840時間/年</b>。</p>
+          <table class="tight">
+            <tr><th>削減率</th><th class="r">年間削減時間</th><th class="r">年間効果（@¥2,500/h 仮）</th></tr>
+            <tr><td>50%</td><td class="r">420時間</td><td class="r">約105万円</td></tr>
+            <tr><td>70%</td><td class="r">588時間</td><td class="r">約147万円</td></tr>
+          </table>
+          <p class="small" style="margin-top:8px">単価は参考。実測は1月の並行テストで置き換える。</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>9 / 11</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <p class="kicker">9. 7月・8月からの差分</p>
+    <h2>何が変わったかを一覧で</h2>
+
+    <table>
+      <tr><th style="width:130px">項目</th><th>7月（入口のみ）</th><th>8月改訂（23枚）</th><th style="background:var(--accent-soft)">今回 v3</th></tr>
+      <tr><td>Oracle 連携</td><td>直接書き込み</td><td>直接書き込み</td><td><b>CSV 出力 → 取込プログラム（開発会社）</b></td></tr>
+      <tr><td>機能</td><td>入口1つ</td><td>入口＋予定表</td><td>入口＋予定表＋<b>自動配置（ルール）</b></td></tr>
+      <tr><td>生産依頼表 Excel</td><td>—</td><td>「他帳票を転記」</td><td><b>手動入力画面から。自動取込は段階的</b></td></tr>
+      <tr><td>予定表の出力</td><td>—</td><td>印刷は従来どおり</td><td><b>CSV 出力・印刷は作らない</b></td></tr>
+      <tr><td>金額</td><td>50／180／230万＋箱</td><td>214／289／379万</td><td><b>機能別・必須／あれば便利</b>（別紙）</td></tr>
+      <tr><td>日程</td><td>—</td><td>9月着手・1月試運用</td><td><b>10〜12月開発・1月並行テスト・2月検収</b></td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>10 / 11</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <p class="kicker">10. 確認したいこと</p>
+    <h2>次に進むために</h2>
+
+    <div class="cols two">
+      <div>
+        <ol>
+          <li>CSV レイアウト（開発会社設計）の受領時期</li>
+          <li>取込結果の通知方法と、UPDATE／DELETE の扱い（開発会社との確認）</li>
+          <li>最初に対象にする主要1社の社名と、PDF サンプルの追加</li>
+          <li>予定表 Excel の実ファイル</li>
+          <li>置き場所（既存 Hyper-V か専用PC か）</li>
+          <li>自動配置のルール（10月 Zoom）</li>
+          <li>助成金の必要書類の粒度</li>
+        </ol>
+      </div>
+      <div class="box accent">
+        <h3>おわりに</h3>
+        <p>目的は、システムを入れることではなく、詰まっている仕事を仕組みにすることです。</p>
+        <p>基幹は守り、入口と予定表だけを軽くします。</p>
+        <p style="margin:0">1月の並行テストで、紙より楽になっているか、一緒に確かめさせてください。</p>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px">別紙: ② 機能別見積 ／ ③ システム構成図 ／ ④ 基本設計書 ／ ⑤ 仕様書 ／ ⑥ スケジュール表 ／ 画面見本 https://tugilo.com/mock/kokuhosha-pdf-order-schedule.html</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 注文入力・製本作業予定表 ご提案（改訂版 v3）</span><span>11 / 11</span></div>
+  </section>
+</body>
+</html>

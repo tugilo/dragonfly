@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>国宝社様 — 「開発会社を確認するときの観点」25項目への回答一覧</title>
+<style>
+  @page { size: A4; margin: 13mm 13mm 12mm 13mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; color: #1f2933; font-size: 9.6pt; line-height: 1.45; background: #fff; }
+  .page { max-width: 184mm; margin: 0 auto; }
+  @media screen { body { background: #e9edf1; } .page { background: #fff; padding: 14mm; margin: 10mm auto; box-shadow: 0 2px 10px rgba(0,0,0,.12); } }
+  header { border-bottom: 3px solid #0f4c81; padding-bottom: 4pt; margin-bottom: 7pt; }
+  header h1 { font-size: 14.5pt; margin: 0 0 2pt; color: #0f4c81; }
+  header .meta { font-size: 9pt; color: #52606d; display: flex; justify-content: space-between; gap: 12pt; flex-wrap: wrap; }
+  .lead { background: #eef4fa; border-left: 4px solid #0f4c81; padding: 5pt 8pt; font-size: 9.2pt; margin: 0 0 6pt; }
+  .legend { font-size: 8.8pt; color: #3e4c59; margin: 0 0 8pt; }
+  .legend .star { color: #b7791f; font-weight: 700; }
+  h2 { font-size: 11pt; color: #0f4c81; margin: 10pt 0 4pt; padding-left: 6pt; border-left: 4px solid #e0a13b; page-break-after: avoid; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.8pt; margin: 0 0 4pt; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th, td { border: 1px solid #cbd2d9; padding: 3pt 5pt; vertical-align: top; text-align: left; }
+  th { background: #f2f5f8; font-weight: 600; }
+  td.no { text-align: center; font-weight: 700; color: #0f4c81; white-space: nowrap; }
+  td.q { color: #3e4c59; }
+  td.ref { color: #52606d; font-size: 8.2pt; }
+  b { color: #0f4c81; }
+  .star { color: #b7791f; font-weight: 700; }
+  .box { border: 1px solid #cbd2d9; background: #fff8ea; padding: 5pt 8pt; font-size: 9pt; margin: 0 0 6pt; page-break-inside: avoid; }
+  .box h3 { margin: 0 0 3pt; font-size: 9.8pt; color: #0f4c81; }
+  .box table { font-size: 8.6pt; margin: 3pt 0 0; }
+  footer { margin-top: 8pt; font-size: 8.5pt; color: #7b8794; border-top: 1px solid #cbd2d9; padding-top: 3pt; display: flex; justify-content: space-between; }
+  .toolbar { position: fixed; right: 12px; top: 12px; }
+  .toolbar button { font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #0f4c81; background: #0f4c81; color: #fff; cursor: pointer; }
+  @media print { .toolbar { display: none; } .page { padding: 0; margin: 0; box-shadow: none; max-width: none; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">PDF に保存 / 印刷</button></div>
+<div class="page">
+<header>
+  <h1>「開発会社を確認するときの観点」25項目への回答一覧</h1>
+  <div class="meta">
+    <span>株式会社国宝社 木村様／専門家 花村様（観点 v1・2026年10月13日 作成分に対して）</span>
+    <span>tugilo 次廣 淳 ｜ 2026年10月14日</span>
+  </div>
+</header>
+
+<p class="lead">ご提示いただいた 25 の観点について、10月12日にお渡しした資料一式（提案書 v3・機能別見積 v3・システム構成図・基本設計書・仕様書・スケジュール表）と、本日付の「変更点メモ（予定表への AI 組み込み）」に基づいて回答します。<b>右端の列は、該当する資料の章</b>です。</p>
+<p class="legend"><span class="star">★</span> ＝ 打合せで確定したい事項（現時点は案）。「AI」は本日付の変更点メモのとおり、<b>予定表の自動配置を「ルール（制約）＋AI（順番案・理由・言葉での指示）＋人（確定）」</b>で必須構成に入れる前提です。</p>
+
+<h2>1. 発注先としての条件</h2>
+<table>
+  <thead><tr><th style="width:5%">No.</th><th style="width:22%">確認すること</th><th>回答</th><th style="width:15%">該当資料</th></tr></thead>
+  <tr><td class="no">1</td><td class="q">開発を主業とし、HP 等で事業内容を公開している国内事業者か</td><td>次廣 淳（tugilo）。2003年に独立し、システム開発に約23年従事。事業内容は https://tugilo.com に公開。所在地・事業形態・開業年は正式見積書に記載します <span class="star">★</span></td><td class="ref">正式見積書（v4）</td></tr>
+  <tr><td class="no">2</td><td class="q">担当者が一人の場合、病気・事故などの際の代替手当</td><td>①工程ごとに成果物（設計書・ソースコード・Docker 構成・手順書）を都度納品し、<b>他の Laravel／React 技術者が引き継げる状態</b>を常に保つ ②週次で進捗を共有し、遅れは2営業日以内に連絡 ③協力技術者の体制 <span class="star">★</span> ④遅延時にも業務が止まらないよう、<b>従来の手入力・手組みにいつでも戻れる設計</b>（補助DB は基幹の正ではない）</td><td class="ref">基本設計 §2・§10／スケジュール §4</td></tr>
+  <tr><td class="no">3</td><td class="q">2月末までに発注・納品・支払いが完了するか。証憑</td><td>10月契約 → 11/2 着手 → 12/28 テスト準備完了 → 1月 並行テスト → <b>2/19 検収 → 2/22 運用開始</b>。請求書・納品書・検収書・領収書を工程ごとに発行。<b>最終の支払いは 2/28 までに完了</b>するよう支払条件を設定します</td><td class="ref">スケジュール §3／見積 §9</td></tr>
+</table>
+
+<h2>2. 見積と費用</h2>
+<table>
+  <thead><tr><th style="width:5%">No.</th><th style="width:22%">確認すること</th><th>回答</th><th style="width:15%">該当資料</th></tr></thead>
+  <tr><td class="no">4</td><td class="q">見積書・請求書に 作業内容（仕様）・単価・数量 が記載されるか</td><td>正式見積は <b>作業項目（M0〜M7・サーバー・AI 連携）× 人日 × 単価</b> の表とし、各行に対応する設計書の章を付記します。10/12 の見積 v3 はその合計を項目別に示したものです。単価は正式見積で提示 <span class="star">★</span></td><td class="ref">見積 §2（v4 で形式変更）</td></tr>
+  <tr><td class="no">5</td><td class="q">助成対象になる費用と、ならない費用の切り分け</td><td><b>対象（構築・検証）:</b> 要件定義〜検収（M0〜M7）・サーバー構築・AI 連携 ＝ <b>¥2,900,000（税別・案）</b>。<b>対象外:</b> AI API 利用料（月額）、保守月額、専用PC の購入（既存 PC を使う場合は発生しない）、Oracle ライセンス。「あれば便利」O1〜O3・O5・O6 は今回の申請に含めない前提です</td><td class="ref">見積 §2・§3・§8／変更点メモ §2</td></tr>
+  <tr><td class="no">6</td><td class="q">1社に依頼する理由と、相場との比較</td><td><b>選定理由書（50万円以上）を作成します。</b>理由: ①既存システム会社は VB／Oracle の保守が主業務で、Web・PDF 解析・予定表 UI は範囲外（分担は既存会社と合意済み）②5月から4回の打合せで業務（注文書 → 受注 → 予定組み）を把握し、画面見本・設計書まで作成済み。他社では業務理解に数か月を要する ③基幹に手を入れない方式（補助DB → CSV）を既存会社と合意済み。<b>相場:</b> 人日単価と総人日を示し、同規模の Web 業務システム（2画面＋連携＋自動配置）の一般的な範囲内であることを記載。相見積もりが必要な場合は協力します</td><td class="ref">見積 §8／選定理由書（v4 で新規）</td></tr>
+  <tr><td class="no">7</td><td class="q">費用の内訳と作業量の根拠</td><td>内訳（AI 連携込み・案）: <b>要件定義・設計 ¥200,000／開発（注文入力・CSV 出力・予定表・自動配置・AI 連携）¥2,150,000／検証・並行テスト・検収 ¥250,000／サーバー構築 ¥300,000</b>。既存の受注データは Oracle に残すため <b>データ移行はありません</b>。「データ投入」に当たる作業は、得意先の写し・判型・作業場所のマスタ登録と操作説明（導入）です。正式見積では 設計／開発／検証／導入 の4区分で人日を示します</td><td class="ref">見積 §2／変更点メモ §2</td></tr>
+  <tr><td class="no">8</td><td class="q">納品後、毎月かかる費用</td><td><b>AI API 利用料のみ</b>（国宝社様名義・従量。週次の提案と日々の組み直しで月 100〜300 回程度の呼び出しを想定 → <b>月 ¥500〜¥3,000 程度</b>が目安。モデル確定後、並行テストで実測して確定）。クラウド利用料なし（社内サーバー）。保守は任意（No.23）。<b>AI を止めてもルールだけで動く</b>ため、利用料ゼロの運用にも戻せます</td><td class="ref">見積 §5／変更点メモ §2</td></tr>
+</table>
+
+<h2>3. 作業の範囲と成果物</h2>
+<table>
+  <thead><tr><th style="width:5%">No.</th><th style="width:22%">確認すること</th><th>回答</th><th style="width:15%">該当資料</th></tr></thead>
+  <tr><td class="no">9</td><td class="q">既存システム会社との作業分担</td><td><b>CSV の形式:</b> 既存会社が設計・提示（tugilo はそれに合わせる）。<b>取込プログラム:</b> 既存会社（既存会社のお見積は tugilo の見積に含みません）。<b>取込の実行・確認:</b> 国宝社様（既定フォルダに置いて起動。結果は VB 画面と結果ファイル）。<b>結合テスト:</b> 三者（12月に1回、1月に並行テスト）。tugilo の範囲は PDF → 補助DB → CSV 出力まで、および予定表（AI 連携を含む）</td><td class="ref">構成図 §5／基本設計 §6・§11</td></tr>
+  <tr><td class="no">10</td><td class="q">要件定義書・設計書（外部・内部）・操作説明書の納入</td><td>次の文書を納品します（いずれも必須の範囲に含む。PDF＋編集可能な元ファイル）。<b>要件定義書</b>（M0 で確定版）／<b>外部設計書</b> ＝ 基本設計書＋画面仕様／<b>内部設計書</b> ＝ DB 定義・CSV 定義・自動配置ルールと AI への指示文の定義・処理フロー／<b>操作説明書</b>（画面ごとの手順・エラー時の対処）／<b>構築・運用手順書</b>（No.21）</td><td class="ref">基本設計 §1（v4 で納品物一覧を追加）</td></tr>
+  <tr><td class="no">11</td><td class="q">検収の基準（何をもって完成とするか）</td><td>1月の並行テスト（4週間）で測ります。案: <b>(a) 注文入力:</b> 主要1社の PDF 50件以上で、人が直す項目が1件あたり平均2項目以下。承認 → CSV → 取込が通ること <b>(b) 予定表:</b> 4週分を手組みと並走し、画面で組んだ週が4週とも運用に使えた（紙に戻らない）<b>(c) 自動配置（ルール＋AI）:</b> 週次の提案に対し、担当者が確定前に動かしたカードが2割以下の週が4週中3週以上（「10回中8回」の置き換え）<b>(d) 連携:</b> CSV 取込エラー 0 件（同一ファイル名エラーを除く）。数値は担当者ヒアリング後に確定</td><td class="ref">基本設計 §7／スケジュール 1月（v4 で検収基準を追加）</td></tr>
+  <tr><td class="no">12</td><td class="q">瑕疵担保と、精度が落ちたときの対応</td><td>検収後 <b>6か月</b> を瑕疵担保期間とし、仕様どおり動かない不具合は無償で修正（案）<span class="star">★</span>。自動配置の「精度低下」は不具合ではなく <b>ルール・重み・AI への指示文の調整</b>として扱い、瑕疵期間中は月1回の調整を含めます。期間後は保守契約または都度見積</td><td class="ref">見積 §10（v4 で更新）</td></tr>
+</table>
+
+<h2>4. AI を使う部分の作り</h2>
+<div class="box">
+  <h3>前提: 予定表の自動配置は「ルール＋AI＋人」の三層</h3>
+  <table>
+    <tr><th style="width:18%">ルール（制約）</th><td>納期・作業場所の稼働枠・判型×作業の所要時間・場所の適性・優先度で「置けるか」を決め、AI 案の制約違反を弾く。AI が止まったときの代替</td></tr>
+    <tr><th>AI（提案・説明・指示）</th><td>①週次の自動配置で<b>順番案と理由（日本語）</b>を返す ②担当者の<b>言葉での指示</b>（「A社の分を来週に前倒し」）を受けて組み直す</td></tr>
+    <tr><th>人（確定）</th><td>画面で動かして確定。AI 案はカード色で区別し、動かした内容を記録</td></tr>
+  </table>
+</div>
+<table>
+  <thead><tr><th style="width:5%">No.</th><th style="width:22%">確認すること</th><th>回答</th><th style="width:15%">該当資料</th></tr></thead>
+  <tr><td class="no">13</td><td class="q">使う AI サービス・契約名義・入力データが学習に使われないか</td><td><b>OpenAI API または Anthropic API</b>（Gemini API も可。申請時のご説明との整合で選定 <span class="star">★</span>）。<b>契約名義は国宝社様</b>（アカウント・支払いとも）。いずれも <b>API 経由の入力は既定で学習に使われません</b>（ChatGPT／Gemini の一般向けアプリは使いません）。渡すデータは No.17 のとおり最小限・ID 化</td><td class="ref">変更点メモ §1／基本設計 §7（v4）</td></tr>
+  <tr><td class="no">14</td><td class="q">AI に渡すルールを、社内で書き換えられるか</td><td>ルールと重み（前倒し上限・優先度の重み・場所の適性・稼働枠）は <b>管理画面で社内の管理者が変更</b>できます（DB の設定値）。AI への指示文のうち業務ルールの部分（「納期優先」「同一判型はまとめる」等）も <b>管理画面で編集</b>でき、版を残します</td><td class="ref">仕様書 §6.3・§8（v4 で追記）</td></tr>
+  <tr><td class="no">15</td><td class="q">担当者の修正を取り込んで精度を上げる機能</td><td>提案と、確定前後に人が動かした内容を <b>記録</b>します。月1回「提案どおり／人が直した」の割合と、よく直されるパターンを出します。v1 は <b>記録＋直近の修正例を次回の提案時に AI へ参考として渡す</b>まで。重みの自動調整・学習モデル化は行いません（v2 で検討）</td><td class="ref">仕様書 §6.3／基本設計 §7</td></tr>
+  <tr><td class="no">16</td><td class="q">AI のモデル更新で結果が変わらないための工夫</td><td>①<b>モデル名を設定で固定</b>（自動で新版に変わらない）②AI 案は<b>ルールで検証</b>し、制約違反は採用しない（モデルが変わっても納期・稼働枠は守られる）③モデル変更時は <b>過去4週の実データで回帰確認</b>してから切替 ④結果が崩れたら <b>ルールだけの提案へ切替</b>可能。ルール・指示文は版番号を持ち履歴を残します</td><td class="ref">基本設計 §5・§7（v4）</td></tr>
+  <tr><td class="no">17</td><td class="q">DB から AI に渡すデータの範囲</td><td><b>渡す:</b> 注文ID・判型・数量・納期・所要時間・優先度・作業場所の空き・直近の修正例（ID 化）。<b>渡さない:</b> 得意先名・担当者名・金額・住所・連絡先・PDF 原本。送信前に ID 化し、受け取った案を社内で元の名前に戻して表示。送信内容はログに残します（監査用）。通信は社内サーバーから AI API への外向き HTTPS のみ</td><td class="ref">構成図 §3（v4 で経路を追加）</td></tr>
+</table>
+
+<h2>5. 運用・保守と今後の改修</h2>
+<table>
+  <thead><tr><th style="width:5%">No.</th><th style="width:22%">確認すること</th><th>回答</th><th style="width:15%">該当資料</th></tr></thead>
+  <tr><td class="no">18</td><td class="q">サーバー構成・バックアップ・復旧</td><td>社内 Docker（案A: 既存 Hyper-V 上の Ubuntu／案B: 専用PC）。nginx＋アプリ＋MariaDB＋ジョブ。<b>日次バックアップ</b>（DB ダンプ・PDF 原本・CSV 控え）を別ディスクへ。復旧手順書を納品。停止時は従来の手入力・手組みに戻れます</td><td class="ref">構成図 §3／基本設計 §10</td></tr>
+  <tr><td class="no">19</td><td class="q">データの取り出し・持ち主</td><td><b>データの持ち主は国宝社様。</b>補助DB は MariaDB で、ダンプ・CSV・Excel で全件取り出せます（管理画面にエクスポートを用意）。基幹の正は従来どおり Oracle</td><td class="ref">基本設計 §2（v4 でエクスポートを追記）</td></tr>
+  <tr><td class="no">20</td><td class="q">プログラム・設定の引き渡しと権利</td><td>ソースコード・Docker 構成・設定・DB 定義を <b>納品</b>し、国宝社様が<b>自社利用・改変・第三者への保守委託に使える権利</b>を付与します（案）。著作権の帰属（譲渡か利用許諾か）と汎用部分の扱いは契約書で明記 <span class="star">★</span></td><td class="ref">契約書</td></tr>
+  <tr><td class="no">21</td><td class="q">担当者交代後も直せる文書</td><td>構築手順書（Docker 起動・更新・バックアップ・復旧）・運用手順書（月次確認・ユーザー追加・マスタ変更・AI 設定の変更）・設計書一式（No.10）を納品します</td><td class="ref">No.10 参照</td></tr>
+  <tr><td class="no">22</td><td class="q">不具合時の連絡先・対応の目安</td><td>連絡先: 次廣（メール・電話・チャット）。一次回答 <b>1営業日以内</b>、業務停止級は <b>2営業日以内に暫定対処</b>、それ以外は次回更新で（案）<span class="star">★</span>。止まったときの代替は従来の手入力・手組み（設計上いつでも戻れます）。保守契約の有無で水準を分けます</td><td class="ref">サポート条件（v4 で新規）</td></tr>
+  <tr><td class="no">23</td><td class="q">保守契約の有無と中身</td><td><b>任意。助成対象外。</b>契約する場合の目安: 月 ¥25,000〜¥35,000（障害対応・軽微改修・月次確認）＋サーバー維持 月 ¥10,000〜¥20,000。契約しない場合は都度見積（No.22 の目安は緩くなります）</td><td class="ref">見積 §5</td></tr>
+  <tr><td class="no">24</td><td class="q">今後の改修を誰が・いくらで</td><td>取引先の PDF 様式追加: <b>1パターン ¥120,000〜¥180,000（O5）</b>。ライン・工場・稼働枠・優先度・AI への業務ルールの変更: <b>管理画面で社内対応（費用なし）</b>。CSV レイアウト変更（既存会社側の都合）: 都度見積（小規模なら保守内）</td><td class="ref">見積 §3</td></tr>
+  <tr><td class="no">25</td><td class="q">機能追加や、他業務・他工場への広げ方</td><td>作業場所はマスタ追加で他工場に広げられます。Excel 読込（O1）・メール自動取込（O2）・自動配置 v2（O3）・2台構成（O6）は並行テスト後に判断。他業務（日報・得意先ポータル）は別案件として見積</td><td class="ref">見積 §3・§4</td></tr>
+</table>
+
+<footer><span>tugilo（次廣 淳） https://tugilo.com</span><span>★ の項目は打合せで確定し、v4 資料と正式見積に反映します</span></footer>
+</div>
+</body>
+</html>

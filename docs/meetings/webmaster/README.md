@@ -65,6 +65,10 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_term11_meeting1_20260914_agenda.md](webmaster_term11_meeting1_20260914_agenda.md) | 第1回進行用アジェンダ |
 | [webmaster_term11_meeting1_20260914.md](webmaster_term11_meeting1_20260914.md) | **第1回議事録**（2026-09-14 19:00–20:00 実施）。Religo `meetings.id` 41 |
 | [webmaster_term11_lt_20260916.md](webmaster_term11_lt_20260916.md) | **LT×WM 議事録**（2026-09-16 21:00〜）。台本・朝礼・9/27通しリハ |
+| [webmaster_term11_zoom_bg_20261004.md](webmaster_term11_zoom_bg_20261004.md) | **11期 Zoom背景 配布案内**（2026-10-04・未送信）。米澤さん |
+| [webmaster_term11_todo_20261005.md](webmaster_term11_todo_20261005.md) | **10/6 前日ToDo**（2026-10-05・未送信） |
+| [webmaster_term11_zoom_update_20261020.md](webmaster_term11_zoom_update_20261020.md) | **Zoom アップデート案内**（2026-10-20・未送信）。Mac 7.2.2／Win 7.2.1 |
+| [webmaster_term11_ltst_report_20261020.md](webmaster_term11_ltst_report_20261020.md) | **LTST 報告・相談**（10/20週・未送信）。BOR 講座／感想 2人固定 |
 
 ## 関連
 

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>システム構成図（v3） — 国宝社 木村秀継様向け（tugilo 次廣）</title>
+  <style>
+    :root {
+      --ink: #1d2430; --muted: #5d6673; --line: #d6d9de;
+      --accent: #1f4e79; --accent-soft: #e6eef6;
+      --warm: #b5652a; --warm-soft: #f7ebe0;
+      --ok: #2f6b4f; --ok-soft: #e4efe8;
+      --ng: #a1372a; --ng-soft: #f6e4e1;
+      --bg: #ffffff; --slide-w: 1280px; --slide-h: 720px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #d9d6d0; color: var(--ink);
+      font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-feature-settings: "palt"; line-height: 1.5; }
+    .toolbar { display: flex; gap: 10px; justify-content: center; align-items: center; padding: 14px 16px 6px; flex-wrap: wrap; }
+    .toolbar button, .toolbar a { border: 1px solid #9aa3ad; background: #fff; color: var(--ink); border-radius: 999px; padding: .45rem 1.1rem; font: inherit; font-size: 13px; cursor: pointer; text-decoration: none; }
+    .hint { text-align: center; color: #555; font-size: 12px; margin: 0 16px 14px; }
+    .slide { width: var(--slide-w); height: var(--slide-h); margin: 0 auto 18px; background: var(--bg); position: relative; overflow: hidden;
+      padding: 44px 64px 56px; box-shadow: 0 12px 30px rgba(30,30,30,.14); display: flex; flex-direction: column; }
+    .slide::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--accent); }
+    .slide.cover::before { width: 0; }
+    .foot { position: absolute; left: 64px; right: 64px; bottom: 22px; display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+    .kicker { font-size: 12px; letter-spacing: .16em; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+    h1 { font-size: 40px; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    h2 { font-size: 28px; line-height: 1.25; margin: 0 0 16px; letter-spacing: -.01em; }
+    h3 { font-size: 16px; margin: 0 0 8px; color: var(--accent); }
+    p { margin: 0 0 8px; font-size: 15px; }
+    .lead { font-size: 18px; }
+    .small { font-size: 12.5px; color: var(--muted); }
+    .cols { display: grid; gap: 22px; }
+    .cols.two { grid-template-columns: 1fr 1fr; }
+    .cols.three { grid-template-columns: 1fr 1fr 1fr; }
+    .cols.wide-left { grid-template-columns: 1.4fr 1fr; }
+    .cols.wide-right { grid-template-columns: 1fr 1.4fr; }
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+    .box.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .box.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .box.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .box.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .box.dim { border-style: dashed; color: var(--muted); }
+    .num { font-size: 40px; font-weight: 700; letter-spacing: -.02em; line-height: 1; color: var(--accent); }
+    .num small { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+    .num.warm { color: var(--warm); }
+    ul, ol { margin: 0; padding-left: 1.3em; font-size: 15px; }
+    li { margin: 0 0 5px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { padding: 6px 9px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f2f4f7; font-weight: 700; font-size: 12.5px; color: #333; }
+    td.r, th.r { text-align: right; white-space: nowrap; }
+    tr.hl td { background: var(--accent-soft); font-weight: 700; }
+    tr.dim td { color: var(--muted); }
+    table.tight th, table.tight td { padding: 4px 7px; font-size: 12.5px; }
+    .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; background: #eef0f3; color: #333; margin-right: 6px; vertical-align: middle; white-space: nowrap; }
+    .tag.must { background: var(--accent); color: #fff; }
+    .tag.nice { background: var(--warm); color: #fff; }
+    .tag.hold { background: #777; color: #fff; }
+    .tag.ok { background: var(--ok); color: #fff; }
+    .tag.ng { background: var(--ng); color: #fff; }
+    .cover { justify-content: center; background: linear-gradient(135deg, #15375a 0%, #1f4e79 60%, #2b6a9b 100%); color: #fff; }
+    .cover .kicker { color: #cfe0f2; }
+    .cover h1 { font-size: 46px; color: #fff; }
+    .cover p { color: #e6eef6; }
+    .cover .meta { margin-top: 32px; font-size: 14.5px; color: #cfe0f2; line-height: 1.8; }
+    .flow { display: flex; gap: 8px; align-items: stretch; }
+    .flow .step { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 13px; position: relative; background: #fff; }
+    .flow .step b { display: block; font-size: 14.5px; color: var(--accent); margin-bottom: 4px; }
+    .flow .step.dim { color: var(--muted); border-style: dashed; }
+    .flow .step.accent { background: var(--accent-soft); border-color: #c5d5e6; }
+    .flow .step.warm { background: var(--warm-soft); border-color: #e7cdb6; }
+    .flow .step.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .flow .arrow { align-self: center; font-size: 22px; color: var(--muted); flex: none; }
+    .stamp { position: absolute; right: 64px; top: 44px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+    .grid-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-cards.three { grid-template-columns: repeat(3, 1fr); }
+    .grid-cards .box { padding: 12px 14px; }
+    .grid-cards .box h3 { font-size: 14.5px; }
+    .grid-cards .box p { font-size: 13px; margin: 0; }
+    /* 構成図 */
+    .diag { display: flex; gap: 14px; align-items: stretch; }
+    .diag .zone { flex: 1; border: 1.5px dashed #b7bec8; border-radius: 12px; padding: 12px; background: #fafbfc; }
+    .diag .zone > b { display: block; font-size: 12px; color: var(--muted); letter-spacing: .1em; margin-bottom: 8px; }
+    .diag .zone.t { border-color: var(--accent); background: #f3f7fb; }
+    .diag .zone.k { border-color: var(--warm); background: #fcf6f0; }
+    .node { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; font-size: 13px; margin-bottom: 8px; }
+    .node b { display: block; font-size: 13.5px; }
+    .node.db { border-radius: 20px / 10px; background: #eef4ea; border-color: #bfd3b5; }
+    .node.file { background: #fff8e8; border-color: #e5d3a3; }
+    .node.ppl { background: #f1eefb; border-color: #cfc5ea; }
+    .varrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; margin: 2px 0 8px; }
+    .harrow { align-self: center; color: var(--muted); font-size: 24px; flex: none; }
+    .harrow.dash { color: #9aa3ad; }
+    /* 状態遷移 */
+    .states { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+    .states span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: #fff; }
+    .states span.ok { background: var(--ok-soft); border-color: #c3d9cb; }
+    .states span.ng { background: var(--ng-soft); border-color: #e3c2bc; }
+    .states i { font-style: normal; color: var(--muted); }
+    /* ガント */
+    .gantt { font-size: 12px; }
+    .gantt .row { display: grid; grid-template-columns: 230px 1fr; align-items: center; gap: 8px; min-height: 18px; }
+    .gantt .row.head { min-height: 20px; }
+    .gantt .label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11.5px; line-height: 1.2; }
+    .gantt .track { position: relative; height: 12px; background: #f2f4f7; border-radius: 3px; }
+    .gantt .track .bar { position: absolute; top: 1px; bottom: 1px; background: var(--accent); border-radius: 2px; }
+    .gantt .track .bar.k { background: var(--warm); }
+    .gantt .track .bar.t { background: var(--ok); }
+    .gantt .track .bar.p { background: #7a8694; }
+    .gantt .track .ms { position: absolute; top: -1px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 12px solid var(--ng); transform: translateX(-7px); }
+    .gantt .months { display: grid; grid-template-columns: repeat(5, 1fr); font-size: 11px; color: var(--muted); border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+    .gantt .months div { border-left: 1px solid var(--line); padding: 0 4px 2px; }
+    .gantt .track .vline { position: absolute; top: 0; bottom: 0; border-left: 1px solid #dfe3e8; }
+    .gantt .sec { font-weight: 700; color: var(--accent); margin: 5px 0 1px; font-size: 11.5px; line-height: 1.2; }
+    /* 画面ワイヤー */
+    .wire { border: 1px solid var(--line); border-radius: 10px; background: #f6f7f9; padding: 10px; font-size: 11.5px; }
+    .wire .bar { background: var(--accent); color: #fff; padding: 5px 10px; border-radius: 6px 6px 0 0; font-weight: 700; font-size: 12px; margin: -10px -10px 8px; }
+    .wire .f { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; margin-bottom: 5px; }
+    .wire .f label { display: block; font-size: 9.5px; color: var(--muted); }
+    .wire .f .v { font-size: 11.5px; }
+    .wire .f .v.ph { color: #9aa3ad; }
+    .wire .row { display: flex; gap: 6px; }
+    .wire .row > div { flex: 1; }
+    .wire .btn { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 11px; margin-right: 4px; }
+    .wire .btn.ghost { background: #fff; color: var(--accent); border: 1px solid var(--accent); }
+    .wire .btn.warm { background: var(--warm); }
+    .sched { display: grid; grid-template-columns: 70px repeat(6, 1fr); gap: 3px; font-size: 10.5px; }
+    .sched .h { background: #f2f4f7; text-align: center; font-weight: 700; padding: 4px 2px; border-radius: 4px; }
+    .sched .d { background: #f2f4f7; padding: 4px; border-radius: 4px; font-weight: 700; }
+    .sched .c { background: #fff; border: 1px solid var(--line); border-radius: 4px; min-height: 42px; padding: 3px; }
+    .sched .c.spare { background: #fafafa; border-style: dashed; }
+    .sched .c.blocked { background: repeating-linear-gradient(45deg, #eee, #eee 4px, #f8f8f8 4px, #f8f8f8 8px); }
+    .sched .k { border-radius: 4px; padding: 2px 4px; margin-bottom: 2px; font-size: 10px; line-height: 1.25; }
+    .sched .k.o { background: var(--warm-soft); border-left: 3px solid var(--warm); }
+    .sched .k.g { background: var(--ok-soft); border-left: 3px solid var(--ok); }
+    .sched .k.n { background: #eef0f3; border-left: 3px solid #777; }
+    @media print {
+      @page { size: 1280px 720px; margin: 0; }
+      html, body { background: #fff; }
+      .toolbar, .hint { display: none; }
+      .slide { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">PDFとして保存（印刷ダイアログ）</button>
+    <a href="kimura_kokuhosha_proposal_v3_slides_20261011.html">① 提案書</a>
+    <a href="kimura_kokuhosha_estimate_v3_slides_20261011.html">② 見積</a>
+    <a href="kimura_kokuhosha_system_architecture_slides_20261011.html" style="background:var(--accent);color:#fff;border-color:var(--accent)">③ 構成図</a>
+    <a href="kimura_kokuhosha_basic_design_slides_20261011.html">④ 基本設計</a>
+    <a href="kimura_kokuhosha_specification_slides_20261011.html">⑤ 仕様</a>
+    <a href="kimura_kokuhosha_schedule_slides_20261011.html">⑥ スケジュール</a>
+  </div>
+  <p class="hint">印刷ダイアログで「送信先: PDFに保存」「用紙サイズ: 既定（CSS指定 1280×720）」「余白: なし」「背景のグラフィック: オン」にすると、1スライド1ページで書き出せます。</p>
+  <!-- 1 表紙 -->
+  <section class="slide cover">
+    <p class="kicker">システム構成図（v3）</p>
+    <h1>注文PDF入力・製本作業予定表<br>システム構成</h1>
+    <p class="lead" style="color:#e6eef6">PDF → 補助DB → CSV → 取込プログラム → Oracle。<br>境界は「既定フォルダの CSV」。</p>
+    <div class="meta">
+      株式会社国宝社　木村 秀継 様<br>
+      tugilo 次廣 淳　｜　2026年10月11日<br>
+      第4回打合せ（2026-10-05）合意と、開発会社資料（2026-09-29）に合わせた案。
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <p class="kicker">1. 全体像</p>
+    <h2>データの流れ。Oracle への書き込みは無い</h2>
+
+    <div class="diag">
+      <div class="zone"><b>入口</b>
+        <div class="node file"><b>注文書PDF</b>メール添付</div>
+        <div class="node file"><b>生産依頼表 Excel</b>メール添付（発注者）</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone t" style="flex:1.8"><b>新 Web（tugilo・社内）</b>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1">
+            <div class="node"><b>まとめてアップロード</b></div>
+            <div class="varrow">↓</div>
+            <div class="node"><b>PDF 解析</b></div>
+            <div class="varrow">↓</div>
+            <div class="node accent"><b>項目編集・1件ずつ承認</b></div>
+          </div>
+          <div style="flex:1">
+            <div class="node"><b>生産依頼表 手動入力</b>Excel を見て入力</div>
+            <div class="varrow">↓</div>
+            <div class="node db"><b>補助DB（MariaDB）</b>仮登録・証跡・予定表・出力履歴</div>
+            <div class="varrow">↓</div>
+            <div class="node"><b>CSV 出力</b></div>
+          </div>
+        </div>
+        <div class="node" style="margin-top:4px;margin-bottom:0"><b>製本作業予定表</b>手配置＋自動配置（補助DB と読み書き）</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone"><b>受け渡し</b>
+        <div class="node file"><b>既定フォルダ</b>共有。ORDER_日時_連番.csv</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone k"><b>既存（開発会社・国宝社様）</b>
+        <div class="node"><b>取込プログラム</b>手動実行</div>
+        <div class="varrow">↓</div>
+        <div class="node db"><b>Oracle</b>受注の正</div>
+        <div class="varrow">↕</div>
+        <div class="node"><b>VB 製本販売管理</b></div>
+      </div>
+    </div>
+    <div class="cols three" style="margin-top:14px">
+      <div class="box"><h3>tugilo 範囲</h3><p style="margin:0">入口（PDF／手動入力）、補助DB、注文情報修正画面、予定表、CSV 出力</p></div>
+      <div class="box warm"><h3>開発会社 範囲</h3><p style="margin:0">CSV レイアウト設計・提示、取込プログラム、Oracle への登録</p></div>
+      <div class="box"><h3>Oracle は読むだけ（点線・要確認）</h3><p style="margin:0">得意先参照と VB 直接入力分の表示。使えなければ開発会社から一覧 CSV を受ける案</p></div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>2 / 7</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <p class="kicker">2. CSV 連携の約束事</p>
+    <h2>開発会社資料（2026-09-29）に合わせる</h2>
+
+    <div class="flow">
+      <div class="step ppl"><b>① 事務</b>承認済み注文を選び「CSV 出力」</div><div class="arrow">→</div>
+      <div class="step accent"><b>② 新 Web</b>出力バッチを補助DB に記録（ファイル名・件数・対象）</div><div class="arrow">→</div>
+      <div class="step warm"><b>③ 既定フォルダ</b>ORDER_YYYYMMDD_HHMMSS_NNN.csv を書く。常に新しい名前</div><div class="arrow">→</div>
+      <div class="step"><b>④ 取込プログラム</b>国宝社様が手動で起動。CSV を読み Oracle に INSERT</div><div class="arrow">→</div>
+      <div class="step dim"><b>⑤ 結果（案）</b>結果ファイルを既定フォルダへ。新 Web が読んで「取込済み」に更新</div>
+    </div>
+    <div class="cols two" style="margin-top:22px">
+      <div class="box">
+        <h3>決まっていること</h3>
+        <table class="tight">
+          <tr><td>形式</td><td>CSV 等のテキスト</td></tr>
+          <tr><td>レイアウト</td><td><b>開発会社が設計・提示</b></td></tr>
+          <tr><td>タイミング</td><td>手動実行。既定フォルダに置いて起動</td></tr>
+          <tr><td>重複防止</td><td>同一ファイル名は取込エラー</td></tr>
+        </table>
+      </div>
+      <div class="box warm">
+        <h3>開発会社の確認事項 → tugilo 案</h3>
+        <table class="tight">
+          <tr><td>取込結果の通知方法</td><td>結果ファイル（同名＋_result.csv）。代替: VB 画面で確認し Web は「出力済み」止まり</td></tr>
+          <tr><td>UPDATE／DELETE の有無</td><td>初回は <b>INSERT のみ</b>。修正・取消は VB 側。将来は取消フラグ列を追加</td></tr>
+          <tr><td>得意先の照合</td><td>Web は Oracle 得意先コードを持って出す。無い行は出力前にエラー</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>3 / 7</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <p class="kicker">3. 置き場所　案A</p>
+    <h2>既存 Windows の Hyper-V に Ubuntu を1台</h2>
+
+    <div class="cols wide-left">
+      <div class="diag">
+        <div class="zone"><b>既存 Windows サーバー</b>
+          <div class="zone t" style="margin-bottom:10px"><b>Hyper-V → Ubuntu VM（4vCPU／8GB／80GB 目安）→ Docker</b>
+            <div style="display:flex;gap:8px">
+              <div class="node" style="flex:1"><b>nginx</b>HTTPS 社内</div>
+              <div class="node" style="flex:1"><b>アプリ</b>Laravel＋React</div>
+              <div class="node db" style="flex:1"><b>MariaDB</b></div>
+              <div class="node" style="flex:1"><b>ジョブ</b>PDF 解析・CSV 出力</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <div class="node file" style="flex:1"><b>既定フォルダ</b>共有</div>
+            <div class="node" style="flex:1"><b>VB</b></div>
+            <div class="node db" style="flex:1"><b>Oracle</b></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="box ok"><h3>利点</h3><ul><li>新しい機械が要らない</li><li>既定フォルダが同じ機械にある</li><li>社内 HTTPS だけで外に出ない</li></ul></div>
+        <div class="box warm" style="margin-top:12px"><h3>条件</h3><ul><li>Hyper-V に VM 1台分の空き（要確認）</li><li>Oracle と同居するため、既存サーバーの負荷が少し増える</li></ul></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">社内PC のブラウザ → HTTPS → nginx → アプリ → MariaDB。ジョブが CSV を既定フォルダへ。アプリは Oracle を読み取り参照（要確認）。</p>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>4 / 7</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <p class="kicker">4. 置き場所　案B</p>
+    <h2>専用PC（木村さん所有・16GB・SSD）</h2>
+
+    <div class="cols wide-left">
+      <div class="diag">
+        <div class="zone t"><b>専用PC（Ubuntu or Windows＋Docker）</b>
+          <div style="display:flex;gap:8px">
+            <div class="node" style="flex:1"><b>nginx</b></div>
+            <div class="node" style="flex:1"><b>アプリ</b></div>
+            <div class="node db" style="flex:1"><b>MariaDB</b></div>
+            <div class="node" style="flex:1"><b>ジョブ</b></div>
+          </div>
+        </div>
+        <div class="harrow">→<br><span style="font-size:11px">SMB 共有</span></div>
+        <div class="zone"><b>既存 Windows サーバー</b>
+          <div class="node file"><b>既定フォルダ</b>共有</div>
+          <div class="node"><b>VB</b></div>
+          <div class="node db"><b>Oracle</b></div>
+        </div>
+      </div>
+      <div>
+        <div class="box ok"><h3>利点</h3><ul><li>Oracle と別の機械（木村さんの意向）</li><li>既存サーバーの負荷を増やさない</li></ul></div>
+        <div class="box warm" style="margin-top:12px"><h3>条件</h3><ul><li>既定フォルダへ SMB 等で書けること</li><li>PC の常時稼働・UPS</li></ul></div>
+      </div>
+    </div>
+    <div class="box" style="margin-top:14px">
+      <h3>両案共通</h3>
+      <p style="margin:0">外部公開なし。Google Workspace／GAS 不採用。社内 LAN のみ。バックアップは DB ダンプ＋アップロード PDF＋CSV 控えを日次でサーバー側へ。</p>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>5 / 7</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <p class="kicker">5. 中身（アプリの層）</p>
+    <h2>何がどこで動くか</h2>
+
+    <table>
+      <tr><th style="width:110px">層</th><th>内容</th><th style="width:300px">技術（案）</th></tr>
+      <tr><td>画面</td><td>注文入力・生産依頼表入力・予定表・CSV 出力・管理</td><td>React（画面見本と同じ操作）</td></tr>
+      <tr><td>アプリ</td><td>認証・権限・解析・承認・CSV 生成・自動配置ルール・ログ</td><td>Laravel</td></tr>
+      <tr><td>ジョブ</td><td>PDF 解析（1件ずつ、「次へ」で次を実行）、CSV 書き出し、（あれば便利）メール取込</td><td>キュー</td></tr>
+      <tr><td>補助DB</td><td>ユーザー・draft・解析証跡・予定表・出力履歴</td><td>MariaDB</td></tr>
+      <tr><td>ファイル</td><td>アップロード PDF 原本、CSV 控え</td><td>ローカルディスク（バックアップ対象）</td></tr>
+      <tr><td>外部参照</td><td>得意先・VB 直接入力分の読み取り</td><td>Oracle 読み取り専用接続（要確認）</td></tr>
+    </table>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>6 / 7</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <p class="kicker">6. 開発会社との境界</p>
+    <h2>既定フォルダの CSV が決まれば、両側は独立に進められる</h2>
+
+    <div class="diag">
+      <div class="zone t"><b>tugilo が作る</b>
+        <div class="node">PDF → 項目抽出</div>
+        <div class="node">修正・承認画面</div>
+        <div class="node db">補助DB</div>
+        <div class="node accent"><b>CSV 出力</b></div>
+        <div class="node">予定表・自動配置</div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone"><b>国宝社様</b>
+        <div class="node file"><b>既定フォルダに置く</b></div>
+        <div class="node ppl"><b>取込を実行</b>手動・任意のタイミング</div>
+        <div class="node ppl"><b>VB で修正・取消</b></div>
+      </div>
+      <div class="harrow">→</div>
+      <div class="zone k"><b>開発会社が作る</b>
+        <div class="node warm"><b>CSV レイアウト設計</b>→ tugilo に提示</div>
+        <div class="node"><b>取込プログラム</b></div>
+        <div class="node db">Oracle へ登録</div>
+      </div>
+    </div>
+    <div class="cols two" style="margin-top:18px">
+      <div class="box"><h3>10月末までに決めたいこと</h3><ul><li>CSV レイアウト（項目・順・型・文字コード・改行）</li><li>既定フォルダの場所・書き込み権限</li><li>取込口の完成時期（12月末目標）</li></ul></div>
+      <div class="box"><h3>11月中に決めたいこと</h3><ul><li>取込結果の通知方法</li><li>UPDATE／DELETE の扱い</li><li>得意先コードの照合方法・Oracle 読み取り接続の可否</li><li>結合テストの日程（12月・1月）</li></ul></div>
+    </div>
+    <div class="foot"><span>tugilo 次廣 淳 ｜ 国宝社様 システム構成図（v3）</span><span>7 / 7</span></div>
+  </section>
+</body>
+</html>
