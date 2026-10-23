@@ -255,7 +255,7 @@
   .kcard b { display: block; font-size: 16px; color: var(--ink); margin-bottom: 2px; }
   .kcard.on { border-color: var(--c); background: var(--c-soft); }
   .tipbox { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 13px; margin-bottom: 10px; }
-  .imgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .imgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
   .islot { border: 2px dashed #c7cdd6; border-radius: 10px; min-height: 116px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; text-align: center; padding: 8px; font-size: 12px; color: var(--sub); background: #fff; }
   .islot b { color: var(--ink); font-size: 14px; }
   .islot.ok { border-style: solid; border-color: var(--ok); background: #f3faf6; }
@@ -272,6 +272,56 @@
   .srow2 .add { margin-left: auto; color: var(--c); font-weight: 700; }
   .me { background: var(--bg); border-radius: 8px; padding: 10px 12px; font-size: 13px; }
   .req-m { color: var(--c); font-weight: 400; font-size: 12px; }
+  .cform { max-width: 960px; margin: 0 auto; }
+  .cform textarea { width: 100%; height: 70px; font: inherit; padding: 8px; border: 1px solid #cfd4dc; border-radius: 6px; }
+  .news { background: var(--bg); border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-bottom: 6px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .err-s { color: #c0392b; font-size: 12px; margin-top: 6px; }
+  .err-s:empty { display: none; }
+  .tblwrap { overflow-x: auto; }
+  .rtbl { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .rtbl th { background: #f3f5f8; border: 1px solid var(--line); padding: 6px 8px; font-weight: 700; white-space: nowrap; text-align: left; font-size: 12px; }
+  .rtbl td { border: 1px solid var(--line); padding: 4px 6px; vertical-align: top; }
+  .rtbl td input, .rtbl td select { min-width: 0; padding: 6px 6px; font-size: 13px; }
+  .rtbl td small { display: block; color: var(--sub); font-size: 11px; margin-top: 2px; line-height: 1.3; }
+  .rtbl .cell-s { position: relative; }
+  .rtbl .cpick { display: flex; gap: 4px; align-items: center; }
+  .rtbl .cpick .btn { white-space: nowrap; padding: 5px 6px; font-size: 11px; flex: none; }
+  .rsug { position: absolute; left: 6px; top: calc(100% - 4px); z-index: 20; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); min-width: 420px; }
+  .rsug:empty { display: none; }
+  .rsug > div { padding: 7px 10px; cursor: pointer; border-bottom: 1px solid #f0f2f5; }
+  .rsug > div:last-child { border-bottom: 0; }
+  .rsug > div:hover { background: var(--c-soft); }
+  .rsug .nohit { cursor: default; }
+  .rclr { border: 0; background: none; color: #98a2b3; cursor: pointer; font-size: 16px; padding: 6px 4px; }
+  .rclr:hover { color: #c0392b; }
+  .rtbl.ro { min-width: 0; }
+  .rtbl.ro td { padding: 5px 8px; }
+  .islot.addslot { border-color: var(--c); color: var(--c); background: #fffaf8; font: inherit; }
+  .islot.addslot b { color: var(--c); font-size: 22px; }
+  .mwrap { display: flex; flex-direction: column; gap: 4px; }
+  .mwrap .mcard { flex: 1; min-height: 64px; }
+  .mwrap > a.link { font-size: 12px; padding-left: 4px; white-space: nowrap; }
+  .pcbox { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 6px; }
+  .pcrow { display: flex; gap: 8px; align-items: center; font-size: 13px; flex-wrap: wrap; }
+  .pcrow > span:first-child { min-width: 160px; font-weight: 700; }
+  .pcrow input { flex: 1; min-width: 160px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin: 6px 0 12px; }
+  .sw { cursor: pointer; text-align: center; font-size: 11px; color: var(--sub); line-height: 1.3; }
+  .sw i { display: block; height: 44px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.25); margin-bottom: 3px; }
+  .sw:hover i { outline: 2px solid var(--c); }
+  .sw span { display: block; }
+  #modal .box h5 { margin: 12px 0 4px; font-size: 14px; }
+  .notice { margin: 8px 0; padding-left: 20px; font-size: 14px; line-height: 1.7; }
+  .ngrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 10px; }
+  .ncard { border: 2px solid var(--line); border-radius: 10px; padding: 8px; cursor: pointer; text-align: center; font-size: 12px; background: #fff; }
+  .ncard.on { border-color: var(--c); background: var(--c-soft); font-weight: 700; }
+  .nimg { width: 100%; height: 80px; object-fit: contain; background: #fff; border-radius: 6px; margin-bottom: 4px; }
+  .wbimg { max-width: min(100%, 640px); border-radius: 8px; border: 1px solid var(--line); display: block; margin: 8px 0; }
+  .imgph { border: 1px dashed #c7cdd6; border-radius: 8px; padding: 18px; text-align: center; color: var(--sub); font-size: 12px; margin: 8px 0; background: #fff; }
+  .crow { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 6px; align-items: center; }
+  details.custom { margin-top: 10px; font-size: 13px; }
+  details.custom summary { cursor: pointer; color: var(--c); font-weight: 700; }
+  details.custom .crow { margin: 8px 0 6px; }
   .cust textarea { width: 100%; height: 70px; font: inherit; padding: 8px; border: 1px solid #cfd4dc; border-radius: 6px; }
   @media (max-width: 860px) { .imgs { grid-template-columns: repeat(2, 1fr); } .kind { grid-template-columns: 1fr; } }
   body.locked > :not(#gate) { display: none !important; }
@@ -296,14 +346,15 @@
   </form>
 </div>
 <script>
-  if (sessionStorage.getItem('wbDemoUnlocked') === '1') document.body.classList.remove('locked');
+  const gateStore = { get() { try { return sessionStorage.getItem('wbDemoUnlocked'); } catch (e) { return null; } }, set() { try { sessionStorage.setItem('wbDemoUnlocked', '1'); } catch (e) {} } };
+  if (gateStore.get() === '1') document.body.classList.remove('locked');
   function unlockDemo(e) {
     e.preventDefault();
     if (document.getElementById('gatePass').value !== 'demo1234') {
       document.getElementById('gateErr').textContent = 'パスワードが違います。';
       return;
     }
-    sessionStorage.setItem('wbDemoUnlocked', '1');
+    gateStore.set();
     document.body.classList.remove('locked');
   }
 </script>
@@ -813,7 +864,7 @@ function startOrder() { state.form = freshForm(); renderForm(); go('order'); }
 function setMode(m) { state.formMode = m; state.form = freshForm(); renderForm(); }
 const modeBar = () => `<div class="seg"><span class="muted">画面の案：</span>${[['classic', 'いつもの注文フォーム（今の順番）'], ['step', 'ステップで案内（はじめての方向け）']].map(([m, l]) => `<button class="${state.formMode === m ? 'on' : ''}" onclick="setMode('${m}')">${l}</button>`).join('')}</div>`;
 const formQty = f => f.items.reduce((a, it) => a + sumQty(it.qty), 0);
-const itemAmt = it => { const b = bodyOf(it.code); return qtyLines(it.qty).reduce((a, l) => a + b.sizes[l.s] * l.n, 0); };
+const itemAmt = it => { const b = bodyOf(it.code); return qtyLines(it.qty).reduce((a, l) => a + (b.sizes[l.s] || 0) * l.n, 0); };
 const emptyColors = it => it.colors.filter(c => !colorTotal(it.qty, c));
 const targetName = (items, v) => v >= 0 && items[v] ? shortName(items[v].code) : 'すべての商品';
 function stepHint(step) {
@@ -941,7 +992,7 @@ function itemBox(it, ii, multi) {
       ${it.colors.map((c, ci) => `<div class="cbox">
         <h4><span>${c}</span><span class="muted" id="ct-${ii}-${ci}">${colorTotal(it.qty, c)}枚</span><a class="link" onclick="toggleColor(${ii},'${c}')">このカラーを外す</a></h4>
         <div class="sgrid">${sizes.map(([s, p]) => { const n = it.qty[c][s] || 0; return `<div class="stile ${n ? 'has' : ''}" id="st-${ii}-${ci}-${s}">
-          <div class="sz">${s}</div><div class="muted">1枚 ${yen(p)}円</div>
+          <div class="sz">${s}</div><div class="muted">${b.custom ? '単価は見積で' : `1枚 ${yen(p)}円`}</div>
           <div class="stepq sm"><button onclick="bump(${ii},${ci},'${s}',-1)">−</button><input type="number" min="0" value="${n}" oninput="setFormQty(${ii},${ci},'${s}',this.value)"><button onclick="bump(${ii},${ci},'${s}',1)">＋</button></div></div>`; }).join('')}</div>
       </div>`).join('')}`
     : `<div class="empty" style="border:1px dashed #d0d5dd;border-radius:10px;padding:14px">上でカラーを選ぶと、サイズ別の枚数を入れる欄が出ます。</div>`}
@@ -1100,24 +1151,92 @@ function submitOrder() {
   renderAll(); renderForm(); window.scrollTo({ top: 0 });
 }
 
-// ---------- ③' 注文：いつもの注文フォーム（今の順番 × 新しい入力） ----------
+// ---------- ③' 注文：いつもの注文フォーム（現行フォームの項目・挙動をすべて再現 × モックの見た目） ----------
 const PAYS = ['銀行振込', '代金引換（クロネコヤマト）', '店頭にて現金支払い'];
 const CONTACTS = ['メール', 'LINE', '電話'];
 const POPULAR = ['5001-01', '5942-01', '5010-01', '1460-01'];
 const pad2 = n => String(n).padStart(2, '0');
 const addDays = (s, n) => { const d = new Date(`${s}T00:00:00`); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; };
+const NEWS = [['2026/9/28', 'ログインしてご注文いただけるようになりました。お客様情報と前回のご注文内容が自動で入ります。']];
+const INKS = ['ラバー', '染み込み', '発泡', 'その他'];
+const ACTUALS = ['はい', 'いいえ', 'よくわからない'];
+const WHITES = ['有り', '無し'];
+const SENDERS = [['弊社', '【ワーカーブロス株式会社】を出荷人（送り主）にする'], ['お客様', '【お客様情報】を出荷人（送り主）にする']];
+const NAME_TYPES = [['一辺縫い', '一辺縫い(既存タグカット)', 'tag90.jpg'], ['二辺縫い', '二辺縫い(既存タグカット)', 'tag110.jpg'], ['四辺縫い', '四辺縫い(既存タグカット)', 'tag130.jpg'], ['タグカットのみ', 'タグカットのみ(サイズ残し)', 'tag20.jpg'], ['タグプリント', 'タグプリント', 'tagprint.jpg'], ['その他', 'その他', 'tagother.jpg']];
+const NAME_IMG_REQ = ['一辺縫い', '二辺縫い', '四辺縫い', 'タグプリント'];
+const NAME_OPT = { '一辺縫い': 'タグカット&1辺縫い', '二辺縫い': 'タグカット&2辺縫い', '四辺縫い': 'タグカット&4辺縫い', 'タグカットのみ': 'タグカットのみ' };
+const WB_IMG = 'https://workerbros.jp/img/';
+const PRICE_IMG = { 'シルクスクリーン': 1, 'DTF': 2, 'インクジェット': 3, '刺繍': 4 };
+const LEAD = [7, 10], DUE_MIN_DAYS = 12;
+// 注意事項（枠組みのみ。文面は粕谷さんから後日）
+const NOTICES = {
+  'シルクスクリーン': ['0.4mm以下の細い線・小さな文字は再現できない場合があります。', '濃色ボディーに淡色をプリントする場合、下地（白）が必要になることがあります。', '（文面は後日差し替え）'],
+  'DTF': ['極端に細い線・小さな文字はひび割れ・欠けの原因になります。', '洗濯は裏返して、乾燥機は避けてください。', '（文面は後日差し替え）'],
+  'インクジェット': ['濃色ボディーは白引きの有無で発色が変わります。', '写真・グラデーションは元データの解像度に左右されます。', '（文面は後日差し替え）'],
+  '刺繍': ['細かなグラデーション・極細の線は表現できません。', '生地の厚みにより仕上がりが変わります。', '（文面は後日差し替え）'],
+  'おまかせ': [],
+};
+const SILK_COLORS = {"スタンダードカラー":[["ホワイト","#FFFFFF","",""],["ライトグレー","#c6c6c6","",""],["グレー","#898989","",""],["ダークグレー","#5d5d5d","",""],["ブラック","#000000","",""],["ホワイトクリーム","#fffde6","",""],["クリーム","#fffdca","",""],["アイボリー","#f0e9cc","",""],["ベージュ","#e5d8a1","",""],["マスタード","#d6b23a","",""],["レモンイエロー","#fcf368","",""],["イエロー","#ffe301","",""],["ゴールデンイエロー","#ffd200","",""],["オレンジ","#ff8500","",""],["レッドオレンジ","#fc4607","",""],["ベビーピンク","#ffd7e0","",""],["サーモンピンク","#ffa79b","",""],["ピンク","#ff8cc5","",""],["ピンクパープル","#e160ba","",""],["ショッキングピンク","#ff017e","",""],["レッド","#fe0000","",""],["ブライトレッド","#da0000","",""],["ワインレッド","#820f38","",""],["ベンガラ","#8e1e06","",""],["バーガンディー","#780e22","",""],["ライトパープル","#e7b8e6","",""],["ラベンダー","#d77fd6","",""],["パープル","#aa00ff","",""],["ダークパープル","#6d018b","",""],["ライトブラウン","#b87944","",""],["ブラウン","#a94c00","",""],["ダークブラウン","#6d3100","",""],["ミントグリーン","#c9ffcd","",""],["イエローグリーン","#8aff00","",""],["グリーン","#01a204","",""],["ミドルグリーン","#067807","",""],["ダークグリーン","#045506","",""],["マットグリーン","#38a095","",""],["ブルーグリーン","#006f70","",""],["カーキ","#687d32","",""],["ティファニーブルー","#17fed0","",""],["ターコイズブルー","#00d0ea","",""],["ウォーターブルー","#81d4fe","",""],["ブルー","#017eff","",""],["ロイヤルブルー","#012aff","",""],["ブルーネイビー","#0608bb","",""],["ネイビー","#232572","",""],["ダークネイビー","#0f0053","",""]],"蛍光カラー":[["蛍光グリーン","#87d764","","linear-gradient(to right, #87d764 0%, #FFFFFF 50%, #87d764 100%)"],["蛍光ピンク","#e543a8","","linear-gradient(to right, #e543a8 0%, #FFFFFF 50%, #e543a8 100%)"],["蛍光オレンジ","#ec7644","","linear-gradient(to right, #ec7644 0%, #FFFFFF 50%, #ec7644 100%)"],["蛍光イエロー","#e7fa60","","linear-gradient(to right, #e7fa60 0%, #FFFFFF 50%, #e7fa60 100%)"],["蛍光ブルー","#4b9ff7","","linear-gradient(to right, #4b9ff7 0%, #FFFFFF 50%, #4b9ff7 100%)"]],"メタリック・特殊インク":[["ゴールド","#FFD700","","linear-gradient(to bottom, #f7ef8a 0%, #d2ac47 50%, #edc967 80%, #e0bf81 100%)"],["シルバー","#C0C0C0","","linear-gradient(to bottom, #ffffff 0%, #c0c0c0 50%, #e8e8e8 80%, #b5b5b5 100%)"],["リフレクター","","","linear-gradient(135deg, #a8a8a8 0%, #f0f0f0 25%, #d8d8d8 50%, #ffffff 75%, #d0d0d0 100%)"],["蓄光","#86c75c","","radial-gradient(circle at center, #d8fe97 0%, #d8fe97 40%, #86c75c 80%, #86c75c 100%), linear-gradient(to bottom, transparent 0%, transparent 100%)"]]};
+const EMB_COLORS = {"スタンダードカラー":[["ホワイト","#FFFFFF","#1198",""],["ライトグレー","#c6c6c6","#1601",""],["グレー","#898989","#1602",""],["ダークグレー","#5d5d5d","#1603",""],["ブラック","#000000","#1197",""],["ホワイトクリーム","#fffde6","#1102",""],["クリーム","#fffdca","#1091",""],["アイボリー","#f0e9cc","#1881",""],["ベージュ","#e5d8a1","#1164",""],["マスタード","#d6b23a","#1116",""],["レモンイエロー","#fcf368","#1093",""],["イエロー","#ffe301","#1095",""],["ゴールデンイエロー","#ffd200","#1105",""],["オレンジ","#ff8500","#1114",""],["レッドオレンジ","#fc4607","#1332",""],["ベビーピンク","#ffd7e0","#1002",""],["サーモンピンク","#ffa79b","#1262",""],["ピンク","#ff8cc5","#1004",""],["ショッキングピンク","#ff017e","#1359",""],["レッド","#fe0000","#9022",""],["ワインレッド","#990100","#1023",""],["ベンガラ","#8e1e06","#1265",""],["バーガンディー","#780e22","#1311",""],["ライトパープル","#e7b8e6","#1123",""],["ラベンダー","#d880d7","#1335",""],["パープル","#cc00ff","#1809",""],["ダークパープル","#8601a8","#1130",""],["ライトブラウン","#b87944","#2111",""],["ブラウン","#a94b01","#1192",""],["ダークブラウン","#6d3100","#1863",""],["ミントグリーン","#c9ffcd","#1048",""],["イエローグリーン","#5acd32","#1058",""],["グリーン","#01a204","#1060",""],["ミドルグリーン","#067807","#1078",""],["ダークグリーン","#075607","#1079",""],["ブルーグリーン","#006f70","#1062",""],["カーキ","#687d32","#1457",""],["ティファニーブルー","17fed0","#1432",""],["ターコイズブルー","#00d0ea","#2914",""],["ウォーターブルー","#82d3fe","#1433",""],["ティファニーブルー","#0ABAB5","#1432",""],["ターコイズブルー","#40E0D0","#2914",""],["ブルー","#017eff","#1537",""],["ロイヤルブルー","#012aff","#1502",""],["ブルーネイビー","#0608bb","#1817",""],["ネイビー","#232572","#1818",""],["ダークネイビー","#0f0053","#2517",""]],"蛍光カラー":[["蛍光グリーン","#8aff00","#3003","linear-gradient(to right, #8aff00 0%, #FFFFFF 50%, #8aff00 100%)"],["蛍光ピンク","#ff017e","#3010","linear-gradient(to right, #ff017e 0%, #FFFFFF 50%, #ff017e 100%)"],["蛍光オレンジ","#eb7746","#3006","linear-gradient(to right, #eb7746 0%, #FFFFFF 50%, #eb7746 100%)"],["蛍光イエロー","#e6fb60","#3001","linear-gradient(to right, #e6fb60 0%, #FFFFFF 50%, #e6fb60 100%)"]],"メタリックカラー":[["ゴールド","#FFD700","#8001","linear-gradient(to bottom, #f7ef8a 0%, #d2ac47 50%, #edc967 80%, #e0bf81 100%)"],["シルバー","#C0C0C0","#8002","linear-gradient(to bottom, #ffffff 0%, #c0c0c0 50%, #e8e8e8 80%, #b5b5b5 100%)"]]};
+const ROWS_INIT = 11, ROWS_ADD = 9;
+const newRow = () => ({ maker: '', code: '', color: '', print: '', emb: '', white: '', size: '', qty: '' });
+const rowTouched = r => ['maker', 'code', 'color', 'size', 'qty', 'print', 'emb', 'white'].some(k => String(r[k]).trim());
+const rowDone = r => !!(r.code.trim() && r.color.trim() && r.size.trim() && (+r.qty || 0) > 0);
+const rowBody = r => { const k = norm(r.code.trim()); return k ? BODIES.find(b => norm(b.code) === k) || null : null; };
+function padRows(f, min = ROWS_INIT) { while (f.rows.length < min) f.rows.push(newRow()); }
+function rowsFromItems(items) {
+  return items.flatMap(it => { const b = bodyOf(it.code); return it.colors.flatMap(c => Object.entries(it.qty[c]).filter(([, n]) => n > 0).map(([s, n]) => { const pc = pcOf(it, c); return { maker: b.maker, code: b.code, color: c, print: pc.print, emb: pc.emb, white: pc.white, size: s, qty: String(n) }; })); });
+}
+const uniCsv = (a, v) => { const arr = String(a || '').split(',').map(x => x.trim()).filter(Boolean); String(v || '').split(',').map(x => x.trim()).filter(Boolean).forEach(x => { if (!arr.includes(x)) arr.push(x); }); return arr.join(','); };
+// 表の行 → 内部の商品データ（見積側はこれを使う）。取り扱いにない品番はその場でマスタ外商品として登録する
+function syncRows(f) {
+  const items = [];
+  f.rows.filter(rowDone).forEach(r => {
+    const code = r.code.trim(), color = r.color.trim(), size = r.size.trim().toUpperCase(), n = +r.qty;
+    let b = rowBody(r);
+    if (!b) { b = { maker: r.maker.trim() || 'メーカー未記入', code, name: code, colors: [], sizes: {}, custom: true }; BODIES.push(b); }
+    if (b.custom) { if (r.maker.trim()) b.maker = r.maker.trim(); if (!b.colors.includes(color)) b.colors.push(color); if (!(size in b.sizes)) b.sizes[size] = 0; }
+    const sz = Object.keys(b.sizes).find(x => norm(x) === norm(size)) || size;
+    let it = items.find(x => x.code === b.code);
+    if (!it) { it = { code: b.code, colors: [], qty: {}, pc: {} }; items.push(it); }
+    if (!it.colors.includes(color)) { it.colors.push(color); it.qty[color] = {}; }
+    it.qty[color][sz] = (it.qty[color][sz] || 0) + n;
+    const pc = pcOf(it, color); pc.print = uniCsv(pc.print, r.print); pc.emb = uniCsv(pc.emb, r.emb); if (r.white && !pc.white) pc.white = r.white;
+  });
+  f.items = items;
+}
+const rowsQty = f => f.rows.reduce((a, r) => a + (+r.qty || 0), 0);
+
 function newClassic() {
   const u = state.user;
-  return { mode: 'classic', kind: '注文', title: '', repeat: '', fromNo: '', dueMode: '最短', due: '', images: [{}, {}, {}, {}], imgNote: '', methods: [], bring: false, q: '', items: [], procs: [], note: '', nameProc: false, opp: false, shipTo: 'home', shipAddr: '', pay: u && u.pay === '代引き' ? PAYS[1] : PAYS[0], contact: '', confirm: false, done: false, lastNo: null };
+  return {
+    mode: 'classic', kind: '注文', title: '', repeat: '', fromNo: '', dueMode: '最短', due: '',
+    images: [{}, {}, {}, {}], imgNote: '',
+    sub: { files: [{}], url: '', actual: '', size: '', note: '' },
+    methods: [], agreed: [], inks: [], inkOther: '',
+    bring: false, bringAgree: false, bringDate: '',
+    items: [], rows: Array.from({ length: ROWS_INIT }, newRow),
+    nameProc: false, name: { type: '', note: '', file: '', img: '', date: '' }, opp: false, note: '',
+    shipTo: 'home', ship: { name: '', zip: '', addr: '', tel: '', sender: '' }, shipNote: '',
+    pay: u && u.pay === '代引き' ? PAYS[1] : PAYS[0], contact: '', confirm: false, done: false, lastNo: null,
+  };
 }
+const pcOf = (it, c) => ((it.pc ||= {})[c] ||= { print: '', emb: '', white: '' });
 function classicFrom(o) {
-  const f = newClassic();
+  const f = newClassic(), c = o.classic || {};
   f.title = o.title; f.repeat = 'リピート'; f.fromNo = o.no;
   f.items = itemsFrom(o);
-  const imgs = ((o.classic && o.classic.images) || o.request || []).filter(r => r.img).slice(0, 4);
-  f.images = [0, 1, 2, 3].map(i => imgs[i] ? { file: imgs[i].file, img: imgs[i].img } : {});
-  f.methods = [...new Set(o.procs.map(p => p.method))];
-  if (o.classic) Object.assign(f, { nameProc: o.classic.nameProc, opp: o.classic.opp, bring: o.classic.bring, contact: o.classic.contact });
+  if (c.pc) f.items.forEach((it, i) => { if (c.pc[i]) it.pc = JSON.parse(JSON.stringify(c.pc[i])); });
+  f.rows = c.rows ? c.rows.map(r => ({ ...newRow(), ...r, qty: String(r.qty) })) : rowsFromItems(f.items);
+  padRows(f, Math.max(ROWS_INIT, f.rows.length + 3));
+  const imgs = (c.images || o.request || []).filter(r => r.img);
+  f.images = imgs.map(d => ({ file: d.file, img: d.img }));
+  while (f.images.length < 4) f.images.push({});
+  f.methods = c.methods ? c.methods.slice() : [...new Set(o.procs.map(p => p.method))];
+  f.agreed = f.methods.slice();
+  Object.assign(f, { inks: (c.inks || []).slice(), inkOther: c.inkOther || '', bring: !!c.bring, bringAgree: !!c.bring, nameProc: !!c.nameProc, opp: !!c.opp, contact: c.contact || '', shipNote: c.shipNote || '', pay: c.pay && PAYS.includes(c.pay) ? c.pay : f.pay });
+  if (c.name) f.name = { ...f.name, type: c.name.type || '', note: c.name.note || '' };
+  if (c.ship) { f.shipTo = 'other'; f.ship = { ...c.ship }; }
   return f;
 }
 function setC(k, v) {
@@ -1125,164 +1244,329 @@ function setC(k, v) {
   if (k === 'repeat' && v !== 'リピート') f.fromNo = '';
   renderForm();
 }
-function toggleMethod(m) { const f = state.form; f.methods = f.methods.includes(m) ? f.methods.filter(x => x !== m) : [...f.methods, m]; renderForm(); }
-function addC(code) { state.form.q = ''; toggleBody(code); toast(`${shortName(code)}を追加しました。カラーと枚数を入れてください`); }
-function loadRepeat(no) { const keep = state.form; state.form = classicFrom(orderOf(no)); Object.assign(state.form, { kind: keep.kind, title: keep.title.trim() || state.form.title, contact: keep.contact || state.form.contact }); renderForm(); toast('前回の内容を読み込みました。枚数を確認してください'); }
-function attachC(i, file) {
-  if (!file) return;
-  if (!file.type.startsWith('image/')) { toast('画像ファイル（PNG・JPG）を選んでください'); return; }
-  const r = new FileReader();
-  r.onload = () => { state.form.images[i] = { file: file.name, img: r.result }; renderForm(); toast(`画像${i + 1}を登録しました`); };
-  r.readAsDataURL(file);
+function setCC(path, v) { const [a, b] = path.split('.'); state.form[a][b] = v; renderForm(); }
+function toggleMethod(m) {
+  const f = state.form;
+  if (f.methods.includes(m)) { f.methods = f.methods.filter(x => x !== m); f.agreed = f.agreed.filter(x => x !== m); renderForm(); return; }
+  if (!f.agreed.includes(m) && (NOTICES[m] || []).length) { showNotice(m); return; }
+  f.methods = [...f.methods, m]; renderForm();
 }
+function showNotice(m) {
+  openModal(`<div class="cust"><h3>${esc(m)}の注意事項</h3>
+    <p class="muted" style="margin-top:0">${esc(m)}を選ぶ前に、次の注意事項をご確認ください。</p>
+    <ul class="notice">${NOTICES[m].map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn ghost" onclick="closeModal()">やめる</button><button class="btn" onclick="agreeMethod('${m}')">注意事項に同意して ${esc(m)} を選ぶ</button></div></div>`);
+}
+function agreeMethod(m) { const f = state.form; if (!f.agreed.includes(m)) f.agreed.push(m); if (!f.methods.includes(m)) f.methods.push(m); closeModal(); renderForm(); }
+function toggleInk(v) { const f = state.form; f.inks = f.inks.includes(v) ? f.inks.filter(x => x !== v) : [...f.inks, v]; renderForm(); }
+function loadRepeat(no) { const keep = state.form; state.form = classicFrom(orderOf(no)); Object.assign(state.form, { kind: keep.kind, title: keep.title.trim() || state.form.title, contact: keep.contact || state.form.contact }); renderForm(); toast('前回の内容を読み込みました。枚数を確認してください'); }
+function readFile(file, cb, imgOnly) {
+  if (!file) return;
+  if (imgOnly && !file.type.startsWith('image/')) { toast('画像ファイル（PNG・JPG）を選んでください'); return; }
+  if (file.type.startsWith('image/')) { const r = new FileReader(); r.onload = () => cb({ file: file.name, img: r.result }); r.readAsDataURL(file); }
+  else cb({ file: file.name, img: '' });
+}
+function attachC(i, file) { readFile(file, d => { state.form.images[i] = d; renderForm(); toast(`画像${i + 1}を登録しました`); }, true); }
+function attachSub(i, file) { readFile(file, d => { state.form.sub.files[i] = d; renderForm(); toast(`入稿ファイル${i + 1}を登録しました`); }); }
+function attachName(file) { readFile(file, d => { Object.assign(state.form.name, d); renderForm(); toast('ネームタグの画像を登録しました'); }); }
+function dueMin() { return addDays(DEMO_TODAY, DUE_MIN_DAYS); }
 function classicChecks(f) {
-  const plain = f.repeat === '無地', imgs = f.images.filter(d => d.img).length;
-  const qtyOk = f.items.length > 0 && f.items.every(it => sumQty(it.qty) > 0);
-  const noQty = f.items.find(it => !sumQty(it.qty));
+  syncRows(f);
+  const plain = f.repeat === '無地', isNew = f.repeat === '新規デザイン', imgs = f.images.filter(d => d.img).length, subs = f.sub.files.filter(d => d.file).length;
+  const touched = f.rows.filter(rowTouched).length, badRow = f.rows.findIndex(r => rowTouched(r) && !rowDone(r));
+  const dueOk = f.dueMode === '最短' || (!!f.due && f.due >= dueMin());
+  const subOk = !isNew || ((subs > 0 || !!f.sub.url.trim()) && !!f.sub.actual && (f.sub.actual === 'はい' || !!f.sub.size.trim()));
+  const nameOk = !f.nameProc || (!!f.name.type && (!NAME_IMG_REQ.includes(f.name.type) || !!f.name.file || !!f.fromNo));
+  const shipOk = f.shipTo === 'home' || (['name', 'zip', 'addr', 'tel', 'sender'].every(k => !!String(f.ship[k]).trim()));
   return [
-    { id: 'c-kind', label: 'ご注文の種類', v: f.kind === '注文' ? '注文' : '見積依頼', ok: true },
-    { id: 'c-item', label: 'アイテム名・新規／リピート', v: f.title.trim() && f.repeat ? f.repeat : '', ok: !!(f.title.trim() && f.repeat), msg: !f.title.trim() ? 'アイテム名を入れてください' : '新規デザイン・リピート・無地のどれかを選んでください' },
-    { id: 'c-due', label: '納品希望日', v: f.dueMode === '最短' ? '最短' : f.due ? jpDate(f.due) : '', ok: f.dueMode === '最短' || (!!f.due && f.due >= DEMO_TODAY), msg: '納品指定日を選んでください（今日以降）' },
-    { id: 'c-img', label: '完成イメージ画像', v: plain ? '不要（無地）' : f.fromNo && !imgs ? '前回と同じ' : imgs ? `${imgs}枚` : '', ok: plain || imgs > 0 || !!f.fromNo, msg: 'イメージ画像を1枚以上登録してください' },
-    { id: 'c-method', label: '加工方法', v: plain ? '不要（無地）' : f.methods.join('・'), ok: plain || f.methods.length > 0, msg: '加工方法を1つ以上選んでください' },
-    { id: 'c-body', label: '商品・カラー・枚数', v: qtyOk ? `${f.items.length}商品・計${formQty(f)}枚` : '', ok: qtyOk, msg: !f.items.length ? '商品を1つ以上選んでください' : noQty ? `「${shortName(noQty.code)}」のカラーと枚数を入れてください` : '' },
-    { id: 'c-ship', label: 'お届け・連絡方法', v: f.contact ? `連絡：${f.contact}` : '', ok: !!f.contact && (f.shipTo === 'home' || !!f.shipAddr.trim()), msg: f.shipTo !== 'home' && !f.shipAddr.trim() ? '納品先の住所を入れてください' : '優先連絡方法を選んでください' },
+    { id: 'c-item', label: '注文基本情報', ok: !!(f.title.trim() && f.repeat && dueOk), msg: !f.title.trim() ? 'アイテム名は必須項目です' : !f.repeat ? '新規orリピートの選択は必須です' : `納品指定日は本日から${DUE_MIN_DAYS}日以降の日付をご指定ください` },
+    { id: 'c-img', label: 'イメージ画像', ok: plain || imgs > 0 || !!f.fromNo, msg: 'イメージ画像を少なくとも1枚登録してください' },
+    { id: 'c-sub', label: '入稿データ', ok: subOk, msg: isNew && !subs && !f.sub.url.trim() ? '入稿ファイルを少なくとも1枚登録するか、ギガファイル便のURLを入力してください' : !f.sub.actual ? '入稿原寸サイズの選択は必須です' : '加工サイズをご記入ください' },
+    { id: 'c-method', label: '加工方法', ok: plain || f.methods.length > 0, msg: '最低でも1つの加工方法を選択してください' },
+    { id: 'c-bring', label: '持ち込みボディー', ok: !f.bring || (f.bringAgree && !!f.bringDate), msg: !f.bringAgree ? '持ち込みボディー注意事項への同意が必要です' : 'ボディー納入予定日の入力は必須です' },
+    { id: 'c-body', label: '商品・カラー・枚数', ok: touched > 0 && badRow < 0, msg: !touched ? '商品（メーカー・品番・ボディーカラー・サイズ・数量）を1行以上ご記入ください' : `${badRow + 1}行目：品番・ボディーカラー・サイズ・数量をすべてご記入ください` },
+    { id: 'c-name', label: 'ネーム加工', ok: nameOk, msg: !f.name.type ? 'ネーム加工の選択は必須です' : 'ネーム加工画像のアップロードが必要です' },
+    { id: 'c-cust', label: '納品先', ok: shipOk, msg: !f.ship.sender ? '送り主の選択は必須です' : '納品先の宛名・郵便番号・住所・電話番号は必須項目です' },
+    { id: 'c-contact', label: '弊社からの優先連絡方法', ok: !!f.contact, msg: '連絡方法の選択は必須です' },
   ];
 }
 const yn = k => `<span class="chips">${[[false, '無し'], [true, '有り']].map(([v, l]) => `<button class="chip ${state.form[k] === v ? 'on' : ''}" onclick="setC('${k}',${v})">${l}</button>`).join('')}</span>`;
-function imgSlot(i, d) {
-  const id = `cimg${i}`;
-  return `<div class="islot ${d.img ? 'ok' : ''}" onclick="document.getElementById('${id}').click()" ondragover="event.preventDefault()" ondrop="event.preventDefault();attachC(${i},event.dataTransfer.files[0])">
-    ${d.img ? `<img src="${d.img}"><span>${esc(d.file)}</span><a class="link" onclick="event.stopPropagation();state.form.images[${i}]={};renderForm()">外す</a>` : `<b>画像${i + 1}</b><span>クリックまたはドラッグ</span>`}
-  </div><input type="file" id="${id}" accept="image/*" style="display:none" onchange="attachC(${i},this.files[0])">`;
+function fileSlot(kind, i, d, label, accept) {
+  const id = `${kind}${i}`, fn = kind === 'cimg' ? 'attachC' : 'attachSub', clear = kind === 'cimg' ? `state.form.images[${i}]={}` : `state.form.sub.files[${i}]={}`;
+  return `<div class="islot ${d.file ? 'ok' : ''}" onclick="document.getElementById('${id}').click()" ondragover="event.preventDefault()" ondrop="event.preventDefault();${fn}(${i},event.dataTransfer.files[0])">
+    ${d.file ? `${d.img ? `<img src="${d.img}">` : '<b>📄</b>'}<span>${esc(d.file)}</span><a class="link" onclick="event.stopPropagation();${clear};renderForm()">外す</a>` : `<b>${label}${i + 1}</b><span>クリックまたはドラッグ</span>`}
+  </div><input type="file" id="${id}" accept="${accept}" style="display:none" onchange="${fn}(${i},this.files[0])">`;
 }
+const wbImg = (file, alt, cls = 'wbimg') => `<img class="${cls}" src="${WB_IMG}${file}" alt="${esc(alt)}" onerror="this.outerHTML='<div class=&quot;imgph&quot;>${esc(alt)}（現行サイトの ${esc(file)} を流用）</div>'">`;
+function openInfo(key) {
+  const T = {
+    '例はこちら': ['完成イメージ画像の例', wbImg('imagegazo.jpg', 'イメージ例')],
+    '加工位置の指定方法': ['加工位置の指定方法', '<p>加工位置に指定がある場合は、イメージ画像の中に「左胸 8cm」のように書き込んでください。「前回と同じ」などの文章での指定は、相違が起こる可能性があるためお受けできません。</p><p class="muted">（現行ページの説明をそのまま掲載します）</p>'],
+    '標準加工位置': ['標準加工位置', '<p>位置の指定がない場合は、当社の標準加工位置（例：フロント胸中央／左胸／バック首下）で加工します。</p><p class="muted">（現行ページの図をそのまま掲載します）</p>'],
+    '表の記入例': ['表の記入例', wbImg('example.jpg', '記入例')],
+  };
+  const [title, body] = T[key] || [key, ''];
+  openModal(`<div class="cust"><div class="row"><h3 style="margin:0">${title}</h3><button class="btn ghost sm" style="margin-left:auto" onclick="closeModal()">閉じる</button></div><div style="margin-top:10px">${body}</div></div>`);
+}
+function openPrice(m) {
+  openModal(`<div class="cust"><div class="row"><h3 style="margin:0">${esc(m)} 価格表</h3><button class="btn ghost sm" style="margin-left:auto" onclick="closeModal()">閉じる</button></div><div style="margin-top:10px">${wbImg(`price/price${PRICE_IMG[m]}.jpg`, `${m}価格表`)}</div><p class="muted">料金表は管理画面で改定でき、見積にも同じ単価が使われます。</p></div>`);
+}
+function pickColor(ri, kind) {
+  const list = kind === 'print' ? SILK_COLORS : EMB_COLORS, title = kind === 'print' ? 'シルクスクリーン用カラー選択' : '刺繍糸用カラー選択';
+  const lead = kind === 'print' ? 'コンピュータディスプレイの性質上、実際の色と異なって見える場合がありますのでご了承ください。' : 'パールヨット刺繍糸を使用しております。＃〇〇〇〇は糸番号です。コンピュータディスプレイの性質上、実際の色と異なって見える場合がありますのでご了承ください。';
+  const sw = (name, hex, code, grad) => `<div class="sw" onclick="addPickedColor(${ri},'${kind}','${esc(name)}')"><i style="background:${grad || hex || '#fff'};${grad && hex ? `border:1px solid ${hex}` : ''}"></i><span>${esc(name)}</span>${code ? `<span class="muted">${esc(code)}</span>` : ''}</div>`;
+  const extra = kind === 'print'
+    ? `<h5>オーダーメイドカラー・その他</h5><div class="swatches">${sw('調合インク', '#fff', '', 'conic-gradient(#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)')}${sw('その他', '#fff')}</div><div class="muted">※上記以外のカラーをご希望の方は調合いたします。備考欄に PANTONE カラーなどでご記載ください。その場合1色あたり1,500円の調合手数料がかかります。調合したインクは使い切りです。追加生産時に色味に違いが生じる場合がございますので予めご了承ください。</div>`
+    : `<h5>その他</h5><div class="swatches">${sw('その他', '#fff', '', 'linear-gradient(135deg,#eee,#bbb)')}</div><div class="muted">※上記以外のカラーをご希望の方はお取り寄せいたします。備考欄にパールヨットの糸番号でご指定ください。その場合1色あたり1,500円のお取り寄せ手数料がかかります。</div>`;
+  openModal(`<div class="cust"><div class="row"><h3 style="margin:0">${title}</h3><button class="btn ghost sm" style="margin-left:auto" onclick="closeModal()">閉じる</button></div><p class="muted" style="margin:6px 0 0">${lead}</p>
+    ${Object.entries(list).map(([cat, rows]) => `<h5>${esc(cat)}</h5><div class="swatches">${rows.map(([n, h, code, g]) => sw(n, h, code, g)).join('')}</div>`).join('')}${extra}</div>`);
+}
+function addPickedColor(ri, kind, name) {
+  const r = state.form.rows[ri]; r[kind] = uniCsv(r[kind], name);
+  closeModal(); renderForm();
+}
+// 商品・カラー・枚数の表（現行フォームと同じ列構成。加工方法に応じて列が増減する）
+function rowsTable(f) {
+  const plain = f.repeat === '無地', silk = !plain && f.methods.includes('シルクスクリーン'), emb = !plain && f.methods.includes('刺繍'), ink = !plain && f.methods.includes('インクジェット');
+  const cols = [['メーカー', 100], ['品番', 150], ['ボディーカラー', 104], ...(silk ? [['プリントカラー(シルク)', 164]] : []), ...(emb ? [['刺繍カラー', 164]] : []), ...(ink ? [['白引き', 84]] : []), ['サイズ', 70], ['数量', 58], ['', 26]];
+  const body = f.rows.map((r, i) => {
+    const b = rowBody(r), ph = t => i === 0 ? ` placeholder="${t}"` : '';
+    const inp = (k, extra = '', p = '') => `<input data-k="${k}" value="${esc(String(r[k]))}"${extra}${p} oninput="setRow(${i},'${k}',this.value)">`;
+    const cpick = (k, kind, p) => `<div class="cpick">${inp(k, '', ph(p))}<button class="btn ghost sm" title="色見本から選ぶ" onclick="pickColor(${i},'${kind}')">色見本</button></div>`;
+    return `<tr id="rrow-${i}">
+      <td>${inp('maker', '', ph('例）アスレ'))}</td>
+      <td class="cell-s">${inp('code', ` autocomplete="off" onfocus="rowSearch(${i},this)" onblur="hideRowSearch()"`, ph('例）5001-01'))}<div class="rsug" id="rsug-${i}"></div><small id="rnm-${i}">${b ? `${esc(b.name)}${b.custom ? '（直接入力）' : ''}` : ''}</small></td>
+      <td>${inp('color', ` list="dlc-${i}"`, ph('例）ブラック'))}<datalist id="dlc-${i}">${b ? b.colors.map(c => `<option value="${esc(c)}">`).join('') : ''}</datalist></td>
+      ${silk ? `<td>${cpick('print', 'print', '例）ホワイト')}</td>` : ''}
+      ${emb ? `<td>${cpick('emb', 'emb', '例）ホワイト #1198')}</td>` : ''}
+      ${ink ? `<td><select onchange="setRow(${i},'white',this.value)"><option value="">選択</option>${WHITES.map(v => `<option ${r.white === v ? 'selected' : ''}>${v}</option>`).join('')}</select></td>` : ''}
+      <td>${inp('size', ` list="dls-${i}"`, ph('例）M'))}<datalist id="dls-${i}">${b ? Object.entries(b.sizes).map(([sz, pr]) => `<option value="${sz}">${b.custom || !pr ? '' : `${yen(pr)}円`}</option>`).join('') : ''}</datalist></td>
+      <td>${inp('qty', ' type="number" min="0"', ph('10'))}</td>
+      <td><button class="rclr" title="この行を消す" onclick="clearRow(${i})">×</button></td></tr>`;
+  }).join('');
+  return `<div class="tblwrap"><table class="rtbl" style="min-width:${cols.reduce((a, c) => a + c[1], 0)}px"><thead><tr>${cols.map(([c, w]) => `<th style="width:${w}px">${c}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>
+    <div class="row" style="margin-top:8px;gap:10px;flex-wrap:wrap"><button class="btn ghost sm" onclick="state.form.rows.push(...Array.from({length:ROWS_ADD},newRow));renderForm()">入力欄を追加</button><span class="muted">品番の欄に品番や商品名を入れると取り扱い商品の候補が出て、選ぶとメーカー・商品名・取り扱いカラー・サイズ（単価）が入ります。取り扱いにない商品・持ち込みボディーはそのまま記入してください（単価は見積でご案内）。</span></div>`;
+}
+function rowSearch(i, el) {
+  const box = document.getElementById(`rsug-${i}`); if (!box) return;
+  const words = norm(el.value).split(/\s+/).filter(Boolean);
+  if (!words.length) { box.innerHTML = ''; return; }
+  const hits = BODIES.filter(b => !b.custom && words.every(w => norm([b.maker, b.code, b.name].join(' ')).includes(w))).slice(0, 6);
+  box.innerHTML = hits.map(b => `<div onmousedown="event.preventDefault();pickRow(${i},'${b.code}')"><b>${esc(b.code)}</b>　${esc(b.name)}　<span class="muted">${esc(b.maker)}・${b.colors.length}色・${yen(Math.min(...Object.values(b.sizes)))}円〜</span></div>`).join('')
+    || (rowBody(state.form.rows[i]) ? '' : '<div class="muted nohit">取り扱い商品に見つかりません。取り扱いにない商品・持ち込みボディーはこのまま品番をご記入ください。</div>');
+}
+function hideRowSearch() { setTimeout(() => document.querySelectorAll('.rsug').forEach(e => { e.innerHTML = ''; }), 150); }
+function pickRow(i, code) {
+  const r = state.form.rows[i], b = bodyOf(code); r.code = b.code; r.maker = b.maker;
+  const tr = document.getElementById(`rrow-${i}`);
+  if (tr) { tr.querySelector('input[data-k=maker]').value = b.maker; tr.querySelector('input[data-k=code]').value = b.code; updateRowAux(i); tr.querySelector('input[data-k=color]').focus(); }
+  const box = document.getElementById(`rsug-${i}`); if (box) box.innerHTML = '';
+  refreshClassic();
+}
+function updateRowAux(i) {
+  const r = state.form.rows[i], b = rowBody(r), nm = document.getElementById(`rnm-${i}`), dc = document.getElementById(`dlc-${i}`), ds = document.getElementById(`dls-${i}`);
+  if (nm) nm.textContent = b ? `${b.name}${b.custom ? '（直接入力）' : ''}` : '';
+  if (dc) dc.innerHTML = b ? b.colors.map(c => `<option value="${esc(c)}">`).join('') : '';
+  if (ds) ds.innerHTML = b ? Object.entries(b.sizes).map(([sz, pr]) => `<option value="${sz}">${b.custom || !pr ? '' : `${yen(pr)}円`}</option>`).join('') : '';
+}
+function setRow(i, k, v) { state.form.rows[i][k] = v; if (k === 'code') { updateRowAux(i); const el = document.querySelector(`#rrow-${i} input[data-k=code]`); if (el) rowSearch(i, el); } refreshClassic(); }
+function clearRow(i) { state.form.rows[i] = newRow(); renderForm(); }
 function repeatPicker() {
   const f = state.form, mine = orders.filter(o => o.cid === state.user.id).slice().reverse().slice(0, 4);
-  return `<div class="tipbox" style="margin:10px 0 0">${f.fromNo ? `<b>前回の注文 ${f.fromNo} を読み込みました。</b>デザイン・加工方法・商品が入っています。枚数を確認してください。<br>` : '<b>前回の注文を選ぶと、デザイン・加工方法・商品・枚数を読み込みます。</b>「前回と同じ」と書かなくても、確実に同じ内容で承れます。<br>'}
+  return `<div class="tipbox" style="margin:10px 0 0">${f.fromNo ? `<b>前回の注文 ${f.fromNo} を読み込みました。</b>デザイン・加工方法・商品・カラーが入っています。枚数を確認してください。<br>` : '<b>前回の注文を選ぶと、デザイン・加工方法・商品・枚数を読み込みます。</b>「前回と同じ」と書かなくても、確実に同じ内容で承れます。<br>'}
     <div class="row" style="gap:6px;margin-top:6px">${mine.map(o => `<button class="chip ${f.fromNo === o.no ? 'on' : ''}" onclick="loadRepeat('${o.no}')">${esc(o.title)}（${o.date.slice(5).replace('-', '/')}）</button>`).join('') || '<span class="muted">過去のご注文はありません</span>'}</div></div>`;
 }
+const chipsOf = (list, cur, fn) => `<div class="chips">${list.map(x => { const [v, l] = Array.isArray(x) ? x : [x, x]; return `<button class="chip ${cur === v ? 'on' : ''}" onclick="${fn.replace('%v', esc(v))}">${esc(l)}</button>`; }).join('')}</div>`;
 function renderClassic() {
   const f = state.form, wrap = document.getElementById('orderWrap');
   if (f.done) { wrap.innerHTML = modeBar() + doneHtml(); return; }
-  if (f.confirm) { wrap.innerHTML = modeBar() + `<div class="olay"><div class="card">${classicReview()}<div id="fnav"></div></div><div class="side" id="fside"></div></div>`; refreshClassic(); return; }
-  const plain = f.repeat === '無地', multi = f.items.length > 1, u = state.user;
+  if (f.confirm) { wrap.innerHTML = modeBar() + `<div class="card cform">${classicReview()}<div id="fnav"></div></div>`; refreshClassic(); return; }
+  const plain = f.repeat === '無地', isNew = f.repeat === '新規デザイン', multi = f.items.length > 1, u = state.user;
+  const checks = classicChecks(f), errOf = id => { const c = checks.find(x => x.id === id); return `<div class="err-s" id="err-${id}">${c && !c.ok && c.msg ? c.msg : ''}</div>`; };
   let n = 0;
-  const sec = (id, title, sub, body) => `<div class="sec" id="${id}"><h3><i>${++n}</i>${title}${sub ? `<span>${sub}</span>` : ''}</h3>${body}</div>`;
-  wrap.innerHTML = modeBar() + `<div class="olay"><div class="card">
+  const sec = (id, title, sub, body) => `<div class="sec" id="${id}"><h3><i>${++n}</i>${title}${sub ? `<span>${sub}</span>` : ''}</h3>${body}${errOf(id)}</div>`;
+  wrap.innerHTML = modeBar() + `<div class="card cform">
     <div class="qhead">ご注文フォーム</div>
-    <p class="qsub">いつものフォームと同じ順番です。上から順に入力して、最後に「確認画面へ」を押してください。お客様情報はログイン情報から自動で入ります。</p>
-    ${sec('c-kind', 'ご注文の種類', '', `<div class="kind">${[['注文', 'このまま注文する', '見積は不要。内容を確認して製作に入ります（金額・納期は確認後にご連絡）'], ['見積依頼', 'まず見積を依頼する', '見積をご確認・承認いただいてから注文が確定します']].map(([v, t, d]) => `<div class="kcard ${f.kind === v ? 'on' : ''}" onclick="setC('kind','${v}')"><b>${f.kind === v ? '● ' : '○ '}${t}</b>${d}</div>`).join('')}</div>`)}
-    ${sec('c-item', 'アイテム名・新規／リピート', '必須', `
-      <input value="${esc(f.title)}" placeholder="例：26AW ロゴTシャツ（ブラック）" oninput="state.form.title=this.value;refreshClassic()">
-      <div class="chips" style="margin-top:10px">${['新規デザイン', 'リピート', '無地'].map(v => `<button class="chip ${f.repeat === v ? 'on' : ''}" onclick="setC('repeat','${v}')">${v}</button>`).join('')}</div>
-      ${f.repeat === 'リピート' ? repeatPicker() : ''}`)}
-    ${sec('c-due', '納品希望日', '', `<div class="chips">${[['最短', `最短（目安：${jpDate(addDays(DEMO_TODAY, 9))}ごろ）`], ['指定', '納品指定日あり']].map(([v, l]) => `<button class="chip ${f.dueMode === v ? 'on' : ''}" onclick="setC('dueMode','${v}')">${l}</button>`).join('')}</div>
-      ${f.dueMode === '指定' ? `<input type="date" min="${DEMO_TODAY}" value="${f.due}" onchange="state.form.due=this.value;refreshClassic()" style="max-width:220px;margin-top:8px">` : ''}`)}
-    ${plain ? '' : sec('c-img', '完成イメージ画像', '1枚以上必須・最大4枚', `
-      <div class="tipbox">加工位置は<b>画像の中に書き込んで</b>ください（例：「左胸 8cm」）。位置の指定がない場合は当社の標準位置で加工します。数量などの指示は画像に書かず、下の欄に入力してください。</div>
+    <p class="qsub">いつものフォームと同じ項目・同じ順番です。上から順に入力して、最後に「確認画面へ」を押してください。お客様情報はログイン情報から自動で入ります。</p>
+    <div class="news"><b>お知らせ</b>${NEWS.map(([d, t]) => `<span><span class="muted">${d}</span> ${t}</span>`).join('')}</div>
+    ${sec('c-item', '注文基本情報', '必須', `
+      <div class="lbl" style="margin-top:0">アイテム名</div>
+      <input value="${esc(f.title)}" placeholder="例) 26AW ロゴTシャツ" oninput="state.form.title=this.value;refreshClassic()" onchange="renderForm()">
+      <div class="lbl">新規orリピート</div>
+      ${chipsOf(['新規デザイン', 'リピート', '無地'], f.repeat, "setC('repeat','%v')")}
+      ${f.repeat === 'リピート' ? repeatPicker() : ''}
+      <div class="lbl">納品希望日</div>
+      ${chipsOf([['最短', '最短'], ['指定', '納品指定日あり']], f.dueMode, "setC('dueMode','%v')")}
+      <div class="muted" style="margin-top:6px">${f.dueMode === '最短' ? `おおよそ${LEAD[0]}〜${LEAD[1]}日間ほどでお届けとなります（${jpDate(addDays(DEMO_TODAY, LEAD[0]))}〜${jpDate(addDays(DEMO_TODAY, LEAD[1]))}ごろ）。のちほど担当者より正確な納品日をご連絡させていただきます。` : `本日から${DUE_MIN_DAYS}日間以降先の日時でご指定ください。混雑状況によりご希望に添えない場合もございます。`}</div>
+      ${f.dueMode === '指定' ? `<input type="date" min="${dueMin()}" value="${f.due}" onchange="state.form.due=this.value;renderForm()" style="max-width:220px;margin-top:8px">` : ''}`)}
+    ${plain ? '' : sec('c-img', 'イメージ画像', '1枚以上必須', `
+      <div class="tipbox">※下記に完成イメージ画像をアップロードしてください。<a class="link" onclick="openInfo('例はこちら')">例はこちら</a><br>
+        <b>【入力前にご確認ください】</b><br>※イメージ画像と加工位置以外の情報はアップロードしないようお願いいたします。<br>※加工位置に指定がある場合は、<a class="link" onclick="openInfo('加工位置の指定方法')">加工位置の指定方法</a> を参考にイメージ画像内にご記入ください。<br>※イメージ画像内に位置指定の記載がない場合は当社 <a class="link" onclick="openInfo('標準加工位置')">標準加工位置</a> にて加工させていただきます。<br>※数量やその他の指示内容等は画像内に記載しないようお願いいたします。</div>
       ${f.fromNo && !f.images.some(d => d.img) ? '<div class="free" style="margin-top:0">前回の注文と同じデザインで承ります。変更がある場合だけ画像を登録してください。</div>' : ''}
-      <div class="imgs">${f.images.map((d, i) => imgSlot(i, d)).join('')}</div>
-      <label class="f" style="margin-top:10px">イメージ画像についての連絡事項（任意）</label>
-      <textarea oninput="state.form.imgNote=this.value" placeholder="例：画像1はTシャツ用、画像2はトートバッグ用です">${esc(f.imgNote)}</textarea>`)}
-    ${plain ? '' : sec('c-method', '加工方法', '箇所によって違う場合は複数選んでください', `<div class="mgrid">${METHODS.filter(([m]) => m !== 'おまかせ').map(([m, d]) => `<div class="mcard ${f.methods.includes(m) ? 'on' : ''}" onclick="toggleMethod('${m}')"><b>${f.methods.includes(m) ? '✓ ' : ''}${m}</b>${d}</div>`).join('')}</div>
-      <div class="muted" style="margin-top:6px">料金の目安は <a class="link" onclick="toast('価格表を開きます（デモ）')">価格表</a> をご覧ください。迷う場合は、連絡事項に「おまかせ」とご記入ください。</div>`)}
+      <div class="imgs">${f.images.map((d, i) => fileSlot('cimg', i, d, '画像', 'image/*')).join('')}<button class="islot addslot" onclick="state.form.images.push({});renderForm()"><b>＋</b><span>画像を追加</span></button></div>
+      <label class="f" style="margin-top:10px">イメージ画像に関して連絡事項等</label>
+      <div class="muted">加工位置の指定がある場合は【イメージ画像内】にご記入ください。「前回と同じ」等ですと、相違が起こる可能性がありますので【イメージ画像内】にご記入お願いいたします。</div>
+      <textarea oninput="state.form.imgNote=this.value" placeholder="イメージ画像に関して連絡事項等がありましたら、ご記入ください。">${esc(f.imgNote)}</textarea>`)}
+    ${isNew ? sec('c-sub', '入稿データ', '新規デザインの方', `
+      <div class="muted" style="margin-bottom:8px">入稿ファイルを少なくとも1枚登録するか、ギガファイル便のURLを入力してください（ai / psd / pdf / png / jpg）。</div>
+      <div class="imgs">${f.sub.files.map((d, i) => fileSlot('csub', i, d, '入稿', '*/*')).join('')}<button class="islot addslot" onclick="state.form.sub.files.push({});renderForm()"><b>＋</b><span>ファイルを追加</span></button></div>
+      <label class="f" style="margin-top:10px">ギガファイル便などのURL</label>
+      <input value="${esc(f.sub.url)}" placeholder="https://〜（ギガファイル便などのURL）" oninput="state.form.sub.url=this.value;refreshClassic()" onchange="renderForm()">
+      <div class="lbl">データは原寸サイズで作成してありますか？</div>
+      ${chipsOf(ACTUALS, f.sub.actual, "setCC('sub.actual','%v')")}
+      ${f.sub.actual && f.sub.actual !== 'はい' ? `<div class="muted" style="margin-top:8px">下記に加工サイズをご記入ください。</div><input value="${esc(f.sub.size)}" placeholder="横幅〇〇cmなど" oninput="state.form.sub.size=this.value;refreshClassic()" onchange="renderForm()" style="max-width:320px">` : ''}
+      <label class="f" style="margin-top:10px">データに関して連絡事項等</label>
+      <textarea oninput="state.form.sub.note=this.value" placeholder="データに関して連絡事項等がありましたら、ご記入お願いいたします。プリント位置等に関する連絡はこの欄に記入されても反映されませんのでご注意ください。">${esc(f.sub.note)}</textarea>`) : ''}
+    ${plain ? '' : sec('c-method', '加工方法', '箇所によって加工方法が異なる場合は複数選択してください', `
+      <div class="mgrid">${METHODS.map(([m, d]) => `<div class="mwrap"><div class="mcard ${f.methods.includes(m) ? 'on' : ''}" onclick="toggleMethod('${m}')"><b>${f.methods.includes(m) ? '✓ ' : ''}${m}</b>${m === 'おまかせ' ? 'デザインを見て最適な方法をご提案' : '<span class="muted">（説明文は後日）</span>'}</div>${PRICE_IMG[m] ? `<a class="link" onclick="openPrice('${m}')">価格表を見る</a>` : ''}</div>`).join('')}</div>
+      <div class="muted" style="margin-top:6px">加工方法を選ぶと、その加工の注意事項をご確認いただきます。</div>
+      ${f.methods.includes('シルクスクリーン') ? `<div class="lbl">インクの種類 <span class="req-m">箇所によって使用するインクが異なる場合は複数選択してください</span></div>
+        <div class="chips">${INKS.map(v => `<button class="chip ${f.inks.includes(v) ? 'on' : ''}" onclick="toggleInk('${v}')">${f.inks.includes(v) ? '✓ ' : ''}${v}</button>`).join('')}</div>
+        ${f.inks.includes('その他') ? `<input value="${esc(f.inkOther)}" placeholder="その他のインク種類" oninput="state.form.inkOther=this.value" style="max-width:320px;margin-top:8px">` : ''}` : ''}`)}
+    ${plain ? '' : sec('c-bring', '持ち込みボディー', '', `
+      <label class="chk"><input type="checkbox" ${f.bring ? 'checked' : ''} onchange="setC('bring',this.checked)"> 持ち込みボディーの場合はチェックを入れてください</label>
+      ${f.bring ? `${wbImg('bring.jpg', '持ち込みボディー注意事項')}
+        <label class="chk" style="margin-top:10px"><input type="checkbox" ${f.bringAgree ? 'checked' : ''} onchange="setC('bringAgree',this.checked)"> 持ち込みボディー注意事項に了承する</label>
+        <div class="muted">納品希望日がある場合は納品日の1週間前には弊社に到着するようにご手配ください。</div>
+        <div class="lbl">ボディーの納入予定日</div>
+        <input type="date" value="${f.bringDate}" onchange="state.form.bringDate=this.value;renderForm()" style="max-width:220px">
+        <div class="req-m" style="margin-top:6px">下の「商品・カラー・枚数」の表に、持ち込みアイテムの情報（メーカー・品番・ボディーカラー・サイズ・数量）をご記入ください。メーカー品番のボディーと混在しても構いません。</div>` : ''}`)}
     ${sec('c-body', '商品・カラー・枚数', '必須', `
-      <label class="chk"><input type="checkbox" ${f.bring ? 'checked' : ''} onchange="setC('bring',this.checked)"> 持ち込みボディー（ボディーをお持ち込みの場合はチェック）</label>
-      ${f.items.length ? `<div class="picked"><span class="muted">選択中 ${f.items.length}点：</span>${f.items.map(it => `<span class="ptag">${esc(shortName(it.code))}<button onclick="toggleBody('${it.code}')" title="外す">×</button></span>`).join('')}</div>` : ''}
-      ${f.items.map((it, ii) => itemBox(it, ii, multi)).join('')}
-      <div class="addbox">
-        <div class="lbl"><b>${f.items.length ? '＋ 別の商品を追加する（何点でも追加できます）' : '商品を選ぶ'}</b> <span class="muted">メーカー・品番・商品名で検索</span></div>
-        <input id="cq" value="${esc(f.q)}" placeholder="例：5001、ロンT、トート" oninput="state.form.q=this.value;renderClassicResults()">
-        <div id="cres" class="srch"></div>
-      </div>`)}
-    ${sec('c-opt', 'ネーム加工・個包装・備考', '', `
-      <div class="row" style="gap:12px"><span>ネーム加工</span>${yn('nameProc')}<span style="margin-left:12px">OPP個包装</span>${yn('opp')}</div>
-      <label class="f" style="margin-top:10px">備考（任意）</label>
-      <textarea oninput="state.form.note=this.value" placeholder="例：ブランドタグに付け替え希望（タグは後日発送）">${esc(f.note)}</textarea>`)}
-    ${sec('c-ship', 'お客様情報・お届け・お支払い・連絡方法', '', `
+      <div class="muted" style="margin-bottom:8px"><a class="link" onclick="openInfo('表の記入例')">表の記入例</a>　1行に「メーカー・品番・ボディーカラー・サイズ・数量」をご記入ください。${f.bring ? '<span class="req-m">下記の表に持ち込みアイテムの情報をご記入ください。</span>' : ''}</div>
+      ${rowsTable(f)}
+      <div class="row" style="margin-top:10px;font-size:15px"><span>合計枚数</span><b style="margin-left:auto;font-size:20px"><span id="rowsTotal">${rowsQty(f)}</span> 枚</b></div>`)}
+    ${sec('c-name', 'ネーム加工', '', `
+      ${yn('nameProc')}
+      ${f.nameProc ? `<div class="ngrid">${NAME_TYPES.map(([v, l, img]) => `<div class="ncard ${f.name.type === v ? 'on' : ''}" onclick="setCC('name.type','${v}')">${wbImg(img, l, 'nimg')}<div>${f.name.type === v ? '● ' : '○ '}${l}</div></div>`).join('')}</div>
+        <label class="f" style="margin-top:10px">備考欄</label>
+        <textarea oninput="state.form.name.note=this.value" placeholder="ネーム加工について連絡事項があればご記入ください。">${esc(f.name.note)}</textarea>
+        <div class="lbl">ネームタグの画像 ${NAME_IMG_REQ.includes(f.name.type) ? '<span class="req-m">必須</span>' : '<span class="muted">（任意）</span>'}</div>
+        <div class="muted">支給していただくネームタグの画像を添付してください（写真でも可）。プリントの方はプリントのデザインを添付してください。jpg / png / pdf（最大1MB）${f.fromNo ? '　<b>前回と同じタグ（弊社保管分）を使う場合は未記入でOKです。</b>' : ''}</div>
+        <div class="imgs" style="margin-top:6px"><div class="islot ${f.name.file ? 'ok' : ''}" onclick="document.getElementById('cname').click()" ondragover="event.preventDefault()" ondrop="event.preventDefault();attachName(event.dataTransfer.files[0])">${f.name.file ? `${f.name.img ? `<img src="${f.name.img}">` : '<b>📄</b>'}<span>${esc(f.name.file)}</span><a class="link" onclick="event.stopPropagation();Object.assign(state.form.name,{file:'',img:''});renderForm()">外す</a>` : '<b>画像選択</b><span>クリックまたはドラッグ</span>'}</div><input type="file" id="cname" accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="attachName(this.files[0])"></div>
+        <div class="lbl">ネームタグの納入予定日</div>
+        <input type="date" value="${f.name.date}" onchange="state.form.name.date=this.value" style="max-width:220px">
+        <div class="req-m" style="margin-top:6px">ネームタグを納入の際は、紛失防止の為、追跡できる配送方法でお送りください。普通郵便等ですと追跡できない為紛失に繋がります。ネームタグの枚数は、実際に使用する枚数よりも予備として多めにお送りください。既に弊社で保管してある場合は未記入でOKです。</div>` : ''}`)}
+    ${sec('c-opp', 'OPP個包装', '', yn('opp'))}
+    ${sec('c-note', '備考欄', '', `<textarea oninput="state.form.note=this.value" placeholder="備考欄に記入したいことがあればご記入ください。">${esc(f.note)}</textarea>`)}
+    ${sec('c-cust', 'お客様情報・納品先・お支払い方法', '', `
       <div class="me"><b>${esc(u.name)} 様</b>　${esc(u.tel)}　${esc(u.email)}<br>〒${u.zip} ${esc(u.addr)}　<a class="link" onclick="toast('登録情報の変更はマイページから行えます（デモ）')">変更</a></div>
       <div class="lbl">納品先</div>
-      <div class="chips">${[['home', 'お客様情報のご住所にお届け'], ['other', '納品先を指定']].map(([v, l]) => `<button class="chip ${f.shipTo === v ? 'on' : ''}" onclick="setC('shipTo','${v}')">${l}</button>`).join('')}</div>
-      ${f.shipTo === 'other' ? `<textarea style="margin-top:8px" oninput="state.form.shipAddr=this.value;refreshClassic()" placeholder="〒・住所・お届け先名・電話番号">${esc(f.shipAddr)}</textarea>` : ''}
+      ${chipsOf([['home', 'お客様情報のご住所にお届け'], ['other', '納品先を指定']], f.shipTo, "setC('shipTo','%v')")}
+      ${f.shipTo === 'other' ? `<div class="crow" style="margin-top:8px"><input value="${esc(f.ship.name)}" placeholder="宛名（会社名・お名前）" oninput="state.form.ship.name=this.value;refreshClassic()" onchange="renderForm()"><input value="${esc(f.ship.zip)}" placeholder="郵便番号" oninput="state.form.ship.zip=this.value;refreshClassic()" onchange="renderForm()"><input value="${esc(f.ship.addr)}" placeholder="ご住所" oninput="state.form.ship.addr=this.value;refreshClassic()" onchange="renderForm()" style="grid-column:span 2"><input value="${esc(f.ship.tel)}" placeholder="電話番号" oninput="state.form.ship.tel=this.value;refreshClassic()" onchange="renderForm()"></div>
+        <div class="lbl">宛名（出荷人）</div>
+        ${chipsOf(SENDERS, f.ship.sender, "setCC('ship.sender','%v')")}` : ''}
       <div class="lbl">お支払い方法</div>
-      ${u.billing === '月次' ? `<div class="muted">${esc(u.pay)}（月次でまとめてご請求）</div>` : `<div class="chips">${PAYS.map(v => `<button class="chip ${f.pay === v ? 'on' : ''}" onclick="setC('pay','${v}')">${v}</button>`).join('')}</div>`}
-      <div class="lbl">弊社からの優先連絡方法 <span class="req-m">必須</span></div>
-      <div class="muted" style="margin-bottom:6px">送信後、当日〜2営業日以内にご連絡します。</div>
-      <div class="chips">${CONTACTS.map(v => `<button class="chip ${f.contact === v ? 'on' : ''}" onclick="setC('contact','${v}')">${v}</button>`).join('')}</div>`)}
+      ${u.billing === '月次' ? `<div class="muted">${esc(u.pay)}（月次でまとめてご請求）</div>` : chipsOf(PAYS, f.pay, "setC('pay','%v')")}`)}
+    ${sec('c-shipnote', '発送に関する連絡事項', '', `<textarea oninput="state.form.shipNote=this.value" placeholder="連絡事項がありましたらご記入ください。インクや加工に関する連絡はこの欄に記入されても反映されませんのでご注意ください。">${esc(f.shipNote)}</textarea>`)}
+    ${sec('c-contact', '弊社からの優先連絡方法', '必須', `
+      <div class="muted" style="margin-bottom:6px">「送信ボタンを押した後、当日〜2営業日以内にご連絡を差し上げます。どの連絡方法がご希望ですか？」</div>
+      ${chipsOf(CONTACTS, f.contact, "setC('contact','%v')")}`)}
+    ${sec('c-kind', 'ご注文の進め方', '', `
+      ${chipsOf([['注文', 'このまま注文する（見積は不要）'], ['見積依頼', 'まず見積を依頼する']], f.kind, "setC('kind','%v')")}
+      <div class="muted" style="margin-top:6px">${f.kind === '注文' ? '内容を確認して製作に入ります。金額・納期は確認後にご連絡します。' : '見積をご確認・承認いただいてから注文が確定します。'}</div>`)}
     <div id="fnav"></div>
-  </div><div class="side" id="fside"></div></div>`;
-  renderClassicResults();
+  </div>`;
   refreshClassic();
-}
-function renderClassicResults() {
-  const f = state.form, el = document.getElementById('cres'); if (!el) return;
-  const words = norm(f.q).split(/\s+/).filter(Boolean);
-  const pool = words.length ? BODIES.filter(b => { const hay = norm([b.maker, b.code, b.name, ...b.colors].join(' ')); return words.every(w => hay.includes(w)); }) : POPULAR.map(bodyOf);
-  el.innerHTML = (words.length ? '' : '<div class="muted">よく選ばれている商品</div>') + (pool.slice(0, 6).map(b => {
-    const on = f.items.some(it => it.code === b.code);
-    return `<div class="srow2 ${on ? 'on' : ''}" ${on ? '' : `onclick="addC('${b.code}')"`}><b>${b.maker}</b><span>${b.code}</span><span>${b.name}</span><span class="muted">${b.colors.length}色・${yen(Math.min(...Object.values(b.sizes)))}円〜</span><span class="add">${on ? '追加済み' : '＋ 追加'}</span></div>`;
-  }).join('') || `<div class="muted">見つかりませんでした。品番をご確認いただくか、<a class="link" onclick="toast('LINEで取り扱い商品を相談できます（デモ）')">LINEで相談</a>してください。</div>`);
 }
 function refreshClassic() {
   const f = state.form; if (!f || f.mode !== 'classic' || f.done) return;
-  const checks = classicChecks(f), bad = checks.find(c => !c.ok);
-  const amt = f.bring ? 0 : f.items.reduce((a, it) => a + itemAmt(it), 0);
-  const label = f.confirm ? (f.kind === '注文' ? 'この内容で注文する' : '見積を依頼する（無料）') : '確認画面へ';
+  const checks = classicChecks(f), bad = checks.filter(c => !c.ok);
+  checks.forEach(c => { const e = document.getElementById(`err-${c.id}`); if (e) e.textContent = c.ok ? '' : c.msg; });
+  const tot = document.getElementById('rowsTotal'); if (tot) tot.textContent = rowsQty(f);
+  const amt = f.items.reduce((a, it) => a + (bodyOf(it.code).custom ? 0 : itemAmt(it)), 0);
   const nav = document.getElementById('fnav');
   if (nav) nav.innerHTML = `<div class="navbar">${f.confirm ? `<button class="btn ghost" onclick="setC('confirm',false)">← 修正する</button>` : ''}
-    <span class="hint">${bad ? bad.msg : ''}</span>
-    <button class="btn next" ${bad ? 'disabled' : ''} onclick="${f.confirm ? 'submitClassic()' : `setC('confirm',true);window.scrollTo({top:0})`}">${label} →</button></div>`;
-  document.getElementById('fside').innerHTML = `<div class="card"><h3>入力の状況</h3><ul class="check">
-    ${checks.filter(c => !(f.repeat === '無地' && (c.id === 'c-img' || c.id === 'c-method'))).map((c, i) => `<li class="${c.ok ? 'ok' : c === bad ? 'now' : ''}" ${f.confirm ? '' : `onclick="document.getElementById('${c.id}').scrollIntoView({behavior:'smooth'})" style="cursor:pointer"`}><i>${c.ok ? '✓' : i + 1}</i><span>${c.label}</span><span class="v">${c.v || '未入力'}</span></li>`).join('')}
-  </ul>
-  <div class="row"><span>商品代（税抜）</span><b style="margin-left:auto;font-size:18px">${yen(amt)}円</b></div>
-  <div class="muted">${f.bring ? '持ち込みボディーのため商品代はかかりません。' : ''}加工代は、デザインを確認してからお知らせします。</div>
-  <div class="muted" style="margin-top:10px">わからないことがあれば <a class="link" onclick="toast('LINEでワーカーブロスに相談できます（デモ）')">LINEで相談</a></div></div>`;
+    <span class="hint" style="color:var(--sub)">商品代（税抜）<b style="font-size:16px;color:var(--ink)">${yen(amt)}円</b>${f.bring ? '（持ち込み分は除く）' : ''}　加工代は内容を確認してからご連絡します${bad.length && !f.confirm ? `<br><span style="color:#c0392b">未入力・要確認：${bad.length}項目</span>` : ''}</span>
+    <button class="btn next" onclick="${f.confirm ? 'submitClassic()' : 'tryConfirm()'}">${f.confirm ? (f.kind === '注文' ? 'この内容で注文する' : '見積を依頼する（無料）') : '確認画面へ'} →</button></div>`;
+}
+function tryConfirm() {
+  const f = state.form, bad = classicChecks(f).filter(c => !c.ok);
+  if (bad.length) {
+    openModal(`<div class="cust"><h3>以下の項目を確認してください</h3><ul class="notice">${bad.map(c => `<li><a class="link" onclick="closeModal();document.getElementById('${c.id}').scrollIntoView({behavior:'smooth'})">${c.label}</a>：${c.msg}</li>`).join('')}</ul><div class="row" style="justify-content:flex-end"><button class="btn" onclick="closeModal()">閉じる</button></div></div>`);
+    return;
+  }
+  f.confirm = true; renderForm(); window.scrollTo({ top: 0 });
 }
 function classicReview() {
-  const f = state.form, plain = f.repeat === '無地', multi = f.items.length > 1, u = state.user;
+  const f = state.form, plain = f.repeat === '無地', isNew = f.repeat === '新規デザイン', multi = f.items.length > 1, u = state.user;
   const rv = (t, body) => `<div class="rv"><h5>${t}</h5>${body}</div>`;
-  return `<div class="qhead">入力内容の確認</div>
+  const thumbs = list => `<div class="row" style="gap:6px">${list.map(d => d.img ? `<img class="thumb" src="${d.img}">` : `<span class="muted">📄 ${esc(d.file)}</span>`).join('')}</div>`;
+  return `<div class="qhead">注文内容確認</div>
     <p class="qsub">${f.kind === '注文' ? 'この内容で注文します。金額と納期は、内容を確認してからご連絡します。' : 'この内容で見積を依頼します。見積をご確認・承認いただいてから注文が確定します。'}</p>
-    ${rv('ご注文の種類', f.kind === '注文' ? 'このまま注文する（見積不要）' : 'まず見積を依頼する')}
-    ${rv('アイテム名', `${esc(f.title)}（${f.repeat}）${f.fromNo ? `　<span class="muted">前回の注文 ${f.fromNo} をもとに作成</span>` : ''}`)}
-    ${rv('納品希望日', f.dueMode === '最短' ? `最短（目安：${jpDate(addDays(DEMO_TODAY, 9))}ごろ）` : jpDate(f.due))}
-    ${plain ? '' : rv('完成イメージ画像・加工方法', `<div class="row" style="gap:6px">${f.images.filter(d => d.img).map(d => `<img class="thumb" src="${d.img}">`).join('') || '<span class="muted">前回と同じデザイン</span>'}</div>
-      <div style="margin-top:6px">加工方法：${f.methods.join('・')}</div>${f.imgNote.trim() ? `<div class="muted">連絡事項：${esc(f.imgNote)}</div>` : ''}`)}
-    ${rv('商品・カラー・枚数', `${f.bring ? '<div class="muted">持ち込みボディー</div>' : ''}${f.items.map((it, ii) => { const b = bodyOf(it.code); return `<div style="margin-bottom:8px"><b>${multi ? `${ii + 1}. ` : ''}${b.name}</b> <span class="muted">${b.maker}・${b.code}</span>
-      ${it.colors.filter(c => colorTotal(it.qty, c)).map(c => `<div>${c}：${Object.entries(it.qty[c]).filter(([, n]) => n > 0).map(([s, n]) => `${s}×${n}`).join('　')}（${colorTotal(it.qty, c)}枚）</div>`).join('')}</div>`; }).join('')}
-      <div style="border-top:1px dashed var(--line);padding-top:6px">合計 <b>${formQty(f)}枚</b></div>`)}
-    ${rv('ネーム加工・個包装・備考', `ネーム加工：${f.nameProc ? '有り' : '無し'}／OPP個包装：${f.opp ? '有り' : '無し'}${f.note.trim() ? `<div class="muted">備考：${esc(f.note)}</div>` : ''}`)}
-    ${rv('お届け・お支払い・連絡方法', `納品先：${f.shipTo === 'home' ? `お客様情報のご住所（〒${u.zip} ${esc(u.addr)}）` : esc(f.shipAddr)}<br>お支払い：${u.billing === '月次' ? esc(u.pay) : esc(f.pay)}<br>優先連絡方法：${esc(f.contact)}`)}`;
+    ${rv('基本情報', `アイテム名：${esc(f.title)}<br>新規 or リピート：${f.repeat}${f.fromNo ? `　<span class="muted">前回の注文 ${f.fromNo} をもとに作成</span>` : ''}<br>納品希望日：${f.dueMode === '最短' ? '最短' : `納品指定日あり／${jpDate(f.due)}`}`)}
+    ${plain ? '' : rv('イメージ画像', `${f.images.some(d => d.img) ? thumbs(f.images.filter(d => d.img)) : '<span class="muted">前回と同じデザイン</span>'}${f.imgNote.trim() ? `<div class="muted">連絡事項：${esc(f.imgNote)}</div>` : ''}`)}
+    ${isNew ? rv('データ入稿', `${f.sub.files.some(d => d.file) ? thumbs(f.sub.files.filter(d => d.file)) : ''}${f.sub.url.trim() ? `<div>URL：${esc(f.sub.url)}</div>` : ''}<div>原寸サイズ：${f.sub.actual}${f.sub.size.trim() ? `／加工サイズ：${esc(f.sub.size)}` : ''}</div>${f.sub.note.trim() ? `<div class="muted">連絡事項：${esc(f.sub.note)}</div>` : ''}`) : ''}
+    ${plain ? '' : rv('加工・オーダー情報', `加工方法：${f.methods.join('・')}${f.inks.length ? `<br>インクの種類：${f.inks.map(i => i === 'その他' && f.inkOther.trim() ? `その他（${esc(f.inkOther)}）` : i).join('・')}` : ''}${f.bring ? `<br>持ち込みボディー：有り（納入予定日 ${f.bringDate ? jpDate(f.bringDate) : '未定'}）` : ''}`)}
+    ${rv('加工品', (() => { const rows = f.rows.filter(rowDone), silk = !plain && f.methods.includes('シルクスクリーン'), emb = !plain && f.methods.includes('刺繍'), ink = !plain && f.methods.includes('インクジェット');
+      const cols = ['メーカー', '品番', 'ボディーカラー', ...(silk ? ['プリントカラー(シルク)'] : []), ...(emb ? ['刺繍カラー'] : []), ...(ink ? ['インクジェット白引き'] : []), 'サイズ', '数量'];
+      const un = '<span class="muted">未記入</span>';
+      return `<div class="tblwrap"><table class="rtbl ro"><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${rows.map(r => { const b = rowBody(r); return `<tr><td>${esc(r.maker) || un}</td><td>${esc(r.code)}${b ? `<small>${esc(b.name)}${b.custom ? '（直接入力）' : ''}</small>` : ''}</td><td>${esc(r.color)}</td>${silk ? `<td>${esc(r.print) || un}</td>` : ''}${emb ? `<td>${esc(r.emb) || un}</td>` : ''}${ink ? `<td>${r.white || un}</td>` : ''}<td>${esc(r.size)}</td><td class="num">${+r.qty}</td></tr>`; }).join('')}</tbody></table></div>
+      <div style="border-top:1px dashed var(--line);padding-top:6px;margin-top:6px">合計 <b>${formQty(f)}枚</b>${f.items.some(it => bodyOf(it.code).custom) ? '　<span class="muted">取り扱いにない商品（直接入力）の単価は見積でご案内します。</span>' : ''}</div>`; })())}
+    ${rv('ネーム加工・OPP個包装・備考', `ネーム加工：${f.nameProc ? `有り（${NAME_TYPES.find(t => t[0] === f.name.type)?.[1] || f.name.type}${f.name.file ? `／${esc(f.name.file)}` : ''}${f.name.date ? `／納入予定 ${jpDate(f.name.date)}` : ''}）` : '無し'}${f.name.note.trim() && f.nameProc ? `<div class="muted">ネーム加工備考：${esc(f.name.note)}</div>` : ''}<br>OPP個包装：${f.opp ? '有り' : '無し'}${f.note.trim() ? `<div class="muted">備考：${esc(f.note)}</div>` : ''}`)}
+    ${rv('お客様情報・納品先・お支払い', `${esc(u.name)} 様　${esc(u.tel)}　${esc(u.email)}　〒${u.zip} ${esc(u.addr)}<br>納品先：${f.shipTo === 'home' ? 'お客様情報のご住所にお届け' : `${esc(f.ship.name)}　〒${esc(f.ship.zip)} ${esc(f.ship.addr)}　${esc(f.ship.tel)}（出荷人：${f.ship.sender}）`}<br>お支払い：${u.billing === '月次' ? esc(u.pay) : esc(f.pay)}`)}
+    ${rv('その他', `${f.shipNote.trim() ? `発送に関する連絡事項：${esc(f.shipNote)}<br>` : ''}優先連絡方法：${esc(f.contact)}<br>進め方：${f.kind === '注文' ? 'このまま注文する（見積不要）' : 'まず見積を依頼する'}`)}`;
 }
 function submitClassic() {
   const f = state.form, bad = classicChecks(f).find(c => !c.ok);
   if (bad) { toast(bad.msg); return; }
   const plain = f.repeat === '無地', q = formQty(f), u = state.user, src = f.fromNo ? orderOf(f.fromNo) : null;
+  const printColors = it => Math.max(1, ...it.colors.map(c => pcOf(it, c).print.split(',').filter(s => s.trim()).length));
+  const silkPlates = Math.min(4, Math.max(1, ...f.items.map(printColors)));
+  const allPrint = f.items.flatMap(it => it.colors.map(c => pcOf(it, c).print)).join(',');
+  const methods = [...new Set(f.methods.map(m => m === 'おまかせ' ? 'シルクスクリーン' : m))];
   const o = {
     no: nextNo(), date: DEMO_TODAY, cid: u.id, kind: f.kind,
-    due: f.dueMode === '最短' ? addDays(DEMO_TODAY, 9) : f.due,
+    due: f.dueMode === '最短' ? addDays(DEMO_TODAY, LEAD[1]) : f.due,
     title: f.title.trim(),
     items: f.items.map(it => ({ code: it.code, qty: Object.fromEntries(it.colors.filter(c => colorTotal(it.qty, c)).map(c => [c, Object.fromEntries(Object.entries(it.qty[c]).filter(([, n]) => n > 0))])) })),
-    classic: { repeat: f.repeat, fromNo: f.fromNo, dueMode: f.dueMode, images: f.images.filter(d => d.img).map(d => ({ file: d.file, img: d.img })), imgNote: f.imgNote.trim(), methods: plain ? [] : f.methods.slice(), bring: f.bring, nameProc: f.nameProc, opp: f.opp, shipTo: f.shipTo === 'home' ? 'お客様情報のご住所' : f.shipAddr.trim(), pay: u.billing === '月次' ? u.pay : f.pay, contact: f.contact },
-    procs: plain ? [] : src ? src.procs.filter(p => f.methods.includes(p.method)).map(p => ({ ...p, it: f.items.map(it => it.code).join() === src.items.map(it => it.code).join() ? p.it : -1 })) : f.methods.map(m => P(m, defaultSize(m, 'フロント : 胸中央'), 'フロント : 胸中央')),
-    opts: [...(f.opp ? [O('OPP袋詰め(Tシャツ)', q)] : []), ...(f.bring ? [O('持ち込み料金(Tシャツ)', q)] : [])],
+    classic: {
+      repeat: f.repeat, fromNo: f.fromNo, dueMode: f.dueMode, images: f.images.filter(d => d.img).map(d => ({ file: d.file, img: d.img })), imgNote: f.imgNote.trim(),
+      sub: f.repeat === '新規デザイン' ? { files: f.sub.files.filter(d => d.file).map(d => ({ file: d.file, img: d.img })), url: f.sub.url.trim(), actual: f.sub.actual, size: f.sub.size.trim(), note: f.sub.note.trim() } : null,
+      methods: plain ? [] : f.methods.slice(), inks: f.inks.slice(), inkOther: f.inkOther.trim(), bring: f.bring, bringDate: f.bringDate,
+      pc: f.items.map(it => Object.fromEntries(it.colors.filter(c => colorTotal(it.qty, c)).map(c => [c, { ...pcOf(it, c) }]))),
+      rows: f.rows.filter(rowDone).map(r => ({ ...r, code: r.code.trim(), color: r.color.trim(), size: r.size.trim(), qty: +r.qty })),
+      nameProc: f.nameProc, name: f.nameProc ? { ...f.name } : null, opp: f.opp,
+      shipTo: f.shipTo === 'home' ? 'お客様情報のご住所' : `${f.ship.name} 〒${f.ship.zip} ${f.ship.addr} ${f.ship.tel}（出荷人：${f.ship.sender}）`, ship: f.shipTo === 'home' ? null : { ...f.ship }, shipNote: f.shipNote.trim(),
+      pay: u.billing === '月次' ? u.pay : f.pay, contact: f.contact,
+    },
+    procs: plain ? [] : src && src.procs.length && [...new Set(src.procs.map(p => p.method))].join() === methods.join() ? src.procs.map(p => ({ ...p, it: f.items.map(it => it.code).join() === src.items.map(it => it.code).join() ? p.it : -1 })) : methods.map(m => P(m, defaultSize(m, 'フロント : 胸中央'), 'フロント : 胸中央', m === 'シルクスクリーン' ? silkPlates : 1)),
+    opts: [
+      ...(f.opp ? [O('OPP袋詰め(Tシャツ)', q)] : []),
+      ...(f.bring ? [O('持ち込み料金(Tシャツ)', f.items.filter(it => bodyOf(it.code).custom).reduce((a, it) => a + sumQty(it.qty), 0) || q)] : []),
+      ...(f.nameProc && NAME_OPT[f.name.type] ? [O(NAME_OPT[f.name.type], q)] : []),
+      ...(f.inks.includes('発泡') ? [O('発泡インク箇所', q)] : []),
+      ...(/蛍光/.test(allPrint) ? [O('蛍光インク箇所', q)] : []),
+      ...(/ゴールド|シルバー/.test(allPrint) ? [O('メタリックインク箇所', q)] : []),
+      ...(/蓄光/.test(allPrint) ? [O('蓄光インク箇所', q)] : []),
+      ...(/リフレクター/.test(allPrint) ? [O('リフレクターインク箇所', q)] : []),
+    ],
     ship: 800, cod: u.billing !== '月次' && f.pay === PAYS[1] ? 330 : 0, web: 3, status: '新規受付', closeMonth: '',
     note: f.note.trim(), history: [H(nowStr(), f.kind === '注文' ? 'Webの注文フォームから注文を受付（見積不要）' : 'Webの注文フォームから見積依頼を受付')],
   };
-  if (!plain && !o.procs.length) o.procs = f.methods.map(m => P(m, defaultSize(m, 'フロント : 胸中央'), 'フロント : 胸中央'));
   orders.push(o);
   state.currentNo = o.no; f.lastNo = o.no; f.done = true;
   renderAll(); renderForm(); window.scrollTo({ top: 0 });
 }
 function classicReq(o) {
-  const c = o.classic;
-  return `<b>お客様の指定（${o.kind === '注文' ? '注文・見積不要' : '見積依頼'}／いつもの注文フォーム）</b>：${esc(c.repeat)}${c.fromNo ? `（前回 ${c.fromNo} をもとに）` : ''}／加工方法 ${c.methods.join('・') || 'なし（無地）'}／納期 ${c.dueMode === '最短' ? '最短' : jpDate(o.due)}${c.bring ? '／<b>持ち込みボディー</b>（ボディー代は見積で除外する）' : ''}${c.nameProc ? '／ネーム加工あり' : ''}${c.opp ? '／OPP個包装' : ''}
+  const c = o.classic, line = [];
+  line.push(`${esc(c.repeat)}${c.fromNo ? `（前回 ${c.fromNo} をもとに）` : ''}`);
+  line.push(`加工方法 ${c.methods.join('・') || 'なし（無地）'}${c.inks && c.inks.length ? `（インク：${c.inks.map(i => i === 'その他' && c.inkOther ? `その他 ${esc(c.inkOther)}` : i).join('・')}）` : ''}`);
+  line.push(`納期 ${c.dueMode === '最短' ? '最短' : jpDate(o.due)}`);
+  if (c.bring) line.push(`<b>持ち込みボディー</b>（納入予定 ${c.bringDate ? jpDate(c.bringDate) : '未定'}・ボディー代は見積で除外する）`);
+  if (c.nameProc) line.push(`ネーム加工あり（${c.name ? `${NAME_TYPES.find(t => t[0] === c.name.type)?.[1] || c.name.type}${c.name.date ? `・タグ納入 ${jpDate(c.name.date)}` : ''}` : ''}）`);
+  if (c.opp) line.push('OPP個包装');
+  const custom = o.items.some(it => bodyOf(it.code).custom);
+  const pcRows = o.items.flatMap((it, i) => Object.entries((c.pc && c.pc[i]) || {}).map(([col, pc]) => { const parts = []; if (pc.print) parts.push(`プリントカラー ${esc(pc.print)}`); if (pc.emb) parts.push(`刺繍カラー ${esc(pc.emb)}`); if (pc.white) parts.push(`白引き ${pc.white}`); return parts.length ? `${esc(shortName(it.code))}／${esc(col)}：${parts.join('・')}` : ''; }).filter(Boolean));
+  return `<b>お客様の指定（${o.kind === '注文' ? '注文・見積不要' : '見積依頼'}／いつもの注文フォーム）</b>：${line.join('／')}
+    ${pcRows.length ? `<div class="muted">${pcRows.join('<br>')}</div>` : ''}
+    ${custom ? '<div class="err">マスタにない商品（直接入力）が含まれています。ボディ単価を確認して入力してください。</div>' : ''}
     ${c.images.length ? `<div class="thumbs">${c.images.map((d, i) => `<figure><img src="${d.img}">画像${i + 1}</figure>`).join('')}</div>` : ''}
     ${c.imgNote ? `<div class="muted">画像の連絡事項：${esc(c.imgNote)}</div>` : ''}
+    ${c.sub ? `<div class="muted">入稿データ：${c.sub.files.map(d => esc(d.file)).join('・') || 'なし'}${c.sub.url ? `／URL ${esc(c.sub.url)}` : ''}／原寸 ${c.sub.actual}${c.sub.size ? `（加工サイズ ${esc(c.sub.size)}）` : ''}${c.sub.note ? `／${esc(c.sub.note)}` : ''}</div>` : ''}
+    ${c.name && c.name.file ? `<div class="muted">ネームタグ画像：${c.name.img ? `<img class="thumb" src="${c.name.img}">` : ''} ${esc(c.name.file)}${c.name.note ? `／${esc(c.name.note)}` : ''}</div>` : ''}
     ${o.note ? `<div class="muted">備考：${esc(o.note)}</div>` : ''}
-    <div class="muted">お届け：${esc(c.shipTo)}｜お支払い：${esc(c.pay)}｜優先連絡：${esc(c.contact)}</div>
-    <div class="muted">加工の位置・サイズは、画像への書き込みを見て担当者が確定する（加工方法ごとに1行を仮置き）。</div>`;
+    <div class="muted">お届け：${esc(c.shipTo)}｜お支払い：${esc(c.pay)}｜優先連絡：${esc(c.contact)}${c.shipNote ? `｜発送連絡：${esc(c.shipNote)}` : ''}</div>
+    <div class="muted">加工の位置・サイズは、画像への書き込みを見て担当者が確定する（加工方法ごとに1行を仮置き。シルクの版数はプリントカラー数から仮置き）。</div>`;
 }
 
 // ---------- ③ 受注一覧 ----------
