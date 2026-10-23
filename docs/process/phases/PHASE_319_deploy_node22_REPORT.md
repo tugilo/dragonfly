@@ -2,7 +2,7 @@
 
 **作成:** 2026-10-24 07:38 JST  
 **Phase Type:** refactor  
-**Status:** in_progress
+**Status:** completed（develop merge 済み 2026-10-24 07:39 JST。main 反映は別途）
 
 ---
 
@@ -36,7 +36,7 @@
 
 ## Merge Evidence
 
-merge commit id: （develop merge 後に記録）  
+merge commit id: 2274666540617d14119581ef4281e36beac6a4d5  
 source branch: feature/phase319-deploy-node22  
 target branch: develop  
 phase id: 319  

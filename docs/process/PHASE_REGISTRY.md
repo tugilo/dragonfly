@@ -317,7 +317,7 @@
 | 316 | 木村杏那 建設業向け 機能選択の概算見積（土台56万・例2は210万・Web全部342万） | docs | in_progress | 作業ツリー未分離 | 2026-10-04 |
 | 317 | 国宝社 第4回121反映 改訂提案 v3・機能別見積・構成図・基本設計・仕様・スケジュール | docs | in_progress | 作業ツリー未分離 | 2026-10-10 |
 | 318 | 竹村裕司 第3回121 Zoom要約反映（足場レンタルのサーバー・決済・BNI） | docs | in_progress | 作業ツリー未分離 | 2026-10-12 |
-| 319 | デプロイ先のフロントビルド Node を nvm 22 系にする（Node.js 2026-10-21 セキュリティリリース対応） | refactor | in_progress | feature/phase319-deploy-node22 | 2026-10-24 |
+| 319 | デプロイ先のフロントビルド Node を nvm 22 系にする（Node.js 2026-10-21 セキュリティリリース対応） | refactor | completed | develop（merge `2274666540617d14119581ef4281e36beac6a4d5`） | 2026-10-24 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
