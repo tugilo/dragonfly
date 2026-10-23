@@ -1,6 +1,6 @@
 # Religo（dragonfly）— tugilo_site と同一 VPS（さくら VPS）
 # Git でリポジトリ全体を管理し、サーバーには www/ のみ rsync
-# composer / npm build はサーバー上で実行（PHP 8.4 + nvm Node 20）
+# composer / npm build はサーバー上で実行（PHP 8.4 + nvm Node 22）
 # develop → /var/www/laravel/religo_dev
 # main    → /var/www/laravel/religo_app
 #
@@ -116,9 +116,12 @@ jobs:
               echo "✅ Composer dependencies are up to date"
             fi
 
+            # Node は VPS の nvm 22 系を使う（Phase 319。20 系は EOL で 2026-10-21 のセキュリティ修正が来ない）。
+            # VPS には nvm 22.23.4 以上が入っていること。22 が無ければここで止める（黙って別の版に落ちない）。
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-            nvm use 20 2>/dev/null || true
+            nvm use 22 || { echo "❌ nvm に Node 22 がありません"; exit 1; }
+            echo "Node: $(node -v) npm: $(npm -v)"
 
             # vite lives in devDependencies; npm ci skips dev when NODE_ENV=production.
             export NODE_ENV=development

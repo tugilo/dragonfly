@@ -958,6 +958,9 @@ Phase 別の詳細な PLAN / WORKLOG / REPORT を置く場合は docs/process/ �
 | [phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_PLAN.md](process/phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_PLAN.md) | Phase 315: 岡元智美 第3回121・生活記憶サービスコンセプト壁打ち準備 PLAN。 |
 | [phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_WORKLOG.md](process/phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_WORKLOG.md) | Phase 315: 同 WORKLOG（原点・対象者・名称2案・未決事項を整理）。 |
 | [phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_REPORT.md](process/phases/PHASE_315_OKAMOTO_SOROSORO_CONCEPT_PREP_REPORT.md) | Phase 315: 同 REPORT（ローカル文書作成。commit / merge / push 未実施）。 |
+| [phases/PHASE_319_deploy_node22_PLAN.md](process/phases/PHASE_319_deploy_node22_PLAN.md) | Phase 319: デプロイ先（さくら VPS）のフロントビルド Node を nvm 20（EOL）から 22 系へ。`.github/workflows/deploy.yml` のみ。2026-10-24。 |
+| [phases/PHASE_319_deploy_node22_WORKLOG.md](process/phases/PHASE_319_deploy_node22_WORKLOG.md) | Phase 319: 同 WORKLOG。 |
+| [phases/PHASE_319_deploy_node22_REPORT.md](process/phases/PHASE_319_deploy_node22_REPORT.md) | Phase 319: 同 REPORT（Merge Evidence・Actions 結果）。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_PLAN.md) | Phase 155: SPEC-013 1to1 事前準備（PDF/URL 添付・AI 原稿生成・OpenAI）PLAN。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_WORKLOG.md) | Phase 155: 同 WORKLOG。 |
 | [phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md](process/phases/PHASE_155_ONETOONE_PREP_AI_OPENAI_REPORT.md) | Phase 155: 同 REPORT。 |
