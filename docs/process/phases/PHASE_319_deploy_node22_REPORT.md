@@ -24,12 +24,12 @@
 
 アプリコード変更なしのため `php artisan test` と React ビルドはローカルでスキップ。develop デプロイの Actions で確認する。
 
-- Actions: （実行後に記録）
+- Actions: run 40034988234（Deploy Religo to Sakura VPS, develop, success, 1m35s）。VPS ログ `Now using node v22.23.4 (npm v10.9.9)`、`Node: v22.23.4 npm: 10.9.9`、vite `✓ built in 12.71s`（2026-10-24 07:41 JST 確認）
 
 ## DoDチェック
 
 - [x] `nvm use 22`、無ければ exit 1
-- [ ] Actions ログに `Node: v22.23.4` とビルド成功（実行後に記録）
+- [x] Actions ログに `Node: v22.23.4` とビルド成功（run 40034988234）
 - [x] INDEX / 進捗 / PHASE_REGISTRY 同期
 
 ---
@@ -44,8 +44,8 @@ phase type: refactor
 related ssot: Spec ID なし（運用）
 
 test command: スキップ（アプリコード変更なし。VPS デプロイで確認）  
-test result: （Actions 実行後に記録）
+test result: develop デプロイ success。Node v22.23.4、vite ✓ built in 12.71s
 
 scope check: OK  
 ssot check: OK  
-dod check: （Actions 確認後に記録）
+dod check: OK
