@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>御見積書（案）— 注文PDF入力・製本作業予定表 システム 構築一式 — 株式会社国宝社 御中</title>
+<style>
+  @page { size: A4; margin: 12mm 12mm 11mm 12mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif; color: #1f2933; font-size: 9.2pt; line-height: 1.42; background: #fff; }
+  .page { max-width: 186mm; margin: 0 auto; }
+  @media screen { body { background: #e9edf1; } .page { background: #fff; padding: 14mm; margin: 10mm auto; box-shadow: 0 2px 10px rgba(0,0,0,.12); } }
+  .draft { border: 2px solid #a1372a; color: #a1372a; background: #fbeeec; padding: 4pt 8pt; font-size: 9pt; font-weight: 700; margin: 0 0 8pt; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #0f4c81; padding-bottom: 5pt; margin-bottom: 8pt; }
+  header h1 { font-size: 20pt; margin: 0; color: #0f4c81; letter-spacing: .3em; }
+  header .meta { font-size: 8.6pt; color: #52606d; text-align: right; line-height: 1.5; }
+  .to { font-size: 13pt; font-weight: 700; margin: 2pt 0 2pt; }
+  .to small { font-size: 9pt; font-weight: 400; color: #52606d; margin-left: 8pt; }
+  .issuer { font-size: 8.8pt; color: #3e4c59; margin: 0 0 8pt; }
+  .total { display: flex; gap: 14pt; align-items: baseline; border: 1px solid #0f4c81; background: #eef4fa; padding: 6pt 10pt; margin: 6pt 0 8pt; }
+  .total .label { font-size: 10pt; color: #0f4c81; font-weight: 700; }
+  .total .amt { font-size: 18pt; font-weight: 700; color: #0f4c81; }
+  .total .sub { font-size: 8.8pt; color: #3e4c59; }
+  .kv { width: 100%; border-collapse: collapse; font-size: 8.6pt; margin: 0 0 8pt; }
+  .kv th { width: 22%; background: #f2f5f8; text-align: left; font-weight: 600; }
+  .kv th, .kv td { border: 1px solid #cbd2d9; padding: 3pt 6pt; vertical-align: top; }
+  h2 { font-size: 10.6pt; color: #0f4c81; margin: 10pt 0 4pt; padding-left: 6pt; border-left: 4px solid #e0a13b; page-break-after: avoid; }
+  table.items { width: 100%; border-collapse: collapse; font-size: 8.2pt; margin: 0 0 4pt; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  table.items th, table.items td { border: 1px solid #cbd2d9; padding: 2.6pt 4.5pt; vertical-align: top; text-align: left; }
+  table.items th { background: #f2f5f8; font-weight: 600; }
+  td.no { white-space: nowrap; font-weight: 700; color: #0f4c81; }
+  td.n { text-align: right; white-space: nowrap; }
+  td.ref { color: #52606d; font-size: 7.6pt; white-space: nowrap; }
+  tr.grp td { background: #f7f9fb; font-weight: 700; color: #0f4c81; }
+  tr.sum td { background: #eef4fa; font-weight: 700; }
+  .note { font-size: 8.2pt; color: #3e4c59; margin: 2pt 0 6pt; }
+  .two { display: flex; gap: 10pt; }
+  .two > div { flex: 1; }
+  footer { margin-top: 10pt; font-size: 8pt; color: #7b8794; border-top: 1px solid #cbd2d9; padding-top: 3pt; display: flex; justify-content: space-between; }
+  .toolbar { position: fixed; right: 12px; top: 12px; }
+  .toolbar button { font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #0f4c81; background: #0f4c81; color: #fff; cursor: pointer; }
+  @media print { .toolbar { display: none; } .page { padding: 0; margin: 0; box-shadow: none; max-width: none; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">PDF に保存 / 印刷</button></div>
+<div class="page">
+
+<p class="draft">【案・社内確認用】各行の金額・条件・発行者表記は次廣確定前。確定後にこの枠を外して発行する（送付不可）。</p>
+
+<header>
+  <h1>御見積書</h1>
+  <div class="meta">
+    見積番号: TG-2026-KK-05（案）<br>
+    発行日: 2026年　月　日（確定後記入）<br>
+    有効期限: 発行日から 60 日
+  </div>
+</header>
+
+<p class="to">株式会社国宝社 御中 <small>ご担当: 木村 秀継 様</small></p>
+<p class="issuer">tugilo（次廣 淳）　※所在地・連絡先・登録番号は発行時に記載</p>
+
+<p>下記のとおり御見積申し上げます。</p>
+
+<div class="total">
+  <span class="label">御見積金額（税込）</span>
+  <span class="amt">¥3,118,500</span>
+  <span class="sub">税抜 ¥2,835,000 ＋ 消費税（10%）¥283,500</span>
+</div>
+
+<table class="kv">
+  <tr><th>件名</th><td>注文PDF入力・製本作業予定表 システム 構築一式</td></tr>
+  <tr><th>内容</th><td>①注文書 PDF（出版社ポータル DL・様式固定）を文字抽出／OCR＋様式テンプレートで読み取り、人が確認・承認して CSV 出力する注文入力機能 ②人の判断を言語化した条件で自動配置案を出す製本作業予定表 ③社内サーバー構築。AI（外部 API・機械学習）は含まない</td></tr>
+  <tr><th>金額の考え方</th><td>各作業項目は成果物単位の定額（数量 1 式・単価＝金額）。作業時間の積み上げではなく、成果物の範囲と貴社で生む価値に基づく価格。範囲が変わる場合は着手前に変更見積を提示</td></tr>
+  <tr><th>納期</th><td>契約から約 3 か月（要件定義 2 週・開発 6〜8 週・並行テスト 2〜4 週）。2027年2月26日（金）までに検収・支払完了</td></tr>
+  <tr><th>支払条件（案）</th><td>契約時 30%（¥850,500）／テスト準備完了時 40%（¥1,134,000）／検収時 30%（¥850,500）いずれも税抜。助成金の交付時期に合わせて調整可</td></tr>
+  <tr><th>基幹との関係</th><td>VB＋Oracle は改修しない。補助DB → CSV → 既存システム開発会社の取込プログラム → Oracle</td></tr>
+</table>
+
+<h2>1. 見積内訳（税抜）</h2>
+<table class="items">
+<thead><tr><th>#</th><th>作業</th><th>内容</th><th>数量</th><th>金額</th><th>設計書</th></tr></thead>
+<tbody>
+<tr class="grp"><td colspan="3">M0 要件定義・基本設計</td><td class="n"></td><td class="n">¥210,000</td><td></td></tr>
+<tr><td class="no">M0-1</td><td>条件ヒアリング</td><td>担当者ヒアリング 2 回。人の判断の言語化シート（一緒にやるか／どこでやるか／順番／入る量／例外）、稼働枠・設備適性・優先順の収集と条件表化</td><td class="n">1 式</td><td class="n">¥87,500</td><td class="ref">仕様 §6</td></tr>
+<tr><td class="no">M0-2</td><td>入力項目・CSV の確定</td><td>VB 基本情報・詳細情報と注文書 PDF の対応確定、コード変換表の初期内容、CSV レイアウト（開発会社）との突合</td><td class="n">1 式</td><td class="n">¥52,500</td><td class="ref">基本設計 §4・§6</td></tr>
+<tr><td class="no">M0-3</td><td>設計書の確定版</td><td>基本設計書・仕様書・構成図の更新（PDF 読取方式・まとめ製本・条件管理・再発行差分・製本日）。画面一覧・項目定義</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">全章</td></tr>
+
+<tr class="grp"><td colspan="3">M1 共通基盤</td><td class="n"></td><td class="n">¥175,000</td><td></td></tr>
+<tr><td class="no">M1-1</td><td>認証・権限・ログ</td><td>ログイン、ユーザー、役割（入力／チェック／予定／管理）、操作ログ</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">基本設計 §8</td></tr>
+<tr><td class="no">M1-2</td><td>DB・Docker・バックアップ</td><td>補助DB スキーマ、Docker 構成、日次バックアップと復旧手順</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">基本設計 §5・§9</td></tr>
+<tr><td class="no">M1-3</td><td>マスタ</td><td>判型（25 種）、作業場所（6 拠点）、優先度、得意先の写し（VB から取込）</td><td class="n">1 式</td><td class="n">¥35,000</td><td class="ref">仕様 §7</td></tr>
+
+<tr class="grp"><td colspan="3">M2 注文入力（PDF 読取）</td><td class="n"></td><td class="n">¥665,000</td><td></td></tr>
+<tr><td class="no">M2-1</td><td>PDF 受付・分割</td><td>複数ファイルのドラッグ＆ドロップ、ページ分割（n/N 表記・枠位置）、取込一覧、1 件ずつ切替「次へ」</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">基本設計 §3 S-01〜02</td></tr>
+<tr><td class="no">M2-2</td><td>PDF 読取・テンプレート</td><td>文字抽出（文字 PDF）と社内 OCR（画像）の両対応、主要 1 社様式のテンプレート（ヘッダー・製本様式・部品明細）、全角半角・日付・数値の整形、サンプル 50 件以上での精度確認。実物が文字 PDF のみなら OCR 分 約 ¥105,000 を減額</td><td class="n">1 式</td><td class="n">¥175,000</td><td class="ref">仕様 §2</td></tr>
+<tr><td class="no">M2-3</td><td>入力・確認画面</td><td>VB 基本情報・詳細情報相当の項目、既定値（取込元ごとの得意先等）、製本日のカレンダー入力、PDF プレビュー並置</td><td class="n">1 式</td><td class="n">¥140,000</td><td class="ref">基本設計 §3 S-03</td></tr>
+<tr><td class="no">M2-4</td><td>コード変換表</td><td>部品名→種別、印刷所名→コード、加工所名→コード、シリーズ略号→コード。管理画面で追加・編集</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">仕様 §7</td></tr>
+<tr><td class="no">M2-5</td><td>再発行の突合・差分</td><td>発注 No.＋品目コードで突合、項目単位の差分表示、変更履歴、担当者への通知。自動上書きしない。重版は前回との差分のみ確認</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">仕様 §2.4</td></tr>
+<tr><td class="no">M2-6</td><td>検証・承認・証跡</td><td>数値の桁・範囲、日付妥当性、判型寸法の整合。信頼度の低い項目と数字項目の強調。承認・差戻し、解析証跡</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">仕様 §2.3</td></tr>
+
+<tr class="grp"><td colspan="3">M3 生産依頼表 手動入力</td><td class="n"></td><td class="n">¥105,000</td><td></td></tr>
+<tr><td class="no">M3-1</td><td>手動入力画面</td><td>Excel テンプレートと同じ項目。M2-3 の画面を共用し取込元「Excel」で登録。上書き（新しい依頼表）の扱い</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">基本設計 §3 S-04</td></tr>
+
+<tr class="grp"><td colspan="3">M4 CSV 出力・連携調整</td><td class="n"></td><td class="n">¥210,000</td><td></td></tr>
+<tr><td class="no">M4-1</td><td>CSV 出力</td><td>承認済みを開発会社レイアウトで出力。既定フォルダ、ファイル名一意、文字コード、出力履歴、再出力</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">基本設計 §6</td></tr>
+<tr><td class="no">M4-2</td><td>連携調整・結合</td><td>開発会社とのレイアウト確認、取込結果の扱い（通知・UPDATE／DELETE の要否）、結合テスト 2 回</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">基本設計 §6</td></tr>
+
+<tr class="grp"><td colspan="3">M5 製本作業予定表</td><td class="n"></td><td class="n">¥490,000</td><td></td></tr>
+<tr><td class="no">M5-1</td><td>予定表画面</td><td>横＝日付・縦＝6 拠点、週／月切替、未配置一覧、ドラッグで差し込み・入れ替え、作業時間、マス・日・週の合計、手追加、塞ぎ</td><td class="n">1 式</td><td class="n">¥315,000</td><td class="ref">基本設計 §3 S-06</td></tr>
+<tr><td class="no">M5-2</td><td>まとめ製本（グループ）</td><td>複数注文を 1 行にまとめて表示、ドリルダウン、グループの分割・結合、合計部数</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">仕様 §6.2</td></tr>
+<tr><td class="no">M5-3</td><td>状態管理</td><td>仮／確定（火曜仮・木曜確定）、固定（動かさない）、確定時の履歴</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">仕様 §6.4</td></tr>
+
+<tr class="grp"><td colspan="3">M6 自動配置（条件エンジン）</td><td class="n"></td><td class="n">¥420,000</td><td></td></tr>
+<tr><td class="no">M6-1</td><td>条件管理画面</td><td>グルーピング条件（AND/OR・優先順）、設備適性（場所×判型×仕様）、並び替えルール（重み）、稼働枠・塞ぎ。担当者が追加・変更できる</td><td class="n">1 式</td><td class="n">¥175,000</td><td class="ref">仕様 §6.3・§7</td></tr>
+<tr><td class="no">M6-2</td><td>配置エンジン</td><td>条件でグルーピング → 場所 → 日・順番を決めて案を出す。案ごとに理由を表示。人が確定するまで反映しない</td><td class="n">1 式</td><td class="n">¥175,000</td><td class="ref">仕様 §6.3</td></tr>
+<tr><td class="no">M6-3</td><td>修正の記録・差分</td><td>案と人の修正の記録、並行テスト用の「システム案 vs 手組み」差分一覧</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">仕様 §6.5</td></tr>
+
+<tr class="grp"><td colspan="3">M7 テスト・並行テスト・検収</td><td class="n"></td><td class="n">¥280,000</td><td></td></tr>
+<tr><td class="no">M7-1</td><td>結合テスト</td><td>機能1 → CSV → 機能2 の通しテスト、OCR 精度の確認記録</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">仕様 §10</td></tr>
+<tr><td class="no">M7-2</td><td>並行テスト伴走</td><td>現行の手入力・手組みと並走（2〜4 週）。週 1 回の見直し、条件の追加、修正</td><td class="n">1 式</td><td class="n">¥140,000</td><td class="ref">仕様 §10</td></tr>
+<tr><td class="no">M7-3</td><td>導入・検収</td><td>マスタ・条件の初期投入、操作説明（2 回）、操作説明書、検収</td><td class="n">1 式</td><td class="n">¥70,000</td><td class="ref">—</td></tr>
+
+<tr class="grp"><td colspan="3">S サーバー構築</td><td class="n"></td><td class="n">¥280,000</td><td></td></tr>
+<tr><td class="no">S-1</td><td>環境構築</td><td>既存 Hyper-V に Ubuntu または専用PC。Docker、社内 HTTPS、OCR エンジン、CSV 共有フォルダ、Oracle 参照用接続（得意先の写し）</td><td class="n">1 式</td><td class="n">¥175,000</td><td class="ref">構成図 §3</td></tr>
+<tr><td class="no">S-2</td><td>運用設計・引き渡し</td><td>バックアップ・復旧、再起動・更新手順、構築手順書、引き渡し</td><td class="n">1 式</td><td class="n">¥105,000</td><td class="ref">構成図 §4</td></tr>
+
+<tr class="sum"><td colspan="3">小計（税抜）</td><td class="n"></td><td class="n">¥2,835,000</td><td></td></tr>
+<tr class="sum"><td colspan="3">消費税（10%）</td><td></td><td class="n">¥283,500</td><td></td></tr>
+<tr class="sum"><td colspan="3">合計（税込）</td><td></td><td class="n">¥3,118,500</td><td></td></tr>
+</tbody>
+</table>
+<p class="note">区分別: 設計 M0 ¥210,000（7.4%）／開発 M1〜M6 ¥2,065,000（72.8%）／検証・導入 M7 ¥280,000（9.9%）／サーバー S ¥280,000（9.9%）。既存データの移行は無い（受注の正は Oracle のまま）。</p>
+
+<div class="two">
+<div>
+<h2>2. 含まれるもの</h2>
+<ul class="note">
+<li>画面見本で示した操作の本実装（第5回 10/26 の要件を反映）</li>
+<li>開発会社との CSV 結合テスト 2 回</li>
+<li>納品文書: 要件定義書、基本設計書、内部設計（DB・CSV・OCR テンプレート・条件定義）、操作説明書、構築・運用・バックアップ復旧手順書（PDF＋元ファイル）</li>
+<li>操作説明 2 回、並行テスト期間の週 1 回の見直し</li>
+<li>ソースコード・Docker 構成一式、テスト記録、検収書</li>
+</ul>
+</div>
+<div>
+<h2>3. 含まれないもの</h2>
+<ul class="note">
+<li>既存 VB の改修、取込プログラム、CSV レイアウト設計（開発会社）</li>
+<li>Oracle ライセンス、Windows Server・専用PC 等の機材購入</li>
+<li>2 社目以降の注文書様式、Excel アップロード読込・メール自動取込（別途）</li>
+<li>AI による配置提案・AI 読取（今回対象外）</li>
+<li>手書き部分・付箋で隠れた項目の読取、過去データの整備・移行</li>
+<li>欠勤・機械故障の自動組み直し、保守月額（任意契約・別途）</li>
+</ul>
+</div>
+</div>
+
+<h2>4. 条件（案）</h2>
+<table class="kv">
+  <tr><th>瑕疵対応</th><td>検収後 6 か月。本見積範囲の不具合を無償で修正</td></tr>
+  <tr><th>権利</th><td>本件固有の成果物（画面・条件定義・テンプレート・文書）は貴社に帰属。tugilo の汎用基盤（認証・ログ・Docker 構成等）は tugilo に留保し、貴社に利用を許諾</td></tr>
+  <tr><th>対応時間</th><td>平日 9:00〜18:00。並行テスト期間は週 1 回の定例</td></tr>
+  <tr><th>再見積</th><td>実物 PDF の様式が複数ある・CSV レイアウトが複雑・条件が多い等で範囲が変わる場合、着手前に変更見積を提示し合意後に実施。ポータル DL の実物が文字 PDF のみの場合は OCR 分（M2-2 約 ¥105,000）を減額</td></tr>
+  <tr><th>助成金</th><td>板橋区産業振興公社「令和8年度 デジタル化・データ利活用推進助成金」の申請書類（作業内容・単価・数量）に合わせた形式（作業項目ごとに 単価＝金額・数量 1 式）。2 社見積または限定理由書は貴社・専門家の判断に協力する。発注日・納品日・支払日は実態どおり</td></tr>
+  <tr><th>保守（参考）</th><td>保守 ¥25,000〜¥35,000／月、サーバー稼働維持 ¥10,000〜¥20,000／月（いずれも任意・税抜）。AI 利用料は発生しない</td></tr>
+</table>
+
+<footer>
+  <span>tugilo 次廣 淳 ｜ 御見積書 TG-2026-KK-05（案）</span>
+  <span>本書は見積であり契約書ではありません。</span>
+</footer>
+</div>
+</body>
+</html>

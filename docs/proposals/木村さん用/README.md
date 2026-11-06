@@ -1,10 +1,12 @@
 # 木村秀継さん（株式会社国宝社 / BPS木村）共有資料
 
 **用途:** 第2回 1to1（2026-05-29）で合意した PDF注文書入力自動化の提案・モック作成用。  
+**このフォルダに置くもの:** 木村さん・国宝社様・開発会社・専門家から **受領した資料**のみ（業務データ・公開禁止）。tugilo が作った提出物（提案書・見積書 PDF 等）はリポジトリ `docs/proposals/` に置き、**送付用の一式は `/Volumes/SSD1TB/tugilo-os/deliverables/kokuhosha/YYYYMMDD_提出一式/`**（10/12 v3 一式、10/14 専門家打合せ、**10/26 v5 一式（案・送付前）**）。  
 **受領日:** 2026-07-05 JST（次廣保存）。予定表・依頼表は **2026-08-27 23:34 JST** 追受領。開発会社資料・Excel テンプレート・判型リスト・一覧シートは **2026-10-10 07:20 JST** 追受領（第4回後）。  
-**関連:** [第2回要望](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) · [第3回追加要件](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) · [1to1 履歴](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md) · [提案書 v3（第4回反映）](../kimura_kokuhosha_proposal_v3_20261010.md) · [旧提案書（§16 まで）](../kimura_kokuhosha_pdf_order_input_proposal.md)
+**関連:** [第2回要望](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) · [第3回追加要件](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) · [1to1 履歴](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md) · [提案書 v5（2026-10-26・提出版候補）](../kimura_kokuhosha_proposal_v5_20261026.md) · [見積書 v5（案）](../kimura_kokuhosha_estimate_v5_20261026.md) · [提案書 v4（AI 参考案・未提出）](../kimura_kokuhosha_proposal_v4_20261026.md) · [提案書 v3（第4回反映・履歴）](../kimura_kokuhosha_proposal_v3_20261010.md) · [旧提案書（§16 まで）](../kimura_kokuhosha_pdf_order_input_proposal.md)
 
-> **第4回（2026-10-05）注記:** Oracle 直接書き込みは廃止し、**補助DB → CSV → 開発会社の取込プログラム → Oracle**。文書一式は v3（提案・見積・構成図・基本設計・仕様・スケジュール）。画面見本は https://tugilo.com/mock/kokuhosha-pdf-order-schedule.html 。
+> **第4回（2026-10-05）注記:** Oracle 直接書き込みは廃止し、**補助DB → CSV → 開発会社の取込プログラム → Oracle**。文書一式は v3（提案・見積・構成図・基本設計・仕様・スケジュール）。画面見本は https://tugilo.com/mock/kokuhosha-pdf-order-schedule.html 。  
+> **2026-10-26 注記:** 木村さんの AI 活用意向（10/14）と助成金専門家ヒアリングシート（10/13）を受け、文書一式を **v4** に更新（予定表の自動配置を「ルール＋AI＋人」の三層・AI 連携を必須・¥2,900,000 概算・発注時期起点の日程）。専門家元シート xlsx を本フォルダに追加。**同日 第5回で「今回は AI は不要」と決定 → v4 は未提出の社内検討版とし、提出版は v5（AI なし・OCR＋テンプレート・条件管理・¥2,835,000 案）。**
 
 ## ファイル一覧
 
@@ -13,7 +15,7 @@
 | [TTJUCUHDテーブル定義.pdf](TTJUCUHDテーブル定義.pdf) | 受注ヘッダー表 **TTJUCUHD** の Oracle テーブル定義 | 既存 VB 画面「基本情報」に対応 |
 | [TTJUCUDTテーブル定義.pdf](TTJUCUDTテーブル定義.pdf) | 受注明細表 **TTJUCUDT** の Oracle テーブル定義 | 既存 VB 画面「詳細情報」に対応。Excel シート名は `TTJUCHDT` |
 | [データ.xlsx](データ.xlsx) | テーブル関連図・画面対応・サンプルデータ | シート: `テーブル関連図` / `画面` / `TTJUCUHD` / `TTJUCHDT` |
-| [注文書.pdf](注文書.pdf) | 出版社から届く PDF 注文書のサンプル（1パターン） | 追加パターンは引き続き確認予定 |
+| [注文書.pdf](注文書.pdf) | 出版社から届く PDF 注文書のサンプル（1パターン） | 追加パターンは引き続き確認予定。**2026-10-26 確認:** 複合機（RICOH IM C4500）スキャン、300dpi JPEG 1枚、**テキスト層なし**。v3／v4 の M2「PDF 解析」はテキスト層を前提にしており、実運用で届く PDF がこの形式なら OCR／帳票読取 AI（別方式・別費用）の検討が要る。実際に受信する PDF の確認を最優先。**2026-10-26 13:33 再受領（同一ファイル・MD5 一致）。次廣判断: 様式固定なので OCR＋座標テンプレートで対応（AI 不要）。** 項目整理: [requirements_20261026](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20261026.md) |
 | [PDF注文書入力支援システム_ご提案_20260705122750.pdf](PDF注文書入力支援システム_ご提案_20260705122750.pdf) | **Genspark 生成の提案スライド（16枚）** | 2026-07-05 12:27 出力。元: [Gensparkプロンプト](../kimura_kokuhosha_pdf_order_input_genspark_slide_prompt.md) · [提案書](../kimura_kokuhosha_pdf_order_input_proposal.md) |
 | [生産依頼表_画面.jpg](生産依頼表_画面.jpg) | **生産依頼表**（1案件の入力票） | 2026-08-27 受領。得意先・書名・部数・判型・仕様・台割・見本／配本／希望／決定日（工場）・備考 |
 | [製本作業予定表_20260907-0911_手書き.jpg](製本作業予定表_20260907-0911_手書き.jpg) | **製本作業予定表**（週次印刷＋手書き） | 2026-08-27 受領。対象 2026-09-07〜11。印刷 2026-08-24 21:49。板橋1F/2F・ふじみ野（本線＋予備） |
@@ -21,7 +23,9 @@
 | [生産依頼表_Excelテンプレート_20261010.png](生産依頼表_Excelテンプレート_20261010.png) | **生産依頼表 Excel テンプレート**（1シートに4票）。**発注者がメール添付で送ってくる**もの | 2026-10-10 受領。得意先・新刊・書名・部数・判型・仕様（アジロ／見返／トライオート）・台割（16P／8P 台・（仮））・見本・配本・希望日・決定日・備考。手動入力画面（仕様書 §3）の項目元 |
 | [判型リスト_20261010.png](判型リスト_20261010.png) | **判型リスト**（25種） | 2026-10-10 受領。A6判〜菊判変型。判型マスタ（仕様書 §7.1）の元 |
 | [生産依頼表_一覧シート_20261010.png](生産依頼表_一覧シート_20261010.png) | **生産依頼表の一覧シート** | 2026-10-10 受領。列: お客様／書名／刷数／仕様／トライ／判型／16P／部数／見本日／配本日／希望日／備考。Excel 読込（あれば便利 O1）の対象列 |
-| [助成金専門家_開発会社を確認するときの観点_花村_20261013_v1.pdf](助成金専門家_開発会社を確認するときの観点_花村_20261013_v1.pdf) | **助成金 専門家派遣（板橋中小企業診断士協会 花村幸一氏）の「開発会社を確認するときの観点」v1**。25観点＋前回伺った内容 | 2026-10-14 受領（木村さん転送）。AI 前提の章あり。回答案: [kimura_kokuhosha_subsidy_consultant_checklist_response_20261014.md](../kimura_kokuhosha_subsidy_consultant_checklist_response_20261014.md) |
+| [助成金専門家_開発会社を確認するときの観点_花村_20261013_v1.pdf](助成金専門家_開発会社を確認するときの観点_花村_20261013_v1.pdf) | **助成金 専門家派遣（板橋中小企業診断士協会 花村幸一氏）の「開発会社を確認するときの観点」v1**。25観点＋前回伺った内容 | 2026-10-14 受領（木村さん転送）。AI 前提の章あり。回答案: [kimura_kokuhosha_subsidy_consultant_checklist_response_20261014.md](../kimura_kokuhosha_subsidy_consultant_checklist_response_20261014.md)（10/14）→ 最新は [kimura_kokuhosha_hearing_sheet_answers_20261026.md](../kimura_kokuhosha_hearing_sheet_answers_20261026.md) |
+| [現行VB受注入力画面_基本情報_詳細情報_20261026.pdf](現行VB受注入力画面_基本情報_詳細情報_20261026.pdf) | **現行 VB 受注入力画面のスクショ**（基本情報タブ・詳細情報タブ。PNG: [基本情報](現行VB受注入力画面_基本情報_20261026.png)・[詳細情報](現行VB受注入力画面_詳細情報_20261026.png)） | 2026-10-26 13:33 受領（第5回アクション）。新 Web の入力項目の元。注文書 PDF との対応表: [requirements_20261026](../../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20261026.md) §3 |
+| [助成金専門家_提案書ヒアリングシート_花村_20261013_v1.xlsx](助成金専門家_提案書ヒアリングシート_花村_20261013_v1.xlsx) | **専門家（花村氏）作成「提案書ヒアリングシート」v1 の元 xlsx**。シート1「前回伺った内容」（1-1〜11-1）＋シート2「開発会社を確認するときの観点」（No.1〜25） | 2026-10-26 リポジトリに写し（元: `/Volumes/SSD500GB/JOB/国宝社様/20261013_提案書ヒアリングシート_国宝社様_v1.xlsx`）。tugilo 回答案: [kimura_kokuhosha_hearing_sheet_answers_20261026.md](../kimura_kokuhosha_hearing_sheet_answers_20261026.md)・[同 xlsx](../kimura_kokuhosha_hearing_sheet_tugilo_answers_20261026.xlsx) |
 
 ## データ.xlsx の概要
 
@@ -31,7 +35,7 @@
 
 ## まだ不足しているもの
 
-- 出版社・得意先ごとの **PDF 注文書サンプル複数パターン**（現状 1 件）
+- 出版社・得意先ごとの **PDF 注文書サンプル複数パターン**（現状 1 件。ポータル DL の実物が文字 PDF か画像かも未確認）
 - 開発会社が設計する **CSV レイアウト**（文字コード・改行・項目）と既定フォルダの場所
 - Oracle **読み取り**接続の可否（得意先参照・VB 直接入力分の表示用。書き込みは第4回で廃止）
 - 予定表 Excel の実ファイル（印刷元）

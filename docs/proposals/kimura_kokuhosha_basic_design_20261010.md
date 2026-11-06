@@ -1,5 +1,7 @@
 # 株式会社国宝社 様 — 基本設計書（v3・案）
 
+> **履歴版（2026-10-26 追記）:** 本書は **v4（2026-10-26）に更新済み**。最新は [kimura_kokuhosha_basic_design_v4_20261026.md](kimura_kokuhosha_basic_design_v4_20261026.md)（三層構成・AI 送信セキュリティ設計方針 §7A・納品物一覧・継続体制を追加）。本書は履歴として保持。
+
 **作成:** 2026-10-10 07:19 JST  
 **位置づけ:** 第4回 1to1（2026-10-05）合意を反映した基本設計。要件定義（M0）で確定・更新する。  
 **関連:** [改訂提案書 v3](kimura_kokuhosha_proposal_v3_20261010.md) · [システム構成図](kimura_kokuhosha_system_architecture_20261010.md) · [仕様書](kimura_kokuhosha_specification_20261010.md) · [要件 第2回](../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260529.md) · [要件 第3回](../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha_requirements_20260826.md) · [第4回 議事録](../meetings/1to1/1to1_kimura_hidetsugu_kokuhosha.md)

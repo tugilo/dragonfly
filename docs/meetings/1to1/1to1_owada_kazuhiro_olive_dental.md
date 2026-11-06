@@ -52,7 +52,7 @@ thank_you_status: draft_not_sent
 
 **文書の位置づけ:** 磐田市で **オリーブ歯科クリニック** を開業している院長 **大和田 和学**さんとの121を1ファイルで時系列管理する。BNI メンバーではない。**DragonFly の飯田千帆さんのお繋ぎ**。  
 **第1回:** **2026-10-22（木）JST 16:15–17:00 実施済み**（次廣確認 17:01 JST。予定枠は 16:15–17:15）。  
-**Religo:** 相手 `members.id` = **408**（guest）。`one_to_ones.id` = **171**（completed／`external_source=zoom`／`zoom_meeting_id=82473114342`／owner `members.id=37`）。**新規行を作らない。**  
+**Religo:** 相手 `members.id` = **408**（guest）。`one_to_ones.id` = **171**（completed／`external_source=zoom`／`zoom_meeting_id=82473114342`／owner `members.id=37`）。**新規行を作らない。** 2026-11-05 の本番 Zoom 取込で重複行 `#185` と重複 member `#423` ができたため、2026-11-05 16:57 JST に削除し、取込 `zoom_meeting_imports.id=255` を `#171`・`members.id=408` に付け替えた。  
 **Zoom:** [824 7311 4342](https://us06web.zoom.us/j/82473114342?pwd=EF9AstJTVdePniPmGBlKUBAecgHJYO.1)／pwd `695009`。要約は 2026-10-22 17:00 JST に校正。  
 **結果の一言:** 課題は **受付の煩雑さ／スタッフ間の伝達ミス／無断キャンセル** の3つ。**インカム音声の文字起こし＋院内掲示の簡易試作** を次廣が作り、概算を LINE で送る。レセコンはリース残2〜3年で基幹は動かさない。ネット予約は廃止のまま。  
 **お繋ぎの言葉（千帆さん）:** 「磐田で歯医者を開業している院長が、現場の報告／連絡／相談の統制がうまくできず悩んでいる。AI を使ってみたら良いのでは、と話したら次廣さんが浮かんだ」。  

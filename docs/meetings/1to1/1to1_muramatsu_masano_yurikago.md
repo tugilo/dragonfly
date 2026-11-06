@@ -22,7 +22,7 @@ referrer_name_ja: "次廣 淳"
 counterparty_email: "muramatsumasano@gmail.com"
 counterparty_phone: "09033097211"
 religo_member_id: 366
-religo_one_to_one_id: null
+religo_one_to_one_id: 192
 session1_status: completed
 session1_external_source: pending_zoom_import
 thank_you_status: draft
@@ -33,7 +33,7 @@ thank_you_status: draft
 **文書の位置づけ:** 藤枝市立青島小学校 PTA で、次廣の会長翌年に会長を務め、その年は次廣が副会長として並走した **村松 方乃**さん（Yurikago／マヤ暦カウンセリング）との 121 を1ファイルで時系列管理する。  
 **第1回:** **2026-09-11（金）JST 15:30–TODO 実施済み**（開始はユーザー口頭。カレンダー MCP ではイベント未取得。同日 17:00 は GOODMAN 山野打合せのため、17:00 前終了の可能性。実終了 TODO）。  
 **目的（達成）:** 初ビジターの安心。BNI／DragonFly と当日の流れ。今後どうしたいか。25秒とオープンネットワーキング用1分は本人が用意する合意。  
-**Religo:** 第222回 CSV 取込後 `members.id=366`（visitor／`display_no=V2`／紹介者 `members.id=37` 次廣）。`one_to_ones` は第1回121分も **未作成のまま**。Zoom 取込後に id を追記する。**新規行を先に作らない。** 裕基（KerNel）は別人・別ファイル。  
+**Religo:** 第222回 CSV 取込後 `members.id=366`（visitor／`display_no=V2`／紹介者 `members.id=37` 次廣）。第1回121は `one_to_ones.id` = **192**（manual・2026-11-06 作成。Zoom 取込は無かった）。 裕基（KerNel）は別人・別ファイル。  
 **ソース:** ユーザー提供 Zoom 文字起こし要約を校正（`[引用]` 省略）。ビジター登録。  
 **参照:** [飯田千帆](1to1_iida_chiho_sui.md)（おつなぎ約束）／[増本重孝](1to1_masumoto_shigetaka_pestblock.md)／[原田里織](1to1_harada_saori_ruiled_vision_japan.md)／[岡元智美](1to1_okamoto_kachiteru_present.md)（参加費口座）。  
 **別人（必須）:** [村松裕基](1to1_muramatsu_yuki_eees.md)（合同会社eees／BNI KerNel）は **別人**。  
@@ -181,7 +181,7 @@ Nキャスの薄い登録を、121後の言葉で濃くする。カテゴリー�
 
 - 日時：**2026-09-11（金）JST 15:30–TODO**（開始はユーザー口頭。終了 TODO。カレンダー未取得）
 - 実施方法：Zoom
-- `one_to_ones.id`: **未発行**（Zoom取込後に正とする。新規行禁止）
+- **Religo 1to1 レコード:** `one_to_ones.id` = **192**（manual・2026-11-06 作成。Zoom 取込なし）
 
 #### 話した内容（重要）
 

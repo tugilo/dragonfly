@@ -1328,7 +1328,15 @@ function addPickedColor(ri, kind, name) {
 // 商品・カラー・枚数の表（現行フォームと同じ列構成。加工方法に応じて列が増減する）
 function rowsTable(f) {
   const plain = f.repeat === '無地', silk = !plain && f.methods.includes('シルクスクリーン'), emb = !plain && f.methods.includes('刺繍'), ink = !plain && f.methods.includes('インクジェット');
-  const cols = [['メーカー', 100], ['品番', 150], ['ボディーカラー', 104], ...(silk ? [['プリントカラー(シルク)', 164]] : []), ...(emb ? [['刺繍カラー', 164]] : []), ...(ink ? [['白引き', 84]] : []), ['サイズ', 70], ['数量', 58], ['', 26]];
+  const cols = [['メーカー', 100], ['品番', 150], ['ボディーカラー', 110], ...(silk ? [['プリントカラー(シルク)', 150]] : []), ...(emb ? [['刺繍カラー', 150]] : []), ...(ink ? [['白引き', 80]] : []), ['サイズ', 108], ['数量', 56], ['', 26]];
+  // 取り扱い商品なら候補のプルダウン（「その他」で直接入力に切替）、それ以外は自由入力
+  const selOrInp = (i, k, opts, p) => {
+    const r = f.rows[i], v = String(r[k]);
+    if (opts && !r[k + 'Free'] && (!v || opts.some(([ov]) => ov === v))) {
+      return `<select data-k="${k}" onchange="setRowSel(${i},'${k}',this.value)"><option value="">選択</option>${opts.map(([ov, ol]) => `<option value="${esc(ov)}" ${ov === v ? 'selected' : ''}>${esc(ol)}</option>`).join('')}<option value="__free">その他（直接入力）</option></select>`;
+    }
+    return `<input data-k="${k}" value="${esc(v)}"${p} oninput="setRow(${i},'${k}',this.value)">${opts ? `<small><a class="link" onclick="state.form.rows[${i}].${k}Free=false;state.form.rows[${i}].${k}='';renderForm()">候補から選ぶ</a></small>` : ''}`;
+  };
   const body = f.rows.map((r, i) => {
     const b = rowBody(r), ph = t => i === 0 ? ` placeholder="${t}"` : '';
     const inp = (k, extra = '', p = '') => `<input data-k="${k}" value="${esc(String(r[k]))}"${extra}${p} oninput="setRow(${i},'${k}',this.value)">`;
@@ -1336,11 +1344,11 @@ function rowsTable(f) {
     return `<tr id="rrow-${i}">
       <td>${inp('maker', '', ph('例）アスレ'))}</td>
       <td class="cell-s">${inp('code', ` autocomplete="off" onfocus="rowSearch(${i},this)" onblur="hideRowSearch()"`, ph('例）5001-01'))}<div class="rsug" id="rsug-${i}"></div><small id="rnm-${i}">${b ? `${esc(b.name)}${b.custom ? '（直接入力）' : ''}` : ''}</small></td>
-      <td>${inp('color', ` list="dlc-${i}"`, ph('例）ブラック'))}<datalist id="dlc-${i}">${b ? b.colors.map(c => `<option value="${esc(c)}">`).join('') : ''}</datalist></td>
+      <td>${selOrInp(i, 'color', b && !b.custom ? b.colors.map(c => [c, c]) : null, ph('例）ブラック'))}</td>
       ${silk ? `<td>${cpick('print', 'print', '例）ホワイト')}</td>` : ''}
       ${emb ? `<td>${cpick('emb', 'emb', '例）ホワイト #1198')}</td>` : ''}
       ${ink ? `<td><select onchange="setRow(${i},'white',this.value)"><option value="">選択</option>${WHITES.map(v => `<option ${r.white === v ? 'selected' : ''}>${v}</option>`).join('')}</select></td>` : ''}
-      <td>${inp('size', ` list="dls-${i}"`, ph('例）M'))}<datalist id="dls-${i}">${b ? Object.entries(b.sizes).map(([sz, pr]) => `<option value="${sz}">${b.custom || !pr ? '' : `${yen(pr)}円`}</option>`).join('') : ''}</datalist></td>
+      <td>${selOrInp(i, 'size', b && !b.custom ? Object.entries(b.sizes).map(([sz, pr]) => [sz, pr ? `${sz}　${yen(pr)}円` : sz]) : null, ph('例）M'))}</td>
       <td>${inp('qty', ' type="number" min="0"', ph('10'))}</td>
       <td><button class="rclr" title="この行を消す" onclick="clearRow(${i})">×</button></td></tr>`;
   }).join('');
@@ -1358,16 +1366,20 @@ function rowSearch(i, el) {
 function hideRowSearch() { setTimeout(() => document.querySelectorAll('.rsug').forEach(e => { e.innerHTML = ''; }), 150); }
 function pickRow(i, code) {
   const r = state.form.rows[i], b = bodyOf(code); r.code = b.code; r.maker = b.maker;
-  const tr = document.getElementById(`rrow-${i}`);
-  if (tr) { tr.querySelector('input[data-k=maker]').value = b.maker; tr.querySelector('input[data-k=code]').value = b.code; updateRowAux(i); tr.querySelector('input[data-k=color]').focus(); }
-  const box = document.getElementById(`rsug-${i}`); if (box) box.innerHTML = '';
-  refreshClassic();
+  r.colorFree = false; r.sizeFree = false;
+  renderForm();
+  const sel = document.querySelector(`#rrow-${i} [data-k=color]`); if (sel) sel.focus();
 }
 function updateRowAux(i) {
-  const r = state.form.rows[i], b = rowBody(r), nm = document.getElementById(`rnm-${i}`), dc = document.getElementById(`dlc-${i}`), ds = document.getElementById(`dls-${i}`);
+  const r = state.form.rows[i], b = rowBody(r), nm = document.getElementById(`rnm-${i}`);
   if (nm) nm.textContent = b ? `${b.name}${b.custom ? '（直接入力）' : ''}` : '';
-  if (dc) dc.innerHTML = b ? b.colors.map(c => `<option value="${esc(c)}">`).join('') : '';
-  if (ds) ds.innerHTML = b ? Object.entries(b.sizes).map(([sz, pr]) => `<option value="${sz}">${b.custom || !pr ? '' : `${yen(pr)}円`}</option>`).join('') : '';
+}
+function setRowSel(i, k, v) {
+  const r = state.form.rows[i];
+  if (v === '__free') { r[k] = ''; r[k + 'Free'] = true; renderForm(); const el = document.querySelector(`#rrow-${i} input[data-k=${k}]`); if (el) el.focus(); return; }
+  r[k] = v; refreshClassic();
+  const next = document.querySelector(`#rrow-${i} [data-k=${k === 'color' ? (state.form.methods.includes('シルクスクリーン') ? 'print' : state.form.methods.includes('刺繍') ? 'emb' : 'size') : 'qty'}]`);
+  if (next && v) next.focus();
 }
 function setRow(i, k, v) { state.form.rows[i][k] = v; if (k === 'code') { updateRowAux(i); const el = document.querySelector(`#rrow-${i} input[data-k=code]`); if (el) rowSearch(i, el); } refreshClassic(); }
 function clearRow(i) { state.form.rows[i] = newRow(); renderForm(); }
@@ -1438,7 +1450,7 @@ function renderClassic() {
     ${sec('c-name', 'ネーム加工', '', `
       ${yn('nameProc')}
       ${f.nameProc ? `<div class="ngrid">${NAME_TYPES.map(([v, l, img]) => `<div class="ncard ${f.name.type === v ? 'on' : ''}" onclick="setCC('name.type','${v}')">${wbImg(img, l, 'nimg')}<div>${f.name.type === v ? '● ' : '○ '}${l}</div></div>`).join('')}</div>
-        <label class="f" style="margin-top:10px">備考欄</label>
+        <label class="f" style="margin-top:10px">ネーム加工についての備考</label>
         <textarea oninput="state.form.name.note=this.value" placeholder="ネーム加工について連絡事項があればご記入ください。">${esc(f.name.note)}</textarea>
         <div class="lbl">ネームタグの画像 ${NAME_IMG_REQ.includes(f.name.type) ? '<span class="req-m">必須</span>' : '<span class="muted">（任意）</span>'}</div>
         <div class="muted">支給していただくネームタグの画像を添付してください（写真でも可）。プリントの方はプリントのデザインを添付してください。jpg / png / pdf（最大1MB）${f.fromNo ? '　<b>前回と同じタグ（弊社保管分）を使う場合は未記入でOKです。</b>' : ''}</div>
@@ -1446,8 +1458,8 @@ function renderClassic() {
         <div class="lbl">ネームタグの納入予定日</div>
         <input type="date" value="${f.name.date}" onchange="state.form.name.date=this.value" style="max-width:220px">
         <div class="req-m" style="margin-top:6px">ネームタグを納入の際は、紛失防止の為、追跡できる配送方法でお送りください。普通郵便等ですと追跡できない為紛失に繋がります。ネームタグの枚数は、実際に使用する枚数よりも予備として多めにお送りください。既に弊社で保管してある場合は未記入でOKです。</div>` : ''}`)}
+    ${sec('c-note', '備考欄', 'ご注文全体についての連絡事項', `<textarea oninput="state.form.note=this.value" placeholder="備考欄に記入したいことがあればご記入ください。">${esc(f.note)}</textarea>`)}
     ${sec('c-opp', 'OPP個包装', '', yn('opp'))}
-    ${sec('c-note', '備考欄', '', `<textarea oninput="state.form.note=this.value" placeholder="備考欄に記入したいことがあればご記入ください。">${esc(f.note)}</textarea>`)}
     ${sec('c-cust', 'お客様情報・納品先・お支払い方法', '', `
       <div class="me"><b>${esc(u.name)} 様</b>　${esc(u.tel)}　${esc(u.email)}<br>〒${u.zip} ${esc(u.addr)}　<a class="link" onclick="toast('登録情報の変更はマイページから行えます（デモ）')">変更</a></div>
       <div class="lbl">納品先</div>

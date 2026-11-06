@@ -35,9 +35,9 @@ source_zoom_passcode: "581948"
 source_zoom_note: "TimeRex 当初の会議室。本日は使わない。"
 counterparty_email: "y-li@smartcontents.co.jp"
 counterparty_office_ja: "東京都新宿区新小川町6-36 S&Sビルディング202号室"
-religo_member_id: null
-religo_one_to_one_id: null
-religo_one_to_one_id_session1: null
+religo_member_id: 411
+religo_one_to_one_id: 173
+religo_one_to_one_id_session1: 173
 session1_status: held
 session1_external_source: null
 session1_notes_status: pending_counterparty_share
@@ -55,7 +55,7 @@ prep_written_at: "2026-10-09 15:57 JST"
 **議事録:** 次廣側の Zoom 文字起こしは残っていない。**Meet の文字起こしは李さんから共有してもらう**（2026-10-10 06:40 JST 決定。依頼文は未送信）。  
 **入室:** Google Meet https://meet.google.com/ger-peww-mkv  
 **Zoom は使わない。** TimeRex 当初は `862 5339 5682`／パスコード `581948`。2026-10-09 16:00 JST、先方都合で Meet に変更。メール `y-li@smartcontents.co.jp`。  
-**Religo:** 相手は `members` に未登録（氏名・メールで 2026-10-09 15:57 JST 確認）。`one_to_ones` に Zoom `86253395682` の行は無い。**新規行を作らない。**  
+**Religo:** 相手 `members.id` = **411**（guest。2026-10-13 の Zoom 取込で作成）。第1回は Zoom 取込済みの行に紐づける（TimeRex の Zoom `86253395682` 由来。実施は Meet）。**新規行を作らない。**  
 **表記:** **次廣 淳**。**DragonFly**／**BRIDGET**／**tugilo**／**1to1**。呼びは **李さん**。  
 **別人:** 紹介者は **佐久間 健寿**。DragonFly の **佐久間 康丞**（許認可専門行政書士）とは別人。  
 **参照:** [佐久間健寿](1to1_sakuma_takehisa_takeover.md)（紹介者）／[佐久間康丞](1to1_sakuma_kousuke_tetote.md)（別人。助成金の判断役ではない）。
@@ -301,7 +301,7 @@ prep_written_at: "2026-10-09 15:57 JST"
 - **実施方法:** Google Meet https://meet.google.com/ger-peww-mkv （2026-10-09 16:00 JST、先方都合。TimeRex の Zoom `86253395682` は使わない）
 - **参加者:** 李 穎、次廣 淳
 - **紹介:** 佐久間 健寿（`members.id=301`。台本では佐久間さん）
-- **Religo:** `members` 未登録。`one_to_ones` 行なし。新規行を作らない
+- **Religo 1to1 レコード:** `one_to_ones.id` = **173**（Zoom 取込済み・`members.id=411`）
 - **状態:** 実施済み。話した内容は未記入
 - **議事録の取り方:** 2026-10-10 06:40 JST、ユーザー決定。Google Meet の文字起こし（主催者のドライブに残る）を **李さんから共有してもらう**。次廣側の Zoom は 14:12 の再起動後に常駐しておらず、ローカル文字起こしは更新されていない
 

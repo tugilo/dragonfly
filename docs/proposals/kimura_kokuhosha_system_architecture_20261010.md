@@ -1,5 +1,7 @@
 # 株式会社国宝社 様 — システム構成図（v3）
 
+> **履歴版（2026-10-26 追記）:** 本書は **v4（2026-10-26）に更新済み**。最新は [kimura_kokuhosha_system_architecture_v4_20261026.md](kimura_kokuhosha_system_architecture_v4_20261026.md)（AI 連携経路・外向き HTTPS 1 宛先・鍵管理を追加）。本書は履歴として保持。
+
 **作成:** 2026-10-10 07:19 JST  
 **位置づけ:** 第4回 1to1（2026-10-05）合意と、既存システム開発会社の「注文データ取込プログラム ご要望事項イメージ図」（2026-09-29）に合わせた構成。案。  
 **関連:** [改訂提案書 v3](kimura_kokuhosha_proposal_v3_20261010.md) · [基本設計書](kimura_kokuhosha_basic_design_20261010.md) · [仕様書](kimura_kokuhosha_specification_20261010.md)

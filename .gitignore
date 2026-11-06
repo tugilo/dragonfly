@@ -20,3 +20,7 @@ db_data
 
 # DB sync backups（db-push が本番/テストを上書きする前に取得するバックアップ）
 backups/
+
+# スライド作成の作業フォルダと出力（pptx は 100MB を超え GitHub に置けない。正本は共有ドライブ）
+.pptx-build/
+.pptx-output/
