@@ -69,6 +69,8 @@ webmaster_<topic>_YYYYMMDD.md
 | [webmaster_term11_todo_20261005.md](webmaster_term11_todo_20261005.md) | **10/6 前日ToDo**（2026-10-05・未送信） |
 | [webmaster_term11_zoom_update_20261020.md](webmaster_term11_zoom_update_20261020.md) | **Zoom アップデート案内**（2026-10-20・未送信）。Mac 7.2.2／Win 7.2.1 |
 | [webmaster_term11_ltst_report_20261020.md](webmaster_term11_ltst_report_20261020.md) | **LTST 報告・相談**（10/20週・未送信）。BOR 講座／感想 2人固定 |
+| [webmaster_term11_bor_training_20261020.md](webmaster_term11_bor_training_20261020.md) | **BOR 作成講座 議事録**（2026-10-20・軍司さん）。Religo `meetings.id` 49 |
+| [webmaster_term11_roles_20261027.md](webmaster_term11_roles_20261027.md) | **10/27 担当表**（2026-10-24・未送信）。BOR 米澤／軍司 |
 
 ## 関連
 

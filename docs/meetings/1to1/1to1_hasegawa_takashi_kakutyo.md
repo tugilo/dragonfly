@@ -20,8 +20,8 @@ source_zoom_summary: "ユーザー提供 Zoom 文字起こし要約（2026-10-07
 source_zoom_summary_verified: "2026-10-07 09:56 JST"
 source_calendar: "ユーザー確認 2026-10-07 09:00-10:00 JST。Zoom実施"
 religo_member_id: 3
-religo_one_to_one_id: null
-religo_one_to_one_id_session1: null
+religo_one_to_one_id: 174
+religo_one_to_one_id_session1: 174
 session1_status: completed
 counterparty_email: "kakutyo@outlook.jp"
 counterparty_phone: "08059010052"
@@ -35,7 +35,7 @@ thank_you_status: not_yet
 
 **文書の位置づけ:** DragonFly メンバー **長谷川 貴志**さん（カクチョー不動産／空き家）との 121。ProtectLabo の新潟県代表でもある。  
 **第1回:** **2026-10-07（水）JST 09:00–10:00** 実施済み（ユーザー確認）。  
-**Religo:** 相手 `members.id` = **3**。`one_to_ones` 行は **未作成**。**新規行を作らない。**  
+**Religo 1to1 レコード:** `one_to_ones.id` = **174**（相手 `members.id` = **3**。Zoom `88230180078` 取込済み）。**新規行を作らない。**  
 **表記:** **次廣 淳**。**DragonFly**／**1to1**。**P-LINK（害虫ブロック管理システム）**。P-LINK上の会社は **合同会社NTSサービス**（加盟店コード C040・信越）。BNIのカテゴリーは **カクチョー不動産**。
 
 ### Zoom要約の校正メモ
@@ -101,7 +101,7 @@ thank_you_status: not_yet
 - **日時:** 2026-10-07（水）JST **09:00–10:00**（ユーザー確認）
 - **実施方法:** Zoom（ユーザー提供の文字起こし要約）
 - **参加者:** 長谷川 貴志、次廣 淳
-- **Religo:** `members.id=3`。`one_to_ones.id` は未作成。Zoom取込有無を確認するまで新規作成しない
+- **Religo:** `members.id=3`。Zoom 取込済みの 1to1 #174 に紐づけ（2026-10-30）
 
 ### P-LINK
 

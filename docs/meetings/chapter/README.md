@@ -14,6 +14,7 @@ BNI **DragonFly チャプター**の定例会および **定例会回数に含�
 - **チーム MTG**（スリーバイス等）→ [`../team/`](../team/)
 - **LTST（期の役職名簿）** → 本ディレクトリの `chapter_ltst_termNN.md`（例: [11期](chapter_ltst_term11.md)）
 - **LTST ミーティング議事録** → `chapter_ltst_termNN_YYYYMMDD.md`（例: [11期 第2回 2026-09-10](chapter_ltst_term11_20260910.md)）。公式の進捗はプレジの [LTST情報まとめ](https://docs.google.com/spreadsheets/d/1ZthGRP71W1iL0fTsADK6Al9LZP_DrT-Ip54CZyoQSck/edit)（タブ LTSTMTG議事録）。Religo の `meetings` には入れない
+- **DragonFly 研究室（1toMany シリーズ）** → 本ディレクトリの [`chapter_dragonfly_lab.md`](chapter_dragonfly_lab.md) **1 ファイルに回ごとに追記**（`doc_type: chapter_lab`）。定例会の **回数に含めない**。Religo `meetings` への取込は未定
 - **期の方針** → 本ディレクトリの `chapter_termNN_policy_*.md`（例: [11期方針 2026-07-31](chapter_term11_policy_20260731.md)）
 - **11期運営思想（所信表明）** → [`docs/SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md`](../../SSOT/DRAGONFLY_TERM11_OPERATING_PHILOSOPHY.md)（WM・Religo の判断前提）
 
@@ -26,6 +27,7 @@ BNI **DragonFly チャプター**の定例会および **定例会回数に含�
 | **モメンタムトレーニング** | 2026-06-16 | BOD 向け学び。定例会 **9回目扱い** など期のカウントは別軸 |
 | **BOD** | **2026-07-28（火）** | 半期一度のビジネスオープンデイ。定例会の **回数は進まない** |
 | **オリエン疑似体験会** | **2026-08-28** | メンバー間ロールプレイ。[chapter_orientation_practice_20260828.md](chapter_orientation_practice_20260828.md)。定例会の **回数は進まない** |
+| **DragonFly 研究室** | **2026-10-27（火）16:00–** 第2回 | メンバー登壇の 1toMany シリーズ。[chapter_dragonfly_lab.md](chapter_dragonfly_lab.md) に累積。定例会の **回数は進まない** |
 | **その他** | GBM 等 | 公式カレンダーで定例会が休止・代替の場合も **回数を進めない** |
 
 **次の定例会回数** は、直前の **通常定例会** の `meeting_number + 1` でよい（例: 第211回の次は **第212回** = 2026-06-23。その間の 6/16 モメンタムは **212ではない**）。
