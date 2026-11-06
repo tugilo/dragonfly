@@ -408,6 +408,8 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 
 **Zoom 連携カラム（SPEC-012 / Phase 152）:** `zoom_meeting_id` / `zoom_meeting_uuid` は Zoom 突合キー（再取り込みの二重登録防止）。`external_source` は取得元（`manual` / `zoom`）。手入力は `manual` 既定。詳細は [ZOOM_ONETOONE_SYNC_REQUIREMENTS.md](ZOOM_ONETOONE_SYNC_REQUIREMENTS.md)。
 
+**ID の正（Phase 323・2026-11-06）:** 1 回の 1 to 1 を指す識別子は **`one_to_ones.id`（自動採番の主キー）** とする。議事録 Markdown・INDEX・運用で参照するのはこの id で、Zoom の会議 ID / UUID は突合用の属性に留める（一意でもない。個人ミーティング ID は回をまたいで同じ番号になる）。行は **Zoom 取込**（自分がホストした会議）と **手動登録**（相手主催の Zoom・Meet・対面など、取込に出ない面談）のどちらで作ってもよく、扱いは同じ。手順と重複防止は [meetings/1to1/README.md](../meetings/1to1/README.md) §登録経路と ID の正、[ZOOM_IMPORT_DEDUP_REQUIREMENTS.md](ZOOM_IMPORT_DEDUP_REQUIREMENTS.md) §11。
+
 **`workspace_id` の意味（SPEC-006 解釈 A）:** 作成 API では必須だが、意味は **記録コンテキスト（通常はオーナー側の所属チャプターに対応する workspaces.id）**。`target_member` が他チャプター所属でもよい（クロスチャプター 1 to 1）。§5.1 参照。
 
 **notes の位置づけ（実装・UX・ONETOONES-P3・補足）:** `one_to_ones` は **1 行が 1 回の 1 to 1**（同一オーナー×ターゲットでも予定・実施が複数行あり得る）。`one_to_ones.notes` には **その回で話した内容**（議題・決定・次アクションを含めてよい）のみを保存する。**回をまたぐ文脈**（プロフィール・サマリー・累積インサイト等）は **各回の `notes` に重複コピーしない。** 共有文脈は `contact_memos`（`memo_type = one_to_one`, **`one_to_one_id` nullable = ペア共通メモ**）に置いてよい（SPEC-019 §4.5）。当該回への追記だけを時系列に残す場合は `one_to_one_id` を付けて `contact_memos` を併用する（ONETOONES-P4）。
