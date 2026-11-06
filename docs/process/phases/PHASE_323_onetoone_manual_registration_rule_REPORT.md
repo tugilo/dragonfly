@@ -2,7 +2,7 @@
 
 **作成:** 2026-11-06 10:47 JST  
 **Phase Type:** docs  
-**Status:** in_progress（文書の改訂は完了。commit・merge はユーザー指示後）
+**Status:** completed（2026-11-06 10:46 JST develop へ merge）
 
 ---
 
@@ -44,8 +44,8 @@
 
 ## Merge Evidence
 
-merge commit id: 未（作業ツリー未分離。commit・merge はユーザー指示後）  
-source branch: 未作成（`feature/phase323-onetoone-manual-registration-rule` 予定）  
+merge commit id: 1f872c1ab392bb5a819c56d53029670b0532dc51  
+source branch: feature/phase323-onetoone-manual-registration-rule  
 target branch: develop  
 phase id: 323  
 phase type: docs  
@@ -54,8 +54,8 @@ related ssot: SPEC-012・ZOOM_IMPORT_DEDUP_REQUIREMENTS・DATA_MODEL §4.12・SP
 test command: php artisan test  
 test result: スキップ（docs フェーズ）
 
-changed files: 上記「変更ファイル」
+changed files（feature commit `2cc40ad`）: `.agents/skills/import-religo/SKILL.md`・`.claude/skills/import-religo/SKILL.md`・`.cursor/rules/1to1-dedup.mdc`・`.cursorrules`・`docs/SSOT/DATA_MODEL.md`・`docs/SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md`・`docs/SSOT/ZOOM_ONETOONE_SYNC_REQUIREMENTS.md`・`docs/meetings/1to1/README.md`・`docs/meetings/1to1/_TEMPLATE.md`・`docs/process/phases/PHASE_323_*`（3件）。INDEX / 進捗 / PHASE_REGISTRY は `feature/docs-sync-20261106` に含めた
 
 scope check: OK（PLAN の Scope 内。コード変更なし）  
 ssot check: OK（DATA_MODEL・ZOOM_IMPORT_DEDUP・SPEC-012 を更新。SSOT_REGISTRY の追加は不要）  
-dod check: INCOMPLETE（commit・merge 後に完了）
+dod check: OK

@@ -2,7 +2,7 @@
 
 **作成:** 2026-10-27 16:46 JST  
 **Phase Type:** implement  
-**Status:** in_progress（実装・テスト完了。commit / develop merge はユーザー指示後）
+**Status:** completed（2026-11-06 10:46 JST develop へ merge）
 
 ---
 
@@ -41,7 +41,7 @@
 - [x] DATA_MODEL §4.2 更新
 - [x] 西浦雅 `left_at=2026-10-07`
 - [x] INDEX / 進捗 / PHASE_REGISTRY 同期
-- [ ] Merge Evidence（merge 後に記載）
+- [x] Merge Evidence
 
 ## 残課題（別 Phase）
 
@@ -55,7 +55,7 @@
 
 ## Merge Evidence
 
-merge commit id: （未 merge）  
+merge commit id: 27b87db511ff70d6faaf0065ca021cbf88be68ef  
 source branch: feature/phase321-members-left-at  
 target branch: develop  
 phase id: 321  
@@ -63,10 +63,20 @@ phase type: implement
 related ssot: DATA_MODEL §4.2 / SPEC-007 / SPEC-008
 
 test command: php artisan test  
-test result: 625 passed（2304 assertions）
+test result: 625 passed（2304 assertions）2026-11-06 10:46 JST merge 後に develop で再実行
 
-changed files: 上記「変更ファイル一覧」
+changed files（feature commit `b1b061a`）:
+
+- docs/SSOT/DATA_MODEL.md
+- docs/process/phases/PHASE_321_members_left_at_{PLAN,WORKLOG,REPORT}.md
+- www/app/Http/Controllers/Api/DragonFlyMemberController.php
+- www/app/Http/Requests/Api/IndexDragonFlyMembersRequest.php
+- www/app/Models/Member.php
+- www/database/migrations/2026_10_27_164600_add_left_at_to_members_table.php
+- www/tests/Feature/Api/DragonFlyMemberLeftAtTest.php
+
+INDEX / 進捗 / PHASE_REGISTRY の更新は `feature/docs-sync-20261106` に含めた（複数 Phase の行が同じファイルにあるため）。
 
 scope check: OK  
 ssot check: UPDATE DONE（DATA_MODEL §4.2）  
-dod check: OK（Merge Evidence を除く）
+dod check: OK

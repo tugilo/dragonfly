@@ -319,9 +319,9 @@
 | 318 | 竹村裕司 第3回121 Zoom要約反映（足場レンタルのサーバー・決済・BNI） | docs | in_progress | 作業ツリー未分離 | 2026-10-12 |
 | 319 | デプロイ先のフロントビルド Node を nvm 22 系にする（Node.js 2026-10-21 セキュリティリリース対応） | refactor | completed | develop（merge `2274666540617d14119581ef4281e36beac6a4d5`） | 2026-10-24 |
 | 320 | 国宝社 v4 — 予定表 AI 三層・見積点検・AI 送信セキュリティ方針・運営保守・専門家ヒアリングシート回答の整合 | docs | in_progress | 作業ツリー未分離（commit 未・次廣判断） | 2026-10-26 |
-| 321 | members に退会日 `left_at` を追加（migration・Model・API `exclude_left`・DATA_MODEL） | implement | in_progress | feature/phase321-members-left-at（commit 未） | 2026-10-27 |
+| 321 | members に退会日 `left_at` を追加（migration・Model・API `exclude_left`・DATA_MODEL） | implement | completed | develop（merge `27b87db511ff70d6faaf0065ca021cbf88be68ef`） | 2026-10-27 |
 | 322 | Zoom 取込の相手照合で入会後のメンバー行を優先（氏名の空白正規化・同名時の優先順位） | implement | planned | feature/phase322-zoom-member-match（未作成） | 2026-11-05 |
-| 323 | 1to1 の登録経路を Zoom 取込と手動登録の2つとし、ID の正を `one_to_ones.id` と明記（衝突しない仕組みの調査・ギャップ G1〜G6 記録） | docs | in_progress | 作業ツリー未分離（commit 未） | 2026-11-06 |
+| 323 | 1to1 の登録経路を Zoom 取込と手動登録の2つとし、ID の正を `one_to_ones.id` と明記（衝突しない仕組みの調査・ギャップ G1〜G6 記録） | docs | completed | develop（merge `1f872c1ab392bb5a819c56d53029670b0532dc51`） | 2026-11-06 |
 
 ## Statusの値
 - planned     : PLAN作成済み、未着手
