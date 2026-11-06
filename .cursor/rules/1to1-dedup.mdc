@@ -1,32 +1,50 @@
 ---
-description: 1to1 の one_to_ones 重複防止（Zoom取込×手動×議事録import）
+description: 1to1 の one_to_ones 登録経路（Zoom取込／手動）と重複防止。ID の正は one_to_ones.id
 globs: docs/meetings/1to1/**/*.md
 alwaysApply: false
 ---
 
-# 1to1 重複防止（one_to_ones）
+# 1to1 の登録と重複防止（one_to_ones）
 
 **同一面談 = DB 1行。** Markdown は1相手1ファイル、DB は1回1行（`DATA_MODEL` §4.12）。
 
+**ID の正は `one_to_ones.id`（Religo の自動採番）。** 議事録・INDEX にはこの id を書く。Zoom の会議 ID・UUID は突合用の属性で、識別子にしない。
+
+## 登録経路は2つ（どちらも正規の手順）
+
+| 経路 | 対象 | 作り方 |
+|------|------|--------|
+| A. Zoom 取込 | 自分がホストした Zoom | 取込画面で相手を確定して登録 |
+| B. 手動登録 | 相手主催の Zoom、Google Meet、対面、電話など、Zoom 取込に出ない面談 | 管理画面の 1to1 作成（`external_source=manual`） |
+
+相手主催の Zoom は自分の Zoom 連携の一覧に出ない（SPEC-012 §6）。**「Zoom 取込待ち」にせず経路 B で登録する。**
+
+## 手動登録の前に確認（必須）
+
+1. 同じ相手・同じ日の `one_to_ones` が無いか。あればその id を使う。
+2. `zoom_meeting_imports` に同じ会議が `held`／`pending` で残っていないか。残っていれば取込画面で登録する（手動で作らない）。
+3. 相手の `members` 行が重複していないか。入会後はメンバー行を使う（ビジター行と別行だと、後の Zoom 取込の同日判定が効かない）。
+
 ## 禁止
 
-- Zoom 取込済み（`planned` / `completed`）の **同日・同相手** 1to1 があるのに **手動で新規行を作る**
-- 議事録 Markdown に **未確認の id** を書く（DB に実在しない id、または別セッションの id）
+- 同じ日・同じ相手の行があるのに、もう1行作る
+- 議事録 Markdown に **未確認の id**（DB に無い id、別セッションの id）や Zoom の会議 ID を書く
+- 相手主催の Zoom・Meet・対面の回を「Zoom 取込待ち・新規行禁止」として保留にしたままにする
 - 重複発見時に **両方を残したまま** 議事録 import だけ続ける
 
-## 正しい手順（第1回・初回面談）
+## 正しい手順
 
-1. **Zoom 1to1 調整** → Religo / `one_to_ones` に **planned** 行ができる（`external_source=zoom`）。**この id を正とする。**
-2. 面談 **実施後** → 同 id を `completed` に更新（開始・終了時刻を入れる）。**新規行は作らない。**
-3. `docs/meetings/1to1/1to1_*.md` を作成・更新し、**【第1回】に `one_to_ones.id` = その id** を明記。
-4. `dragonfly:import-1to1-notes` で **既存 id の notes のみ更新**（新規行は作らない）。
+1. 経路 A なら取込でできた行、経路 B なら手動登録した行の **`one_to_ones.id` を正**とする。
+2. 実施後 → 同じ id を `completed` にし、開始・終了時刻を入れる。**新しい行は作らない。**
+3. `docs/meetings/1to1/1to1_*.md` の **【第N回】に `one_to_ones.id` = その id** を書く。
+4. `dragonfly:import-1to1-notes` で **既存 id の notes のみ更新**（新規行は作らない）。回の見出しの無い補足資料（要件メモ等）がある相手は、本編ファイルを指定して取り込む。
 
 ## 重複が既にある場合
 
-- **残す行:** `notes` あり / `completed` / 議事録 Markdown が参照している id（例: 西原海成 **#105**）
-- **統合:** Zoom 側の `zoom_meeting_id` / `zoom_meeting_uuid` を残す行へ移す
+- **残す行:** `notes` あり／`completed`／議事録 Markdown が参照している id（例: 西原海成 **#105**）
+- **統合:** Zoom の `zoom_meeting_id`／`zoom_meeting_uuid` を残す行へ移す
 - **削除:** 空の `planned` 重複行（例: **#94**）。`zoom_meeting_imports.one_to_one_id` を残す行へ付け替え
-- 議事録 front matter / 【第1回】 / INDEX の id を **1つに統一**し、統合日時を1行メモ
+- 議事録 front matter・【第N回】・INDEX の id を **1つに統一**し、統合日時を1行メモ
 
 ## AI 作業前チェック
 
@@ -39,5 +57,5 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
   "
 ```
 
-- 2件以上 → **統合してから** 議事録反映・import
-- 詳細: `docs/meetings/1to1/README.md` §重複防止、`docs/SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md`
+- 同じ日に2件以上 → **統合してから** 議事録反映・import
+- 詳細: `docs/meetings/1to1/README.md` §登録経路と ID の正、`docs/SSOT/ZOOM_IMPORT_DEDUP_REQUIREMENTS.md`

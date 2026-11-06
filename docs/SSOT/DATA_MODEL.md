@@ -185,8 +185,10 @@ Religo は **BNI（Business Network International）運用**を前提として�
 | **主キー** | id (bigIncrements) |
 | **外部キー** | **category_id → categories.id (nullable)**。introducer_member_id → members.id (nullable), attendant_member_id → members.id (nullable)。**workspace_id → workspaces.id（nullable）** — 所属チャプター。 |
 | **ユニーク制約** | なし |
-| **主要カラム** | id, name, name_kana (nullable), **category_id (nullable)**, **workspace_id (nullable)** — 所属チャプター, type, display_no (nullable), **ncast_profile_url (nullable, string 2048)** — Nキャスの自己紹介ページ URL, **weekly_presentation_body (nullable, text)** — ウィークリープレゼン原稿（SPEC-004・Dashboard 表示用）, **weekly_presentation_patterns (nullable, json)** — 週替わり稿 `[{id,label,body}]`（SPEC-004 / Phase 307）, **weekly_presentation_active_id (nullable, string 32)** — 選択中パターン ID, **start_dash_presentation_body (nullable, text)** — スタートダッシュプレゼン原稿（SPEC-004・Dashboard 表示用）, introducer_member_id, attendant_member_id, timestamps |
-| **インデックス** | type, category_id, introducer_member_id, attendant_member_id |
+| **主要カラム** | id, name, name_kana (nullable), **category_id (nullable)**, **workspace_id (nullable)** — 所属チャプター, type, **left_at (nullable, date)** — 退会日（Phase 321）。NULL＝在籍（または入会前の visitor/guest）。`left_at <= today` を退会済みとみなし、将来日付は予約退会として在籍扱い。`Member::scopeActiveMembers()` / `isLeft()`、API `GET /api/dragonfly/members?exclude_left=1` で除外（既定は全件）。退会者の行は履歴（participants / one_to_ones の FK）として残し削除しない（SPEC-008）, display_no (nullable), **ncast_profile_url (nullable, string 2048)** — Nキャスの自己紹介ページ URL, **weekly_presentation_body (nullable, text)** — ウィークリープレゼン原稿（SPEC-004・Dashboard 表示用）, **weekly_presentation_patterns (nullable, json)** — 週替わり稿 `[{id,label,body}]`（SPEC-004 / Phase 307）, **weekly_presentation_active_id (nullable, string 32)** — 選択中パターン ID, **start_dash_presentation_body (nullable, text)** — スタートダッシュプレゼン原稿（SPEC-004・Dashboard 表示用）, introducer_member_id, attendant_member_id, timestamps |
+| **インデックス** | type, category_id, introducer_member_id, attendant_member_id, **left_at** |
+
+**退会の表現（Phase 321）:** 退会は `left_at` に日付を入れる。`type` は変えない（入会種別の履歴を保つ）。退会確定時は open の `member_roles.term_end` を手動で閉じる（自動連動は将来 Phase）。名簿 CSV から消えた＝退会とは限らないため、`import-participants-csv` は `left_at` を自動設定しない。
 
 **廃止済みカラム（Phase14 で正規化・削除）:**  
 - **members.category（文字列）** → 廃止。カテゴリは **categories** マスタを参照（category_id）する。  
@@ -405,6 +407,8 @@ BNI の「1 to 1」の予定と履歴を保存するテーブル。BNI では「
 | **インデックス** | (owner_member_id, target_member_id), scheduled_at, zoom_meeting_id, zoom_meeting_uuid |
 
 **Zoom 連携カラム（SPEC-012 / Phase 152）:** `zoom_meeting_id` / `zoom_meeting_uuid` は Zoom 突合キー（再取り込みの二重登録防止）。`external_source` は取得元（`manual` / `zoom`）。手入力は `manual` 既定。詳細は [ZOOM_ONETOONE_SYNC_REQUIREMENTS.md](ZOOM_ONETOONE_SYNC_REQUIREMENTS.md)。
+
+**ID の正（Phase 323・2026-11-06）:** 1 回の 1 to 1 を指す識別子は **`one_to_ones.id`（自動採番の主キー）** とする。議事録 Markdown・INDEX・運用で参照するのはこの id で、Zoom の会議 ID / UUID は突合用の属性に留める（一意でもない。個人ミーティング ID は回をまたいで同じ番号になる）。行は **Zoom 取込**（自分がホストした会議）と **手動登録**（相手主催の Zoom・Meet・対面など、取込に出ない面談）のどちらで作ってもよく、扱いは同じ。手順と重複防止は [meetings/1to1/README.md](../meetings/1to1/README.md) §登録経路と ID の正、[ZOOM_IMPORT_DEDUP_REQUIREMENTS.md](ZOOM_IMPORT_DEDUP_REQUIREMENTS.md) §11。
 
 **`workspace_id` の意味（SPEC-006 解釈 A）:** 作成 API では必須だが、意味は **記録コンテキスト（通常はオーナー側の所属チャプターに対応する workspaces.id）**。`target_member` が他チャプター所属でもよい（クロスチャプター 1 to 1）。§5.1 参照。
 

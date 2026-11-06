@@ -1,5 +1,7 @@
 # 株式会社国宝社 様 — 仕様書（v3・案）
 
+> **履歴版（2026-10-26 追記）:** 本書は **v4（2026-10-26）に更新済み**。最新は [kimura_kokuhosha_specification_v4_20261026.md](kimura_kokuhosha_specification_v4_20261026.md)（PDF 解析方式の前提、三層処理、言葉での指示の範囲、AI 入出力、検収案を追加）。本書は履歴として保持。
+
 **作成:** 2026-10-10 07:19 JST  
 **位置づけ:** [基本設計書](kimura_kokuhosha_basic_design_20261010.md) の機能・画面を、項目と動きまで落としたもの。CSV レイアウトは **開発会社の設計提示待ち**のため「たたき台」。要件定義（M0）で確定・更新する。  
 **関連:** [改訂提案書 v3](kimura_kokuhosha_proposal_v3_20261010.md) · [システム構成図](kimura_kokuhosha_system_architecture_20261010.md) · [画面見本](https://tugilo.com/mock/kokuhosha-pdf-order-schedule.html) · [受領資料](木村さん用/README.md)

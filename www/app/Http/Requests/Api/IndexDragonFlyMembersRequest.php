@@ -49,6 +49,8 @@ class IndexDragonFlyMembersRequest extends FormRequest
             'bni_members_only' => ['nullable', 'boolean'],
             /** Members 名簿: DragonFly チャプター在籍メンバーのみ（他チャプター BNI 会員を除外）。 */
             'dragonfly_chapter_only' => ['nullable', 'boolean'],
+            /** 退会者（members.left_at <= today）を除外（Phase 321）。既定は全件。 */
+            'exclude_left' => ['nullable', 'boolean'],
         ];
     }
 }

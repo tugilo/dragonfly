@@ -41,6 +41,7 @@ class DragonFlyMemberController extends Controller
      * M-3c: q, category_id, group_name, role_id, interested, want_1on1, sort, order で検索・フィルタ・ソート対応。
      * meeting_id: 当該例会の参加者に限定（participants.type が absent の行は除外）。各要素に participant_type / bo_assignable（proxy は false）を付与。SPEC-007。
      * q_extended=1: q をチャプター名・カテゴリにも拡張。exclude_workspace_id: 自チャプター除外。limit: 件数上限（1to1 他チャプター相手検索・SPEC-021 T6）。
+     * exclude_left=1: 退会者（members.left_at <= today）を除外。既定は従来どおり全件（Phase 321）。
      */
     public function index(IndexDragonFlyMembersRequest $request): JsonResponse
     {
@@ -48,7 +49,11 @@ class DragonFlyMemberController extends Controller
 
         $query = Member::query()
             ->with(['category', 'memberRoles.role', 'workspace.region.country'])
-            ->select('id', 'display_no', 'name', 'name_kana', 'email', 'category_id', 'ncast_profile_url', 'workspace_id');
+            ->select('id', 'display_no', 'name', 'name_kana', 'email', 'category_id', 'ncast_profile_url', 'workspace_id', 'left_at');
+
+        if ($request->boolean('exclude_left')) {
+            $query->activeMembers();
+        }
 
         if ($meetingScopeId !== null) {
             $query->whereHas('participants', function ($q) use ($meetingScopeId) {
@@ -274,6 +279,14 @@ class DragonFlyMemberController extends Controller
             ]);
             $raw = $request->input('email');
             $member->email = ($raw !== null && $raw !== '') ? (string) $raw : null;
+        }
+
+        if (array_key_exists('left_at', $request->all())) {
+            $request->validate([
+                'left_at' => ['nullable', 'date_format:Y-m-d'],
+            ]);
+            $leftAt = $request->input('left_at');
+            $member->left_at = ($leftAt !== null && $leftAt !== '') ? $leftAt : null;
         }
 
         $member->fill($request->only(['name', 'name_kana', 'type', 'display_no', 'introducer_member_id', 'attendant_member_id']));

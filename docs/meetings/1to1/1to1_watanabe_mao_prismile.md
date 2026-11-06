@@ -37,7 +37,7 @@ religo_member_id: 21
 religo_member_type: member
 religo_display_no: 25
 religo_category_id: 95
-religo_one_to_one_id: null
+religo_one_to_one_id: 190
 session1_status: completed
 session1_external_source: pending_zoom_import
 session1_zoom_meeting_id: "89755713223"
@@ -57,7 +57,7 @@ thank_you_watanabe_status: user_confirmed_unsent
 
 **文書の位置づけ:** DragonFly メンバー **渡邊 真大**さん（株式会社プライスマイル／着物に強い出張買取）との 121 を1ファイルで時系列管理する。第1回は **軍司 敦哉**さん同席の3者。主題は、渡邊さんが Claude Code で自社運用している出張買取向けデジタル契約・管理システムの技術相談と、他者展開（SaaS化）の進め方。  
 **第1回:** **2026-09-11（金）JST 14:00–15:00 実施済み**（ユーザー確定。カレンダー招待は **14:15–15:00**・アイテマス45分枠）。  
-**Religo:** 相手 `members.id` = **21**（member・display_no=25・カテゴリ **着物に強い出張買取**）／本日の `one_to_ones` 行は **なし**。Zoom `89755713223` の取込待ち。**新規行は作らない。** 軍司さんは `members.id=36`。同席分の本文は本ファイルを正とし、軍司ファイルは【第3回】で参照する。  
+**Religo:** 相手 `members.id` = **21**（member・display_no=25・カテゴリ **着物に強い出張買取**）／第1回は `one_to_ones.id` = **190**（manual・2026-11-06 作成。Zoom `89755713223` の取込は無かった）。軍司さんは `members.id=36`。同席分の本文は本ファイルを正とし、軍司ファイルは【第3回】で参照する。  
 **ソース:** ユーザー提供 Zoom 文字起こし要約を校正（`[引用]` 省略）。カレンダー・[公式](https://www.prismile-kaitori.com/)。  
 **参照:** [軍司敦哉](1to1_gunji_lstep_webhook.md)（同席・LINE構築）／[木村杏那](1to1_kimura_anna_andirich.md)（Google Workspace。誤入力対応の事例として言及）／[榎田聡一](1to1_enokida_soichi_unity.md)（出張**車**買取。本線は別人）。  
 **表記:** **次廣 淳**。**DragonFly**／**プライスマイル**／**tugilo**／**1to1**。呼びは **マオさん**／**渡邊さん**。  
@@ -167,7 +167,7 @@ ID `897 5571 3223`／pwd `729227`
 - **参加者:** 渡邊 真大、軍司 敦哉、次廣 淳
 - **接点:** DragonFly 同チャプター。アイテマス調整。紹介者欄は「まおさん」
 - **カレンダー事前:** 「レベニューシェアでうまくできないかを相談したい」。当日要約の本線は技術アドバイスと SaaS 化
-- **Religo:** `members.id=21`／本日行なし。Zoom 取込待ち。新規二重禁止
+- **Religo 1to1 レコード:** `one_to_ones.id` = **190**（manual・2026-11-06 作成。Zoom 取込なし。同じ面談の軍司さん側は #191）。相手 `members.id=21`
 - **ソース:** ユーザー提供 Zoom 文字起こし要約（2026-09-11 15:04 JST 校正）
 
 #### 主要な成果

@@ -365,7 +365,7 @@ source_profile_url: "https://ne001.ncas.jp/bni_meibo/viewsheets.php?id=b0U5U21JR
 - **実施方法:** Zoom（meeting id **89755713223**／pwd **729227**）
 - **参加者:** 渡邊 真大、軍司 敦哉、次廣 淳
 - **本文の正:** [`1to1_watanabe_mao_prismile.md`](1to1_watanabe_mao_prismile.md)。本ファイルは軍司さん側の履歴用。
-- **Religo:** 渡邊さん `members.id=21`。本日の `one_to_ones` 行なし。`#99` `#100` は流用しない。
+- **Religo 1to1 レコード:** `one_to_ones.id` = **191**（manual・2026-11-06 作成。Zoom 取込なし。同じ面談の渡邊さん側は #190）。`#99` `#100` は流用しない。
 
 #### 主要成果（軍司さん視点）
 
