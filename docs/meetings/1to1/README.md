@@ -95,20 +95,39 @@ docker compose -f infra/compose/docker-compose.yml --env-file project.env exec a
 - **1ファイル → 1レコード**、`notes` にファイル全文を格納。
 - レコード未存在は **skip**（新規行は手動作成 + 本文に `one_to_ones.id` 追記が必要）。
 
-### 重複防止（必須・2026-07-08 西原海成事例）
+### 登録経路と ID の正（必須・2026-11-06 改訂）
 
-**事象:** Zoom 取込で `planned`（例: id=94）ができたあと、別途手動で `completed`（例: id=105）を作り、**同一面談が2行**になった。
+**ID の正は `one_to_ones.id`（Religo が自動で採番する番号）。** 議事録の【第N回】・front matter・INDEX に書くのはこの id だけ。Zoom の会議 ID（`zoom_meeting_id`）や UUID は、Zoom 取込で同じ会議を見分けるための属性で、識別子として使わない。
+
+1回の面談 = DB 1行。行の作り方は次の2つで、どちらで作っても扱いは同じ。
+
+| 経路 | 対象 | 作り方 |
+|------|------|--------|
+| **A. Zoom 取込** | **自分がホストした** Zoom（自分の TimeRex で予約された会議など） | 管理画面「Zoom 取り込み」で取得 → 相手を確定 → 登録 |
+| **B. 手動登録** | **Zoom 取込に出ない面談**: 相手が主催した Zoom、Google Meet、対面、電話 | 管理画面の 1to1 作成で登録（`external_source=manual`）。予定でも実施後でもよい |
+
+**相手主催の Zoom は取込に出ない。** Zoom 連携は連携した本人がホストした会議しか一覧に出ない（SPEC-012 §6）。待っても行はできないので、経路 B で登録する。見分ける目安（次廣の場合）: 会議リンクが自分のアカウントの `us06web.zoom.us` ではない、カレンダーの件名が自分の TimeRex の「〇〇さん: 1to1調整用」ではない。
+
+**手動登録の前に確かめること（重複を作らない）:**
+
+1. 同じ相手・同じ日の `one_to_ones` が既に無いか（相手の `members.id` で一覧する）。あれば **その id を使う**。
+2. Zoom 取込の候補に、同じ会議が **保留（held）・未処理（pending）** で残っていないか。残っていれば手動で作らず、取込画面で相手を確定して登録する。
+3. 相手の `members` 行が重複していないか（ビジター行とメンバー行など）。入会後はメンバー行を使う。
+
+**後から Zoom 取込が来た場合:** 同じ owner＋同じ相手（同じ `members` 行）＋同じ日の行があれば、取込は新しい行を作らず既存の行に Zoom の会議 ID と実時刻を補う（ZOOM_IMPORT_DEDUP R1/R2）。相手が別の `members` 行だと検知できないので、上の 3 を守る。
 
 | 順序 | やること | やってはいけないこと |
 |------|----------|----------------------|
-| 1 | Zoom 調整 → できた **`one_to_ones.id` を正**とする | 同じ日・同相手でもう1行作る |
-| 2 | 実施後、**同 id** を `completed` + 開始/終了時刻 | 議事録用に新規 id を発行 |
-| 3 | Markdown 【第N回】に **その id** を書く | id 未確認のまま import |
-| 4 | `import-1to1-notes` で **既存 id の notes のみ更新** | import で新規行を期待する |
+| 1 | 経路 A なら取込でできた行、経路 B なら手動登録した行の **`one_to_ones.id` を正**とする | 同じ日・同じ相手でもう1行作る |
+| 2 | 実施後、**同じ id** を `completed`＋開始・終了時刻にする | 議事録用に別の id を発行する |
+| 3 | Markdown 【第N回】に **その id** を書く | id 未確認のまま import する／Zoom の会議 ID を書く |
+| 4 | `import-1to1-notes` で **既存 id の notes のみ更新** | import で新規行ができることを期待する |
 
-**重複発見時:** `notes` / `completed` / Markdown 参照側を残し、Zoom 側の `zoom_meeting_id` を移して **`planned` 空行を削除**。`zoom_meeting_imports.one_to_one_id` も残す行へ付け替え。議事録に統合メモを1行残す。
+**やめること:** 相手主催の Zoom・Meet・対面の回に「Zoom 取込待ち・新規行禁止」と書いて保留にしない（2026-11-06 の突合で、この書き方の回が DB に載らないまま溜まっていた）。
 
-**確認コマンド（相手 `members.id` 既知）:** `one_to_ones` を `target_member_id` で一覧し、同一 `scheduled_at` 日が2件以上ないか見る（Cursor ルール: `.cursor/rules/1to1-dedup.mdc`）。
+**重複発見時（2026-07-08 西原海成事例: Zoom 取込の `planned` #94 と手動の `completed` #105 が並んだ）:** `notes`／`completed`／Markdown が参照している側を残し、Zoom の会議 ID・UUID をその行へ移して **`planned` の空行を削除**。`zoom_meeting_imports.one_to_one_id` も残す行へ付け替え。議事録に統合メモを1行残す。
+
+**確認コマンド（相手 `members.id` 既知）:** `one_to_ones` を `target_member_id` で一覧し、同じ日が2件以上ないか見る（Cursor ルール: `.cursor/rules/1to1-dedup.mdc`）。
 
 ### 複数回ある相手（SPEC-019・未実装）
 

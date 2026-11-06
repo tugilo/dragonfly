@@ -32,7 +32,8 @@ first_session_time_jst: "HH:MM-HH:MM"      # **必須キー**。不明は "TODO"
 #### 基本情報
 
 - 日時：**YYYY-MM-DD（曜）JST HH:MM–HH:MM**（開始・終了まで。取得元をメモ）
-- 実施方法：
+- 実施方法：（自分主催の Zoom／相手主催の Zoom／Meet／対面／電話）
+- **Religo 1to1 レコード:** `one_to_ones.id` = **N**（Zoom 取込でできた行、または手動登録した行の id。Zoom の会議 ID は書かない。取込に出ない面談は手動登録する。README §登録経路と ID の正）
 
 #### 話した内容（重要）
 

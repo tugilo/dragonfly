@@ -67,12 +67,17 @@ $COMPOSE exec app php artisan dragonfly:import-1to1-notes docs/meetings/1to1/ --
 
 - 突合: front matter の `one_to_ones.id` または notes 内 source path
 
-### 重複防止（import 前に必ず）
+### 登録経路と重複防止（import 前に必ず）
 
-1. **Zoom 1to1 調整済み** → 既に `one_to_ones` 行（多くは `planned`）がある。**その id を Markdown に書く。新規行を作らない。**
-2. 面談後 → **同 id** を `completed` + 開始/終了時刻。議事録 Markdown 作成。
-3. `import-1to1-notes` は **既存 id の notes 更新のみ**（未存在 id は skip）。
-4. 同一 `target_member_id` + 同日に **2行以上**あれば統合してから import（手順: `docs/meetings/1to1/README.md` §重複防止、`.cursor/rules/1to1-dedup.mdc`）。
+**ID の正は `one_to_ones.id`（Religo の自動採番）。** Markdown にはこの id を書く。Zoom の会議 ID は書かない。
+
+1. **行を用意する（経路は2つ）**
+   - **A. Zoom 取込:** 自分がホストした Zoom。取込でできた行（多くは `planned`）の id を使う。
+   - **B. 手動登録:** 相手主催の Zoom・Google Meet・対面・電話など、Zoom 取込に出ない面談。管理画面の 1to1 作成で行を作る（`external_source=manual`）。**「Zoom 取込待ち」で保留にしない。**
+2. **手動登録の前に確認:** 同じ相手・同じ日の行が無いこと、`zoom_meeting_imports` に同じ会議が `held`／`pending` で残っていないこと、相手の `members` 行が重複していないこと。
+3. 面談後 → **同じ id** を `completed`＋開始/終了時刻。議事録 Markdown の【第N回】に id を書く。
+4. `import-1to1-notes` は **既存 id の notes 更新のみ**（未存在 id は skip）。回の見出しの無い補足資料がある相手は、本編ファイルを指定して取り込む。
+5. 同一 `target_member_id`＋同日に **2行以上**あれば統合してから import（手順: `docs/meetings/1to1/README.md` §登録経路と ID の正、`.cursor/rules/1to1-dedup.mdc`）。
 
 ## 参加者 CSV
 
