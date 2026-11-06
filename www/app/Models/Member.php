@@ -20,6 +20,7 @@ class Member extends Model
         'category_id',
         'workspace_id',
         'type',
+        'left_at',
         'display_no',
         'ncast_profile_url',
         'weekly_presentation_body',
@@ -34,7 +35,33 @@ class Member extends Model
     {
         return [
             'weekly_presentation_patterns' => 'array',
+            'left_at' => 'date:Y-m-d',
         ];
+    }
+
+    /**
+     * 退会済みか（Phase 321）。left_at が今日以前なら退会。NULL／将来日付は在籍扱い。
+     */
+    public function isLeft(?string $asOf = null): bool
+    {
+        if ($this->left_at === null) {
+            return false;
+        }
+
+        return $this->left_at->toDateString() <= ($asOf ?? now()->toDateString());
+    }
+
+    /**
+     * 在籍メンバーのみ（left_at IS NULL または left_at > today）。
+     * members 行は履歴として残すため、退会者の除外はこのスコープで行う。
+     */
+    public function scopeActiveMembers(Builder $query, ?string $asOf = null): Builder
+    {
+        $today = $asOf ?? now()->toDateString();
+
+        return $query->where(function (Builder $q) use ($today) {
+            $q->whereNull('left_at')->orWhere('left_at', '>', $today);
+        });
     }
 
     public function weeklyPresentationUsages(): HasMany
